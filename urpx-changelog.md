@@ -1,10 +1,16 @@
 # 📋 URPX Changelog
 
 **Version:** 0.1.1
-**Last Updated:** 2026-01-21
+**Last Updated:** 2026-01-28
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
 
+2026-01-28
+- removed tierThreshold as redundant
+- updated ontology notes to removce progress notes
+
+---
+2026-01-27
 ---
 Added for accounting purposes:
 ```urpx:isCredit a owl:DatatypeProperty ;

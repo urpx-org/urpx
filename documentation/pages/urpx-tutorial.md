@@ -26,7 +26,8 @@ Before starting this tutorial, ensure you have:
 
 ### Required Files
 - `../../ontology/urpx-ontology.ttl` - URPX ontology file.
-- `../../shacl/urpx-core-shacl.ttl` - The primary SHACL file with basic validation rules.
+
+> **Note:** SHACL validation schemas are under development and will be included in future releases.
 
 ---
 
@@ -582,7 +583,7 @@ Extracted from the full list of possible values in `urpx-ontology.ttl`:
 1. **Validate JSON-LD syntax** - Ensure well-formed JSON
 2. **Check property existence** - All properties must exist in ontology
 3. **Validate enum values** - All enum instances must exist in ontology
-4. **Run SHACL validation** - Use a SHACL validation tool against the relevant SHACL files. The URPX repository includes multiple SHACL files for different validation contexts (e.g., `urpx-core-shacl.ttl`, `urpx-tariff-book-shacl.ttl`).
+4. **SHACL validation** - SHACL validation schemas are under development and will be included in future releases.
 5. **Verify business logic** - Price combinations make sense
 
 ---

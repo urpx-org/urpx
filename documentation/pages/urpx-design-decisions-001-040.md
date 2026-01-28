@@ -2,7 +2,9 @@
 
 **Version:** 1.0
 **Created:** 2025-09-25
-**Last Updated:** 2026-01-04
+**Last Updated:** 2026-01-28
+
+> **Note:** Design decisions reference the original modular ontology files (urpx-core-ontology.ttl, urpx-profile.ttl, urpx-organization.ttl, urpx-geography.ttl, urpx-charge-classification.ttl). As of v0.1.1, these files have been consolidated into a single `ontology/urpx-ontology.ttl` file. See [urpx-changelog.md](../../urpx-changelog.md) for consolidation details.
 
 ## Welcome!
 
@@ -185,7 +187,7 @@ Quick links to all design decisions:
 
 - **Status:** ✅ Implemented
 - **Date:** 2025-09-25
-- **Issue:** [Issue #001: serviceType Property Naming Ambiguity](urpx-design-issues.md#issue-001-servicetype-property-naming-ambiguity)
+- **Issue:** [Issue reference removed - file no longer exists]
 - **Category:** Standards Compliance, Naming Convention
 - **Impact:** Medium - Property rename affecting geographic ontology
 
@@ -256,7 +258,7 @@ Rename `urpx-geo:serviceType` to `urpx-geo:utilityServiceKind` to eliminate ambi
 - **Status:** ✅ Implemented - COMPLETE  
 - **Date:** 2025-09-23 to 2025-09-26
 - **Completion:** 2025-09-26
-- **Issue:** [Issue #003: Enum Property Inconsistency](urpx-design-issues.md#issue-003-enum-property-inconsistency)
+- **Issue:** [Issue reference removed - file no longer exists]
 - **Category:** Architecture, Standards Compliance
 - **Impact:** High - Core architectural pattern affecting entire ontology
 
@@ -348,7 +350,7 @@ Despite 100% ontology conversion, SHACL validation rules still expect string dat
 
 - **Status:** ✅ Implemented  
 - **Date:** 2025-09-18
-- **Issue:** [Issue #005: Architectural Boundaries](urpx-design-issues.md#issue-005-architectural-boundaries-urpx-vs-cds)
+- **Issue:** [Issue reference removed - file no longer exists]
 - **Category:** Architecture, Data Boundaries
 - **Impact:** High - Core integration architecture
 
@@ -478,7 +480,7 @@ Implement comprehensive CustomerProfileSet architecture with boolean eligibility
 
 - **Status:** ✅ Implemented
 - **Date:** 2025-10-10
-- **Issue:** [Issue #007: CustomerProfile Architecture Domain Error](urpx-design-issues.md#issue-007)
+- **Issue:** [Issue reference removed - file no longer exists]
 - **Category:** Architecture, Standards Compliance
 - **Impact:** High - Core eligibility architecture redesign
 
@@ -677,7 +679,7 @@ Enables UtiliPub GUI filter buttons, maintains RDF/linked data patterns.
 
 - **Status:** ✅ Implemented
 - **Date:** 2025-10-13
-- **Issue:** [Issue #010: Enumeration Naming Convention & OWL Formalism Inconsistency](urpx-design-issues.md#issue-010)
+- **Issue:** [Issue reference removed - file no longer exists]
 - **Category:** Standards Compliance, Architecture
 - **Impact:** Critical - Affects all 50+ enumeration classes and 500+ instances
 
@@ -806,7 +808,7 @@ urpx:energyCharge a urpx:ChargeTypeValue ;
 - W3C OWL 2 Primer: https://www.w3.org/TR/owl2-primer/
 - W3C Linked Data Best Practices: https://www.w3.org/TR/ld-bp/
 - Schema.org: https://schema.org
-- [Issue #010: Enumeration Architecture Inconsistency](urpx-design-issues.md#issue-010)
+- [Issue reference removed - file no longer exists]
 - [Documentation Update Log Batch #010](urpx-documentation-update-log.md#update-batch-010)
 
 ---
@@ -905,7 +907,7 @@ if name in standard_units:
 
 - **Status:** ✅ Implemented
 - **Date:** 2025-10-14
-- **Issue:** [Issue #012: CustomerKind/CustomerSubKind Improper Enumeration Format](urpx-design-issues.md#issue-012)
+- **Issue:** [Issue reference removed - file no longer exists]
 - **Category:** Standards Compliance, Enumeration Architecture
 - **Impact:** High - Customer classification enumeration consistency
 
@@ -1711,7 +1713,7 @@ ex:metric urpx:commodity urpx:electricity ;
 
 - **Status:** ✅ Implemented
 - **Date:** 2025-10-20
-- **Issue:** [Issue #014: TOUSchedule Nested in SeasonalSchedule Architecture Problem](urpx-design-issues.md#issue-014)
+- **Issue:** [Issue reference removed - file no longer exists]
 - **Category:** Architecture, Temporal Structure, Pricing Model
 - **Impact:** Critical - Major architectural restructuring for v0.1.1
 
@@ -1951,7 +1953,7 @@ ex:touSchedule urpx:hasTOUTier [
 7. **Phase 7**: Documentation (1-2 hours)
 
 **References:**
-- [Issue #014: TOUSchedule Architecture Problem](urpx-design-issues.md#issue-014)
+- [Issue reference removed - file no longer exists]
 - Green Button terminology documentation
 - ApplicabilityGroup architecture (separate system)
 - Measurement Framework Design v2.0

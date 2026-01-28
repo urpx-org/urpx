@@ -2,7 +2,9 @@
 
 **Version:** 1.0
 **Created:** 2026-01-05
-**Last Updated:** 2026-01-21
+**Last Updated:** 2026-01-28
+
+> **Note:** Design decisions reference the original modular ontology files (urpx-core-ontology.ttl, urpx-profile.ttl, urpx-organization.ttl, urpx-geography.ttl, urpx-charge-classification.ttl). As of v0.1.1, these files have been consolidated into a single `ontology/urpx-ontology.ttl` file. See [urpx-changelog.md](../../urpx-changelog.md) for consolidation details.
 
 ## Welcome!
 

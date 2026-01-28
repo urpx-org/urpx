@@ -1,4 +1,4 @@
-# 🔗 URPX Data Dictionary
+# URPX Data Dictionary
 
 **Version:** 0.1.1
 **Last Updated:** 2026-01-21
@@ -265,7 +265,94 @@ Eligibility rules encode complex business logic that determines which customers 
 
 ### Prices
 
-![Price Structure Diagram](../diagrams/urpx-price-structure-diagram.svg)
+```mermaid
+%% URPX Price Structure Diagram
+%% Shows: Prices → PriceSet → Price hierarchy
+%% Created: January 26, 2026
+%% Paul Tol 2.7 Light color scheme
+
+%%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
+
+graph TB
+    
+    RPVersion[RatePlanVersion]
+    
+    %% Prices Container
+    subgraph PricesContainer["Prices Container (1..1)"]
+        direction TB
+        Prices[Prices<br/>Centralized price storage]
+        
+        PriceSet1[PriceSet<br/>Logical grouping<br/>e.g., 'Summer Prices']
+        PriceSet2[PriceSet<br/>e.g., 'Winter Prices']
+        
+        Prices -->|hasPriceSet<br/>1..*| PriceSet1
+        Prices -->|hasPriceSet| PriceSet2
+    end
+    
+    %% Price Components
+    subgraph PriceComponents["Price Components"]
+        direction TB
+        
+        Price1[Price<br/>Individual price component]
+        Price2[Price<br/>Another price]
+        Price3[Price<br/>Another price]
+        
+        PriceSet1 -->|hasPrice<br/>1..*| Price1
+        PriceSet1 -->|hasPrice| Price2
+        PriceSet1 -->|hasPrice| Price3
+    end
+    
+    %% Price Properties
+    subgraph PriceProps["Price Properties (Required)"]
+        direction TB
+        
+        ChargeType[chargeType<br/>ObjectProperty<br/>minimumCharge, usageCharge,<br/>demandDirect, etc.]
+        
+        ChargeCategory[chargeCategory<br/>ObjectProperty<br/>serviceCharge, auxiliaryCharge,<br/>infrastructure, taxes, etc.]
+        
+        BillPortion[billPortion<br/>ObjectProperty<br/>delivery, supply, bundled]
+        
+        Amount[amount or unitPrice<br/>Numeric value<br/>Fixed or per-unit]
+    end
+    
+    %% Price Types Examples
+    subgraph PriceExamples["Common Price Types"]
+        direction LR
+        
+        Ex1[Fixed Service Price<br/>chargeType: minimumCharge<br/>chargeCategory: serviceCharge<br/>amount: $18.75/month]
+        
+        Ex2[Energy Usage Price<br/>chargeType: usageCharge<br/>chargeCategory: auxiliaryCharge<br/>unitPrice: $0.12/kWh]
+        
+        Ex3[Demand Price<br/>chargeType: demandDirect<br/>chargeCategory: auxiliaryCharge<br/>unitPrice: $8.50/kW]
+        
+        Ex4[State Tax<br/>chargeType: taxState<br/>chargeCategory: taxes<br/>multiplier: 0.0825]
+    end
+    
+    %% Connections
+    RPVersion -->|hasPrices<br/>1..1| Prices
+    
+    Price1 -.->|has properties| ChargeType
+    Price1 -.->|has properties| ChargeCategory
+    Price1 -.->|has properties| BillPortion
+    Price1 -.->|has properties| Amount
+    
+    PriceProps -.->|examples| PriceExamples
+    
+    %% Styling - Paul Tol 2.7 Light colors
+    classDef versionClass fill:#77AADD,stroke:#5588BB,stroke-width:3px,color:#fff
+    classDef containerClass fill:#44BB99,stroke:#228877,stroke-width:3px,color:#fff
+    classDef priceSetClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#333
+    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#333
+    classDef propClass fill:#FFAABB,stroke:#DD8899,stroke-width:2px,color:#333
+    classDef exampleClass fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#fff
+    
+    class RPVersion versionClass
+    class Prices containerClass
+    class PriceSet1,PriceSet2 priceSetClass
+    class Price1,Price2,Price3 priceClass
+    class ChargeType,ChargeCategory,BillPortion,Amount propClass
+    class Ex1,Ex2,Ex3,Ex4 exampleClass
+```
 
 #### urpx:PriceSet
 **Description:** A logical grouping of related prices that are calculated and applied together.
@@ -428,7 +515,60 @@ Applicability groups enable complex conditional logic for charge application, su
 
 ### Time-of-Use Classes
 
-![TOU Structure Diagram](../diagrams/urpx-tou-structure-diagram.svg)
+```mermaid
+%% URPX TOU Structure Diagram
+%% Shows: TOUSchedule → TOUTier → TOUPeriod → TimeBracket hierarchy
+%% Created: January 26, 2026
+%% Paul Tol 2.7 Light color scheme
+
+%%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
+
+graph TB
+    
+    TOUSchedule[TOUSchedule]
+    
+    %% TOU Tiers
+    Tier1[TOUTier<br/>touTierNumber: 1<br/>Peak Period]
+    Tier2[TOUTier<br/>touTierNumber: 2<br/>Off-Peak Period]
+    
+    %% TOU Periods
+    Period1[TOUPeriod<br/>touPeriodNumber: 1<br/>Peak Period]
+    Period2[TOUPeriod<br/>touPeriodNumber: 2<br/>Off-Peak]
+    
+    %% Time Brackets
+    TB1[TimeBracket<br/>14:00-19:00<br/>Weekdays only]
+    TB2[TimeBracket<br/>All other hours]
+    
+    %% Price References
+    Price1[Price<br/>Peak: $0.285/kWh<br/>touPeriodNumber: 1]
+    Price2[Price<br/>Off-Peak: $0.075/kWh<br/>touPeriodNumber: 2]
+    
+    %% Connections
+    TOUSchedule -->|hasTOUTier| Tier1
+    TOUSchedule -->|hasTOUTier| Tier2
+    
+    Tier1 -->|hasTOUPeriod| Period1
+    Tier2 -->|hasTOUPeriod| Period2
+    
+    Period1 -->|hasTimeBracket| TB1
+    Period2 -->|hasTimeBracket| TB2
+    
+    Price1 -.->|references| Period1
+    Price2 -.->|references| Period2
+    
+    %% Styling - Paul Tol 2.7 Light colors
+    classDef scheduleClass fill:#77AADD,stroke:#5588BB,stroke-width:3px,color:#fff
+    classDef tierClass fill:#44BB99,stroke:#228877,stroke-width:2px,color:#fff
+    classDef periodClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#333
+    classDef bracketClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#333
+    classDef priceClass fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#fff
+    
+    class TOUSchedule scheduleClass
+    class Tier1,Tier2 tierClass
+    class Period1,Period2 periodClass
+    class TB1,TB2 bracketClass
+    class Price1,Price2 priceClass
+```
 
 #### urpx:TOUSchedule
 **Description:** Container for time-based pricing tiers and periods that define when different rates apply.

@@ -1,0 +1,56 @@
+# URPX: Utility Rate Plan Exchange Ontology
+
+**Version 0.1.1** | **W3C-Ready Semantic Standard**
+
+ [![Documentation](https://img.shields.io/badge/Documentation-Complete-green)](documentation/) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+
+---
+
+## What is URPX?
+
+The **Utility Rate Plan Exchange (URPX)** ontology is an open standard for exchanging utility rate plan information using semantic web technologies (RDF, OWL, SHACL). URPX enables precise, machine-readable data exchange between utilities, regulators, vendors, and researchers.
+
+
+## Documentation
+
+**For complete documentation, guides, and technical reference, see [documentation/index.md](documentation/index.md)**
+
+### Quick Links
+
+- **[Overview](documentation/pages/urpx-overview.md)** - Understanding URPX
+- **[Tutorial](documentation/pages/urpx-tutorial.md)** - Step-by-step guide
+- **[Data Dictionary](documentation/pages/urpx-data-dictionary.md)** - Complete reference
+- **[Examples](documentation/pages/urpx-examples.md)** - Real-world implementations
+- **[FAQ](documentation/pages/urpx-faq.md)** - Frequently asked questions
+
+---
+
+## Repository Structure
+
+```
+urpx/
+├── documentation/     # Complete documentation (start at index)
+├── ontology/           # Core OWL ontology files
+├── shacl/             # SHACL validation constraints
+├── skos/     # SKOS mapping
+├── test-cases/        # Test datasets and examples
+```
+
+---
+
+## License
+
+This pre-draft version is licensed under [Apache 2.0](LICENSE). Intended for working group review purposes only. Any subsequent versions incorporating contributions will be published under a W3C license.
+
+---
+
+## Support & Contact
+
+- **Documentation**: [documentation/index.md](documentation/index.md)
+- **Bug Reports and Feedback**: [GitHub Issues](https://github.com/urpx-org/urpx/issues)
+
+- **Mailing List**: [URPX Working Group](https://lists.lfenergy.org/g/urpx-wg)
+
+---
+
+*Open standard for utility rate plan data exchange • Built on W3C semantic web standards*
