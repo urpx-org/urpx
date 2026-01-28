@@ -277,7 +277,7 @@ urpx:Price skos:relatedMatch zigbee:PriceCluster ;
 
 Each published mapping profile includes header metadata, vocabulary declarations, and bidirectional mapping rules.
 
-**Directory**: `documentation/specifications/standards-integration/`
+**Directory**: `skos/`
 
 **Naming Convention**: `urpx-{standard-name}-mappings.ttl`
 

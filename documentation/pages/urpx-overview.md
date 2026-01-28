@@ -1,4 +1,4 @@
-# 🔗 URPX Overview
+# URPX Overview
 
 ## Understanding the Utility Rate Plan Exchange Standard
 
@@ -32,7 +32,7 @@ Built on RDF and OWL standards, URPX defines a rich vocabulary for describing ev
 
 #### 2. Modular Architecture
 
-![URPX Core Schema](../diagrams/urpx-core-schema-diagram.svg)
+[URPX Core Schema diagram creation in progress]
 
 URPX is built on a core ontology ([`urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)) that includes:
 
@@ -135,7 +135,7 @@ A rate plan in URPX follows a hierarchical structure:
 
 ```
 URPXDocument
-  └── RatePlan (master template)
+  └── RatePlan
       └── RatePlanVersion (temporal instance)
         └── EligibilityRule (customer requirements)
         │   ├── CustomerProfile
@@ -145,6 +145,7 @@ URPXDocument
         │        ├── TOUSchedule (time-of-use rules)
         │           └── TOUTier (price level)
         │               └── TOUPeriod (time window)
+        │        ├── ServiceTier (service tier constraints)      
         └── Prices (container for all prices)
             ├── PriceSet (logical grouping)
                 └── Price (individual price component)
@@ -154,7 +155,7 @@ URPXDocument
 
 Rate plans evolve over time. URPX captures this through versioning:
 
-![Temporal Versioning](../diagrams/urpx-temporal-versioning-diagram.svg)
+![Temporal Versioning](../diagrams/urpx-temporal-versioning-summary.svg)
 
 - **RatePlan** - The permanent identifier for a rate plan
 - **RatePlanVersion** - A specific version effective during a time period
@@ -164,8 +165,7 @@ Rate plans evolve over time. URPX captures this through versioning:
 
 URPX supports the full spectrum of utility charges:
 
-![Charge Types](../diagrams/urpx-charge-types-diagram.svg)
-
+![Charge Types Diagram creation in progress]
 **Energy Prices**
 - Usage-based pricing ($/kWh)
 - Tiered structures with thresholds
@@ -224,8 +224,69 @@ ex:NorthernRegionApplicability a urpx:ApplicabilityGroup ;
 ### Customer Eligibility
 
 Complex eligibility rules determine who can enroll in specific rate plans:
+```mermaid
+%% URPX Eligibility Rules
+%% Updated: January 26, 2026
+%% Paul Tol 2.7 Light color scheme
 
-![Eligibility Rules](../diagrams/urpx-rules-eligibility-diagram.svg)
+%%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
+
+graph TB
+    
+    RPlan[RatePlanVersion]
+    EligRule[EligibilityRule]
+    
+    %% Profile Types
+    CustProf[CustomerProfile-based<br/>Rules]
+    UsageProf[UsagePointProfile-based<br/>Rules<br/>ESPI Green Button]
+    
+    %% Customer Profile Attributes
+    Prior[Prior Rate Plan]
+    Program[Program Enrollment]
+    CustClass[Customer Classification<br/>NAESB]
+    Geographic[Geographic Territory<br/>ISO 3166]
+    
+    %% Usage Profile Attributes
+    MinUsage[Minimum Usage]
+    MaxUsage[Maximum Usage]
+    PeakDemand[Peak Demand]
+    
+    %% Standards
+    CDS[CDS Integration<br/>LF Energy]
+    
+    %% Connections
+    RPlan -->|has| EligRule
+    EligRule -->|customerProfile| CustProf
+    EligRule -->|usagePoint| UsageProf
+    
+    CustProf --> Prior
+    CustProf --> Program
+    CustProf --> CustClass
+    CustProf --> Geographic
+    
+    UsageProf --> MinUsage
+    UsageProf --> MaxUsage
+    UsageProf --> PeakDemand
+    
+    CustProf -.-> CDS
+    UsageProf -.-> CDS
+    
+    classDef titleClass fill:#DDDDDD,stroke:#BBBBBB,stroke-width:2px,color:#fff
+    classDef lightBlue fill:#77AADD,stroke:#5588BB,stroke-width:2px,color:#fff
+    classDef orange fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#fff
+    classDef mint fill:#44BB99,stroke:#228877,stroke-width:2px,color:#fff
+    classDef lightYellow fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#fff
+    classDef pear fill:#BBCC33,stroke:#99AA11,stroke-width:2px,color:#fff
+    classDef paleGrey fill:#DDDDDD,stroke:#BBBBBB,stroke-width:2px,color:#fff
+    
+    class Title titleClass
+    class RPlan lightBlue
+    class EligRule orange
+    class CustProf,UsageProf mint
+    class Prior,Program,CustClass,Geographic lightYellow
+    class MinUsage,MaxUsage,PeakDemand pear
+    class CDS paleGrey
+```
 
 **Prior Rate Plan Requirements**
 ```turtle

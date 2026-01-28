@@ -53,7 +53,7 @@ urpx:AlternativeDimensions a owl:Class ;
 urpx:ApplicabilityConstraint a owl:Class ;
     rdfs:label "Applicability Constraint"@en ;
     rdfs:comment "Generic inclusion or exclusion rule for price applicability. Enables flexible applicability rules without requiring new properties for each constraint type." ;
-    skos:note "Used with ApplicabilityGroup via hasInclusionConstraint (price applies when property matches value) or hasExclusionConstraint (price does not apply when property matches value). Replaces property explosion pattern with systematic constraint structure." .
+    skos:note "Used with ApplicabilityGroup via hasInclusionConstraint (price applies when property matches value) or hasExclusionConstraint (price does not apply when property matches value). Provides systematic constraint structure for flexible applicability rules." .
 
 urpx:ApplicabilityGroup a owl:Class ;
     rdfs:label "Applicability Group"@en ;
@@ -350,7 +350,7 @@ urpx:ServiceTerritory a owl:Class ;
 urpx:ServiceTier a owl:Class ;
     rdfs:label "Service Tier"@en ;
     rdfs:comment "Usage tier definition with upper/lower bounds and inclusivity for tiered pricing" ;
-    skos:note "Defines usage, demand, or other service tiers for tiered pricing structures with precise boundary handling and calculated thresholds dependent on service scenario inputs. Replaces threshold-based properties for flexible tier configuration." .
+    skos:note "Defines usage, demand, or other service tiers for tiered pricing structures with precise boundary handling. Tiers are defined at BillingModel level and reference the MetricInput they apply to. Prices reference tiers via serviceTierNumber or referencesServiceTier properties." .
 
 urpx:State a owl:Class ;
     rdfs:label "State"@en ;
@@ -919,7 +919,7 @@ urpx:appliesInSeason a owl:ObjectProperty ;
     rdfs:domain [ a owl:Class ;
         owl:unionOf ( urpx:TimeBracket urpx:Price urpx:PriceDefinition urpx:PriceSet ) ] ;
     rdfs:range urpx:Season ;
-    skos:note "URI references to seasons defined in PlanElements. Enables TimeBrackets to reference seasons without nesting. Multiple seasons can be referenced for brackets that apply across seasonal boundaries. Part of flat version architecture (Decision #018)." .
+    skos:note "URI references to seasons defined in PlanElements. Enables TimeBrackets to reference seasons without nesting. Multiple seasons can be referenced for brackets that apply across seasonal boundaries." .
 
 urpx:appliesInServiceTerritory a owl:ObjectProperty ;
     rdfs:label "Applies In Service Territory"@en ;
@@ -1027,12 +1027,11 @@ urpx:billingCycleCode a owl:DatatypeProperty ;
 
 urpx:billPortion a owl:ObjectProperty ;
     rdfs:label "Bill Portion"@en ;
-    dcterms:description "Specifies whether a charge applies to delivery, supply, or bundled service. Preferred at MetricSpecification level for flat RatePlanVersion architecture (Decision #018)."@en ;
     rdfs:comment "Identifies which portion of the bill this charge, metric, or price set belongs to"@en ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:Price urpx:PriceSet urpx:PriceDefinition urpx:ChargeTypeValue ) ] ;
     rdfs:range urpx:BillPortionValue ;
-    skos:note "billPortion shall be defined at MetricSpecification level. When defined on PriceSet, all contained prices inherit the value." .
+    skos:note "Specifies whether a charge applies to delivery, supply, or bundled service. Typically defined at MetricSpecification level for consistent application across prices."@en .
 
 urpx:buildingSquareFootage a owl:DatatypeProperty ;
     rdfs:label "Building Square Footage"@en ;
@@ -1576,7 +1575,7 @@ urpx:hasHolidayCalendar a owl:ObjectProperty ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:LocationDataSet urpx:PlanElements ) ] ;
     rdfs:range urpx:HolidayCalendar ;
-    skos:note "Can be referenced at RatePlanVersion level for direct selection (option A), contained within LocationDataSet for versioned bundling (option B), or within PlanElements for flat architecture (Decision #018). All approaches supported for flexibility." .
+    skos:note "Can be referenced at RatePlanVersion level for direct selection, contained within LocationDataSet for versioned bundling, or within PlanElements. All approaches supported for flexibility." .
 
 urpx:hasHVAC a owl:ObjectProperty ;
     rdfs:label "Has HVAC"@en ;
@@ -1658,8 +1657,8 @@ urpx:hasPlanElements a owl:ObjectProperty ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
     rdfs:range urpx:PlanElements ;
-    skos:note "Links version to centralized container for seasons, holiday calendars, and metric-specific pricing rule sets. Shared architecture between RatePlanVersion and RatePlanModifierVersion for unified pricing structure (Decision #019, #020)." .
-
+    skos:note "Links version to centralized container for seasons, holiday calendars, and metric-specific pricing rule sets. Shared architecture between RatePlanVersion and RatePlanModifierVersion for unified pricing structure." .
+    
 urpx:hasPossibleValues a owl:ObjectProperty ;
     rdfs:label "Has Possible Values"@en ;
     rdfs:comment "Structured possible values with human-readable labels for GUI buttons" ;
@@ -1796,7 +1795,7 @@ urpx:hasSeasons a owl:ObjectProperty ;
     rdfs:comment "Seasonal definitions for rate plan or modifier version" ;
     rdfs:domain urpx:PlanElements ;
     rdfs:range urpx:Season ;
-    skos:note "Defines seasons once in PlanElements, eliminating redundancy. Seasons are referenced by TimeBrackets via appliesInSeason property for clean flat architecture (Decision #018). Shared by both rate plan and modifier versions." .
+    skos:note "Defines seasons once in PlanElements, eliminating redundancy. Seasons are referenced by TimeBrackets via appliesInSeason property. Shared by both rate plan and modifier versions." .
 
 urpx:hasServiceClass a owl:ObjectProperty ;
     rdfs:label "Has Service Class"@en ;
@@ -1817,8 +1816,8 @@ urpx:hasServiceTier a owl:ObjectProperty ;
     rdfs:label "Has Service Tier"@en ;
     rdfs:comment "Service tier definitions for tiered pricing structures" ;
     rdfs:domain urpx:MetricInput ;
-    rdfs:range urpx:ServiceTier ;
-    skos:note "Defines upfront service tiers with upper/lower bounds and operator-based comparison logic. Prices reference tiers via serviceTierNumber for clean flat architecture (Decision #018)." .
+    rdfs:range urpx:BillingModel ;
+    skos:note "Defines upfront service tiers with upper/lower bounds and operator-based comparison logic. Prices reference tiers via serviceTierNumber property." .
 
 urpx:hasTariffPublication a owl:ObjectProperty ;
     rdfs:label "Has Tariff Publication"@en ;
@@ -1853,7 +1852,7 @@ urpx:hasTOUTier a owl:ObjectProperty ;
     rdfs:comment "Links TOU schedule to pricing tiers (peak, mid-peak, off-peak)" ;
     rdfs:domain urpx:TOUSchedule ;
     rdfs:range urpx:TOUTier ;
-    skos:note "New in v2.0. Tiers organize periods by price level for clearer structure." .
+    skos:note "Tiers organize time-of-use periods by price level for clearer structure." .
 
 urpx:holidayDate a owl:DatatypeProperty ;
     rdfs:label "Holiday Date"@en ;
@@ -1968,7 +1967,7 @@ urpx:intervalDuration a owl:DatatypeProperty ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:BillingCycle urpx:CalculationMethod urpx:MetricSpecification ) ] ;
     rdfs:range xsd:duration ;
-    skos:note "ISO 8601 duration (e.g., P1M, P7D, PT15M). Replaces cycleDuration and intervalDuration. Required property on BillingCycle and MetricSpecification (when defining interval for eligibility/calculation) - duration is the primary source of truth for the interval length." .
+    skos:note "ISO 8601 duration (e.g., P1M, P7D, PT15M). Required property on BillingCycle and MetricSpecification when defining interval for eligibility or calculation. Duration is the primary specification for interval length." .
 
 urpx:intervalSelection a owl:ObjectProperty ;
     rdfs:label "Interval Selection"@en ;
@@ -1984,7 +1983,7 @@ urpx:intervalType a owl:ObjectProperty ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:BillingCycle urpx:CalculationMethod urpx:MetricSpecification ) ] ;
     rdfs:range urpx:IntervalTypeValue ;
-    skos:note "Optional semantic label (e.g., monthlyInterval) for human readability. Only required if the interval is customInterval. Replaces cycleType, billingIntervalType, and measurementIntervalType." .
+    skos:note "Optional semantic label (e.g., monthlyInterval) for human readability. Required only when interval is customInterval." .
 
 urpx:inverterType a owl:ObjectProperty ;
     rdfs:label "Inverter Type"@en ;
@@ -2449,7 +2448,7 @@ urpx:referencesServiceTier a owl:ObjectProperty ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet ) ] ;
     rdfs:range urpx:ServiceTier ;
-    skos:note "IRI-based reference to ServiceTier instance defined in MetricInput. Enables direct dereferencing for tier metadata (bounds, operators, etc.). Alternative to serviceTierNumber integer-based reference pattern." .
+    skos:note "IRI-based reference to ServiceTier instance defined in MetricInput. Enables direct dereferencing for tier metadata including bounds and operators." .
 
 urpx:referencesTouPeriod a owl:ObjectProperty ;
     rdfs:label "References TOU Period"@en ;
@@ -2457,7 +2456,7 @@ urpx:referencesTouPeriod a owl:ObjectProperty ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet ) ] ;
     rdfs:range urpx:TOUPeriod ;
-    skos:note "IRI-based reference to TOUPeriod instance defined in MetricInput. Enables direct dereferencing for period metadata (time brackets, multipliers, etc.). Alternative to touPeriodNumber integer-based reference pattern." .
+    skos:note "IRI-based reference to TOUPeriod instance defined in MetricInput. Enables direct dereferencing for period metadata including time brackets and multipliers." .
 
 urpx:regulatoryApproval a owl:DatatypeProperty ;
     rdfs:label "Regulatory Approval"@en ;
@@ -2537,7 +2536,7 @@ urpx:serviceTierNumber a owl:DatatypeProperty ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:ServiceTier ) ] ;
     rdfs:range xsd:integer ;
-    skos:note "Integer-based reference to ServiceTier via its unique serviceTierNumber. Sequential tier numbering. Alternative to referencesServiceTier IRI pattern." .
+    skos:note "Integer-based reference to ServiceTier via its unique serviceTierNumber. Sequential tier numbering enables simple numeric tier identification." .
 
 urpx:settlementInterval a owl:DatatypeProperty ;
     rdfs:label "Settlement Interval"@en ;
@@ -2643,14 +2642,6 @@ urpx:tierSourceName a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     skos:note "Preserves utility's terminology for reference and mapping." .
 
-urpx:tierThreshold a owl:DatatypeProperty ;
-    rdfs:label "Tier Threshold"@en ;
-    rdfs:comment "Upper bound of usage tier" ;
-    rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet ) ] ;
-    rdfs:range xsd:decimal ;
-    skos:note "Maximum usage for this tier to apply." .
-
 urpx:timeZone a owl:DatatypeProperty ;
     rdfs:label "Time Zone"@en ;
     rdfs:comment "The timezone. For example, by name 'America/New_York'" ;
@@ -2672,7 +2663,7 @@ urpx:touPeriodNumber a owl:DatatypeProperty ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TOUPeriod ) ] ;
     rdfs:range xsd:integer ;
-    skos:note "Integer-based reference to TOUPeriod via its unique touPeriodNumber. Must be unique across entire schedule. Alternative to referencesTouPeriod IRI pattern." .
+    skos:note "Integer-based reference to TOUPeriod via its unique touPeriodNumber. Must be unique across entire schedule for unambiguous period identification." .
 
 urpx:touTierNumber a owl:DatatypeProperty ;
     rdfs:label "TOU Tier Number"@en ;
