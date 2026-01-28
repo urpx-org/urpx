@@ -1,0 +1,45 @@
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#77AADD', 'primaryTextColor':'#000', 'primaryBorderColor':'#000', 'lineColor':'#000', 'secondaryColor':'#EEDD88', 'tertiaryColor':'#FFAABB', 'background':'transparent'}}}%%
+graph LR
+    subgraph "SPARQL Query"
+        Q["SELECT ?price ?name ?price<br/>WHERE {<br/>  ?ratePlan urpx:identifier 'RES-TOU-2025' ;<br/>    hasRatePlanVersion/hasPrices/<br/>    hasPriceSet/hasPrice ?Price .<br/>  ?Price urpx:PriceName ?name ;<br/>    urpx:unitPrice ?price .<br/>}"]
+    end
+    
+    subgraph "Graph Traversal"
+        RP[RatePlan<br/>RES-TOU-2025]
+        RPV[RatePlanVersion]
+        PRC[Prices]
+        PS[PriceSet]
+        P1[Price 1]
+        P2[Price 2]
+        P3[Price 3]
+        
+        RP -->|hasRatePlanVersion| RPV
+        RPV -->|hasPrices| PRC
+        PRC -->|hasPriceSet| PS
+        PS -->|hasPrice| P1
+        PS -->|hasPrice| P2
+        PS -->|hasPrice| P3
+    end
+    
+    subgraph "Results"
+        R1["Peak Energy, $0.28/kWh"]
+        R2["Off-Peak Energy, $0.09/kWh"]
+        R3["Service Charge, $15.00/month"]
+    end
+    
+    Q -.->|navigates| RP
+    P1 -.->|binds| R1
+    P2 -.->|binds| R2
+    P3 -.->|binds| R3
+    
+    style Q fill:#EEDD88,stroke:#000,stroke-width:2px,color:#000
+    style RP fill:#77AADD,stroke:#000,stroke-width:2px,color:#000
+    style RPV fill:#99DDFF,stroke:#000,stroke-width:2px,color:#000
+    style PRC fill:#BBCC33,stroke:#000,stroke-width:2px,color:#000
+    style PS fill:#EEDD88,stroke:#000,stroke-width:2px,color:#000
+    style P1 fill:#FFAABB,stroke:#000,stroke-width:2px,color:#000
+    style P2 fill:#FFAABB,stroke:#000,stroke-width:2px,color:#000
+    style P3 fill:#FFAABB,stroke:#000,stroke-width:2px,color:#000
+    style R1 fill:#44BB99,stroke:#000,stroke-width:2px,color:#000
+    style R2 fill:#44BB99,stroke:#000,stroke-width:2px,color:#000
+    style R3 fill:#44BB99,stroke:#000,stroke-width:2px,color:#000
