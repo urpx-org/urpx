@@ -1021,7 +1021,7 @@ urpx:billingCycleCode a owl:DatatypeProperty ;
     rdfs:comment "Billing cycle identifier aligned with utility billing periods",
         "Billing cycle identifier aligned with utility billing periods" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:CustomerProfile urpx:ServicePointProfile urpx:Price urpx:PriceDefinition urpx:PriceSet ) ] ;
+            owl:unionOf ( urpx:CustomerProfile urpx:Price urpx:PriceDefinition urpx:PriceSet ) ] ;
     rdfs:range xsd:string ;
     skos:note "Identifies billing cycle using utility-determined codes (e.g., 'trip_1', 'cycle_21', 'route_A'). " .
 
