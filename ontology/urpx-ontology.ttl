@@ -1815,8 +1815,8 @@ urpx:hasServicePointProfile a owl:ObjectProperty ;
 urpx:hasServiceTier a owl:ObjectProperty ;
     rdfs:label "Has Service Tier"@en ;
     rdfs:comment "Service tier definitions for tiered pricing structures" ;
-    rdfs:domain urpx:MetricInput ;
-    rdfs:range urpx:BillingModel ;
+    rdfs:domain urpx:BillingModel ;
+    rdfs:range urpx:ServiceTier ;
     skos:note "Defines upfront service tiers with upper/lower bounds and operator-based comparison logic. Prices reference tiers via serviceTierNumber property." .
 
 urpx:hasTariffPublication a owl:ObjectProperty ;
