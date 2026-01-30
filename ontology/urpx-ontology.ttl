@@ -959,7 +959,8 @@ urpx:appliesForCustomerSubKind a owl:ObjectProperty ;
 urpx:approvalDate a owl:DatatypeProperty ;
     rdfs:label "Approval Date"@en ;
     rdfs:comment "Regulatory approval date" ;
-    rdfs:domain urpx:RatePlanVersion ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
     rdfs:range xsd:dateTime ;
     skos:note "When regulatory authority approved this version." .
 
@@ -1062,14 +1063,16 @@ urpx:calculationRule a owl:ObjectProperty ;
 urpx:changeDescription a owl:DatatypeProperty ;
     rdfs:label "Change Description"@en ;
     rdfs:comment "Detailed explanation of changes" ;
-    rdfs:domain urpx:RatePlanVersion ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
     rdfs:range xsd:string ;
     skos:note "Human-readable description of what changed and why." .
 
 urpx:changeReason a owl:ObjectProperty ;
     rdfs:label "Change Reason"@en ;
     rdfs:comment "Reason for version change (regulatory filing categories)" ;
-    rdfs:domain urpx:RatePlanVersion ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
     rdfs:range urpx:ChangeReasonValue ;
     skos:note "Regulatory filing categories enumeration for version change tracking. with standardized change reason definitions." .
 
@@ -1685,7 +1688,8 @@ urpx:hasPriceDefinition a owl:ObjectProperty ;
 urpx:hasPrices a owl:ObjectProperty ;
     rdfs:label "Has Prices"@en ;
     rdfs:comment "Links rate plan version to actual price instances with rate values" ;
-    rdfs:domain urpx:RatePlanVersion ;
+    rdfs:domain [ a owl:Class ;
+        owl:unionOf ( urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:TariffStatementDocument urpx:TariffSupplementDocument urpx:TariffAddendumDocument ) ] ;
     rdfs:range urpx:Prices ;
     skos:note "Two-tier Price architecture: Tier 2 instances contain actual unitPrice/amount values and temporal validity. Reference price definitions for calculation structure." .
 
