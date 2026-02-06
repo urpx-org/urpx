@@ -1,0 +1,3635 @@
+# URPX SHACL Shapes - Unified File
+# Version: 0.1.1 Pre-Draft
+# Generated: 2026-02-06
+# Description: SHACL shapes for validating URPX data against the URPX Ontology.
+
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix urpx: <https://schema.urpx.org/> .
+@prefix urpx-shacl: <https://schema.urpx.org/shacl/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://schema.urpx.org/shacl/>
+    a owl:Ontology, sh:ShapesGraph ;
+    rdfs:label "URPX SHACL Shapes"@en ;
+    dcterms:creator "Una Smithsimon, Klaar De Schepper, Flux Tailor LLC" ;
+    dcterms:date "2026-02-06"^^xsd:date ;
+    dcterms:description "SHACL shapes for validating URPX data against the URPX Ontology." ;
+    dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
+    dcterms:modified "2026-02-06"^^xsd:date ;
+    dcterms:title "URPX - SHACL" ;    
+    owl:versionInfo "0.1.1" ;
+    dcat:version "0.1.1" .
+
+# ============================================================================
+# NODE SHAPES
+# ============================================================================
+
+urpx-shacl:AccountServiceAgreementShape
+    a sh:NodeShape ;
+    rdfs:label "AccountServiceAgreement Shape"@en ;
+    sh:targetClass urpx:AccountServiceAgreement ;
+    sh:property [
+        sh:path urpx:contractEffectiveDate ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:contractExpirationDate ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:AlternativeDimensionShape
+    a sh:NodeShape ;
+    rdfs:label "AlternativeDimension Shape"@en ;
+    sh:targetClass urpx:AlternativeDimension ;
+    sh:property [
+        sh:path urpx:dimensionDisplayName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:dimensionProperty ;
+        sh:datatype xsd:anyURI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasPossibleValues ;
+        sh:node [ sh:property [ sh:path rdf:first ; sh:minCount 1 ] ] ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesMetricInput ;
+        sh:class urpx:MetricInput ;
+        sh:minCount 0 ;
+    ] .
+
+urpx-shacl:AlternativeDimensionsShape
+    a sh:NodeShape ;
+    rdfs:label "AlternativeDimensions Shape"@en ;
+    sh:targetClass urpx:AlternativeDimensions ;
+    sh:property [
+        sh:path urpx:hasAlternativeDimension ;
+        sh:class urpx:AlternativeDimension ;
+        sh:minCount 1 ;
+    ] .
+
+urpx-shacl:ApplicabilityConstraintShape
+    a sh:NodeShape ;
+    rdfs:label "ApplicabilityConstraint Shape"@en ;
+    sh:targetClass urpx:ApplicabilityConstraint ;
+    sh:property [
+        sh:path urpx:constraintProperty ;
+        sh:datatype xsd:anyURI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:constraintValue ;
+        sh:or (
+            [ sh:nodeKind sh:IRI ]
+            [ sh:nodeKind sh:Literal ]
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:ApplicabilityGroupShape
+    a sh:NodeShape ;
+    rdfs:label "ApplicabilityGroup Shape"@en ;
+    sh:targetClass urpx:ApplicabilityGroup ;
+    sh:property [
+        sh:path urpx:applicabilityLogic ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:appliesForCustomerKind ;
+        sh:node urpx-shacl:CustomerKindValueShape ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:appliesForCustomerSubKind ;
+        sh:node urpx-shacl:CustomerSubKindValueShape ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:appliesInCounty ;
+        sh:class urpx:County ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:appliesInMunicipality ;
+        sh:class urpx:Municipality ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:appliesInServiceTerritory ;
+        sh:class urpx:ServiceTerritory ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:appliesInState ;
+        sh:class urpx:State ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:appliesInZone ;
+        sh:node urpx-shacl:GeographicZoneValueShape ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:endUse ;
+        sh:node urpx-shacl:EndUseValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:geographicScope ;
+        sh:node urpx-shacl:GeographicScopeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasExclusionConstraint ;
+        sh:class urpx:ApplicabilityConstraint ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasInclusionConstraint ;
+        sh:class urpx:ApplicabilityConstraint ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:serviceClassPattern ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:voltageLevel ;
+        sh:node urpx-shacl:VoltageLevelValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:ApplicabilityRuleShape
+    a sh:NodeShape ;
+    rdfs:label "ApplicabilityRule Shape"@en ;
+    sh:targetClass urpx:ApplicabilityRule ;
+    sh:property [
+        sh:path urpx:conditionType ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:conditionValue ;
+        sh:nodeKind sh:Literal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasCondition ;
+        sh:class urpx:Condition ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:logicExpression ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:month ;
+        sh:datatype xsd:gMonth ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:operator ;
+        sh:node urpx-shacl:OperatorValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:BillingCycleShape
+    a sh:NodeShape ;
+    rdfs:label "BillingCycle Shape"@en ;
+    sh:targetClass urpx:BillingCycle ;
+    sh:property [
+        sh:path urpx:cycleStartDay ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 31 ;
+    ] ;
+    sh:property [
+        sh:path urpx:endDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:endDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:intervalAlignment ;
+        sh:node urpx-shacl:IntervalAlignmentValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:intervalDuration ;
+        sh:datatype xsd:duration ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:intervalSelection ;
+        sh:node urpx-shacl:IntervalSelectionValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:intervalType ;
+        sh:node urpx-shacl:IntervalTypeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:startDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:startDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:BillingModelShape
+    a sh:NodeShape ;
+    rdfs:label "BillingModel Shape"@en ;
+    sh:targetClass urpx:BillingModel ;
+    sh:property [
+        sh:path urpx:hasLedger ;
+        sh:class urpx:Ledger ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasServiceTier ;
+        sh:class urpx:ServiceTier ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasTOUSchedule ;
+        sh:class urpx:TOUSchedule ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:prorationMethod ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:CalculationMethodShape
+    a sh:NodeShape ;
+    rdfs:label "CalculationMethod Shape"@en ;
+    sh:targetClass urpx:CalculationMethod ;
+    sh:property [
+        sh:path urpx:aggregationMethod ;
+        sh:node urpx-shacl:AggregationMethodValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:calculationFormula ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:intervalAlignment ;
+        sh:node urpx-shacl:IntervalAlignmentValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:intervalDuration ;
+        sh:datatype xsd:duration ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:intervalSelection ;
+        sh:node urpx-shacl:IntervalSelectionValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:intervalType ;
+        sh:node urpx-shacl:IntervalTypeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:ConditionShape
+    a sh:NodeShape ;
+    rdfs:label "Condition Shape"@en ;
+    sh:targetClass urpx:Condition ;
+    sh:property [
+        sh:path urpx:conditionType ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:conditionValue ;
+        sh:nodeKind sh:Literal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasMetricInput ;
+        sh:class urpx:MetricInput ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasMetricSpecification ;
+        sh:class urpx:MetricSpecification ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:operator ;
+        sh:node urpx-shacl:OperatorValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesMetricInput ;
+        sh:class urpx:MetricInput ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:unitOfMeasure ;
+        sh:node urpx-shacl:UnitOfMeasureValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:CustomerProfileShape
+    a sh:NodeShape ;
+    rdfs:label "CustomerProfile Shape"@en ;
+    sh:targetClass urpx:CustomerProfile ;
+    sh:property [
+        sh:path urpx:annualIncomeRange ;
+        sh:node urpx-shacl:AnnualIncomeRangeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:assistanceEligibilityLevel ;
+        sh:node urpx-shacl:AssistanceEligibilityLevelValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:billingCycleCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:creditRating ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:demandThreshold ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:entityType ;
+        sh:node urpx-shacl:EntityTypeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:geographicZone ;
+        sh:node urpx-shacl:GeographicZoneValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasCustomerKind ;
+        sh:node urpx-shacl:CustomerKindValueShape ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasCustomerSubKind ;
+        sh:node urpx-shacl:CustomerSubKindValueShape ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasPriorRatePlan ;
+        sh:class urpx:PriorRatePlan ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasProgramEnrollment ;
+        sh:class urpx:ProgramEnrollment ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:householdCount ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:householdSize ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:isCCACustomer ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:isCommunitySolarCustomer ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:numberOfOccupants ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:profileId ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:specialNeedsStatus ;
+        sh:node urpx-shacl:SpecialNeedsStatusValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:taxExemptStatus ;
+        sh:node urpx-shacl:TaxExemptStatusValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:usageThreshold ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:DataSourceReferenceShape
+    a sh:NodeShape ;
+    rdfs:label "DataSourceReference Shape"@en ;
+    sh:targetClass urpx:DataSourceReference ;
+    sh:property [
+        sh:path urpx:fileName ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:mediaType ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:url ;
+        sh:datatype xsd:anyURI ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:DimensionValuePairShape
+    a sh:NodeShape ;
+    rdfs:label "DimensionValuePair Shape"@en ;
+    sh:targetClass urpx:DimensionValuePair ;
+    sh:property [
+        sh:path urpx:forDimension ;
+        sh:class urpx:AlternativeDimension ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:valueIRI ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:DistributedEnergyResourceShape
+    a sh:NodeShape ;
+    rdfs:label "DistributedEnergyResource Shape"@en ;
+    sh:targetClass urpx:DistributedEnergyResource ;
+    sh:property [
+        sh:path urpx:connectorType ;
+        sh:node urpx-shacl:ConnectorTypeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:derType ;
+        sh:node urpx-shacl:DERTypeValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:evChargingCapacity ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:interconnectionStatus ;
+        sh:node urpx-shacl:InterconnectionStatusValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:inverterType ;
+        sh:node urpx-shacl:InverterTypeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:panelOrientation ;
+        sh:node urpx-shacl:PanelOrientationValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:powerRating ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:roundTripEfficiency ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 100 ;
+    ] ;
+    sh:property [
+        sh:path urpx:smartChargingEnabled ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:solarCapacity ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:storageCapacity ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:windCapacity ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:DynamicPricingShape
+    a sh:NodeShape ;
+    rdfs:label "DynamicPricing Shape"@en ;
+    sh:targetClass urpx:DynamicPricing ;
+    sh:property [
+        sh:path urpx:dynamicPricingType ;
+        sh:node urpx-shacl:DynamicPricingTypeValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasPriceUpdateRule ;
+        sh:class urpx:PriceUpdateRule ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:priceCeiling ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:priceFloor ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:priceSource ;
+        sh:node urpx-shacl:PriceSourceValueShape ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:updateFrequency ;
+        sh:node urpx-shacl:UpdateFrequencyValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:EligibilityRuleShape
+    a sh:NodeShape ;
+    rdfs:label "EligibilityRule Shape"@en ;
+    sh:targetClass urpx:EligibilityRule ;
+    sh:or (
+        [
+            sh:path urpx:hasCustomerProfile ;
+            sh:class urpx:CustomerProfile ;
+            sh:minCount 1 ;
+        ]
+        [
+            sh:path urpx:hasServicePointProfile ;
+            sh:class urpx:ServicePointProfile ;
+            sh:minCount 1 ;
+        ]
+    ) ;
+    sh:property [
+        sh:path urpx:conditionType ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:conditionValue ;
+        sh:nodeKind sh:Literal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasCondition ;
+        sh:class urpx:Condition ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasDataSourceReference ;
+        sh:class urpx:DataSourceReference ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:logicExpression ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:operator ;
+        sh:node urpx-shacl:OperatorValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:EnergyServiceProviderShape
+    a sh:NodeShape ;
+    rdfs:label "EnergyServiceProvider Shape"@en ;
+    sh:targetClass urpx:EnergyServiceProvider ;
+    sh:property [
+        sh:path urpx:serviceRole ;
+        sh:node urpx-shacl:ServiceRoleValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+    
+urpx-shacl:HolidayShape
+    a sh:NodeShape ;
+    rdfs:label "Holiday Shape"@en ;
+    sh:targetClass urpx:Holiday ;
+    sh:property [
+        sh:path urpx:holidayDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:holidayName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:holidayRule ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:observanceRule ;
+        sh:node urpx-shacl:ObservanceRuleValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:HolidayCalendarShape
+    a sh:NodeShape ;
+    rdfs:label "HolidayCalendar Shape"@en ;
+    sh:targetClass urpx:HolidayCalendar ;
+    sh:property [
+        sh:path urpx:hasHoliday ;
+        sh:class urpx:Holiday ;
+        sh:minCount 1 ;
+    ] .
+
+urpx-shacl:LedgerShape
+    a sh:NodeShape ;
+    rdfs:label "Ledger Shape"@en ;
+    sh:targetClass urpx:Ledger ;
+    sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasBillingCycle ;
+        sh:class urpx:BillingCycle ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasPriceDefinition ;
+        sh:class urpx:PriceDefinition ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:ledgerType ;
+        sh:node urpx-shacl:LedgerTypeValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesMetricInput ;
+        sh:class urpx:MetricInput ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:settlementInterval ;
+        sh:datatype xsd:duration ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:LocationDataSetShape
+    a sh:NodeShape ;
+    rdfs:label "LocationDataSet Shape"@en ;
+    sh:targetClass urpx:LocationDataSet ;
+    sh:property [
+        sh:path urpx:daylightSavingRules ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasHolidayCalendar ;
+        sh:class urpx:HolidayCalendar ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:timeZone ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:timezoneIdentifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:MetricInputShape
+    a sh:NodeShape ;
+    rdfs:label "MetricInput Shape"@en ;
+    sh:targetClass urpx:MetricInput ;
+    sh:property [
+        sh:path urpx:calculationRule ;
+        sh:node [
+            a sh:NodeShape ;
+            sh:property [
+                sh:path urpx:formula ;
+                sh:datatype xsd:string ;
+                sh:minCount 0 ;
+                sh:maxCount 1 ;
+            ] ;
+            sh:property [
+                sh:path urpx:calculatedBasedOn ;
+                sh:class urpx:MetricInput ;
+                sh:minCount 0 ;
+            ] ;
+        ] ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasMetricSpecification ;
+        sh:class urpx:MetricSpecification ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:metricInputType ;
+        sh:node urpx-shacl:MetricInputTypeValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:profileMetricProperty ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:MetricSpecificationShape
+    a sh:NodeShape ;
+    rdfs:label "MetricSpecification Shape"@en ;
+    sh:targetClass urpx:MetricSpecification ;
+    sh:property [
+        sh:path urpx:accumulationMethod ;
+        sh:node urpx-shacl:AccumulationValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:commodity ;
+        sh:node urpx-shacl:CommodityValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:flowDirection ;
+        sh:node urpx-shacl:FlowDirectionValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:intervalAlignment ;
+        sh:node urpx-shacl:IntervalAlignmentValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:intervalDuration ;
+        sh:datatype xsd:duration ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:intervalSelection ;
+        sh:node urpx-shacl:IntervalSelectionValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:intervalType ;
+        sh:node urpx-shacl:IntervalTypeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:measurementKind ;
+        sh:node urpx-shacl:MeasurementTypeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:phaseCodeKind ;
+        sh:node urpx-shacl:PhaseCodeKindValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:unitOfMeasure ;
+        sh:node urpx-shacl:UnitOfMeasureValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:OrganizationShape
+    a sh:NodeShape ;
+    rdfs:label "Organization Shape"@en ;
+    sh:targetClass urpx:Organization ;
+    sh:property [
+        sh:path urpx:alternateName ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:commodity ;
+        sh:node urpx-shacl:CommodityValueShape ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasIdentity ;
+        sh:class urpx:OrganizationIdentity ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasLocationDataSet ;
+        sh:class urpx:LocationDataSet ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:legalName ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:operatesIn ;
+        sh:class urpx:SystemOperator ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:organizationType ;
+        sh:node urpx-shacl:OrganizationTypeValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:publishes ;
+        sh:class urpx:RatePlan ;
+        sh:minCount 0 ;
+    ] .
+
+urpx-shacl:OrganizationEventShape
+    a sh:NodeShape ;
+    rdfs:label "OrganizationEvent Shape"@en ;
+    sh:targetClass urpx:OrganizationEvent ;
+    sh:property [
+        sh:path urpx:regulatoryApproval ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:OrganizationIdentifierShape
+    a sh:NodeShape ;
+    rdfs:label "OrganizationIdentifier Shape"@en ;
+    sh:targetClass urpx:OrganizationIdentifier ;
+    sh:property [
+        sh:path urpx:identifierJurisdiction ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:identifierScheme ;
+        sh:node urpx-shacl:IdentifierSchemeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:utilityId ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:OrganizationIdentityShape
+    a sh:NodeShape ;
+    rdfs:label "OrganizationIdentity Shape"@en ;
+    sh:targetClass urpx:OrganizationIdentity ;
+    sh:property [
+        sh:path urpx:hasIdentifier ;
+        sh:class urpx:OrganizationIdentifier ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasName ;
+        sh:class urpx:OrganizationName ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:identityValidFrom ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:identityValidTo ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:OrganizationNameShape
+    a sh:NodeShape ;
+    rdfs:label "OrganizationName Shape"@en ;
+    sh:targetClass urpx:OrganizationName ;
+    sh:property [
+        sh:path urpx:abbreviation ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:isCanonical ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:isPreferred ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:OrganizationTransitionShape
+    a sh:NodeShape ;
+    rdfs:label "OrganizationTransition Shape"@en ;
+    sh:targetClass urpx:OrganizationTransition ;
+    sh:property [
+        sh:path urpx:regulatoryApproval ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:PlanElementsShape
+    a sh:NodeShape ;
+    rdfs:label "PlanElements Shape"@en ;
+    sh:targetClass urpx:PlanElements ;
+    sh:property [
+        sh:path urpx:hasBillingModel ;
+        sh:class urpx:BillingModel ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasHolidayCalendar ;
+        sh:class urpx:HolidayCalendar ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasMetricInput ;
+        sh:class urpx:MetricInput ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasProfileAlternatives ;
+        sh:class urpx:ProfileAlternatives ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasSeasons ;
+        sh:class urpx:Season ;
+        sh:minCount 0 ;
+    ] .
+
+urpx-shacl:PriceShape
+    a sh:NodeShape ;
+    rdfs:label "Price Shape"@en ;
+    sh:targetClass urpx:Price ;
+    sh:xone (
+        [
+            sh:path urpx:amount ;
+            sh:datatype xsd:decimal ;
+            sh:minCount 1 ;
+            sh:maxCOunt 1 ;
+        ]
+        [
+            sh:path urpx:unitPrice ;
+            sh:datatype xsd:decimal ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ]
+    ) ;
+    sh:property [
+        sh:path urpx:adder ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:appliesInSeason ;
+        sh:class urpx:Season ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:basedOnPrice ;
+        sh:or (
+            [ sh:class urpx:Price ]
+            [ sh:class urpx:PriceSummary ]
+        ) ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:basePrice ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:baseQuantity ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:billingCycleCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:billPortion ;
+        sh:node urpx-shacl:BillPortionValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:chargeCategory ;
+        sh:node urpx-shacl:ChargeCategoryValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:chargeType ;
+        sh:node urpx-shacl:ChargeTypeValueShape ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:commodity ;
+        sh:node urpx-shacl:CommodityValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:currentPrice ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:endDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:endDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasApplicabilityGroup ;
+        sh:class urpx:ApplicabilityGroup ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasApplicabilityRule ;
+        sh:class urpx:ApplicabilityRule ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasCalculationMethod ;
+        sh:class urpx:CalculationMethod ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasDataSourceReference ;
+        sh:class urpx:DataSourceReference ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasDynamicPricing ;
+        sh:class urpx:DynamicPricing ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasMetricInput ;
+        sh:class urpx:MetricInput ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasMetricSpecification ;
+        sh:class urpx:MetricSpecification ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:isCredit ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:multiplier ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:priceCurrency ;
+        sh:datatype xsd:string ;
+        sh:maxLength 3 ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:priceId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:priceMatchingKey ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:primaryChargeType ;
+        sh:node urpx-shacl:ChargeTypeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesMetricInput ;
+        sh:class urpx:MetricInput ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesServiceTier ;
+        sh:class urpx:ServiceTier ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesTouPeriod ;
+        sh:class urpx:TOUPeriod ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:serviceTierNumber ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:startDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:startDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:tariffBookReference ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:tariffStatementReference ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:touPeriodNumber ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:PriceDefinitionShape
+    a sh:NodeShape ;
+    rdfs:label "PriceDefinition Shape"@en ;
+    sh:targetClass urpx:PriceDefinition ;
+    sh:property [
+        sh:path urpx:appliesInSeason ;
+        sh:class urpx:Season ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:basedOnPrice ;
+        sh:or (
+            [ sh:class urpx:Price ]
+            [ sh:class urpx:PriceSummary ]
+        ) ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:baseQuantity ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:billingCycleCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:billPortion ;
+        sh:node urpx-shacl:BillPortionValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:chargeCategory ;
+        sh:node urpx-shacl:ChargeCategoryValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:chargeType ;
+        sh:node urpx-shacl:ChargeTypeValueShape ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:commodity ;
+        sh:node urpx-shacl:CommodityValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:endDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:endDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasApplicabilityGroup ;
+        sh:class urpx:ApplicabilityGroup ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasApplicabilityRule ;
+        sh:class urpx:ApplicabilityRule ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasCalculationMethod ;
+        sh:class urpx:CalculationMethod ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasDataSourceReference ;
+        sh:class urpx:DataSourceReference ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasMetricSpecification ;
+        sh:class urpx:MetricSpecification ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:isCredit ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:priceCurrency ;
+        sh:datatype xsd:string ;
+        sh:maxLength 3 ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:priceMatchingKey ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:primaryChargeType ;
+        sh:node urpx-shacl:ChargeTypeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesMetricInput ;
+        sh:class urpx:MetricInput ;
+        sh:minCount 0 ;
+    ] ;    
+    sh:property [
+        sh:path urpx:referencesServiceTier ;
+        sh:class urpx:ServiceTier ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesTouPeriod ;
+        sh:class urpx:TOUPeriod ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:serviceTierNumber ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:startDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:startDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:tariffBookReference ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:tariffStatementReference ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:touPeriodNumber ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:PricesShape
+    a sh:NodeShape ;
+    rdfs:label "Prices Shape"@en ;
+    sh:targetClass urpx:Prices ;
+    sh:property [
+        sh:path urpx:hasPrice ;
+        sh:class urpx:Price ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasPriceSet ;
+        sh:class urpx:PriceSet ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasPriceSetAlternatives ;
+        sh:class urpx:PriceSetAlternatives ;
+        sh:minCount 0 ;
+    ] .
+
+urpx-shacl:PriceSetShape
+    a sh:NodeShape ;
+    rdfs:label "PriceSet Shape"@en ;
+    sh:targetClass urpx:PriceSet ;
+    sh:property [
+        sh:path urpx:adder ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:appliesInSeason ;
+        sh:class urpx:Season ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:baseQuantity ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:billingCycleCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:billPortion ;
+        sh:node urpx-shacl:BillPortionValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:chargeCategory ;
+        sh:node urpx-shacl:ChargeCategoryValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:chargeType ;
+        sh:node urpx-shacl:ChargeTypeValueShape ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:commodity ;
+        sh:node urpx-shacl:CommodityValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:endDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:endDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasAlternative ;
+        sh:class urpx:ProfileAlternative ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasApplicabilityGroup ;
+        sh:class urpx:ApplicabilityGroup ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasApplicabilityRule ;
+        sh:class urpx:ApplicabilityRule ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasCalculationMethod ;
+        sh:class urpx:CalculationMethod ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasDataSourceReference ;
+        sh:class urpx:DataSourceReference ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasMetricInput ;
+        sh:class urpx:MetricInput ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasMetricSpecification ;
+        sh:class urpx:MetricSpecification ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasPrice ;
+        sh:class urpx:Price ;
+        sh:minCount 2 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasPriceSummary ;
+        sh:class urpx:PriceSummary ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:isCredit ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:multiplier ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:priceCurrency ;
+        sh:datatype xsd:string ;
+        sh:maxLength 3 ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:priceMatchingKey ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:primaryChargeType ;
+        sh:node urpx-shacl:ChargeTypeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesMetricInput ;
+        sh:class urpx:MetricInput ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesServiceTier ;
+        sh:class urpx:ServiceTier ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesTouPeriod ;
+        sh:class urpx:TOUPeriod ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:serviceTierNumber ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:startDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:startDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:tariffBookReference ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:tariffStatementReference ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:touPeriodNumber ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:PriceSetAlternativeShape
+    a sh:NodeShape ;
+    rdfs:label "PriceSetAlternative Shape"@en ;
+    sh:targetClass urpx:PriceSetAlternative ;
+    sh:property [
+        sh:path urpx:alternativeLabel ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:forProfileAlternative ;
+        sh:class urpx:ProfileAlternative ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:PriceSetAlternativesShape
+    a sh:NodeShape ;
+    rdfs:label "PriceSetAlternatives Shape"@en ;
+    sh:targetClass urpx:PriceSetAlternatives ;
+    sh:property [
+        sh:path urpx:forProfileAlternatives ;
+        sh:class urpx:ProfileAlternatives ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasPriceSetAlternative ;
+        sh:class urpx:PriceSetAlternative ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:priceMatchingKey ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:PriceSummaryShape
+    a sh:NodeShape ;
+    rdfs:label "PriceSummary Shape"@en ;
+    sh:targetClass urpx:PriceSummary ;
+    sh:property [
+        sh:path urpx:includesPrice ;
+        sh:class urpx:Price ;
+        sh:minCount 2 ;
+    ] ;
+    sh:property [
+        sh:path urpx:summaryAmount ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:PriceUpdateRuleShape
+    a sh:NodeShape ;
+    rdfs:label "PriceUpdateRule Shape"@en ;
+    sh:targetClass urpx:PriceUpdateRule ;
+    sh:property [
+        sh:path urpx:priority ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+    ] .
+
+urpx-shacl:PriorRatePlanShape
+    a sh:NodeShape ;
+    rdfs:label "PriorRatePlan Shape"@en ;
+    sh:targetClass urpx:PriorRatePlan ;
+    sh:property [
+        sh:path urpx:enrollmentEndDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:enrollmentStartDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:enrollmentStatus ;
+        sh:node urpx-shacl:EnrollmentStatusValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:minimumTenure ;
+        sh:datatype xsd:duration ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesRatePlan ;
+        sh:class urpx:RatePlan ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:ProfileAlternativeShape
+    a sh:NodeShape ;
+    rdfs:label "ProfileAlternative Shape"@en ;
+    sh:targetClass urpx:ProfileAlternative ;
+    sh:property [
+        sh:path urpx:alternativesType ;
+        sh:node urpx-shacl:AlternativesTypeValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:defaultSelectionLogic ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasDimensionValue ;
+        sh:class urpx:DimensionValuePair ;
+        sh:minCount 1 ;
+    ] .
+
+urpx-shacl:ProfileAlternativesShape
+    a sh:NodeShape ;
+    rdfs:label "ProfileAlternatives Shape"@en ;
+    sh:targetClass urpx:ProfileAlternatives ;
+    sh:property [
+        sh:path urpx:hasAlternativeDimensions ;
+        sh:class urpx:AlternativeDimensions ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasProfileAlternative ;
+        sh:class urpx:ProfileAlternative ;
+        sh:minCount 2 ;
+    ] .
+    
+urpx-shacl:ProgramEnrollmentShape
+    a sh:NodeShape ;
+    rdfs:label "ProgramEnrollment Shape"@en ;
+    sh:targetClass urpx:ProgramEnrollment ;
+    sh:property [
+        sh:path urpx:enrollmentEndDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:enrollmentStartDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:enrollmentStatus ;
+        sh:node urpx-shacl:EnrollmentStatusValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:minimumTenure ;
+        sh:datatype xsd:duration ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:programName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:programType ;
+        sh:node urpx-shacl:ProgramTypeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:RateGroupShape
+    a sh:NodeShape ;
+    rdfs:label "RateGroup Shape"@en ;
+    sh:targetClass urpx:RateGroup ;
+    sh:property [
+        sh:path urpx:parentServiceClass ;
+        sh:class urpx:ServiceClass ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:rateGroupIdentifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:rateGroupName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:RatePlanShape
+    a sh:NodeShape ;
+    rdfs:label "RatePlan Shape"@en ;
+    sh:targetClass urpx:RatePlan ;
+    sh:property [
+        sh:path urpx:applicableToRateGroup ;
+        sh:class urpx:RateGroup ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:effectiveDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:effectiveDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expirationDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expirationDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasRateGroup ;
+        sh:class urpx:RateGroup ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasRatePlanVersion ;
+        sh:class urpx:RatePlanVersion ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasServiceClass ;
+        sh:class urpx:ServiceClass ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:initialEffectiveDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:priceCurrency ;
+        sh:datatype xsd:string ;
+        sh:maxLength 3 ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:ratePlanIdentifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:url ;
+        sh:datatype xsd:anyURI ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:version ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:RatePlanModifierShape
+    a sh:NodeShape ;
+    rdfs:label "RatePlanModifier Shape"@en ;
+    sh:targetClass urpx:RatePlanModifier ;
+    sh:property [
+        sh:path urpx:applicableToRateGroup ;
+        sh:class urpx:RateGroup ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:effectiveDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:effectiveDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expirationDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expirationDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasRatePlanModifierVersion ;
+        sh:class urpx:RatePlanModifierVersion ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasServiceClass ;
+        sh:class urpx:ServiceClass ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:initialEffectiveDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:isOptional ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:priceCurrency ;
+        sh:datatype xsd:string ;
+        sh:maxLength 3 ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:url ;
+        sh:datatype xsd:anyURI ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:version ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:RatePlanModifierVersionShape
+    a sh:NodeShape ;
+    rdfs:label "RatePlanModifierVersion Shape"@en ;
+    sh:targetClass urpx:RatePlanModifierVersion ;    
+    sh:property [
+        sh:path urpx:applicableToRatePlan ;
+        sh:class urpx:RatePlan ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:approvalDate ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:changeDescription ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:changeReason ;
+        sh:node urpx-shacl:ChangeReasonValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:commodity ;
+        sh:node urpx-shacl:CommodityValueShape ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:effectiveDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:effectiveDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expirationDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expirationDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasDataSourceReference ;
+        sh:class urpx:DataSourceReference ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasEligibilityRule ;
+        sh:class urpx:EligibilityRule ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasPlanElements ;
+        sh:class urpx:PlanElements ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasPrices ;
+        sh:class urpx:Prices ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:minimumTenure ;
+        sh:datatype xsd:duration ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:modifierCategory ;
+        sh:node urpx-shacl:ModifierCategoryValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:modifierIdentifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern "^[A-Z0-9-]+$" ;
+    ] ;
+    sh:property [
+        sh:path urpx:modifierType ;
+        sh:node urpx-shacl:ModifierTypeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:modifierVersionNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:priceCurrency ;
+        sh:datatype xsd:string ;
+        sh:maxLength 3 ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:publishedBy ;
+        sh:class urpx:Organization ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:serviceRole ;
+        sh:node urpx-shacl:ServiceRoleValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:supersedes ;
+        sh:class urpx:RatePlanModifierVersion ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:url ;
+        sh:datatype xsd:anyURI ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:version ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:RatePlanVersionShape
+    a sh:NodeShape ;
+    rdfs:label "RatePlanVersion Shape"@en ;
+    sh:targetClass urpx:RatePlanVersion ;
+    sh:property [
+        sh:path urpx:applicableToRatePlan ;
+        sh:class urpx:RatePlan ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:approvalDate ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:changeDescription ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:changeReason ;
+        sh:node urpx-shacl:ChangeReasonValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:commodity ;
+        sh:node urpx-shacl:CommodityValueShape ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:effectiveDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:effectiveDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expirationDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expirationDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasDataSourceReference ;
+        sh:class urpx:DataSourceReference ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasEligibilityRule ;
+        sh:class urpx:EligibilityRule ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasPlanElements ;
+        sh:class urpx:PlanElements ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasPrices ;
+        sh:class urpx:Prices ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:minimumTenure ;
+        sh:datatype xsd:duration ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:observesHoliday ;
+        sh:class urpx:Holiday ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:priceCurrency ;
+        sh:datatype xsd:string ;
+        sh:maxLength 3 ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:publishedBy ;
+        sh:class urpx:Organization ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:serviceRole ;
+        sh:node urpx-shacl:ServiceRoleValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:supersedes ;
+        sh:class urpx:RatePlanVersion ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:url ;
+        sh:datatype xsd:anyURI ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:version ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:RegulatoryAuthorityShape
+    a sh:NodeShape ;
+    rdfs:label "RegulatoryAuthority Shape"@en ;
+    sh:targetClass urpx:RegulatoryAuthority ;
+    sh:property [
+        sh:path urpx:approves ;
+        sh:class urpx:RatePlan ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasJurisdictionOver ;
+        sh:class urpx:Organization ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:regulatoryScope ;
+        sh:node urpx-shacl:RegulatoryScopeValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:SeasonShape
+    a sh:NodeShape ;
+    rdfs:label "Season Shape"@en ;
+    sh:targetClass urpx:Season ;
+    sh:property [
+        sh:path urpx:endDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:endDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:month ;
+        sh:datatype xsd:gMonth ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:seasonName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:startDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:startDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:yearlyRecurrence ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:ServiceClassShape
+    a sh:NodeShape ;
+    rdfs:label "ServiceClass Shape"@en ;
+    sh:targetClass urpx:ServiceClass ;
+    sh:property [
+        sh:path urpx:hasRateGroup ;
+        sh:class urpx:RateGroup ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:serviceClassCleaned ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:serviceClassName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:serviceClassRaw ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:ServicePointProfileShape
+    a sh:NodeShape ;
+    rdfs:label "ServicePointProfile Shape"@en ;
+    sh:targetClass urpx:ServicePointProfile ;
+    sh:property [
+        sh:path urpx:averageMonthlyUsage ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:billedDemand ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:buildingSquareFootage ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:connectionKind ;
+        sh:node urpx-shacl:ConnectionKindValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:endUse ;
+        sh:node urpx-shacl:EndUseValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasDistributedEnergyResource ;
+        sh:class urpx:DistributedEnergyResource ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasHVAC ;
+        sh:node urpx-shacl:HVACKindValueShape ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasMeteringConfiguration ;
+        sh:node urpx-shacl:MeteringConfigurationValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:loadProfile ;
+        sh:node urpx-shacl:LoadProfileValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:nominalVoltage ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:numberOfMeters ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:phaseCodeKind ;
+        sh:node urpx-shacl:PhaseCodeKindValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:premiseType ;
+        sh:node urpx-shacl:PremiseTypeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:ratedPowerCapacity ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:seasonalPattern ;
+        sh:node urpx-shacl:SeasonalPatternValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:usageVariability ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:voltageLevel ;
+        sh:node urpx-shacl:VoltageLevelValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:ServiceTierShape
+    a sh:NodeShape ;
+    rdfs:label "ServiceTier Shape"@en ;
+    sh:targetClass urpx:ServiceTier ;
+    sh:property [
+        sh:path urpx:lowerBound ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:lowerBoundOperator ;
+        sh:node urpx-shacl:OperatorValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesMetricInput ;
+        sh:class urpx:MetricInput ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:serviceTierNumber ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:upperBound ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:upperBoundOperator ;
+        sh:node urpx-shacl:OperatorValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:TariffAddendumDocumentShape
+    a sh:NodeShape ;
+    rdfs:label "TariffAddendumDocument Shape"@en ;
+    sh:targetClass urpx:TariffAddendumDocument ;
+    sh:property [
+        sh:path urpx:hasPrices ;
+        sh:class urpx:Prices ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:TariffBookDocumentShape
+    a sh:NodeShape ;
+    rdfs:label "TariffBookDocument Shape"@en ;
+    sh:targetClass urpx:TariffBookDocument ;
+    sh:property [
+        sh:path urpx:hasDataSourceReference ;
+        sh:class urpx:DataSourceReference ;
+        sh:minCount 0 ;
+    ] .
+
+urpx-shacl:TariffPublicationShape
+    a sh:NodeShape ;
+    rdfs:label "TariffPublication Shape"@en ;
+    sh:targetClass urpx:TariffPublication ;
+    sh:property [
+        sh:path urpx:datePublished ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:effectiveDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:effectiveDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expirationDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expirationDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:filingNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:issuingAuthority ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:pageReference ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:publicationType ;
+        sh:node urpx-shacl:PublicationTypeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:url ;
+        sh:datatype xsd:anyURI ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:version ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:TariffStatementDocumentShape
+    a sh:NodeShape ;
+    rdfs:label "TariffStatementDocument Shape"@en ;
+    sh:targetClass urpx:TariffStatementDocument ;
+    sh:property [
+        sh:path urpx:hasPrices ;
+        sh:class urpx:Prices ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:TariffSupplementDocumentShape
+    a sh:NodeShape ;
+    rdfs:label "TariffSupplementDocument Shape"@en ;
+    sh:targetClass urpx:TariffSupplementDocument ;
+    sh:property [
+        sh:path urpx:hasPrices ;
+        sh:class urpx:Prices ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:TOUPeriodShape
+    a sh:NodeShape ;
+    rdfs:label "TOUPeriod Shape"@en ;
+    sh:targetClass urpx:TOUPeriod ;
+    sh:property [
+        sh:path urpx:endDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:endDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasTimeBracket ;
+        sh:class urpx:TimeBracket ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:priority ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:startDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:startDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:touPeriodNumber ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:TOUScheduleShape
+    a sh:NodeShape ;
+    rdfs:label "TOUSchedule Shape"@en ;
+    sh:targetClass urpx:TOUSchedule ;
+    sh:property [
+        sh:path urpx:hasCalendar ;
+        sh:class urpx:HolidayCalendar ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasTOUTier ;
+        sh:class urpx:TOUTier ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesMetricInput ;
+        sh:class urpx:MetricInput ;
+        sh:minCount 1 ;
+    ] .
+
+urpx-shacl:TOUTierShape
+    a sh:NodeShape ;
+    rdfs:label "TOUTier Shape"@en ;
+    sh:targetClass urpx:TOUTier ;
+    sh:property [
+        sh:path urpx:hasTOUPeriod ;
+        sh:class urpx:TOUPeriod ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:tierSourceName ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:touTierNumber ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:touTierStandardName ;
+        sh:node urpx-shacl:TOUTierStandardNameValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:TimeBracketShape
+    a sh:NodeShape ;
+    rdfs:label "TimeBracket Shape"@en ;
+    sh:targetClass urpx:TimeBracket ;
+    sh:property [
+        sh:path urpx:appliesInSeason ;
+        sh:class urpx:Season ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:dayType ;
+        sh:node urpx-shacl:DayTypeValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:endTime ;
+        sh:datatype xsd:time ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:includeHolidays ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:includeNonHolidays ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:startTime ;
+        sh:datatype xsd:time ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:URPXDocumentShape
+    a sh:NodeShape ;
+    rdfs:label "URPXDocument Shape"@en ;
+    sh:targetClass urpx:URPXDocument ;
+    sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:effectiveDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:effectiveDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expectedEndDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expirationDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expirationDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasRatePlan ;
+        sh:class urpx:RatePlan ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasRatePlanModifier ;
+        sh:class urpx:RatePlanModifier ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasTariffPublication ;
+        sh:class urpx:TariffPublication ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:priceCurrency ;
+        sh:datatype xsd:string ;
+        sh:maxLength 3 ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:timeZone ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:url ;
+        sh:datatype xsd:anyURI ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:version ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:UtilityOperatorShape
+    a sh:NodeShape ;
+    rdfs:label "UtilityOperator Shape"@en ;
+    sh:targetClass urpx:UtilityOperator ;
+    sh:property [
+        sh:path urpx:ownershipType ;
+        sh:node urpx-shacl:OwnershipTypeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+# ============================================================================
+# ENUMERATION VALUE SHAPES
+# ============================================================================
+
+urpx-shacl:AccumulationValueShape
+    a sh:NodeShape ;
+    rdfs:label "AccumulationValue Shape"@en ;
+    sh:targetClass urpx:AccumulationValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:delta urpx:bulk urpx:instantaneous urpx:summation ) .
+
+urpx-shacl:AggregationMethodValueShape
+    a sh:NodeShape ;
+    rdfs:label "AggregationMethodValue Shape"@en ;
+    sh:targetClass urpx:AggregationMethodValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:sum urpx:average urpx:maximum urpx:minimum urpx:median ) .
+
+urpx-shacl:AlternativesTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "AlternativesTypeValue Shape"@en ;
+    sh:targetClass urpx:AlternativesTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:billingCycleAlternatives urpx:customerProfileAlternatives urpx:geographicAlternatives urpx:serviceClassAlternatives urpx:temporalAlternatives ) .
+
+urpx-shacl:AnnualIncomeRangeValueShape
+    a sh:NodeShape ;
+    rdfs:label "AnnualIncomeRangeValue Shape"@en ;
+    sh:targetClass urpx:AnnualIncomeRangeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:highIncome urpx:lowIncome urpx:middleIncome urpx:moderateIncome urpx:veryLowIncome ) .
+
+urpx-shacl:AssistanceEligibilityLevelValueShape
+    a sh:NodeShape ;
+    rdfs:label "AssistanceEligibilityLevelValue Shape"@en ;
+    sh:targetClass urpx:AssistanceEligibilityLevelValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:notQualifiedAssistance urpx:provisionallyQualifiedAssistance urpx:qualifiedAssistance urpx:underReviewAssistance ) .
+
+urpx-shacl:BillPortionValueShape
+    a sh:NodeShape ;
+    rdfs:label "BillPortionValue Shape"@en ;
+    sh:targetClass urpx:BillPortionValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:bundledPortion urpx:deliveryPortion urpx:supplyPortion ) .
+
+urpx-shacl:ChangeReasonValueShape
+    a sh:NodeShape ;
+    rdfs:label "ChangeReasonValue Shape"@en ;
+    sh:targetClass urpx:ChangeReasonValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:changeReasonOther urpx:correction urpx:fuelAdjustment urpx:initial urpx:rateCase urpx:regulatoryOrder urpx:riderUpdate urpx:seasonalChange ) .
+
+urpx-shacl:ChargeCategoryValueShape
+    a sh:NodeShape ;
+    rdfs:label "ChargeCategoryValue Shape"@en ;
+    sh:targetClass urpx:ChargeCategoryValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:adjustment urpx:auxiliaryCharge urpx:discount urpx:environmental urpx:infrastructure urpx:regulatory urpx:serviceCharge urpx:taxes ) .
+
+urpx-shacl:ChargeTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "ChargeTypeValue Shape"@en ;
+    sh:targetClass urpx:ChargeTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:adjustmentPowerCost urpx:adjustmentRenewable urpx:adjustmentTariff urpx:ancillaryServices urpx:capacity urpx:capacityCharge urpx:capitalCredit urpx:complianceCharge urpx:congestionCharge urpx:conservationCharge urpx:contractMisc urpx:creditAdministrative urpx:creditEnergy urpx:creditGeneration urpx:creditInfrastructure urpx:creditMisc urpx:creditPriceProtection urpx:creditRenewable urpx:creditTariffRider urpx:deliveryCharge urpx:demandDirect urpx:demandIndirect urpx:demandSideManagement urpx:depositCredit urpx:depositInterest urpx:depositRequest urpx:distributedGeneration urpx:distributionCharge urpx:donation urpx:efficiencyFunding urpx:energyStorage urpx:environmentalFunding urpx:facilities urpx:generation urpx:handling urpx:heapDiscount urpx:initiationCharge urpx:minimumBill urpx:minimumCharge urpx:nonBypassableCharge urpx:powerFactor urpx:publicBenefits urpx:recoverySurcharge urpx:reliabilityCharge urpx:renewableFunding urpx:rentalFee urpx:serviceMetered urpx:serviceNonMetered urpx:strandedCosts urpx:systemBenefitCharge urpx:tariffRider urpx:taxAdjustment urpx:taxCredit urpx:taxMisc urpx:taxMunicipal urpx:taxSales urpx:taxState urpx:taxUtility urpx:transitionCharge urpx:transmission urpx:usageCharge urpx:volumetricCharge ) .
+
+urpx-shacl:CommodityValueShape
+    a sh:NodeShape ;
+    rdfs:label "CommodityValue Shape"@en ;
+    sh:targetClass urpx:CommodityValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:biomass urpx:cableTv urpx:chilledWater urpx:coal urpx:commodityOther urpx:compressedAir urpx:diesel urpx:districtCooling urpx:districtHeating urpx:electricity urpx:fuelOil urpx:gasoline urpx:geothermal urpx:hotWater urpx:hydroelectric urpx:internet urpx:irrigation urpx:naturalGas urpx:nonPotableWater urpx:nuclear urpx:potableWater urpx:propane urpx:recycling urpx:security urpx:sewage urpx:solar urpx:steam urpx:stormwater urpx:telecommunications urpx:wasteHeat urpx:wasteManagement urpx:water urpx:wind ) .
+
+urpx-shacl:ConnectionKindValueShape
+    a sh:NodeShape ;
+    rdfs:label "ConnectionKindValue Shape"@en ;
+    sh:targetClass urpx:ConnectionKindValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:directConnection urpx:overheadConnection urpx:padMountedConnection urpx:permanentConnection urpx:temporaryConnection urpx:undergroundConnection ) .
+
+urpx-shacl:ConnectorTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "ConnectorTypeValue Shape"@en ;
+    sh:targetClass urpx:ConnectorTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:level1 urpx:level2 urpx:dcFast urpx:teslaSupercharger urpx:chademo urpx:ccs ) .
+
+urpx-shacl:CustomerKindValueShape
+    a sh:NodeShape ;
+    rdfs:label "CustomerKindValue Shape"@en ;
+    sh:targetClass urpx:CustomerKindValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:residentialKind urpx:commercialKind urpx:industrialKind urpx:enterpriseKind urpx:serviceProviderKind urpx:internalUseKind urpx:nonResidentialKind ) .
+
+urpx-shacl:CustomerSubKindValueShape
+    a sh:NodeShape ;
+    rdfs:label "CustomerSubKindValue Shape"@en ;
+    sh:targetClass urpx:CustomerSubKindValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:residentialStandard urpx:residentialFarm urpx:residentialMultiUnit urpx:commercialStandard urpx:commercialStreetlight urpx:commercialPumping urpx:industrialStandard urpx:industrialLargeLoad urpx:energySupplier urpx:energyScheduler urpx:windMachine urpx:subsidiary urpx:regionalOperator urpx:religiousInstitution ) .
+
+urpx-shacl:DataSourceTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "DataSourceTypeValue Shape"@en ;
+    sh:targetClass urpx:DataSourceTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:apiSource urpx:csvSource urpx:databaseSource urpx:jsonSource urpx:manualSource urpx:pdfSource urpx:spreadsheetSource urpx:xmlSource ) .
+
+urpx-shacl:DayTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "DayTypeValue Shape"@en ;
+    sh:targetClass urpx:DayTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:allDays urpx:customDays urpx:weekdayDays urpx:weekendDays ) .
+
+urpx-shacl:DERTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "DERTypeValue Shape"@en ;
+    sh:targetClass urpx:DERTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:solarDER urpx:storageDER urpx:evChargingDER urpx:windDER urpx:generatorDER urpx:geothermalDER urpx:wasteDigestionDER urpx:hydroDER urpx:nuclearDER ) .
+
+urpx-shacl:DynamicPricingTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "DynamicPricingTypeValue Shape"@en ;
+    sh:targetClass urpx:DynamicPricingTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:criticalPeakPricing urpx:demandResponsePricing urpx:eventDrivenPricing urpx:indexBasedPricing urpx:realTimePricing urpx:timeVaryingPricing ) .
+
+urpx-shacl:EndUseValueShape
+    a sh:NodeShape ;
+    rdfs:label "EndUseValue Shape"@en ;
+    sh:targetClass urpx:EndUseValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:heatingEndUse urpx:nonheatingEndUse urpx:dataCenterEndUse urpx:spaceHeatingEndUse urpx:spaceCoolingEndUse urpx:waterHeatingEndUse urpx:cookingEndUse urpx:dryingEndUse urpx:lightingEndUse urpx:refrigerationEndUse urpx:agriculturalEndUse urpx:streetLightingEndUse urpx:municipalEndUse urpx:otherEndUse ) .
+
+urpx-shacl:EnrollmentStatusValueShape
+    a sh:NodeShape ;
+    rdfs:label "EnrollmentStatusValue Shape"@en ;
+    sh:targetClass urpx:EnrollmentStatusValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:activeStatus urpx:expiredStatus urpx:inactiveStatus urpx:pendingStatus urpx:suspendedStatus urpx:terminatedStatus ) .
+
+urpx-shacl:EntityTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "EntityTypeValue Shape"@en ;
+    sh:targetClass urpx:EntityTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:corporationEntity urpx:entityOther urpx:governmentEntity urpx:individualEntity urpx:llcEntity urpx:nonprofitEntity urpx:partnershipEntity urpx:trustEntity ) .
+
+urpx-shacl:FlowDirectionValueShape
+    a sh:NodeShape ;
+    rdfs:label "FlowDirectionValue Shape"@en ;
+    sh:targetClass urpx:FlowDirectionValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:forward urpx:reverse urpx:net urpx:bidirectional ) .
+
+urpx-shacl:GeographicScopeValueShape
+    a sh:NodeShape ;
+    rdfs:label "GeographicScopeValue Shape"@en ;
+    sh:targetClass urpx:GeographicScopeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:countyScope urpx:customScope urpx:municipalityScope urpx:serviceTerritoryScope urpx:statewideScope ) .
+
+urpx-shacl:GeographicZoneValueShape
+    a sh:NodeShape ;
+    rdfs:label "GeographicZoneValue Shape"@en ;
+    sh:targetClass urpx:GeographicZoneValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:coastalZone urpx:desertZone urpx:geographicZoneOther urpx:industrialZone urpx:mountainZone urpx:ruralZone urpx:suburbanZone urpx:urbanZone ) .
+
+urpx-shacl:HVACKindValueShape
+    a sh:NodeShape ;
+    rdfs:label "HVACKindValue Shape"@en ;
+    sh:targetClass urpx:HVACKindValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:airConditioner urpx:airSourceHeatPump urpx:groundSourceHeatPump urpx:spaceHeater urpx:districtHeatingConnection ) .
+
+urpx-shacl:IdentifierSchemeValueShape
+    a sh:NodeShape ;
+    rdfs:label "IdentifierSchemeValue Shape"@en ;
+    sh:targetClass urpx:IdentifierSchemeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:companyNumberScheme urpx:dunsScheme urpx:eiaScheme urpx:gleifScheme urpx:gridScheme urpx:isinScheme urpx:leiScheme urpx:localRegulatorScheme urpx:vatScheme ) .
+
+urpx-shacl:InterconnectionStatusValueShape
+    a sh:NodeShape ;
+    rdfs:label "InterconnectionStatusValue Shape"@en ;
+    sh:targetClass urpx:InterconnectionStatusValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:disconnectedStatus urpx:interconnectedStatus urpx:notApplicableInterconnection urpx:pendingInterconnection ) .
+
+urpx-shacl:IntervalAlignmentValueShape
+    a sh:NodeShape ;
+    rdfs:label "IntervalAlignmentValue Shape"@en ;
+    sh:targetClass urpx:IntervalAlignmentValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:calendarAligned urpx:billingPeriodAligned urpx:rollingAligned urpx:fixedAligned ) .
+
+urpx-shacl:IntervalSelectionValueShape
+    a sh:NodeShape ;
+    rdfs:label "IntervalSelectionValue Shape"@en ;
+    sh:targetClass urpx:IntervalSelectionValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:rollingWindowSelection urpx:consecutivePeriodsSelection urpx:fixedWindowSelection ) .
+
+urpx-shacl:IntervalTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "IntervalTypeValue Shape"@en ;
+    sh:targetClass urpx:IntervalTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:realTimeInterval urpx:fiveMinuteInterval urpx:fifteenMinuteInterval urpx:thirtyMinuteInterval urpx:hourlyInterval urpx:dailyInterval urpx:weeklyInterval urpx:monthlyInterval urpx:quarterlyInterval urpx:annualInterval urpx:customInterval ) .
+
+urpx-shacl:InverterTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "InverterTypeValue Shape"@en ;
+    sh:targetClass urpx:InverterTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:stringInverter urpx:microInverter urpx:powerOptimizer urpx:centralInverter urpx:hybridInverter ) .
+
+urpx-shacl:LedgerTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "LedgerTypeValue Shape"@en ;
+    sh:targetClass urpx:LedgerTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:bundledLedger urpx:calculatedLedger urpx:deliveryLedger urpx:distributionLedger urpx:measuredLedger urpx:profileMetricLedger urpx:supplyLedger urpx:transmissionLedger ) .
+
+urpx-shacl:LoadProfileValueShape
+    a sh:NodeShape ;
+    rdfs:label "LoadProfileValue Shape"@en ;
+    sh:targetClass urpx:LoadProfileValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:baseload urpx:peaking urpx:variable urpx:seasonal urpx:intermittent urpx:loadProfileOther ) .
+
+urpx-shacl:MeasurementTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "MeasurementTypeValue Shape"@en ;
+    sh:targetClass urpx:MeasurementTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:current urpx:demand urpx:energy urpx:frequency urpx:power urpx:powerFactor urpx:pressure urpx:temperature urpx:voltage urpx:volume urpx:volumetricFlow ) .
+
+urpx-shacl:MeteringConfigurationValueShape
+    a sh:NodeShape ;
+    rdfs:label "MeteringConfigurationValue Shape"@en ;
+    sh:targetClass urpx:MeteringConfigurationValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:interval urpx:demandConfiguration urpx:prepaid urpx:ami urpx:manual urpx:netMetering ) .
+
+urpx-shacl:MetricInputTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "MetricInputTypeValue Shape"@en ;
+    sh:targetClass urpx:MetricInputTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:measuredMetricInput urpx:calculatedMetricInput urpx:aggregatedMetricInput urpx:virtualMetricInput urpx:profileMetricInput ) .
+
+urpx-shacl:ModifierCategoryValueShape
+    a sh:NodeShape ;
+    rdfs:label "ModifierCategoryValue Shape"@en ;
+    sh:targetClass urpx:ModifierCategoryValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:billingCategory urpx:customerServiceCategory urpx:demandManagementCategory urpx:environmentalCategory urpx:modifierCategoryOther urpx:promotionalCategory urpx:regulatoryCategory ) .
+
+urpx-shacl:ModifierTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "ModifierTypeValue Shape"@en ;
+    sh:targetClass urpx:ModifierTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:addOn urpx:adjustment urpx:credit urpx:demandResponse urpx:evCharging urpx:greenEnergy urpx:modifierTypeOther urpx:optIn urpx:optOut urpx:rider ) .
+
+urpx-shacl:NameTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "NameTypeValue Shape"@en ;
+    sh:targetClass urpx:NameTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:abbreviationName urpx:acronymName urpx:brandName urpx:commonName urpx:dbaName urpx:formerName urpx:legalName urpx:tradeName ) .
+
+urpx-shacl:ObservanceRuleValueShape
+    a sh:NodeShape ;
+    rdfs:label "ObservanceRuleValue Shape"@en ;
+    sh:targetClass urpx:ObservanceRuleValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:actualDateObservance urpx:fridayIfWeekendObservance urpx:mondayIfWeekendObservance urpx:nearestWeekdayObservance ) .
+
+urpx-shacl:OperatorValueShape
+    a sh:NodeShape ;
+    rdfs:label "OperatorValue Shape"@en ;
+    sh:targetClass urpx:OperatorValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:betweenOperator urpx:containsOperator urpx:equalsOperator urpx:greaterThanOperator urpx:greaterThanOrEqualOperator urpx:inOperator urpx:lessThanOperator urpx:lessThanOrEqualOperator urpx:notEqualsOperator urpx:notInOperator ) .
+
+urpx-shacl:OrganizationTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "OrganizationTypeValue Shape"@en ;
+    sh:targetClass urpx:OrganizationTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:aggregatorOrganization urpx:cooperativeOrganization urpx:espOrganization urpx:ippOrganization urpx:isoRtoOrganization urpx:municipalOrganization urpx:parentOrganization urpx:regulatorOrganization urpx:utilityOrganization ) .
+
+urpx-shacl:OwnershipTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "OwnershipTypeValue Shape"@en ;
+    sh:targetClass urpx:OwnershipTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:cooperativeOwnership urpx:federalOwnership urpx:investorOwned urpx:municipalOwnership urpx:privateOwnership urpx:stateOwnership urpx:tribalOwnership ) .
+
+urpx-shacl:PanelOrientationValueShape
+    a sh:NodeShape ;
+    rdfs:label "PanelOrientationValue Shape"@en ;
+    sh:targetClass urpx:PanelOrientationValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:south urpx:southeast urpx:southwest urpx:east urpx:west urpx:north urpx:northeast urpx:northwest urpx:tracking urpx:multipleOrientations ) .
+
+urpx-shacl:PhaseCodeKindValueShape
+    a sh:NodeShape ;
+    rdfs:label "PhaseCodeKindValue Shape"@en ;
+    sh:targetClass urpx:PhaseCodeKindValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:A urpx:AB urpx:ABN urpx:ABC urpx:ABCN urpx:AC urpx:ACN urpx:AN urpx:AtoAv urpx:B urpx:BAv urpx:BC urpx:BCN urpx:BN urpx:C urpx:CAv urpx:CN urpx:N urpx:NG urpx:S1 urpx:S12 urpx:S12N urpx:S1N urpx:S2 urpx:S2N ) .
+
+urpx-shacl:PremiseTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "PremiseTypeValue Shape"@en ;
+    sh:targetClass urpx:PremiseTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:singleFamily urpx:multiFamily urpx:office urpx:retailStore urpx:manufacturing urpx:warehouse urpx:school urpx:hospital urpx:premiseTypeOther ) .
+
+urpx-shacl:PriceSourceValueShape
+    a sh:NodeShape ;
+    rdfs:label "PriceSourceValue Shape"@en ;
+    sh:targetClass urpx:PriceSourceValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:algorithmicSource urpx:capacityAuctionSource urpx:demandForecastSource urpx:gasIndexSource urpx:manualOverrideSource urpx:renewableForecastSource urpx:wholesaleMarketSource ) .
+
+urpx-shacl:ProgramTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "ProgramTypeValue Shape"@en ;
+    sh:targetClass urpx:ProgramTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:demandResponseProgram urpx:energyEfficiencyProgram urpx:greenEnergyProgram urpx:lowIncomeProgram urpx:timeOfUseProgram urpx:communityChoiceAggregation urpx:communitySolar ) .
+
+urpx-shacl:PublicationTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "PublicationTypeValue Shape"@en ;
+    sh:targetClass urpx:PublicationTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:amendment urpx:notice urpx:order urpx:ratePlanPublication urpx:ratePlanModifierPublication urpx:regulatoryFiling urpx:supplement urpx:tariffBook urpx:tariffBookLeaves urpx:tariffStatement ) .
+
+urpx-shacl:RegulatoryScopeValueShape
+    a sh:NodeShape ;
+    rdfs:label "RegulatoryScopeValue Shape"@en ;
+    sh:targetClass urpx:RegulatoryScopeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:distributionRegulation urpx:environmentalRegulation urpx:marketRegulation urpx:ratesRegulation urpx:safetyRegulation urpx:transmissionRegulation ) .
+
+urpx-shacl:SeasonalPatternValueShape
+    a sh:NodeShape ;
+    rdfs:label "SeasonalPatternValue Shape"@en ;
+    sh:targetClass urpx:SeasonalPatternValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:flatPattern urpx:summerPeakPattern urpx:variablePattern urpx:winterPeakPattern ) .
+
+urpx-shacl:ServiceRoleValueShape
+    a sh:NodeShape ;
+    rdfs:label "ServiceRoleValue Shape"@en ;
+    sh:targetClass urpx:ServiceRoleValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:aggregationRole urpx:bundledServiceRole urpx:demandResponseRole urpx:communitySolarServiceRole urpx:distributionServiceRole urpx:energyEfficiencyRole urpx:retailSupplyRole urpx:solarInstallationRole ) .
+
+urpx-shacl:SpecialNeedsStatusValueShape
+    a sh:NodeShape ;
+    rdfs:label "SpecialNeedsStatusValue Shape"@en ;
+    sh:targetClass urpx:SpecialNeedsStatusValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:disabilityAccommodation urpx:lifeSupport urpx:medicalEquipment urpx:noSpecialNeeds urpx:vulnerableCustomer ) .
+
+urpx-shacl:StatementTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "StatementTypeValue Shape"@en ;
+    sh:targetClass urpx:StatementTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:distributionStatement urpx:fuelAdjustmentStatement urpx:purchasedPowerStatement urpx:rateStatement urpx:statementTypeOther urpx:transmissionStatement ) .
+
+urpx-shacl:TaxExemptStatusValueShape
+    a sh:NodeShape ;
+    rdfs:label "TaxExemptStatusValue Shape"@en ;
+    sh:targetClass urpx:TaxExemptStatusValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:exempt urpx:nonExempt urpx:partialExempt urpx:pendingVerification ) .
+
+urpx-shacl:TOUTierStandardNameValueShape
+    a sh:NodeShape ;
+    rdfs:label "TOUTierStandardNameValue Shape"@en ;
+    sh:targetClass urpx:TOUTierStandardNameValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:criticalPeakTier urpx:midPeakTier urpx:offPeakTier urpx:peakTier urpx:shoulderTier urpx:superOffPeakTier urpx:superPeakTier ) .
+
+urpx-shacl:UnitOfMeasureValueShape
+    a sh:NodeShape ;
+    rdfs:label "UnitOfMeasureValue Shape"@en ;
+    sh:targetClass urpx:UnitOfMeasureValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:Gbps urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:bit urpx:btu urpx:byte urpx:ccf urpx:cord urpx:count urpx:cubicFoot urpx:cubicMeter urpx:day urpx:decatherm urpx:gallon urpx:hectare urpx:hour urpx:item urpx:kVA urpx:kVAh urpx:kVAr urpx:kVArh urpx:kW urpx:kWh urpx:kilogallon urpx:kilogram urpx:kilometer urpx:liter urpx:Mbps urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:month urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:VA urpx:VAh urpx:VAr urpx:VArh urpx:year ) .
+
+urpx-shacl:UpdateFrequencyValueShape
+    a sh:NodeShape ;
+    rdfs:label "UpdateFrequencyValue Shape"@en ;
+    sh:targetClass urpx:UpdateFrequencyValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:continuousUpdates urpx:dailyUpdates urpx:eventTriggeredUpdates urpx:every15Minutes urpx:every5Minutes urpx:hourlyUpdates urpx:monthlyUpdates urpx:onDemandUpdates urpx:weeklyUpdates ) .
+
+urpx-shacl:VoltageLevelValueShape
+    a sh:NodeShape ;
+    rdfs:label "VoltageLevelValue Shape"@en ;
+    sh:targetClass urpx:VoltageLevelValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:secondaryVoltage urpx:primaryVoltage urpx:subTransmissionVoltage urpx:transmissionVoltage urpx:distributionVoltage ) .
