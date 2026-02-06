@@ -554,7 +554,7 @@ urpx:DynamicPricingTypeValue a owl:Class ;
 urpx:EndUseValue a owl:Class ;
     rdfs:label "End Use Value"@en ;
     rdfs:comment "End use classification enumeration values for electric service" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:heatingEndUse urpx:nonheatingEndUse urpx:dataCenterEndUse urpx:spaceHeatingEndUse urpx:spaceCoolingEndUse urpx:waterHeatingEndUse urpx:cookingEndUse urpx:dryingEndUse urpx:lightingEndUse urpx:refrigerationEndUse urpx:agriculturalEndUse urpx:streetLightingEndUse urpx:municipalEndUse ) ] ;
+    owl:equivalentClass [ owl:oneOf ( urpx:heatingEndUse urpx:nonheatingEndUse urpx:dataCenterEndUse urpx:spaceHeatingEndUse urpx:spaceCoolingEndUse urpx:waterHeatingEndUse urpx:cookingEndUse urpx:dryingEndUse urpx:lightingEndUse urpx:refrigerationEndUse urpx:agriculturalEndUse urpx:streetLightingEndUse urpx:municipalEndUse urpx:otherEndUse ) ] ;
     skos:note "Enumeration class for electric service end use categorization covering heating, cooling, water heating, cooking, drying, lighting, refrigeration, and specific service types like agricultural or street lighting." .
 
 urpx:EnergyServiceProvider a owl:Class ;
@@ -639,7 +639,7 @@ urpx:InverterTypeValue a owl:Class ;
 urpx:LedgerTypeValue a owl:Class ;
     rdfs:label "Ledger Type Value"@en ;
     rdfs:comment "Ledger type enumeration values for billing segregation" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:bundledLedger urpx:calculatedLedger urpx:deliveryLedger urpx:distributionLedger urpx:profileMetricLedger urpx:supplyLedger urpx:transmissionLedger ) ] ;
+    owl:equivalentClass [ owl:oneOf ( urpx:bundledLedger urpx:calculatedLedger urpx:deliveryLedger urpx:distributionLedger urpx:measuredLedger urpx:profileMetricLedger urpx:supplyLedger urpx:transmissionLedger ) ] ;
     skos:note "Enumeration for ledger types enabling separation of supply, delivery, transmission, distribution, and bundled charges." .
 
 urpx:LoadProfileValue a owl:Class ;
@@ -657,7 +657,7 @@ urpx:MeasurementTypeValue a owl:Class ;
 urpx:MeteringConfigurationValue a owl:Class ;
     rdfs:label "Metering Configuration Value"@en ;
     rdfs:comment "Metering configuration type enumeration values" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:net urpx:interval urpx:demandConfiguration urpx:prepaid urpx:ami urpx:manual urpx:netMetering ) ] ;
+    owl:equivalentClass [ owl:oneOf ( urpx:interval urpx:demandConfiguration urpx:prepaid urpx:ami urpx:manual urpx:netMetering ) ] ;
     skos:note "Enumeration class for metering configuration types. standardized metering definitions for billing and rate application." .
 
 urpx:MetricInputTypeValue a owl:Class ;
@@ -741,7 +741,7 @@ urpx:ProgramTypeValue a owl:Class ;
 urpx:PublicationTypeValue a owl:Class ;
     rdfs:label "Publication Type Value"@en ;
     rdfs:comment "Regulatory document types enumeration values" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:amendment urpx:notice urpx:order urpx:regulatoryFiling urpx:supplement urpx:tariffBook urpx:tariffBookLeaves urpx:tariffStatement ) ] ;
+    owl:equivalentClass [ owl:oneOf ( urpx:amendment urpx:notice urpx:order urpx:ratePlanPublication urpx:ratePlanModifierPublication urpx:regulatoryFiling urpx:supplement urpx:tariffBook urpx:tariffBookLeaves urpx:tariffStatement ) ] ;
     skos:note "Enumeration class for tariff publication categorization. standardized document type definitions." .
 
 urpx:RegulatoryScopeValue a owl:Class ;
@@ -789,7 +789,7 @@ urpx:TOUTierStandardNameValue a owl:Class ;
 urpx:UnitOfMeasureValue a owl:Class ;
     rdfs:label "Unit of Measure Value"@en ;
     rdfs:comment "Industry-standard unit of measure enumeration values" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:btu urpx:ccf urpx:cord urpx:cubicFoot urpx:cubicMeter urpx:day urpx:gallon urpx:hectare urpx:hour urpx:kVA urpx:kVAh urpx:kW urpx:kWh urpx:kilogram urpx:kilometer urpx:liter urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:month urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:year ) ] ;
+    owl:equivalentClass [ owl:oneOf ( urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:bit urpx:btu urpx:byte urpx:ccf urpx:cord urpx:count urpx:cubicFoot urpx:cubicMeter urpx:day urpx:decatherm urpx:gallon urpx:Gbps urpx:hectare urpx:hour urpx:item urpx:kVA urpx:kVAr urpx:kVArh urpx:kVAh urpx:kW urpx:kWh urpx:kilogallon urpx:kilogram urpx:kilometer urpx:liter urpx:Mbps urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:month urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:VA urpx:VAh urpx:VAr urpx:VArh urpx:year ) ] ;
     skos:note "Enumeration class for units of measure covering energy, demand, volume, weight, area, and time units." .
 
 urpx:UpdateFrequencyValue a owl:Class ;
@@ -1429,14 +1429,14 @@ urpx:geographicZone a owl:ObjectProperty ;
 urpx:hasAlternative a owl:ObjectProperty ;
     rdfs:label "Has Alternative"@en ;
     rdfs:comment "Links alternatives container to specific price set options" ;
-    rdfs:domain urpx:ProfileAlternative ;
-    rdfs:range urpx:PriceSet ;
+    rdfs:domain urpx:PriceSet ;
+    rdfs:range urpx:ProfileAlternative ;
     skos:note "All linked PriceSets must have matching priceMatchingKey." .
 
 urpx:hasAlternativeDimension a owl:ObjectProperty ;
     rdfs:label "Has Alternative Dimension"@en ;
     rdfs:comment "Dimensions along which alternatives differ" ;
-    rdfs:domain urpx:ProfileAlternative ;
+    rdfs:domain urpx:AlternativeDimensions ;
     rdfs:range urpx:AlternativeDimension ;
     skos:note "Multiple dimensions create a matrix of alternatives." .
 
@@ -1638,7 +1638,6 @@ urpx:hasMetricInput a owl:ObjectProperty ;
     rdfs:range urpx:MetricInput ;
     skos:note "Supports measured MetricInputs (raw meter data) and calculated MetricInputs (derived metrics). Also used in Conditions to specify the metric being evaluated." .
 
-
 urpx:hasMetricSpecification a owl:ObjectProperty ;
     rdfs:label "Has Metric Specification"@en ;
     rdfs:comment "Defines measurement specifications for prices or pricing model components" ;
@@ -1664,11 +1663,10 @@ urpx:hasPlanElements a owl:ObjectProperty ;
     
 urpx:hasPossibleValues a owl:ObjectProperty ;
     rdfs:label "Has Possible Values"@en ;
-    rdfs:comment "Structured possible values with human-readable labels for GUI buttons" ;
+    rdfs:comment "List of possible values" ;
     rdfs:domain urpx:AlternativeDimension ;
     rdfs:range rdf:List ;
-    skos:note """Array of structured objects containing @id or @value, rdfs:label, and optional skos:notation.
-                 Enables human-readable labels for dimension values in filtering interfaces.""" .
+    skos:note """List of objects for possible values.""" .
 
 urpx:hasPrice a owl:ObjectProperty ;
     rdfs:label "Has Price"@en ;
@@ -1760,8 +1758,8 @@ urpx:hasRateGroup a owl:ObjectProperty ;
     rdfs:label "Has Rate Group"@en ;
     rdfs:comment "Links rate plan to specific rate group",
         "Links service class to specific rate groups" ;
-    rdfs:domain urpx:RatePlan,
-        urpx:ServiceClass ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:RatePlan  urpx:ServiceClass ) ] ;
     rdfs:range urpx:RateGroup ;
     skos:note "Enables service class to contain multiple rate groups (e.g., Rate I, Rate II).",
         "Rate plans can reference rate groups directly for precise classification" .
@@ -2433,9 +2431,9 @@ urpx:ratePlanIdentifier a owl:DatatypeProperty ;
 
 urpx:referencesMetricInput a owl:ObjectProperty ;
     rdfs:label "References Metric Input"@en ;
-    rdfs:comment "Links ledger or TOU schedule to metric inputs for measurement data" ;
+    rdfs:comment "Links to metric inputs for measurement and profile metric input definitions" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Ledger urpx:TOUSchedule urpx:ServiceTier urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:Condition) ] ;
+            owl:unionOf ( urpx:AlternativeDimension urpx:Ledger urpx:TOUSchedule urpx:ServiceTier urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:Condition) ] ;
     rdfs:range urpx:MetricInput ;
     skos:note "Many-to-many relationship between ledgers/TOU schedules/service tiers and MetricInputs. Ledgers reference MetricInputs rather than containing them. TOU schedules link to the metric input they apply to." .
 
@@ -3028,13 +3026,13 @@ urpx:adjustmentPowerCost rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Adjustment Power Cost"@en ;
     skos:definition "Adjustment for changes in power costs"@en ;
     urpx:chargeCategory urpx:adjustment ;
-    urpx:billPortion urpx:supply .
+    urpx:billPortion urpx:supplyPortion .
 
 urpx:adjustmentRenewable rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Adjustment Renewable"@en ;
     skos:definition "Adjustment for renewable energy costs"@en ;
     urpx:chargeCategory urpx:adjustment ;
-    urpx:billPortion urpx:supply .
+    urpx:billPortion urpx:supplyPortion .
 
 urpx:adjustmentTariff rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Adjustment Tariff"@en ;
@@ -3046,19 +3044,19 @@ urpx:ancillaryServices rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Ancillary Services"@en ;
     skos:definition "Grid ancillary services charge"@en ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
-    urpx:billPortion urpx:supply .
+    urpx:billPortion urpx:supplyPortion .
 
 urpx:capacity rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Capacity"@en ;
     skos:definition "General capacity-related charge"@en ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
-    urpx:billPortion urpx:supply .
+    urpx:billPortion urpx:supplyPortion .
 
 urpx:capacityCharge rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Capacity Charge"@en ;
     skos:definition "Charge for reserved capacity"@en ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
-    urpx:billPortion urpx:supply .
+    urpx:billPortion urpx:supplyPortion .
 
 urpx:capitalCredit rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Capital Credit"@en ;
@@ -3077,7 +3075,7 @@ urpx:congestionCharge rdf:type urpx:ChargeTypeValue ;
     skos:definition "Locational marginal pricing congestion component"@en ;
     skos:note "Applies in nodal pricing markets"@en ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
-    urpx:billPortion urpx:supply .
+    urpx:billPortion urpx:supplyPortion .
 
 urpx:conservationCharge rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Conservation Charge"@en ;
@@ -3101,19 +3099,19 @@ urpx:creditEnergy rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Credit Energy"@en ;
     skos:definition "Credit for energy charges"@en ;
     urpx:chargeCategory urpx:discount ;
-    urpx:billPortion urpx:supply .
+    urpx:billPortion urpx:supplyPortion .
 
 urpx:creditGeneration rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Credit Generation"@en ;
     skos:definition "Credit for customer generation"@en ;
     urpx:chargeCategory urpx:discount ;
-    urpx:billPortion urpx:supply .
+    urpx:billPortion urpx:supplyPortion .
 
 urpx:creditInfrastructure rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Credit Infrastructure"@en ;
     skos:definition "Credit against infrastructure charges"@en ;
     urpx:chargeCategory urpx:discount ;
-    urpx:billPortion urpx:delivery .
+    urpx:billPortion urpx:deliveryPortion .
 
 urpx:creditMisc rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Credit Misc"@en ;
@@ -3143,19 +3141,19 @@ urpx:deliveryCharge rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Delivery Charge"@en ;
     skos:definition "Combined charge for energy delivery"@en ;
     urpx:chargeCategory urpx:infrastructure ;
-    urpx:billPortion urpx:delivery .
+    urpx:billPortion urpx:deliveryPortion .
 
 urpx:demandDirect rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Demand Direct"@en ;
     skos:definition "Charge based on peak demand measurement"@en ;
     urpx:chargeCategory urpx:infrastructure ;
-    urpx:billPortion urpx:delivery .
+    urpx:billPortion urpx:deliveryPortion .
 
 urpx:demandIndirect rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Demand Indirect"@en ;
     skos:definition "Allocated or estimated demand charge"@en ;
     urpx:chargeCategory urpx:infrastructure ;
-    urpx:billPortion urpx:delivery .
+    urpx:billPortion urpx:deliveryPortion .
 
 urpx:demandSideManagement rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Demand Side Management"@en ;
@@ -3185,14 +3183,14 @@ urpx:distributedGeneration rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Distributed Generation"@en ;
     skos:definition "Charge related to distributed generation"@en ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
-    urpx:billPortion urpx:delivery .
+    urpx:billPortion urpx:deliveryPortion .
 
 urpx:distributionCharge rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Distribution Charge"@en ;
     skos:definition "Local distribution system charge"@en ;
     skos:prefLabel "Distribution"@en ;
     urpx:chargeCategory urpx:infrastructure ;
-    urpx:billPortion urpx:delivery .
+    urpx:billPortion urpx:deliveryPortion .
 
 urpx:donation rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Donation"@en ;
@@ -3222,7 +3220,7 @@ urpx:facilities rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Facilities"@en ;
     skos:definition "Charge for specific facilities or equipment"@en ;
     urpx:chargeCategory urpx:serviceCharge ;
-    urpx:billPortion urpx:delivery .
+    urpx:billPortion urpx:deliveryPortion .
 
 urpx:generation rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Generation"@en ;
@@ -3259,7 +3257,7 @@ urpx:minimumCharge rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Minimum Charge"@en ;
     skos:definition "Fixed monthly minimum charge for being a customer"@en ;
     urpx:chargeCategory urpx:serviceCharge ;
-    urpx:billPortion urpx:delivery .
+    urpx:billPortion urpx:deliveryPortion .
 
 urpx:nonBypassableCharge rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Non-Bypassable Charge"@en ;
@@ -3272,7 +3270,7 @@ urpx:powerFactor rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Power Factor"@en ;
     skos:definition "Power factor correction charge or penalty"@en ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
-    urpx:billPortion urpx:delivery .
+    urpx:billPortion urpx:deliveryPortion .
 
 urpx:publicBenefits rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Public Benefits"@en ;
@@ -3303,19 +3301,19 @@ urpx:rentalFee rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Rental Fee"@en ;
     skos:definition "Equipment rental charges"@en ;
     urpx:chargeCategory urpx:serviceCharge ;
-    urpx:billPortion urpx:delivery .
+    urpx:billPortion urpx:deliveryPortion .
 
 urpx:serviceMetered rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Service Metered"@en ;
     skos:definition "Service charge based on metered usage"@en ;
     urpx:chargeCategory urpx:serviceCharge ;
-    urpx:billPortion urpx:delivery .
+    urpx:billPortion urpx:deliveryPortion .
 
 urpx:serviceNonMetered rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Service Non Metered"@en ;
     skos:definition "Fixed service charge for unmetered services"@en ;
     urpx:chargeCategory urpx:serviceCharge ;
-    urpx:billPortion urpx:delivery .
+    urpx:billPortion urpx:deliveryPortion .
 
 urpx:strandedCosts rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Stranded Costs"@en ;
@@ -3388,7 +3386,7 @@ urpx:transmission rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Transmission"@en ;
     skos:definition "High-voltage transmission system charge"@en ;
     urpx:chargeCategory urpx:infrastructure ;
-    urpx:billPortion urpx:delivery .
+    urpx:billPortion urpx:deliveryPortion .
 
 urpx:usageCharge rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Usage Charge"@en ;
@@ -4404,6 +4402,11 @@ urpx:volumetricFlow rdf:type urpx:MeasurementTypeValue ;
 
 # --- Metering Configuration Property (MeteringConfigurationValue) ---
 
+urpx:interval rdf:type urpx:MeteringConfigurationValue ;
+    rdfs:label "Interval metering"@en ;
+    skos:definition "Interval metering configuration - interval meter reading" ;
+    skos:prefLabel "Interval" .
+
 urpx:ami rdf:type urpx:MeteringConfigurationValue ;
     rdfs:label "AMI Metering"@en ;
     skos:definition "Advanced Metering Infrastructure (AMI) configuration - smart meter with remote communication" ;
@@ -4422,13 +4425,36 @@ urpx:manual rdf:type urpx:MeteringConfigurationValue ;
 urpx:netMetering rdf:type urpx:MeteringConfigurationValue ;
     rdfs:label "Net Metering"@en ;
     skos:definition "Net metering configuration - bidirectional meter for DER net metering" ;
-
     skos:prefLabel "Net" .
+
 urpx:prepaid rdf:type urpx:MeteringConfigurationValue ;
     rdfs:label "Prepaid Metering"@en ;
     skos:definition "Prepaid metering configuration - prepayment billing system" ;
     skos:prefLabel "Prepaid" .
 
+
+# --- Metric Input Type Property (MetricInputTypeValue) ---
+
+urpx:measuredMetricInput a urpx:MetricInputTypeValue ;
+    rdfs:label "Measured Metric Input"@en ;
+    skos:definition "Metric input with measured metrics" .
+
+urpx:calculatedMetricInput a urpx:MetricInputTypeValue ;
+    rdfs:label "Calculated Metric Input" ;
+    skos:definition "Metric input with a calculated metric" .
+
+urpx:aggregatedMetricInput a urpx:MetricInputTypeValue ;
+    rdfs:label "Aggregated Metric Input"@en ;
+    skos:definition "Metric input with an aggregated metric" .
+
+urpx:virtualMetricInput a urpx:MetricInputTypeValue ;
+    rdfs:label "Virtual Metric Input"@en ;
+    skos:definition "Metric input for virtual net metering" .
+
+urpx:profileMetricInput a urpx:MetricInputTypeValue ;
+    rdfs:label "Profile Metric Input"@en ;
+    skos:definition "Metric input from customer/service point profile characteristics" ;
+    skos:note "Used for profile characteristics (not meter measurements). Examples: numberOfMeters, numberOfOccupants, buildingSquareFootage, billedDemand (utility estimate). NOT for values calculated from meter data like averageMonthlyUsage or loadFactor (use calculatedMetricInput). Profile characteristics can change over time. References profile properties via profileMetricProperty." .
 
 # --- Modifier Category Property (ModifierCategoryValue) ---
 
@@ -5292,8 +5318,6 @@ urpx:superPeakTier rdf:type urpx:TOUTierStandardNameValue ;
 
 # --- Unit of Measure Property (UnitOfMeasureValue) ---
 
-# --- Unit of Measure Property (UnitOfMeasureValue) ---
-
 urpx:acre rdf:type urpx:UnitOfMeasureValue ;
     rdfs:label "Acre"@en ;
     skos:definition "Acre - unit of area"@en ;
@@ -5403,6 +5427,12 @@ urpx:item rdf:type urpx:UnitOfMeasureValue ;
     skos:prefLabel "item"@en ;
     skos:altLabel "each"@en .
 
+urpx:kilogallon rdf:type urpx:UnitOfMeasureValue ;
+    rdfs:label "Kilogallon"@en ;
+    skos:definition "Kilogallon - unit of liquid volume"@en ;
+    skos:prefLabel "kilogallon"@en ;
+    skos:altLabel "kgal"@en .
+
 urpx:kilogram rdf:type urpx:UnitOfMeasureValue ;
     rdfs:label "Kilogram"@en ;
     skos:definition "Kilogram - unit of weight"@en ;
@@ -5426,6 +5456,18 @@ urpx:kVAh rdf:type urpx:UnitOfMeasureValue ;
     skos:definition "Kilovolt-ampere hour - unit of reactive energy"@en ;
     skos:prefLabel "kVAh"@en ;
     skos:altLabel "kvah"@en, "KVAh"@en .
+
+urpx:kVAr rdf:type urpx:UnitOfMeasureValue ;
+    rdfs:label "Kilovolt-Ampere Reactive"@en ;
+    skos:definition "Kilovolt-ampere reactive - unit of reactive energy"@en ;
+    skos:prefLabel "kVAr"@en ;
+    skos:altLabel "kvar"@en, "KVAr"@en .
+
+urpx:kVArh rdf:type urpx:UnitOfMeasureValue ;
+    rdfs:label "Kilovolt-Ampere Reactive Hour"@en ;
+    skos:definition "Kilovolt-ampere reactive hour - unit of reactive energy"@en ;
+    skos:prefLabel "kVArh"@en ;
+    skos:altLabel "kvarh"@en, "KVArh"@en .
 
 urpx:kW rdf:type urpx:UnitOfMeasureValue ;
     rdfs:label "Kilowatt"@en ;
@@ -5560,6 +5602,31 @@ urpx:unitOther rdf:type urpx:UnitOfMeasureValue ;
     rdfs:label "Other Unit"@en ;
     skos:definition "Other unit of measure not specifically categorized"@en ;
     skos:prefLabel "other"@en .
+
+
+urpx:VA rdf:type urpx:UnitOfMeasureValue ;
+    rdfs:label "Volt-Ampere"@en ;
+    skos:definition "Volt-ampere - unit of apparent power"@en ;
+    skos:prefLabel "VA"@en ;
+    skos:altLabel "va"@en, "VA"@en .
+
+urpx:VAh rdf:type urpx:UnitOfMeasureValue ;
+    rdfs:label "Volt-Ampere Hour"@en ;
+    skos:definition "Volt-ampere hour - unit of reactive energy"@en ;
+    skos:prefLabel "VAh"@en ;
+    skos:altLabel "vah"@en, "VAh"@en .
+
+urpx:VAr rdf:type urpx:UnitOfMeasureValue ;
+    rdfs:label "Volt-Ampere Reactive"@en ;
+    skos:definition "Volt-ampere reactive - unit of reactive energy"@en ;
+    skos:prefLabel "VAr"@en ;
+    skos:altLabel "var"@en, "VAr"@en .
+
+urpx:VArh rdf:type urpx:UnitOfMeasureValue ;
+    rdfs:label "Volt-Ampere Reactive Hour"@en ;
+    skos:definition "Volt-ampere reactive hour - unit of reactive energy"@en ;
+    skos:prefLabel "VArh"@en ;
+    skos:altLabel "varh"@en, "VArh"@en .
 
 urpx:W rdf:type urpx:UnitOfMeasureValue ;
     rdfs:label "Watt"@en ;
