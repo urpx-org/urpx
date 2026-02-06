@@ -1758,8 +1758,8 @@ urpx:hasRateGroup a owl:ObjectProperty ;
     rdfs:label "Has Rate Group"@en ;
     rdfs:comment "Links rate plan to specific rate group",
         "Links service class to specific rate groups" ;
-    rdfs:domain urpx:RatePlan,
-        urpx:ServiceClass ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:RatePlan  urpx:ServiceClass ) ] ;
     rdfs:range urpx:RateGroup ;
     skos:note "Enables service class to contain multiple rate groups (e.g., Rate I, Rate II).",
         "Rate plans can reference rate groups directly for precise classification" .
