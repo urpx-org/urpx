@@ -392,6 +392,12 @@ urpx-shacl:ConditionShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:hasMetricInput ;
         sh:class urpx:MetricInput ;
         sh:minCount 0 ;
@@ -427,48 +433,40 @@ urpx-shacl:CustomerProfileShape
         sh:path urpx:annualIncomeRange ;
         sh:node urpx-shacl:AnnualIncomeRangeValueShape ;
         sh:minCount 0 ;
-        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:assistanceEligibilityLevel ;
         sh:node urpx-shacl:AssistanceEligibilityLevelValueShape ;
         sh:minCount 0 ;
-        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:billingCycleCode ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
-        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:creditRating ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
-        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:demandThreshold ;
         sh:datatype xsd:decimal ;
         sh:minCount 0 ;
-        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:entityType ;
         sh:node urpx-shacl:EntityTypeValueShape ;
         sh:minCount 0 ;
-        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:geographicZone ;
         sh:node urpx-shacl:GeographicZoneValueShape ;
         sh:minCount 0 ;
-        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:hasCustomerKind ;
         sh:node urpx-shacl:CustomerKindValueShape ;
-        sh:minCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:hasCustomerSubKind ;
@@ -489,58 +487,49 @@ urpx-shacl:CustomerProfileShape
         sh:path urpx:householdCount ;
         sh:datatype xsd:integer ;
         sh:minCount 0 ;
-        sh:maxCount 1 ;
         sh:minInclusive 1 ;
     ] ;
     sh:property [
         sh:path urpx:householdSize ;
         sh:datatype xsd:integer ;
         sh:minCount 0 ;
-        sh:maxCount 1 ;
         sh:minInclusive 1 ;
     ] ;
     sh:property [
         sh:path urpx:isCCACustomer ;
         sh:datatype xsd:boolean ;
         sh:minCount 0 ;
-        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:isCommunitySolarCustomer ;
         sh:datatype xsd:boolean ;
         sh:minCount 0 ;
-        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:numberOfOccupants ;
         sh:datatype xsd:integer ;
         sh:minCount 0 ;
-        sh:maxCount 1 ;
         sh:minInclusive 1 ;
     ] ;
     sh:property [
         sh:path urpx:profileId ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
-        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:specialNeedsStatus ;
         sh:node urpx-shacl:SpecialNeedsStatusValueShape ;
         sh:minCount 0 ;
-        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:taxExemptStatus ;
         sh:node urpx-shacl:TaxExemptStatusValueShape ;
         sh:minCount 0 ;
-        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:usageThreshold ;
         sh:datatype xsd:decimal ;
         sh:minCount 0 ;
-        sh:maxCount 1 ;
     ] .
 
 urpx-shacl:DataSourceReferenceShape
@@ -726,6 +715,12 @@ urpx-shacl:EligibilityRuleShape
     sh:property [
         sh:path urpx:conditionValue ;
         sh:nodeKind sh:Literal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
@@ -3618,7 +3613,7 @@ urpx-shacl:UnitOfMeasureValueShape
     rdfs:label "UnitOfMeasureValue Shape"@en ;
     sh:targetClass urpx:UnitOfMeasureValue ;
     sh:nodeKind sh:IRI ;
-    sh:in ( urpx:Gbps urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:bit urpx:btu urpx:byte urpx:ccf urpx:cord urpx:count urpx:cubicFoot urpx:cubicMeter urpx:day urpx:decatherm urpx:gallon urpx:hectare urpx:hour urpx:item urpx:kVA urpx:kVAh urpx:kVAr urpx:kVArh urpx:kW urpx:kWh urpx:kilogallon urpx:kilogram urpx:kilometer urpx:liter urpx:Mbps urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:month urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:VA urpx:VAh urpx:VAr urpx:VArh urpx:year ) .
+    sh:in ( urpx:hertz urpx:Gbps urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:bit urpx:btu urpx:byte urpx:ccf urpx:cord urpx:count urpx:cubicFoot urpx:cubicMeter urpx:day urpx:decatherm urpx:gallon urpx:hectare urpx:hour urpx:item urpx:kVA urpx:kVAh urpx:kVAr urpx:kVArh urpx:kW urpx:kWh urpx:kilogallon urpx:kilogram urpx:kilometer urpx:liter urpx:Mbps urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:month urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:VA urpx:VAh urpx:VAr urpx:VArh urpx:year ) .
 
 urpx-shacl:UpdateFrequencyValueShape
     a sh:NodeShape ;

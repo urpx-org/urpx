@@ -789,7 +789,7 @@ urpx:TOUTierStandardNameValue a owl:Class ;
 urpx:UnitOfMeasureValue a owl:Class ;
     rdfs:label "Unit of Measure Value"@en ;
     rdfs:comment "Industry-standard unit of measure enumeration values" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:bit urpx:btu urpx:byte urpx:ccf urpx:cord urpx:count urpx:cubicFoot urpx:cubicMeter urpx:day urpx:decatherm urpx:gallon urpx:Gbps urpx:hectare urpx:hour urpx:item urpx:kVA urpx:kVAr urpx:kVArh urpx:kVAh urpx:kW urpx:kWh urpx:kilogallon urpx:kilogram urpx:kilometer urpx:liter urpx:Mbps urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:month urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:VA urpx:VAh urpx:VAr urpx:VArh urpx:year ) ] ;
+    owl:equivalentClass [ owl:oneOf ( urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:bit urpx:btu urpx:byte urpx:ccf urpx:cord urpx:count urpx:cubicFoot urpx:cubicMeter urpx:day urpx:decatherm urpx:gallon urpx:Gbps urpx:hectare urpx:hertz urpx:hour urpx:item urpx:kVA urpx:kVAr urpx:kVArh urpx:kVAh urpx:kW urpx:kWh urpx:kilogallon urpx:kilogram urpx:kilometer urpx:liter urpx:Mbps urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:month urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:VA urpx:VAh urpx:VAr urpx:VArh urpx:year ) ] ;
     skos:note "Enumeration class for units of measure covering energy, demand, volume, weight, area, and time units." .
 
 urpx:UpdateFrequencyValue a owl:Class ;
@@ -1177,6 +1177,13 @@ urpx:cycleStartDay a owl:DatatypeProperty ;
     rdfs:range xsd:integer ;
     skos:note "Integer 1-31 for billing period definitions." .
 
+urpx:dataSourceType a owl:ObjectProperty ;
+    rdfs:label "Data Source"@en ;
+    rdfs:comment "Type of source of the data" ;
+    rdfs:domain urpx:DataSourceReference;
+    rdfs:range xsd:string ;
+    skos:note "Identifies the source of the data, such as the database name or specific API endpoint. Useful for tracking data provenance." .
+
 urpx:datePublished a owl:DatatypeProperty ;
     rdfs:label "Date Published"@en ;
     rdfs:comment "Date of first broadcast/publication" ;
@@ -1230,7 +1237,7 @@ urpx:description a owl:DatatypeProperty ;
     rdfs:label "Description"@en ;
     rdfs:comment "Detailed description of the item" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TariffPublication urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger) ] ;
+            owl:unionOf ( urpx:EligibilityRule urpx:Condition urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TariffPublication urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger) ] ;
     rdfs:range xsd:string ;
     skos:note "Comprehensive explanation for documentation (max 1000 chars recommended)." .
 
@@ -5414,6 +5421,12 @@ urpx:hectare rdf:type urpx:UnitOfMeasureValue ;
     skos:definition "Hectare - unit of area"@en ;
     skos:prefLabel "hectare"@en ;
     skos:altLabel "ha"@en .
+
+urpx:hertz rdf:type urpx:UnitOfMeasureValue ;
+    rdfs:label "Hertz"@en ;
+    skos:definition "Hertz - unit of frequency"@en ;
+    skos:prefLabel "hertz"@en ;
+    skos:altLabel "Hz"@en .
 
 urpx:hour rdf:type urpx:UnitOfMeasureValue ;
     rdfs:label "Hour"@en ;
