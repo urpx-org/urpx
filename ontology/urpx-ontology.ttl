@@ -1181,7 +1181,7 @@ urpx:dataSourceType a owl:ObjectProperty ;
     rdfs:label "Data Source"@en ;
     rdfs:comment "Type of source of the data" ;
     rdfs:domain urpx:DataSourceReference;
-    rdfs:range xsd:string ;
+    rdfs:range urpx:DataSourceTypeValue ;
     skos:note "Identifies the source of the data, such as the database name or specific API endpoint. Useful for tracking data provenance." .
 
 urpx:datePublished a owl:DatatypeProperty ;
