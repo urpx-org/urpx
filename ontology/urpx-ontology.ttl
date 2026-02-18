@@ -761,6 +761,7 @@ urpx:ServiceRoleValue a owl:Class ;
     rdfs:comment "Service role enumeration values" ;
     owl:equivalentClass [ owl:oneOf ( urpx:distributionRole urpx:retailRole urpx:bundledRole ) ] ;
     skos:note "Enumeration class for utility service role indicating distribution, retail, or bundled service delivery." .
+
 urpx:SpecialNeedsStatusValue a owl:Class ;
     rdfs:label "Special Needs Status Value"@en ;
     rdfs:comment "Special needs classification enumeration values" ;
@@ -784,7 +785,6 @@ urpx:TOUTierStandardNameValue a owl:Class ;
     rdfs:comment "Industry standard TOU tier terminology enumeration values" ;
     owl:equivalentClass [ owl:oneOf ( urpx:criticalPeakTier urpx:midPeakTier urpx:offPeakTier urpx:peakTier urpx:shoulderTier urpx:superOffPeakTier urpx:superPeakTier ) ] ;
     skos:note "Enumeration class for standardized time-of-use tier naming across utilities." .
-
 
 urpx:UnitOfMeasureValue a owl:Class ;
     rdfs:label "Unit of Measure Value"@en ;
@@ -1275,7 +1275,7 @@ urpx:endDate a owl:DatatypeProperty ;
     rdfs:label "End Date"@en ;
     rdfs:comment "End date for validity period (date only, no time component). Omit for indefinite validity." ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season ) ] ;
+            owl:unionOf ( urpx:Price urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season ) ] ;
     rdfs:range xsd:date ;
     skos:note "When endDate is not present, the validity period is considered open-ended until superseded or explicitly terminated." .
 
@@ -1283,7 +1283,7 @@ urpx:endDateTime a owl:DatatypeProperty ;
     rdfs:label "End Date Time"@en ;
     rdfs:comment "End date and time for validity period (with time component). Omit for indefinite validity." ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season ) ] ;
+            owl:unionOf ( urpx:Price urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season ) ] ;
     rdfs:range xsd:dateTime ;
     skos:note "When endDateTime is not present, the validity period is considered open-ended until superseded or explicitly terminated." .
 
@@ -1360,7 +1360,7 @@ urpx:expectedEndDate a owl:DatatypeProperty ;
     rdfs:label "Expected End Date"@en ;
     rdfs:comment "Provisional end date subject to change" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:URPXDocument urpx:TariffPublication urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:LocationDataSet ) ] ;
+            owl:unionOf ( urpx:Price urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:URPXDocument urpx:TariffPublication urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:LocationDataSet ) ] ;
     rdfs:range xsd:date ;
     skos:note "Used when definitive end date is unknown but provisional date exists. Common for rates marked 'effective until further notice' or 'subject to review'. Does not create binding commitment - actual end may differ." .
 
@@ -1368,7 +1368,7 @@ urpx:expectedEndDateTime a owl:DatatypeProperty ;
     rdfs:label "Expected End Date Time"@en ;
     rdfs:comment "Provisional end date/time subject to change" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:URPXDocument urpx:TariffPublication urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:LocationDataSet ) ] ;
+            owl:unionOf ( urpx:Price urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:URPXDocument urpx:TariffPublication urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:LocationDataSet ) ] ;
     rdfs:range xsd:dateTime ;
     skos:note "Provisional end date/time with timezone precision. Supports utility 'until further notice' rate patterns. ISO 8601 format with timezone." .
 
@@ -2022,14 +2022,6 @@ urpx:isCommunitySolarCustomer a owl:DatatypeProperty ;
     rdfs:range xsd:boolean ;
     skos:note "Enables eligibility and billing calculations for community solar participants." .
 
-urpx:isCredit a owl:DatatypeProperty ;
-    rdfs:label "Is Credit"@en ;
-    rdfs:comment "Indicates if the charge is a credit to the customer account."@en ;
-    rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceSet urpx:PriceDefinition ) ] ;
-    rdfs:range xsd:boolean ;
-    skos:note "Used for accounting system integration. If true, the value should be treated as a credit (reducing balance) even if the amount is stored as a positive number. In URPX v0.1.1, negative unitPrices are still the primary mathematical indicator."@en .
-
 urpx:isOptional a owl:DatatypeProperty ;
     rdfs:label "Is Optional"@en ;
     rdfs:comment "Whether this modifier is optional for customers" ;
@@ -2299,13 +2291,6 @@ urpx:priceCurrency a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     skos:note "URPX Usage: Three-letter ISO 4217 code (e.g., USD, EUR, GBP). Dual-level currency architecture: Document level (RatePlan, RatePlanVersion, URPXDocument)  all prices inherit. Price/PriceSet level for international analysis - explicit currency for cross-currency comparison. Override pattern: Price-level currency takes precedence when both present." .
 
-urpx:priceId a owl:DatatypeProperty ;
-    rdfs:label "Price ID"@en ;
-    rdfs:comment "Unique identifier for price instances" ;
-    rdfs:domain urpx:Price ;
-    rdfs:range xsd:string ;
-    skos:note "Identifier for price definitions and instances. Pattern: '{LEDGER_TYPE}-{CHARGE_TYPE}-{SEQUENCE}' Example: 'SUPPLY-ENERGY-001'." .
-
 urpx:priceMatchingKey a owl:DatatypeProperty ;
     rdfs:label "Price Matching Key"@en ;
     rdfs:comment "Key for identifying equivalent prices across alternatives" ;
@@ -2443,6 +2428,14 @@ urpx:referencesMetricInput a owl:ObjectProperty ;
             owl:unionOf ( urpx:AlternativeDimension urpx:Ledger urpx:TOUSchedule urpx:ServiceTier urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:Condition) ] ;
     rdfs:range urpx:MetricInput ;
     skos:note "Many-to-many relationship between ledgers/TOU schedules/service tiers and MetricInputs. Ledgers reference MetricInputs rather than containing them. TOU schedules link to the metric input they apply to." .
+
+urpx:referencesPriceDefinition a owl:ObjectProperty ;
+    rdfs:label "References Price Definition"@en ;
+    rdfs:comment "IRI reference linking a Price instance to its PriceDefinition" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:Price urpx:PriceSet ) ] ;
+    rdfs:range urpx:PriceDefinition ;
+    skos:note "IRI-based reference from Price to PriceDefinition. Enables Price instances to reference the structural definition established at the Ledger level via hasPriceDefinition. Supports n:1 relationship between Price instances and their price definition." .
 
 urpx:referencesRatePlan a owl:ObjectProperty ;
     rdfs:label "References Rate Plan"@en ;
@@ -2586,7 +2579,7 @@ urpx:startDate a owl:DatatypeProperty ;
     rdfs:label "Start Date"@en ;
     rdfs:comment "The start date and time of the item (in ISO 8601 date format)" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season ) ] ;
+            owl:unionOf ( urpx:Price urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season ) ] ;
     rdfs:range xsd:date ;
     skos:note "Represents when prices and pricing structures begin applying to customers." .
 
@@ -2594,7 +2587,7 @@ urpx:startDateTime a owl:DatatypeProperty ;
     rdfs:label "Start Date"@en ;
     rdfs:comment "The start date and time of the item (in ISO 8601 date format)" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season ) ] ;
+            owl:unionOf ( urpx:Price urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season ) ] ;
     rdfs:range xsd:dateTime ;
     skos:note "Represents when prices and pricing structures begin applying to customers." .
 

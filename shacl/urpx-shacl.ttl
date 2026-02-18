@@ -1191,7 +1191,7 @@ urpx-shacl:PriceShape
             sh:path urpx:amount ;
             sh:datatype xsd:decimal ;
             sh:minCount 1 ;
-            sh:maxCOunt 1 ;
+            sh:maxCount 1 ;
         ]
         [
             sh:path urpx:unitPrice ;
@@ -1246,13 +1246,13 @@ urpx-shacl:PriceShape
     sh:property [
         sh:path urpx:chargeCategory ;
         sh:node urpx-shacl:ChargeCategoryValueShape ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:chargeType ;
         sh:node urpx-shacl:ChargeTypeValueShape ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
     ] ;
     sh:property [
         sh:path urpx:commodity ;
@@ -1336,12 +1336,6 @@ urpx-shacl:PriceShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:isCredit ;
-        sh:datatype xsd:boolean ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:multiplier ;
         sh:datatype xsd:decimal ;
         sh:minCount 0 ;
@@ -1361,12 +1355,6 @@ urpx-shacl:PriceShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:priceId ;
-        sh:datatype xsd:string ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:priceMatchingKey ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
@@ -1382,6 +1370,12 @@ urpx-shacl:PriceShape
         sh:path urpx:referencesMetricInput ;
         sh:class urpx:MetricInput ;
         sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesPriceDefinition ;
+        sh:class urpx:PriceDefinition ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:referencesServiceTier ;
@@ -1464,7 +1458,7 @@ urpx-shacl:PriceDefinitionShape
     sh:property [
         sh:path urpx:billPortion ;
         sh:node urpx-shacl:BillPortionValueShape ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -1487,30 +1481,6 @@ urpx-shacl:PriceDefinitionShape
     sh:property [
         sh:path urpx:description ;
         sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:endDate ;
-        sh:datatype xsd:date ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:endDateTime ;
-        sh:datatype xsd:dateTime ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:expectedEndDate ;
-        sh:datatype xsd:date ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:expectedEndDateTime ;
-        sh:datatype xsd:dateTime ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
@@ -1538,12 +1508,6 @@ urpx-shacl:PriceDefinitionShape
     sh:property [
         sh:path urpx:hasMetricSpecification ;
         sh:class urpx:MetricSpecification ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:isCredit ;
-        sh:datatype xsd:boolean ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
@@ -1592,18 +1556,6 @@ urpx-shacl:PriceDefinitionShape
     sh:property [
         sh:path urpx:serviceTierNumber ;
         sh:datatype xsd:integer ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:startDate ;
-        sh:datatype xsd:date ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:startDateTime ;
-        sh:datatype xsd:dateTime ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
@@ -1775,12 +1727,6 @@ urpx-shacl:PriceSetShape
         sh:minCount 0 ;
     ] ;
     sh:property [
-        sh:path urpx:isCredit ;
-        sh:datatype xsd:boolean ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:multiplier ;
         sh:datatype xsd:decimal ;
         sh:minCount 0 ;
@@ -1815,6 +1761,12 @@ urpx-shacl:PriceSetShape
         sh:path urpx:referencesMetricInput ;
         sh:class urpx:MetricInput ;
         sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesPriceDefinition ;
+        sh:class urpx:PriceDefinition ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:referencesServiceTier ;
