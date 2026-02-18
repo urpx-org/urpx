@@ -14,7 +14,6 @@
     "urpx:url": { "@type": "xsd:anyURI" },
     "urpx:month": { "@type": "xsd:gMonth" },
     "urpx:intervalDuration": { "@type": "xsd:duration" },
-    "urpx:isCredit": { "@type": "xsd:boolean" },
     "urpx:touTierNumber": { "@type": "xsd:integer" },
     "urpx:touPeriodNumber": { "@type": "xsd:integer" }
   },
@@ -40,10 +39,9 @@
     "urpx:priceCurrency": "USD",
     "urpx:commodity": { "@id": "urpx:electricity" },
     "urpx:serviceRole": { "@id": "urpx:bundledServiceRole" },
-    "urpx:url": "./PGE_E-ELEC_2026-01-01.pdf",
     "urpx:hasDataSourceReference": {
       "@type": "urpx:DataSourceReference",
-      "urpx:url": "https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_SCHEDS_E-ELEC.pdf",
+      "urpx:url": "file://./assets/PGE_E-ELEC_2026-01-01.pdf",
       "urpx:fileName": "ELEC_SCHEDS_E-ELEC.pdf",
       "urpx:mediaType": "application/pdf"
     },
@@ -154,6 +152,7 @@
           "urpx:hasTOUTier": [
             {
               "@type": "urpx:TOUTier",
+              "urpx:tierSourceName": "Peak",
               "urpx:touTierStandardName": { "@id": "urpx:peakTier" },
               "urpx:touTierNumber": 1,
               "urpx:hasTOUPeriod": [
@@ -191,6 +190,7 @@
             },
             {
               "@type": "urpx:TOUTier",
+              "urpx:tierSourceName": "Part-Peak",
               "urpx:touTierStandardName": { "@id": "urpx:midPeakTier" },
               "urpx:touTierNumber": 2,
               "urpx:hasTOUPeriod": [
@@ -242,6 +242,7 @@
             },
             {
               "@type": "urpx:TOUTier",
+              "urpx:tierSourceName": "Off-Peak",
               "urpx:touTierStandardName": { "@id": "urpx:offPeakTier" },
               "urpx:touTierNumber": 3,
               "urpx:hasTOUPeriod": [
@@ -419,6 +420,30 @@
                 "urpx:chargeType": { "@id": "urpx:generation" },
                 "urpx:chargeCategory": { "@id": "urpx:infrastructure" },
                 "urpx:billPortion": { "@id": "urpx:deliveryPortion" }
+              },
+              {
+                "@type": "urpx:PriceDefinition",
+                "@id": "urpx:pd-transmission",
+                "urpx:name": "Transmission",
+                "urpx:chargeType": { "@id": "urpx:transmission" },
+                "urpx:chargeCategory": { "@id": "urpx:adjustment" },
+                "urpx:billPortion": { "@id": "urpx:deliveryPortion" }
+              },
+              {
+                "@type": "urpx:PriceDefinition",
+                "@id": "urpx:pd-transmission-adj",
+                "urpx:name": "Transmission Rate Adjustments",
+                "urpx:chargeType": { "@id": "urpx:transmission" },
+                "urpx:chargeCategory": { "@id": "urpx:adjustment" },
+                "urpx:billPortion": { "@id": "urpx:deliveryPortion" }
+              },
+              {
+                "@type": "urpx:PriceDefinition",
+                "@id": "urpx:pd-reliability",
+                "urpx:name": "Reliability Services",
+                "urpx:chargeType": { "@id": "urpx:reliabilityCharge" },
+                "urpx:chargeCategory": { "@id": "urpx:adjustment" },
+                "urpx:billPortion": { "@id": "urpx:deliveryPortion" }
               }
             ]
           },
@@ -497,39 +522,6 @@
           },
           {
             "@type": "urpx:Ledger",
-            "@id": "urpx:ledger-transmission-adjustments",
-            "urpx:name": "Transmission Prices",
-            "urpx:ledgerType": { "@id": "urpx:deliveryLedger" },
-            "urpx:referencesMetricInput": { "@id": "urpx:mi-energy" },
-            "urpx:hasPriceDefinition": [
-              {
-                "@type": "urpx:PriceDefinition",
-                "@id": "urpx:pd-transmission",
-                "urpx:name": "Transmission",
-                "urpx:chargeType": { "@id": "urpx:transmission" },
-                "urpx:chargeCategory": { "@id": "urpx:adjustment" },
-                "urpx:billPortion": { "@id": "urpx:deliveryPortion" }
-              },
-              {
-                "@type": "urpx:PriceDefinition",
-                "@id": "urpx:pd-transmission-adj",
-                "urpx:name": "Transmission Rate Adjustments",
-                "urpx:chargeType": { "@id": "urpx:transmission" },
-                "urpx:chargeCategory": { "@id": "urpx:adjustment" },
-                "urpx:billPortion": { "@id": "urpx:deliveryPortion" }
-              },
-              {
-                "@type": "urpx:PriceDefinition",
-                "@id": "urpx:pd-reliability",
-                "urpx:name": "Reliability Services",
-                "urpx:chargeType": { "@id": "urpx:reliabilityCharge" },
-                "urpx:chargeCategory": { "@id": "urpx:adjustment" },
-                "urpx:billPortion": { "@id": "urpx:deliveryPortion" }
-              }
-            ]
-          },
-          {
-            "@type": "urpx:Ledger",
             "@id": "urpx:ledger-service",
             "urpx:name": "Service Price",
             "urpx:ledgerType": { "@id": "urpx:bundledLedger" },
@@ -540,7 +532,12 @@
               "urpx:name": "Base Services Charge",
               "urpx:chargeType": { "@id": "urpx:minimumBill" },
               "urpx:chargeCategory": { "@id": "urpx:serviceCharge" },
-              "urpx:billPortion": { "@id": "urpx:bundledPortion" }
+              "urpx:billPortion": { "@id": "urpx:bundledPortion" },
+              "urpx:baseQuantity": "1",
+              "urpx:hasCalculationMethod": {
+                "@type": "urpx:CalculationMethod",
+                "urpx:intervalDuration": "P1D"
+               }
             }
           },
           {
@@ -555,7 +552,15 @@
               "urpx:name": "California Climate Credit",
               "urpx:chargeType": { "@id": "urpx:creditEnergy" },
               "urpx:chargeCategory": { "@id": "urpx:environmental" },
-              "urpx:billPortion": { "@id": "urpx:bundledPortion" }
+              "urpx:billPortion": { "@id": "urpx:bundledPortion" },
+              "urpx:baseQuantity": "1",
+              "urpx:hasApplicabilityRule": {
+                "@type": "urpx:ApplicabilityRule",
+                "urpx:month": [
+                  "--04",
+                  "--10"
+                ]
+              }
             }
           }
         ]
@@ -566,39 +571,19 @@
       "urpx:hasPrice": [
         {
           "@type": "urpx:Price",
-          "urpx:priceId": "urpx:price-climate-credit",
+          "@id": "urpx:price-climate-credit",
+          "urpx:referencesPriceDefinition": { "@id": "urpx:pd-climate-credit" },
           "urpx:startDate": "2026-01-01",
           "urpx:name": "California Climate Credit",
-          "urpx:unitPrice": "-36.18",
-          "urpx:isCredit": true,
-          "urpx:chargeType": { "@id": "urpx:creditEnergy" },
-          "urpx:chargeCategory": { "@id": "urpx:environmental" },
-          "urpx:billPortion": { "@id": "urpx:bundledPortion" },
-          "urpx:baseQuantity": "1",
-          "urpx:referencesMetricInput": { "@id": "urpx:mi-household-count" },
-          "urpx:hasApplicabilityRule": {
-            "@type": "urpx:ApplicabilityRule",
-            "urpx:month": [
-              "--04",
-              "--10"
-            ]
-          }
+          "urpx:unitPrice": "-36.18"
         },
         {
           "@type": "urpx:Price",
-          "urpx:priceId": "urpx:price-base-charge",
+          "@id": "urpx:price-base-charge",
+          "urpx:referencesPriceDefinition": { "@id": "urpx:pd-base-charge" },
           "urpx:startDate": "2026-01-01",
           "urpx:name": "Base Services Charge",
-          "urpx:unitPrice": "0.49281",
-          "urpx:chargeType": { "@id": "urpx:minimumBill" },
-          "urpx:chargeCategory": { "@id": "urpx:serviceCharge" },
-          "urpx:billPortion": { "@id": "urpx:bundledPortion" },
-          "urpx:baseQuantity": "1",
-          "urpx:referencesMetricInput": { "@id": "urpx:mi-meter-count" },
-          "urpx:hasCalculationMethod": {
-            "@type": "urpx:CalculationMethod",
-            "urpx:intervalDuration": "P1D"
-          }
+          "urpx:unitPrice": "0.49281"          
         }
       ],
       "urpx:hasPriceSet": [
@@ -606,71 +591,55 @@
           "@type": "urpx:PriceSet",
           "@id": "urpx:ps-generation-charges",
           "urpx:startDate": "2026-01-01",
-          "urpx:referencesMetricInput": { "@id": "urpx:mi-energy" },
-          "urpx:billPortion": { "@id": "urpx:supplyPortion" },
           "urpx:hasPrice": [
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-gen-summer-peak",
+              "@id": "urpx:price-gen-summer-peak",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-gen-summer-peak" },
               "urpx:name": "Generation Summer Peak",
-              "urpx:unitPrice": "0.26299",
-              "urpx:chargeType": { "@id": "urpx:usageCharge" },
-              "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
-              "urpx:touPeriodNumber": 1
+              "urpx:unitPrice": "0.26299"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-gen-summer-part-peak",
+              "@id": "urpx:price-gen-summer-part-peak",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-gen-summer-part-peak" },
               "urpx:name": "Generation Summer Part-Peak",
-              "urpx:unitPrice": "0.16388",
-              "urpx:chargeType": { "@id": "urpx:usageCharge" },
-              "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
-              "urpx:touPeriodNumber": 3
+              "urpx:unitPrice": "0.16388"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-gen-summer-off-peak",
+              "@id": "urpx:price-gen-summer-off-peak",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-gen-summer-off-peak" },
               "urpx:name": "Generation Summer Off-Peak",
-              "urpx:unitPrice": "0.11878",
-              "urpx:chargeType": { "@id": "urpx:usageCharge" },
-              "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
-              "urpx:touPeriodNumber": 5
+              "urpx:unitPrice": "0.11878"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-gen-winter-peak",
+              "@id": "urpx:price-gen-winter-peak",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-gen-winter-peak" },
               "urpx:name": "Generation Winter Peak",
-              "urpx:unitPrice": "0.10086",
-              "urpx:chargeType": { "@id": "urpx:usageCharge" },
-              "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
-              "urpx:touPeriodNumber": 2
+              "urpx:unitPrice": "0.10086"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-gen-winter-part-peak",
+              "@id": "urpx:price-gen-winter-part-peak",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-gen-winter-part-peak" },
               "urpx:name": "Generation Winter Part-Peak",
-              "urpx:unitPrice": "0.08089",
-              "urpx:chargeType": { "@id": "urpx:usageCharge" },
-              "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
-              "urpx:touPeriodNumber": 4
+              "urpx:unitPrice": "0.08089"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-gen-winter-off-peak",
+              "@id": "urpx:price-gen-winter-off-peak",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-gen-winter-off-peak" },
               "urpx:name": "Generation Winter Off-Peak",
-              "urpx:unitPrice": "0.06754",
-              "urpx:chargeType": { "@id": "urpx:usageCharge" },
-              "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
-              "urpx:touPeriodNumber": 6
+              "urpx:unitPrice": "0.06754"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-pcia",
+              "@id": "urpx:price-pcia",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-pcia" },
               "urpx:name": "Bundled PCIA",
-              "urpx:unitPrice": "-0.01011",
-              "urpx:isCredit": true,
-              "urpx:chargeType": { "@id": "urpx:adjustmentPowerCost" },
-              "urpx:chargeCategory": { "@id": "urpx:adjustment" }
+              "urpx:unitPrice": "-0.01011"
             }
           ]
         },
@@ -678,94 +647,76 @@
           "@type": "urpx:PriceSet",
           "@id": "urpx:ps-distribution-charges",
           "urpx:startDate": "2026-01-01",
-          "urpx:referencesMetricInput": { "@id": "urpx:mi-energy" },
-          "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
           "urpx:hasPrice": [
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-dist-summer-peak",
+              "@id": "urpx:price-dist-summer-peak",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-dist-summer-peak" } ,
               "urpx:name": "Distribution Summer Peak",
-              "urpx:unitPrice": "0.23076",
-              "urpx:chargeType": { "@id": "urpx:usageCharge" },
-              "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
-              "urpx:touPeriodNumber": 1
+              "urpx:unitPrice": "0.23076"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-dist-summer-part-peak",
+              "@id": "urpx:price-dist-summer-part-peak",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-dist-summer-part-peak" },
               "urpx:name": "Distribution Summer Part-Peak",
-              "urpx:unitPrice": "0.16799",
-              "urpx:chargeType": { "@id": "urpx:usageCharge" },
-              "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
-              "urpx:touPeriodNumber": 3
+              "urpx:unitPrice": "0.16799"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-dist-summer-off-peak",
+              "@id": "urpx:price-dist-summer-off-peak",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-dist-summer-off-peak" },
               "urpx:name": "Distribution Summer Off-Peak",
-              "urpx:unitPrice": "0.15641",
-              "urpx:chargeType": { "@id": "urpx:usageCharge" },
-              "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
-              "urpx:touPeriodNumber": 5
+              "urpx:unitPrice": "0.15641"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-dist-winter-peak",
+              "@id": "urpx:price-dist-winter-peak",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-dist-winter-peak" },
               "urpx:name": "Distribution Winter Peak",
-              "urpx:unitPrice": "0.16137",
-              "urpx:chargeType": { "@id": "urpx:usageCharge" },
-              "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
-              "urpx:touPeriodNumber": 2
+              "urpx:unitPrice": "0.16137"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-dist-winter-part-peak",
+              "@id": "urpx:price-dist-winter-part-peak",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-dist-winter-part-peak" },
               "urpx:name": "Distribution Winter Part-Peak",
-              "urpx:unitPrice": "0.15925",
-              "urpx:chargeType": { "@id": "urpx:usageCharge" },
-              "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
-              "urpx:touPeriodNumber": 4
+              "urpx:unitPrice": "0.15925"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-dist-winter-off-peak",
+              "@id": "urpx:price-dist-winter-off-peak",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-dist-winter-off-peak" },
               "urpx:name": "Distribution Winter Off-Peak",
-              "urpx:unitPrice": "0.15874",
-              "urpx:chargeType": { "@id": "urpx:usageCharge" },
-              "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
-              "urpx:touPeriodNumber": 6
+              "urpx:unitPrice": "0.15874"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-new-sys-gen",
+              "@id": "urpx:price-new-sys-gen",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-new-sys-gen" },
               "urpx:name": "New System Generation Charge",
-              "urpx:unitPrice": "0.00792",
-              "urpx:chargeType": { "@id": "urpx:generation" },
-              "urpx:chargeCategory": { "@id": "urpx:infrastructure" }
+              "urpx:unitPrice": "0.00792"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-transmission",
+              "@id": "urpx:price-transmission",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-transmission" },
               "urpx:name": "Transmission",
-              "urpx:unitPrice": "0.04638",
-              "urpx:chargeType": { "@id": "urpx:transmission" },
-              "urpx:chargeCategory": { "@id": "urpx:adjustment" }
+              "urpx:unitPrice": "0.04638"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-transmission-adj",
+              "@id": "urpx:price-transmission-adj",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-transmission-adj" },
               "urpx:name": "Transmission Rate Adjustments",
-              "urpx:unitPrice": "0.00315",
-              "urpx:chargeType": { "@id": "urpx:transmission" },
-              "urpx:chargeCategory": { "@id": "urpx:adjustment" }
+              "urpx:unitPrice": "0.00315"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-reliability",
+              "@id": "urpx:price-reliability",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-reliability" },
               "urpx:name": "Reliability Services",
-              "urpx:unitPrice": "0.00013",
-              "urpx:chargeType": { "@id": "urpx:reliabilityCharge" },
-              "urpx:chargeCategory": { "@id": "urpx:adjustment" }
+              "urpx:unitPrice": "0.00013"
             }
           ]
         },
@@ -773,74 +724,62 @@
           "@type": "urpx:PriceSet",
           "@id": "urpx:ps-adjustment-charges",
           "urpx:startDate": "2026-01-01",
-          "urpx:referencesMetricInput": { "@id": "urpx:mi-energy" },
-          "urpx:billPortion": { "@id": "urpx:bundledPortion" },
           "urpx:hasPrice": [
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-public-purpose",
+              "@id": "urpx:price-public-purpose",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-public-purpose" },
               "urpx:name": "Public Purpose Programs",
-              "urpx:unitPrice": "0.02829",
-              "urpx:chargeType": { "@id": "urpx:publicBenefits" },
-              "urpx:chargeCategory": { "@id": "urpx:regulatory" }
+              "urpx:unitPrice": "0.02829"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-nuclear",
+              "@id": "urpx:price-nuclear",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-nuclear" },
               "urpx:name": "Nuclear Decommissioning",
-              "urpx:unitPrice": "-0.00002",
-              "urpx:isCredit": true,
-              "urpx:chargeType": { "@id": "urpx:environmentalFunding" },
-              "urpx:chargeCategory": { "@id": "urpx:environmental" }
+              "urpx:unitPrice": "-0.00002"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-ctc",
+              "@id": "urpx:price-ctc",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-ctc" },
               "urpx:name": "Competition Transition Charges",
-              "urpx:unitPrice": "0.00027",
-              "urpx:chargeType": { "@id": "urpx:transitionCharge" },
-              "urpx:chargeCategory": { "@id": "urpx:adjustment" }
+              "urpx:unitPrice": "0.00027"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-energy-cost-recovery",
+              "@id": "urpx:price-energy-cost-recovery",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-energy-cost-recovery" },
               "urpx:name": "Energy Cost Recovery Amount",
-              "urpx:unitPrice": "0.00002",
-              "urpx:chargeType": { "@id": "urpx:recoverySurcharge" },
-              "urpx:chargeCategory": { "@id": "urpx:adjustment" }
+              "urpx:unitPrice": "0.00002"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-wildfire-fund",
+              "@id": "urpx:price-wildfire-fund",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-wildfire-fund" },
               "urpx:name": "Wildfire Fund Charge",
-              "urpx:unitPrice": "0.00591",
-              "urpx:chargeType": { "@id": "urpx:environmentalFunding" },
-              "urpx:chargeCategory": { "@id": "urpx:environmental" }
+              "urpx:unitPrice": "0.00591"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-wildfire-hardening",
+              "@id": "urpx:price-wildfire-hardening",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-wildfire-hardening" },
               "urpx:name": "Wildfire Hardening Charge",
-              "urpx:unitPrice": "0.00339",
-              "urpx:chargeType": { "@id": "urpx:environmentalFunding" },
-              "urpx:chargeCategory": { "@id": "urpx:environmental" }
+              "urpx:unitPrice": "0.00339"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-recovery-bond",
+              "@id": "urpx:price-recovery-bond",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-recovery-bond" },
               "urpx:name": "Recovery Bond Charge",
-              "urpx:unitPrice": "0.00778",
-              "urpx:chargeType": { "@id": "urpx:recoverySurcharge" },
-              "urpx:chargeCategory": { "@id": "urpx:adjustment" }
+              "urpx:unitPrice": "0.00778"
             },
             {
               "@type": "urpx:Price",
-              "urpx:priceId": "urpx:price-recovery-bond-credit",
+              "@id": "urpx:price-recovery-bond-credit",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:pd-recovery-bond-credit" },
               "urpx:name": "Recovery Bond Credit",
-              "urpx:unitPrice": "-0.00778",
-              "urpx:isCredit": true,
-              "urpx:chargeType": { "@id": "urpx:creditMisc" },
-              "urpx:chargeCategory": { "@id": "urpx:adjustment" }
+              "urpx:unitPrice": "-0.00778"
             }
           ]
         }

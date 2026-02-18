@@ -761,6 +761,7 @@ urpx:ServiceRoleValue a owl:Class ;
     rdfs:comment "Service role enumeration values" ;
     owl:equivalentClass [ owl:oneOf ( urpx:distributionRole urpx:retailRole urpx:bundledRole ) ] ;
     skos:note "Enumeration class for utility service role indicating distribution, retail, or bundled service delivery." .
+
 urpx:SpecialNeedsStatusValue a owl:Class ;
     rdfs:label "Special Needs Status Value"@en ;
     rdfs:comment "Special needs classification enumeration values" ;
@@ -785,11 +786,10 @@ urpx:TOUTierStandardNameValue a owl:Class ;
     owl:equivalentClass [ owl:oneOf ( urpx:criticalPeakTier urpx:midPeakTier urpx:offPeakTier urpx:peakTier urpx:shoulderTier urpx:superOffPeakTier urpx:superPeakTier ) ] ;
     skos:note "Enumeration class for standardized time-of-use tier naming across utilities." .
 
-
 urpx:UnitOfMeasureValue a owl:Class ;
     rdfs:label "Unit of Measure Value"@en ;
     rdfs:comment "Industry-standard unit of measure enumeration values" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:bit urpx:btu urpx:byte urpx:ccf urpx:cord urpx:count urpx:cubicFoot urpx:cubicMeter urpx:day urpx:decatherm urpx:gallon urpx:Gbps urpx:hectare urpx:hour urpx:item urpx:kVA urpx:kVAr urpx:kVArh urpx:kVAh urpx:kW urpx:kWh urpx:kilogallon urpx:kilogram urpx:kilometer urpx:liter urpx:Mbps urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:month urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:VA urpx:VAh urpx:VAr urpx:VArh urpx:year ) ] ;
+    owl:equivalentClass [ owl:oneOf ( urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:bit urpx:btu urpx:byte urpx:ccf urpx:cord urpx:count urpx:cubicFoot urpx:cubicMeter urpx:day urpx:decatherm urpx:gallon urpx:Gbps urpx:hectare urpx:hertz urpx:hour urpx:item urpx:kVA urpx:kVAr urpx:kVArh urpx:kVAh urpx:kW urpx:kWh urpx:kilogallon urpx:kilogram urpx:kilometer urpx:liter urpx:Mbps urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:month urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:VA urpx:VAh urpx:VAr urpx:VArh urpx:year ) ] ;
     skos:note "Enumeration class for units of measure covering energy, demand, volume, weight, area, and time units." .
 
 urpx:UpdateFrequencyValue a owl:Class ;
@@ -1177,6 +1177,13 @@ urpx:cycleStartDay a owl:DatatypeProperty ;
     rdfs:range xsd:integer ;
     skos:note "Integer 1-31 for billing period definitions." .
 
+urpx:dataSourceType a owl:ObjectProperty ;
+    rdfs:label "Data Source"@en ;
+    rdfs:comment "Type of source of the data" ;
+    rdfs:domain urpx:DataSourceReference;
+    rdfs:range urpx:DataSourceTypeValue ;
+    skos:note "Identifies the source of the data, such as the database name or specific API endpoint. Useful for tracking data provenance." .
+
 urpx:datePublished a owl:DatatypeProperty ;
     rdfs:label "Date Published"@en ;
     rdfs:comment "Date of first broadcast/publication" ;
@@ -1230,7 +1237,7 @@ urpx:description a owl:DatatypeProperty ;
     rdfs:label "Description"@en ;
     rdfs:comment "Detailed description of the item" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TariffPublication urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger) ] ;
+            owl:unionOf ( urpx:EligibilityRule urpx:Condition urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TariffPublication urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger) ] ;
     rdfs:range xsd:string ;
     skos:note "Comprehensive explanation for documentation (max 1000 chars recommended)." .
 
@@ -1268,7 +1275,7 @@ urpx:endDate a owl:DatatypeProperty ;
     rdfs:label "End Date"@en ;
     rdfs:comment "End date for validity period (date only, no time component). Omit for indefinite validity." ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season ) ] ;
+            owl:unionOf ( urpx:Price urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season ) ] ;
     rdfs:range xsd:date ;
     skos:note "When endDate is not present, the validity period is considered open-ended until superseded or explicitly terminated." .
 
@@ -1276,7 +1283,7 @@ urpx:endDateTime a owl:DatatypeProperty ;
     rdfs:label "End Date Time"@en ;
     rdfs:comment "End date and time for validity period (with time component). Omit for indefinite validity." ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season ) ] ;
+            owl:unionOf ( urpx:Price urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season ) ] ;
     rdfs:range xsd:dateTime ;
     skos:note "When endDateTime is not present, the validity period is considered open-ended until superseded or explicitly terminated." .
 
@@ -1353,7 +1360,7 @@ urpx:expectedEndDate a owl:DatatypeProperty ;
     rdfs:label "Expected End Date"@en ;
     rdfs:comment "Provisional end date subject to change" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:URPXDocument urpx:TariffPublication urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:LocationDataSet ) ] ;
+            owl:unionOf ( urpx:Price urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:URPXDocument urpx:TariffPublication urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:LocationDataSet ) ] ;
     rdfs:range xsd:date ;
     skos:note "Used when definitive end date is unknown but provisional date exists. Common for rates marked 'effective until further notice' or 'subject to review'. Does not create binding commitment - actual end may differ." .
 
@@ -1361,7 +1368,7 @@ urpx:expectedEndDateTime a owl:DatatypeProperty ;
     rdfs:label "Expected End Date Time"@en ;
     rdfs:comment "Provisional end date/time subject to change" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:URPXDocument urpx:TariffPublication urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:LocationDataSet ) ] ;
+            owl:unionOf ( urpx:Price urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:URPXDocument urpx:TariffPublication urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:LocationDataSet ) ] ;
     rdfs:range xsd:dateTime ;
     skos:note "Provisional end date/time with timezone precision. Supports utility 'until further notice' rate patterns. ISO 8601 format with timezone." .
 
@@ -2015,14 +2022,6 @@ urpx:isCommunitySolarCustomer a owl:DatatypeProperty ;
     rdfs:range xsd:boolean ;
     skos:note "Enables eligibility and billing calculations for community solar participants." .
 
-urpx:isCredit a owl:DatatypeProperty ;
-    rdfs:label "Is Credit"@en ;
-    rdfs:comment "Indicates if the charge is a credit to the customer account."@en ;
-    rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceSet urpx:PriceDefinition ) ] ;
-    rdfs:range xsd:boolean ;
-    skos:note "Used for accounting system integration. If true, the value should be treated as a credit (reducing balance) even if the amount is stored as a positive number. In URPX v0.1.1, negative unitPrices are still the primary mathematical indicator."@en .
-
 urpx:isOptional a owl:DatatypeProperty ;
     rdfs:label "Is Optional"@en ;
     rdfs:comment "Whether this modifier is optional for customers" ;
@@ -2292,13 +2291,6 @@ urpx:priceCurrency a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     skos:note "URPX Usage: Three-letter ISO 4217 code (e.g., USD, EUR, GBP). Dual-level currency architecture: Document level (RatePlan, RatePlanVersion, URPXDocument)  all prices inherit. Price/PriceSet level for international analysis - explicit currency for cross-currency comparison. Override pattern: Price-level currency takes precedence when both present." .
 
-urpx:priceId a owl:DatatypeProperty ;
-    rdfs:label "Price ID"@en ;
-    rdfs:comment "Unique identifier for price instances" ;
-    rdfs:domain urpx:Price ;
-    rdfs:range xsd:string ;
-    skos:note "Identifier for price definitions and instances. Pattern: '{LEDGER_TYPE}-{CHARGE_TYPE}-{SEQUENCE}' Example: 'SUPPLY-ENERGY-001'." .
-
 urpx:priceMatchingKey a owl:DatatypeProperty ;
     rdfs:label "Price Matching Key"@en ;
     rdfs:comment "Key for identifying equivalent prices across alternatives" ;
@@ -2436,6 +2428,14 @@ urpx:referencesMetricInput a owl:ObjectProperty ;
             owl:unionOf ( urpx:AlternativeDimension urpx:Ledger urpx:TOUSchedule urpx:ServiceTier urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:Condition) ] ;
     rdfs:range urpx:MetricInput ;
     skos:note "Many-to-many relationship between ledgers/TOU schedules/service tiers and MetricInputs. Ledgers reference MetricInputs rather than containing them. TOU schedules link to the metric input they apply to." .
+
+urpx:referencesPriceDefinition a owl:ObjectProperty ;
+    rdfs:label "References Price Definition"@en ;
+    rdfs:comment "IRI reference linking a Price instance to its PriceDefinition" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:Price urpx:PriceSet ) ] ;
+    rdfs:range urpx:PriceDefinition ;
+    skos:note "IRI-based reference from Price to PriceDefinition. Enables Price instances to reference the structural definition established at the Ledger level via hasPriceDefinition. Supports n:1 relationship between Price instances and their price definition." .
 
 urpx:referencesRatePlan a owl:ObjectProperty ;
     rdfs:label "References Rate Plan"@en ;
@@ -2579,7 +2579,7 @@ urpx:startDate a owl:DatatypeProperty ;
     rdfs:label "Start Date"@en ;
     rdfs:comment "The start date and time of the item (in ISO 8601 date format)" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season ) ] ;
+            owl:unionOf ( urpx:Price urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season ) ] ;
     rdfs:range xsd:date ;
     skos:note "Represents when prices and pricing structures begin applying to customers." .
 
@@ -2587,7 +2587,7 @@ urpx:startDateTime a owl:DatatypeProperty ;
     rdfs:label "Start Date"@en ;
     rdfs:comment "The start date and time of the item (in ISO 8601 date format)" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season ) ] ;
+            owl:unionOf ( urpx:Price urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season ) ] ;
     rdfs:range xsd:dateTime ;
     skos:note "Represents when prices and pricing structures begin applying to customers." .
 
@@ -2877,23 +2877,23 @@ urpx:temporalAlternatives rdf:type urpx:AlternativesTypeValue ;
 
 urpx:highIncome rdf:type urpx:AnnualIncomeRangeValue ;
     rdfs:label "High Income"@en ;
-    skos:definition "High income range - above 200% of area median income" ;
+    skos:definition "High income range - typically above 200% of area median income" ;
     skos:prefLabel "High Income" .
 urpx:lowIncome rdf:type urpx:AnnualIncomeRangeValue ;
     rdfs:label "Low Income"@en ;
-    skos:definition "Low income range - 50-80% of area median income" ;
+    skos:definition "Low income range - typically 50-80% of area median income" ;
     skos:prefLabel "Low Income" .
 urpx:middleIncome rdf:type urpx:AnnualIncomeRangeValue ;
     rdfs:label "Middle Income"@en ;
-    skos:definition "Middle income range - 120-200% of area median income" ;
+    skos:definition "Middle income range - typically 120-200% of area median income" ;
     skos:prefLabel "Middle Income" .
 urpx:moderateIncome rdf:type urpx:AnnualIncomeRangeValue ;
     rdfs:label "Moderate Income"@en ;
-    skos:definition "Moderate income range - 80-120% of area median income" ;
+    skos:definition "Moderate income range - typically 80-120% of area median income" ;
     skos:prefLabel "Moderate Income" .
 urpx:veryLowIncome rdf:type urpx:AnnualIncomeRangeValue ;
     rdfs:label "Very Low Income"@en ;
-    skos:definition "Very low income range - below 50% of area median income" ;
+    skos:definition "Very low income range - typically below 50% of area median income" ;
     skos:prefLabel "Very Low Income" .
 
 # --- Assistance Eligibility Level Property (AssistanceEligibilityLevelValue) ---
@@ -5414,6 +5414,12 @@ urpx:hectare rdf:type urpx:UnitOfMeasureValue ;
     skos:definition "Hectare - unit of area"@en ;
     skos:prefLabel "hectare"@en ;
     skos:altLabel "ha"@en .
+
+urpx:hertz rdf:type urpx:UnitOfMeasureValue ;
+    rdfs:label "Hertz"@en ;
+    skos:definition "Hertz - unit of frequency"@en ;
+    skos:prefLabel "hertz"@en ;
+    skos:altLabel "Hz"@en .
 
 urpx:hour rdf:type urpx:UnitOfMeasureValue ;
     rdfs:label "Hour"@en ;
