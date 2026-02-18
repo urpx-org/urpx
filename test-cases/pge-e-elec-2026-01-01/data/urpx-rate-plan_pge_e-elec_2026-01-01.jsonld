@@ -41,7 +41,7 @@
     "urpx:serviceRole": { "@id": "urpx:bundledServiceRole" },
     "urpx:hasDataSourceReference": {
       "@type": "urpx:DataSourceReference",
-      "urpx:url": "./assets/PGE_E-ELEC_2026-01-01.pdf",
+      "urpx:url": "file://./assets/PGE_E-ELEC_2026-01-01.pdf",
       "urpx:fileName": "ELEC_SCHEDS_E-ELEC.pdf",
       "urpx:mediaType": "application/pdf"
     },
