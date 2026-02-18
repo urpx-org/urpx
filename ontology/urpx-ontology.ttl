@@ -2877,23 +2877,23 @@ urpx:temporalAlternatives rdf:type urpx:AlternativesTypeValue ;
 
 urpx:highIncome rdf:type urpx:AnnualIncomeRangeValue ;
     rdfs:label "High Income"@en ;
-    skos:definition "High income range - above 200% of area median income" ;
+    skos:definition "High income range - typically above 200% of area median income" ;
     skos:prefLabel "High Income" .
 urpx:lowIncome rdf:type urpx:AnnualIncomeRangeValue ;
     rdfs:label "Low Income"@en ;
-    skos:definition "Low income range - 50-80% of area median income" ;
+    skos:definition "Low income range - typically 50-80% of area median income" ;
     skos:prefLabel "Low Income" .
 urpx:middleIncome rdf:type urpx:AnnualIncomeRangeValue ;
     rdfs:label "Middle Income"@en ;
-    skos:definition "Middle income range - 120-200% of area median income" ;
+    skos:definition "Middle income range - typically 120-200% of area median income" ;
     skos:prefLabel "Middle Income" .
 urpx:moderateIncome rdf:type urpx:AnnualIncomeRangeValue ;
     rdfs:label "Moderate Income"@en ;
-    skos:definition "Moderate income range - 80-120% of area median income" ;
+    skos:definition "Moderate income range - typically 80-120% of area median income" ;
     skos:prefLabel "Moderate Income" .
 urpx:veryLowIncome rdf:type urpx:AnnualIncomeRangeValue ;
     rdfs:label "Very Low Income"@en ;
-    skos:definition "Very low income range - below 50% of area median income" ;
+    skos:definition "Very low income range - typically below 50% of area median income" ;
     skos:prefLabel "Very Low Income" .
 
 # --- Assistance Eligibility Level Property (AssistanceEligibilityLevelValue) ---
