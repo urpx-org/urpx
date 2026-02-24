@@ -870,16 +870,11 @@ urpx-shacl:LocationDataSetShape
         sh:minCount 0 ;
     ] ;
     sh:property [
-        sh:path urpx:timeZone ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:timezoneIdentifier ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+        sh:pattern "^[A-Za-z]+(/[A-Za-z0-9_+-]+)+$" ;
     ] .
 
 urpx-shacl:MetricInputShape
@@ -1378,7 +1373,7 @@ urpx-shacl:PriceShape
     sh:property [
         sh:path urpx:referencesPriceDefinition ;
         sh:class urpx:PriceDefinition ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -2116,16 +2111,11 @@ urpx-shacl:RatePlanShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:timeZone ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:timezoneIdentifier ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+        sh:pattern "^[A-Za-z]+(/[A-Za-z0-9_+-]+)+$" ;
     ] ;
     sh:property [
         sh:path urpx:url ;
@@ -2220,16 +2210,11 @@ urpx-shacl:RatePlanModifierShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:timeZone ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:timezoneIdentifier ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+        sh:pattern "^[A-Za-z]+(/[A-Za-z0-9_+-]+)+$" ;
     ] ;
     sh:property [
         sh:path urpx:url ;
@@ -3173,10 +3158,11 @@ urpx-shacl:URPXDocumentShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:timeZone ;
+        sh:path urpx:timezoneIdentifier ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+        sh:pattern "^[A-Za-z]+(/[A-Za-z0-9_+-]+)+$" ;
     ] ;
     sh:property [
         sh:path urpx:url ;
