@@ -250,7 +250,7 @@ Authorization: Bearer {token}
   "@type": "RatePlan",
   "ratePlanIdentifier": "NEW-RES-PLAN-001",
   "name": "New Residential Rate Plan",
-  "serviceRole": {"@id": "urpx:bundled"},
+  "serviceRole": {"@id": "urpx:bundledServiceRole"},
   "initialEffectiveDate": "2025-01-01"
 }
 ```
@@ -266,7 +266,7 @@ Location: /api/v1/rate-plans/NEW-RES-PLAN-001
   "@type": "RatePlan",
   "ratePlanIdentifier": "NEW-RES-PLAN-001",
   "name": "New Residential Rate Plan",
-  "serviceRole": {"@id": "urpx:bundled"},
+  "serviceRole": {"@id": "urpx:bundledServiceRole"},
   "initialEffectiveDate": "2025-01-01"
 }
 ```
@@ -328,7 +328,7 @@ Accept: application/ld+json
   "@type": "RatePlan",
   "ratePlanIdentifier": "RES-TOU-001",
   "name": "Residential Time-of-Use Rate Plan",
-  "serviceRole": {"@id": "urpx:bundled"},
+  "serviceRole": {"@id": "urpx:bundledServiceRole"},
   "initialEffectiveDate": "2025-01-01"
 }
 ```

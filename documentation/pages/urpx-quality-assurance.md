@@ -67,20 +67,14 @@ jena.infer --rdfs ontology/urpx-ontology.ttl
 
 ### SHACL Validation Files
 
-- `shacl/urpx-core-shacl.ttl` - Core constraints
-- `shacl/urpx-charge-classification-shacl.ttl` - Price classification validation
-- `shacl/urpx-geography-shacl.ttl` - Geographic constraints
-- `shacl/urpx-organization-shacl.ttl` - Organization validation
+- [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl) - Unified SHACL validation shapes (~3,635 lines, draft). Contains comprehensive shapes for all major URPX classes.
 
 ### Running SHACL Validation
 
 ```bash
 # Validate rate plan document
-jena.shacl --shapes shacl/urpx-core-shacl.ttl \
+jena.shacl --shapes shacl/urpx-shacl.ttl \
           --data my-rate-plan.ttl
-
-# Validate with all constraint files
-jena.shacl --shapes shacl/ --data my-rate-plan.ttl
 ```
 
 ### Critical SHACL Constraints
@@ -88,12 +82,11 @@ jena.shacl --shapes shacl/ --data my-rate-plan.ttl
 **RatePlan Requirements:**
 - Must have at least one RatePlanVersion
 - Must have ratePlanIdentifier
-- Must specify serviceRole (distribution, retail, or bundled)
+- Must specify serviceRole (from ServiceRoleValue enumeration)
 
 **Price Requirements:**
-- Must have exactly one chargeCategory
-- Must have at least one chargeType
-- Must have hasMetricSpecification with billPortion
+- chargeCategory is optional (0..1)
+- chargeType is optional (0..*)
 - Must have one pricing field (amount, unitPrice, or basePrice)
 
 **Temporal Requirements:**
@@ -110,7 +103,7 @@ jena.shacl --shapes shacl/ --data my-rate-plan.ttl
 **Every RatePlan must have:**
 - ratePlanIdentifier (alphanumeric + hyphen only)
 - name (human-readable)
-- serviceRole (delivery, supply, or bundled)
+- serviceRole (from ServiceRoleValue enumeration)
 - hasRatePlanVersion (at least one)
 
 **Every RatePlanVersion must have:**
@@ -121,11 +114,14 @@ jena.shacl --shapes shacl/ --data my-rate-plan.ttl
 - hasPrices (Prices container)
 
 **Every Price must have:**
-- chargeType (at least one from ChargeTypeValue)
-- chargeCategory (exactly one from ChargeCategoryValue)
-- hasMetricSpecification with billPortion
 - One pricing field (amount, unitPrice, or basePrice)
 - currency (ISO 4217 code)
+
+**Every Price may have:**
+- chargeType (from ChargeTypeValue) — optional, recommended
+- chargeCategory (from ChargeCategoryValue) — optional, recommended
+- billPortion (from BillPortionValue) — optional
+- referencesPriceDefinition (link to PriceDefinition) — optional, recommended
 
 ### Enumeration Value Validation
 
@@ -136,18 +132,19 @@ jena.shacl --shapes shacl/ --data my-rate-plan.ttl
 - `urpx:taxState` (not "TaxState" or "state_tax")
 
 **BillPortionValue** - Must use exact values:
-- `urpx:delivery` (not "Delivery" or "deliveryCharge")
-- `urpx:supply` (not "Supply" or "supplyCharge")
-- `urpx:bundled` (not "Bundled" or "bundledCharge")
+- `urpx:bundledPortion` (not "bundled" or "Bundled")
+- `urpx:deliveryPortion` (not "delivery" or "Delivery")
+- `urpx:supplyPortion` (not "supply" or "Supply")
 
 **ChargeCategoryValue** - Must use exact instances:
-- `urpx:serviceCharge`
-- `urpx:auxiliaryCharge`
-- `urpx:infrastructure`
 - `urpx:adjustment`
-- `urpx:taxes`
-- `urpx:regulatory`
+- `urpx:auxiliaryCharge`
+- `urpx:discount`
 - `urpx:environmental`
+- `urpx:infrastructure`
+- `urpx:regulatory`
+- `urpx:serviceCharge`
+- `urpx:taxes`
 
 ### JSON-LD Pattern Requirements
 
@@ -156,7 +153,7 @@ jena.shacl --shapes shacl/ --data my-rate-plan.ttl
 {
   "chargeType": {"@id": "urpx:minimumCharge"},
   "chargeCategory": {"@id": "urpx:serviceCharge"},
-  "billPortion": {"@id": "urpx:bundled"}
+  "billPortion": {"@id": "urpx:bundledPortion"}
 }
 ```
 
@@ -165,7 +162,7 @@ jena.shacl --shapes shacl/ --data my-rate-plan.ttl
 {
   "chargeType": "minimumCharge",
   "chargeCategory": "serviceCharge",
-  "billPortion": "bundled"
+  "billPortion": "bundledPortion"
 }
 ```
 
@@ -177,7 +174,7 @@ ex:price1 a urpx:Price ;
     urpx:chargeType urpx:minimumCharge ;
     urpx:chargeCategory urpx:serviceCharge ;
     urpx:hasMetricSpecification [
-        urpx:billPortion urpx:bundled
+        urpx:billPortion urpx:bundledPortion
     ] .
 ```
 
@@ -232,7 +229,7 @@ ex:price1 a urpx:Price ;
 From `urpx-ontology.ttl`:
 - Charge types: `minimumCharge`, `usageCharge`, `demandDirect`, `taxState`
 - Charge categories: `serviceCharge`, `auxiliaryCharge`, `infrastructure`, `taxes`
-- Bill portions: `delivery`, `supply`, `bundled`
+- Bill portions: `bundledPortion`, `deliveryPortion`, `supplyPortion`
 - Customer kinds: `residentialKind`, `commercialKind`, `industrialKind`
 - Measurement types: `energy`, `demand`, `power`, `voltage`
 - Units: `kWh`, `kW`, `therm`, `ccf`

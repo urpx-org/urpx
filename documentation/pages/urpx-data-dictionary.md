@@ -1,7 +1,7 @@
 # URPX Data Dictionary
 
 **Version:** 0.1.1
-**Last Updated:** 2026-01-21
+**Last Updated:** 2026-02-18
 **Ontology Source:** [`urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
 
 [← Back to Index](../index.md) | [Overview](urpx-overview.md) | [Tutorial](urpx-tutorial.md) | [Examples](urpx-examples.md)
@@ -103,10 +103,10 @@ Each entry includes:
 ### Document and Rate Plan Classes
 
 #### urpx:URPXDocument
-**Description:** The root container that encapsulates all rate plan information, customer profiles, and temporal schedules for a utility's pricing structure.
+**Description:** The root container that can encapsulate all rate plan information, customer profiles, and temporal schedules for a utility's pricing structure. Contains metadata for the document.
 
 **Semantic Context:**  
-A URPXDocument represents a complete, self-contained specification of utility pricing at a point in time. It serves as the exchange unit between utilities, regulators, and third-party systems.
+An URPXDocument represents a complete, self-contained specification of utility pricing at a point in time. It serves as the exchange unit between utilities, regulators, and third-party systems.
 
 **Parent:** `owl:Thing`
 
@@ -119,7 +119,6 @@ A URPXDocument represents a complete, self-contained specification of utility pr
 | [`urpx:effectiveDate`](#urpx-effective-date) | 1..1 | xsd:dateTime | When document becomes active |
 | [`urpx:name`](#urpx-name) | 1..1 | xsd:string | Human-readable name |
 | [`urpx:description`](#urpx-description) | 0..1 | xsd:string | Detailed description |
-| [`urpx:timeZone`](#urpx-time-zone) | 0..1 | xsd:string | Default time zone |
 
 **Relationships:**
 - `urpx:hasRatePlan` → RatePlan (0..n)
@@ -144,11 +143,11 @@ A RatePlan represents the regulatory-approved pricing structure that persists ac
 | [`urpx:identifier`](#urpx-identifier) | 1..1 | xsd:string | Unique plan identifier |
 | [`urpx:name`](#urpx-name) | 1..1 | xsd:string | Official rate plan name |
 | [`urpx:initialEffectiveDate`](#urpx-initial-effective-date) | 0..1 | xsd:date | Date plan was first introduced |
-| [`urpx:regulatoryReference`](#urpx-regulatory-reference) | 0..1 | xsd:string | Docket or case number |
-| [`urpx:submissionDate`](#urpx-submission-date) | 0..1 | xsd:dateTime | Date submitted to regulator |
+| [`urpx:timezoneIdentifier`](#urpx-timezone-identifier) | 0..1 | xsd:string | IANA timezone identifier |
 
 **Relationships:**
 - `urpx:hasRatePlanVersion` → RatePlanVersion (1..n) - Temporal versions of this plan
+- `urpx:hasLocationDataSet` → LocationDataSet (0..n) - Versioned location data (timezones, holiday calendars)
 - `urpx:hasServiceClass` → ServiceClass (0..n) - Applicable service classes
 - `urpx:hasEligibilityRule` → EligibilityRule (0..n) - Customer qualification rules
 - `urpx:hasApplicabilityGroup` → ApplicabilityGroup (0..n) - Default applicability rules
@@ -175,12 +174,11 @@ Each RatePlanVersion represents the actual rates customers pay during a specific
 | [`urpx:versionNumber`](#urpx-version-number) | 1..1 | xsd:string | Semantic version identifier |
 | [`urpx:effectiveDateTime`](#urpx-effective-date-time) | 1..1 | xsd:dateTime | When version becomes active |
 | [`urpx:expirationDateTime`](#urpx-expiration-date-time) | 0..1 | xsd:dateTime | When version expires |
-| [`urpx:versionStatus`](#urpx-version-status) | 1..1 | VersionStatusValue | Lifecycle status |
 | [`urpx:changeReason`](#urpx-change-reason) | 1..1 | ChangeReasonValue | Reason for new version |
 | [`urpx:changeDescription`](#urpx-change-description) | 0..1 | xsd:string | Detailed change explanation |
 | [`urpx:approvalDate`](#urpx-approval-date) | 0..1 | xsd:dateTime | Regulatory approval date |
 
-**See Also:** [RatePlan](#urpx-rate-plan), [RatePlanModifierVersion](#urpx-rate-plan-modifier-version), [VersionStatusValue](#version-status-value), [ChangeReasonValue](#change-reason-value)
+**See Also:** [RatePlan](#urpx-rate-plan), [RatePlanModifierVersion](#urpx-rate-plan-modifier-version), [ChangeReasonValue](#change-reason-value)
 
 **Relationships:**
 - `urpx:supersedes` → RatePlanVersion (0..1) - References previous version in the temporal chain
@@ -397,11 +395,8 @@ Prices are the atomic units of utility pricing. Each price represents a specific
 | Property | Required | Type | Constraints | Description |
 |----------|----------|------|-------------|-------------|
 | `urpx:name` | ✓ | string | Max 255 chars | Price name |
-| `urpx:chargeType` | ✓ | string | [Enum](#charge-types) | Type classification |
-| `urpx:chargeCategory` | ✓ | string | [Enum](#charge-categories) | Category classification |
-| `urpx:billPortion` | ✓ | string | [Enum](#bill-portions) | Bill component |
-| `urpx:priceCurrency` | ✓ | string | ISO 4217 | Currency code |
-| `urpx:unitOfMeasure` | | [Enum](#units) | UnitOfMeasureValue | Measurement unit enumeration |
+| `urpx:referencesPriceDefinition` | no | ObjectProperty | PriceDefinition | Link to structural price definition |
+|`startDate` xone `startDateTime` | ✓ | xsd:date or xsd
 
 **Price Fields (at least one required):**
 | Property | Type | Description |
@@ -774,7 +769,7 @@ ProfileAlternatives bridges customer and service point profile characteristics a
 
 **Referenced By:**
 - `urpx:hasProfileAlternatives` from PlanElements
-- `urpx:forProfileAlternatives` from PriceSetAlternatives
+- `urpx:referencesProfileAlternatives` from PriceSetAlternatives
 
 ---
 
@@ -797,7 +792,7 @@ ProfileAlternative defines dimensions along which price set alternatives differ,
 - `urpx:hasAlternativeDimension` → AlternativeDimension (0..n) - Dimensions for this alternative
 
 **Referenced By:**
-- `urpx:forProfileAlternative` from PriceSetAlternative
+- `urpx:referencesProfileAlternative` from PriceSetAlternative
 
 ---
 
@@ -811,7 +806,7 @@ PriceSetAlternatives groups related PriceSetAlternative instances representing d
 
 **Relationships:**
 - `urpx:hasPriceSetAlternative` → PriceSetAlternative (2..n) - Individual alternatives (minimum 2)
-- `urpx:forProfileAlternatives` → ProfileAlternatives (1..1) - Links to dimension definition
+- `urpx:referencesProfileAlternatives` → ProfileAlternatives (1..1) - Links to dimension definition
 
 **Referenced By:**
 - `urpx:hasPriceSetAlternatives` from Prices
@@ -827,7 +822,7 @@ PriceSetAlternative is a subclass of PriceSet with a required reference to its a
 **Parent:** `urpx:PriceSet`
 
 **Relationships:**
-- `urpx:forProfileAlternative` → ProfileAlternative (1..1) - Links to defining alternative
+- `urpx:referencesProfileAlternative` → ProfileAlternative (1..1) - Links to defining alternative
 - Inherits `urpx:hasPrice` → Price (1..n) from PriceSet
 
 ---
@@ -1280,13 +1275,13 @@ Service territories define the spatial boundaries of utility operations and regu
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:residentialKind | Residential | All residential customers |
 | urpx:commercialKind | Commercial | All commercial customers |
-| urpx:industrialKind | Industrial | All industrial customers |
 | urpx:enterpriseKind | Enterprise | Large multi-site businesses or government entities |
-| urpx:serviceProviderKind | Service Provider | Utility or Energy Service Provider (ESP) |
+| urpx:industrialKind | Industrial | All industrial customers |
 | urpx:internalUseKind | Internal Use | Internal utility or internal government accounts |
 | urpx:nonResidentialKind | Non-Residential | All non-residential customers (commercial and industrial) |
+| urpx:residentialKind | Residential | All residential customers |
+| urpx:serviceProviderKind | Service Provider | Utility or Energy Service Provider (ESP) |
 
 ---
 
@@ -1296,20 +1291,20 @@ Service territories define the spatial boundaries of utility operations and regu
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:residentialStandard | Residential Standard | Standard single-family residential customers |
-| urpx:residentialFarm | Residential Farm | Residential properties with agricultural usage |
-| urpx:residentialMultiUnit | Residential Multi-Unit | Multi-unit residential buildings |
+| urpx:commercialPumping | Commercial Pumping | Water/sewer pumping stations |
 | urpx:commercialStandard | Commercial Standard | Standard small to mid-sized commercial operations |
 | urpx:commercialStreetlight | Commercial Streetlight | Street lighting and public lighting service |
-| urpx:commercialPumping | Commercial Pumping | Water/sewer pumping stations |
-| urpx:industrialStandard | Industrial Standard | Standard industrial facilities |
-| urpx:industrialLargeLoad | Industrial Large Load | Large industrial facilities requiring dedicated service |
-| urpx:energySupplier | Energy Supplier | Third-party energy suppliers |
 | urpx:energyScheduler | Energy Scheduler | Entities managing energy delivery schedules |
-| urpx:windMachine | Wind Machine | Agricultural wind machines/pumps |
-| urpx:subsidiary | Subsidiary | Subsidiary company accounts |
+| urpx:energySupplier | Energy Supplier | Third-party energy suppliers |
+| urpx:industrialLargeLoad | Industrial Large Load | Large industrial facilities requiring dedicated service |
+| urpx:industrialStandard | Industrial Standard | Standard industrial facilities |
 | urpx:regionalOperator | Regional Operator | Regional utility or grid operator accounts |
 | urpx:religiousInstitution | Religious Institution | Non-profit religious institutions |
+| urpx:residentialFarm | Residential Farm | Residential properties with agricultural usage |
+| urpx:residentialMultiUnit | Residential Multi-Unit | Multi-unit residential buildings |
+| urpx:residentialStandard | Residential Standard | Standard single-family residential customers |
+| urpx:subsidiary | Subsidiary | Subsidiary company accounts |
+| urpx:windMachine | Wind Machine | Agricultural wind machines/pumps |
 
 ---
 
@@ -1350,9 +1345,9 @@ Service territories define the spatial boundaries of utility operations and regu
 | IRI | Label | Definition |
 |-----|-------|------------|
 | urpx:highIncome | High Income | Above 200% of area median income (AMI) |
+| urpx:lowIncome | Low Income | 50-80% of AMI |
 | urpx:middleIncome | Middle Income | 120-200% of AMI |
 | urpx:moderateIncome | Moderate Income | 80-120% of AMI |
-| urpx:lowIncome | Low Income | 50-80% of AMI |
 | urpx:veryLowIncome | Very Low Income | Below 50% of AMI |
 
 ---
@@ -1363,11 +1358,39 @@ Service territories define the spatial boundaries of utility operations and regu
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:medicalEquipment | Medical Equipment | Customer uses life-sustaining medical equipment |
 | urpx:disabilityAccommodation | Disability Accommodation | Requires service accommodation for disability |
 | urpx:lifeSupport | Life Support | Requires essential life support services |
-| urpx:vulnerableCustomer | Vulnerable Customer | Customer requiring special attention (e.g., age, illness) |
+| urpx:medicalEquipment | Medical Equipment | Customer uses life-sustaining medical equipment |
 | urpx:noSpecialNeeds | No Special Needs | No special needs classification |
+| urpx:vulnerableCustomer | Vulnerable Customer | Customer requiring special attention (e.g., age, illness) |
+
+---
+
+#### urpx:AssistanceEligibilityLevelValue
+**Definition:** Qualification level for utility assistance programs.
+**Used By:** [urpx:assistanceEligibilityLevel](#urpx-assistance-eligibility-level)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:notQualifiedAssistance | Not Qualified | Does not meet program eligibility criteria |
+| urpx:provisionallyQualifiedAssistance | Provisionally Qualified | Conditionally approved pending verification |
+| urpx:qualifiedAssistance | Qualified | Fully qualified for assistance program |
+| urpx:underReviewAssistance | Under Review | Application under review |
+
+---
+
+#### urpx:EnrollmentStatusValue
+**Definition:** Enrollment lifecycle status for program participation.
+**Used By:** [urpx:enrollmentStatus](#urpx-enrollment-status)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:activeStatus | Active | Currently enrolled and participating |
+| urpx:expiredStatus | Expired | Enrollment period has ended |
+| urpx:inactiveStatus | Inactive | Enrollment is inactive |
+| urpx:pendingStatus | Pending | Enrollment pending processing |
+| urpx:suspendedStatus | Suspended | Enrollment temporarily suspended |
+| urpx:terminatedStatus | Terminated | Enrollment has been terminated |
 
 ---
 
@@ -1408,7 +1431,7 @@ Service territories define the spatial boundaries of utility operations and regu
 | urpx:depositInterest | Deposit Interest | Interest on security deposit |
 | urpx:depositRequest | Deposit Request | Security deposit requirement |
 | urpx:distributedGeneration | Distributed Generation | Charge related to distributed generation |
-| urpx:distribution | Distribution | Local distribution system charge |
+| urpx:distributionCharge | Distribution Charge | Local distribution system charge |
 | urpx:donation | Donation | Voluntary donation or contribution |
 | urpx:efficiencyFunding | Efficiency Funding | Energy efficiency program funding |
 | urpx:energyStorage | Energy Storage | Energy storage-related charge |
@@ -1469,9 +1492,9 @@ Service territories define the spatial boundaries of utility operations and regu
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:delivery | Delivery | Charges for delivering energy to the customer |
-| urpx:supply | Supply | Charges for energy commodity and generation |
-| urpx:bundled | Bundled | Combined delivery and supply charges not separately stated |
+| urpx:bundledPortion | Bundled | Combined delivery and supply charges not separately stated |
+| urpx:deliveryPortion | Delivery | Charges for delivering energy to the customer |
+| urpx:supplyPortion | Supply | Charges for energy commodity and generation |
 
 ---
 
@@ -1485,13 +1508,13 @@ Service territories define the spatial boundaries of utility operations and regu
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:superPeakTier | Super Peak | Highest price tier |
 | urpx:criticalPeakTier | Critical Peak | Critical event pricing tier |
-| urpx:peakTier | Peak | Standard peak period tier |
 | urpx:midPeakTier | Mid Peak | Moderate peak period tier |
-| urpx:shoulderTier | Shoulder | Transition period between peak and off-peak |
 | urpx:offPeakTier | Off Peak | Standard off-peak tier |
+| urpx:peakTier | Peak | Standard peak period tier |
+| urpx:shoulderTier | Shoulder | Transition period between peak and off-peak |
 | urpx:superOffPeakTier | Super Off Peak | Lowest price tier |
+| urpx:superPeakTier | Super Peak | Highest price tier |
 
 ---
 
@@ -1501,10 +1524,10 @@ Service territories define the spatial boundaries of utility operations and regu
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:weekdayDays | Weekday | Monday through Friday |
-| urpx:weekendDays | Weekend | Saturday and Sunday |
 | urpx:allDays | All Days | All days of the week |
 | urpx:customDays | Custom Days | Custom defined day set |
+| urpx:weekdayDays | Weekday | Monday through Friday |
+| urpx:weekendDays | Weekend | Saturday and Sunday |
 
 ---
 
@@ -1514,17 +1537,17 @@ Service territories define the spatial boundaries of utility operations and regu
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:realTimeInterval | Real Time Interval | Continuous updates |
-| urpx:fiveMinuteInterval | 5 Minute Interval | 5-minute intervals |
-| urpx:fifteenMinuteInterval | 15 Minute Interval | 15-minute intervals |
-| urpx:thirtyMinuteInterval | 30 Minute Interval | 30-minute intervals |
-| urpx:hourlyInterval | Hourly Interval | Hourly updates |
-| urpx:dailyInterval | Daily Interval | Daily intervals |
-| urpx:weeklyInterval | Weekly Interval | Weekly intervals |
-| urpx:monthlyInterval | Monthly Interval | Monthly intervals |
-| urpx:quarterlyInterval | Quarterly Interval | Quarterly intervals |
 | urpx:annualInterval | Annual Interval | Annual intervals |
 | urpx:customInterval | Custom Interval | Custom defined interval length |
+| urpx:dailyInterval | Daily Interval | Daily intervals |
+| urpx:fifteenMinuteInterval | 15 Minute Interval | 15-minute intervals |
+| urpx:fiveMinuteInterval | 5 Minute Interval | 5-minute intervals |
+| urpx:hourlyInterval | Hourly Interval | Hourly updates |
+| urpx:monthlyInterval | Monthly Interval | Monthly intervals |
+| urpx:quarterlyInterval | Quarterly Interval | Quarterly intervals |
+| urpx:realTimeInterval | Real Time Interval | Continuous updates |
+| urpx:thirtyMinuteInterval | 30 Minute Interval | 30-minute intervals |
+| urpx:weeklyInterval | Weekly Interval | Weekly intervals |
 
 ---
 
@@ -1534,66 +1557,27 @@ Service territories define the spatial boundaries of utility operations and regu
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:summerPeakPattern | Summer Peak | Usage highest during summer months |
-| urpx:winterPeakPattern | Winter Peak | Usage highest during winter months |
 | urpx:flatPattern | Flat | Consistent usage pattern year-round |
+| urpx:summerPeakPattern | Summer Peak | Usage highest during summer months |
 | urpx:variablePattern | Variable | Non-standard or fluctuating seasonal pattern |
+| urpx:winterPeakPattern | Winter Peak | Usage highest during winter months |
+
+---
+
+#### urpx:ObservanceRuleValue
+**Definition:** Rules for how holidays are observed when they fall on weekends.
+**Used By:** [urpx:observanceRule](#urpx-observance-rule)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:actualDateObservance | Actual Date | Holiday observed on its actual calendar date |
+| urpx:fridayIfWeekendObservance | Friday If Weekend | Observed on preceding Friday if holiday falls on weekend |
+| urpx:mondayIfWeekendObservance | Monday If Weekend | Observed on following Monday if holiday falls on weekend |
+| urpx:nearestWeekdayObservance | Nearest Weekday | Observed on nearest weekday to actual date |
 
 ---
 
 ### Status and Lifecycle
-
----
-
-#### urpx:RatePlanStatusValue
-**Definition:** Regulatory status of a conceptual rate plan (e.g., Draft, Approved, Superseded).
-**Used By:** [urpx:ratePlanStatus](#urpx-rate-plan-status)
-
-| IRI | Label | Definition |
-|-----|-------|------------|
-| urpx:draftStatus | Draft | Under development or internal review |
-| urpx:pendingStatus | Pending | Awaiting approval from regulator |
-| urpx:approvedStatus | Approved | Approved by regulator, possibly not yet effective |
-| urpx:effectiveStatus | Effective | Currently in effect and billing customers |
-| urpx:suspendedStatus | Suspended | Temporarily suspended from use |
-| urpx:withdrawnStatus | Withdrawn | Withdrawn from regulatory consideration |
-| urpx:supersededStatus | Superseded | Replaced by a newer version or plan |
-| urpx:expiredStatus | Expired | End date reached, no longer valid |
-| urpx:rejectedStatus | Rejected | Rejected by regulatory authority |
-
----
-
-#### urpx:VersionStatusValue
-**Definition:** Lifecycle status of a specific temporal version of a rate plan or modifier.
-**Used By:** [urpx:versionStatus](#urpx-version-status)
-
-| IRI | Label | Definition |
-|-----|-------|------------|
-| urpx:draftVersion | Draft Version | Version under internal development |
-| urpx:proposedVersion | Proposed Version | Proposed to regulatory body |
-| urpx:pendingApprovalVersion | Pending Approval | Under regulatory review |
-| urpx:approvedVersion | Approved Version | Approved but not yet effective |
-| urpx:effectiveVersion | Effective Version | Currently active and in use |
-| urpx:suspendedVersion | Suspended Version | Temporarily suspended |
-| urpx:expiredVersion | Expired Version | Past expiration date |
-| urpx:archivedVersion | Archived Version | Historical record, no longer in use |
-
----
-
-#### urpx:StatementStatusValue
-**Definition:** Lifecycle status of a regulatory statement document filing.
-**Used By:** [urpx:statementStatus](#urpx-statement-status)
-
-| IRI | Label | Definition |
-|-----|-------|------------|
-| urpx:draftStatement | Draft Statement | Internal draft of the filing |
-| urpx:filedStatement | Filed Statement | Officially submitted to regulator |
-| urpx:pendingStatement | Pending Statement | Pending regulatory approval |
-| urpx:approvedStatement | Approved Statement | Approved and ready for effectivity |
-| urpx:effectiveStatement | Effective Statement | Currently effective statement |
-| urpx:amendedStatement | Amended Statement | Amended or revised filing |
-| urpx:supersededStatement | Superseded Statement | Replaced by a newer statement |
-| urpx:withdrawnStatement | Withdrawn Statement | Filing was withdrawn |
 
 ---
 
@@ -1603,19 +1587,14 @@ Service territories define the spatial boundaries of utility operations and regu
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:initial | Initial | First filing or version of a new rate plan |
-| urpx:regulatoryOrder | Regulatory Order | Change mandated by regulator order |
-| urpx:rateCase | Rate Case | Change resulting from general rate case proceeding |
-| urpx:fuelAdjustment | Fuel Adjustment | Change due to fuel cost adjustment mechanism |
-| urpx:riderUpdate | Rider Update | Change to a rate rider or surcharge component |
+| urpx:changeReasonOther | Other | Other change reason not listed |
 | urpx:correction | Correction | Correction of an error in a previous filing |
+| urpx:fuelAdjustment | Fuel Adjustment | Change due to fuel cost adjustment mechanism |
+| urpx:initial | Initial | First filing or version of a new rate plan |
+| urpx:rateCase | Rate Case | Change resulting from general rate case proceeding |
+| urpx:regulatoryOrder | Regulatory Order | Change mandated by regulator order |
+| urpx:riderUpdate | Rider Update | Change to a rate rider or surcharge component |
 | urpx:seasonalChange | Seasonal Change | Scheduled seasonal rate adjustment |
-| urpx:inflationAdjustment | Inflation Adjustment | Change due to inflation adjustment mechanism |
-| urpx:taxChange | Tax Change | Change in tax rate or structure |
-| urpx:mergerAcquisition | Merger/Acquisition | Change due to corporate restructuring |
-| urpx:pilotProgram | Pilot Program | Change related to a pilot program implementation |
-| urpx:emergency | Emergency | Change due to emergency rate filing |
-| urpx:other | Other | Other change reason not listed |
 
 ---
 
@@ -1629,12 +1608,12 @@ Service territories define the spatial boundaries of utility operations and regu
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:realTimePricing | Real Time Pricing | Pricing determined in real-time based on market conditions |
-| urpx:indexBasedPricing | Index Based Pricing | Pricing linked to a market index (e.g., natural gas) |
-| urpx:timeVaryingPricing | Time Varying Pricing | Rates that change based on time schedule (includes TOU) |
-| urpx:eventDrivenPricing | Event Driven Pricing | Pricing triggered by system events (e.g., critical peak events) |
-| urpx:demandResponsePricing | Demand Response Pricing | Pricing designed to elicit a change in consumption from end-use customers |
 | urpx:criticalPeakPricing | Critical Peak Pricing | High prices during a limited number of critical peak periods |
+| urpx:demandResponsePricing | Demand Response Pricing | Pricing designed to elicit a change in consumption from end-use customers |
+| urpx:eventDrivenPricing | Event Driven Pricing | Pricing triggered by system events (e.g., critical peak events) |
+| urpx:indexBasedPricing | Index Based Pricing | Pricing linked to a market index (e.g., natural gas) |
+| urpx:realTimePricing | Real Time Pricing | Pricing determined in real-time based on market conditions |
+| urpx:timeVaryingPricing | Time Varying Pricing | Rates that change based on time schedule (includes TOU) |
 
 ---
 
@@ -1645,14 +1624,14 @@ Service territories define the spatial boundaries of utility operations and regu
 | IRI | Label | Definition |
 |-----|-------|------------|
 | urpx:continuousUpdates | Continuous Updates | Updates are continuous (e.g., streaming) |
-| urpx:every5Minutes | Every 5 Minutes | Updates occur every 5 minutes |
-| urpx:every15Minutes | Every 15 Minutes | Updates occur every 15 minutes |
-| urpx:hourlyUpdates | Hourly Updates | Updates occur every hour |
 | urpx:dailyUpdates | Daily Updates | Updates occur daily |
-| urpx:weeklyUpdates | Weekly Updates | Updates occur weekly |
+| urpx:eventTriggeredUpdates | Event Triggered Updates | Updates triggered by a specific event |
+| urpx:every15Minutes | Every 15 Minutes | Updates occur every 15 minutes |
+| urpx:every5Minutes | Every 5 Minutes | Updates occur every 5 minutes |
+| urpx:hourlyUpdates | Hourly Updates | Updates occur every hour |
 | urpx:monthlyUpdates | Monthly Updates | Updates occur monthly |
 | urpx:onDemandUpdates | On Demand Updates | Updates only occur upon request |
-| urpx:eventTriggeredUpdates | Event Triggered Updates | Updates triggered by a specific event |
+| urpx:weeklyUpdates | Weekly Updates | Updates occur weekly |
 
 ---
 
@@ -1662,17 +1641,40 @@ Service territories define the spatial boundaries of utility operations and regu
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:wholesaleMarketSource | Wholesale Market | Prices based on wholesale energy market data |
-| urpx:capacityAuctionSource | Capacity Auction | Prices based on capacity market auction results |
-| urpx:gasIndexSource | Gas Index | Prices based on a natural gas market index |
-| urpx:demandForecastSource | Demand Forecast | Prices based on predicted demand |
-| urpx:manualOverrideSource | Manual Override | Price set manually by operator (e.g., emergency) |
 | urpx:algorithmicSource | Algorithmic | Price determined by an algorithmic calculation |
-| urpx:regulatoryFormulaSource | Regulatory Formula | Price set by formula mandated by regulator |
+| urpx:capacityAuctionSource | Capacity Auction | Prices based on capacity market auction results |
+| urpx:demandForecastSource | Demand Forecast | Prices based on predicted demand |
+| urpx:gasIndexSource | Gas Index | Prices based on a natural gas market index |
+| urpx:manualOverrideSource | Manual Override | Price set manually by operator (e.g., emergency) |
+| urpx:renewableForecastSource | Renewable Forecast | Prices based on renewable energy forecast |
+| urpx:wholesaleMarketSource | Wholesale Market | Prices based on wholesale energy market data |
 
 ---
 
-### Organization
+#### urpx:IntervalAlignmentValue
+**Definition:** How measurement intervals align to time boundaries.
+**Used By:** [urpx:intervalAlignment](#urpx-interval-alignment)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:billingPeriodAligned | Billing Period Aligned | Intervals align to billing period boundaries |
+| urpx:calendarAligned | Calendar Aligned | Intervals align to calendar boundaries (hour, day, month) |
+| urpx:fixedAligned | Fixed Aligned | Intervals align to a fixed reference point |
+| urpx:rollingAligned | Rolling Aligned | Intervals roll forward from a starting point |
+
+---
+
+#### urpx:IntervalSelectionValue
+**Definition:** Method for selecting measurement intervals in calculations.
+**Used By:** [urpx:intervalSelection](#urpx-interval-selection)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:consecutivePeriodsSelection | Consecutive Periods | Uses consecutive measurement periods |
+| urpx:fixedWindowSelection | Fixed Window | Uses a fixed time window |
+| urpx:rollingWindowSelection | Rolling Window | Uses a rolling window of intervals |
+
+---
 
 ### Organization
 
@@ -1684,30 +1686,15 @@ Service territories define the spatial boundaries of utility operations and regu
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:utilityOrganization | Utility | Regulated utility service provider |
-| urpx:regulatorOrganization | Regulator | Regulatory authority (e.g., PUC, FERC) |
-| urpx:isoRtoOrganization | ISO/RTO | Independent System Operator / Regional Transmission Organization |
-| urpx:espOrganization | ESP | Energy Service Provider (competitive retail) |
 | urpx:aggregatorOrganization | Aggregator | Load aggregator or CCA |
-| urpx:municipalOrganization | Municipal | Municipal utility or entity |
 | urpx:cooperativeOrganization | Cooperative | Member-owned cooperative |
+| urpx:espOrganization | ESP | Energy Service Provider (competitive retail) |
 | urpx:ippOrganization | IPP | Independent Power Producer |
+| urpx:isoRtoOrganization | ISO/RTO | Independent System Operator / Regional Transmission Organization |
+| urpx:municipalOrganization | Municipal | Municipal utility or entity |
 | urpx:parentOrganization | Parent Company | Parent holding company |
-
----
-
-#### urpx:UtilityTypeValue
-**Definition:** Types of utility services provided.
-**Used By:** [urpx:utilityType](#urpx-utility-type)
-
-| IRI | Label | Definition |
-|-----|-------|------------|
-| urpx:electricUtility | Electric | Electric utility service |
-| urpx:gasUtility | Gas | Natural gas utility service |
-| urpx:waterUtility | Water | Water utility service |
-| urpx:multiUtility | Multi-Utility | Provides multiple utility services (e.g., Gas & Electric) |
-| urpx:districtEnergyUtility | District Energy | District heating/cooling provider |
-| urpx:telecomUtility | Telecom | Telecommunications provider |
+| urpx:regulatorOrganization | Regulator | Regulatory authority (e.g., PUC, FERC) |
+| urpx:utilityOrganization | Utility | Regulated utility service provider |
 
 ---
 
@@ -1717,13 +1704,13 @@ Service territories define the spatial boundaries of utility operations and regu
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:investorOwned | Investor Owned | Investor-owned utility (IOU) |
-| urpx:municipalOwnership | Municipal | Municipally owned utility (MOU) |
 | urpx:cooperativeOwnership | Cooperative | Member-owned cooperative |
 | urpx:federalOwnership | Federal | Federally owned entity (e.g., TVA, BPA) |
+| urpx:investorOwned | Investor Owned | Investor-owned utility (IOU) |
+| urpx:municipalOwnership | Municipal | Municipally owned utility (MOU) |
+| urpx:privateOwnership | Private | Privately owned non-utility entity |
 | urpx:stateOwnership | State | State-owned entity |
 | urpx:tribalOwnership | Tribal | Tribally owned utility |
-| urpx:privateOwnership | Private | Privately owned non-utility entity |
 
 ---
 
@@ -1733,12 +1720,47 @@ Service territories define the spatial boundaries of utility operations and regu
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:ratesRegulation | Rates Regulation | Authority to regulate rates and tariffs |
-| urpx:marketRegulation | Market Regulation | Authority to regulate wholesale markets |
-| urpx:safetyRegulation | Safety Regulation | Authority to regulate safety standards |
-| urpx:environmentalRegulation | Environmental | Authority over environmental compliance |
-| urpx:transmissionRegulation | Transmission | Authority over transmission siting and access |
 | urpx:distributionRegulation | Distribution | Authority over distribution system operations |
+| urpx:environmentalRegulation | Environmental | Authority over environmental compliance |
+| urpx:marketRegulation | Market Regulation | Authority to regulate wholesale markets |
+| urpx:ratesRegulation | Rates Regulation | Authority to regulate rates and tariffs |
+| urpx:safetyRegulation | Safety Regulation | Authority to regulate safety standards |
+| urpx:transmissionRegulation | Transmission | Authority over transmission siting and access |
+
+---
+
+#### urpx:IdentifierSchemeValue
+**Definition:** Identifier system or registry used for organization identification.
+**Used By:** [urpx:identifierScheme](#urpx-identifier-scheme)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:companyNumberScheme | Company Number | National company registration number |
+| urpx:dunsScheme | DUNS | Dun & Bradstreet DUNS number |
+| urpx:eiaScheme | EIA | US Energy Information Administration identifier |
+| urpx:gleifScheme | GLEIF | Global Legal Entity Identifier Foundation |
+| urpx:gridScheme | GRID | Global Research Identifier Database |
+| urpx:isinScheme | ISIN | International Securities Identification Number |
+| urpx:leiScheme | LEI | Legal Entity Identifier |
+| urpx:localRegulatorScheme | Local Regulator | Local regulatory authority identifier |
+| urpx:vatScheme | VAT | Value Added Tax registration number |
+
+---
+
+#### urpx:NameTypeValue
+**Definition:** Classification of organization name types.
+**Used By:** [urpx:nameType](#urpx-name-type)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:abbreviationName | Abbreviation | Shortened form of the name |
+| urpx:acronymName | Acronym | Initialism or acronym |
+| urpx:brandName | Brand Name | Marketing or brand name |
+| urpx:commonName | Common Name | Commonly used informal name |
+| urpx:dbaName | DBA | Doing Business As name |
+| urpx:formerName | Former Name | Previously used name |
+| urpx:legalName | Legal Name | Official registered legal name |
+| urpx:tradeName | Trade Name | Name used in commerce |
 
 ---
 
@@ -1780,6 +1802,37 @@ county             # County jurisdiction
 district           # District
 ```
 
+#### urpx:GeographicScopeValue
+**Definition:** Geographic scope level for applicability rules.
+**Used By:** [urpx:geographicScope](#urpx-geographic-scope)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:countyScope | County | County-level geographic scope |
+| urpx:customScope | Custom | Custom-defined geographic boundary |
+| urpx:municipalityScope | Municipality | Municipality-level scope |
+| urpx:serviceTerritoryScope | Service Territory | Utility service territory scope |
+| urpx:statewideScope | Statewide | State-level geographic scope |
+
+---
+
+#### urpx:GeographicZoneValue
+**Definition:** Geographic zone classification for rate differentiation.
+**Used By:** [urpx:geographicZone](#urpx-geographic-zone)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:coastalZone | Coastal | Coastal geographic zone |
+| urpx:desertZone | Desert | Desert geographic zone |
+| urpx:geographicZoneOther | Other | Other geographic zone not listed |
+| urpx:industrialZone | Industrial | Industrial geographic zone |
+| urpx:mountainZone | Mountain | Mountain geographic zone |
+| urpx:ruralZone | Rural | Rural geographic zone |
+| urpx:suburbanZone | Suburban | Suburban geographic zone |
+| urpx:urbanZone | Urban | Urban geographic zone |
+
+---
+
 ### Service Point & DER
 
 ---
@@ -1790,14 +1843,15 @@ district           # District
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:singleFamily | Single Family | Detached single-family dwelling |
+| urpx:hospital | Hospital | Medical care facility |
+| urpx:manufacturing | Manufacturing | Industrial manufacturing facility |
 | urpx:multiFamily | Multi-Family | Multi-unit residential building |
 | urpx:office | Office | Commercial office space |
-| urpx:retail | Retail | Commercial retail space |
-| urpx:manufacturing | Manufacturing | Industrial manufacturing facility |
-| urpx:warehouse | Warehouse | Storage and distribution facility |
+| urpx:premiseTypeOther | Other | Other premise type not listed |
+| urpx:retailStore | Retail Store | Commercial retail space |
 | urpx:school | School | Educational institution |
-| urpx:hospital | Hospital | Medical care facility |
+| urpx:singleFamily | Single Family | Detached single-family dwelling |
+| urpx:warehouse | Warehouse | Storage and distribution facility |
 
 ---
 
@@ -1809,8 +1863,10 @@ district           # District
 |-----|-------|------------|
 | urpx:directConnection | Direct | Direct connection to grid |
 | urpx:overheadConnection | Overhead | Overhead service drop |
-| urpx:undergroundConnection | Underground | Underground service lateral |
+| urpx:padMountedConnection | Pad Mounted | Pad-mounted transformer connection |
+| urpx:permanentConnection | Permanent | Permanent service connection |
 | urpx:temporaryConnection | Temporary | Temporary service connection |
+| urpx:undergroundConnection | Underground | Underground service lateral |
 
 ---
 
@@ -1821,12 +1877,30 @@ district           # District
 | IRI | Label | Definition |
 |-----|-------|------------|
 | urpx:A | Phase A | Single phase A |
-| urpx:B | Phase B | Single phase B |
-| urpx:C | Phase C | Single phase C |
+| urpx:AB | Phase AB | Two-phase AB |
 | urpx:ABC | Three Phase | Three-phase ABC |
+| urpx:ABCN | Three Phase Neutral | Three-phase ABC with neutral |
+| urpx:ABN | Phase AB Neutral | Two-phase AB with neutral |
+| urpx:AC | Phase AC | Two-phase AC |
+| urpx:ACN | Phase AC Neutral | Two-phase AC with neutral |
+| urpx:AN | Phase A Neutral | Single phase A with neutral |
+| urpx:AtoAv | A to Average | Phase A to average |
+| urpx:B | Phase B | Single phase B |
+| urpx:BAv | B Average | Phase B average |
+| urpx:BC | Phase BC | Two-phase BC |
+| urpx:BCN | Phase BC Neutral | Two-phase BC with neutral |
+| urpx:BN | Phase B Neutral | Single phase B with neutral |
+| urpx:C | Phase C | Single phase C |
+| urpx:CAv | C Average | Phase C average |
+| urpx:CN | Phase C Neutral | Single phase C with neutral |
+| urpx:N | Neutral | Neutral only |
+| urpx:NG | Neutral Ground | Neutral to ground |
 | urpx:S1 | Split Phase 1 | Split phase leg 1 |
-| urpx:S2 | Split Phase 2 | Split phase leg 2 |
 | urpx:S12 | Split Phase 1-2 | Split phase 120/240V |
+| urpx:S12N | Split Phase 1-2 Neutral | Split phase 120/240V with neutral |
+| urpx:S1N | Split Phase 1 Neutral | Split phase leg 1 with neutral |
+| urpx:S2 | Split Phase 2 | Split phase leg 2 |
+| urpx:S2N | Split Phase 2 Neutral | Split phase leg 2 with neutral |
 
 ---
 
@@ -1836,11 +1910,12 @@ district           # District
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:net | Net Metering | Bidirectional net metering |
-| urpx:interval | Interval | Interval data recording meter |
-| urpx:demand | Demand | Maximum demand recording meter |
 | urpx:ami | AMI | Advanced Metering Infrastructure |
+| urpx:demandConfiguration | Demand | Maximum demand recording meter |
+| urpx:interval | Interval | Interval data recording meter |
 | urpx:manual | Manual | Manually read meter |
+| urpx:netMetering | Net Metering | Net metering configuration - bidirectional meter for DER net metering |
+| urpx:prepaid | Prepaid | Prepaid metering configuration |
 
 ---
 
@@ -1850,11 +1925,15 @@ district           # District
 
 | IRI | Label | Definition |
 |-----|-------|------------|
+| urpx:evChargingDER | EV Charging | Electric vehicle charging station |
+| urpx:generatorDER | Generator | Fossil fuel backup generator |
+| urpx:geothermalDER | Geothermal | Geothermal energy system |
+| urpx:hydroDER | Hydro | Small-scale hydroelectric generation |
+| urpx:nuclearDER | Nuclear | Small modular nuclear reactor |
 | urpx:solarDER | Solar | Solar photovoltaic system |
 | urpx:storageDER | Storage | Battery energy storage system |
-| urpx:evChargingDER | EV Charging | Electric vehicle charging station |
+| urpx:wasteDigestionDER | Waste Digestion | Biogas/waste digestion generation |
 | urpx:windDER | Wind | Wind turbine generation |
-| urpx:generatorDER | Generator | Fossil fuel backup generator |
 
 ---
 
@@ -1868,19 +1947,20 @@ district           # District
 
 | IRI | Label | Notation | Definition |
 |-----|-------|----------|------------|
-| urpx:heatingEndUse | Heating | HEAT | Electric heating service - space heating, water heating, thermal applications |
-| urpx:nonheatingEndUse | Non-Heating | NONHEAT | General electric service excluding heating - lighting, appliances, motors |
-| urpx:spaceHeatingEndUse | Space Heating | SPACEHEAT | Building interior space heating |
-| urpx:spaceCoolingEndUse | Space Cooling | SPACECOOL | Air conditioning and building cooling |
-| urpx:waterHeatingEndUse | Water Heating | WATERHEAT | Domestic hot water heating |
-| urpx:cookingEndUse | Cooking | COOK | Cooking appliances |
-| urpx:dryingEndUse | Drying | DRY | Clothes drying |
-| urpx:lightingEndUse | Lighting | LIGHT | Lighting systems |
-| urpx:refrigerationEndUse | Refrigeration | REFRIG | Refrigeration equipment |
-| urpx:dataCenterEndUse | Data Center | DATACTR | Data center operations |
 | urpx:agriculturalEndUse | Agricultural | AGRIC | Agricultural operations |
-| urpx:streetLightingEndUse | Street Lighting | STREETLT | Street and outdoor lighting |
+| urpx:cookingEndUse | Cooking | COOK | Cooking appliances |
+| urpx:dataCenterEndUse | Data Center | DATACTR | Data center operations |
+| urpx:dryingEndUse | Drying | DRY | Clothes drying |
+| urpx:heatingEndUse | Heating | HEAT | Electric heating service - space heating, water heating, thermal applications |
+| urpx:lightingEndUse | Lighting | LIGHT | Lighting systems |
 | urpx:municipalEndUse | Municipal | MUNIC | Municipal services |
+| urpx:nonheatingEndUse | Non-Heating | NONHEAT | General electric service excluding heating - lighting, appliances, motors |
+| urpx:otherEndUse | Other | OTHER | Other end use not classified above |
+| urpx:refrigerationEndUse | Refrigeration | REFRIG | Refrigeration equipment |
+| urpx:spaceCoolingEndUse | Space Cooling | SPACECOOL | Air conditioning and building cooling |
+| urpx:spaceHeatingEndUse | Space Heating | SPACEHEAT | Building interior space heating |
+| urpx:streetLightingEndUse | Street Lighting | STREETLT | Street and outdoor lighting |
+| urpx:waterHeatingEndUse | Water Heating | WATERHEAT | Domestic hot water heating |
 
 **Usage Context:**
 End use classification enables:
@@ -1900,9 +1980,99 @@ End use classification enables:
 |-----|-------|------------|
 | urpx:airConditioner | Air Conditioner | Standard air conditioning unit |
 | urpx:airSourceHeatPump | Air Source Heat Pump | Air source heat pump (ASHP) |
+| urpx:districtHeatingConnection | District Heating | Connection to district heating loop |
 | urpx:groundSourceHeatPump | Ground Source Heat Pump | Geothermal heat pump (GSHP) |
 | urpx:spaceHeater | Space Heater | Electric space heater |
-| urpx:districtHeatingConnection | District Heating | Connection to district heating loop |
+
+---
+
+#### urpx:ConnectorTypeValue
+**Definition:** EV charging connector type classification.
+**Used By:** [urpx:connectorType](#urpx-connector-type)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:ccs | CCS | Combined Charging System connector |
+| urpx:chademo | CHAdeMO | CHAdeMO DC fast charging connector |
+| urpx:dcFast | DC Fast | Generic DC fast charging |
+| urpx:level1 | Level 1 | Standard 120V AC charging |
+| urpx:level2 | Level 2 | 240V AC charging |
+| urpx:teslaSupercharger | Tesla Supercharger | Tesla proprietary connector |
+
+---
+
+#### urpx:InterconnectionStatusValue
+**Definition:** DER interconnection status with the grid.
+**Used By:** [urpx:interconnectionStatus](#urpx-interconnection-status)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:disconnectedStatus | Disconnected | DER is disconnected from grid |
+| urpx:interconnectedStatus | Interconnected | DER is interconnected and operational |
+| urpx:notApplicableInterconnection | Not Applicable | Interconnection status not applicable |
+| urpx:pendingInterconnection | Pending | Interconnection application pending |
+
+---
+
+#### urpx:InverterTypeValue
+**Definition:** Solar/DER inverter technology classification.
+**Used By:** [urpx:inverterType](#urpx-inverter-type)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:centralInverter | Central Inverter | Single large inverter for array |
+| urpx:hybridInverter | Hybrid Inverter | Combined solar and battery inverter |
+| urpx:microInverter | Micro Inverter | Panel-level micro inverter |
+| urpx:powerOptimizer | Power Optimizer | DC-DC power optimizer per panel |
+| urpx:stringInverter | String Inverter | String-level inverter |
+
+---
+
+#### urpx:LoadProfileValue
+**Definition:** Customer load profile pattern classification.
+**Used By:** [urpx:loadProfile](#urpx-load-profile)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:baseload | Baseload | Consistent load throughout the day |
+| urpx:intermittent | Intermittent | Irregular or unpredictable load pattern |
+| urpx:loadProfileOther | Other | Other load profile not classified |
+| urpx:peaking | Peaking | Load concentrated during peak hours |
+| urpx:seasonal | Seasonal | Load varies significantly by season |
+| urpx:variable | Variable | Variable load pattern |
+
+---
+
+#### urpx:PanelOrientationValue
+**Definition:** Solar panel orientation for DER rate eligibility.
+**Used By:** [urpx:panelOrientation](#urpx-panel-orientation)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:east | East | Panels facing east |
+| urpx:multipleOrientations | Multiple Orientations | Panels in multiple directions |
+| urpx:north | North | Panels facing north |
+| urpx:northeast | Northeast | Panels facing northeast |
+| urpx:northwest | Northwest | Panels facing northwest |
+| urpx:south | South | Panels facing south |
+| urpx:southeast | Southeast | Panels facing southeast |
+| urpx:southwest | Southwest | Panels facing southwest |
+| urpx:tracking | Tracking | Solar tracking system |
+| urpx:west | West | Panels facing west |
+
+---
+
+#### urpx:VoltageLevelValue
+**Definition:** Service voltage level classification.
+**Used By:** [urpx:voltageLevel](#urpx-voltage-level)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:distributionVoltage | Distribution | Distribution voltage level |
+| urpx:primaryVoltage | Primary | Primary distribution voltage |
+| urpx:secondaryVoltage | Secondary | Secondary (service) voltage |
+| urpx:subTransmissionVoltage | Sub-Transmission | Sub-transmission voltage level |
+| urpx:transmissionVoltage | Transmission | Transmission voltage level |
 
 ---
 
@@ -1916,15 +2086,17 @@ End use classification enables:
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:energy | Energy | Energy consumption (kWh) |
-| urpx:demand | Demand | Power demand (kW) |
-| urpx:powerFactor | Power Factor | Ratio of real to apparent power |
-| urpx:voltage | Voltage | Electric potential difference |
 | urpx:current | Current | Electric current flow |
+| urpx:demand | Demand | Power demand (kW) |
+| urpx:energy | Energy | Energy consumption (kWh) |
 | urpx:frequency | Frequency | AC frequency |
-| urpx:volume | Volume | Fluid volume (water/gas) |
+| urpx:power | Power | Real power (W) |
+| urpx:powerFactor | Power Factor | Ratio of real to apparent power |
 | urpx:pressure | Pressure | Fluid pressure |
 | urpx:temperature | Temperature | Ambient or fluid temperature |
+| urpx:voltage | Voltage | Electric potential difference |
+| urpx:volume | Volume | Fluid volume (water/gas) |
+| urpx:volumetricFlow | Volumetric Flow | Fluid flow rate |
 
 ---
 
@@ -1934,15 +2106,62 @@ End use classification enables:
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:kWh | kWh | Kilowatt-hour (Energy) |
-| urpx:kW | kW | Kilowatt (Power/Demand) |
-| urpx:kVA | kVA | Kilovolt-ampere (Apparent Power) |
-| urpx:kVar | kVar | Kilovolt-ampere reactive (Reactive Power) |
-| urpx:therm | Therm | Thermal energy unit (Gas) |
+| urpx:acre | Acre | Land area (acre) |
+| urpx:barrel | Barrel | Petroleum barrel |
+| urpx:bcf | BCF | Billion cubic feet (Gas) |
+| urpx:bit | Bit | Data unit |
+| urpx:btu | BTU | British thermal unit |
+| urpx:byte | Byte | Data unit (8 bits) |
 | urpx:ccf | CCF | Hundred cubic feet (Gas/Water) |
-| urpx:gallon | Gallon | US Gallon (Water) |
-| urpx:month | Month | Per month (Service charges) |
+| urpx:cord | Cord | Cord of wood |
+| urpx:count | Count | Discrete count |
+| urpx:cubicFoot | Cubic Foot | Volume in cubic feet |
+| urpx:cubicMeter | Cubic Meter | Volume in cubic meters |
 | urpx:day | Day | Per day (Daily charges) |
+| urpx:decatherm | Decatherm | Decatherm (Gas) |
+| urpx:gallon | Gallon | US Gallon (Water) |
+| urpx:Gbps | Gbps | Gigabits per second |
+| urpx:GW | GW | Gigawatt |
+| urpx:GWh | GWh | Gigawatt-hour |
+| urpx:hectare | Hectare | Land area (hectare) |
+| urpx:hertz | Hertz | Frequency (Hz) |
+| urpx:item | Item | Discrete item |
+| urpx:kilogallon | Kilogallon | Thousand gallons (Water) |
+| urpx:kilogram | Kilogram | Mass in kilograms |
+| urpx:kilometer | Kilometer | Distance in kilometers |
+| urpx:kVA | kVA | Kilovolt-ampere (Apparent Power) |
+| urpx:kVAh | kVAh | Kilovolt-ampere-hour |
+| urpx:kVAr | kVAr | Kilovolt-ampere reactive |
+| urpx:kVArh | kVArh | Kilovolt-ampere reactive-hour |
+| urpx:kW | kW | Kilowatt (Power/Demand) |
+| urpx:kWh | kWh | Kilowatt-hour (Energy) |
+| urpx:liter | Liter | Volume in liters |
+| urpx:Mbps | Mbps | Megabits per second |
+| urpx:mcf | MCF | Thousand cubic feet (Gas) |
+| urpx:metricTon | Metric Ton | Mass in metric tons |
+| urpx:mile | Mile | Distance in miles |
+| urpx:mmbtu | MMBTU | Million British thermal units |
+| urpx:mmcf | MMCF | Million cubic feet (Gas) |
+| urpx:MVA | MVA | Megavolt-ampere |
+| urpx:MVAh | MVAh | Megavolt-ampere-hour |
+| urpx:MW | MW | Megawatt |
+| urpx:MWh | MWh | Megawatt-hour |
+| urpx:percent | Percent | Percentage value |
+| urpx:pound | Pound | Mass in pounds |
+| urpx:ratio | Ratio | Dimensionless ratio |
+| urpx:squareFoot | Square Foot | Area in square feet |
+| urpx:squareMeter | Square Meter | Area in square meters |
+| urpx:tcf | TCF | Trillion cubic feet (Gas) |
+| urpx:therm | Therm | Thermal energy unit (Gas) |
+| urpx:ton | Ton | Mass in short tons |
+| urpx:unitOther | Other | Other unit of measure |
+| urpx:VA | VA | Volt-ampere (Apparent Power) |
+| urpx:VAh | VAh | Volt-ampere-hour |
+| urpx:VAr | VAr | Volt-ampere reactive |
+| urpx:VArh | VArh | Volt-ampere reactive-hour |
+| urpx:W | W | Watt |
+| urpx:Wh | Wh | Watt-hour |
+| urpx:year | Year | Per year (Annual charges) |
 
 ---
 
@@ -1952,10 +2171,10 @@ End use classification enables:
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:forward | Forward | Import from grid (Consumption) |
-| urpx:reverse | Reverse | Export to grid (Generation) |
-| urpx:net | Net | Net flow (Import - Export) |
 | urpx:bidirectional | Bidirectional | Both directions measured separately |
+| urpx:forward | Forward | Import from grid (Consumption) |
+| urpx:net | Net | Net flow (Import - Export) |
+| urpx:reverse | Reverse | Export to grid (Generation) |
 
 ---
 
@@ -1965,8 +2184,8 @@ End use classification enables:
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:delta | Delta | Change in value over interval |
 | urpx:bulk | Bulk | Cumulative total reading |
+| urpx:delta | Delta | Change in value over interval |
 | urpx:instantaneous | Instantaneous | Snapshot value at specific time |
 | urpx:summation | Summation | Sum of values over period |
 
@@ -1978,11 +2197,25 @@ End use classification enables:
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:measuredMetricInput | Measured | Raw meter data |
-| urpx:calculatedMetricInput | Calculated | Derived from calculation rule |
 | urpx:aggregatedMetricInput | Aggregated | Sum/aggregation of multiple inputs |
-| urpx:virtualMetricInput | Virtual | Synthetic metric for billing |
+| urpx:calculatedMetricInput | Calculated | Derived from calculation rule |
+| urpx:measuredMetricInput | Measured | Raw meter data |
 | urpx:profileMetricInput | Profile | Based on static profile property |
+| urpx:virtualMetricInput | Virtual | Synthetic metric for billing |
+
+---
+
+#### urpx:AggregationMethodValue
+**Definition:** Method used to aggregate measurement values.
+**Used By:** [urpx:aggregationMethod](#urpx-aggregation-method)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:average | Average | Arithmetic mean of values |
+| urpx:maximum | Maximum | Highest value in set |
+| urpx:median | Median | Median value in set |
+| urpx:minimum | Minimum | Lowest value in set |
+| urpx:sum | Sum | Sum of all values |
 
 ---
 
@@ -1996,16 +2229,16 @@ End use classification enables:
 
 | IRI | Label | Definition |
 |-----|-------|------------|
+| urpx:betweenOperator | Between | Value is within range (inclusive) |
+| urpx:containsOperator | Contains | Value contains substring/item |
 | urpx:equalsOperator | Equals | Value matches exactly (=) |
-| urpx:notEqualsOperator | Not Equals | Value does not match (!=) |
 | urpx:greaterThanOperator | Greater Than | Value is strictly greater (>) |
 | urpx:greaterThanOrEqualOperator | Greater Than Or Equal | Value is greater or equal (>=) |
+| urpx:inOperator | In | Value is in list |
 | urpx:lessThanOperator | Less Than | Value is strictly less (<) |
 | urpx:lessThanOrEqualOperator | Less Than Or Equal | Value is less or equal (<=) |
-| urpx:containsOperator | Contains | Value contains substring/item |
-| urpx:inOperator | In | Value is in list |
+| urpx:notEqualsOperator | Not Equals | Value does not match (!=) |
 | urpx:notInOperator | Not In | Value is not in list |
-| urpx:betweenOperator | Between | Value is within range (inclusive) |
 
 ---
 
@@ -2019,12 +2252,14 @@ End use classification enables:
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:supplyLedger | Supply | Generation/energy commodity charges |
-| urpx:deliveryLedger | Delivery | Transmission/distribution charges |
-| urpx:transmissionLedger | Transmission | Transmission-only charges |
-| urpx:distributionLedger | Distribution | Distribution-only charges |
 | urpx:bundledLedger | Bundled | Combined supply and delivery charges |
-| urpx:calculatedLedger | Calculated Ledger | Ledger for calculated or derived charges |
+| urpx:calculatedLedger | Calculated | Ledger for calculated or derived charges |
+| urpx:deliveryLedger | Delivery | Transmission/distribution charges |
+| urpx:distributionLedger | Distribution | Distribution-only charges |
+| urpx:measuredLedger | Measured | Ledger for metered/measured charges |
+| urpx:profileMetricLedger | Profile Metric | Ledger for profile-based metric charges |
+| urpx:supplyLedger | Supply | Generation/energy commodity charges |
+| urpx:transmissionLedger | Transmission | Transmission-only charges |
 
 ---
 
@@ -2038,33 +2273,48 @@ End use classification enables:
 
 | IRI | Label | Definition |
 |-----|-------|------------|
+| urpx:communityChoiceAggregation | CCA | Community Choice Aggregation service |
+| urpx:communitySolar | Community Solar | Shared solar subscription |
 | urpx:demandResponseProgram | Demand Response | Load reduction program |
 | urpx:energyEfficiencyProgram | Energy Efficiency | Efficiency incentive program |
 | urpx:greenEnergyProgram | Green Energy | Renewable energy option |
 | urpx:lowIncomeProgram | Low Income | Income-qualified assistance (CARE, HEAP) |
 | urpx:timeOfUseProgram | Time-of-Use | Optional TOU rate enrollment |
-| urpx:communityChoiceAggregation | CCA | Community Choice Aggregation service |
-| urpx:communitySolar | Community Solar | Shared solar subscription |
-| urpx:electricVehicleProgram | EV Program | EV-specific rate or incentive |
 
 ---
 
----
-
-#### urpx:ProgramTypeValue
-**Definition:** Utility program classification for enrollment eligibility.
-**Used By:** [urpx:programType](#urpx-program-type)
+#### urpx:ModifierCategoryValue
+**Definition:** Business category of a rate plan modifier.
+**Used By:** [urpx:modifierCategory](#urpx-modifier-category)
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:demandResponseProgram | Demand Response | Load reduction program |
-| urpx:energyEfficiencyProgram | Energy Efficiency | Efficiency incentive program |
-| urpx:greenEnergyProgram | Green Energy | Renewable energy option |
-| urpx:lowIncomeProgram | Low Income | Income-qualified assistance (CARE, HEAP) |
-| urpx:timeOfUseProgram | Time-of-Use | Optional TOU rate enrollment |
-| urpx:communityChoiceAggregation | CCA | Community Choice Aggregation service |
-| urpx:communitySolar | Community Solar | Shared solar subscription |
-| urpx:electricVehicleProgram | EV Program | EV-specific rate or incentive |
+| urpx:billingCategory | Billing | Billing-related modifier |
+| urpx:customerServiceCategory | Customer Service | Customer service modifier |
+| urpx:demandManagementCategory | Demand Management | Demand-side management modifier |
+| urpx:environmentalCategory | Environmental | Environmental program modifier |
+| urpx:modifierCategoryOther | Other | Other modifier category |
+| urpx:promotionalCategory | Promotional | Promotional or marketing modifier |
+| urpx:regulatoryCategory | Regulatory | Regulatory compliance modifier |
+
+---
+
+#### urpx:ModifierTypeValue
+**Definition:** Functional type of rate plan modifier.
+**Used By:** [urpx:modifierType](#urpx-modifier-type)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:addOn | Add-On | Additional service added to base rate plan |
+| urpx:adjustment | Adjustment | Rate adjustment or true-up |
+| urpx:credit | Credit | Credit applied to customer bill |
+| urpx:demandResponse | Demand Response | Demand response program modifier |
+| urpx:evCharging | EV Charging | Electric vehicle charging modifier |
+| urpx:greenEnergy | Green Energy | Green energy or renewable modifier |
+| urpx:modifierTypeOther | Other | Other modifier type |
+| urpx:optIn | Opt-In | Optional program requiring enrollment |
+| urpx:optOut | Opt-Out | Default program with opt-out option |
+| urpx:rider | Rider | Tariff rider or surcharge |
 
 ---
 
@@ -2078,27 +2328,11 @@ End use classification enables:
 
 | IRI | Label | Definition |
 |-----|-------|------------|
+| urpx:billingCycleAlternatives | Billing Cycle | Alternatives based on billing cycles |
+| urpx:customerProfileAlternatives | Customer Profile | Alternatives based on customer characteristics |
 | urpx:geographicAlternatives | Geographic | Alternatives based on location/zone |
 | urpx:serviceClassAlternatives | Service Class | Alternatives based on service level |
-| urpx:customerProfileAlternatives | Customer Profile | Alternatives based on customer characteristics |
 | urpx:temporalAlternatives | Temporal | Alternatives based on time periods |
-| urpx:billingCycleAlternatives | Billing Cycle | Alternatives based on billing cycles |
-
----
-
----
-
-#### urpx:AlternativesTypeValue
-**Definition:** Internal classification for alternative dimension sets.
-**Used By:** [urpx:alternativesType](#urpx-alternatives-type)
-
-| IRI | Label | Definition |
-|-----|-------|------------|
-| urpx:geographicAlternatives | Geographic | Alternatives based on location/zone |
-| urpx:serviceClassAlternatives | Service Class | Alternatives based on service level |
-| urpx:customerProfileAlternatives | Customer Profile | Alternatives based on customer characteristics |
-| urpx:temporalAlternatives | Temporal | Alternatives based on time periods |
-| urpx:billingCycleAlternatives | Billing Cycle | Alternatives based on billing cycles |
 
 ---
 
@@ -2112,37 +2346,76 @@ End use classification enables:
 
 | IRI | Label | Definition |
 |-----|-------|------------|
+| urpx:amendment | Amendment | Amendment to existing tariff |
+| urpx:notice | Notice | Public notice |
+| urpx:order | Order | Regulatory order |
+| urpx:ratePlanModifierPublication | Modifier Publication | Publication containing rate plan modifier details |
+| urpx:ratePlanPublication | Rate Plan Publication | Publication containing full rate plan details |
+| urpx:regulatoryFiling | Regulatory Filing | Formal filing document |
+| urpx:supplement | Supplement | Supplemental filing |
 | urpx:tariffBook | Tariff Book | Complete tariff book |
 | urpx:tariffStatement | Tariff Statement | Periodic price statement |
-| urpx:regulatoryFiling | Regulatory Filing | Formal filing document |
-| urpx:order | Order | Regulatory order |
-| urpx:notice | Notice | Public notice |
-| urpx:amendment | Amendment | Amendment to existing tariff |
-| urpx:supplement | Supplement | Supplemental filing |
-| urpx:ratePlanPublication | Rate Plan Publication | Publication containing full rate plan details |
-| urpx:ratePlanModifierPublication | Modifier Publication | Publication containing rate plan modifier details |
 
 ---
 
+### Data & Service Classification
+
 ---
 
-#### urpx:PublicationTypeValue
-**Definition:** Regulatory document classification.
-**Used By:** [urpx:publicationType](#urpx-publication-type)
+#### urpx:DataSourceTypeValue
+**Definition:** Source format for rate plan data ingestion.
+**Used By:** [urpx:dataSourceType](#urpx-data-source-type)
 
 | IRI | Label | Definition |
 |-----|-------|------------|
-| urpx:tariffBook | Tariff Book | Complete tariff book |
-| urpx:tariffStatement | Tariff Statement | Periodic price statement |
-| urpx:regulatoryFiling | Regulatory Filing | Formal filing document |
-| urpx:order | Order | Regulatory order |
-| urpx:notice | Notice | Public notice |
-| urpx:amendment | Amendment | Amendment to existing tariff |
-| urpx:supplement | Supplement | Supplemental filing |
+| urpx:apiSource | API | Data sourced from API |
+| urpx:csvSource | CSV | Data sourced from CSV file |
+| urpx:databaseSource | Database | Data sourced from database |
+| urpx:jsonSource | JSON | Data sourced from JSON file |
+| urpx:manualSource | Manual | Data entered manually |
+| urpx:pdfSource | PDF | Data sourced from PDF document |
+| urpx:spreadsheetSource | Spreadsheet | Data sourced from spreadsheet |
+| urpx:xmlSource | XML | Data sourced from XML file |
+
+---
+
+#### urpx:ServiceRoleValue
+**Definition:** Role of the rate plan or modifier within the service delivery chain.
+**Used By:** [urpx:serviceRole](#urpx-service-role)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:aggregationRole | Aggregation | Load aggregation service role |
+| urpx:bundledServiceRole | Bundled Service | Combined delivery and supply service |
+| urpx:communitySolarServiceRole | Community Solar | Community solar service role |
+| urpx:demandResponseRole | Demand Response | Demand response service role |
+| urpx:distributionServiceRole | Distribution | Distribution service role |
+| urpx:energyEfficiencyRole | Energy Efficiency | Energy efficiency service role |
+| urpx:retailSupplyRole | Retail Supply | Retail energy supply service |
+| urpx:solarInstallationRole | Solar Installation | Solar installation service role |
+
+---
+
+#### urpx:StatementTypeValue
+**Definition:** Classification of regulatory statement documents.
+**Used By:** [urpx:statementType](#urpx-statement-type)
+
+| IRI | Label | Definition |
+|-----|-------|------------|
+| urpx:distributionStatement | Distribution | Distribution-related statement |
+| urpx:fuelAdjustmentStatement | Fuel Adjustment | Fuel cost adjustment statement |
+| urpx:purchasedPowerStatement | Purchased Power | Purchased power cost statement |
+| urpx:rateStatement | Rate | General rate statement |
+| urpx:statementTypeOther | Other | Other statement type not listed |
+| urpx:transmissionStatement | Transmission | Transmission-related statement |
 
 ---
 
 ## Validation Rules
+
+### SHACL Validation
+
+Draft SHACL validation shapes are available at [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl) (~3,635 lines). This unified file contains comprehensive shapes for all major URPX classes including RatePlan, Price, PriceDefinition, BillingModel, TOUSchedule, EligibilityRule, Organization, and more.
 
 ### Core Validation Requirements
 
@@ -2239,17 +2512,15 @@ FILTER NOT EXISTS {
 #### Temporal Constraints
 | Field Type | Format | Timezone |
 |------------|--------|----------|
-| Dates | ISO 8601 Date | N/A |
-| DateTimes | ISO 8601 DateTime | **Required** |
+| Dates | ISO 8601 Date | Inherited from parent |
+| DateTimes | ISO 8601 DateTime | Inherited from parent |
 | Times | ISO 8601 Time | Inherited from parent |
 | Durations | ISO 8601 Duration | N/A |
 
 **Critical ISO 8601 Requirements:**
-- **All dateTime properties must include timezone information**
-- Contract dates (`contractEffectiveDate`, `contractExpirationDate`) require timezone for legal validity
-- Rate plan assignment dates must include timezone for audit trail accuracy
-- TimeBracket times inherit timezone context from parent TOUSchedule's `timeZone` property
-- Validation enforces timezone presence: `FILTER (!REGEX(STR(?value), "[+-]\\d{2}:\\d{2}$|Z$"))`
+- **DateTime properties inherit timezone information**
+- TimeBracket times inherit timezone context from parent `RatePlan` `timeZone` property
+- Validation to enforce timezone presence: `FILTER (!REGEX(STR(?value), "[+-]\\d{2}:\\d{2}$|Z$"))`
 
 ### Cross-Reference Validation
 

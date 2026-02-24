@@ -4208,7 +4208,7 @@ urpx:referencesMetricInput a owl:ObjectProperty ;
 # NEW (v0.1.2 with BillingModel)
 :billingModel a urpx:BillingModel ;
     urpx:hasTOUSchedule :touSchedule ;
-    urpx:billPortion urpx:delivery .
+    urpx:billPortion urpx:deliveryPortion .
 
 :touSchedule a urpx:TOUSchedule ;
     urpx:referencesMetricInput :energyMetric .

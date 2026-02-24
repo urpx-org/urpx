@@ -75,7 +75,7 @@ ex:rateplan-res-flat a urpx:RatePlan ;
     urpx:name "Residential Service - Schedule R" ;
     urpx:description "Basic residential rate plan with tiered pricing" ;
     urpx:initialEffectiveDate "2025-01-01"^^xsd:date ;
-    urpx:serviceRole urpx:bundled ;
+    urpx:serviceRole urpx:bundledServiceRole ;
     urpx:hasRatePlanVersion ex:version-res-flat-2025 .
 
 # Rate Plan Version
@@ -122,7 +122,7 @@ ex:Price-service a urpx:Price ;
     urpx:chargeType urpx:minimumCharge ;
     urpx:chargeCategory urpx:serviceCharge ;
     urpx:amount 12.50 ;
-    urpx:billPortion urpx:bundled;
+    urpx:billPortion urpx:bundledPortion;
     urpx:hasMetricSpecification [ a urpx:MetricSpecification ; urpx:intervalDuration "P1M" ] .
 
 # Tier 1 Energy Supply Price (0-500 kWh)
@@ -133,7 +133,7 @@ ex:price-tier1 a urpx:Price ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
     urpx:unitPrice 0.095 ;
     urpx:serviceTierNumber 1 ;
-    urpx:billPortion urpx:supply;
+    urpx:billPortion urpx:supplyPortion;
     urpx:referencesMetricInput ex:grid-kwh-import .
 
 # Tier 2 Energy Supply Price (Over 500 kWh)
@@ -144,7 +144,7 @@ ex:price-tier2 a urpx:Price ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
     urpx:unitPrice 0.135 ;
     urpx:serviceTierNumber 2 ;
-    urpx:billPortion urpx:supply;
+    urpx:billPortion urpx:supplyPortion;
     urpx:referencesMetricInput ex:grid-kwh-import .
 
 # Tier 1 Energy Delivery Price (0-500 kWh)
@@ -216,7 +216,7 @@ ex:rateplan-res-tou a urpx:RatePlan ;
     urpx:name "Residential Time-of-Use - Schedule R-TOU" ;
     urpx:description "Time-varying residential rate plan with seasonal schedules" ;
     urpx:initialEffectiveDate "2025-01-01"^^xsd:date ;
-    urpx:serviceRole urpx:bundled ;
+    urpx:serviceRole urpx:bundledServiceRole ;
     urpx:hasRatePlanVersion ex:version-res-tou-summer .
 
 # Summer Version
@@ -357,7 +357,7 @@ ex:price-peak a urpx:Price ;
     urpx:name "Peak Energy" ;
     urpx:chargeType urpx:usageCharge ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
-    urpx:billPortion urpx:supply ;
+    urpx:billPortion urpx:supplyPortion ;
     urpx:unitPrice 0.285 ;
     urpx:touPeriodNumber 1 ;
     urpx:referencesMetricInput ex:metric-spec-energy .
@@ -366,7 +366,7 @@ ex:price-midpeak a urpx:Price ;
     urpx:name "Mid-Peak Energy" ;
     urpx:chargeType urpx:usageCharge ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
-    urpx:billPortion urpx:supply ;
+    urpx:billPortion urpx:supplyPortion ;
     urpx:unitPrice 0.165 ;
     urpx:touPeriodNumber 2 ;
     urpx:referencesMetricInput ex:metric-spec-energy .
@@ -375,7 +375,7 @@ ex:price-offpeak a urpx:Price ;
     urpx:name "Off-Peak Energy" ;
     urpx:chargeType urpx:usageCharge ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
-    urpx:billPortion urpx:supply ;
+    urpx:billPortion urpx:supplyPortion ;
     urpx:unitPrice 0.075 ;
     urpx:touPeriodNumber 3 ;
     urpx:referencesMetricInput ex:metric-spec-energy .
@@ -419,7 +419,7 @@ ex:rateplan-comm-demand a urpx:RatePlan ;
     urpx:name "General Service Demand - Schedule GS-2" ;
     urpx:description "Commercial rate plan with demand and energy prices" ;
     urpx:initialEffectiveDate "2025-01-01"^^xsd:date ;
-    urpx:serviceRole urpx:bundled ;
+    urpx:serviceRole urpx:bundledServiceRole ;
     urpx:hasRatePlanVersion ex:version-comm-demand .
 
 # Rate Plan Version
@@ -479,7 +479,7 @@ ex:price-comm-energy a urpx:Price ;
     urpx:name "Commercial Energy Price" ;
     urpx:chargeType urpx:usageCharge ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
-    urpx:billPortion urpx:supply ;
+    urpx:billPortion urpx:supplyPortion ;
     urpx:unitPrice 0.085 ;
     urpx:referencesMetricInput ex:metric-input-comm-energy .
 
@@ -489,7 +489,7 @@ ex:price-comm-demand a urpx:Price ;
     urpx:description "Price per kW of monthly peak demand" ;
     urpx:chargeType urpx:demandDirect ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
-    urpx:billPortion urpx:delivery ;
+    urpx:billPortion urpx:deliveryPortion ;
     urpx:unitPrice 18.50 ;
     urpx:aggregationMethod urpx:maximum ;
     urpx:measurementIntervalDuration "PT15M" ;
@@ -500,7 +500,7 @@ ex:price-comm-distribution a urpx:Price ;
     urpx:name "Distribution Price" ;
     urpx:chargeType urpx:distribution ;
     urpx:chargeCategory urpx:infrastructure ;
-    urpx:billPortion urpx:delivery ;
+    urpx:billPortion urpx:deliveryPortion ;
     urpx:unitPrice 0.042 ;
     urpx:referencesMetricInput ex:metric-input-comm-energy .
 ```
@@ -543,7 +543,7 @@ ex:rateplan-ev a urpx:RatePlan ;
     urpx:name "Electric Vehicle Time-of-Use Rate Plan" ;
     urpx:description "Special TOU rate plan for EV charging" ;
     urpx:initialEffectiveDate "2025-01-01"^^xsd:date ;
-    urpx:serviceRole urpx:bundled ;
+    urpx:serviceRole urpx:bundledServiceRole ;
     urpx:hasRatePlanVersion ex:version-ev .
 
 # Rate Plan Version
@@ -630,7 +630,7 @@ ex:price-ev-service a urpx:Price ;
     urpx:chargeType urpx:minimumCharge ;
     urpx:chargeCategory urpx:serviceCharge ;
     urpx:amount 8.00 ;
-    urpx:billPortion urpx:bundled
+    urpx:billPortion urpx:bundledPortion
     urpx:hasMetricSpecification [ a urpx:MetricSpecification ; urpx:intervalDuration "P1M" ] .
 
 ex:price-ev-peak a urpx:Price ;
@@ -639,7 +639,7 @@ ex:price-ev-peak a urpx:Price ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
     urpx:unitPrice 0.45 ;
     urpx:touPeriodNumber 1 ;
-    urpx:billPortion urpx:delivery
+    urpx:billPortion urpx:deliveryPortion
     urpx:referencesMetricInput ex:metric-spec-ev .
 
 ex:price-ev-superoffpeak a urpx:Price ;
@@ -649,7 +649,7 @@ ex:price-ev-superoffpeak a urpx:Price ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
     urpx:unitPrice 0.05 ;
     urpx:touPeriodNumber 2 ;
-    urpx:billPortion urpx:delivery
+    urpx:billPortion urpx:deliveryPortion
     urpx:referencesMetricInput ex:metric-spec-ev .
 ```
 
@@ -690,7 +690,7 @@ ex:rateplan-care a urpx:RatePlan ;
     urpx:name "California Alternate Rates for Energy" ;
     urpx:description "Low-income assistance rate plan with discounted prices" ;
     urpx:initialEffectiveDate "2025-01-01"^^xsd:date ;
-    urpx:serviceRole urpx:bundled ;
+    urpx:serviceRole urpx:bundledServiceRole ;
     urpx:hasCustomerProfileSet ex:profile-set-care ;
     urpx:hasRatePlanVersion ex:version-care .
 
@@ -761,7 +761,7 @@ ex:price-care-energy a urpx:Price ;
     urpx:description "Discounted energy price (30% discount)" ;
     urpx:chargeType urpx:usageCharge ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
-    urpx:billPortion urpx:supply ;
+    urpx:billPortion urpx:supplyPortion ;
     urpx:unitPrice 0.067 ;
     urpx:referencesMetricInput ex:metric-input-care-energy .
 ```

@@ -335,22 +335,15 @@ URPX aligns with industry standards for maximum interoperability:
 
 ### Data Quality & Validation
 
-URPX includes comprehensive validation rules organized into modular SHACL files:
+URPX includes SHACL (Shapes Constraint Language) validation shapes in a unified file ([`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl), pre-draft v0.1.1):
 
-**Core Validation** (`urpx-shacl.ttl`)
-- Rate plan structure integrity
-- Price consistency rules
-- Temporal constraint validation
+**Core Validation** — Rate plan structure integrity, price consistency rules, temporal constraint validation
 
-**Organization Validation** (`urpx-organization-shacl.ttl`)
-- Identity tracking consistency
-- Corporate relationship rules
-- Regulatory jurisdiction validation
+**Organization Validation** — Identity tracking consistency, corporate relationship rules, regulatory jurisdiction validation
 
-**Geography Validation** (`urpx-geography-shacl.ttl`)
-- Territory coverage rules
-- Hierarchical boundary consistency
-- Coordinate range validation
+**Geography Validation** — Territory coverage rules, hierarchical boundary consistency, coordinate range validation
+
+Because SHACL shapes are modular and composable, additional shape definitions can be authored to enforce jurisdiction-specific constraints — such as required fields, value ranges, or expected relationships between classes that vary by regulatory context.
 
 ### Benefits of URPX
 

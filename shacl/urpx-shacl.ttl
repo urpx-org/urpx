@@ -1199,6 +1199,10 @@ urpx-shacl:PriceShape
             sh:minCount 1 ;
             sh:maxCount 1 ;
         ]
+        [
+            sh:path urpx:basedOnPrice ;
+            sh:minCount 1 ;
+        ]
     ) ;
     sh:property [
         sh:path urpx:adder ;
@@ -1719,7 +1723,7 @@ urpx-shacl:PriceSetShape
     sh:property [
         sh:path urpx:hasPrice ;
         sh:class urpx:Price ;
-        sh:minCount 2 ;
+        sh:minCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:hasPriceSummary ;
@@ -1828,7 +1832,7 @@ urpx-shacl:PriceSetAlternativeShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:forProfileAlternative ;
+        sh:path urpx:referencesProfileAlternative ;
         sh:class urpx:ProfileAlternative ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
@@ -1839,7 +1843,7 @@ urpx-shacl:PriceSetAlternativesShape
     rdfs:label "PriceSetAlternatives Shape"@en ;
     sh:targetClass urpx:PriceSetAlternatives ;
     sh:property [
-        sh:path urpx:forProfileAlternatives ;
+        sh:path urpx:referencesProfileAlternatives ;
         sh:class urpx:ProfileAlternatives ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
@@ -1958,7 +1962,7 @@ urpx-shacl:ProfileAlternativesShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:hasProfileAlternative ;
+        sh:path urpx:referencesProfileAlternative ;
         sh:class urpx:ProfileAlternative ;
         sh:minCount 2 ;
     ] .
@@ -2072,6 +2076,11 @@ urpx-shacl:RatePlanShape
         sh:minCount 0 ;
     ] ;
     sh:property [
+        sh:path urpx:hasLocationDataSet ;
+        sh:class urpx:LocationDataSet ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
         sh:path urpx:hasRatePlanVersion ;
         sh:class urpx:RatePlanVersion ;
         sh:minCount 1 ;
@@ -2104,6 +2113,18 @@ urpx-shacl:RatePlanShape
         sh:path urpx:ratePlanIdentifier ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:timeZone ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:timezoneIdentifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -2159,6 +2180,11 @@ urpx-shacl:RatePlanModifierShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:hasLocationDataSet ;
+        sh:class urpx:LocationDataSet ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
         sh:path urpx:hasRatePlanModifierVersion ;
         sh:class urpx:RatePlanModifierVersion ;
         sh:minCount 1 ;
@@ -2190,6 +2216,18 @@ urpx-shacl:RatePlanModifierShape
         sh:path urpx:priceCurrency ;
         sh:datatype xsd:string ;
         sh:maxLength 3 ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:timeZone ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:timezoneIdentifier ;
+        sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;

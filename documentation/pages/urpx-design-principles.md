@@ -102,7 +102,7 @@ urpx:PhaseCodeKindValue owl:oneOf (
 
 **Examples**:
 - `urpx:hasCalculationMethod`
-- `urpx:priceId`
+- `urpx:unitPrice`
 - `urpx:effectiveDate`
 
 ### 2.3 Enumeration Classes

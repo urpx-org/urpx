@@ -1,9 +1,185 @@
 # 📋 URPX Changelog
 
 **Version:** 0.1.1
-**Last Updated:** 2026-01-28
+**Last Updated:** 2026-02-24
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-02-24
+---
+
+### Ontology Property Changes
+
+#### Labels Updated
+- Updated `urpx:includeHolidays` label to "Includes Holidays"
+- Updated `urpx:includeNonHolidays` label to "Includes Non-Holidays"
+
+#### Domain Extensions
+- Extended `urpx:timeZone` domain to include `RatePlan` and `RatePlanModifier`
+- Extended `urpx:timezoneIdentifier` domain to include `RatePlan` and `RatePlanModifier`
+- Extended `urpx:hasLocationDataSet` domain to include `RatePlan` and `RatePlanModifier`
+
+#### Property Renamed
+- Renamed `urpx:hasProfileAlternative` to `urpx:referencesProfileAlternative` on `PriceSetAlternative` and `PriceDefinition` domains
+- Original `urpx:hasProfileAlternative` retained on `ProfileAlternatives` → `ProfileAlternative` containment relationship
+- Renamed `urpx:forProfileAlternative` to `urpx:referencesProfileAlternative` (PriceSetAlternative, PriceDefinition → ProfileAlternative)
+- Renamed `urpx:forProfileAlternatives` to `urpx:referencesProfileAlternatives` (PriceSetAlternatives, PriceDefinition → ProfileAlternatives)
+
+#### Enumeration Updates
+- Removed `urpx:month` and `urpx:hour` from `UnitOfMeasureValue` (time expressed via `intervalDuration`)
+- Updated `ServiceRoleValue` enumeration definitions
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- Reduced `PriceSet` minimum `hasPrice` cardinality from 2 to 1 (supports `PriceSetAlternative` subclass)
+- Added `urpx:basedOnPrice` as third option in Price shape `sh:xone` (alongside `amount` and `unitPrice`)
+- Renamed `urpx:hasProfileAlternative` to `urpx:referencesProfileAlternative` on `ProfileAlternativesShape`
+- Renamed `urpx:forProfileAlternative` to `urpx:referencesProfileAlternative` on `PriceSetAlternativeShape`
+- Renamed `urpx:forProfileAlternatives` to `urpx:referencesProfileAlternatives` on `PriceSetAlternativesShape`
+- Added `urpx:hasLocationDataSet`, `urpx:timeZone`, `urpx:timezoneIdentifier` to `RatePlanShape`
+- Added `urpx:hasLocationDataSet`, `urpx:timeZone`, `urpx:timezoneIdentifier` to `RatePlanModifierShape`
+
+### Documentation Updates
+
+#### Data Dictionary (`documentation/pages/urpx-data-dictionary.md`)
+- Reconciled all enumeration tables against ontology (59 enum classes)
+- Added 21 missing enumeration classes with complete value tables
+- Corrected enumeration value names to match ontology (`delivery` → `deliveryPortion`, `supply` → `supplyPortion`, `bundled` → `bundledPortion`, `distribution` → `distributionCharge`, etc.)
+- Alphabetically sorted all enumeration value tables
+- Removed 4 classes not in ontology: `RatePlanStatusValue`, `VersionStatusValue`, `StatementStatusValue`, `UtilityTypeValue`
+- Removed `versionStatus` property from RatePlanVersion (not in ontology)
+- Renamed `forProfileAlternative`/`forProfileAlternatives` to `referencesProfileAlternative`/`referencesProfileAlternatives`
+- Added `hasLocationDataSet`, `timeZone`, `timezoneIdentifier` to RatePlan class
+- Removed decision log cross-references
+
+#### Examples, Tutorial, API Spec, Design Decisions
+- Updated `billPortion` values across all files (`delivery` → `deliveryPortion`, `supply` → `supplyPortion`, `bundled` → `bundledPortion`)
+- Updated `serviceRole` values across all files (`bundled` → `bundledServiceRole`)
+- Updated `chargeType` values (`distribution` → `distributionCharge`)
+- Updated property rename references in design decisions log
+
+#### Quality Assurance (`documentation/pages/urpx-quality-assurance.md`)
+- Updated `BillPortionValue` and `ServiceRoleValue` references to new enumeration names
+- Removed decision log cross-references
+
+#### Overview (`documentation/pages/urpx-overview.md`)
+- Updated SHACL section for extensibility and accuracy
+
+#### Tutorial (`documentation/pages/urpx-tutorial.md`)
+- Added reference to validation script under development
+
+---
+
+2026-02-18
+---
+
+### Ontology Property Changes
+
+#### Removed: `urpx:isCredit` (DatatypeProperty)
+- **Rationale:** Risks data integrity by introducing ambiguity and duplicate credit handling for negative values. Impossible to enforce proper use of optional boolean property with large datasets.
+- **Migration:** Credits are now indicated exclusively through negative `unitPrice`/`amount` values combined with credit-specific `chargeType` enumerations (e.g., `creditEnergy`, `capitalCredit`, `creditGeneration`).
+- **Impact:** Breaking change for any implementations using `isCredit`. Remove all `isCredit` instances from data.
+- **Status:** Open to revisiting credit tagging in the future (see working group agenda item).
+- **Design Decision:** [#057](#decision-057)
+
+#### Removed: `urpx:priceId` (DatatypeProperty)
+- **Rationale:** `@id` provides a unique identifier for prices; a separate property is redundant.
+- **Migration:** Replace all `urpx:priceId` values with `@id` declarations on Price objects.
+- **Impact:** Breaking change for implementations relying on `priceId`.
+- **Design Decision:** [#058](#decision-058)
+
+#### Added: `urpx:referencesPriceDefinition` (ObjectProperty)
+- **Domain:** `urpx:Price`, `urpx:PriceSet`
+- **Range:** `urpx:PriceDefinition`
+- **Purpose:** Provides an IRI-based link between a `Price` instance (containing temporal and numerical information) and its associated `PriceDefinition` object (containing structural, descriptive, and applicability information). Supports n:1 relationship.
+- **Design Decision:** [#059](#decision-059)
+
+#### Removed: `urpx:PriceDefinition` from temporal property domains
+- Removed from `startDate`, `startDateTime`, `endDate`, `endDateTime`, `expectedEndDate`, `expectedEndDateTime` domains.
+- **Rationale:** `PriceDefinition` communicates structural/descriptive price information and should not have temporal properties.
+- **Design Decision:** [#062](#decision-062)
+
+#### SHACL Updates
+- Made `urpx:chargeType` and `urpx:chargeCategory` optional on Price shape (previously required).
+- Made `urpx:billPortion` optional on PriceDefinition shape (previously required).
+- **Rationale:** These are mapping categorizations; not required for complete data.
+- **Design Decision:** [#061](#decision-061)
+
+#### Test Data Updates
+- Removed `urpx:isCredit` instances from test data.
+- Replaced `urpx:priceId` with `@id` declarations.
+- Added `urpx:referencesPriceDefinition` to each `Price` object.
+- Consolidated delivery price definitions into single Ledger for consistency.
+- Moved structural properties (`baseQuantity`, `hasCalculationMethod`, `hasApplicabilityRule`) from `Price` to `PriceDefinition`.
+- Removed duplicate `chargeType`/`chargeCategory`/`touPeriodNumber` from Price instances where already on PriceDefinition.
+- Added `assets/` and `data/` subdirectories to test case folder structure.
+
+### Minor Updates
+- Updated `AnnualIncomeRangeValue` instance descriptions to indicate ranges are "typical" rather than absolute.
+- Updated `urpx:url` value from string to valid URL format in test data.
+
+---
+
+2026-02-11
+---
+- Corrected range for `urpx:dataSourceType` property.
+
+---
+
+2026-02-10
+---
+- Added `urpx:hertz` unit of measure to `UnitOfMeasureValue` enumeration.
+- Added `urpx:EligibilityRule` and `urpx:Condition` to domain of `urpx:description` property.
+
+---
+
+2026-02-06
+---
+
+### Ontology Consistency Updates
+- Added `urpx:otherEndUse` to `EndUseValue` enumeration.
+- Added `urpx:measuredLedger` to `LedgerTypeValue` enumeration.
+- Removed `urpx:net` from `MeteringConfigurationValue` enumeration.
+- Added `urpx:ratePlanPublication` and `urpx:ratePlanModifierPublication` to `PublicationTypeValue` enumeration.
+- Updated `billPortion` values in `ChargeTypeValue` charge classification combinations (`supply` -> `supplyPortion`, `delivery` -> `deliveryPortion`).
+- Added `urpx:interval` to `MeteringConfigurationValue` enumeration.
+- Added `MetricInputTypeValue` enumeration section (was missing from ontology).
+- Added `urpx:day` and `urpx:year` to `UnitOfMeasureValue` enumeration.
+- Removed misplaced `profileMetricProperty` definition from `UpdateFrequencyValue` section.
+
+### SHACL Validation File
+- **Added:** `shacl/urpx-shacl.ttl` (~3,635 lines) - Draft SHACL shapes for ontology validation.
+- Updated PG&E test case data for SHACL compliance.
+- **Design Decision:** [#060](#decision-060)
+
+### Domain Fix
+- Fixed `urpx:hasRateGroup` domain to use proper OWL union syntax: `owl:unionOf ( urpx:RatePlan urpx:ServiceClass )`.
+
+---
+
+2026-02-05
+---
+- Added units of measure: `urpx:bit`, `urpx:byte`, `urpx:count`, `urpx:decatherm`, `urpx:Gbps`, `urpx:item`, `urpx:Mbps`, `urpx:kilogallon`, `urpx:VA`, `urpx:VAh`, `urpx:VAr`, `urpx:VArh`, `urpx:kVAr`, `urpx:kVArh`.
+- Updated domain/range for `urpx:hasAlternative`: domain changed from `ProfileAlternative` to `PriceSet`; range changed from `PriceSet` to `ProfileAlternative`.
+- Updated domain for `urpx:hasAlternativeDimension`: changed from `ProfileAlternative` to `AlternativeDimensions`.
+- Added `urpx:RatePlanModifierVersion` to `hasPrices` domain (along with `TariffStatementDocument`, `TariffSupplementDocument`, `TariffAddendumDocument`).
+- Added `urpx:RatePlanModifierVersion` to domains of `approvalDate`, `changeDescription`, `changeReason`.
+- Fixed `urpx:hasServiceTier`: domain corrected to `BillingModel`, range corrected to `ServiceTier`.
+
+---
+
+2026-01-30
+---
+- Added `urpx:RatePlanModifierVersion` to `hasPrices` and other property domains.
+- Removed `urpx:ServicePointProfile` from `billingCycleCode` property domain.
+
+---
+
+2026-01-29
+---
+- Updated `.gitignore`.
+- Minor ontology corrections.
+
+---
 
 2026-01-28
 - removed tierThreshold as redundant
@@ -49,7 +225,7 @@ Updated domain to allow for season price tagging:
 - **Diagrams Cleanup**:
     - Embedded all active Mermaid diagrams directly into [`urpx-diagram-index.md`](documentation/pages/urpx-diagram-index.md) code blocks, eliminating the need for external SVG exports.
     - Moved all draft/WIP diagrams and historical archives to [`dev-documentation/documentation-drafts/diagrams-drafts/`](dev-documentation/documentation-drafts/diagrams-drafts).
-    - Logged new Design Decision #082 for diagram embedding strategy.
+    - Embedded Mermaid diagrams directly into documentation pages.
 - **Index Updates**: Updated [`index.md`](documentation/index.md) to reference new `urpx-interoperability.md` and include new design decision logs.
 - **Status**: All documentation finalization complete, documentation files are MECE.
 

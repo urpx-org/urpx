@@ -27,7 +27,7 @@ Before starting this tutorial, ensure you have:
 ### Required Files
 - `../../ontology/urpx-ontology.ttl` - URPX ontology file.
 
-> **Note:** SHACL validation schemas are under development and will be included in future releases.
+> **Note:** Draft SHACL validation shapes are available at [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl). A reference validation script is under development for inclusion in the repository.
 
 ---
 
@@ -131,7 +131,7 @@ Let's build a basic residential rate plan step by step using JSON-LD.
       "@type": "xsd:date",
       "@value": "2025-01-01"
     },
-    "serviceRole": {"@id": "urpx:bundled"},
+    "serviceRole": {"@id": "urpx:bundledServiceRole"},
     "hasRatePlanVersion": {
       "@id": "ex:version-basic-res-v1",
       "@type": "RatePlanVersion",
@@ -161,7 +161,7 @@ Let's build a basic residential rate plan step by step using JSON-LD.
             "commodity": {"@id": "urpx:electricity"},
             "measurementKind": {"@id": "urpx:energy"},
             "unitOfMeasure": {"@id": "urpx:kWh"},
-            "billPortion": {"@id": "urpx:supply"}
+            "billPortion": {"@id": "urpx:supplyPortion"}
           }
         }
       }
@@ -293,7 +293,7 @@ Commercial and industrial rates often include demand prices based on peak power 
   "description": "Monthly peak demand price based on 15-minute intervals",
   "chargeType": {"@id": "urpx:demandDirect"},
   "chargeCategory": {"@id": "urpx:auxiliaryCharge"},
-  "billPortion": {"@id": "urpx:delivery"},
+  "billPortion": {"@id": "urpx:deliveryPortion"},
   "unitPrice": 8.50,
   "schema:priceCurrency": "USD",
   "referencesMetricInput": {"@id": "ex:metric-input-demand"},
@@ -315,7 +315,7 @@ Fuel adjustment mechanisms that vary monthly based on generation costs.
   "description": "Monthly fuel cost adjustment per kWh",
   "chargeType": {"@id": "urpx:adjustmentPowerCost"},
   "chargeCategory": {"@id": "urpx:adjustment"},
-  "billPortion": {"@id": "urpx:supply"},
+  "billPortion": {"@id": "urpx:supplyPortion"},
   "unitPrice": 0.025,
   "schema:priceCurrency": "USD",
   "referencesMetricInput": {"@id": "ex:metric-input-energy"}
@@ -332,9 +332,9 @@ Delivery system prices separated from generation costs.
   "@type": "Price",
   "name": "Distribution Price",
   "description": "Local distribution system delivery price",
-  "chargeType": {"@id": "urpx:distribution"},
+  "chargeType": {"@id": "urpx:distributionCharge"},
   "chargeCategory": {"@id": "urpx:infrastructure"},
-  "billPortion": {"@id": "urpx:delivery"},
+  "billPortion": {"@id": "urpx:deliveryPortion"},
   "unitPrice": 0.058,
   "schema:priceCurrency": "USD",
   "referencesMetricInput": {"@id": "ex:metric-input-energy"}
@@ -543,9 +543,9 @@ Extracted from the full list of possible values in `urpx-ontology.ttl`:
 
 ### Valid Bill Portion Values
 
-- `urpx:delivery` - Distribution and transmission prices
-- `urpx:supply` - Generation and energy prices
-- `urpx:bundled` - Combined prices, taxes, service fees
+- `urpx:deliveryPortion` - Distribution and transmission prices
+- `urpx:supplyPortion` - Generation and energy prices
+- `urpx:bundledPortion` - Combined prices, taxes, service fees
 
 ### Common Patterns
 
@@ -583,7 +583,7 @@ Extracted from the full list of possible values in `urpx-ontology.ttl`:
 1. **Validate JSON-LD syntax** - Ensure well-formed JSON
 2. **Check property existence** - All properties must exist in ontology
 3. **Validate enum values** - All enum instances must exist in ontology
-4. **SHACL validation** - SHACL validation schemas are under development and will be included in future releases.
+4. **SHACL validation** - Validate against draft SHACL shapes at [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl). A reference validation script is under development.
 5. **Verify business logic** - Price combinations make sense
 
 ---

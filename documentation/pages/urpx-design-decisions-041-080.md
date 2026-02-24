@@ -2,7 +2,7 @@
 
 **Version:** 1.0
 **Created:** 2026-01-05
-**Last Updated:** 2026-01-28
+**Last Updated:** 2026-02-18
 
 > **Note:** Design decisions reference the original modular ontology files (urpx-core-ontology.ttl, urpx-profile.ttl, urpx-organization.ttl, urpx-geography.ttl, urpx-charge-classification.ttl). As of v0.1.1, these files have been consolidated into a single `ontology/urpx-ontology.ttl` file. See [urpx-changelog.md](../../urpx-changelog.md) for consolidation details.
 
@@ -57,7 +57,15 @@ Quick links to all design decisions:
 - ✅ [Decision #052: Structured Data Source Reference Architecture](#decision-052)
 - 📋 [Decision #053: Removal of Misplaced Cardinality Constraints from Property Definitions](#decision-053)
 - ✅ [Decision #054: Data Dictionary MECE Restructuring and Repetition Elimination](#decision-054)
- 
+- ✅ [Decision #055: Constraint Architecture Refactoring and Simplification](#decision-055)
+- 📋 [Decision #056: Enhancement Log for Inverse Properties](#decision-056)
+- ✅ [Decision #057: Removal of isCredit Property](#decision-057)
+- ✅ [Decision #058: Removal of priceId Property and @id Standardization](#decision-058)
+- ✅ [Decision #059: referencesPriceDefinition Object Property Creation](#decision-059)
+- ✅ [Decision #060: SHACL Validation Shapes Introduction](#decision-060)
+- ✅ [Decision #061: chargeType/chargeCategory Made Optional on Price](#decision-061)
+- ✅ [Decision #062: PriceDefinition Removed from Temporal Property Domains](#decision-062)
+
 ---
 
 ## How to Add New Decisions
@@ -730,8 +738,8 @@ ProfileAlternatives (container)
 - `hasProfileAlternatives`: PlanElements → ProfileAlternatives
 - `hasAlternativeDimensions`: ProfileAlternatives → AlternativeDimensions
 - `hasProfileAlternative`: ProfileAlternatives → ProfileAlternative (domain updated by user)
-- `forProfileAlternative`: PriceSetAlternative → ProfileAlternative
-- `forProfileAlternatives`: PriceSetAlternatives → ProfileAlternatives
+- `referencesProfileAlternative`: PriceSetAlternative, PriceDefinition → ProfileAlternative
+- `referencesProfileAlternatives`: PriceSetAlternatives, PriceDefinition → ProfileAlternatives
 
 **Renaming:**
 - Class: `AlternativeDimensionSet` → `ProfileAlternative`
@@ -1119,7 +1127,7 @@ Remove all instances of `owl:cardinality`, `owl:minCardinality`, and `owl:maxCar
 
 ---
 <a id="decision-054"></a>
-### 🔗 Decision #081: Data Dictionary MECE Restructuring and Repetition Elimination
+### 🔗 Decision #054: Data Dictionary MECE Restructuring and Repetition Elimination
 
 - **Status:** ✅ Implemented
 - **Date:** 2026-01-21
@@ -1263,46 +1271,328 @@ The v0.1.1 release is focused on consolidation and cleanup. Adding new propertie
 
 ---
 
-<a id="decision-082"></a>
-### 🔗 Decision #082: Embed Mermaid Diagrams in Documentation
+<a id="decision-057"></a>
+### 🔗 Decision #057: Removal of isCredit Property
 
 - **Status:** ✅ Implemented
-- **Date:** 2026-01-26
-- **Issue:** Epic 0016 Task 0008 - Final Documentation Scan and Cleanup
-- **Category:** Architecture (Documentation)
-- **Impact:** Medium - Improves maintainability and reduces file clutter.
+- **Date:** 2026-02-18
+- **Issue:** Ontology property review
+- **Category:** Architecture, Data Integrity
+- **Impact:** High - Breaking change; eliminates data ambiguity for credit handling
 
 **Context:**
-The previous documentation strategy relied on exporting Mermaid diagrams to external SVG files (`.svg`) and referencing them as images in Markdown pages. This created synchronization issues where the SVG would become out of date with the source `.mmd` file. Additionally, exporting SVGs required external CLI tools (mermaid-cli) which were not consistently available in the dev environment.
+The `urpx:isCredit` boolean property was added on 2026-01-27 to explicitly flag credits for accounting system integration. However, with negative `unitPrice`/`amount` values already serving as the primary mathematical indicator for credits, the boolean created multiple valid representations for the same concept:
+1. A negative `unitPrice`/`amount` value (mathematical indicator)
+2. `isCredit: true` with a positive value (boolean indicator)
+3. Both simultaneously (redundant)
+
+This ambiguity made enforcement impossible at scale — there was no way to guarantee that optional boolean flags would be used consistently across large datasets.
 
 **Decision:**
-Embed Mermaid diagram code directly into Markdown documentation pages using ` ```mermaid ` code blocks.
+Remove `urpx:isCredit` entirely. Use negative values in `unitPrice`/`amount` combined with credit-specific `chargeType` enumerations as the single source of truth for credit semantics.
 
 **Alternatives Considered:**
 
-1.  **Embed Mermaid Code (Selected)** ⭐ **SELECTED**
-    -   ✅ Single source of truth (the code is the diagram).
-    -   ✅ Renders natively in GitHub and modern Markdown editors (VS Code).
-    -   ✅ Eliminates build step (no need to run `mmdc`).
-    -   ✅ Easier to edit and version control (text diffs vs binary/generated image diffs).
+1. **Remove isCredit, rely on negative values + chargeType** ⭐ **SELECTED**
+   - ✅ Single unambiguous representation for credits
+   - ✅ Negative values are mathematically self-consistent (summation works without special logic)
+   - ✅ Credit-specific `chargeType` enumerations provide semantic richness
+   - ✅ Eliminates enforcement burden of optional boolean
 
-2.  **Keep External SVGs**
-    -   ❌ Requires manual export step or CI/CD pipeline.
-    -   ❌ SVGs can get out of sync with source.
-    -   ❌ Requires separate file management.
+2. **Keep isCredit as supplementary metadata**
+   - ✅ Provides explicit flag for accounting systems
+   - ❌ Ambiguity persists — two representations for the same concept
+   - ❌ Cannot enforce consistency of optional boolean across large datasets
+   - ❌ Risk of contradictory data (positive value + `isCredit: true` vs negative value + `isCredit: false`)
+
+3. **Replace with creditType ObjectProperty (controlled vocabulary)**
+   - ✅ Richer semantics than boolean
+   - ✅ Avoids boolean ambiguity
+   - ❌ Premature — requires working group consensus on vocabulary
+   - ❌ Deferred as potential future enhancement
 
 **Rationale:**
-Simplifying the documentation toolchain reduces friction for maintainers and contributors. Direct embedding ensures that what you see is always the current version of the diagram logic.
+- Single representation eliminates ambiguity and simplifies validation
+- Credit `chargeType` enumerations (`creditEnergy`, `capitalCredit`, `creditGeneration`, etc.) already provide semantic classification
+- Negative values are the standard mathematical convention for credits in financial systems
+- Open to revisiting credit tagging in the future with a less ambiguous mechanism (see working group agenda)
 
 **Implementation Details:**
--   Updated `documentation/pages/urpx-diagram-index.md` to use embedded Mermaid blocks for active diagrams.
--   Removed references to external `.svg` files for these diagrams.
--   Draft/WIP diagrams were moved to `dev-documentation` and references kept as text pointers for future work.
+- Removed `urpx:isCredit` property definition from `ontology/urpx-ontology.ttl`
+- Removed `isCredit` constraints from `shacl/urpx-shacl.ttl`
+- Removed `isCredit` instances from test data (`test-cases/pge-e-elec-2026-01-01/`)
 
 **Impact Assessment:**
--   **Positive**: Reduced maintenance overhead, guaranteed consistency.
--   **Breaking Change**: None.
--   **Requirements**: Viewers must use a Markdown reader with Mermaid support (standard in GitHub/VS Code).
+- **Positive**: Eliminates data ambiguity, simplifies validation, reduces property count
+- **Breaking Change**: Yes — implementations using `isCredit` must remove all instances. Credits should be represented via negative values only.
+- **Requirements**: Working group discussion on credit representation strategy (scheduled for meeting #004)
 
 **References:**
--   Task: [`task_0008_final_documentation_scan.md`](../../dev-documentation/v0.1.1/epics/epic_0016_cleanup_and_consolidation/task_0008_final_documentation_scan.md)
+- Commit: `54d1c9f`
+- Working Group Agenda: Meeting #004, Item 3 (isCredit removal and credit representation)
+
+---
+
+<a id="decision-058"></a>
+### 🔗 Decision #058: Removal of priceId Property and @id Standardization
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-02-18
+- **Issue:** Ontology property review
+- **Category:** Architecture, Identification
+- **Impact:** High - Breaking change; standardizes identification pattern
+
+**Context:**
+The `urpx:priceId` datatype property provided a string-based identifier for Price instances. However, JSON-LD's `@id` mechanism already provides a standards-based, globally unique identifier for any resource. Maintaining a separate `priceId` property created redundancy and potential confusion about which identifier to use.
+
+**Decision:**
+Remove `urpx:priceId`. Use JSON-LD `@id` exclusively for Price identification.
+
+**Alternatives Considered:**
+
+1. **Use @id only** ⭐ **SELECTED**
+   - ✅ Leverages standard JSON-LD identification mechanism
+   - ✅ Eliminates redundant property
+   - ✅ Globally unique by definition (IRIs)
+   - ✅ Consistent with how other URPX classes are identified
+
+2. **Keep priceId as human-readable alias**
+   - ✅ May be easier for non-RDF consumers
+   - ❌ Redundant with @id
+   - ❌ Creates two identification systems for the same resource
+   - ❌ Adds maintenance burden
+
+**Rationale:**
+- `@id` is the standard JSON-LD mechanism for resource identification
+- Eliminating `priceId` reduces property count and removes ambiguity
+- Aligns Price identification with how all other URPX classes use `@id`
+
+**Implementation Details:**
+- Removed `urpx:priceId` property definition from `ontology/urpx-ontology.ttl`
+- Replaced all `urpx:priceId` values with `@id` declarations in test data
+
+**Impact Assessment:**
+- **Positive**: Cleaner identification, reduced property count, consistent patterns
+- **Breaking Change**: Yes — replace all `priceId` with `@id` in data
+- **Requirements**: Migration guide for implementations relying on `priceId`
+
+**References:**
+- Commit: `54d1c9f`
+
+---
+
+<a id="decision-059"></a>
+### 🔗 Decision #059: referencesPriceDefinition Object Property Creation
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-02-18
+- **Issue:** Price architecture refinement
+- **Category:** Architecture
+- **Impact:** Medium - New property; non-breaking addition
+
+**Context:**
+The two-tier price architecture (Decision #045) separates `PriceDefinition` (structural/descriptive information) from `Price` (temporal/numerical instances). However, there was no explicit property linking a `Price` instance back to its associated `PriceDefinition`. This link is needed to support scenarios like dynamic pricing where multiple temporal `Price` instances reference the same structural `PriceDefinition`.
+
+**Decision:**
+Create `urpx:referencesPriceDefinition` as an ObjectProperty linking `Price` and `PriceSet` instances to their `PriceDefinition`.
+
+**Alternatives Considered:**
+
+1. **Explicit ObjectProperty (referencesPriceDefinition)** ⭐ **SELECTED**
+   - ✅ Clear, named relationship between Price and PriceDefinition
+   - ✅ Supports n:1 relationship (multiple Prices referencing one PriceDefinition)
+   - ✅ Queryable via SPARQL
+   - ✅ Follows URPX Object-Property naming convention
+
+2. **Implicit relationship via containment**
+   - ✅ No new property needed
+   - ❌ Ambiguous relationship
+   - ❌ Cannot support n:1 patterns
+   - ❌ Difficult to query
+
+**Rationale:**
+- Enables explicit linking between temporal price instances and their structural definitions
+- Supports dynamic pricing scenarios where multiple temporal instances share one definition
+- Follows established URPX naming conventions (`references` prefix for cross-referencing properties)
+
+**Implementation Details:**
+```turtle
+urpx:referencesPriceDefinition a owl:ObjectProperty ;
+    rdfs:label "References Price Definition"@en ;
+    rdfs:comment "Links a Price instance to its associated PriceDefinition." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:Price urpx:PriceSet ) ] ;
+    rdfs:range urpx:PriceDefinition .
+```
+- Added to test data: each `Price` object now includes `urpx:referencesPriceDefinition` linking to its `PriceDefinition`
+
+**Impact Assessment:**
+- **Positive**: Enables explicit price-to-definition linking, supports dynamic pricing patterns
+- **Breaking Change**: None — additive only
+- **Requirements**: Existing data should add `referencesPriceDefinition` links for completeness
+
+**References:**
+- Commit: `54d1c9f`
+- Related Decision: #045 (PriceDefinition Architecture Clarification)
+
+---
+
+<a id="decision-060"></a>
+### 🔗 Decision #060: SHACL Validation Shapes Introduction
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-02-06
+- **Issue:** Ontology validation capability
+- **Category:** Validation
+- **Impact:** High - Major quality assurance addition
+
+**Context:**
+URPX lacked machine-readable validation constraints beyond OWL axioms. OWL reasoning validates class consistency and inference but cannot enforce instance-level constraints like required properties, value ranges, or cardinality on specific shapes. SHACL (Shapes Constraint Language) fills this gap by providing data validation at the instance level.
+
+**Decision:**
+Introduce `shacl/urpx-shacl.ttl` as a unified SHACL validation file containing comprehensive shapes for all major URPX classes.
+
+**Alternatives Considered:**
+
+1. **Unified SHACL file** ⭐ **SELECTED**
+   - ✅ Single file for all validation shapes (~3,635 lines)
+   - ✅ Consistent with unified ontology approach (single `urpx-ontology.ttl`)
+   - ✅ Simpler tooling and validation workflow
+   - ✅ Easier to maintain and distribute
+
+2. **Modular SHACL files (per domain)**
+   - ✅ Smaller individual files
+   - ❌ Increases file management complexity
+   - ❌ Inconsistent with unified ontology decision
+   - ❌ Harder to validate comprehensively
+
+**Rationale:**
+- SHACL enables data validation at instance level, catching constraint violations OWL reasoning cannot
+- Unified file mirrors the unified ontology approach for consistency
+- Provides immediate value for data quality assurance in working group review
+
+**Implementation Details:**
+- Created `shacl/urpx-shacl.ttl` (~3,635 lines) with shapes for:
+  - RatePlan, RatePlanVersion, RatePlanModifier, RatePlanModifierVersion
+  - Price, PriceSet, PriceDefinition, PriceSetAlternative
+  - BillingModel, Ledger, ServiceTier, BillingCycle
+  - TOUSchedule, TOUTier, TOUPeriod, Season, Holiday
+  - EligibilityRule, Condition, CustomerProfile, ServicePointProfile
+  - Organization, ServiceTerritory, and more
+- Updated PG&E test case data for SHACL compliance
+- Status: Draft — constraints may be refined based on working group feedback
+
+**Impact Assessment:**
+- **Positive**: Machine-readable validation, improved data quality, standardized constraint enforcement
+- **Breaking Change**: None — additive only (validation is opt-in)
+- **Requirements**: Viewers should use SHACL-aware tools (e.g., Apache Jena, TopBraid) for validation
+
+**References:**
+- Commit: `8de0ce9`
+- File: [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+
+---
+
+<a id="decision-061"></a>
+### 🔗 Decision #061: chargeType/chargeCategory Made Optional on Price
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-02-18
+- **Issue:** SHACL constraint refinement
+- **Category:** Validation
+- **Impact:** Medium - Relaxes previous requirements
+
+**Context:**
+The initial SHACL shapes defined `urpx:chargeType` and `urpx:chargeCategory` as required properties on Price shapes (minCount 1). Similarly, `urpx:billPortion` was required on PriceDefinition. However, these are charge classification/mapping categorizations that:
+1. May not always be available from source tariff documents
+2. Are not essential for mathematical rate calculation
+3. May be applied during a later enrichment step rather than at initial data creation
+
+**Decision:**
+Make `chargeType`, `chargeCategory`, and `billPortion` optional (minCount 0) in SHACL shapes.
+
+**Alternatives Considered:**
+
+1. **Make optional (minCount 0)** ⭐ **SELECTED**
+   - ✅ Allows valid data to pass validation without artificial classification
+   - ✅ Supports incremental data enrichment workflows
+   - ✅ More realistic for initial data ingestion from diverse sources
+   - ✅ Classification can still be encouraged via documentation
+
+2. **Keep required (minCount 1)**
+   - ✅ Ensures complete charge classification
+   - ❌ Rejects valid data that lacks charge classification
+   - ❌ Forces artificial classification for data sources that don't provide it
+   - ❌ Barriers to adoption for data providers
+
+**Rationale:**
+- Not all data sources provide charge classification upfront
+- Making these optional lowers barriers for initial data submission
+- Classification remains strongly recommended in documentation and examples
+- SHACL severity levels can flag missing classification as warnings rather than errors
+
+**Implementation Details:**
+- Updated `shacl/urpx-shacl.ttl`: `chargeType` and `chargeCategory` minCount changed from 1 to 0 on Price shape
+- Updated `shacl/urpx-shacl.ttl`: `billPortion` minCount changed from 1 to 0 on PriceDefinition shape
+
+**Impact Assessment:**
+- **Positive**: More flexible validation, better adoption support
+- **Breaking Change**: None — relaxation, not restriction
+- **Requirements**: Documentation should still recommend providing these properties
+
+**References:**
+- Commit: `54d1c9f`
+
+---
+
+<a id="decision-062"></a>
+### 🔗 Decision #062: PriceDefinition Removed from Temporal Property Domains
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-02-18
+- **Issue:** Domain architecture refinement
+- **Category:** Architecture
+- **Impact:** Medium - Breaking change for implementations using temporal properties on PriceDefinition
+
+**Context:**
+`urpx:PriceDefinition` was included in the domain of temporal properties (`startDate`, `startDateTime`, `endDate`, `endDateTime`, `expectedEndDate`, `expectedEndDateTime`). However, PriceDefinition holds structural and descriptive price information (charge classification, applicability rules, calculation methods) that is not temporal in nature. Temporal information (when a price is effective) belongs on `Price` instances, which contain the actual numerical and temporal data.
+
+**Decision:**
+Remove `urpx:PriceDefinition` from the domain of all temporal properties. Temporal information is expressed exclusively on `Price` instances.
+
+**Alternatives Considered:**
+
+1. **Remove PriceDefinition from temporal domains** ⭐ **SELECTED**
+   - ✅ Clean separation: PriceDefinition = structural, Price = temporal + numerical
+   - ✅ Prevents confusion about where temporal data lives
+   - ✅ Aligns with two-tier architecture intent (Decision #045)
+   - ✅ Simplifies validation
+
+2. **Keep PriceDefinition in temporal domains**
+   - ✅ No migration needed
+   - ❌ Blurs the structural/temporal boundary
+   - ❌ Contradicts two-tier architecture intent
+   - ❌ Creates ambiguity about whether dates on PriceDefinition or Price take precedence
+
+**Rationale:**
+- Two-tier architecture (Decision #045) establishes PriceDefinition as structural and Price as temporal
+- Temporal properties on PriceDefinition contradicted this separation
+- Clean domain boundaries improve data modeling clarity
+
+**Implementation Details:**
+- Removed `urpx:PriceDefinition` from `rdfs:domain` union of:
+  - `urpx:startDate`
+  - `urpx:startDateTime`
+  - `urpx:endDate`
+  - `urpx:endDateTime`
+  - `urpx:expectedEndDate`
+  - `urpx:expectedEndDateTime`
+
+**Impact Assessment:**
+- **Positive**: Clean architectural separation, reduced ambiguity
+- **Breaking Change**: Yes — data using temporal properties on PriceDefinition must migrate these to Price instances
+- **Requirements**: Migration guide for existing implementations
+
+**References:**
+- Commit: `54d1c9f`
+- Related Decision: #045 (PriceDefinition Architecture Clarification), #059 (referencesPriceDefinition)
