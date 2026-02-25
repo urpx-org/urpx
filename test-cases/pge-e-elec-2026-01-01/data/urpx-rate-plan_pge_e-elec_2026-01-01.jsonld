@@ -32,7 +32,6 @@
       "urpx:organizationType": { "@id": "urpx:utilityOrganization"}
     },
     "@id": "urpx:pge-e-elec-2026-01-01",
-    "urpx:versionNumber": "2026-01-01",
     "urpx:description": "This optional schedule applies to individually-metered electric service to residential customers who have one or more of the following qualifying electric technologies: • Electric vehicle charging; • Energy storage; or • Electric heat pump for water heating or climate control (space heating and/or cooling).",
     "urpx:effectiveDateTime": "2026-01-01T00:00:00",
     "urpx:changeReason": { "@id": "urpx:rateCase" },
