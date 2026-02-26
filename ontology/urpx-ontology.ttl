@@ -2150,6 +2150,13 @@ urpx:name a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     skos:note "Human-readable name for entities. Keep concise for display purposes (max 255 chars recommended). Universal naming property used across all entity types." .
 
+urpx:nameType a owl:ObjectProperty ;
+    rdfs:label "Name Type"@en ;
+    rdfs:comment "Classification of name usage (entity naming)" ;
+    rdfs:domain urpx:OrganizationName ;
+    rdfs:range urpx:NameTypeValue ;
+    skos:note "Entity naming enumeration. Standardized name categorization." .
+
 urpx:nominalVoltage a owl:DatatypeProperty ;
     rdfs:label "Nominal Voltage"@en ;
     rdfs:comment "Nominal service voltage in volts" ;

@@ -1198,6 +1198,18 @@ urpx-shacl:PriceShape
             sh:path urpx:basedOnPrice ;
             sh:minCount 1 ;
         ]
+        [
+            sh:path urpx:basePrice ;
+            sh:datatype xsd:decimal ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ]
+        [
+            sh:path urpx:currentPrice ;
+            sh:datatype xsd:decimal ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ]
     ) ;
     sh:property [
         sh:path urpx:adder ;
@@ -1929,12 +1941,6 @@ urpx-shacl:ProfileAlternativeShape
     rdfs:label "ProfileAlternative Shape"@en ;
     sh:targetClass urpx:ProfileAlternative ;
     sh:property [
-        sh:path urpx:alternativesType ;
-        sh:node urpx-shacl:AlternativesTypeValueShape ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:defaultSelectionLogic ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
@@ -1957,7 +1963,7 @@ urpx-shacl:ProfileAlternativesShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:referencesProfileAlternative ;
+        sh:path urpx:hasProfileAlternative ;
         sh:class urpx:ProfileAlternative ;
         sh:minCount 2 ;
     ] .
@@ -3205,13 +3211,6 @@ urpx-shacl:AggregationMethodValueShape
     sh:targetClass urpx:AggregationMethodValue ;
     sh:nodeKind sh:IRI ;
     sh:in ( urpx:sum urpx:average urpx:maximum urpx:minimum urpx:median ) .
-
-urpx-shacl:AlternativesTypeValueShape
-    a sh:NodeShape ;
-    rdfs:label "AlternativesTypeValue Shape"@en ;
-    sh:targetClass urpx:AlternativesTypeValue ;
-    sh:nodeKind sh:IRI ;
-    sh:in ( urpx:billingCycleAlternatives urpx:customerProfileAlternatives urpx:geographicAlternatives urpx:serviceClassAlternatives urpx:temporalAlternatives ) .
 
 urpx-shacl:AnnualIncomeRangeValueShape
     a sh:NodeShape ;

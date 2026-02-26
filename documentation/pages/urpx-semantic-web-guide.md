@@ -288,8 +288,7 @@ This example demonstrates how charge alternatives link to dimension sets via IRI
   "@graph": [
     {
       "@id": "ex:zone-h-secondary",
-      "@type": "urpx:AlternativeDimensionSet",
-      "urpx:alternativesType": {"@id": "urpx:geographicAlternatives"},
+      "@type": "urpx:ProfileAlternative",
       "urpx:hasDimensionValue": [
         {
           "urpx:forDimension": {"@id": "ex:nyiso-zone-dimension"},
@@ -303,10 +302,10 @@ This example demonstrates how charge alternatives link to dimension sets via IRI
     },
     {
       "@id": "ex:charges-zone-h-secondary",
-      "@type": "urpx:chargeSetAlternative",
-      "urpx:forAlternative": {"@id": "ex:zone-h-secondary"},
-      "urpx:alternativeLabel": "Zone H - Secondary Voltage",
-      "urpx:hasCharge": [
+      "@type": "urpx:PriceSetAlternative",
+      "urpx:referencesProfileAlternative": {"@id": "ex:zone-h-secondary"},
+      "urpx:name": "Zone H - Secondary Voltage",
+      "urpx:hasPrice": [
         {"@id": "ex:energy-charge-zone-h-secondary"},
         {"@id": "ex:demand-charge-zone-h-secondary"}
       ]
@@ -315,7 +314,7 @@ This example demonstrates how charge alternatives link to dimension sets via IRI
 }
 ```
 
-The `forAlternative` property uses an **IRI reference** (`ex:zone-h-secondary`) to link the charge set to its dimension set. This enables:
+The `referencesProfileAlternative` property uses an **IRI reference** (`ex:zone-h-secondary`) to link the price set alternative to its profile alternative. This enables:
 - Dereferenceable links for metadata lookup
 - Clean separation between dimension definitions and charges
 - Reusable dimension sets across multiple rate plans

@@ -2,7 +2,7 @@
 
 **Version:** 1.0
 **Created:** 2026-01-05
-**Last Updated:** 2026-02-18
+**Last Updated:** 2026-02-25
 
 > **Note:** Design decisions reference the original modular ontology files (urpx-core-ontology.ttl, urpx-profile.ttl, urpx-organization.ttl, urpx-geography.ttl, urpx-charge-classification.ttl). As of v0.1.1, these files have been consolidated into a single `ontology/urpx-ontology.ttl` file. See [urpx-changelog.md](../../urpx-changelog.md) for consolidation details.
 
@@ -65,6 +65,8 @@ Quick links to all design decisions:
 - ✅ [Decision #060: SHACL Validation Shapes Introduction](#decision-060)
 - ✅ [Decision #061: chargeType/chargeCategory Made Optional on Price](#decision-061)
 - ✅ [Decision #062: PriceDefinition Removed from Temporal Property Domains](#decision-062)
+- ✅ [Decision #063: Removal of alternativesType Property and AlternativesTypeValue](#decision-063)
+- ✅ [Decision #064: Removal of timeZone Property (timezoneIdentifier Standardization)](#decision-064)
 
 ---
 
@@ -1596,3 +1598,96 @@ Remove `urpx:PriceDefinition` from the domain of all temporal properties. Tempor
 **References:**
 - Commit: `54d1c9f`
 - Related Decision: #045 (PriceDefinition Architecture Clarification), #059 (referencesPriceDefinition)
+
+---
+
+<a id="decision-063"></a>
+### 🔗 Decision #063: Removal of alternativesType Property and AlternativesTypeValue
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-02-25
+- **Issue:** Redundant classification mechanism
+- **Category:** Architecture / Simplification
+- **Impact:** Medium - Breaking change for implementations using `alternativesType`
+
+**Context:**
+`urpx:alternativesType` was an ObjectProperty on `ProfileAlternative` with range `AlternativesTypeValue`, an enumeration class with values like `billingCycleAlternatives`, `customerProfileAlternatives`, `geographicAlternatives`, `serviceClassAlternatives`, and `temporalAlternatives`. This property classified what dimension an alternative represented. However, this classification is already expressed structurally through the `AlternativeDimension` and `DimensionValuePair` architecture — the dimension type is inherent in the dimension values themselves, making the explicit type property redundant.
+
+**Decision:**
+Remove `urpx:alternativesType` ObjectProperty, `AlternativesTypeValue` class, and all enumeration instances. Alternative dimension classification is expressed through the existing structural mechanism.
+
+**Alternatives Considered:**
+
+1. **Remove alternativesType and AlternativesTypeValue entirely** ⭐ **SELECTED**
+   - ✅ Eliminates redundant classification mechanism
+   - ✅ Reduces potential for inconsistency between type label and actual dimension values
+   - ✅ Simplifies ProfileAlternative model
+   - ❌ Removes a convenience shorthand for querying by alternative type
+
+2. **Keep alternativesType as optional metadata**
+   - ✅ Provides quick filtering without inspecting dimension values
+   - ❌ Redundant with structural information
+   - ❌ Risk of inconsistency between type and actual dimension content
+   - ❌ Additional maintenance burden for enumeration values
+
+**Rationale:**
+- The `AlternativeDimension` → `DimensionValuePair` structure already encodes the type of alternative
+- Redundant classification properties create consistency risks at scale
+- Simplification aligns with the principle of single source of truth
+
+**Implementation Details:**
+- Removed `urpx:alternativesType` ObjectProperty definition from ontology
+- Removed `urpx:AlternativesTypeValue` class and all instances (`billingCycleAlternatives`, `customerProfileAlternatives`, `geographicAlternatives`, `serviceClassAlternatives`, `temporalAlternatives`)
+- Removed from SHACL: `alternativesType` constraint on `ProfileAlternativeShape`, `AlternativesTypeValueShape`
+- Removed from data dictionary: property entry on ProfileAlternative, AlternativesTypeValue enumeration section
+
+**Impact Assessment:**
+- **Positive**: Simplified model, reduced redundancy, eliminated consistency risk
+- **Breaking Change**: Yes — remove all `alternativesType` triples from data
+- **Requirements**: None — alternative type information is already expressed via dimensions
+
+---
+
+<a id="decision-064"></a>
+### 🔗 Decision #064: Removal of timeZone Property (timezoneIdentifier Standardization)
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-02-25
+- **Issue:** Duplicate timezone representation
+- **Category:** Architecture / Simplification
+- **Impact:** Medium - Breaking change for implementations using `timeZone`
+
+**Context:**
+The ontology contained two timezone-related properties: `urpx:timeZone` (a general timezone string) and `urpx:timezoneIdentifier` (an IANA timezone identifier with pattern validation `^[A-Za-z]+(/[A-Za-z0-9_+-]+)+$`). Both served the same purpose — identifying the timezone for a rate plan or modifier. Having two properties created ambiguity about which to use and risked inconsistent timezone representation.
+
+**Decision:**
+Remove `urpx:timeZone` and standardize on `urpx:timezoneIdentifier` as the single timezone property, using IANA timezone identifiers (e.g., `America/New_York`, `Europe/London`).
+
+**Alternatives Considered:**
+
+1. **Remove timeZone, keep timezoneIdentifier** ⭐ **SELECTED**
+   - ✅ Single source of truth for timezone
+   - ✅ IANA identifiers are the industry standard
+   - ✅ Pattern validation ensures well-formed values
+   - ✅ Unambiguous machine-readable format
+
+2. **Keep both properties with different semantics**
+   - ✅ Flexibility for display names vs machine identifiers
+   - ❌ Ambiguity about which property to populate
+   - ❌ Potential inconsistency between the two values
+   - ❌ Increased validation complexity
+
+**Rationale:**
+- IANA timezone identifiers are the unambiguous standard for timezone representation
+- Duplicate properties violate the single source of truth principle
+- Display-friendly timezone names can be derived from IANA identifiers at the application layer
+
+**Implementation Details:**
+- Removed `urpx:timeZone` DatatypeProperty definition from ontology
+- Updated SHACL shapes: removed `timeZone` from `RatePlanShape` and `RatePlanModifierShape`
+- Updated data dictionary: removed `timeZone` from RatePlan properties, retained `timezoneIdentifier`
+
+**Impact Assessment:**
+- **Positive**: Unambiguous timezone representation, simplified model
+- **Breaking Change**: Yes — migrate `timeZone` values to `timezoneIdentifier` using IANA format
+- **Requirements**: Implementations must use IANA timezone identifiers

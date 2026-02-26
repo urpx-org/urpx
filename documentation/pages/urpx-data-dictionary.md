@@ -114,17 +114,17 @@ An URPXDocument represents a complete, self-contained specification of utility p
 
 | Property | Cardinality | Range | Description |
 |----------|-------------|-------|-------------|
-| [`urpx:identifier`](#urpx-identifier) | 1..1 | xsd:string | Unique identifier |
 | [`urpx:version`](#urpx-version) | 1..1 | xsd:string | Document version |
 | [`urpx:effectiveDate`](#urpx-effective-date) | 1..1 | xsd:dateTime | When document becomes active |
 | [`urpx:name`](#urpx-name) | 1..1 | xsd:string | Human-readable name |
 | [`urpx:description`](#urpx-description) | 0..1 | xsd:string | Detailed description |
+| [`urpx:timeZone`](#urpx-time-zone) | 0..1 | xsd:string | Default time zone |
 
 **Relationships:**
 - `urpx:hasRatePlan` → RatePlan (0..n)
+- `urpx:hasRatePlanModifier` → RatePlanModifier (0..n)
 - `urpx:hasCustomerProfile` → CustomerProfile (0..n)
-- `urpx:hasHolidayCalendar` → HolidayCalendar (0..1)
-- `urpx:hasStatementDocument` → StatementDocument (0..n)
+- `urpx:hasTariffPublication` → TariffPublication (0..n)
 
 ---
 
@@ -140,7 +140,7 @@ A RatePlan represents the regulatory-approved pricing structure that persists ac
 
 | Property | Cardinality | Range | Description |
 |----------|-------------|-------|-------------|
-| [`urpx:identifier`](#urpx-identifier) | 1..1 | xsd:string | Unique plan identifier |
+| [`urpx:ratePlanIdentifier`](#urpx-rate-plan-identifier) | 1..1 | xsd:string | Unique plan identifier |
 | [`urpx:name`](#urpx-name) | 1..1 | xsd:string | Official rate plan name |
 | [`urpx:initialEffectiveDate`](#urpx-initial-effective-date) | 0..1 | xsd:date | Date plan was first introduced |
 | [`urpx:timezoneIdentifier`](#urpx-timezone-identifier) | 0..1 | xsd:string | IANA timezone identifier |
@@ -149,11 +149,7 @@ A RatePlan represents the regulatory-approved pricing structure that persists ac
 - `urpx:hasRatePlanVersion` → RatePlanVersion (1..n) - Temporal versions of this plan
 - `urpx:hasLocationDataSet` → LocationDataSet (0..n) - Versioned location data (timezones, holiday calendars)
 - `urpx:hasServiceClass` → ServiceClass (0..n) - Applicable service classes
-- `urpx:hasEligibilityRule` → EligibilityRule (0..n) - Customer qualification rules
-- `urpx:hasApplicabilityGroup` → ApplicabilityGroup (0..n) - Default applicability rules
-- `urpx:publishedBy` → Organization (1..1) - Publishing utility
-- `urpx:approvedBy` → RegulatoryAuthority (0..n) - Approving authority
-- `urpx:applicableInTerritory` → ServiceTerritory (0..n) - Applicable service territories
+- `urpx:hasRateGroup` → RateGroup (0..n) - Nested rate groups within service classes
 
 **See Also:** [RatePlanVersion](#urpx-rate-plan-version), [EligibilityRule](#urpx-eligibility-rule)
 
@@ -171,7 +167,7 @@ Each RatePlanVersion represents the actual rates customers pay during a specific
 
 | Property | Cardinality | Range | Description |
 |----------|-------------|-------|-------------|
-| [`urpx:versionNumber`](#urpx-version-number) | 1..1 | xsd:string | Semantic version identifier |
+| [`urpx:version`](#urpx-version) | 1..1 | xsd:string | Version identifier |
 | [`urpx:effectiveDateTime`](#urpx-effective-date-time) | 1..1 | xsd:dateTime | When version becomes active |
 | [`urpx:expirationDateTime`](#urpx-expiration-date-time) | 0..1 | xsd:dateTime | When version expires |
 | [`urpx:changeReason`](#urpx-change-reason) | 1..1 | ChangeReasonValue | Reason for new version |
@@ -181,10 +177,10 @@ Each RatePlanVersion represents the actual rates customers pay during a specific
 **See Also:** [RatePlan](#urpx-rate-plan), [RatePlanModifierVersion](#urpx-rate-plan-modifier-version), [ChangeReasonValue](#change-reason-value)
 
 **Relationships:**
+- `urpx:publishedBy` → Organization (1..1) - Publishing utility
+- `urpx:hasEligibilityRule` → EligibilityRule (0..n) - Customer qualification rules
 - `urpx:supersedes` → RatePlanVersion (0..1) - References previous version in the temporal chain
-- `urpx:hasModifier` → RatePlanModifier (0..n) - Rate Plan Modifiers available in this version
 - `urpx:hasPlanElements` → PlanElements (1..1) - Links to the centralized temporal and metric container (required)
-
 - `urpx:hasPrices` → Prices (1..1) - Links to the single price container (required)
 
 
@@ -254,10 +250,14 @@ Eligibility rules encode complex business logic that determines which customers 
 **Key Properties:**
 | Property | Required | Type | Constraints | Description |
 |----------|----------|------|-------------|-------------|
-| `urpx:ruleType` | ✓ | string | [Enum](#rule-types) | Type of eligibility check |
-| `urpx:operator` | ✓ | string | [Enum](#operators) | Comparison operator |
-| `urpx:value` | ✓ | string | | Comparison value |
-| `urpx:description` | | string | Max 500 chars | Rule explanation |
+| `urpx:conditionType` | ✓ | string | | Type of condition being evaluated |
+| `urpx:operator` | ✓ | OperatorValue | [Enum](#operator-values) | Comparison operator |
+| `urpx:conditionValue` | ✓ | string | | Value to compare against |
+| `urpx:description` | | string | | Rule explanation |
+
+**Relationships:**
+- `urpx:hasCustomerProfile` → CustomerProfile (0..1) - Business/social characteristics for eligibility
+- `urpx:hasServicePointProfile` → ServicePointProfile (0..1) - Physical service delivery characteristics for eligibility
 
 ---
 
@@ -372,12 +372,11 @@ PriceSets organize prices into meaningful groups (e.g., "Summer Energy Prices", 
 **Relationships:**
 - `urpx:hasPrice` → Price (1..n)
 - `urpx:hasPriceSummary` → PriceSummary (0..n)
-- `urpx:hasStatementPrice` → StatementPrice (0..n)
+- `urpx:hasDataSourceReference` → DataSourceReference (0..n) - Structured data source references
 
 **Document Reference Properties:**
 | Property | Type | Description |
 |----------|------|-------------|
-| `urpx:dataSourceReference` | string | Reference to data source file (CSV, JSON, etc.) containing price information |
 | `urpx:tariffBookReference` | string | Reference to tariff book PDF with leaf/page numbers for price source |
 | `urpx:tariffStatementReference` | string | Reference to PSC statement filing PDF containing price information |
 
@@ -398,19 +397,19 @@ Prices are the atomic units of utility pricing. Each price represents a specific
 | `urpx:referencesPriceDefinition` | no | ObjectProperty | PriceDefinition | Link to structural price definition |
 |`startDate` xone `startDateTime` | ✓ | xsd:date or xsd
 
-**Price Fields (at least one required):**
+**Price Fields (exactly one required — xone constraint):**
 | Property | Type | Description |
 |----------|------|-------------|
 | `urpx:amount` | decimal | Fixed charge amount |
 | `urpx:unitPrice` | decimal | Price per unit |
+| `urpx:basedOnPrice` | ObjectProperty | Reference to another Price this is derived from |
 | `urpx:basePrice` | decimal | Base price before adjustments |
 | `urpx:currentPrice` | decimal | Current effective price |
 
 **Additional Properties:**
 | Property | Type | Description |
 |----------|------|-------------|
-| `urpx:tierNumber` | integer | Tier level (1-based) |
-| `urpx:tierThreshold` | decimal | Tier trigger point |
+| `urpx:serviceTierNumber` | integer | Service tier reference (1-based) |
 | `urpx:multiplier` | decimal | Price multiplier |
 | `urpx:adder` | decimal | Price adder |
 | `urpx:touPeriodNumber` | integer | TOU period reference |
@@ -419,67 +418,48 @@ Prices are the atomic units of utility pricing. Each price represents a specific
 - `urpx:hasApplicabilityRule` → ApplicabilityRule (0..n)
 - `urpx:hasDynamicPricing` → DynamicPricing (0..1)
 - `urpx:hasApplicabilityGroup` → ApplicabilityGroup (0..n)
+- `urpx:hasDataSourceReference` → DataSourceReference (0..n) - Structured data source references
 
 **Document Reference Properties:**
 | Property | Type | Description |
 |----------|------|-------------|
-| `urpx:dataSourceReference` | string | Reference to data source file (CSV, JSON, etc.) containing price information |
 | `urpx:tariffBookReference` | string | Reference to tariff book PDF with leaf/page numbers for price source |
 | `urpx:tariffStatementReference` | string | Reference to PSC statement filing PDF containing price information |
 
-**Note:** Individual prices can have their own document references or inherit them from their parent PriceSet for traceability and regulatory compliance.
+---
+
+### Tariff Document Subclasses
+
+The following are subclasses of [URPXDocument](#urpx-urpxdocument) that inherit all its properties and relationships. They are distinguished by their content scope.
+
+#### urpx:TariffBookDocument
+**Description:** Tariff book document containing rate plans, modifiers, prices, and general rules.
+
+**Parent:** `urpx:URPXDocument`
 
 ---
 
-### Statement Classes
+#### urpx:TariffStatementDocument
+**Description:** PSC statement filing with prices and modifiers but no rate plans. Used for periodic price adjustments across customer types and rate plans.
 
-#### urpx:StatementDocument
-**Description:** A formal document filed with regulatory authorities that contains official rate schedules and charges.
+**Parent:** `urpx:URPXDocument`
 
-**Semantic Context:**  
-Statement documents represent the legal rate schedules filed with Public Service Commissions. They provide the authoritative source for utility pricing and ensure regulatory compliance.
-
-**Parent:** `owl:Thing`
-
-**Key Properties:**
-| Property | Required | Type | Constraints | Description |
-|----------|----------|------|-------------|-------------|
-| `urpx:statementId` | ✓ | string | | Unique statement identifier |
-| `urpx:statementType` | ✓ | string | [Enum](#statement-types) | Document type |
-| `urpx:filingDate` | ✓ | dateTime | | Date filed with regulator |
-| `urpx:effectiveDate` | ✓ | dateTime | | When rates become effective |
-| `urpx:docketNumber` | | string | | Regulatory docket reference |
-| `urpx:statementStatus` | | string | [Enum](#statement-status) | Current status |
-
-**Relationships:**
-- `urpx:hasStatementCharge` → StatementCharge (1..n)
-- `urpx:filedWith` → RegulatoryAuthority (1..1)
-- `urpx:replacesStatement` → StatementDocument (0..1)
+**Additional Relationships:**
+- `urpx:hasPrices` → Prices (1..1) - Price container for this statement
 
 ---
 
-#### urpx:StatementPrice
-**Description:** A specific price item within a regulatory statement document, representing an official rate component.
+#### urpx:TariffSupplementDocument
+**Description:** Supplemental filing containing only rate plan modifiers.
 
-**Semantic Context:**
-Statement prices are the individual line items in regulatory filings. They provide the granular detail required for compliance reporting and rate case proceedings.
+**Parent:** `urpx:URPXDocument`
 
-**Parent:** `owl:Thing`
+---
 
-**Key Properties:**
-| Property | Required | Type | Constraints | Description |
-|----------|----------|------|-------------|-------------|
-| `urpx:identifier` | ✓ | string | | Official price identifier |
-| `urpx:name` | ✓ | string | Max 255 chars | Official price name |
-| `urpx:description` | | string | Max 1000 chars | Detailed description |
-| `urpx:rateSchedule` | | string | | Associated rate schedule |
-| `urpx:amount` | | decimal | | Fixed amount |
-| `urpx:unitPrice` | | decimal | | Variable rate |
-| `urpx:unitOfMeasure` | | [Enum](#units) | UnitOfMeasureValue | Unit of measure enumeration |
+#### urpx:TariffAddendumDocument
+**Description:** Addendum filing for corrections or clarifications.
 
-**Relationships:**
-- `urpx:implementedAs` → Price (0..n)
-- `urpx:hasApplicabilityGroup` → ApplicabilityGroup (0..n)
+**Parent:** `urpx:URPXDocument`
 
 ---
 
@@ -494,17 +474,19 @@ Applicability groups enable complex conditional logic for charge application, su
 **Key Properties:**
 | Property | Required | Type | Constraints | Description |
 |----------|----------|------|-------------|-------------|
-| `urpx:groupName` | ✓ | string | Max 255 chars | Group identifier |
-| `urpx:groupType` | | string | [Enum](#group-types) | Type of applicability |
+| `urpx:applicabilityLogic` | | string | | Boolean logic for complex applicability rules (AND, OR, NOT) |
 | `urpx:priority` | | integer | | Evaluation order |
-| `urpx:isExclusive` | | boolean | | Mutual exclusivity flag |
 
 **Relationships:**
-- `urpx:hasApplicabilityRule` → ApplicabilityRule (1..n)
-- `urpx:appliesInTerritory` → ServiceTerritory (0..n)
+- `urpx:hasInclusionConstraint` → Constraint (0..n) - Price applies when property matches value
+- `urpx:hasExclusionConstraint` → Constraint (0..n) - Price does not apply when property matches value
+- `urpx:appliesInServiceTerritory` → ServiceTerritory (0..n)
 - `urpx:appliesInState` → State (0..n)
 - `urpx:appliesInCounty` → County (0..n)
 - `urpx:appliesInMunicipality` → Municipality (0..n)
+- `urpx:appliesInZone` → GeographicZoneValue (0..n)
+- `urpx:appliesForCustomerKind` → CustomerKindValue (0..n)
+- `urpx:appliesForCustomerSubKind` → CustomerSubKindValue (0..n)
 
 ---
 
@@ -578,12 +560,10 @@ TOU schedules implement dynamic pricing that encourages load shifting by varying
 |----------|----------|------|-------------|-------------|
 | `urpx:name` | ✓ | string | Max 255 chars | Schedule name |
 | `urpx:description` | | string | Max 1000 chars | Schedule description |
-| `urpx:scheduleType` | | string | [Enum](#schedule-types) | Type of TOU schedule |
 
 **Relationships:**
 - `urpx:hasTOUTier` → TOUTier (1..n)
 - `urpx:hasCalendar` → HolidayCalendar (0..1)
-- `urpx:hasMeasurement` → Measurement (0..n)
 
 ---
 
@@ -599,7 +579,7 @@ TOU tiers organize periods into pricing levels (e.g., peak, off-peak) that refle
 | Property | Required | Type | Constraints | Description |
 |----------|----------|------|-------------|-------------|
 | `urpx:touTierNumber` | ✓ | integer | 1-based, 1=highest | Tier priority |
-| `urpx:tierStandardName` | ✓ | string | [Enum](#tou-period-types) | Standard tier name |
+| `urpx:touTierStandardName` | ✓ | TOUTierStandardNameValue | [Enum](#tou-tier-standard-name-values) | Standard tier name |
 | `urpx:tierSourceName` | | string | Max 255 chars | Utility-specific name |
 
 **Relationships:**
@@ -644,14 +624,12 @@ MetricInput provides a structured way to define what is measured for rate applic
 **Key Properties:**
 | Property | Required | Type | Constraints | Description |
 |----------|----------|------|-------------|-------------|
-| `urpx:identifier` | ✓ | string | Pattern: `^[A-Z0-9-]+$` | Unique MetricInput identifier |
 | `urpx:name` | ✓ | string | Max 255 chars | Human-readable name |
 | `urpx:description` | | string | Max 1000 chars | Detailed description |
 | `urpx:metricInputType` | ✓ | MetricInputTypeValue | [Enum](#metric-input-type-values) | Type: measured, calculated, aggregated, virtual, or profile |
 
 **Relationships:**
 - `urpx:hasMetricSpecification` → MetricSpecification (1..n)
-- `urpx:hasServiceTier` → ServiceTier (0..n) - Service tier definitions for tiered pricing
 - `urpx:calculationRule` → (blank node) - For calculated MetricInputs
 - `urpx:profileMetricProperty` → rdf:Property (0..1) - For profile MetricInputs
 
@@ -784,7 +762,6 @@ ProfileAlternative defines dimensions along which price set alternatives differ,
 **Key Properties:**
 | Property | Required | Type | Constraints | Description |
 |----------|----------|------|-------------|-------------|
-| `urpx:alternativesType` | ✓ | AlternativesTypeValue | [Enum](#alternatives-type-values) | Internal classification |
 | `urpx:defaultSelectionLogic` | | string | | Logic for auto-selecting default |
 
 **Relationships:**
@@ -1027,16 +1004,6 @@ Service territories define the spatial boundaries of utility operations and regu
 
 ---
 
-#### urpx:submissionDate
-
-**Definition:** The date and time the entity was submitted to a regulatory authority.
-
-**Domain:** RatePlan
-**Range:** xsd:dateTime
-**Cardinality:** 0..1
-
----
-
 #### urpx:approvalDate
 
 **Definition:** The date and time the entity received formal regulatory approval.
@@ -1044,16 +1011,6 @@ Service territories define the spatial boundaries of utility operations and regu
 **Domain:** RatePlanVersion
 **Range:** xsd:dateTime
 **Cardinality:** 0..1
-
----
-
-#### urpx:filingDate
-
-**Definition:** The date and time a regulatory statement document was filed.
-
-**Domain:** StatementDocument
-**Range:** xsd:dateTime
-**Cardinality:** 1..1 (Required)
 
 ---
 
@@ -1072,16 +1029,6 @@ Service territories define the spatial boundaries of utility operations and regu
 **Definition:** The expiration date and time of a service agreement contract.
 
 **Domain:** AccountServiceAgreement
-**Range:** xsd:dateTime
-**Cardinality:** 0..1
-
----
-
-#### urpx:ratePlanAssignmentDate
-
-**Definition:** Date/time when a customer was assigned to a rate plan.
-
-**Domain:** ServiceAccount
 **Range:** xsd:dateTime
 **Cardinality:** 0..1
 
@@ -1183,15 +1130,15 @@ Service territories define the spatial boundaries of utility operations and regu
 
 ---
 
-#### urpx:tierThreshold
+#### urpx:upperBound / urpx:lowerBound
 
-**Definition:** Upper bound of usage tier (pre-MetricInput architecture).
+**Definition:** Upper and lower threshold values for service tier applicability.
 
-**Domain:** Price
+**Domain:** ServiceTier
 **Range:** xsd:decimal
-**Cardinality:** 0..1
+**Cardinality:** 0..1 each
 
-**Usage:** Represents the maximum usage for a specific price tier. Largely superseded by the [ServiceTier](#urpx-service-tier) class for new development, but retained for legacy mapping.
+**Related:** `urpx:upperBoundOperator` and `urpx:lowerBoundOperator` (OperatorValue) define the comparison logic (>= or >, <= or <).
 
 ---
 
@@ -1749,7 +1696,7 @@ Service territories define the spatial boundaries of utility operations and regu
 
 #### urpx:NameTypeValue
 **Definition:** Classification of organization name types.
-**Used By:** [urpx:nameType](#urpx-name-type)
+**Used By:** `urpx:nameType` (OrganizationName)
 
 | IRI | Label | Definition |
 |-----|-------|------------|
@@ -1906,7 +1853,7 @@ district           # District
 
 #### urpx:MeteringConfigurationValue
 **Definition:** Metering configuration type (e.g., Net, Interval).
-**Used By:** [urpx:meteringConfiguration](#urpx-metering-configuration)
+**Used By:** [urpx:hasMeteringConfiguration](#urpx-has-metering-configuration)
 
 | IRI | Label | Definition |
 |-----|-------|------------|
@@ -2318,24 +2265,6 @@ End use classification enables:
 
 ---
 
-### Alternatives
-
----
-
-#### urpx:AlternativesTypeValue
-**Definition:** Internal classification for alternative dimension sets.
-**Used By:** [urpx:alternativesType](#urpx-alternatives-type)
-
-| IRI | Label | Definition |
-|-----|-------|------------|
-| urpx:billingCycleAlternatives | Billing Cycle | Alternatives based on billing cycles |
-| urpx:customerProfileAlternatives | Customer Profile | Alternatives based on customer characteristics |
-| urpx:geographicAlternatives | Geographic | Alternatives based on location/zone |
-| urpx:serviceClassAlternatives | Service Class | Alternatives based on service level |
-| urpx:temporalAlternatives | Temporal | Alternatives based on time periods |
-
----
-
 ### Document & Publication
 
 ---
@@ -2458,8 +2387,6 @@ FILTER NOT EXISTS {
   ?version2 urpx:expirationDate ?exp2 .
   FILTER(?version1 != ?version2)
   FILTER(?date1 < ?exp2 && ?date2 < ?exp1)
-  FILTER(?version1 urpx:versionStatus "effective")
-  FILTER(?version2 urpx:versionStatus "effective")
 }
 ```
 
@@ -2546,11 +2473,10 @@ urpx:RatePlanShape
   a sh:NodeShape ;
   sh:targetClass urpx:RatePlan ;
   sh:property [
-    sh:path urpx:identifier ;
+    sh:path urpx:ratePlanIdentifier ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:datatype xsd:string ;
-    sh:pattern "^[A-Z0-9-]+$" ;
   ] ;
   sh:property [
     sh:path urpx:hasRatePlanVersion ;
@@ -2564,11 +2490,12 @@ urpx:RatePlanShape
 urpx:PriceShape
   a sh:NodeShape ;
   sh:targetClass urpx:Price ;
-  sh:or (
-    [ sh:property [ sh:path urpx:amount ; sh:minCount 1 ] ]
-    [ sh:property [ sh:path urpx:unitPrice ; sh:minCount 1 ] ]
-    [ sh:property [ sh:path urpx:basePrice ; sh:minCount 1 ] ]
-    [ sh:property [ sh:path urpx:currentPrice ; sh:minCount 1 ] ]
+  sh:xone (
+    [ sh:path urpx:amount ; sh:minCount 1 ; sh:maxCount 1 ]
+    [ sh:path urpx:unitPrice ; sh:minCount 1 ; sh:maxCount 1 ]
+    [ sh:path urpx:basedOnPrice ; sh:minCount 1 ]
+    [ sh:path urpx:basePrice ; sh:minCount 1 ; sh:maxCount 1 ]
+    [ sh:path urpx:currentPrice ; sh:minCount 1 ; sh:maxCount 1 ]
   ) .
 ```
 

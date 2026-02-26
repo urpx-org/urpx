@@ -1,9 +1,58 @@
 # 📋 URPX Changelog
 
 **Version:** 0.1.1
-**Last Updated:** 2026-02-24
+**Last Updated:** 2026-02-25
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-02-25
+---
+
+### Ontology Property Changes
+
+#### Removed: `urpx:alternativesType` (ObjectProperty)
+- **Rationale:** Removed along with `AlternativesTypeValue` enum class and all instances. Classification of alternative dimensions is better expressed through the ontology structure itself rather than a separate type property.
+- **Impact:** Breaking change for any implementations using `alternativesType` on `ProfileAlternative`.
+
+#### Removed: `urpx:timeZone` (DatatypeProperty)
+- **Rationale:** Duplicated `urpx:timezoneIdentifier`. A single timezone property using IANA timezone identifiers is sufficient.
+- **Impact:** Use `urpx:timezoneIdentifier` instead.
+
+#### Added: `urpx:nameType` (ObjectProperty)
+- Domain: `OrganizationName`
+- Range: `NameTypeValue`
+- Migrated from the original organization ontology.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- Removed `alternativesType` property constraint from `ProfileAlternativeShape`
+- Removed `AlternativesTypeValueShape` enumeration shape
+- Fixed `ProfileAlternativesShape`: restored `hasProfileAlternative` (containment) instead of `referencesProfileAlternative` (cross-reference)
+- Added `basePrice` and `currentPrice` to Price `sh:xone` constraint (now 5 options: `amount`, `unitPrice`, `basedOnPrice`, `basePrice`, `currentPrice`)
+
+### Documentation Updates
+
+#### Data Dictionary (`documentation/pages/urpx-data-dictionary.md`)
+- Comprehensive reconciliation of all class properties against ontology (35 non-ontology properties identified and resolved)
+- Removed `alternativesType` property from ProfileAlternative and `AlternativesTypeValue` enumeration section
+- URPXDocument: removed `identifier`, replaced `hasStatementDocument` with `hasRatePlanModifier` + `hasTariffPublication`
+- RatePlan: renamed `identifier` → `ratePlanIdentifier`, removed `timeZone`/`submissionDate`/`approvedBy`/`applicableInTerritory`/`hasEligibilityRule`/`publishedBy`, added `hasRateGroup`
+- RatePlanVersion: renamed `versionNumber` → `version`, added `publishedBy` and `hasEligibilityRule`, removed `hasModifier`
+- EligibilityRule: renamed `ruleType` → `conditionType`, `value` → `conditionValue`, added `hasCustomerProfile`/`hasServicePointProfile`
+- PriceSet: removed `hasStatementPrice`, renamed `dataSourceReference` → `hasDataSourceReference`
+- Price: updated xone table (5 fields), renamed `tierNumber` → `serviceTierNumber`, replaced `tierThreshold` with `upperBound`/`lowerBound` on ServiceTier, renamed `dataSourceReference` → `hasDataSourceReference`
+- Replaced StatementDocument/StatementPrice sections with TariffBookDocument/TariffStatementDocument/TariffSupplementDocument/TariffAddendumDocument
+- ApplicabilityGroup: removed `groupName`/`groupType`/`isExclusive`, added `applicabilityLogic`/`hasInclusionConstraint`/`hasExclusionConstraint`/`appliesInZone`/`appliesForCustomerKind`/`appliesForCustomerSubKind`
+- TOUSchedule: removed `scheduleType`/`hasMeasurement`
+- TOUTier: renamed `tierStandardName` → `touTierStandardName`
+- MetricInput: removed non-ontology `identifier`/`hasServiceTier`
+- Updated SHACL examples with correct property names and xone constraint
+- Updated SPARQL examples (removed `versionStatus` references)
+- Updated `MeteringConfigurationValue` "Used By" to `hasMeteringConfiguration`
+
+#### Semantic Web Guide (`documentation/pages/urpx-semantic-web-guide.md`)
+- Updated JSON-LD examples: `AlternativeDimensionSet` → `ProfileAlternative`, removed `alternativesType`, corrected property names
+
+---
 
 2026-02-24
 ---
@@ -15,7 +64,6 @@
 - Updated `urpx:includeNonHolidays` label to "Includes Non-Holidays"
 
 #### Domain Extensions
-- Extended `urpx:timeZone` domain to include `RatePlan` and `RatePlanModifier`
 - Extended `urpx:timezoneIdentifier` domain to include `RatePlan` and `RatePlanModifier`
 - Extended `urpx:hasLocationDataSet` domain to include `RatePlan` and `RatePlanModifier`
 
@@ -32,11 +80,10 @@
 ### SHACL Updates (`shacl/urpx-shacl.ttl`)
 - Reduced `PriceSet` minimum `hasPrice` cardinality from 2 to 1 (supports `PriceSetAlternative` subclass)
 - Added `urpx:basedOnPrice` as third option in Price shape `sh:xone` (alongside `amount` and `unitPrice`)
-- Renamed `urpx:hasProfileAlternative` to `urpx:referencesProfileAlternative` on `ProfileAlternativesShape`
 - Renamed `urpx:forProfileAlternative` to `urpx:referencesProfileAlternative` on `PriceSetAlternativeShape`
 - Renamed `urpx:forProfileAlternatives` to `urpx:referencesProfileAlternatives` on `PriceSetAlternativesShape`
-- Added `urpx:hasLocationDataSet`, `urpx:timeZone`, `urpx:timezoneIdentifier` to `RatePlanShape`
-- Added `urpx:hasLocationDataSet`, `urpx:timeZone`, `urpx:timezoneIdentifier` to `RatePlanModifierShape`
+- Added `urpx:hasLocationDataSet`, `urpx:timezoneIdentifier` to `RatePlanShape`
+- Added `urpx:hasLocationDataSet`, `urpx:timezoneIdentifier` to `RatePlanModifierShape`
 
 ### Documentation Updates
 
@@ -48,7 +95,7 @@
 - Removed 4 classes not in ontology: `RatePlanStatusValue`, `VersionStatusValue`, `StatementStatusValue`, `UtilityTypeValue`
 - Removed `versionStatus` property from RatePlanVersion (not in ontology)
 - Renamed `forProfileAlternative`/`forProfileAlternatives` to `referencesProfileAlternative`/`referencesProfileAlternatives`
-- Added `hasLocationDataSet`, `timeZone`, `timezoneIdentifier` to RatePlan class
+- Added `hasLocationDataSet`, `timezoneIdentifier` to RatePlan class
 - Removed decision log cross-references
 
 #### Examples, Tutorial, API Spec, Design Decisions
