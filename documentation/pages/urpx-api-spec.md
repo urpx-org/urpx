@@ -126,7 +126,7 @@ GET /api/v1/rate-plans/{ratePlanId}/versions?startDate=2025-01-01&endDate=2025-1
     {
       "id": "ex:version-2025-summer",
       "type": "RatePlanVersion",
-      "versionNumber": "1.0",
+      "version": "1.0",
       "effectiveDateTime": "2025-06-01T00:00:00-04:00",
       "expirationDateTime": "2025-09-30T23:59:59-04:00",
       "changeReason": "seasonalChange",
@@ -193,16 +193,15 @@ POST /api/v1/eligibility/check
 Content-Type: application/json
 
 {
-  "customerProfile": {
+  "CustomerProfile": {
     "hasCustomerKind": "residentialKind",
-    "hasCustomerSubKind": "residentialStandard",
-    "geographicZone": "urbanZone"
+    "hasCustomerSubKind": "residentialStandard"
   },
-  "servicePointProfile": {
-    "endUseCategory": "residentialService",
+  "ServicePointProfile": {
+    "endUse": "residentialService",
     "voltageLevel": "secondaryVoltage",
-    "meteringConfiguration": "ami",
-    "serviceTerritory": "nyiso-zone-j"
+    "hasMeteringConfiguration": "ami"
+    "geographicZone": "urbanZone"
   }
 }
 ```
@@ -215,7 +214,7 @@ Content-Type: application/json
       {
         "ratePlanIdentifier": "RES-TOU-001",
         "name": "Residential Time-of-Use Rate Plan",
-        "serviceRole": "bundled",
+        "serviceRole": "bundledServiceRole",
         "matchedCriteria": [
           "customerKind",
           "serviceTerritory",
@@ -284,7 +283,7 @@ Authorization: Bearer {token}
 {
   "@context": "https://schema.urpx.org/context.jsonld",
   "@type": "RatePlanVersion",
-  "versionNumber": "2.0",
+  "version": "2.0",
   "effectiveDateTime": "2025-07-01T00:00:00-04:00",
   "changeReason": {"@id": "urpx:rateCase"},
   "publishedBy": {"@id": "ex:utility-example"},
@@ -303,7 +302,7 @@ Location: /api/v1/rate-plans/RES-TOU-001/versions/2.0
 {
   "@id": "ex:version-2025-v2",
   "@type": "RatePlanVersion",
-  "versionNumber": "2.0",
+  "version": "2.0",
   "effectiveDateTime": "2025-07-01T00:00:00-04:00",
   "changeReason": {"@id": "urpx:rateCase"}
 }
@@ -348,7 +347,7 @@ Accept: application/ld+json
   "@context": "https://schema.urpx.org/context.jsonld",
   "@id": "ex:version-current",
   "@type": "RatePlanVersion",
-  "versionNumber": "1.0",
+  "version": "1.0",
   "effectiveDateTime": "2025-06-01T00:00:00-04:00",
   "hasPrices": {
       "@type": "Prices",
@@ -357,41 +356,7 @@ Accept: application/ld+json
   "hasPlanElements": {
     "@type": "PlanElements",
     "hasSeasons": [...],
-    "hasMetricInputRuleSet": [...]
-  }
-}
-```
-
----
-
-### Query Rate Plans by Service Territory
-
-```http
-GET /api/v1/rate-plans?serviceTerritory=nyiso-zone-j&customerKind=residentialKind
-Accept: application/json
-```
-
-**Response**:
-```json
-{
-  "data": [
-    {
-      "ratePlanIdentifier": "RES-TOU-001",
-      "name": "Residential Time-of-Use Rate Plan",
-      "serviceRole": "bundled"
-    },
-    {
-      "ratePlanIdentifier": "RES-FLAT-001",
-      "name": "Residential Flat Rate Plan",
-      "serviceRole": "bundled"
-    }
-  ],
-  "meta": {
-    "total": 2,
-    "filters": {
-      "serviceTerritory": "nyiso-zone-j",
-      "customerKind": "residentialKind"
-    }
+    "hasMetricInput": [...]
   }
 }
 ```
@@ -420,7 +385,7 @@ WHERE {
          urpx:unitPrice ?unitPrice ;
          urpx:touPeriodNumber ?periodNum .
   
-  ?version urpx:hasPlanElements/urpx:hasMetricInputRuleSet/urpx:hasTOUSchedule/
+  ?version urpx:hasPlanElements/urpx:hasMetricInput/urpx:hasTOUSchedule/
            urpx:hasTOUTier/urpx:hasTOUPeriod ?period .
   
   ?period urpx:touPeriodNumber ?periodNum ;

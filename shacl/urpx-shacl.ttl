@@ -145,7 +145,7 @@ urpx-shacl:ApplicabilityGroupShape
         sh:minCount 0 ;
     ] ;
     sh:property [
-        sh:path urpx:appliesInZone ;
+        sh:path urpx:appliesInGeographicZone ;
         sh:node urpx-shacl:GeographicZoneValueShape ;
         sh:minCount 0 ;
     ] ;
@@ -188,18 +188,6 @@ urpx-shacl:ApplicabilityRuleShape
     a sh:NodeShape ;
     rdfs:label "ApplicabilityRule Shape"@en ;
     sh:targetClass urpx:ApplicabilityRule ;
-    sh:property [
-        sh:path urpx:conditionType ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:conditionValue ;
-        sh:nodeKind sh:Literal ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
     sh:property [
         sh:path urpx:hasCondition ;
         sh:class urpx:Condition ;
@@ -460,11 +448,6 @@ urpx-shacl:CustomerProfileShape
         sh:minCount 0 ;
     ] ;
     sh:property [
-        sh:path urpx:geographicZone ;
-        sh:node urpx-shacl:GeographicZoneValueShape ;
-        sh:minCount 0 ;
-    ] ;
-    sh:property [
         sh:path urpx:hasCustomerKind ;
         sh:node urpx-shacl:CustomerKindValueShape ;
     ] ;
@@ -510,11 +493,6 @@ urpx-shacl:CustomerProfileShape
         sh:datatype xsd:integer ;
         sh:minCount 0 ;
         sh:minInclusive 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:profileId ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
     ] ;
     sh:property [
         sh:path urpx:specialNeedsStatus ;
@@ -706,18 +684,6 @@ urpx-shacl:EligibilityRuleShape
             sh:minCount 1 ;
         ]
     ) ;
-    sh:property [
-        sh:path urpx:conditionType ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:conditionValue ;
-        sh:nodeKind sh:Literal ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
     sh:property [
         sh:path urpx:description ;
         sh:datatype xsd:string ;
@@ -2685,6 +2651,11 @@ urpx-shacl:ServicePointProfileShape
         sh:node urpx-shacl:EndUseValueShape ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:geographicZone ;
+        sh:node urpx-shacl:GeographicZoneValueShape ;
+        sh:minCount 0 ;
     ] ;
     sh:property [
         sh:path urpx:hasDistributedEnergyResource ;

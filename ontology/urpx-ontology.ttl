@@ -922,7 +922,7 @@ urpx:appliesInState a owl:ObjectProperty ;
     rdfs:range urpx:State ;
     skos:note "Defines state-level applicability for statement prices." .
 
-urpx:appliesInZone a owl:ObjectProperty ;
+urpx:appliesInGeographicZone a owl:ObjectProperty ;
     rdfs:label "Applies In Zone"@en ;
     rdfs:comment "Links applicability group to geographic zone" ;
     rdfs:domain urpx:ApplicabilityGroup ;
@@ -1117,16 +1117,14 @@ urpx:commodity a owl:ObjectProperty ;
 urpx:conditionType a owl:DatatypeProperty ;
     rdfs:label "Condition Type"@en ;
     rdfs:comment "Type of condition being evaluated" ;
-    rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:EligibilityRule urpx:ApplicabilityRule urpx:Condition ) ] ;
+    rdfs:domain urpx:Condition ;
     rdfs:range xsd:string ;
     skos:note "Type of condition being evaluated; either applicability or eligibility conditions." .
 
 urpx:conditionValue a owl:DatatypeProperty ;
     rdfs:label "Condition Value"@en ;
     rdfs:comment "Value to compare against" ;
-    rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:EligibilityRule urpx:ApplicabilityRule urpx:Condition ) ] ;
+    rdfs:domain urpx:Condition ;
     skos:note "Can be string, number, or list depending on operator." .
 
 urpx:contractEffectiveDate a owl:DatatypeProperty ;
@@ -1402,7 +1400,7 @@ urpx:geographicScope a owl:ObjectProperty ;
 urpx:geographicZone a owl:ObjectProperty ;
     rdfs:label "Geographic Zone"@en ;
     rdfs:comment "Geographic classification (Census geographic types)" ;
-    rdfs:domain urpx:CustomerProfile ;
+    rdfs:domain urpx:ServicePointProfile ;
     rdfs:range urpx:GeographicZoneValue ;
     skos:note "Census geographic types enumeration for customer location classification. with standardized geographic zone definitions for consistent location-based analysis across utilities." .
 
@@ -2323,13 +2321,6 @@ urpx:prorationMethod a owl:DatatypeProperty ;
     rdfs:domain urpx:BillingModel ;
     rdfs:range xsd:string ;
     skos:note "Defines how prices are prorated when service starts/ends mid-period. Aligned with schema.org billingDuration pattern for temporal billing allocation." .
-
-urpx:profileId a owl:DatatypeProperty ;
-    rdfs:label "Profile Id"@en ;
-    rdfs:comment "Unique identifier for this customer profile within the rate plan" ;
-    rdfs:domain urpx:CustomerProfile ;
-    rdfs:range xsd:string ;
-    skos:note "Must be unique within the rate plan. Used by ProfileALternative and other components to reference specific customer profiles. Alphanumeric with hyphens recommended (e.g., 'residential-urban-high-usage')." .
 
 urpx:profileMetricProperty a owl:ObjectProperty ;
     rdfs:label "Profile Metric Property"@en ;

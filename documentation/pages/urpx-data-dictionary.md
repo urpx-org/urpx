@@ -39,8 +39,6 @@ Each entry includes:
 | `rdfs:` | http://www.w3.org/2000/01/rdf-schema# | RDF Schema |
 | `skos:` | http://www.w3.org/2004/02/skos/core# | SKOS vocabulary |
 
-**Note:** All URPX entities are now in the single `urpx:` namespace. Previous separate namespaces have been consolidated into [`urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl).
-
 ---
 
 ## Table of Contents
@@ -118,7 +116,7 @@ An URPXDocument represents a complete, self-contained specification of utility p
 | [`urpx:effectiveDate`](#urpx-effective-date) | 1..1 | xsd:dateTime | When document becomes active |
 | [`urpx:name`](#urpx-name) | 1..1 | xsd:string | Human-readable name |
 | [`urpx:description`](#urpx-description) | 0..1 | xsd:string | Detailed description |
-| [`urpx:timeZone`](#urpx-time-zone) | 0..1 | xsd:string | Default time zone |
+| [`urpx:timeZoneIdentifier`](#urpx-time-zone) | 0..1 | xsd:string | Default time zone |
 
 **Relationships:**
 - `urpx:hasRatePlan` → RatePlan (0..n)
@@ -217,7 +215,6 @@ Customer profiles enable sophisticated rate targeting based on usage patterns, d
 
 | Property | Cardinality | Range | Description |
 |----------|-------------|-------|-------------|
-| [`urpx:profileId`](#urpx-profile-id) | 1..1 | xsd:string | Unique profile identifier (e.g., 'RES-URB-HEAT') |
 | [`urpx:name`](#urpx-name) | 1..1 | xsd:string | Human-readable profile name |
 | [`urpx:customerKind`](#urpx-customer-kind) | 1..1 | CustomerKindValue | Primary classification (e.g., Residential, Commercial) |
 | [`urpx:customerSubKind`](#urpx-customer-sub-kind) | 0..n | CustomerSubKindValue | Detailed classification (e.g., Single-Family, Retail) |
@@ -233,7 +230,6 @@ Customer profiles enable sophisticated rate targeting based on usage patterns, d
 - `urpx:hasCustomerSubKind` → CustomerSubKindValue (0..n) - Detailed customer classification
 - `urpx:hasPriorRatePlan` → PriorRatePlan (0..n) - Previous rate plan enrollment history
 - `urpx:hasProgramEnrollment` → ProgramEnrollment (0..n) - Program participation (e.g., Low Income, DR)
-- `urpx:hasProfileAlternatives` → ProfileAlternatives (0..1) - User-selectable profile options (e.g., Heating vs. Non-Heating)
 
 **See Also:** [ServicePointProfile](#urpx-service-point-profile), [ProfileAlternative](#urpx-profile-alternative), [MetricInput](#urpx-metric-input)
 
@@ -250,107 +246,17 @@ Eligibility rules encode complex business logic that determines which customers 
 **Key Properties:**
 | Property | Required | Type | Constraints | Description |
 |----------|----------|------|-------------|-------------|
-| `urpx:conditionType` | ✓ | string | | Type of condition being evaluated |
 | `urpx:operator` | ✓ | OperatorValue | [Enum](#operator-values) | Comparison operator |
-| `urpx:conditionValue` | ✓ | string | | Value to compare against |
 | `urpx:description` | | string | | Rule explanation |
 
 **Relationships:**
 - `urpx:hasCustomerProfile` → CustomerProfile (0..1) - Business/social characteristics for eligibility
 - `urpx:hasServicePointProfile` → ServicePointProfile (0..1) - Physical service delivery characteristics for eligibility
+- `urpx:hasCondition` → Condition (0..n) - Used to define
 
 ---
 
 ### Prices
-
-```mermaid
-%% URPX Price Structure Diagram
-%% Shows: Prices → PriceSet → Price hierarchy
-%% Created: January 26, 2026
-%% Paul Tol 2.7 Light color scheme
-
-%%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
-
-graph TB
-    
-    RPVersion[RatePlanVersion]
-    
-    %% Prices Container
-    subgraph PricesContainer["Prices Container (1..1)"]
-        direction TB
-        Prices[Prices<br/>Centralized price storage]
-        
-        PriceSet1[PriceSet<br/>Logical grouping<br/>e.g., 'Summer Prices']
-        PriceSet2[PriceSet<br/>e.g., 'Winter Prices']
-        
-        Prices -->|hasPriceSet<br/>1..*| PriceSet1
-        Prices -->|hasPriceSet| PriceSet2
-    end
-    
-    %% Price Components
-    subgraph PriceComponents["Price Components"]
-        direction TB
-        
-        Price1[Price<br/>Individual price component]
-        Price2[Price<br/>Another price]
-        Price3[Price<br/>Another price]
-        
-        PriceSet1 -->|hasPrice<br/>1..*| Price1
-        PriceSet1 -->|hasPrice| Price2
-        PriceSet1 -->|hasPrice| Price3
-    end
-    
-    %% Price Properties
-    subgraph PriceProps["Price Properties (Required)"]
-        direction TB
-        
-        ChargeType[chargeType<br/>ObjectProperty<br/>minimumCharge, usageCharge,<br/>demandDirect, etc.]
-        
-        ChargeCategory[chargeCategory<br/>ObjectProperty<br/>serviceCharge, auxiliaryCharge,<br/>infrastructure, taxes, etc.]
-        
-        BillPortion[billPortion<br/>ObjectProperty<br/>delivery, supply, bundled]
-        
-        Amount[amount or unitPrice<br/>Numeric value<br/>Fixed or per-unit]
-    end
-    
-    %% Price Types Examples
-    subgraph PriceExamples["Common Price Types"]
-        direction LR
-        
-        Ex1[Fixed Service Price<br/>chargeType: minimumCharge<br/>chargeCategory: serviceCharge<br/>amount: $18.75/month]
-        
-        Ex2[Energy Usage Price<br/>chargeType: usageCharge<br/>chargeCategory: auxiliaryCharge<br/>unitPrice: $0.12/kWh]
-        
-        Ex3[Demand Price<br/>chargeType: demandDirect<br/>chargeCategory: auxiliaryCharge<br/>unitPrice: $8.50/kW]
-        
-        Ex4[State Tax<br/>chargeType: taxState<br/>chargeCategory: taxes<br/>multiplier: 0.0825]
-    end
-    
-    %% Connections
-    RPVersion -->|hasPrices<br/>1..1| Prices
-    
-    Price1 -.->|has properties| ChargeType
-    Price1 -.->|has properties| ChargeCategory
-    Price1 -.->|has properties| BillPortion
-    Price1 -.->|has properties| Amount
-    
-    PriceProps -.->|examples| PriceExamples
-    
-    %% Styling - Paul Tol 2.7 Light colors
-    classDef versionClass fill:#77AADD,stroke:#5588BB,stroke-width:3px,color:#fff
-    classDef containerClass fill:#44BB99,stroke:#228877,stroke-width:3px,color:#fff
-    classDef priceSetClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#333
-    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#333
-    classDef propClass fill:#FFAABB,stroke:#DD8899,stroke-width:2px,color:#333
-    classDef exampleClass fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#fff
-    
-    class RPVersion versionClass
-    class Prices containerClass
-    class PriceSet1,PriceSet2 priceSetClass
-    class Price1,Price2,Price3 priceClass
-    class ChargeType,ChargeCategory,BillPortion,Amount propClass
-    class Ex1,Ex2,Ex3,Ex4 exampleClass
-```
 
 #### urpx:PriceSet
 **Description:** A logical grouping of related prices that are calculated and applied together.
@@ -363,7 +269,7 @@ PriceSets organize prices into meaningful groups (e.g., "Summer Energy Prices", 
 **Key Properties:**
 | Property | Required | Type | Constraints | Description |
 |----------|----------|------|-------------|-------------|
-| `urpx:name` | ✓ | string | Max 255 chars | Set name |
+| `urpx:name` |  | string | Max 255 chars | Set name |
 | `urpx:description` | | string | Max 1000 chars | Set description |
 | `urpx:startDate` | | dateTime | | When prices begin |
 | `urpx:endDate` | | dateTime | | When prices end |
@@ -395,15 +301,15 @@ Prices are the atomic units of utility pricing. Each price represents a specific
 |----------|----------|------|-------------|-------------|
 | `urpx:name` | ✓ | string | Max 255 chars | Price name |
 | `urpx:referencesPriceDefinition` | no | ObjectProperty | PriceDefinition | Link to structural price definition |
-|`startDate` xone `startDateTime` | ✓ | xsd:date or xsd
+|`startDate` xone `startDateTime` | required unless parent PriceSet has `startDate` or `startDateTime` | xsd:date or xsd|
 
 **Price Fields (exactly one required — xone constraint):**
 | Property | Type | Description |
 |----------|------|-------------|
 | `urpx:amount` | decimal | Fixed charge amount |
 | `urpx:unitPrice` | decimal | Price per unit |
-| `urpx:basedOnPrice` | ObjectProperty | Reference to another Price this is derived from |
-| `urpx:basePrice` | decimal | Base price before adjustments |
+| `urpx:basedOnPrice` | ObjectProperty | Reference to another Price or PriceSummary that this price is derived from |
+| `urpx:basePrice` | decimal | Base price before calculation |
 | `urpx:currentPrice` | decimal | Current effective price |
 
 **Additional Properties:**
