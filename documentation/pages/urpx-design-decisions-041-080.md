@@ -67,6 +67,8 @@ Quick links to all design decisions:
 - ✅ [Decision #062: PriceDefinition Removed from Temporal Property Domains](#decision-062)
 - ✅ [Decision #063: Removal of alternativesType Property and AlternativesTypeValue](#decision-063)
 - ✅ [Decision #064: Removal of timeZone Property (timezoneIdentifier Standardization)](#decision-064)
+- ✅ [Decision #065: Rename StatementTypeValue to TariffStatementTypeValue](#decision-065)
+- ✅ [Decision #066: Addition of tariffStatementType Property](#decision-066)
 
 ---
 
@@ -1691,3 +1693,97 @@ Remove `urpx:timeZone` and standardize on `urpx:timezoneIdentifier` as the singl
 - **Positive**: Unambiguous timezone representation, simplified model
 - **Breaking Change**: Yes — migrate `timeZone` values to `timezoneIdentifier` using IANA format
 - **Requirements**: Implementations must use IANA timezone identifiers
+
+---
+
+<a id="decision-065"></a>
+### 🔗 Decision #065: Rename StatementTypeValue to TariffStatementTypeValue
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-03-02
+- **Issue:** Naming consistency
+- **Category:** Naming Convention
+- **Impact:** Low - No breaking changes
+
+**Context:**
+The enumeration class `urpx:StatementTypeValue` provides controlled vocabulary for PSC statement filing types. The name `StatementTypeValue` was insufficiently specific — "statement" is a broad term used in many contexts, and the class specifically enumerates tariff statement types. Renaming to `TariffStatementTypeValue` aligns the class name with its domain (`TariffStatementDocument`) and with the URPX naming convention of prefixing tariff-related classes with `Tariff`.
+
+**Decision:**
+Rename `urpx:StatementTypeValue` to `urpx:TariffStatementTypeValue`.
+
+**Alternatives Considered:**
+
+1. **Rename to TariffStatementTypeValue** ⭐ **SELECTED**
+   - ✅ Unambiguously scoped to tariff statements
+   - ✅ Consistent with `TariffStatementDocument` naming
+   - ✅ Reduces risk of name collision with other statement types in future
+
+2. **Keep StatementTypeValue**
+   - ✅ No migration required
+   - ❌ Name is too generic — does not convey tariff context
+   - ❌ Inconsistent with `TariffStatementDocument` naming
+
+**Rationale:**
+- Naming consistency: the range class should mirror the domain class (`TariffStatementDocument` → `TariffStatementTypeValue`)
+- Reduces ambiguity for implementers and working group reviewers
+- Aligns with the URPX pattern of prefixing related terms consistently
+
+**Implementation Details:**
+- Renamed class declaration in `ontology/urpx-ontology.ttl`: `urpx:StatementTypeValue` → `urpx:TariffStatementTypeValue`
+- Updated `skos:note` capitalisation fix ("standardized" → "Standardized")
+- Range of `urpx:tariffStatementType` set to `urpx:TariffStatementTypeValue`
+- Renamed `StateemntTypeValue` in SHACL to `TariffStatementTypeValue` 
+
+**Impact Assessment:**
+- **Positive**: Clearer, more specific class name consistent with domain class naming
+- **Breaking Change**: No, not yet in use
+
+---
+
+<a id="decision-066"></a>
+### 🔗 Decision #066: Addition of tariffStatementType Property
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-03-02
+- **Issue:** Missing classification property on TariffStatementDocument
+- **Category:** Architecture
+- **Impact:** Low - Non-breaking addition
+
+**Context:**
+`TariffStatementDocument` represents PSC statement filings with prices and modifiers. The ontology lacked a property to classify which *kind* of statement a document represents (e.g., fuel adjustment, rate statement, transmission). The `TariffStatementTypeValue` enumeration class existed to provide this vocabulary but had no corresponding property linking it to the document class.
+
+**Decision:**
+Add `urpx:tariffStatementType` as an ObjectProperty with domain `TariffStatementDocument` and range `TariffStatementTypeValue`.
+
+**Alternatives Considered:**
+
+1. **Add tariffStatementType ObjectProperty** ⭐ **SELECTED**
+   - ✅ Enables classification of statement documents by regulatory type
+   - ✅ Connects the existing `TariffStatementTypeValue` enumeration to its intended domain
+   - ✅ Follows URPX naming convention for enumeration-backed classification properties
+   - ✅ Non-breaking addition
+
+2. **Use a generic `documentType` property**
+   - ✅ Reusable across document types
+   - ❌ Less semantically precise
+   - ❌ Would require a broader enumeration covering all document types
+
+**Rationale:**
+- The `TariffStatementTypeValue` enumeration was defined without a corresponding property — this decision closes that gap
+- Domain-specific property name (`tariffStatementType`) is unambiguous and consistent with existing patterns (e.g., `urpx:publicationType` on `TariffPublication`)
+
+**Implementation Details:**
+```turtle
+urpx:tariffStatementType a owl:ObjectProperty ;
+    rdfs:label "Tariff Statement Type"@en ;
+    rdfs:comment "Type of regulatory statement filing (PSC statement types)" ;
+    rdfs:domain urpx:TariffStatementDocument ;
+    rdfs:range urpx:TariffStatementTypeValue ;
+    skos:note "PSC statement types enumeration for regulatory statement categorization. with standardized statement type definitions." .
+```
+
+**Impact Assessment:**
+- **Positive**: Enables statement document classification; connects existing enumeration to its domain
+- **Breaking Change**: None — additive only
+- **Additional implementation**: SHACL `TariffStatementDocumentShape` was updated to include `tariffStatementType` as an optional property constraint
+

@@ -1,7 +1,7 @@
 # URPX Data Dictionary
 
 **Version:** 0.1.1
-**Last Updated:** 2026-02-18
+**Last Updated:** 2026-03-02
 **Ontology Source:** [`urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
 
 [← Back to Index](../index.md) | [Overview](urpx-overview.md) | [Tutorial](urpx-tutorial.md) | [Examples](urpx-examples.md)
@@ -343,6 +343,9 @@ The following are subclasses of [URPXDocument](#urpx-urpxdocument) that inherit 
 
 **Parent:** `urpx:URPXDocument`
 
+**Additional Relationships:**
+- `urpx:hasPrices` → Prices (1..1) - Price container for this statement
+
 ---
 
 #### urpx:TariffStatementDocument
@@ -360,12 +363,18 @@ The following are subclasses of [URPXDocument](#urpx-urpxdocument) that inherit 
 
 **Parent:** `urpx:URPXDocument`
 
+**Additional Relationships:**
+- `urpx:hasPrices` → Prices (1..1) - Price container for this statement
+
 ---
 
 #### urpx:TariffAddendumDocument
 **Description:** Addendum filing for corrections or clarifications.
 
 **Parent:** `urpx:URPXDocument`
+
+**Additional Relationships:**
+- `urpx:hasPrices` → Prices (1..1) - Price container for this statement
 
 ---
 
@@ -626,11 +635,11 @@ Ledgers support complex billing scenarios with multiple charge categories (e.g.,
 | `urpx:name` | ✓ | string | Max 255 chars | Ledger name |
 | `urpx:ledgerType` | ✓ | LedgerTypeValue | [Enum](#ledger-types) | Type: supply, delivery, transmission, distribution, bundled |
 | `urpx:settlementInterval` | | duration | ISO 8601 | Period over which balances are settled |
+| `urpx:referencesMetricInput` | ✓ | MetricInput IRI reference | 1..n | Metric input(s) for this ledger |
+| `urpx:hasPriceDefinition` | ✓ | Points to PriceDefinition object | 1..n | Price structure definitions |
 
 **Relationships:**
-- `urpx:referencesMetricInput` → MetricInput (1..n) - Metric inputs for this ledger
 - `urpx:hasBillingCycle` → BillingCycle (0..n) - Billing cycle definitions
-- `urpx:hasPriceDefinition` → PriceDefinition (0..n) - Price structure definitions
 
 **Referenced By:**
 - `urpx:hasLedger` from BillingModel
@@ -653,7 +662,7 @@ ProfileAlternatives bridges customer and service point profile characteristics a
 
 **Referenced By:**
 - `urpx:hasProfileAlternatives` from PlanElements
-- `urpx:referencesProfileAlternatives` from PriceSetAlternatives
+- `urpx:referencesProfileAlternatives` from PriceSetAlternatives and Price Definition
 
 ---
 
@@ -669,13 +678,10 @@ ProfileAlternative defines dimensions along which price set alternatives differ,
 | Property | Required | Type | Constraints | Description |
 |----------|----------|------|-------------|-------------|
 | `urpx:defaultSelectionLogic` | | string | | Logic for auto-selecting default |
-
-**Relationships:**
-- `urpx:hasDimensionValue` → (blank node) (1..n) - Dimension-value pairs using forDimension + valueIRI
-- `urpx:hasAlternativeDimension` → AlternativeDimension (0..n) - Dimensions for this alternative
+| `urpx:hasDimensionValue` | | blank node | 1..n | Dimension-value pairs using forDimension + valueIRI |
 
 **Referenced By:**
-- `urpx:referencesProfileAlternative` from PriceSetAlternative
+- `urpx:referencesProfileAlternative` from PriceSetAlternative and Price Definition
 
 ---
 
@@ -740,61 +746,35 @@ AlternativeDimension defines customer profile attributes that determine which Pr
 **Relationships:**
 - `urpx:hasPossibleValues` → rdf:List - Structured possible values with labels for GUI
 
+**Referenced By:**
+- `urpx:hasAlternativeDimension` from AlternativeDimensions
+
 ---
 
 ## Organization Classes
 
-### urpx-org:Organization
+### urpx:Organization
 **Description:** Base class for any entity participating in energy markets or rate regulation.
 
 **Semantic Context:**  
 Organizations form the institutional framework of the utility industry, from service providers to regulators to parent companies.
 
-**Parent:** `org:Organization`
+**Parent:** `urpx:Organization`
 
 **Key Properties:**
 | Property | Required | Type | Constraints | Description |
 |----------|----------|------|-------------|-------------|
-| `urpx-org:organizationId` | ✓ | string | | Unique identifier |
-| `urpx-org:organizationType` | ✓ | string | [Enum](#organization-types) | Entity type |
-| `urpx-org:status` | ✓ | string | [Enum](#organization-status) | Current status |
-| `urpx-org:foundedDate` | | date | | Establishment date |
-| `urpx-org:dissolvedDate` | | date | | Dissolution date |
+| `urpx:organizationType` | ✓ | string | [Enum](#organization-types) | Entity type |
+| `urpx:legalName` | | string | | Official legal utility name including corporate designations (Inc., LLC). |
 
 **Relationships:**
-- `urpx-org:hasIdentity` → OrganizationIdentity (1..n)
-- `urpx-org:hasParent` → ParentCompany (0..1)
-- `urpx-org:hasEvent` → OrganizationEvent (0..n)
-
----
-
-### urpx-org:UtilityOperator
-**Description:** Entity providing utility services and publishing rate plans.
-
-**Semantic Context:**  
-Utility operators are the primary actors in the URPX ecosystem, creating and maintaining the rate plans that determine customer costs.
-
-**Parent:** `urpx-org:Organization`
-
-**Key Properties:**
-| Property | Required | Type | Constraints | Description |
-|----------|----------|------|-------------|-------------|
-| `urpx-org:utilityType` | ✓ | string | [Enum](#utility-types) | Service type |
-| `urpx-org:ownershipType` | | string | [Enum](#ownership-types) | Ownership model |
-| `urpx-org:customerCount` | | integer | | Number of customers |
-| `urpx-org:annualRevenue` | | decimal | | Annual revenue |
-| `urpx-org:reportingCurrency` | | string | ISO 4217 | Currency for financials |
-
-**Relationships:**
-- `urpx-org:hasServiceTerritory` → ServiceTerritory (1..n)
-- `urpx-org:regulatedBy` → RegulatoryAuthority (0..n)
-- `urpx-org:publishes` → RatePlan (0..n)
+- `urpx:hasIdentity` → OrganizationIdentity (1..n)
 
 ---
 
 ## Geographic Classes
 
-### urpx-geo:ServiceTerritory
+### urpx:ServiceTerritory
 **Description:** Geographic area where an organization provides service.
 
 **Semantic Context:**  
@@ -802,69 +782,38 @@ Service territories define the spatial boundaries of utility operations and regu
 
 **Parent:** `owl:Thing`
 
-**Key Properties:**
-| Property | Required | Type | Constraints | Description |
-|----------|----------|------|-------------|-------------|
-| `urpx-geo:territoryId` | ✓ | string | | Unique identifier |
-| `urpx-geo:territoryName` | | string | | Territory name |
-| `urpx-geo:territoryType` | ✓ | string | [Enum](#territory-types) | Territory classification |
-| `urpx-geo:utilityServiceKind` | ✓ | string | [Enum](#service-types) | Services provided |
-| `urpx-geo:effectiveFrom` | | date | | Start of territory |
-| `urpx-geo:effectiveTo` | | date | | End of territory |
-
-**Relationships:**
-- `urpx-geo:hasTerritorySegment` → TerritorySegment (1..n)
-- `urpx-geo:containsState` → State (0..n)
-- `urpx-geo:containsCounty` → County (0..n)
-- `urpx-geo:containsMunicipality` → Municipality (0..n)
+**Referenced By:**
+- `urpx:appliesInServiceTerritory` from ApplicabilityGroup
 
 ---
 
-### urpx-geo:State
+### urpx:State
 **Description:** U.S. state or Canadian province for geographic applicability.
 
 **Parent:** `owl:Thing`
 
-**Key Properties:**
-| Property | Required | Type | Constraints | Description |
-|----------|----------|------|-------------|-------------|
-| `urpx-geo:stateCode` | ✓ | string | 2-letter code | State abbreviation |
-| `urpx-geo:stateName` | ✓ | string | | Full state name |
-| `urpx-geo:countryCode` | | string | ISO 3166 | Country code |
+**Referenced By:**
+- `urpx:appliesInState` from ApplicabilityGroup
 
 ---
 
-### urpx-geo:County
+### urpx:County
 **Description:** County-level geographic division for rate applicability.
 
 **Parent:** `owl:Thing`
 
-**Key Properties:**
-| Property | Required | Type | Constraints | Description |
-|----------|----------|------|-------------|-------------|
-| `urpx-geo:countyCode` | ✓ | string | FIPS code | County identifier |
-| `urpx-geo:countyName` | ✓ | string | | County name |
-
-**Relationships:**
-- `urpx-geo:inState` → State (1..1)
+**Referenced By:**
+- `urpx:appliesInCounty` from ApplicabilityGroup
 
 ---
 
-### urpx-geo:Municipality
+### urpx:Municipality
 **Description:** City or town-level geographic division.
 
 **Parent:** `owl:Thing`
 
-**Key Properties:**
-| Property | Required | Type | Constraints | Description |
-|----------|----------|------|-------------|-------------|
-| `urpx-geo:municipalityCode` | ✓ | string | | Municipality code |
-| `urpx-geo:municipalityName` | ✓ | string | | Municipality name |
-| `urpx-geo:municipalityType` | | string | [Enum](#municipality-types) | Type of municipality |
-
-**Relationships:**
-- `urpx-geo:inCounty` → County (0..1)
-- `urpx-geo:inState` → State (1..1)
+**Referenced By:**
+- `urpx:appliesInMunicipality` from ApplicabilityGroup
 
 ---
 
@@ -878,9 +827,9 @@ Service territories define the spatial boundaries of utility operations and regu
 
 **Definition:** The date and time when a core entity (document, version, modifier) becomes active.
 
-**Domain:** URPXDocument, RatePlanVersion, RatePlanModifierVersion
+**Domain:** URPXDocument, TariffPublication, RatePlan, RatePlanVersion, RatePlanModifier, RatePlanModifierVersion
 **Range:** xsd:dateTime
-**Cardinality:** 1..1 (Required)
+**Cardinality:** 0..1 (Optional, typically requires either effectiveDateTime or effectiveDate)
 
 **Usage:** Marks when a rate plan version, document, or modifier becomes active. See [Temporal Constraints](#temporal-constraints) for timezone requirements.
 
@@ -890,9 +839,9 @@ Service territories define the spatial boundaries of utility operations and regu
 
 **Definition:** The date and time when a core entity expires and ceases to apply.
 
-**Domain:** RatePlanVersion, RatePlanModifierVersion
+**Domain:** URPXDocument, TariffPublication, RatePlan, RatePlanVersion, RatePlanModifier, RatePlanModifierVersion
 **Range:** xsd:dateTime
-**Cardinality:** 0..1
+**Cardinality:** 0..1 (Optional, typically requires either expirationDateTime or expirationDate unless active version with no set end date)
 
 **Usage:** Marks when a temporal entity expires. Null implies indefinite validity until superseded.
 
@@ -902,11 +851,11 @@ Service territories define the spatial boundaries of utility operations and regu
 
 **Definition:** A provisional end date/time subject to change.
 
-**Domain:** Price, PriceSet, URPXDocument, TariffPublication, RatePlanVersion, RatePlanModifierVersion, LocationDataSet
+**Domain:** Price, PriceSet, URPXDocument, TariffPublication, RatePlanVersion, RatePlanModifierVersion, LocationDataSet, TOUPeriod, BillingCycle
 **Range:** xsd:dateTime
 **Cardinality:** 0..1
 
-**Usage:** Used when a definitive end date is unknown (e.g., rates effective 'until further notice').
+**Usage:** Used when a definitive end date is unknown (e.g., rates effective 'until further notice') but an anticipated end date is available.
 
 ---
 
@@ -914,7 +863,7 @@ Service territories define the spatial boundaries of utility operations and regu
 
 **Definition:** The date and time the entity received formal regulatory approval.
 
-**Domain:** RatePlanVersion
+**Domain:** RatePlanVersion, RatePlanModifierVersion
 **Range:** xsd:dateTime
 **Cardinality:** 0..1
 
@@ -945,7 +894,17 @@ Service territories define the spatial boundaries of utility operations and regu
 **Definition:** The non-time-specific start date of a pricing or temporal element.
 
 **Domain:** Price, PriceSet, TOUPeriod, BillingCycle, Season
-**Range:** xsd:date or xsd:dateTime
+**Range:** xsd:date 
+**Cardinality:** 0..1
+
+---
+
+#### urpx:startDateTime
+
+**Definition:** The time-specific start date of a pricing or temporal element.
+
+**Domain:** Price, PriceSet, TOUPeriod, BillingCycle, Season
+**Range:** xsd:dateTime 
 **Cardinality:** 0..1
 
 ---
@@ -955,7 +914,17 @@ Service territories define the spatial boundaries of utility operations and regu
 **Definition:** The non-time-specific end date of a pricing or temporal element.
 
 **Domain:** Price, PriceSet, TOUPeriod, BillingCycle, Season
-**Range:** xsd:date or xsd:dateTime
+**Range:** xsd:date
+**Cardinality:** 0..1
+
+---
+
+#### urpx:endDateTime
+
+**Definition:** The time-specific end date of a pricing or temporal element.
+
+**Domain:** Price, PriceSet, TOUPeriod, BillingCycle, Season
+**Range:** xsd:dateTime
 **Cardinality:** 0..1
 
 ---
@@ -968,7 +937,7 @@ Service territories define the spatial boundaries of utility operations and regu
 
 **Definition:** Fixed amount for prices not based on consumption.
 
-**Domain:** Price, PriceSummary
+**Domain:** Price
 **Range:** xsd:decimal
 **Cardinality:** 0..1
 
@@ -984,7 +953,7 @@ Service territories define the spatial boundaries of utility operations and regu
 **Range:** xsd:decimal
 **Cardinality:** 0..1
 
-**Usage:** Per-unit pricing for usage-based prices. Use with [urpx:unitOfMeasure](#urpx-unit-of-measure) to specify pricing basis.
+**Usage:** Per-unit pricing for usage-based prices. Use with `urpx:referencesMetricInput` to specify pricing basis.
 
 ---
 
@@ -1052,7 +1021,7 @@ Service territories define the spatial boundaries of utility operations and regu
 
 **Definition:** Base quantity for per-unit pricing (e.g., 'per 2 households').
 
-**Domain:** Price
+**Domain:** Price, PriceDefinition, PriceSet
 **Range:** xsd:decimal
 **Cardinality:** 0..1
 
@@ -1064,7 +1033,7 @@ Service territories define the spatial boundaries of utility operations and regu
 
 **Definition:** ISO 4217 three-letter currency code.
 
-**Domain:** Price, PriceSet, RatePlan, RatePlanVersion, URPXDocument, RatePlanModifier, RatePlanModifierVersion
+**Domain:** Price, PriceDefinition, PriceSet, RatePlan, RatePlanVersion, URPXDocument, RatePlanModifier, RatePlanModifierVersion
 **Range:** xsd:string
 **Cardinality:** 0..1
 
@@ -1080,7 +1049,7 @@ Service territories define the spatial boundaries of utility operations and regu
 
 **Definition:** Classification of electric service end use.
 
-**Domain:** ProfileAlternative, ServicePointProfile
+**Domain:** ApplicabilityGroup, ServicePointProfile
 **Range:** EndUseValue
 **Cardinality:** 0..1
 
@@ -1391,16 +1360,16 @@ Service territories define the spatial boundaries of utility operations and regu
 | IRI | Label | Definition |
 |-----|-------|------------|
 | urpx:annualInterval | Annual Interval | Annual intervals |
-| urpx:customInterval | Custom Interval | Custom defined interval length |
+| urpx:quarterlyInterval | Quarterly Interval | Quarterly intervals |
+| urpx:monthlyInterval | Monthly Interval | Monthly intervals |
+| urpx:weeklyInterval | Weekly Interval | Weekly intervals |
 | urpx:dailyInterval | Daily Interval | Daily intervals |
+| urpx:hourlyInterval | Hourly Interval | Hourly updates |
+| urpx:thirtyMinuteInterval | 30 Minute Interval | 30-minute intervals |
 | urpx:fifteenMinuteInterval | 15 Minute Interval | 15-minute intervals |
 | urpx:fiveMinuteInterval | 5 Minute Interval | 5-minute intervals |
-| urpx:hourlyInterval | Hourly Interval | Hourly updates |
-| urpx:monthlyInterval | Monthly Interval | Monthly intervals |
-| urpx:quarterlyInterval | Quarterly Interval | Quarterly intervals |
 | urpx:realTimeInterval | Real Time Interval | Continuous updates |
-| urpx:thirtyMinuteInterval | 30 Minute Interval | 30-minute intervals |
-| urpx:weeklyInterval | Weekly Interval | Weekly intervals |
+| urpx:customInterval | Custom Interval | Custom defined interval length |
 
 ---
 
@@ -1970,7 +1939,6 @@ End use classification enables:
 | urpx:count | Count | Discrete count |
 | urpx:cubicFoot | Cubic Foot | Volume in cubic feet |
 | urpx:cubicMeter | Cubic Meter | Volume in cubic meters |
-| urpx:day | Day | Per day (Daily charges) |
 | urpx:decatherm | Decatherm | Decatherm (Gas) |
 | urpx:gallon | Gallon | US Gallon (Water) |
 | urpx:Gbps | Gbps | Gigabits per second |
@@ -2014,7 +1982,6 @@ End use classification enables:
 | urpx:VArh | VArh | Volt-ampere reactive-hour |
 | urpx:W | W | Watt |
 | urpx:Wh | Wh | Watt-hour |
-| urpx:year | Year | Per year (Annual charges) |
 
 ---
 
@@ -2264,7 +2231,8 @@ All entities must satisfy these fundamental requirements:
 
 2. **Temporal Consistency**
    - Effective dates must precede expiration dates
-   - Charge dates must fall within parent ChargeSet dates
+   - Prices inherit validity from parent PriceSet when start and end dates are present on PriceSet and not Price objects within that PriceSet
+   - Unique Price validity dates must fall within parent PriceSet validity dates
    - Version effective dates cannot overlap (except drafts)
 
 3. **Price Field Requirements**
@@ -2273,7 +2241,8 @@ All entities must satisfy these fundamental requirements:
      - `unitPrice` for variable prices
      - `basePrice` for base rates
      - `currentPrice` for current rates
-   - Price fields must be non-negative decimals
+     - `basedOnPrice` for Prices calculated based on other Price or PriceSummary objects
+   - Price fields must be decimals
 
 4. **Relationship Cardinality**
    - RatePlan must have at least one RatePlanVersion
@@ -2313,17 +2282,6 @@ FILTER NOT EXISTS {
 }
 ```
 
-#### Geographic Validation
-```sparql
-# Counties must reference valid states
-?county urpx-geo:inState ?state .
-?state a urpx-geo:State .
-
-# Municipalities must reference valid states
-?municipality urpx-geo:inState ?state .
-?state a urpx-geo:State .
-```
-
 ### Data Type Validation
 
 #### String Constraints
@@ -2337,7 +2295,7 @@ FILTER NOT EXISTS {
 #### Numeric Constraints
 | Field Type | Range | Precision |
 |------------|-------|-----------|
-| Prices | 0 to 999999.999999 | 6 decimal places |
+| Prices | Any decimal | 6 decimal places |
 | Percentages | 0 to 100 | 2 decimal places |
 | Tier Numbers | 1 to 99 | Integer |
 | Priority | 1 to 999 | Integer |
@@ -2345,31 +2303,27 @@ FILTER NOT EXISTS {
 #### Temporal Constraints
 | Field Type | Format | Timezone |
 |------------|--------|----------|
-| Dates | ISO 8601 Date | Inherited from parent |
-| DateTimes | ISO 8601 DateTime | Inherited from parent |
-| Times | ISO 8601 Time | Inherited from parent |
+| Dates | ISO 8601 Date | Inherited from parent unless more precision on nested Object |
+| DateTimes | ISO 8601 DateTime | Inherited from parent unless more precision on nested Object |
+| Times | ISO 8601 Time | Inherited from parent unless more precision on nested Object |
 | Durations | ISO 8601 Duration | N/A |
 
 **Critical ISO 8601 Requirements:**
 - **DateTime properties inherit timezone information**
-- TimeBracket times inherit timezone context from parent `RatePlan` `timeZone` property
+- TimeBracket times inherit timezone context from parent `RatePlan` `timeZoneIdentifier` property
 - Validation to enforce timezone presence: `FILTER (!REGEX(STR(?value), "[+-]\\d{2}:\\d{2}$|Z$"))`
 
 ### Cross-Reference Validation
 
 #### Organization References
 - All `publishedBy` references must point to valid UtilityOperator instances
-- All `approvedBy` references must point to valid RegulatoryAuthority instances
-- All `regulatedBy` references must point to valid RegulatoryAuthority instances
 
 #### Geographic References
-- All `applicableInTerritory` must point to valid ServiceTerritory instances
 - All `appliesInState` must point to valid State instances
 - All `appliesInCounty` must point to valid County instances
 
 #### Temporal References
 - All `supersedes` references must point to earlier versions
-- All `replacesStatement` references must point to earlier statements
 
 ### SHACL Validation Examples
 
@@ -2404,58 +2358,6 @@ urpx:PriceShape
     [ sh:path urpx:currentPrice ; sh:minCount 1 ; sh:maxCount 1 ]
   ) .
 ```
-
-### Error Handling
-
-#### Validation Error Categories
-
-1. **Critical Errors** (Must be fixed)
-   - Missing required fields
-   - Invalid data types
-   - Broken references
-   - Constraint violations
-
-2. **Warnings** (Should be reviewed)
-   - Missing recommended fields
-   - Unusual value ranges
-   - Deprecated enumerations
-   - Incomplete relationships
-
-3. **Information** (For awareness)
-   - Use of default values
-   - Automatic corrections applied
-   - Migration notes
-   - Best practice suggestions
-
-#### Common Validation Errors
-
-| Error Code | Description | Resolution |
-|------------|-------------|------------|
-| `URPX-001` | Missing required identifier | Add unique identifier matching pattern |
-| `URPX-002` | Invalid date range | Ensure start date precedes end date |
-| `URPX-003` | No price fields on price | Add at least one price property |
-| `URPX-004` | Overlapping rate versions | Adjust version dates to prevent overlap |
-| `URPX-005` | Invalid enumeration value | Use value from approved enumeration list |
-| `URPX-006` | Broken entity reference | Ensure referenced entity exists |
-| `URPX-007` | Duplicate TOU period number | Use unique period numbers in schedule |
-| `URPX-008` | Invalid currency code | Use ISO 4217 currency code |
-| `URPX-009` | Invalid timezone | Use IANA timezone identifier |
-| `URPX-010` | Cardinality violation | Adjust number of relationships |
-
----
-
-## Change Log
-
-### Version 0.1.1 (2025-11-23)
-- Initial release with comprehensive ontology
-- Added statement charges for PSC filings
-- Implemented flexible pricing with unitPrice/amount
-- Enhanced geographic applicability (state/county/municipality)
-- Added customer eligibility features (prior plans, programs)
-- Expanded enumerations for all entity types
-- Implemented relator patterns for complex relationships
-- Added measurement and aggregation methods
-- Comprehensive SHACL validation rules
 
 ---
 

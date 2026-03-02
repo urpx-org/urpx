@@ -1,5 +1,9 @@
 # URPX Quality Assurance Guidelines
 
+**Version**: 0.1.1  
+**Last Updated**: 2026-03-02  
+**Status**: Active
+
 **Validation and quality standards for URPX v0.1.1 rate plan data**
 
 [← Back to Index](../index.md)
@@ -27,7 +31,6 @@ URPX v0.1.1 maintains rigorous quality standards to ensure rate plan data accura
 2. **SHACL Validation** - Business rules enforced through SHACL constraints
 3. **Semantic Consistency** - Proper use of properties, classes, and enumerations
 4. **Data Completeness** - Required fields populated with valid values
-5. **Standards Alignment** - Integration with Green Button, LF Energy CDS, CIM
 
 ---
 
@@ -67,7 +70,7 @@ jena.infer --rdfs ontology/urpx-ontology.ttl
 
 ### SHACL Validation Files
 
-- [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl) - Unified SHACL validation shapes (~3,635 lines, draft). Contains comprehensive shapes for all major URPX classes.
+- [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl) - Unified SHACL validation shapes (~3,500 lines, draft). Contains comprehensive shapes for all major URPX classes.
 
 ### Running SHACL Validation
 
@@ -87,12 +90,13 @@ jena.shacl --shapes shacl/urpx-shacl.ttl \
 **Price Requirements:**
 - chargeCategory is optional (0..1)
 - chargeType is optional (0..*)
-- Must have one pricing field (amount, unitPrice, or basePrice)
+- Must have one pricing field (amount, unitPrice, basedOnPrice, currentPrice, or basePrice)
+- Must have start and end dates when available (startDate, startDateTime, endDate, endDateTime)
 
 **Temporal Requirements:**
-- effectiveDateTime must include timezone
+- Time zone must be specified with `timeZoneIdentifier` on LocationDataSet, URPXDocument, RatePlan, or RatePlanModifier
 - Versions must not overlap temporally
-- expirationDateTime must be after effectiveDateTime
+- expirationDate or expirationDateTime must be after effectiveDate or effectiveDateTime
 
 ---
 
@@ -107,15 +111,15 @@ jena.shacl --shapes shacl/urpx-shacl.ttl \
 - hasRatePlanVersion (at least one)
 
 **Every RatePlanVersion must have:**
-- versionNumber (semantic versioning)
-- effectiveDateTime (with timezone)
+- version (semantic versioning)
+- effectiveDateTime or effectiveDate
 - changeReason (from ChangeReasonValue enumeration)
 - publishedBy (Organization reference)
 - hasPrices (Prices container)
 
 **Every Price must have:**
-- One pricing field (amount, unitPrice, or basePrice)
-- currency (ISO 4217 code)
+- One pricing field (amount, unitPrice, basedOnPrice, currentPrice, or basePrice)
+- startDate or startDateTime and endDate or endDateTime when available
 
 **Every Price may have:**
 - chargeType (from ChargeTypeValue) — optional, recommended
@@ -172,10 +176,7 @@ jena.shacl --shapes shacl/urpx-shacl.ttl \
 ```turtle
 ex:price1 a urpx:Price ;
     urpx:chargeType urpx:minimumCharge ;
-    urpx:chargeCategory urpx:serviceCharge ;
-    urpx:hasMetricSpecification [
-        urpx:billPortion urpx:bundledPortion
-    ] .
+    urpx:chargeCategory urpx:serviceCharge .
 ```
 
 **Incorrect:**
@@ -275,12 +276,6 @@ jena.shacl --shapes shacl/ --data my-rate-plan.ttl
 - Check temporal consistency
 - Validate geographic applicability
 - Confirm eligibility rules are complete
-
-**5. Standards Alignment Check**
-- Verify Green Button mapping compatibility
-- Check LF Energy CDS alignment
-- Validate CIM property usage
-- Confirm timezone compliance (ISO 8601)
 
 ---
 

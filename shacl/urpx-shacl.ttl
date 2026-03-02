@@ -787,7 +787,7 @@ urpx-shacl:LedgerShape
     sh:property [
         sh:path urpx:ledgerType ;
         sh:node urpx-shacl:LedgerTypeValueShape ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -886,7 +886,7 @@ urpx-shacl:MetricInputShape
     sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -2294,7 +2294,7 @@ urpx-shacl:RatePlanModifierVersionShape
     sh:property [
         sh:path urpx:hasPrices ;
         sh:class urpx:Prices ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -2776,7 +2776,7 @@ urpx-shacl:TariffAddendumDocumentShape
     sh:property [
         sh:path urpx:hasPrices ;
         sh:class urpx:Prices ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] .
 
@@ -2891,6 +2891,12 @@ urpx-shacl:TariffStatementDocumentShape
     sh:property [
         sh:path urpx:hasPrices ;
         sh:class urpx:Prices ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:tariffStatementType ;
+        sh:node urpx-shacl:TariffStatementTypeValueShape ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] .
@@ -2902,7 +2908,7 @@ urpx-shacl:TariffSupplementDocumentShape
     sh:property [
         sh:path urpx:hasPrices ;
         sh:class urpx:Prices ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] .
 
@@ -3533,10 +3539,10 @@ urpx-shacl:SpecialNeedsStatusValueShape
     sh:nodeKind sh:IRI ;
     sh:in ( urpx:disabilityAccommodation urpx:lifeSupport urpx:medicalEquipment urpx:noSpecialNeeds urpx:vulnerableCustomer ) .
 
-urpx-shacl:StatementTypeValueShape
+urpx-shacl:TariffStatementTypeValueShape
     a sh:NodeShape ;
-    rdfs:label "StatementTypeValue Shape"@en ;
-    sh:targetClass urpx:StatementTypeValue ;
+    rdfs:label "TariffStatementTypeValue Shape"@en ;
+    sh:targetClass urpx:TariffStatementTypeValue ;
     sh:nodeKind sh:IRI ;
     sh:in ( urpx:distributionStatement urpx:fuelAdjustmentStatement urpx:purchasedPowerStatement urpx:rateStatement urpx:statementTypeOther urpx:transmissionStatement ) .
 
@@ -3559,7 +3565,7 @@ urpx-shacl:UnitOfMeasureValueShape
     rdfs:label "UnitOfMeasureValue Shape"@en ;
     sh:targetClass urpx:UnitOfMeasureValue ;
     sh:nodeKind sh:IRI ;
-    sh:in ( urpx:hertz urpx:Gbps urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:bit urpx:btu urpx:byte urpx:ccf urpx:cord urpx:count urpx:cubicFoot urpx:cubicMeter urpx:day urpx:decatherm urpx:gallon urpx:hectare urpx:hour urpx:item urpx:kVA urpx:kVAh urpx:kVAr urpx:kVArh urpx:kW urpx:kWh urpx:kilogallon urpx:kilogram urpx:kilometer urpx:liter urpx:Mbps urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:month urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:VA urpx:VAh urpx:VAr urpx:VArh urpx:year ) .
+    sh:in ( urpx:hertz urpx:Gbps urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:bit urpx:btu urpx:byte urpx:ccf urpx:cord urpx:count urpx:cubicFoot urpx:cubicMeter urpx:decatherm urpx:gallon urpx:hectare urpx:item urpx:kVA urpx:kVAh urpx:kVAr urpx:kVArh urpx:kW urpx:kWh urpx:kilogallon urpx:kilogram urpx:kilometer urpx:liter urpx:Mbps urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:VA urpx:VAh urpx:VAr urpx:VArh urpx:year ) .
 
 urpx-shacl:UpdateFrequencyValueShape
     a sh:NodeShape ;

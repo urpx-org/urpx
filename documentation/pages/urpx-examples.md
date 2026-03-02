@@ -1,7 +1,7 @@
 # URPX Examples
 
 **Version:** 0.1.1  
-**Last Updated:** 2025-11-23
+**Last Updated:** 2026-03-02
 
 [← Back to Index](../index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md) | [Tutorial](urpx-tutorial.md)
 
@@ -48,25 +48,22 @@ Simple residential rate plan structure with fixed monthly price plus tiered usag
 
 ```turtle
 @prefix urpx: <https://schema.urpx.org/> .
-@prefix urpx-org: <https://schema.urpx.org/organization/> .
-@prefix schema: <https://schema.org/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix ex: <https://example.org/res-flat/> .
 
 # Document Container
 ex:doc-res-flat-2025 a urpx:TariffBookDocument ;
-    urpx:identifier "DOC-RES-FLAT-2025" ;
     urpx:version "0.1.1" ;
     urpx:effectiveDateTime "2025-01-01T00:00:00-05:00"^^xsd:dateTime ;
     urpx:name "Basic Residential Flat Rate Plan 2025" ;
     urpx:description "Standard residential rate plan with tiered usage pricing" ;
-    urpx:timeZone "America/New_York" ;
-    schema:priceCurrency "USD" ;
+    urpx:timeZoneIdentifier "America/New_York" ;
+    urpx:priceCurrency "USD" ;
     urpx:hasRatePlan ex:rateplan-res-flat .
 
 # Utility Organization
-ex:utility-example a urpx-org:Organization ;
-    urpx-org:organizationIdentifier "UTIL-EXAMPLE-001" ;
+ex:utility-example a urpx:Organization ;
+    urpx:organizationIdentifier "UTIL-EXAMPLE-001" ;
     urpx:name "Example Power Company" .
 
 # Rate Plan
@@ -195,8 +192,6 @@ Time-of-use rate plans encourage customers to shift usage to off-peak hours, red
 
 ```turtle
 @prefix urpx: <https://schema.urpx.org/> .
-@prefix urpx-org: <https://schema.urpx.org/organization/> .
-@prefix schema: <https://schema.org/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix ex: <https://example.org/res-tou/> .
 
@@ -207,7 +202,7 @@ ex:doc-res-tou-2025 a urpx:TariffBookDocument ;
     urpx:effectiveDateTime "2025-01-01T00:00:00-05:00"^^xsd:dateTime ;
     urpx:name "Residential Time-of-Use Rate Plan 2025" ;
     urpx:timeZone "America/New_York" ;
-    schema:priceCurrency "USD" ;
+    urpx:priceCurrency "USD" ;
     urpx:hasRatePlan ex:rateplan-res-tou .
 
 # Rate Plan
@@ -340,7 +335,7 @@ ex:prices-tou-summer a urpx:Prices ;
 
 ex:priceset-tou-summer a urpx:PriceSet ;
     urpx:name "Summer TOU Rate Plan Prices" ;
-    schema:priceCurrency "USD" ;
+    urpx:priceCurrency "USD" ;
     urpx:hasPrice ex:price-tou-service ,
                    ex:price-peak ,
                    ex:price-midpeak ,
@@ -398,8 +393,6 @@ Commercial rate plans include both energy consumption and peak demand prices, in
 
 ```turtle
 @prefix urpx: <https://schema.urpx.org/> .
-@prefix urpx-org: <https://schema.urpx.org/organization/> .
-@prefix schema: <https://schema.org/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix ex: <https://example.org/comm-demand/> .
 
@@ -410,7 +403,7 @@ ex:doc-comm-demand-2025 a urpx:TariffBookDocument ;
     urpx:effectiveDateTime "2025-01-01T00:00:00-05:00"^^xsd:dateTime ;
     urpx:name "Commercial Demand Rate Plan 2025" ;
     urpx:timeZone "America/New_York" ;
-    schema:priceCurrency "USD" ;
+    urpx:priceCurrency "USD" ;
     urpx:hasRatePlan ex:rateplan-comm-demand .
 
 # Rate Plan
@@ -522,8 +515,6 @@ Special rate plans designed to encourage EV adoption while managing grid impacts
 
 ```turtle
 @prefix urpx: <https://schema.urpx.org/> .
-@prefix urpx-org: <https://schema.urpx.org/organization/> .
-@prefix schema: <https://schema.org/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix ex: <https://example.org/ev-rate/> .
 
@@ -534,7 +525,7 @@ ex:doc-ev-rate-2025 a urpx:TariffBookDocument ;
     urpx:effectiveDateTime "2025-01-01T00:00:00-08:00"^^xsd:dateTime ;
     urpx:name "Electric Vehicle Charging Rate Plan 2025" ;
     urpx:timeZone "America/Los_Angeles" ;
-    schema:priceCurrency "USD" ;
+    urpx:priceCurrency "USD" ;
     urpx:hasRatePlan ex:rateplan-ev .
 
 # Rate Plan
@@ -670,7 +661,6 @@ Low-income assistance rate plans provide discounted rates for qualifying custome
 
 ```turtle
 @prefix urpx: <https://schema.urpx.org/> .
-@prefix urpx-org: <https://schema.urpx.org/organization/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix ex: <https://example.org/care/> .
 
@@ -681,7 +671,7 @@ ex:doc-care-2025 a urpx:TariffBookDocument ;
     urpx:effectiveDateTime "2025-01-01T00:00:00-08:00"^^xsd:dateTime ;
     urpx:name "CARE Low-Income Discount Rate Plan 2025" ;
     urpx:timeZone "America/Los_Angeles" ;
-    schema:priceCurrency "USD" ;
+    urpx:priceCurrency "USD" ;
     urpx:hasRatePlan ex:rateplan-care .
 
 # Rate Plan

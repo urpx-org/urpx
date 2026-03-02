@@ -5,6 +5,20 @@
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
 
+2026-03-02
+---
+
+### Ontology Changes
+
+#### Class Renamed
+- Renamed `urpx:StatementTypeValue` to `urpx:TariffStatementTypeValue`
+
+#### Added: `urpx:tariffStatementType` (ObjectProperty)
+- Domain: `TariffStatementDocument`
+- Range: `TariffStatementTypeValue`
+
+---
+
 2026-02-25
 ---
 
@@ -74,8 +88,8 @@
 - Renamed `urpx:forProfileAlternatives` to `urpx:referencesProfileAlternatives` (PriceSetAlternatives, PriceDefinition → ProfileAlternatives)
 
 #### Enumeration Updates
-- Removed `urpx:month` and `urpx:hour` from `UnitOfMeasureValue` (time expressed via `intervalDuration`)
-- Updated `ServiceRoleValue` enumeration definitions
+- Removed `urpx:month`, `urpx:hour`, and `urpx:day` from `UnitOfMeasureValue` (time expressed via `intervalDuration`)
+- Expanded `ServiceRoleValue` enumeration definitions
 
 ### SHACL Updates (`shacl/urpx-shacl.ttl`)
 - Reduced `PriceSet` minimum `hasPrice` cardinality from 2 to 1 (supports `PriceSetAlternative` subclass)

@@ -21,7 +21,7 @@
     dcterms:date "2026-01-23"^^xsd:date ;
     dcterms:description "URPX ontology for utility rate plan exchange" ;
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
-    dcterms:modified "2026-01-23"^^xsd:date ;
+    dcterms:modified "2026-03-02"^^xsd:date ;
     dcterms:title "URPX - Unified Ontology" ;
     owl:versionInfo "0.1.1" ;
     dcat:version "0.1.1" .
@@ -162,8 +162,8 @@ urpx:LocationDataSet a owl:Class ;
 
 urpx:MetricInput a owl:Class ;
     rdfs:label "MetricInput"@en ;
-    rdfs:comment "Organizational unit for pricing rules supporting measured MetricInputs (raw meter data) and calculated MetricInputs (derived metrics)" ;
-    skos:note "Defines a time based metric input to the cost model. Supports measured MetricInputs (meter data), static or dynamic metrics derived from other inputs, and calculated metrics based on inputs from one or more MetricInput inputs (derived metrics like net export = generation - grid import)." .
+    rdfs:comment "Organizational unit for pricing rules supporting measured MetricInputs (raw meter data), profile MetricInputs (profile properties), and calculated MetricInputs (derived metrics)" ;
+    skos:note "Defines a time based metric input to the cost model. Supports measured MetricInputs (meter data), profile MetricInputs (customer or service point profile properties), static or dynamic metrics derived from other inputs, and calculated metrics based on inputs from one or more MetricInput inputs (derived metrics like net export = generation - grid import)." .
 
 urpx:MetricSpecification a owl:Class ;
     rdfs:label "Metric Specification"@en ;
@@ -762,11 +762,11 @@ urpx:SpecialNeedsStatusValue a owl:Class ;
     owl:equivalentClass [ owl:oneOf ( urpx:medicalEquipment urpx:disabilityAccommodation urpx:lifeSupport urpx:vulnerableCustomer urpx:noSpecialNeeds ) ] ;
     skos:note "Enumeration class for special needs classification affecting rate eligibility and service priority." .
 
-urpx:StatementTypeValue a owl:Class ;
+urpx:TariffStatementTypeValue a owl:Class ;
     rdfs:label "Statement Type Value"@en ;
     rdfs:comment "PSC statement filing types enumeration values" ;
     owl:equivalentClass [ owl:oneOf ( urpx:distributionStatement urpx:fuelAdjustmentStatement urpx:purchasedPowerStatement urpx:rateStatement urpx:statementTypeOther urpx:transmissionStatement ) ] ;
-    skos:note "Enumeration class for statement document categorization. standardized statement type definitions." .
+    skos:note "Enumeration class for statement document categorization. Standardized statement type definitions." .
 
 urpx:TaxExemptStatusValue a owl:Class ;
     rdfs:label "Tax Exempt Status Value"@en ;
@@ -783,7 +783,7 @@ urpx:TOUTierStandardNameValue a owl:Class ;
 urpx:UnitOfMeasureValue a owl:Class ;
     rdfs:label "Unit of Measure Value"@en ;
     rdfs:comment "Industry-standard unit of measure enumeration values" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:bit urpx:btu urpx:byte urpx:ccf urpx:cord urpx:count urpx:cubicFoot urpx:cubicMeter urpx:day urpx:decatherm urpx:gallon urpx:Gbps urpx:hectare urpx:hertz urpx:item urpx:kVA urpx:kVAr urpx:kVArh urpx:kVAh urpx:kW urpx:kWh urpx:kilogallon urpx:kilogram urpx:kilometer urpx:liter urpx:Mbps urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:VA urpx:VAh urpx:VAr urpx:VArh urpx:year ) ] ;
+    owl:equivalentClass [ owl:oneOf ( urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:bit urpx:btu urpx:byte urpx:ccf urpx:cord urpx:count urpx:cubicFoot urpx:cubicMeter urpx:decatherm urpx:gallon urpx:Gbps urpx:hectare urpx:hertz urpx:item urpx:kVA urpx:kVAr urpx:kVArh urpx:kVAh urpx:kW urpx:kWh urpx:kilogallon urpx:kilogram urpx:kilometer urpx:liter urpx:Mbps urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:VA urpx:VAh urpx:VAr urpx:VArh urpx:year ) ] ;
     skos:note "Enumeration class for units of measure covering energy, demand, volume, weight, area, and time units." .
 
 urpx:UpdateFrequencyValue a owl:Class ;
@@ -1591,7 +1591,6 @@ urpx:hasJurisdictionOver a owl:ObjectProperty ;
     rdfs:comment "Links regulator to regulated entities" ;
     rdfs:domain urpx:RegulatoryAuthority ;
     rdfs:range urpx:Organization ;
-    owl:inverseOf urpx:regulatedBy ;
     skos:note "Regulatory authority jurisdiction over organizations." .
 
 urpx:hasLedger a owl:ObjectProperty ;
@@ -2027,7 +2026,6 @@ urpx:legalName a owl:DatatypeProperty ;
     rdfs:comment "Official legal name of the organization" ;
     rdfs:domain urpx:Organization ;
     rdfs:range xsd:string ;
-    rdfs:isDefinedBy urpx: ;
     skos:note "Official legal utility name including corporate designations (Inc., LLC)." .
 
 urpx:loadProfile a owl:ObjectProperty ;
@@ -2085,7 +2083,7 @@ urpx:metricInputType a owl:ObjectProperty ;
     rdfs:comment "Type of MetricInput for measurement organization" ;
     rdfs:domain urpx:MetricInput ;
     rdfs:range urpx:MetricInputTypeValue ;
-    skos:note "Specifies metricInput type: measured (raw meter data), calculated (derived metrics), aggregated (sum of MetricInputs), or virtual (synthetic for billing)." .
+    skos:note "Specifies metricInput type: measured (raw meter data), calculated (derived metrics), profile (profile properties), aggregated (sum of MetricInputs), or virtual (synthetic for billing)." .
 
 urpx:minimumTenure a owl:DatatypeProperty ;
     rdfs:label "Minimum Tenure"@en ;
@@ -2617,6 +2615,13 @@ urpx:tariffStatementReference a owl:DatatypeProperty ;
             owl:unionOf ( urpx:PriceSet urpx:Price urpx:PriceDefinition ) ] ;
     rdfs:range xsd:string ;
     skos:note "Structured reference to regulatory statement filings with source path, media type, and description for audit trail." .
+
+urpx:tariffStatementType a owl:ObjectProperty ;
+    rdfs:label "Tariff Statement Type"@en ;
+    rdfs:comment "Type of regulatory statement filing (PSC statement types)" ;
+    rdfs:domain urpx:TariffStatementDocument ;
+    rdfs:range urpx:TariffStatementTypeValue ;
+    skos:note "PSC statement types enumeration for regulatory statement categorization. with standardized statement type definitions." .
 
 urpx:taxExemptStatus a owl:ObjectProperty ;
     rdfs:label "Tax Exempt Status"@en ;
@@ -3689,6 +3694,47 @@ urpx:windMachine rdf:type urpx:CustomerSubKindValue ;
     skos:prefLabel "Wind Machine" ;
     skos:broader urpx:serviceProviderKind .
 
+# --- Data Source Type Property (DataSourceTypeValue) ---
+
+urpx:apiSource rdf:type urpx:DataSourceTypeValue ;
+    rdfs:label "API Source"@en ;
+    skos:definition "Data sourced from a web API or REST/GraphQL endpoint" ;
+    skos:prefLabel "API" .
+
+urpx:csvSource rdf:type urpx:DataSourceTypeValue ;
+    rdfs:label "CSV Source"@en ;
+    skos:definition "Data sourced from a comma-separated values (CSV) file" ;
+    skos:prefLabel "CSV" .
+
+urpx:databaseSource rdf:type urpx:DataSourceTypeValue ;
+    rdfs:label "Database Source"@en ;
+    skos:definition "Data sourced directly from a relational or non-relational database" ;
+    skos:prefLabel "Database" .
+
+urpx:jsonSource rdf:type urpx:DataSourceTypeValue ;
+    rdfs:label "JSON Source"@en ;
+    skos:definition "Data sourced from a JSON file or JSON-formatted response" ;
+    skos:prefLabel "JSON" .
+
+urpx:manualSource rdf:type urpx:DataSourceTypeValue ;
+    rdfs:label "Manual Source"@en ;
+    skos:definition "Data entered manually by a human operator" ;
+    skos:prefLabel "Manual" .
+
+urpx:pdfSource rdf:type urpx:DataSourceTypeValue ;
+    rdfs:label "PDF Source"@en ;
+    skos:definition "Data sourced from a PDF document such as a tariff filing or rate schedule" ;
+    skos:prefLabel "PDF" .
+
+urpx:spreadsheetSource rdf:type urpx:DataSourceTypeValue ;
+    rdfs:label "Spreadsheet Source"@en ;
+    skos:definition "Data sourced from a spreadsheet file (e.g., Excel .xlsx or Google Sheets)" ;
+    skos:prefLabel "Spreadsheet" .
+
+urpx:xmlSource rdf:type urpx:DataSourceTypeValue ;
+    rdfs:label "XML Source"@en ;
+    skos:definition "Data sourced from an XML file or XML-formatted response" ;
+    skos:prefLabel "XML" .
 
 # --- Day Type Property (DayTypeValue) ---
 
@@ -5551,7 +5597,6 @@ urpx:unitOther rdf:type urpx:UnitOfMeasureValue ;
     rdfs:label "Other Unit"@en ;
     skos:definition "Other unit of measure not specifically categorized"@en ;
     skos:prefLabel "other"@en .
-
 
 urpx:VA rdf:type urpx:UnitOfMeasureValue ;
     rdfs:label "Volt-Ampere"@en ;

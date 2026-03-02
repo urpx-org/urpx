@@ -1,5 +1,9 @@
 # URPX Tutorial: Building Your First Rate Plan
 
+**Version**: 0.1.1  
+**Last Updated**: 2026-03-02  
+**Status**: Active
+
 **Learn the basics of creating and validating utility rate plan data using the URPX v0.1.1 ontology**
 
 ---
@@ -49,24 +53,25 @@ Understanding these distinctions is critical for working with URPX. For a more d
 
 **Rate Plan**: A complete pricing structure offered by a utility
 - Contains temporal versions with specific effective dates
-- Has eligibility criteria for customer qualification
-- Applies to specific customer classes and service types
 - Valid for specific time periods
 
 **Rate Plan Version**: Time-bound instance of a rate plan
 - Contains actual prices and pricing structures
 - Has specific effectiveDateTime and optional expirationDateTime
-- Links to centralized PlanElements for seasons, holidays, and pricing rules ncluding time-of--use schedules
+- Has eligibility criteria for customer qualification
+- Applies to specific customer classes and service types
+- Links to centralized PlanElements for seasons, holidays, and pricing rules including time-of-use schedules
 - Contains Prices container with PriceSet instances
 
 **Price**: An individual component of a bill
-- Has a **chargeType** (specific implementation like `minimumCharge`, `usageCharge`)
-- Has a **chargeCategory** (business purpose like `serviceCharge`, `auxiliaryCharge`)
-- References a **MetricInput** to define what is being measured for pricing.
+- May have a **chargeType** (specific implementation like `minimumCharge`, `usageCharge`)
+- May have a **chargeCategory** (business purpose like `serviceCharge`, `auxiliaryCharge`)
+- May reference a **MetricInput** to define what is being measured for pricing.
+- May reference a **PriceDefinition** for structural price information.
 
 **MetricInput & MetricSpecification**:
 - **MetricSpecification**: Defines the technical details of *what* is being measured (e.g., energy, kWh, supply-side).
-- **MetricInput**: A container for one or more `MetricSpecification`s. It acts as a centralized, reusable definition that Ledgers, Prices, Service Tiers, and TOU Schedules can reference. This prevents repetition and ensures consistency.
+- **MetricInput**: Organizational unit for pricing rules supporting measured MetricInputs (raw meter data), calculated MetricInputs (derived metrics), aggregated MetricInputs (sum of MetricInputs), and profile MetricInputs (based on Customer and Service Point Profile properties) that may contain one or more `MetricSpecification` objects. It acts as a centralized, reusable definition that Ledger, Price, Price Definition, Service Tier, and TOU Schedule objects can reference. This prevents repetition and ensures consistency.
 
 ### Key Terminology
 
@@ -79,11 +84,11 @@ Understanding these distinctions is critical for working with URPX. For a more d
 
 ### Bill Portion Values
 
-Every price must belong to one billPortion:
+Every price may belong to one billPortion:
 
-- **delivery** - Distribution, transmission, and delivery infrastructure prices
-- **supply** - Generation, energy commodity, and capacity prices  
-- **bundled** - Combined prices not separately stated, taxes, and service fees
+- **deliveryPortion** - Distribution, transmission, and delivery infrastructure prices
+- **supplyPortion** - Generation, energy commodity, and capacity prices  
+- **bundledPortion** - Combined prices not separately stated, taxes, and service fees
 
 ---
 
@@ -105,7 +110,6 @@ Let's build a basic residential rate plan step by step using JSON-LD.
   },
   "@id": "ex:doc-tutorial-basic",
   "@type": "URPXDocument",
-  "identifier": "DOC-TUTORIAL-BASIC-001",
   "version": "0.1.1",
   "name": "Tutorial Basic Residential Rate Plan",
   "description": "Simple residential rate plan with minimum price and energy price",
@@ -113,7 +117,7 @@ Let's build a basic residential rate plan step by step using JSON-LD.
     "@type": "xsd:dateTime",
     "@value": "2025-01-01T00:00:00-05:00"
   },
-  "timeZone": "America/New_York"
+  "timeZoneIdentifier": "America/New_York"
 }
 ```
 
@@ -135,8 +139,8 @@ Let's build a basic residential rate plan step by step using JSON-LD.
     "hasRatePlanVersion": {
       "@id": "ex:version-basic-res-v1",
       "@type": "RatePlanVersion",
-      "versionNumber": "1.0",
-      "schema:priceCurrency": "USD",
+      "version": "1.0",
+      "priceCurrency": "USD",
       "effectiveDateTime": {
         "@type": "xsd:dateTime",
         "@value": "2025-01-01T00:00:00-05:00"
@@ -160,8 +164,7 @@ Let's build a basic residential rate plan step by step using JSON-LD.
             "@type": "MetricSpecification",
             "commodity": {"@id": "urpx:electricity"},
             "measurementKind": {"@id": "urpx:energy"},
-            "unitOfMeasure": {"@id": "urpx:kWh"},
-            "billPortion": {"@id": "urpx:supplyPortion"}
+            "unitOfMeasure": {"@id": "urpx:kWh"}
           }
         }
       }
@@ -294,14 +297,19 @@ Commercial and industrial rates often include demand prices based on peak power 
   "chargeType": {"@id": "urpx:demandDirect"},
   "chargeCategory": {"@id": "urpx:auxiliaryCharge"},
   "billPortion": {"@id": "urpx:deliveryPortion"},
+  "startDate": {
+    "@type": "xsd:date",
+    "@value": "2025-01-01"
+  },
+  "endDate": {
+    "@type": "xsd:date",
+    "@value": "2026-01-01"
+  },
   "unitPrice": 8.50,
-  "schema:priceCurrency": "USD",
-  "referencesMetricInput": {"@id": "ex:metric-input-demand"},
-  "calculationMethod": "Maximum 15-minute demand during billing period"
+  "priceCurrency": "USD",
+  "referencesMetricInput": {"@id": "ex:metric-input-demand"}
 }
 ```
-
-**Note**: The `calculationMethod` property is a string that describes the calculation logic in human-readable form. The technical measurement details (interval duration, aggregation method) are defined in the referenced MetricInput's MetricSpecification.
 
 ### Power Cost Adjustment
 
@@ -316,6 +324,14 @@ Fuel adjustment mechanisms that vary monthly based on generation costs.
   "chargeType": {"@id": "urpx:adjustmentPowerCost"},
   "chargeCategory": {"@id": "urpx:adjustment"},
   "billPortion": {"@id": "urpx:supplyPortion"},
+  "startDate": {
+    "@type": "xsd:date",
+    "@value": "2025-01-01"
+  },
+  "endDate": {
+    "@type": "xsd:date",
+    "@value": "2026-01-01"
+  },
   "unitPrice": 0.025,
   "schema:priceCurrency": "USD",
   "referencesMetricInput": {"@id": "ex:metric-input-energy"}
@@ -335,6 +351,14 @@ Delivery system prices separated from generation costs.
   "chargeType": {"@id": "urpx:distributionCharge"},
   "chargeCategory": {"@id": "urpx:infrastructure"},
   "billPortion": {"@id": "urpx:deliveryPortion"},
+  "startDate": {
+    "@type": "xsd:date",
+    "@value": "2025-01-01"
+  },
+  "endDate": {
+    "@type": "xsd:date",
+    "@value": "2026-01-01"
+  },
   "unitPrice": 0.058,
   "schema:priceCurrency": "USD",
   "referencesMetricInput": {"@id": "ex:metric-input-energy"}
@@ -364,8 +388,14 @@ Time-of-use rates vary pricing based on time of day, day of week, and season.
       "@id": "ex:season-summer",
       "@type": "Season",
       "seasonName": "Summer",
-      "startMonth": "06",
-      "endMonth": "09",
+      "startDate": {
+        "@type": "xsd:date",
+        "@value": "2025-06-01"
+      },
+      "endDate": {
+        "@type": "xsd:date",
+        "@value": "2025-09-01"
+      },
       "yearlyRecurrence": true
     },
     "hasHolidayCalendar": {
@@ -386,7 +416,10 @@ Time-of-use rates vary pricing based on time of day, day of week, and season.
       ]
     },
     "referencesMetricInput": { "@id": "ex:metric-input-energy" },
-    "hasTOUSchedule": {
+    "hasBillingModel": {
+      "@id": "ex-example-billing-model",
+      "@type": "BillingModel",
+      "hasTOUSchedule": {
         "@id": "ex:tou-schedule-summer",
         "@type": "TOUSchedule",
         "name": "Summer TOU Schedule",
@@ -413,6 +446,7 @@ Time-of-use rates vary pricing based on time of day, day of week, and season.
                   "@type": "xsd:time",
                   "@value": "19:00:00"
                 },
+                "appliesInSeason": {"@id": "ex:season-summer"},
                 "dayType": {"@id": "urpx:weekdayDays"},
                 "includeHolidays": false,
                 "includeNonHolidays": true
@@ -441,6 +475,7 @@ Time-of-use rates vary pricing based on time of day, day of week, and season.
                   "@value": "23:59:59"
                 },
                 "dayType": {"@id": "urpx:weekdayDays"},
+                "appliesInSeason": {"@id": "ex:season-summer"},
                 "includeHolidays": true,
                 "includeNonHolidays": true,
                 "description": "All non-peak hours including weekends and holidays"
@@ -463,7 +498,7 @@ Time-of-use rates vary pricing based on time of day, day of week, and season.
     "hasPriceSet": {
       "@type": "PriceSet",
       "name": "Summer TOU Prices",
-      "schema:priceCurrency": "USD",
+      "priceCurrency": "USD",
       "hasPrice": [
         {
           "@id": "ex:price-peak",
@@ -471,6 +506,14 @@ Time-of-use rates vary pricing based on time of day, day of week, and season.
           "name": "Peak Energy",
           "chargeType": {"@id": "urpx:usageCharge"},
           "chargeCategory": {"@id": "urpx:auxiliaryCharge"},
+          "startDate": {
+            "@type": "xsd:date",
+            "@value": "2025-06-01"
+          },
+          "endDate": {
+            "@type": "xsd:date",
+            "@value": "2026-01-01"
+          },
           "unitPrice": 0.285,
           "touPeriodNumber": 1,
           "referencesMetricInput": { "@id": "ex:metric-input-energy" }
@@ -481,6 +524,14 @@ Time-of-use rates vary pricing based on time of day, day of week, and season.
           "name": "Off-Peak Energy",
           "chargeType": {"@id": "urpx:usageCharge"},
           "chargeCategory": {"@id": "urpx:auxiliaryCharge"},
+          "startDate": {
+            "@type": "xsd:date",
+            "@value": "2025-06-01"
+          },
+          "endDate": {
+            "@type": "xsd:date",
+            "@value": "2026-01-01"
+          },
           "unitPrice": 0.075,
           "touPeriodNumber": 2,
           "referencesMetricInput": { "@id": "ex:metric-input-energy" }
@@ -499,9 +550,9 @@ Time-of-use rates vary pricing based on time of day, day of week, and season.
 
 Every Price must have:
 
-1. **chargeType** - At least one (e.g., `{"@id": "urpx:minimumCharge"}`)
-2. **chargeCategory** - Exactly one (e.g., `{"@id": "urpx:serviceCharge"}`)
-3. **Measurement Definition** - Each `Price` that depends on a measured quantity must reference a `MetricInput` via `referencesMetricInput`. Each `Price` that depends on a non-measured quantity must reference a `MetricInput` with `ProfileMetricProperty` via `referencesMetricInput`. Prices with a fixed `amount` (like `minimumCharge`) only require interval definition in `MetricSpecification`.
+1. **amount, unitPrice, basedOnPrice, basePrice, or currentPrice** - Exactly one
+2. **startDate or startDateTime** - Either directly on the Price object or on a parent PriceSet. Also include endDate or endDateTime on Price or parent PriceSet when available.
+3. **Measurement Definition** - Each `Price` that depends on a measured quantity must reference a `MetricInput` via `referencesMetricInput` or via `referencesPriceDefinition` on a `Ledger` object containing property `referencesMetricInput`. Each `Price` that depends on a non-measured quantity must reference a `MetricInput` with `ProfileMetricProperty` via `referencesMetricInput`. Prices with a fixed `amount` (like `minimumCharge`) only require interval definition in `MetricSpecification`.
 
 ### Sample Valid Charge Type Values
 
@@ -509,7 +560,7 @@ Extracted from the full list of possible values in `urpx-ontology.ttl`:
 
 **Service Prices:**
 - `urpx:minimumCharge` - Fixed monthly minimum
-- `urpx:serviceCharge` - General service fee (also valid as category)
+- `urpx:minimumBill` - Ensures total bill meets a minimum amount
 
 **Usage Prices:**
 - `urpx:usageCharge` - Volumetric energy consumption
@@ -517,7 +568,7 @@ Extracted from the full list of possible values in `urpx-ontology.ttl`:
 - `urpx:capacityCharge` - Reserved capacity
 
 **Infrastructure:**
-- `urpx:distribution` - Local distribution
+- `urpx:distributionCharge` - Local distribution
 - `urpx:transmission` - High-voltage transmission
 - `urpx:deliveryCharge` - Combined delivery
 
