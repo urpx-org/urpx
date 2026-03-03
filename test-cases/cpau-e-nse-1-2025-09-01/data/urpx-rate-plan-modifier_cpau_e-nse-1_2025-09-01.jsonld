@@ -1,0 +1,132 @@
+{
+  "@context": {
+    "urpx": "https://schema.urpx.org/",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "urpx:unitPrice": { "@type": "xsd:decimal" },
+    "urpx:effectiveDate": { "@type": "xsd:date" },
+    "urpx:effectiveDateTime": { "@type": "xsd:dateTime" },
+    "urpx:startDate": { "@type": "xsd:date" },
+    "urpx:initialEffectiveDate": { "@type": "xsd:date" },
+    "urpx:url": { "@type": "xsd:anyURI" }
+  },
+  "@type": "urpx:RatePlanModifier",
+  "@id": "urpx:cpau-e-nse-1",
+  "urpx:ratePlanIdentifier": "E-NSE-1",
+  "urpx:name": "Net Metering Net Surplus Electricity Compensation",
+  "urpx:initialEffectiveDate": "2025-09-01",
+  "urpx:hasRatePlanModifierVersion": {
+    "@type": "urpx:RatePlanModifierVersion",
+    "@id": "urpx:cpau-e-nse-1-2025-09-01",
+    "urpx:versionNumber": "2025-09-01",
+    "urpx:description": "Applies to eligible residential and small commercial Net Energy Metering Election A Customers who, at the end of an annual settlement period (per Rule 29), are Net Surplus Customer-Generators of electricity who elect to receive monetary compensation. Does not apply to customers on the City's Net Energy Metering Successor Rate. Net surplus electricity is multiplied by the compensation rate to determine annual monetary compensation.",
+    "urpx:effectiveDateTime": "2025-09-01T00:00:00",
+    "urpx:priceCurrency": "USD",
+    "urpx:commodity": { "@id": "urpx:electricity" },
+    "urpx:serviceRole": { "@id": "urpx:bundledServiceRole" },
+    "urpx:applicableToRatePlan": [
+      { "@id": "urpx:cpau-e-1" },
+      { "@id": "urpx:cpau-e-1-tou" }
+    ],
+    "urpx:publishedBy": {
+      "@type": "urpx:Organization",
+      "@id": "urpx:utility-cpau",
+      "urpx:legalName": "City of Palo Alto Utilities",
+      "urpx:eiaId": "3203",
+      "urpx:organizationType": { "@id": "urpx:municipalOrganization" }
+    },
+    "urpx:hasDataSourceReference": {
+      "@type": "urpx:DataSourceReference",
+      "urpx:url": "file://./assets/CPAU_E-NSE-1_2025-09-01.pdf",
+      "urpx:fileName": "CPAU_E-NSE-1_2025-09-01.pdf",
+      "urpx:mediaType": "application/pdf"
+    },
+    "urpx:hasEligibilityRule": [
+      {
+        "@type": "urpx:EligibilityRule",
+        "@id": "urpx:cpau-nse-er-nem-surplus",
+        "urpx:logicExpression": "urpx:cpau-nse-condition-nem-election-a AND urpx:cpau-nse-condition-net-surplus AND NOT urpx:cpau-nse-condition-nem-successor",
+        "urpx:hasCustomerProfile": {
+          "@type": "urpx:CustomerProfile",
+          "@id": "urpx:cpau-nse-cp-res-smallcomm",
+          "urpx:hasCustomerKind": { "@id": "urpx:residentialKind" },
+          "urpx:description": "Eligible residential and small commercial customers"
+        },
+        "urpx:hasCondition": [
+          {
+            "@type": "urpx:Condition",
+            "@id": "urpx:cpau-nse-condition-nem-election-a",
+            "urpx:conditionType": "Other customer enrollment",
+            "urpx:operator": { "@id": "urpx:equalsOperator" },
+            "urpx:conditionValue": "Net Energy Metering Election A"
+          },
+          {
+            "@type": "urpx:Condition",
+            "@id": "urpx:cpau-nse-condition-net-surplus",
+            "urpx:conditionType": "derType",
+            "urpx:operator": { "@id": "urpx:equalsOperator" },
+            "urpx:conditionValue": "Net Surplus Customer-Generator"
+          },
+          {
+            "@type": "urpx:Condition",
+            "@id": "urpx:cpau-nse-condition-nem-successor",
+            "urpx:conditionType": "Other customer enrollment",
+            "urpx:operator": { "@id": "urpx:notEqualOperator" },
+            "urpx:conditionValue": "Net Energy Metering Successor Rate"
+          }
+        ]
+      }
+    ],
+    "urpx:hasPlanElements": {
+      "@type": "urpx:PlanElements",
+      "urpx:hasMetricInput": [
+        {
+          "@type": "urpx:MetricInput",
+          "@id": "urpx:cpau-nse-mi-energy-net-surplus",
+          "urpx:metricInputType": { "@id": "urpx:measuredMetricInput" },
+          "urpx:hasMetricSpecification": {
+            "@type": "urpx:MetricSpecification",
+            "@id": "urpx:cpau-nse-ms-energy-net-surplus",
+            "urpx:measurementKind": { "@id": "urpx:energy" },
+            "urpx:unitOfMeasure": { "@id": "urpx:kWh" },
+            "urpx:flowDirection": { "@id": "urpx:reverse" }
+          }
+        }
+      ],
+      "urpx:hasBillingModel": {
+        "@type": "urpx:BillingModel",
+        "urpx:hasLedger": [
+          {
+            "@type": "urpx:Ledger",
+            "@id": "urpx:cpau-nse-ledger-surplus-compensation",
+            "urpx:name": "Net Surplus Electricity Compensation",
+            "urpx:ledgerType": { "@id": "urpx:bundledLedger" },
+            "urpx:referencesMetricInput": { "@id": "urpx:cpau-nse-mi-energy-net-surplus" },
+            "urpx:hasPriceDefinition": {
+              "@type": "urpx:PriceDefinition",
+              "@id": "urpx:cpau-nse-pd-surplus-compensation",
+              "urpx:name": "Net Surplus Electricity Compensation Rate",
+              "urpx:description": "Applied to net surplus kWh at end of annual settlement period (Rule 29). Customer must elect monetary compensation on the net surplus electricity election form.",
+              "urpx:chargeType": { "@id": "urpx:creditEnergy" },
+              "urpx:chargeCategory": { "@id": "urpx:discount" },
+              "urpx:billPortion": { "@id": "urpx:bundledPortion" }
+            }
+          }
+        ]
+      }
+    },
+    "urpx:hasPrices": {
+      "@type": "urpx:Prices",
+      "urpx:hasPrice": [
+        {
+          "@type": "urpx:Price",
+          "@id": "urpx:cpau-nse-price-surplus-compensation",
+          "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-nse-pd-surplus-compensation" },
+          "urpx:startDate": "2025-09-01",
+          "urpx:name": "Net Surplus Electricity Compensation Rate",
+          "urpx:unitPrice": "-0.10120"
+        }
+      ]
+    }
+  }
+}
