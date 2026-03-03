@@ -420,12 +420,12 @@ graph TB
     TOUSchedule[TOUSchedule]
     
     %% TOU Tiers
-    Tier1[TOUTier<br/>touTierNumber: 1<br/>Peak Period]
-    Tier2[TOUTier<br/>touTierNumber: 2<br/>Off-Peak Period]
+    Tier1[TOUTier<br/>touTierNumber: 1<br/>Peak Tier]
+    Tier2[TOUTier<br/>touTierNumber: 2<br/>Off-Peak Tier]
     
     %% TOU Periods
     Period1[TOUPeriod<br/>touPeriodNumber: 1<br/>Peak Period]
-    Period2[TOUPeriod<br/>touPeriodNumber: 2<br/>Off-Peak]
+    Period2[TOUPeriod<br/>touPeriodNumber: 2<br/>Off-Peak Period]
     
     %% Time Brackets
     TB1[TimeBracket<br/>14:00-19:00<br/>Weekdays only]
@@ -2363,4 +2363,4 @@ urpx:PriceShape
 
 *This data dictionary is maintained as part of the Utility Rate Plan Exchange (URPX) standard. For the latest version and updates, visit [GitHub](https://github.com/urpx/standard).*
 
-[← Back to Index](../index.md) | [Overview](urpx-overview.md) | [Tutorial](urpx-tutorial.md) | [Examples](urpx-examples.md)
+[← Back to Index](../index.md) | [Overview](urpx-overview.md) | [Tutorial](urpx-tutorial.md) 

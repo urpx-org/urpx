@@ -301,8 +301,7 @@ Because SHACL shapes are modular and composable, additional shape definitions ca
 Ready to work with URPX data? Here are your next steps:
 
 1. **[Read the Tutorial](urpx-tutorial.md)** - Learn by building a simple rate plan
-2. **[Explore Examples](urpx-examples.md)** - See real-world implementations
-3. **[Review the Data Dictionary](urpx-data-dictionary.md)** - Understand all classes and properties
+2. **[Review the Data Dictionary](urpx-data-dictionary.md)** - Understand all classes and properties
 
 ### Summary
 

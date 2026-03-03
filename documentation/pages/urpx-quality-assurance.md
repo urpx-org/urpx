@@ -42,19 +42,6 @@ URPX v0.1.1 uses a core ontology file:
 
 - `../../ontology/urpx-ontology.ttl` - Complete URPX ontology with all classes and properties
 
-### Validation Commands
-
-```bash
-# Validate Turtle syntax
-jena.riot --validate ontology/urpx-ontology.ttl
-
-# Check OWL consistency
-pellet consistency ontology/urpx-ontology.ttl
-
-# Verify imports resolve
-jena.infer --rdfs ontology/urpx-ontology.ttl
-```
-
 ### Common Validation Errors
 
 | Error | Cause | Solution |
@@ -71,14 +58,6 @@ jena.infer --rdfs ontology/urpx-ontology.ttl
 ### SHACL Validation Files
 
 - [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl) - Unified SHACL validation shapes (~3,500 lines, draft). Contains comprehensive shapes for all major URPX classes.
-
-### Running SHACL Validation
-
-```bash
-# Validate rate plan document
-jena.shacl --shapes shacl/urpx-shacl.ttl \
-          --data my-rate-plan.ttl
-```
 
 ### Critical SHACL Constraints
 
@@ -253,23 +232,14 @@ From `urpx-ontology.ttl`:
 
 **1. Create Rate Plan Data**
 - Use v0.1.1 ontology as reference
-- Follow examples from urpx-examples.md
 - Include all required properties
 
 **2. Syntax Validation**
-```bash
-# Validate JSON-LD syntax
-jsonld validate my-rate-plan.jsonld
-
-# Validate Turtle syntax  
-jena.riot --validate my-rate-plan.ttl
-```
+- Validate JSON-LD syntax
+- Validate Turtle syntax
 
 **3. SHACL Validation**
-```bash
-# Run all constraint checks
-jena.shacl --shapes shacl/ --data my-rate-plan.ttl
-```
+- Perform SHACL validation using [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl) 
 
 **4. Business Logic Verification**
 - Verify price classification combinations make sense
@@ -311,10 +281,9 @@ jena.shacl --shapes shacl/ --data my-rate-plan.ttl
 ### Development Workflow
 
 1. **Reference ontology first** - Check urpx-ontology.ttl for all classes and properties
-2. **Use complete examples** - Start from urpx-examples.md templates
-3. **Validate early** - Run SHACL validation during development
-4. **Test with real data** - Verify with actual utility tariff information
-5. **Document sources** - Include tariff book references and filing numbers
+2. **Validate early** - Run SHACL validation during development
+3. **Test with real data** - Verify with actual utility tariff information
+4. **Document sources** - Include tariff book references and filing numbers
 
 ### Common Pitfalls to Avoid
 

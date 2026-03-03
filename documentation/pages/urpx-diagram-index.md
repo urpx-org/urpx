@@ -137,12 +137,12 @@ graph TB
     TOUSchedule[TOUSchedule]
     
     %% TOU Tiers
-    Tier1[TOUTier<br/>touTierNumber: 1<br/>Peak Period]
-    Tier2[TOUTier<br/>touTierNumber: 2<br/>Off-Peak Period]
+    Tier1[TOUTier<br/>touTierNumber: 1<br/>Peak Tier]
+    Tier2[TOUTier<br/>touTierNumber: 2<br/>Off-Peak Tier]
     
     %% TOU Periods
     Period1[TOUPeriod<br/>touPeriodNumber: 1<br/>Peak Period]
-    Period2[TOUPeriod<br/>touPeriodNumber: 2<br/>Off-Peak]
+    Period2[TOUPeriod<br/>touPeriodNumber: 2<br/>Off-Peak Period]
     
     %% Time Brackets
     TB1[TimeBracket<br/>14:00-19:00<br/>Weekdays only]
@@ -199,77 +199,6 @@ graph TB
 
 ## Rules & Eligibility
 
-### Eligibility Rules Diagram
-
-```mermaid
-%% URPX Eligibility Rules
-%% Updated: January 26, 2026
-%% Paul Tol 2.7 Light color scheme
-
-%%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
-
-graph TB
-    
-    RPlan[RatePlanVersion]
-    EligRule[EligibilityRule]
-    
-    %% Profile Types
-    CustProf[CustomerProfile-based<br/>Rules]
-    UsageProf[UsagePointProfile-based<br/>Rules<br/>ESPI Green Button]
-    
-    %% Customer Profile Attributes
-    Prior[Prior Rate Plan]
-    Program[Program Enrollment]
-    CustClass[Customer Classification<br/>NAESB]
-    Geographic[Geographic Territory<br/>ISO 3166]
-    
-    %% Usage Profile Attributes
-    MinUsage[Minimum Usage]
-    MaxUsage[Maximum Usage]
-    PeakDemand[Peak Demand]
-    
-    %% Standards
-    CDS[CDS Integration<br/>LF Energy]
-    
-    %% Connections
-    RPlan -->|has| EligRule
-    EligRule -->|customerProfile| CustProf
-    EligRule -->|usagePoint| UsageProf
-    
-    CustProf --> Prior
-    CustProf --> Program
-    CustProf --> CustClass
-    CustProf --> Geographic
-    
-    UsageProf --> MinUsage
-    UsageProf --> MaxUsage
-    UsageProf --> PeakDemand
-    
-    CustProf -.-> CDS
-    UsageProf -.-> CDS
-    
-    classDef titleClass fill:#DDDDDD,stroke:#BBBBBB,stroke-width:2px,color:#fff
-    classDef lightBlue fill:#77AADD,stroke:#5588BB,stroke-width:2px,color:#fff
-    classDef orange fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#fff
-    classDef mint fill:#44BB99,stroke:#228877,stroke-width:2px,color:#fff
-    classDef lightYellow fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#fff
-    classDef pear fill:#BBCC33,stroke:#99AA11,stroke-width:2px,color:#fff
-    classDef paleGrey fill:#DDDDDD,stroke:#BBBBBB,stroke-width:2px,color:#fff
-    
-    class Title titleClass
-    class RPlan lightBlue
-    class EligRule orange
-    class CustProf,UsageProf mint
-    class Prior,Program,CustClass,Geographic lightYellow
-    class MinUsage,MaxUsage,PeakDemand pear
-    class CDS paleGrey
-```
-
-**File:** `documentation/diagrams/urpx-rules-eligibility-diagram.mmd`  
-**Used in:** [Overview](urpx-overview.md)  
-**Shows:** Eligibility patterns with customer and service point profiles
-
----
 
 ### Charge Types Diagram
 
@@ -309,7 +238,7 @@ graph TB
 %%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#77AADD', 'primaryTextColor':'#000', 'primaryBorderColor':'#000', 'lineColor':'#000', 'secondaryColor':'#EEDD88', 'tertiaryColor':'#FFAABB', 'background':'transparent'}}}%%
 graph LR
     subgraph "SPARQL Query"
-        Q["SELECT ?price ?name ?price<br/>WHERE {<br/>  ?ratePlan urpx:identifier 'RES-TOU-2025' ;<br/>    hasRatePlanVersion/hasPrices/<br/>    hasPriceSet/hasPrice ?Price .<br/>  ?Price urpx:PriceName ?name ;<br/>    urpx:unitPrice ?price .<br/>}"]
+        Q["SELECT ?price ?name ?price<br/>WHERE {<br/>  ?ratePlan urpx:identifier 'RES-TOU-2025' ;<br/>    hasRatePlanVersion/hasPrices/<br/>    hasPriceSet/hasPrice ?Price .<br/>  ?Price urpx:name ?name ;<br/>    urpx:unitPrice ?price .<br/>}"]
     end
     
     subgraph "Graph Traversal"

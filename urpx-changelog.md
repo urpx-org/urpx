@@ -1,21 +1,105 @@
 # 📋 URPX Changelog
 
 **Version:** 0.1.1
-**Last Updated:** 2026-02-25
+**Last Updated:** 2026-03-03
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-03-03
+---
+
+### Ontology Property Changes
+
+#### Property Renamed: `urpx:appliesInZone` → `urpx:appliesInGeographicZone`
+- **Rationale:** Renamed for specificity — the property applies to geographic zones, and the name should unambiguously reflect this to avoid confusion with non-geographic zone concepts.
+- **Design Decision:** [#067](#decision-067)
+
+#### Domain Removal: `urpx:conditionType` and `urpx:conditionValue`
+- Removed `urpx:EligibilityRule` and `urpx:ApplicabilityRule` from the domain of `conditionType` and `conditionValue`.
+- **Rationale:** These properties belong on the structured `Condition` object, not on the rule-level objects. `EligibilityRule` and `ApplicabilityRule` contain `Condition` objects which in turn carry `conditionType` and `conditionValue`. Removing the rule classes from the domain enforces correct placement within the `Condition` structure.
+- **Design Decision:** [#068](#decision-068)
+
+#### Domain Extension: `urpx:hasLocationDataSet`
+- Added `urpx:RatePlan` and `urpx:RatePlanModifier` to the domain of `urpx:hasLocationDataSet`.
+- **Design Decision:** [#069](#decision-069)
+
+#### Added: `urpx:nameType` (ObjectProperty)
+- Domain: `urpx:OrganizationName`
+- Range: `urpx:NameTypeValue`
+- **Purpose:** Classifies organization names by type (e.g., legal, trade, doing-business-as), enabling structured name management for organizations with multiple name representations.
+- **Design Decision:** [#070](#decision-070)
+
+#### Removed: `urpx:profileId` (DatatypeProperty)
+- **Rationale:** `@id` provides a referenceable unique identifier for profile instances; a separate `profileId` property is redundant.
+- **Migration:** Replace all `urpx:profileId` values with `@id` declarations on CustomerProfile and ServicePointProfile objects.
+- **Impact:** Breaking change for implementations relying on `profileId`.
+- **Design Decision:** [#071](#decision-071)
+
+#### Removed: `urpx:month`, `urpx:hour`, `urpx:day` from `UnitOfMeasureValue`
+- **Rationale:** Time-based interval units are better expressed through structured interval metric specifications using `urpx:intervalDuration` (ISO 8601) rather than as unit-of-measure enumeration values.
+- **Design Decision:** [#074](#decision-074)
+
+#### Domain Update: `urpx:geographicZone`
+- Removed `urpx:CustomerProfile` from the domain of `urpx:geographicZone`; domain now includes `urpx:ServicePointProfile`.
+- **Rationale:** Geographic properties belong on `ServicePointProfile` (the location-centric profile) rather than on `CustomerProfile` (the customer-centric profile). This consolidates all geographic properties under `ServicePointProfile`.
+- **Design Decision:** [#075](#decision-075)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Price Shape (`PriceShape`) — `sh:xone` constraint
+- Added `urpx:basedOnPrice`, `urpx:basePrice`, and `urpx:currentPrice` as additional options in the `sh:xone` pricing constraint (now includes `amount`, `unitPrice`, `basedOnPrice`, `basePrice`, `currentPrice`).
+- **Design Decision:** [#072](#decision-072)
+
+#### Price Shape (`PriceShape`) — `referencesPriceDefinition` cardinality
+- Updated `urpx:referencesPriceDefinition` cardinality on `PriceShape` to optional (`minCount 0`).
+- **Rationale:** Not every Price instance requires an explicit link to a PriceDefinition; this should be optional.
+- **Design Decision:** [#073](#decision-073)
+
+#### PriceSet Shape (`PriceSetShape`) — `hasPrice` cardinality
+- Updated `urpx:hasPrice` minimum cardinality from 2 to 1 on `PriceSetShape`.
+- **Rationale:** A PriceSet with a single Price is valid, particularly for the `PriceSetAlternative` subclass pattern. Requiring at least 2 prevented flexible modeling.
+- **Design Decision:** [#076](#decision-076)
+
+### Documentation Updates (`documentation/`)
+
+Updates made to align with ontology and SHACL changes in (`documentation/pages/`):
+- `documentation/pages/urpx-api-spec.md`
+- `documentation/pages/urpx-complex-condition-modeling.md` (removed, requires re-development)
+- `documentation/pages/urpx-data-dictionary.md`
+- `documentation/pages/urpx-design-principles.md`
+- `documentation/pages/urpx-diagram-index.md`
+- `documentation/pages/urpx-examples.md` (removed, requires re-development)
+- `documentation/pages/urpx-faq.md`
+- `documentation/pages/urpx-overview.md`
+- `documentation/pages/urpx-quality-assurance.md`
+- `documentation/pages/urpx-semantic-web-guide.md`
+- `documentation/pages/urpx-syntax-guidelines.md`
+- `documentation/pages/urpx-tutorial.md`
+
+Update to urpx/documentation/index.md to remove broken links.
+
+---
 
 2026-03-02
 ---
 
 ### Ontology Changes
 
-#### Class Renamed
-- Renamed `urpx:StatementTypeValue` to `urpx:TariffStatementTypeValue`
+#### Class Renamed: `urpx:StatementTypeValue` → `urpx:TariffStatementTypeValue`
+- **Rationale:** `StatementTypeValue` was too generic — "statement" is a broad term and the class specifically enumerates tariff statement types. Renaming aligns the class name with its domain class (`TariffStatementDocument`) and with the URPX convention of prefixing tariff-related classes with `Tariff`.
+- Fixed `skos:note` capitalisation ("standardized" → "Standardized") during rename.
+- **Impact:** No breaking change — not yet in use.
+- **Design Decision:** [#065](documentation/pages/urpx-design-decisions-041-080.md#decision-065)
 
 #### Added: `urpx:tariffStatementType` (ObjectProperty)
-- Domain: `TariffStatementDocument`
-- Range: `TariffStatementTypeValue`
+- **Domain:** `urpx:TariffStatementDocument`
+- **Range:** `urpx:TariffStatementTypeValue`
+- **Rationale:** `TariffStatementDocument` lacked a property to classify which kind of statement a document represents (e.g., fuel adjustment, rate statement, transmission). `TariffStatementTypeValue` existed as a vocabulary class but had no corresponding property connecting it to the document.
+- **Design Decision:** [#066](documentation/pages/urpx-design-decisions-041-080.md#decision-066)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- Fixed typo: renamed `StateemntTypeValue` shape to `TariffStatementTypeValue` shape.
+- Added `tariffStatementType` as an optional property constraint on `TariffStatementDocumentShape`.
 
 ---
 

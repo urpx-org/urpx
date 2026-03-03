@@ -385,7 +385,7 @@ WHERE {
          urpx:unitPrice ?unitPrice ;
          urpx:touPeriodNumber ?periodNum .
   
-  ?version urpx:hasPlanElements/urpx:hasMetricInput/urpx:hasTOUSchedule/
+  ?version urpx:hasPlanElements/urpx:hasBillingModel/urpx:hasTOUSchedule/
            urpx:hasTOUTier/urpx:hasTOUPeriod ?period .
   
   ?period urpx:touPeriodNumber ?periodNum ;
@@ -443,7 +443,6 @@ WHERE {
 
 - [Standards Integration](urpx-standards-integration.md) - LF Energy standards alignment
 - [Tutorial](urpx-tutorial.md) - Rate plan data creation guide
-- [Examples](urpx-examples.md) - Real-world implementations
 
 ---
 

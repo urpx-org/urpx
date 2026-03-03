@@ -28,7 +28,7 @@ Rate plan data comes from multiple sources: tariff books (primary), tariff state
 
 **Q: Can URPX work with my existing systems?**
 
-Yes. URPX provides mapping templates for major standards (Green Button, OpenADR, CIM). You can also create custom mappings for proprietary formats.
+Yes. URPX will provide mapping templates for major standards (Green Button, OpenADR, CIM). You can also create custom mappings for proprietary formats.
 
 **Q: What tools do I need to work with URPX?**
 

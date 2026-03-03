@@ -2,7 +2,7 @@
 
 **Version:** 1.0
 **Created:** 2026-01-05
-**Last Updated:** 2026-02-25
+**Last Updated:** 2026-03-03
 
 > **Note:** Design decisions reference the original modular ontology files (urpx-core-ontology.ttl, urpx-profile.ttl, urpx-organization.ttl, urpx-geography.ttl, urpx-charge-classification.ttl). As of v0.1.1, these files have been consolidated into a single `ontology/urpx-ontology.ttl` file. See [urpx-changelog.md](../../urpx-changelog.md) for consolidation details.
 
@@ -69,6 +69,16 @@ Quick links to all design decisions:
 - ✅ [Decision #064: Removal of timeZone Property (timezoneIdentifier Standardization)](#decision-064)
 - ✅ [Decision #065: Rename StatementTypeValue to TariffStatementTypeValue](#decision-065)
 - ✅ [Decision #066: Addition of tariffStatementType Property](#decision-066)
+- ✅ [Decision #067: appliesInZone Renamed to appliesInGeographicZone](#decision-067)
+- ✅ [Decision #068: conditionType and conditionValue Domain Removal from Rule Classes](#decision-068)
+- ✅ [Decision #069: hasLocationDataSet Domain Extension to RatePlan and RatePlanModifier](#decision-069)
+- ✅ [Decision #070: nameType Property Creation for Organization Name Classification](#decision-070)
+- ✅ [Decision #071: profileId Property Removal and @id Standardization](#decision-071)
+- ✅ [Decision #072: Additional Properties in Price Shape xone Constraint](#decision-072)
+- ✅ [Decision #073: referencesPriceDefinition Made Optional on Price Shape](#decision-073)
+- ✅ [Decision #074: Removal of urpx:month, urpx:hour, and urpx:day from UnitOfMeasureValue](#decision-074)
+- ✅ [Decision #075: geographicZone Domain Update from CustomerProfile to ServicePointProfile](#decision-075)
+- ✅ [Decision #076: hasPrice Minimum Cardinality Reduced to 1 on PriceSet Shape](#decision-076)
 
 ---
 
@@ -1786,4 +1796,483 @@ urpx:tariffStatementType a owl:ObjectProperty ;
 - **Positive**: Enables statement document classification; connects existing enumeration to its domain
 - **Breaking Change**: None — additive only
 - **Additional implementation**: SHACL `TariffStatementDocumentShape` was updated to include `tariffStatementType` as an optional property constraint
+
+---
+
+<a id="decision-067"></a>
+### 🔗 Decision #067: appliesInZone Renamed to appliesInGeographicZone
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-03-03
+- **Issue:** Property naming specificity
+- **Category:** Naming Convention
+- **Impact:** Low - Breaking rename; improves semantic clarity
+
+**Context:**
+`urpx:appliesInZone` was a property on `ApplicabilityRule` or `ApplicabilityGroup` indicating the geographic zone in which a rule applies. The name `appliesInZone` was insufficiently specific — "zone" is a broad term that could refer to service zones, pricing zones, tariff zones, or other zone concepts. The property exclusively refers to geographic zones, and its name should unambiguously reflect this.
+
+**Decision:**
+Rename `urpx:appliesInZone` to `urpx:appliesInGeographicZone`.
+
+**Alternatives Considered:**
+
+1. **Rename to appliesInGeographicZone** ⭐ **SELECTED**
+   - ✅ Unambiguously identifies the geographic nature of the zone reference
+   - ✅ Consistent with `urpx:geographicZone` and `urpx:geographicScope` naming patterns
+   - ✅ Reduces risk of confusion with other zone-related concepts
+
+2. **Keep appliesInZone**
+   - ✅ No migration required
+   - ❌ Name is too generic — does not convey geographic specificity
+   - ❌ Inconsistent with the existing `geographicZone` property naming pattern
+
+**Rationale:**
+- Naming consistency: the property should align with the `geographicZone` naming convention used elsewhere in the ontology
+- Reduces ambiguity for implementers and working group reviewers
+- The `Geographic` qualifier clarifies the nature of the zone without loss of conciseness
+
+**Implementation Details:**
+- Renamed `urpx:appliesInZone` → `urpx:appliesInGeographicZone` in `ontology/urpx-ontology.ttl`
+- Updated SHACL shapes referencing the property
+- Updated data dictionary entries for affected classes
+
+**Impact Assessment:**
+- **Positive**: Clearer, more specific property name consistent with geographic naming conventions
+- **Breaking Change**: Yes — rename requires migration of all `appliesInZone` triples to `appliesInGeographicZone`
+
+---
+
+<a id="decision-068"></a>
+### 🔗 Decision #068: conditionType and conditionValue Domain Removal from Rule Classes
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-03-03
+- **Issue:** Domain architecture refinement
+- **Category:** Architecture
+- **Impact:** Medium - Breaking change for implementations placing conditionType/conditionValue directly on rule objects
+
+**Context:**
+`urpx:conditionType` and `urpx:conditionValue` had domains that included `urpx:EligibilityRule` and `urpx:ApplicabilityRule` in addition to `urpx:Condition`. This allowed these properties to be placed directly on rule objects, bypassing the intended structured `Condition` architecture. The correct pattern is:
+
+```
+EligibilityRule / ApplicabilityRule
+  └─ hasCondition → Condition
+        ├─ conditionType → [ConditionTypeValue]
+        └─ conditionValue → [value]
+```
+
+Allowing `conditionType`/`conditionValue` directly on rule objects created ambiguity about where condition data should live and undermined the structured `Condition` intermediate object.
+
+**Decision:**
+Remove `urpx:EligibilityRule` and `urpx:ApplicabilityRule` from the domain of `urpx:conditionType` and `urpx:conditionValue`. These properties now apply exclusively to `urpx:Condition` objects.
+
+**Alternatives Considered:**
+
+1. **Remove rule classes from domain** ⭐ **SELECTED**
+   - ✅ Enforces the structured Condition architecture
+   - ✅ Single location for condition data (on Condition object)
+   - ✅ Consistent with the intended EligibilityRule → hasCondition → Condition pattern
+   - ✅ Eliminates ambiguity about where to place condition properties
+
+2. **Keep rule classes in domain**
+   - ✅ No migration required
+   - ❌ Permits rule objects to bypass the Condition structure
+   - ❌ Creates two valid representations for the same data (on rule vs. on condition)
+   - ❌ Makes validation and querying more complex
+
+**Rationale:**
+- The `Condition` object is the correct semantic location for condition type and value data
+- Rule classes (`EligibilityRule`, `ApplicabilityRule`) are containers for conditions, not conditions themselves
+- Enforcing this boundary through domain restrictions ensures consistent data modeling
+- Aligns with the architectural pattern established for all structured sub-object relationships in URPX
+
+**Implementation Details:**
+- Removed `urpx:EligibilityRule` and `urpx:ApplicabilityRule` from the `rdfs:domain` union of `urpx:conditionType`
+- Removed `urpx:EligibilityRule` and `urpx:ApplicabilityRule` from the `rdfs:domain` union of `urpx:conditionValue`
+- Domain for both properties is now exclusively `urpx:Condition`
+
+**Impact Assessment:**
+- **Positive**: Enforces correct condition architecture, eliminates ambiguity, simplifies validation
+- **Breaking Change**: Yes — data placing `conditionType`/`conditionValue` directly on `EligibilityRule` or `ApplicabilityRule` must migrate these properties to the associated `Condition` object
+
+---
+
+<a id="decision-069"></a>
+### 🔗 Decision #069: hasLocationDataSet Domain Extension to RatePlan and RatePlanModifier
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-03-03
+- **Issue:** Domain coverage for location data
+- **Category:** Architecture
+- **Impact:** Low - Non-breaking addition
+
+**Context:**
+`urpx:hasLocationDataSet` links a resource to a set of location data (e.g., territory, zone, service area). The property's domain did not include `urpx:RatePlan` or `urpx:RatePlanModifier`, preventing these top-level rate plan objects from directly referencing their applicable location datasets. Rate plans and modifiers often apply to specific service territories or geographic areas, making a direct `hasLocationDataSet` reference on these objects necessary for complete geographic applicability modeling.
+
+**Decision:**
+Extend the domain of `urpx:hasLocationDataSet` to include `urpx:RatePlan` and `urpx:RatePlanModifier`.
+
+**Alternatives Considered:**
+
+1. **Extend domain to RatePlan and RatePlanModifier** ⭐ **SELECTED**
+   - ✅ Enables direct geographic applicability on rate plan objects
+   - ✅ Consistent with the parallel extension of `urpx:timezoneIdentifier` to the same classes
+   - ✅ Non-breaking addition
+   - ✅ Supports geographic applicability at the rate plan level without requiring intermediate objects
+
+2. **Keep current domain (no extension)**
+   - ✅ No changes required
+   - ❌ Prevents rate plans from directly referencing location datasets
+   - ❌ Requires workarounds via `RatePlanVersion` or applicability rules for location data
+
+**Rationale:**
+- Rate plans frequently have geographic applicability (e.g., applies only within a specific service territory)
+- The parallel extension of `timezoneIdentifier` to these same classes established the pattern; `hasLocationDataSet` should follow
+- Non-breaking addition with no risk to existing implementations
+
+**Implementation Details:**
+- Extended `rdfs:domain` union of `urpx:hasLocationDataSet` to include `urpx:RatePlan` and `urpx:RatePlanModifier`
+- Updated SHACL shapes: added `urpx:hasLocationDataSet` as optional constraint on `RatePlanShape` and `RatePlanModifierShape`
+
+**Impact Assessment:**
+- **Positive**: Enables rate plan-level geographic applicability modeling
+- **Breaking Change**: None — additive only
+
+---
+
+<a id="decision-070"></a>
+### 🔗 Decision #070: nameType Property Creation for Organization Name Classification
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-03-03
+- **Issue:** Organization name classification gap
+- **Category:** Architecture
+- **Impact:** Low - Non-breaking addition
+
+**Context:**
+`urpx:OrganizationName` represents a named instance of an organization's name (e.g., legal name, trade name, doing-business-as name). Without a classification property, there was no structured way to distinguish between different name types on the same organization. Organizations frequently have multiple names for different contexts (legal filings, customer-facing branding, regulatory references), requiring a controlled vocabulary property to classify each `OrganizationName` instance.
+
+**Decision:**
+Add `urpx:nameType` as an ObjectProperty with domain `urpx:OrganizationName` and range `urpx:NameTypeValue`, providing controlled vocabulary classification for organization name types. 
+
+**Alternatives Considered:**
+
+1. **Add nameType ObjectProperty with NameTypeValue enumeration** ⭐ **SELECTED**
+   - ✅ Structured classification via controlled vocabulary
+   - ✅ Enables filtering and querying by name type
+   - ✅ Consistent with URPX pattern of pairing ObjectProperties with `*Value` enumeration ranges
+   - ✅ Non-breaking addition
+
+2. **Use a free-text nameType DatatypeProperty**
+   - ✅ More flexible for custom name types
+   - ❌ No controlled vocabulary — poor interoperability
+   - ❌ Inconsistent with URPX enumeration-backed classification pattern
+
+**Rationale:**
+- Controlled vocabulary classification enables consistent, queryable name type data
+- Follows the established URPX pattern of ObjectProperty + `*Value` enumeration range
+- Addresses the real-world requirement of distinguishing legal, trade, and operating names on a single organization
+
+**Implementation Details:**
+```turtle
+urpx:nameType a owl:ObjectProperty ;
+    rdfs:label "Name Type"@en ;
+    rdfs:comment "Classification type for an organization name (e.g., legal, trade, doing-business-as)" ;
+    rdfs:domain urpx:OrganizationName ;
+    rdfs:range urpx:NameTypeValue .
+```
+
+- `NameTypeValue` enumeration provides controlled vocabulary for name type classification
+
+**Impact Assessment:**
+- **Positive**: Enables structured classification of organization names, supports multi-name organizations
+- **Breaking Change**: None — additive only
+
+---
+
+<a id="decision-071"></a>
+### 🔗 Decision #071: profileId Property Removal and @id Standardization
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-03-03
+- **Issue:** Ontology property redundancy
+- **Category:** Architecture, Identification
+- **Impact:** Medium - Breaking change; standardizes profile identification pattern
+
+**Context:**
+`urpx:profileId` was a datatype property providing a string-based identifier for `CustomerProfile` and/or `ServicePointProfile` instances. JSON-LD's `@id` mechanism already provides a standards-based, globally unique IRI identifier for any resource. Maintaining a separate `profileId` property created redundancy and potential confusion about which identifier to use without beinga. structured ID for IRI reference — the same situation that led to the removal of `urpx:priceId` (Decision #058).
+
+**Decision:**
+Remove `urpx:profileId`. Use JSON-LD `@id` exclusively for profile identification.
+
+**Alternatives Considered:**
+
+1. **Use @id only** ⭐ **SELECTED**
+   - ✅ Leverages standard JSON-LD identification mechanism
+   - ✅ Eliminates redundant property
+   - ✅ IRIs are globally unique by definition
+   - ✅ Consistent with the pattern established by Decision #058 (priceId removal)
+   - ✅ Profile instances become directly referenceable by IRI
+
+2. **Keep profileId as human-readable alias**
+   - ✅ May be easier for non-RDF consumers
+   - ❌ Redundant with `@id`
+   - ❌ Creates two identification systems for the same resource
+   - ❌ Inconsistent with how other URPX classes are identified (cf. Decision #058)
+
+**Rationale:**
+- `@id` is the standard JSON-LD mechanism for resource identification
+- Eliminating `profileId` reduces property count and removes ambiguity
+- Aligns profile identification with how all other URPX classes (including Price after Decision #058) use `@id`
+- Profile instances referenced by `@id` become referenceable from other objects without a dedicated identifier property
+
+**Implementation Details:**
+- Removed `urpx:profileId` property definition from `ontology/urpx-ontology.ttl`
+- Updated SHACL shapes to remove `profileId` constraints
+- Implementations should assign an `@id` to each `CustomerProfile` and `ServicePointProfile` instance
+
+**Impact Assessment:**
+- **Positive**: Cleaner identification, reduced property count, consistent patterns across all URPX classes
+- **Breaking Change**: Yes — replace all `profileId` values with `@id` declarations
+- **Requirements**: Migration guide for implementations relying on `profileId`
+
+**References:**
+- Related Decision: #058 (Removal of priceId Property and @id Standardization)
+
+---
+
+<a id="decision-072"></a>
+### 🔗 Decision #072: Additional Properties in Price Shape xone Constraint
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-03-03
+- **Issue:** SHACL constraint completeness for Price shape
+- **Category:** Validation
+- **Impact:** Low - Non-breaking addition; expands valid pricing patterns
+
+**Context:**
+The `PriceShape` in `shacl/urpx-shacl.ttl` used an `sh:xone` constraint to enforce that exactly one pricing value property is present on a `Price` instance. The initial constraint included only `urpx:amount` and `urpx:unitPrice`. As the ontology evolved, additional pricing properties were introduced — `urpx:basedOnPrice`, `urpx:basePrice`, and `urpx:currentPrice` — to support reference pricing patterns (e.g., a price derived from another price, a base tariff price, a current effective price). These were not included in the `xone` constraint, leaving them unvalidated.
+
+**Decision:**
+Add `urpx:basedOnPrice`, `urpx:basePrice`, and `urpx:currentPrice` to the `sh:xone` constraint on `PriceShape`, resulting in five mutually exclusive pricing value options: `amount`, `unitPrice`, `basedOnPrice`, `basePrice`, `currentPrice`.
+
+**Alternatives Considered:**
+
+1. **Add all three properties to xone constraint** ⭐ **SELECTED**
+   - ✅ Complete validation coverage for all price value patterns
+   - ✅ Enforces mutual exclusivity across all pricing property options
+   - ✅ Non-breaking — adds valid options without restricting existing ones
+
+2. **Leave xone unchanged, document new properties separately**
+   - ✅ No SHACL changes required
+   - ❌ New pricing properties are unvalidated
+   - ❌ Allows a Price to have multiple pricing value properties simultaneously
+
+**Rationale:**
+- The `sh:xone` pattern enforces that a `Price` uses exactly one pricing value mechanism
+- As new pricing value properties are added to the ontology, they must be included in the constraint to maintain validation completeness
+- Adding them as options (not requirements) is non-breaking
+
+**Implementation Details:**
+- Updated `PriceShape` in `shacl/urpx-shacl.ttl`: added `urpx:basedOnPrice`, `urpx:basePrice`, `urpx:currentPrice` as additional branches in the `sh:xone` constraint
+- Full `sh:xone` options: `amount`, `unitPrice`, `basedOnPrice`, `basePrice`, `currentPrice`
+
+**Impact Assessment:**
+- **Positive**: Complete SHACL validation for all price value properties, consistent enforcement
+- **Breaking Change**: None — additive only
+
+---
+
+<a id="decision-073"></a>
+### 🔗 Decision #073: referencesPriceDefinition Made Optional on Price Shape
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-03-03
+- **Issue:** SHACL cardinality refinement for Price shape
+- **Category:** Validation
+- **Impact:** Low - Relaxes cardinality; non-breaking
+
+**Context:**
+`urpx:referencesPriceDefinition` was introduced in Decision #059 to link `Price` instances to their associated `PriceDefinition`. The initial SHACL constraint for this property on `PriceShape` required a minimum cardinality of 1 (required). However, not every `Price` instance requires an explicit link to a `PriceDefinition` — particularly for simple pricing data, dynamic prices, or data ingested from sources where the structural definition has not yet been created.
+
+**Decision:**
+Update the cardinality of `urpx:referencesPriceDefinition` on `PriceShape` to optional (`minCount 0`).
+
+**Alternatives Considered:**
+
+1. **Make optional (minCount 0)** ⭐ **SELECTED**
+   - ✅ Allows valid Price data without requiring a PriceDefinition link
+   - ✅ Supports incremental data enrichment workflows
+   - ✅ Consistent with the pattern of making structural/descriptive properties optional (cf. Decision #061)
+   - ✅ Non-breaking relaxation
+
+2. **Keep required (minCount 1)**
+   - ✅ Ensures Price-to-PriceDefinition links are always present
+   - ❌ Rejects valid Price data that lacks a PriceDefinition reference
+   - ❌ Forces artificial PriceDefinition creation for simple pricing data
+   - ❌ Barrier to adoption for data providers working incrementally
+
+**Rationale:**
+- Not all data sources or use cases require the two-tier Price/PriceDefinition architecture to be fully populated
+- Making the link optional lowers barriers for initial data submission while still supporting the full two-tier pattern when needed
+- Consistent with the broader principle of making structural enrichment properties optional
+
+**Implementation Details:**
+- Updated `PriceShape` in `shacl/urpx-shacl.ttl`: `referencesPriceDefinition` constraint changed from `minCount 1` to `minCount 0`
+
+**Impact Assessment:**
+- **Positive**: More flexible validation, better adoption support
+- **Breaking Change**: None — relaxation, not restriction
+
+**References:**
+- Related Decision: #059 (referencesPriceDefinition Object Property Creation)
+
+---
+
+<a id="decision-074"></a>
+### 🔗 Decision #074: Removal of urpx:month, urpx:hour, and urpx:day from UnitOfMeasureValue
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-03-03
+- **Issue:** Time unit representation alignment
+- **Category:** Architecture / Simplification
+- **Impact:** Medium - Breaking change for implementations using time-based unit-of-measure values
+
+**Context:**
+`urpx:UnitOfMeasureValue` contained time-based enumeration instances: `urpx:month`, `urpx:hour`, and `urpx:day`. These were used to express time-period units in measurement contexts. However, the introduction of structured interval metric specifications (Decision #051) established `urpx:intervalDuration` (ISO 8601 `xsd:duration`) as the canonical way to express time intervals. Retaining `month`, `hour`, and `day` as `UnitOfMeasureValue` instances creates redundancy and ambiguity — the same concept (a monthly interval, an hourly interval) could be expressed in two incompatible ways.
+
+Additionally, `UnitOfMeasureValue` is semantically intended for physical measurement units (kWh, kW, therm, etc.), not for time interval categorization. Time-based "units" are more accurately expressed as interval durations in structured metric specifications.
+
+**Decision:**
+Remove `urpx:month`, `urpx:hour`, and `urpx:day` from `urpx:UnitOfMeasureValue`. Time-based intervals are expressed via `urpx:intervalDuration` using ISO 8601 duration values.
+
+**Alternatives Considered:**
+
+1. **Remove time-based values from UnitOfMeasureValue** ⭐ **SELECTED**
+   - ✅ Eliminates redundancy with the structured interval approach (Decision #051)
+   - ✅ Preserves semantic purity of `UnitOfMeasureValue` as a physical measurement unit enumeration
+   - ✅ Single mechanism for expressing time intervals (`intervalDuration`)
+   - ✅ Consistent with the removal of shoehorned non-physical units (Decision #048)
+
+2. **Keep time-based values as convenience aliases**
+   - ✅ No migration required
+   - ❌ Creates two valid representations for the same concept
+   - ❌ Blurs the semantic boundary of `UnitOfMeasureValue`
+   - ❌ Inconsistent with the structured interval architecture
+
+**Rationale:**
+- `UnitOfMeasureValue` should represent physical measurement units, not time interval labels
+- The structured interval approach (`intervalDuration` + optional `intervalType` + `intervalAlignment`) provides a richer and more precise representation of time intervals
+- Removing these values eliminates an ambiguity that could lead to inconsistent data modeling choices
+- Consistent with the broader clean-up of shoehorned enumeration values (cf. Decision #048 removal of non-measurement units)
+
+**Implementation Details:**
+- Removed `urpx:month`, `urpx:hour`, and `urpx:day` individual declarations and `owl:oneOf` references from `urpx:UnitOfMeasureValue` in `ontology/urpx-ontology.ttl`
+- Time intervals should use `urpx:intervalDuration` with ISO 8601 values (e.g., `"P1M"^^xsd:duration` for monthly, `"PT1H"^^xsd:duration` for hourly, `"P1D"^^xsd:duration` for daily)
+
+**Impact Assessment:**
+- **Positive**: Cleaner enumeration semantics, single mechanism for time interval expression
+- **Breaking Change**: Yes — data using `urpx:month`, `urpx:hour`, or `urpx:day` as unit-of-measure values must migrate to `urpx:intervalDuration` specifications
+
+**References:**
+- Related Decision: #048 (ProfileMetric Architecture — removal of shoehorned units)
+- Related Decision: #051 (Time Interval Property Consolidation)
+
+---
+
+<a id="decision-075"></a>
+### 🔗 Decision #075: geographicZone Domain Update from CustomerProfile to ServicePointProfile
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-03-03
+- **Issue:** Geographic property domain alignment
+- **Category:** Architecture
+- **Impact:** Medium - Breaking change for implementations placing geographicZone on CustomerProfile
+
+**Context:**
+`urpx:geographicZone` had a domain that included `urpx:CustomerProfile`. However, geographic zones describe the physical location of a service point, not characteristics of the customer as a person or account. The `urpx:ServicePointProfile` class represents the location-centric profile (premise, service point, geographic context), while `urpx:CustomerProfile` represents the customer-centric profile (demographics, eligibility, account status). All geographic properties should consistently live on `ServicePointProfile` rather than being split between the two profile types.
+
+**Decision:**
+Remove `urpx:CustomerProfile` from the domain of `urpx:geographicZone` and ensure `urpx:ServicePointProfile` is included. All geographic properties are now consolidated under `ServicePointProfile`.
+
+**Alternatives Considered:**
+
+1. **Move geographicZone domain to ServicePointProfile only** ⭐ **SELECTED**
+   - ✅ All geographic properties consistently live on ServicePointProfile
+   - ✅ Clear semantic boundary: CustomerProfile = customer data, ServicePointProfile = location data
+   - ✅ Consistent with other geographic properties (geographicScope, etc.) on ServicePointProfile
+   - ✅ Aligns with the architectural principle of privacy by design (geographic data is location data, not customer data)
+
+2. **Keep geographicZone on CustomerProfile**
+   - ✅ No migration required
+   - ❌ Blurs the semantic boundary between customer and location profiles
+   - ❌ Geographic data on CustomerProfile risks conflating location with customer identity
+   - ❌ Inconsistent with where other geographic properties live
+
+**Rationale:**
+- Geographic zones describe where service is provided, not who the customer is — this is inherently `ServicePointProfile` data
+- Consolidating all geographic properties on `ServicePointProfile` creates a single, consistent location for geographic data
+- Aligns with the privacy-by-design principle of clear separation between customer and location data
+- Consistent with the broader pattern of `ServicePointProfile` as the authoritative location context
+
+**Implementation Details:**
+- Removed `urpx:CustomerProfile` from the `rdfs:domain` union of `urpx:geographicZone`
+- Verified `urpx:ServicePointProfile` is in the domain of `urpx:geographicZone`
+- Updated data dictionary to reflect `geographicZone` under `ServicePointProfile` only
+
+**Impact Assessment:**
+- **Positive**: Cleaner architectural separation, all geographic data on ServicePointProfile
+- **Breaking Change**: Yes — data placing `geographicZone` on `CustomerProfile` instances must migrate this property to the associated `ServicePointProfile`
+
+---
+
+<a id="decision-076"></a>
+### 🔗 Decision #076: hasPrice Minimum Cardinality Reduced to 1 on PriceSet Shape
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-03-03
+- **Issue:** SHACL cardinality refinement for PriceSet shape
+- **Category:** Validation
+- **Impact:** Low - Relaxes cardinality; non-breaking
+
+**Context:**
+The `PriceSetShape` in `shacl/urpx-shacl.ttl` required a minimum of 2 `urpx:hasPrice` values (minCount 2). This constraint was intended to reflect that a `PriceSet` typically contains multiple price objects. However, the `urpx:PriceSetAlternative` subclass represents a single alternative within a set of alternatives — each `PriceSetAlternative` may contain only one `Price` (the price applicable for that alternative). Requiring at least 2 prices prevented valid `PriceSetAlternative` instances from passing SHACL validation.
+
+**Decision:**
+Reduce the minimum cardinality of `urpx:hasPrice` on `PriceSetShape` from 2 to 1.
+
+**Alternatives Considered:**
+
+1. **Reduce minCount to 1** ⭐ **SELECTED**
+   - ✅ Allows valid PriceSet instances with a single Price (e.g., PriceSetAlternative)
+   - ✅ More flexible modeling for diverse pricing structures
+   - ✅ Non-breaking relaxation
+   - ✅ A PriceSet with one Price is semantically valid (a set with one member)
+
+2. **Keep minCount 2**
+   - ✅ Enforces that a PriceSet always contains multiple prices
+   - ❌ Rejects valid PriceSetAlternative instances with a single price
+   - ❌ Prevents use of PriceSet subclass patterns for alternative pricing
+   - ❌ Over-constrains the model beyond semantic necessity
+
+3. **Create separate shape for PriceSetAlternative with minCount 1**
+   - ✅ Preserves stricter constraint on base PriceSet
+   - ❌ Shape hierarchy complexity
+   - ❌ Two shapes for the same cardinality concept is over-engineering
+
+**Rationale:**
+- `PriceSetAlternative` is a valid subclass that may contain a single `Price` — the parent shape's constraint must accommodate subclass use cases
+- A `PriceSet` with one price is semantically valid (requiring at least one price ensures the set is non-empty)
+- Consistent with the principle of making validation constraints reflect the minimum semantic requirements, not assumed usage patterns
+
+**Implementation Details:**
+- Updated `PriceSetShape` in `shacl/urpx-shacl.ttl`: `urpx:hasPrice` constraint changed from `sh:minCount 2` to `sh:minCount 1`
+
+**Impact Assessment:**
+- **Positive**: Flexible PriceSet modeling, supports PriceSetAlternative subclass pattern
+- **Breaking Change**: None — relaxation, not restriction
+
+**References:**
+- Related Decision: #059 (referencesPriceDefinition Object Property Creation)
+- Related Decision: #060 (SHACL Validation Shapes Introduction)
 

@@ -643,10 +643,9 @@ Extracted from the full list of possible values in `urpx-ontology.ttl`:
 
 ### Further Learning
 
-1. [URPX Examples](urpx-examples.md) - Real-world rate plan examples
-2. [Data Dictionary](urpx-data-dictionary.md) - Complete property reference
-3. [URPX Interoperability & Standards Integration](urpx-interoperability.md) - Comprehensive guide to URPX interoperability
-4. [Semantic Web Guide](urpx-semantic-web-guide.md) - RDF and semantic web concepts
+1. [Data Dictionary](urpx-data-dictionary.md) - Complete property reference
+2. [URPX Interoperability & Standards Integration](urpx-interoperability.md) - Comprehensive guide to URPX interoperability
+3. [Semantic Web Guide](urpx-semantic-web-guide.md) - RDF and semantic web concepts
 
 ### Advanced Topics
 
