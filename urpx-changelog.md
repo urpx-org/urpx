@@ -5,6 +5,54 @@
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
 
+2026-03-03 (continued)
+---
+
+### Ontology Changes
+
+#### Domain Narrowed: `urpx:hasMetricInput`
+- Removed `urpx:Price`, `urpx:PriceSet`, and `urpx:Condition` from the domain; domain is now `urpx:PlanElements` only.
+- **Rationale:** Metric input *definitions* belong centrally in `PlanElements`. Individual objects reference metrics through `hasMetricSpecification`. Having `hasMetricInput` on Price, PriceSet, and Condition blurred the define-vs-reference distinction.
+- **Design Decision:** [#077](#decision-077)
+
+#### Domain Extended: `urpx:name`
+- Added `urpx:ProfileAlternatives` and `urpx:ProfileAlternative` to the domain of `urpx:name`.
+- **Rationale:** These are user-facing selection entities that need human-readable labels for display.
+- **Design Decision:** [#078](#decision-078)
+
+#### Domain Extended: `urpx:referencesProfileAlternative`
+- Added `urpx:TOUSchedule` and `urpx:ServiceTier` to the domain.
+- **Rationale:** Profile-based differentiation should apply uniformly across the rate plan structure — not just prices, but also TOU schedules and service tiers.
+- **Design Decision:** [#079](#decision-079)
+
+#### Alphabetical Reordering: Classes in `P` Block
+- Reordered `PlanElements`, `PriceUpdateRule`, `Profile`, `ProfileAlternative`, `ProfileAlternatives`, `ProgramEnrollment` into strict alphabetical order.
+- No semantic changes.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Removed: `hasMetricInput` from `ConditionShape`, `PriceShape`, `PriceSetShape`
+- Removed `urpx:hasMetricInput` property constraints from these three shapes.
+- **Rationale:** Aligns with ontology domain narrowing (Decision #077).
+
+#### Required: `name` on `LedgerShape` and `PriceDefinitionShape`
+- Changed `urpx:name` from optional (`sh:minCount 0`) to required (`sh:minCount 1`).
+- **Design Decision:** [#078](#decision-078)
+
+#### Added: `name` on `ProfileAlternativeShape` and `ProfileAlternativesShape`
+- Added required `urpx:name` property constraint (`sh:minCount 1`, `sh:maxCount 1`) to both shapes.
+- **Design Decision:** [#078](#decision-078)
+
+#### Added: `referencesProfileAlternative` on `TOUScheduleShape` and `ServiceTierShape`
+- Added optional `urpx:referencesProfileAlternative` property constraint (`sh:minCount 0`, `sh:maxCount 1`).
+- **Design Decision:** [#079](#decision-079)
+
+#### Added: `referencesProfileAlternatives` on `PriceDefinitionShape`
+- Added optional `urpx:referencesProfileAlternatives` property constraint (`sh:minCount 0`, `sh:maxCount 1`).
+- **Design Decision:** [#079](#decision-079)
+
+---
+
 2026-03-03
 ---
 

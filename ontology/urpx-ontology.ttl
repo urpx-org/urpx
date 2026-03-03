@@ -213,6 +213,11 @@ urpx:OrganizationTransition a owl:Class ;
     skos:note """Captures full context of organization changes including multiple
                  predecessors/successors, partial transfers, and regulatory approvals.""" .
 
+urpx:PlanElements a owl:Class ;
+    rdfs:label "Plan Elements"@en ;
+    rdfs:comment "Centralized container for temporal and pricing elements of rate plan or modifier versions" ;
+    skos:note "Contains parameters needed to set up cost model calculations including seasons, holiday calendars, metric input definitions, and billing model definitions. Used by both RatePlanVersion and RatePlanModifierVersion for unified structure." .
+
 urpx:Price a owl:Class ;
     rdfs:label "Price"@en ;
     rdfs:comment "Individual pricing component with rate and applicability rules" ;
@@ -251,40 +256,35 @@ urpx:PriceSummary a owl:Class ;
                  Explicitly references included line items to avoid double counting.
                  Supports transition from summary to detailed billing formats.""" .
 
+urpx:PriceUpdateRule a owl:Class ;
+    rdfs:label "Price Update Rule"@en ;
+    rdfs:comment "Rule defining when and how dynamic prices are calculated" ;
+    skos:note "Governs dynamic price updates. Contains formulas and trigger conditions. Can reference external indices or internal calculations." .
+
 urpx:PriorRatePlan a owl:Class ;
     rdfs:label "Prior Rate Plan"@en ;
     rdfs:comment "Reference to customer's previous rate plan for eligibility determination" ;
     skos:note "Tracks customer's rate plan history for eligibility rules that depend on previous enrollment. Separate from ProgramEnrollment to handle different eligibility patterns in utility rate structures." .
+
+urpx:Profile a owl:Class ;
+    rdfs:label "Profile"@en ;
+    rdfs:comment "Abstract parent for all profile types used in rate plan eligibility and service delivery" ;
+    skos:note "Subclasses define specific profile characteristics: CustomerProfile for business and social characteristics, ServicePointProfile for physical service delivery characteristics. No properties defined at this level - all properties live on concrete subclasses." .
 
 urpx:ProfileAlternative a owl:Class ;
     rdfs:label "Profile Alternative"@en ;
     rdfs:comment "Specific combination of dimension values representing one alternative choice. Defines the dimensions along which price set alternatives differ, enabling mutually exclusive options for user selection. Each dimension set specifies dimension-value pairs that characterize a particular alternative configuration." ;
     skos:note "Dimension definition layer independent of price sets. Used to define alternatives based on customer profile characteristics, geographic locations, or service configurations." .
 
-urpx:ProgramEnrollment a owl:Class ;
-    rdfs:label "Program Enrollment"@en ;
-    rdfs:comment "Customer enrollment in utility programs for eligibility determination" ;
-    skos:note "Tracks customer participation in utility programs (demand response, green energy, low-income assistance, etc.) for rate plan eligibility. Distinct from rate plan history to handle program-based eligibility patterns." .
-
 urpx:ProfileAlternatives a owl:Class ;
     rdfs:label "Profile Alternatives"@en ;
     rdfs:comment "Container for alternative dimension structures requiring user selection. Provides the bridge between customer profile characteristics and mutually exclusive alternative choices. Each ProfileAlternatives instance groups related alternative dimension sets that define the available options for a specific selection context." ;
     skos:note "Separates user selection layer from automatic filtering layer. Used when rate plan has mutually exclusive options requiring explicit user choice (e.g., selecting between different zone configurations or service levels)." .
 
-urpx:PlanElements a owl:Class ;
-    rdfs:label "Plan Elements"@en ;
-    rdfs:comment "Centralized container for temporal and pricing elements of rate plan or modifier versions" ;
-    skos:note "Contains parameters needed to set up cost model calculations including seasons, holiday calendars, metric input definitions, and billing model definitions. Used by both RatePlanVersion and RatePlanModifierVersion for unified structure." .
-
-urpx:PriceUpdateRule a owl:Class ;
-    rdfs:label "Price Update Rule"@en ;
-    rdfs:comment "Rule defining when and how dynamic prices are calculated" ;
-    skos:note "Governs dynamic price updates. Contains formulas and trigger conditions. Can reference external indices or internal calculations." .
-
-urpx:Profile a owl:Class ;
-    rdfs:label "Profile"@en ;
-    rdfs:comment "Abstract parent for all profile types used in rate plan eligibility and service delivery" ;
-    skos:note "Subclasses define specific profile characteristics: CustomerProfile for business and social characteristics, ServicePointProfile for physical service delivery characteristics. No properties defined at this level - all properties live on concrete subclasses." .
+urpx:ProgramEnrollment a owl:Class ;
+    rdfs:label "Program Enrollment"@en ;
+    rdfs:comment "Customer enrollment in utility programs for eligibility determination" ;
+    skos:note "Tracks customer participation in utility programs (demand response, green energy, low-income assistance, etc.) for rate plan eligibility. Distinct from rate plan history to handle program-based eligibility patterns." .
 
 urpx:RateGroup a owl:Class ;
     rdfs:label "Rate Group"@en ;
@@ -1611,10 +1611,9 @@ urpx:hasLocationDataSet a owl:ObjectProperty ;
 urpx:hasMetricInput a owl:ObjectProperty ;
     rdfs:label "Has Metric Input"@en ;
     rdfs:comment "Links plan elements to metric inputs for measurement organization" ;
-    rdfs:domain [ a owl:Class;
-            owl:unionOf ( urpx:PlanElements urpx:Price urpx:PriceSet urpx:Condition ) ] ; 
+    rdfs:domain urpx:PlanElements ; 
     rdfs:range urpx:MetricInput ;
-    skos:note "Supports measured MetricInputs (raw meter data) and calculated MetricInputs (derived metrics). Also used in Conditions to specify the metric being evaluated." .
+    skos:note "Supports measured MetricInputs (raw meter data) and calculated MetricInputs (derived metrics)." .
 
 urpx:hasMetricSpecification a owl:ObjectProperty ;
     rdfs:label "Has Metric Specification"@en ;
@@ -2142,7 +2141,7 @@ urpx:name a owl:DatatypeProperty ;
     rdfs:label "Name"@en ;
     rdfs:comment "The name of the item" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceSet urpx:PriceSetAlternatives urpx:PriceDefinition urpx:TariffPublication urpx:TOUPeriod urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:OrganizationName) ] ;
+            owl:unionOf ( urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceSet urpx:PriceSetAlternatives urpx:PriceDefinition urpx:TariffPublication urpx:TOUPeriod urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:OrganizationName urpx:ProfileAlternatives urpx:ProfileAlternative ) ] ;
     rdfs:range xsd:string ;
     skos:note "Human-readable name for entities. Keep concise for display purposes (max 255 chars recommended). Universal naming property used across all entity types." .
 
@@ -2410,7 +2409,7 @@ urpx:referencesPriceDefinition a owl:ObjectProperty ;
 urpx:referencesProfileAlternative a owl:ObjectProperty ;
     rdfs:label "References Profile Alternative"@en ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:PriceSetAlternative urpx:PriceDefinition ) ] ;
+            owl:unionOf ( urpx:PriceSetAlternative urpx:PriceDefinition urpx:TOUSchedule urpx:ServiceTier ) ] ;
     rdfs:range urpx:ProfileAlternative ;
     rdfs:comment "IRI reference linking a price set alternative or price definition to its applicable ProfileAlternative. This property connects the price storage layer (Prices container) to the dimension definition layer (ProfileAlternatives), enabling the price set to indicate which dimension configuration it applies to." ;
     skos:note "Each PriceSetAlternative must reference exactly one ProfileAlternative. The referenced ProfileAlternative defines the dimension-value pairs that characterize when this price set applies." .
@@ -2418,7 +2417,7 @@ urpx:referencesProfileAlternative a owl:ObjectProperty ;
 urpx:referencesProfileAlternatives a owl:ObjectProperty ;
     rdfs:label "References Profile Alternatives"@en ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:PriceSetAlternatives urpx:PriceDefinition ) ];
+            owl:unionOf ( urpx:PriceSetAlternatives urpx:PriceDefinition ) ] ;
     rdfs:range urpx:ProfileAlternatives ;
     rdfs:comment "Links price set alternatives or price definition container to the profile alternatives definition." ;
     skos:note "Each PriceSetAlternatives must reference exactly one ProfileAlternatives. Each contained PriceSetAlternative must reference a ProfileAlternative from this ProfileAlternatives." .

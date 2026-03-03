@@ -79,6 +79,9 @@ Quick links to all design decisions:
 - ✅ [Decision #074: Removal of urpx:month, urpx:hour, and urpx:day from UnitOfMeasureValue](#decision-074)
 - ✅ [Decision #075: geographicZone Domain Update from CustomerProfile to ServicePointProfile](#decision-075)
 - ✅ [Decision #076: hasPrice Minimum Cardinality Reduced to 1 on PriceSet Shape](#decision-076)
+- ✅ [Decision #077: hasMetricInput Domain Narrowed to PlanElements Only](#decision-077)
+- ✅ [Decision #078: name Property Extended to ProfileAlternative and ProfileAlternatives; Made Required on Key Entities](#decision-078)
+- ✅ [Decision #079: referencesProfileAlternative Domain Extended to TOUSchedule and ServiceTier](#decision-079)
 
 ---
 
@@ -2275,4 +2278,167 @@ Reduce the minimum cardinality of `urpx:hasPrice` on `PriceSetShape` from 2 to 1
 **References:**
 - Related Decision: #059 (referencesPriceDefinition Object Property Creation)
 - Related Decision: #060 (SHACL Validation Shapes Introduction)
+
+---
+
+<a id="decision-077"></a>
+### 🔗 Decision #077: hasMetricInput Domain Narrowed to PlanElements Only
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-03-03
+- **Issue:** `hasMetricInput` domain included Price, PriceSet, and Condition alongside PlanElements
+- **Category:** Ontology / Validation
+- **Impact:** Medium - Breaking change; narrows domain and removes SHACL constraints
+
+**Context:**
+The `urpx:hasMetricInput` property had a union domain of `(urpx:PlanElements, urpx:Price, urpx:PriceSet, urpx:Condition)`, allowing metric inputs to be attached at multiple levels of the rate plan hierarchy. In practice, metric input *definitions* belong at the `PlanElements` level as centralized configuration, while individual `Price`, `PriceSet`, and `Condition` objects can reference specific `MetricInput` objects via IRI through `urpx:referencesMetricInput`. Having `hasMetricInput` available on all four classes blurred the distinction between defining a metric input and referencing one.
+
+**Decision:**
+Narrow the domain of `urpx:hasMetricInput` to `urpx:PlanElements` only. Remove the corresponding SHACL property constraints from `ConditionShape`, `PriceShape`, and `PriceSetShape`.
+
+**Alternatives Considered:**
+
+1. **Narrow domain to PlanElements only** ⭐ **SELECTED**
+   - ✅ Clear separation: PlanElements *defines* metric inputs, other objects *reference* them via hasMetricSpecification
+   - ✅ Single authoritative location for metric input definitions
+   - ✅ Removes ambiguity about where metric inputs should be declared
+
+2. **Keep union domain across all four classes**
+   - ✅ No migration required
+   - ❌ Blurs the define-vs-reference distinction
+   - ❌ Allows metric input definitions to be scattered across the rate plan hierarchy
+
+**Rationale:**
+- Metric input definitions are configuration-level concerns that belong in `PlanElements`, not on individual pricing or condition objects
+- Centralizing metric input definitions in `PlanElements` creates a single source of truth
+
+**Implementation Details:**
+- Ontology: Replaced union domain `(PlanElements, Price, PriceSet, Condition)` with single domain `urpx:PlanElements`
+- Ontology: Simplified `skos:note` to remove reference to Condition usage
+- SHACL: Removed `hasMetricInput` property constraint from `ConditionShape`
+- SHACL: Removed `hasMetricInput` property constraint from `PriceShape`
+- SHACL: Removed `hasMetricInput` property constraint from `PriceSetShape`
+
+**Impact Assessment:**
+- **Positive**: Cleaner architecture, single authoritative location for metric input definitions
+- **Breaking Change**: Yes — data placing `hasMetricInput` on `Price`, `PriceSet`, or `Condition` instances must migrate to `PlanElements` or use `hasMetricSpecification` instead
+
+**References:**
+- Related Decision: #060 (SHACL Validation Shapes Introduction)
+
+---
+
+<a id="decision-078"></a>
+### 🔗 Decision #078: name Property Extended to ProfileAlternative and ProfileAlternatives; Made Required on Key Entities
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-03-03
+- **Issue:** ProfileAlternative and ProfileAlternatives lacked human-readable names; Ledger and PriceDefinition names were optional
+- **Category:** Ontology / Validation
+- **Impact:** Medium - Breaking change; adds required name constraints
+
+**Context:**
+`ProfileAlternative` and `ProfileAlternatives` instances represent user-facing selection options (e.g., choosing between zone configurations or service levels). Without a `name` property, these instances had no standardized human-readable label for display in UIs or documents. Additionally, `Ledger` and `PriceDefinition` had `name` as optional (`sh:minCount 0`) in their SHACL shapes, despite being entities that require identification in billing and pricing contexts.
+
+**Decision:**
+1. Extend the ontology domain of `urpx:name` to include `urpx:ProfileAlternatives` and `urpx:ProfileAlternative`.
+2. Add required `name` property constraints (`sh:minCount 1`, `sh:maxCount 1`) to `ProfileAlternativeShape` and `ProfileAlternativesShape`.
+3. Change `name` from optional to required on `LedgerShape` and `PriceDefinitionShape`.
+
+**Alternatives Considered:**
+
+1. **Extend name to ProfileAlternative/ProfileAlternatives and require it on key entities** ⭐ **SELECTED**
+   - ✅ All user-facing selection entities have human-readable labels
+   - ✅ Consistent naming requirement across key billing/pricing entities
+   - ✅ Improves UI/document generation — every alternative and ledger has a display name
+   - ✅ Uses the existing `name` property rather than introducing new properties
+
+2. **Add name to ontology domain but keep optional in SHACL**
+   - ✅ Non-breaking change
+   - ❌ No guarantee that instances will have names for display
+   - ❌ UIs and reports would need fallback logic for missing names
+
+3. **Introduce separate label properties (e.g., alternativeLabel)**
+   - ✅ No impact on existing name property
+   - ❌ Proliferates naming properties unnecessarily
+   - ❌ Inconsistent with the established `name` pattern used across the ontology
+
+**Rationale:**
+- `ProfileAlternative` and `ProfileAlternatives` are user-selection constructs — a name is essential for presenting choices
+- `Ledger` and `PriceDefinition` are core billing/pricing entities that appear in reports and UIs — requiring a name ensures they are always identifiable
+- The `name` property is the established pattern for human-readable labels across URPX; extending it is consistent with existing design
+
+**Implementation Details:**
+- Ontology: Added `urpx:ProfileAlternatives` and `urpx:ProfileAlternative` to the `owl:unionOf` domain of `urpx:name`
+- SHACL: Added `name` property constraint (`sh:minCount 1`, `sh:maxCount 1`) to `ProfileAlternativeShape`
+- SHACL: Added `name` property constraint (`sh:minCount 1`, `sh:maxCount 1`) to `ProfileAlternativesShape`
+- SHACL: Changed `name` from `sh:minCount 0` to `sh:minCount 1` on `LedgerShape`
+- SHACL: Changed `name` from `sh:minCount 0` to `sh:minCount 1` on `PriceDefinitionShape`
+
+**Impact Assessment:**
+- **Positive**: All key user-facing and billing entities guaranteed to have human-readable names
+- **Breaking Change**: Yes — existing `Ledger`, `PriceDefinition`, `ProfileAlternative`, and `ProfileAlternatives` instances without a `name` value will fail SHACL validation
+
+**References:**
+- Related Decision: #049 (ProfileAlternative Architecture and Naming)
+- Related Decision: #060 (SHACL Validation Shapes Introduction)
+
+---
+
+<a id="decision-079"></a>
+### 🔗 Decision #079: referencesProfileAlternative Domain Extended to TOUSchedule and ServiceTier
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-03-03
+- **Issue:** Profile alternatives could only differentiate price sets and price definitions, not TOU schedules or service tiers
+- **Category:** Ontology / Validation
+- **Impact:** Low - Non-breaking domain extension and SHACL additions
+
+**Context:**
+The `urpx:referencesProfileAlternative` property had a domain restricted to `(urpx:PriceSetAlternative, urpx:PriceDefinition)`, meaning profile-based differentiation could only be applied to price structures. In practice, rate plans may offer alternative TOU schedules or service tier configurations based on the same profile dimensions (e.g., different TOU periods for different zone selections, or different tier structures for different service levels). Without extending the domain, these variations had to be modeled indirectly or duplicated across price sets.
+
+Similarly, `PriceDefinition` needed the ability to reference a `ProfileAlternatives` container (the parent grouping), not just individual `ProfileAlternative` instances.
+
+**Decision:**
+1. Extend the ontology domain of `urpx:referencesProfileAlternative` to include `urpx:TOUSchedule` and `urpx:ServiceTier`.
+2. Add optional `referencesProfileAlternative` SHACL constraints to `TOUScheduleShape` and `ServiceTierShape`.
+3. Add optional `referencesProfileAlternatives` SHACL constraint to `PriceDefinitionShape`.
+
+**Alternatives Considered:**
+
+1. **Extend referencesProfileAlternative to TOUSchedule and ServiceTier** ⭐ **SELECTED**
+   - ✅ Profile-based differentiation applies uniformly across the rate plan structure
+   - ✅ TOU schedules and service tiers can vary by the same profile dimensions as prices
+   - ✅ Non-breaking — optional property addition on existing shapes
+   - ✅ Consistent with the architectural pattern of profile alternatives as a cross-cutting concern
+
+2. **Keep domain restricted to PriceSetAlternative and PriceDefinition**
+   - ✅ No changes required
+   - ❌ Forces TOU and tier variations to be modeled through duplicated price sets
+   - ❌ Profile alternatives cannot express that TOU schedules differ by zone or service level
+   - ❌ Inconsistent — profiles influence prices but not the schedules and tiers that underpin them
+
+3. **Create separate properties (e.g., touScheduleAlternative, serviceTierAlternative)**
+   - ✅ Domain-specific naming
+   - ❌ Proliferates properties for the same semantic concept
+   - ❌ Breaks the unified profile alternatives pattern
+
+**Rationale:**
+- Profile alternatives represent customer-facing choices that can affect multiple aspects of a rate plan — not just prices, but also when rates apply (TOU) and how tiers are structured
+- Extending the existing `referencesProfileAlternative` property maintains the unified pattern where a single `ProfileAlternatives` definition drives differentiation across all rate plan components
+- Adding `referencesProfileAlternatives` on `PriceDefinitionShape` allows the price definition container to declare which alternatives group it participates in
+
+**Implementation Details:**
+- Ontology: Added `urpx:TOUSchedule` and `urpx:ServiceTier` to the `owl:unionOf` domain of `urpx:referencesProfileAlternative`
+- SHACL: Added optional `referencesProfileAlternative` property constraint (`sh:minCount 0`, `sh:maxCount 1`) to `TOUScheduleShape`
+- SHACL: Added optional `referencesProfileAlternative` property constraint (`sh:minCount 0`, `sh:maxCount 1`) to `ServiceTierShape`
+- SHACL: Added optional `referencesProfileAlternatives` property constraint (`sh:minCount 0`, `sh:maxCount 1`) to `PriceDefinitionShape`
+
+**Impact Assessment:**
+- **Positive**: Unified profile-based differentiation across prices, TOU schedules, and service tiers
+- **Breaking Change**: None — all additions are optional extensions
+
+**References:**
+- Related Decision: #049 (ProfileAlternative Architecture and Naming)
+- Related Decision: #078 (name Property Extended to ProfileAlternative and ProfileAlternatives)
 

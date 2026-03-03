@@ -386,11 +386,6 @@ urpx-shacl:ConditionShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:hasMetricInput ;
-        sh:class urpx:MetricInput ;
-        sh:minCount 0 ;
-    ] ;
-    sh:property [
         sh:path urpx:hasMetricSpecification ;
         sh:class urpx:MetricSpecification ;
         sh:minCount 0 ;
@@ -793,7 +788,7 @@ urpx-shacl:LedgerShape
     sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -1301,12 +1296,6 @@ urpx-shacl:PriceShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:hasMetricInput ;
-        sh:class urpx:MetricInput ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:hasMetricSpecification ;
         sh:class urpx:MetricSpecification ;
         sh:minCount 0 ;
@@ -1491,7 +1480,7 @@ urpx-shacl:PriceDefinitionShape
     sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -1518,6 +1507,12 @@ urpx-shacl:PriceDefinitionShape
         sh:class urpx:MetricInput ;
         sh:minCount 0 ;
     ] ;    
+    sh:property [
+        sh:path urpx:referencesProfileAlternatives ;
+        sh:class urpx:ProfileAlternatives ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
     sh:property [
         sh:path urpx:referencesServiceTier ;
         sh:class urpx:ServiceTier ;
@@ -1680,12 +1675,6 @@ urpx-shacl:PriceSetShape
         sh:path urpx:hasDataSourceReference ;
         sh:class urpx:DataSourceReference ;
         sh:minCount 0 ;
-    ] ;
-    sh:property [
-        sh:path urpx:hasMetricInput ;
-        sh:class urpx:MetricInput ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:hasMetricSpecification ;
@@ -1916,6 +1905,12 @@ urpx-shacl:ProfileAlternativeShape
         sh:path urpx:hasDimensionValue ;
         sh:class urpx:DimensionValuePair ;
         sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
     ] .
 
 urpx-shacl:ProfileAlternativesShape
@@ -1932,6 +1927,12 @@ urpx-shacl:ProfileAlternativesShape
         sh:path urpx:hasProfileAlternative ;
         sh:class urpx:ProfileAlternative ;
         sh:minCount 2 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
     ] .
     
 urpx-shacl:ProgramEnrollmentShape
@@ -2751,6 +2752,12 @@ urpx-shacl:ServiceTierShape
         sh:minCount 0 ;
     ] ;
     sh:property [
+        sh:path urpx:referencesProfileAlternative ;
+        sh:class urpx:ProfileAlternative ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:serviceTierNumber ;
         sh:datatype xsd:integer ;
         sh:minCount 1 ;
@@ -2996,6 +3003,12 @@ urpx-shacl:TOUScheduleShape
         sh:path urpx:referencesMetricInput ;
         sh:class urpx:MetricInput ;
         sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesProfileAlternative ;
+        sh:class urpx:ProfileAlternative ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
     ] .
 
 urpx-shacl:TOUTierShape
