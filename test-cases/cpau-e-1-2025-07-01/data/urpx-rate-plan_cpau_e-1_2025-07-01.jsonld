@@ -1,0 +1,287 @@
+{
+  "@context": {
+    "urpx": "https://schema.urpx.org/",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "urpx:unitPrice": { "@type": "xsd:decimal" },
+    "urpx:effectiveDate": { "@type": "xsd:date" },
+    "urpx:effectiveDateTime": { "@type": "xsd:dateTime" },
+    "urpx:baseQuantity": { "@type": "xsd:decimal" },
+    "urpx:startDate": { "@type": "xsd:date" },
+    "urpx:initialEffectiveDate": { "@type": "xsd:date" },
+    "urpx:url": { "@type": "xsd:anyURI" },
+    "urpx:intervalDuration": { "@type": "xsd:duration" },
+    "urpx:serviceTierNumber": { "@type": "xsd:integer" },
+    "urpx:upperBound": { "@type": "xsd:decimal" },
+    "urpx:lowerBound": { "@type": "xsd:decimal" }
+  },
+  "@type": "urpx:RatePlan",
+  "@id": "urpx:cpau-e-1",
+  "urpx:ratePlanIdentifier": "E-1",
+  "urpx:name": "Residential Electric Service",
+  "urpx:initialEffectiveDate": "2025-07-01",
+  "urpx:hasRatePlanVersion": {
+    "@type": "urpx:RatePlanVersion",
+    "@id": "urpx:cpau-e-1-2025-07-01",
+    "urpx:versionNumber": "2025-07-01",
+    "urpx:description": "Applies to all single-family residential electric service supplied through one meter at one point of delivery for domestic purposes in a single-family dwelling unit within the City of Palo Alto electric service area.",
+    "urpx:effectiveDateTime": "2025-07-01T00:00:00",
+    "urpx:priceCurrency": "USD",
+    "urpx:commodity": { "@id": "urpx:electricity" },
+    "urpx:serviceRole": { "@id": "urpx:bundledServiceRole" },
+    "urpx:publishedBy": {
+      "@type": "urpx:Organization",
+      "@id": "urpx:utility-cpau",
+      "urpx:legalName": "City of Palo Alto Utilities",
+      "urpx:eiaId": "3203",
+      "urpx:organizationType": { "@id": "urpx:municipalOrganization" }
+    },
+    "urpx:hasDataSourceReference": {
+      "@type": "urpx:DataSourceReference",
+      "urpx:url": "file://./assets/CPAU_E-1_2025-07-01.pdf",
+      "urpx:fileName": "CPAU_E-1_2025-07-01.pdf",
+      "urpx:mediaType": "application/pdf"
+    },
+    "urpx:hasEligibilityRule": [
+      {
+        "@type": "urpx:EligibilityRule",
+        "@id": "urpx:cpau-er-residential-single-family",
+        "urpx:hasCustomerProfile": {
+          "@type": "urpx:CustomerProfile",
+          "@id": "urpx:cpau-cp-residential-sf",
+          "urpx:hasCustomerKind": { "@id": "urpx:residentialKind" }
+        },
+        "urpx:hasCondition": [
+          {
+            "@type": "urpx:Condition",
+            "@id": "urpx:cpau-condition-single-family",
+            "urpx:conditionType": "dwellingType",
+            "urpx:operator": { "@id": "urpx:equalsOperator" },
+            "urpx:conditionValue": "Single-family dwelling"
+          },
+          {
+            "@type": "urpx:Condition",
+            "@id": "urpx:cpau-condition-single-meter",
+            "urpx:conditionType": "metering",
+            "urpx:operator": { "@id": "urpx:equalsOperator" },
+            "urpx:conditionValue": "Separately metered"
+          }
+        ]
+      }
+    ],
+    "urpx:hasPlanElements": {
+      "@type": "urpx:PlanElements",
+      "urpx:hasMetricInput": [
+        {
+          "@type": "urpx:MetricInput",
+          "@id": "urpx:cpau-mi-energy",
+          "urpx:metricInputType": { "@id": "urpx:measuredMetricInput" },
+          "urpx:hasMetricSpecification": {
+            "@type": "urpx:MetricSpecification",
+            "@id": "urpx:cpau-ms-energy",
+            "urpx:measurementKind": { "@id": "urpx:energy" },
+            "urpx:unitOfMeasure": { "@id": "urpx:kWh" },
+            "urpx:flowDirection": { "@id": "urpx:forward" }
+          }
+        },
+        {
+          "@type": "urpx:MetricInput",
+          "@id": "urpx:cpau-mi-meter-count",
+          "urpx:metricInputType": { "@id": "urpx:profileMetricInput" },
+          "urpx:profileMetricProperty": { "@id": "urpx:numberOfMeters" }
+        }
+      ],
+      "urpx:hasBillingModel": {
+        "@type": "urpx:BillingModel",
+        "urpx:hasServiceTier": [
+          {
+            "@type": "urpx:ServiceTier",
+            "@id": "urpx:cpau-tier-1",
+            "urpx:name": "Tier 1 — Baseline",
+            "urpx:description": "Usage up to baseline allowance of 15 kWh per day, prorated by meter reading days in billing period",
+            "urpx:serviceTierNumber": 1,
+            "urpx:referencesMetricInput": { "@id": "urpx:cpau-mi-energy" },
+            "urpx:upperBound": "15",
+            "urpx:upperBoundOperator": { "@id": "urpx:lessThanOrEqualOperator" },
+            "urpx:hasCalculationMethod": {
+              "@type": "urpx:CalculationMethod",
+              "urpx:intervalDuration": "P1D"
+            }
+          },
+          {
+            "@type": "urpx:ServiceTier",
+            "@id": "urpx:cpau-tier-2",
+            "urpx:name": "Tier 2 — Over Baseline",
+            "urpx:description": "Usage exceeding baseline allowance of 15 kWh per day",
+            "urpx:serviceTierNumber": 2,
+            "urpx:referencesMetricInput": { "@id": "urpx:cpau-mi-energy" },
+            "urpx:lowerBound": "15",
+            "urpx:lowerBoundOperator": { "@id": "urpx:greaterThanOperator" },
+            "urpx:hasCalculationMethod": {
+              "@type": "urpx:CalculationMethod",
+              "urpx:intervalDuration": "P1D"
+            }
+          }
+        ],
+        "urpx:hasLedger": [
+          {
+            "@type": "urpx:Ledger",
+            "@id": "urpx:cpau-ledger-commodity",
+            "urpx:name": "Commodity (Supply)",
+            "urpx:ledgerType": { "@id": "urpx:supplyLedger" },
+            "urpx:referencesMetricInput": { "@id": "urpx:cpau-mi-energy" },
+            "urpx:hasPriceDefinition": [
+              {
+                "@type": "urpx:PriceDefinition",
+                "@id": "urpx:cpau-pd-commodity-tier1",
+                "urpx:name": "Commodity Tier 1",
+                "urpx:chargeType": { "@id": "urpx:usageCharge" },
+                "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
+                "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+                "urpx:serviceTierNumber": 1
+              },
+              {
+                "@type": "urpx:PriceDefinition",
+                "@id": "urpx:cpau-pd-commodity-tier2",
+                "urpx:name": "Commodity Tier 2",
+                "urpx:chargeType": { "@id": "urpx:usageCharge" },
+                "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
+                "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+                "urpx:serviceTierNumber": 2
+              }
+            ]
+          },
+          {
+            "@type": "urpx:Ledger",
+            "@id": "urpx:cpau-ledger-distribution",
+            "urpx:name": "Distribution (Delivery)",
+            "urpx:ledgerType": { "@id": "urpx:deliveryLedger" },
+            "urpx:referencesMetricInput": { "@id": "urpx:cpau-mi-energy" },
+            "urpx:hasPriceDefinition": [
+              {
+                "@type": "urpx:PriceDefinition",
+                "@id": "urpx:cpau-pd-distribution-tier1",
+                "urpx:name": "Distribution Tier 1",
+                "urpx:chargeType": { "@id": "urpx:usageCharge" },
+                "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
+                "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+                "urpx:serviceTierNumber": 1
+              },
+              {
+                "@type": "urpx:PriceDefinition",
+                "@id": "urpx:cpau-pd-distribution-tier2",
+                "urpx:name": "Distribution Tier 2",
+                "urpx:chargeType": { "@id": "urpx:usageCharge" },
+                "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
+                "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+                "urpx:serviceTierNumber": 2
+              }
+            ]
+          },
+          {
+            "@type": "urpx:Ledger",
+            "@id": "urpx:cpau-ledger-public-benefits",
+            "urpx:name": "Public Benefits",
+            "urpx:ledgerType": { "@id": "urpx:bundledLedger" },
+            "urpx:referencesMetricInput": { "@id": "urpx:cpau-mi-energy" },
+            "urpx:hasPriceDefinition": {
+              "@type": "urpx:PriceDefinition",
+              "@id": "urpx:cpau-pd-public-benefits",
+              "urpx:name": "Public Benefits",
+              "urpx:chargeType": { "@id": "urpx:publicBenefits" },
+              "urpx:chargeCategory": { "@id": "urpx:regulatory" },
+              "urpx:billPortion": { "@id": "urpx:bundledPortion" }
+            }
+          },
+          {
+            "@type": "urpx:Ledger",
+            "@id": "urpx:cpau-ledger-customer-charge",
+            "urpx:name": "Customer Charge",
+            "urpx:ledgerType": { "@id": "urpx:bundledLedger" },
+            "urpx:referencesMetricInput": { "@id": "urpx:cpau-mi-meter-count" },
+            "urpx:hasPriceDefinition": {
+              "@type": "urpx:PriceDefinition",
+              "@id": "urpx:cpau-pd-customer-charge",
+              "urpx:name": "Customer Charge",
+              "urpx:chargeType": { "@id": "urpx:minimumCharge" },
+              "urpx:chargeCategory": { "@id": "urpx:serviceCharge" },
+              "urpx:billPortion": { "@id": "urpx:bundledPortion" },
+              "urpx:baseQuantity": "1",
+              "urpx:hasCalculationMethod": {
+                "@type": "urpx:CalculationMethod",
+                "urpx:intervalDuration": "P1M"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "urpx:hasPrices": {
+      "@type": "urpx:Prices",
+      "urpx:hasPrice": [
+        {
+          "@type": "urpx:Price",
+          "@id": "urpx:cpau-price-customer-charge",
+          "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-pd-customer-charge" },
+          "urpx:startDate": "2025-07-01",
+          "urpx:name": "Customer Charge",
+          "urpx:unitPrice": "5.15"
+        },
+        {
+          "@type": "urpx:Price",
+          "@id": "urpx:cpau-price-public-benefits",
+          "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-pd-public-benefits" },
+          "urpx:startDate": "2025-07-01",
+          "urpx:name": "Public Benefits",
+          "urpx:unitPrice": "0.00604"
+        }
+      ],
+      "urpx:hasPriceSet": [
+        {
+          "@type": "urpx:PriceSet",
+          "@id": "urpx:cpau-ps-commodity",
+          "urpx:name": "Commodity Charges",
+          "urpx:startDate": "2025-07-01",
+          "urpx:hasPrice": [
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-price-commodity-tier1",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-pd-commodity-tier1" },
+              "urpx:name": "Commodity Tier 1",
+              "urpx:unitPrice": "0.10373"
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-price-commodity-tier2",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-pd-commodity-tier2" },
+              "urpx:name": "Commodity Tier 2",
+              "urpx:unitPrice": "0.13372"
+            }
+          ]
+        },
+        {
+          "@type": "urpx:PriceSet",
+          "@id": "urpx:cpau-ps-distribution",
+          "urpx:name": "Distribution Charges",
+          "urpx:startDate": "2025-07-01",
+          "urpx:hasPrice": [
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-price-distribution-tier1",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-pd-distribution-tier1" },
+              "urpx:name": "Distribution Tier 1",
+              "urpx:unitPrice": "0.09593"
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-price-distribution-tier2",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-pd-distribution-tier2" },
+              "urpx:name": "Distribution Tier 2",
+              "urpx:unitPrice": "0.08968"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
