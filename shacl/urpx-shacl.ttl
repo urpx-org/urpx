@@ -21,7 +21,7 @@
     dcterms:date "2026-02-06"^^xsd:date ;
     dcterms:description "SHACL shapes for validating URPX data against the URPX Ontology." ;
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
-    dcterms:modified "2026-02-06"^^xsd:date ;
+    dcterms:modified "2026-03-03"^^xsd:date ;
     dcterms:title "URPX - SHACL" ;    
     owl:versionInfo "0.1.1" ;
     dcat:version "0.1.1" .
@@ -145,7 +145,7 @@ urpx-shacl:ApplicabilityGroupShape
         sh:minCount 0 ;
     ] ;
     sh:property [
-        sh:path urpx:appliesInZone ;
+        sh:path urpx:appliesInGeographicZone ;
         sh:node urpx-shacl:GeographicZoneValueShape ;
         sh:minCount 0 ;
     ] ;
@@ -188,18 +188,6 @@ urpx-shacl:ApplicabilityRuleShape
     a sh:NodeShape ;
     rdfs:label "ApplicabilityRule Shape"@en ;
     sh:targetClass urpx:ApplicabilityRule ;
-    sh:property [
-        sh:path urpx:conditionType ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:conditionValue ;
-        sh:nodeKind sh:Literal ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
     sh:property [
         sh:path urpx:hasCondition ;
         sh:class urpx:Condition ;
@@ -398,11 +386,6 @@ urpx-shacl:ConditionShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:hasMetricInput ;
-        sh:class urpx:MetricInput ;
-        sh:minCount 0 ;
-    ] ;
-    sh:property [
         sh:path urpx:hasMetricSpecification ;
         sh:class urpx:MetricSpecification ;
         sh:minCount 0 ;
@@ -460,11 +443,6 @@ urpx-shacl:CustomerProfileShape
         sh:minCount 0 ;
     ] ;
     sh:property [
-        sh:path urpx:geographicZone ;
-        sh:node urpx-shacl:GeographicZoneValueShape ;
-        sh:minCount 0 ;
-    ] ;
-    sh:property [
         sh:path urpx:hasCustomerKind ;
         sh:node urpx-shacl:CustomerKindValueShape ;
     ] ;
@@ -510,11 +488,6 @@ urpx-shacl:CustomerProfileShape
         sh:datatype xsd:integer ;
         sh:minCount 0 ;
         sh:minInclusive 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:profileId ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
     ] ;
     sh:property [
         sh:path urpx:specialNeedsStatus ;
@@ -707,18 +680,6 @@ urpx-shacl:EligibilityRuleShape
         ]
     ) ;
     sh:property [
-        sh:path urpx:conditionType ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:conditionValue ;
-        sh:nodeKind sh:Literal ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:description ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
@@ -821,13 +782,13 @@ urpx-shacl:LedgerShape
     sh:property [
         sh:path urpx:ledgerType ;
         sh:node urpx-shacl:LedgerTypeValueShape ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -870,16 +831,11 @@ urpx-shacl:LocationDataSetShape
         sh:minCount 0 ;
     ] ;
     sh:property [
-        sh:path urpx:timeZone ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:timezoneIdentifier ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+        sh:pattern "^[A-Za-z]+(/[A-Za-z0-9_+-]+)+$" ;
     ] .
 
 urpx-shacl:MetricInputShape
@@ -925,7 +881,7 @@ urpx-shacl:MetricInputShape
     sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -1199,6 +1155,22 @@ urpx-shacl:PriceShape
             sh:minCount 1 ;
             sh:maxCount 1 ;
         ]
+        [
+            sh:path urpx:basedOnPrice ;
+            sh:minCount 1 ;
+        ]
+        [
+            sh:path urpx:basePrice ;
+            sh:datatype xsd:decimal ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ]
+        [
+            sh:path urpx:currentPrice ;
+            sh:datatype xsd:decimal ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ]
     ) ;
     sh:property [
         sh:path urpx:adder ;
@@ -1324,12 +1296,6 @@ urpx-shacl:PriceShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:hasMetricInput ;
-        sh:class urpx:MetricInput ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:hasMetricSpecification ;
         sh:class urpx:MetricSpecification ;
         sh:minCount 0 ;
@@ -1374,7 +1340,7 @@ urpx-shacl:PriceShape
     sh:property [
         sh:path urpx:referencesPriceDefinition ;
         sh:class urpx:PriceDefinition ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -1514,7 +1480,7 @@ urpx-shacl:PriceDefinitionShape
     sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -1541,6 +1507,12 @@ urpx-shacl:PriceDefinitionShape
         sh:class urpx:MetricInput ;
         sh:minCount 0 ;
     ] ;    
+    sh:property [
+        sh:path urpx:referencesProfileAlternatives ;
+        sh:class urpx:ProfileAlternatives ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
     sh:property [
         sh:path urpx:referencesServiceTier ;
         sh:class urpx:ServiceTier ;
@@ -1705,12 +1677,6 @@ urpx-shacl:PriceSetShape
         sh:minCount 0 ;
     ] ;
     sh:property [
-        sh:path urpx:hasMetricInput ;
-        sh:class urpx:MetricInput ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:hasMetricSpecification ;
         sh:class urpx:MetricSpecification ;
         sh:minCount 0 ;
@@ -1719,7 +1685,7 @@ urpx-shacl:PriceSetShape
     sh:property [
         sh:path urpx:hasPrice ;
         sh:class urpx:Price ;
-        sh:minCount 2 ;
+        sh:minCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:hasPriceSummary ;
@@ -1828,7 +1794,7 @@ urpx-shacl:PriceSetAlternativeShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:forProfileAlternative ;
+        sh:path urpx:referencesProfileAlternative ;
         sh:class urpx:ProfileAlternative ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
@@ -1839,7 +1805,7 @@ urpx-shacl:PriceSetAlternativesShape
     rdfs:label "PriceSetAlternatives Shape"@en ;
     sh:targetClass urpx:PriceSetAlternatives ;
     sh:property [
-        sh:path urpx:forProfileAlternatives ;
+        sh:path urpx:referencesProfileAlternatives ;
         sh:class urpx:ProfileAlternatives ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
@@ -1930,12 +1896,6 @@ urpx-shacl:ProfileAlternativeShape
     rdfs:label "ProfileAlternative Shape"@en ;
     sh:targetClass urpx:ProfileAlternative ;
     sh:property [
-        sh:path urpx:alternativesType ;
-        sh:node urpx-shacl:AlternativesTypeValueShape ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:defaultSelectionLogic ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
@@ -1945,6 +1905,12 @@ urpx-shacl:ProfileAlternativeShape
         sh:path urpx:hasDimensionValue ;
         sh:class urpx:DimensionValuePair ;
         sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
     ] .
 
 urpx-shacl:ProfileAlternativesShape
@@ -1961,6 +1927,12 @@ urpx-shacl:ProfileAlternativesShape
         sh:path urpx:hasProfileAlternative ;
         sh:class urpx:ProfileAlternative ;
         sh:minCount 2 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
     ] .
     
 urpx-shacl:ProgramEnrollmentShape
@@ -2072,6 +2044,11 @@ urpx-shacl:RatePlanShape
         sh:minCount 0 ;
     ] ;
     sh:property [
+        sh:path urpx:hasLocationDataSet ;
+        sh:class urpx:LocationDataSet ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
         sh:path urpx:hasRatePlanVersion ;
         sh:class urpx:RatePlanVersion ;
         sh:minCount 1 ;
@@ -2105,6 +2082,13 @@ urpx-shacl:RatePlanShape
         sh:datatype xsd:string ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:timezoneIdentifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:pattern "^[A-Za-z]+(/[A-Za-z0-9_+-]+)+$" ;
     ] ;
     sh:property [
         sh:path urpx:url ;
@@ -2159,6 +2143,11 @@ urpx-shacl:RatePlanModifierShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:hasLocationDataSet ;
+        sh:class urpx:LocationDataSet ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
         sh:path urpx:hasRatePlanModifierVersion ;
         sh:class urpx:RatePlanModifierVersion ;
         sh:minCount 1 ;
@@ -2192,6 +2181,13 @@ urpx-shacl:RatePlanModifierShape
         sh:maxLength 3 ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:timezoneIdentifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:pattern "^[A-Za-z]+(/[A-Za-z0-9_+-]+)+$" ;
     ] ;
     sh:property [
         sh:path urpx:url ;
@@ -2299,7 +2295,7 @@ urpx-shacl:RatePlanModifierVersionShape
     sh:property [
         sh:path urpx:hasPrices ;
         sh:class urpx:Prices ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -2658,6 +2654,11 @@ urpx-shacl:ServicePointProfileShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:geographicZone ;
+        sh:node urpx-shacl:GeographicZoneValueShape ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
         sh:path urpx:hasDistributedEnergyResource ;
         sh:class urpx:DistributedEnergyResource ;
         sh:minCount 0 ;
@@ -2751,6 +2752,12 @@ urpx-shacl:ServiceTierShape
         sh:minCount 0 ;
     ] ;
     sh:property [
+        sh:path urpx:referencesProfileAlternative ;
+        sh:class urpx:ProfileAlternative ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:serviceTierNumber ;
         sh:datatype xsd:integer ;
         sh:minCount 1 ;
@@ -2776,7 +2783,7 @@ urpx-shacl:TariffAddendumDocumentShape
     sh:property [
         sh:path urpx:hasPrices ;
         sh:class urpx:Prices ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] .
 
@@ -2891,6 +2898,12 @@ urpx-shacl:TariffStatementDocumentShape
     sh:property [
         sh:path urpx:hasPrices ;
         sh:class urpx:Prices ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:tariffStatementType ;
+        sh:node urpx-shacl:TariffStatementTypeValueShape ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] .
@@ -2902,7 +2915,7 @@ urpx-shacl:TariffSupplementDocumentShape
     sh:property [
         sh:path urpx:hasPrices ;
         sh:class urpx:Prices ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] .
 
@@ -2990,6 +3003,12 @@ urpx-shacl:TOUScheduleShape
         sh:path urpx:referencesMetricInput ;
         sh:class urpx:MetricInput ;
         sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesProfileAlternative ;
+        sh:class urpx:ProfileAlternative ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
     ] .
 
 urpx-shacl:TOUTierShape
@@ -3135,10 +3154,11 @@ urpx-shacl:URPXDocumentShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:timeZone ;
+        sh:path urpx:timezoneIdentifier ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+        sh:pattern "^[A-Za-z]+(/[A-Za-z0-9_+-]+)+$" ;
     ] ;
     sh:property [
         sh:path urpx:url ;
@@ -3181,13 +3201,6 @@ urpx-shacl:AggregationMethodValueShape
     sh:targetClass urpx:AggregationMethodValue ;
     sh:nodeKind sh:IRI ;
     sh:in ( urpx:sum urpx:average urpx:maximum urpx:minimum urpx:median ) .
-
-urpx-shacl:AlternativesTypeValueShape
-    a sh:NodeShape ;
-    rdfs:label "AlternativesTypeValue Shape"@en ;
-    sh:targetClass urpx:AlternativesTypeValue ;
-    sh:nodeKind sh:IRI ;
-    sh:in ( urpx:billingCycleAlternatives urpx:customerProfileAlternatives urpx:geographicAlternatives urpx:serviceClassAlternatives urpx:temporalAlternatives ) .
 
 urpx-shacl:AnnualIncomeRangeValueShape
     a sh:NodeShape ;
@@ -3539,10 +3552,10 @@ urpx-shacl:SpecialNeedsStatusValueShape
     sh:nodeKind sh:IRI ;
     sh:in ( urpx:disabilityAccommodation urpx:lifeSupport urpx:medicalEquipment urpx:noSpecialNeeds urpx:vulnerableCustomer ) .
 
-urpx-shacl:StatementTypeValueShape
+urpx-shacl:TariffStatementTypeValueShape
     a sh:NodeShape ;
-    rdfs:label "StatementTypeValue Shape"@en ;
-    sh:targetClass urpx:StatementTypeValue ;
+    rdfs:label "TariffStatementTypeValue Shape"@en ;
+    sh:targetClass urpx:TariffStatementTypeValue ;
     sh:nodeKind sh:IRI ;
     sh:in ( urpx:distributionStatement urpx:fuelAdjustmentStatement urpx:purchasedPowerStatement urpx:rateStatement urpx:statementTypeOther urpx:transmissionStatement ) .
 
@@ -3565,7 +3578,7 @@ urpx-shacl:UnitOfMeasureValueShape
     rdfs:label "UnitOfMeasureValue Shape"@en ;
     sh:targetClass urpx:UnitOfMeasureValue ;
     sh:nodeKind sh:IRI ;
-    sh:in ( urpx:hertz urpx:Gbps urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:bit urpx:btu urpx:byte urpx:ccf urpx:cord urpx:count urpx:cubicFoot urpx:cubicMeter urpx:day urpx:decatherm urpx:gallon urpx:hectare urpx:hour urpx:item urpx:kVA urpx:kVAh urpx:kVAr urpx:kVArh urpx:kW urpx:kWh urpx:kilogallon urpx:kilogram urpx:kilometer urpx:liter urpx:Mbps urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:month urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:VA urpx:VAh urpx:VAr urpx:VArh urpx:year ) .
+    sh:in ( urpx:hertz urpx:Gbps urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:bit urpx:btu urpx:byte urpx:ccf urpx:cord urpx:count urpx:cubicFoot urpx:cubicMeter urpx:decatherm urpx:gallon urpx:hectare urpx:item urpx:kVA urpx:kVAh urpx:kVAr urpx:kVArh urpx:kW urpx:kWh urpx:kilogallon urpx:kilogram urpx:kilometer urpx:liter urpx:Mbps urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:VA urpx:VAh urpx:VAr urpx:VArh urpx:year ) .
 
 urpx-shacl:UpdateFrequencyValueShape
     a sh:NodeShape ;

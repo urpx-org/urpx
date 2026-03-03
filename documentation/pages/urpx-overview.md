@@ -1,5 +1,9 @@
 # URPX Overview
 
+**Version**: 0.1.1  
+**Last Updated**: 2026-03-02  
+**Status**: Active
+
 ## Understanding the Utility Rate Plan Exchange Standard
 
 [← Back to Index](../index.md)
@@ -14,7 +18,7 @@ URPX provides a solution through a comprehensive, standards-based approach to ra
 
 Utility rate plans are surprisingly complex. A single rate plan might include:
 
-- **Multiple charge types** - Energy charges, demand charges, customer charges, and various fees
+- **Multiple price types** - Energy prices, demand prices, customer prices, and various fees
 - **Time-varying prices** - Different prices for peak vs. off-peak hours
 - **Seasonal variations** - Summer and winter pricing schedules
 - **Tiered structures** - Prices that change based on usage levels
@@ -44,7 +48,7 @@ URPX is built on a core ontology ([`urpx-ontology.ttl`](../../ontology/urpx-onto
 **Charge Classification:**
 - Charge types (minimumCharge, usageCharge, demandDirect, etc.)
 - Charge categories (serviceCharge, auxiliaryCharge, infrastructure, taxes)
-- Bill portions (delivery, supply, bundled)
+- Bill portions (deliveryPortion, supplyPortion, bundledPortion)
 
 **Geography:**
 - Service territories
@@ -110,7 +114,7 @@ Rate plan modifiers also contain complete pricing information including prices, 
 
 #### Prices
 
-Individual pricing components with specific charge types, categories, and bill portions. Every price must have:
+Individual pricing components with specific charge types, charge categories, and bill portions. Every price may have:
 - chargeType (implementation: minimumCharge, usageCharge, etc.)
 - chargeCategory (purpose: serviceCharge, auxiliaryCharge, etc.)
 - hasMetricSpecification with billPortion (delivery, supply, bundled)
@@ -157,7 +161,7 @@ Rate plans evolve over time. URPX captures this through versioning:
 
 ![Temporal Versioning](../diagrams/urpx-temporal-versioning-summary.svg)
 
-- **RatePlan** - The permanent identifier for a rate plan
+- **RatePlan** - The permanent structure for a rate plan
 - **RatePlanVersion** - A specific version effective during a time period
 - **Version Transitions** - Tracked with reasons and regulatory approvals
 
@@ -165,7 +169,6 @@ Rate plans evolve over time. URPX captures this through versioning:
 
 URPX supports the full spectrum of utility charges:
 
-![Charge Types Diagram creation in progress]
 **Energy Prices**
 - Usage-based pricing ($/kWh)
 - Tiered structures with thresholds
@@ -192,10 +195,10 @@ A major enhancement in URPX is support for regulatory statement prices:
 
 ```turtle
 # Statement document from PSC filing
-ex:PSC-Filing-2025-001 a urpx:StatementDocument ;
-    urpx:statementType "psc_filing" ;
+ex:PSC-Filing-2025-001 a urpx:TariffStatementDocument ;
+    urpx:tariffStatementType "psc_filing" ;
     urpx:filingNumber "2025-EL-0123" ;
-    urpx:filingDate "2025-01-15"^^xsd:date ;
+    urpx:effectiveDate "2025-01-15"^^xsd:date ;
     urpx:contains ex:TransmissionCharge-001 .
 
 # Individual statement price with flexible pricing
@@ -204,7 +207,6 @@ ex:TransmissionCharge-001 a urpx:Price ;
     urpx:chargeType "transmission" ;
     urpx:unitPrice 0.0234 ;  # $/kWh
     urpx:commodity "electricity" ;
-    urpx:unit "kWh" ;
     urpx:hasApplicability ex:StateWideApplicability .
 ```
 
@@ -215,7 +217,6 @@ Prices apply within specific geographic boundaries. URPX provides hierarchical s
 ```turtle
 # Applicability group with geographic hierarchy
 ex:NorthernRegionApplicability a urpx:ApplicabilityGroup ;
-    urpx:applicabilityType "geographic" ;
     urpx:appliesInState ex:California ;
     urpx:appliesInCounty ex:AlamedaCounty, ex:ContraCostaCounty ;
     urpx:appliesInServiceTerritory ex:PGE-NorthernTerritory .
@@ -223,134 +224,32 @@ ex:NorthernRegionApplicability a urpx:ApplicabilityGroup ;
 
 ### Customer Eligibility
 
-Complex eligibility rules determine who can enroll in specific rate plans:
-```mermaid
-%% URPX Eligibility Rules
-%% Updated: January 26, 2026
-%% Paul Tol 2.7 Light color scheme
-
-%%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
-
-graph TB
-    
-    RPlan[RatePlanVersion]
-    EligRule[EligibilityRule]
-    
-    %% Profile Types
-    CustProf[CustomerProfile-based<br/>Rules]
-    UsageProf[UsagePointProfile-based<br/>Rules<br/>ESPI Green Button]
-    
-    %% Customer Profile Attributes
-    Prior[Prior Rate Plan]
-    Program[Program Enrollment]
-    CustClass[Customer Classification<br/>NAESB]
-    Geographic[Geographic Territory<br/>ISO 3166]
-    
-    %% Usage Profile Attributes
-    MinUsage[Minimum Usage]
-    MaxUsage[Maximum Usage]
-    PeakDemand[Peak Demand]
-    
-    %% Standards
-    CDS[CDS Integration<br/>LF Energy]
-    
-    %% Connections
-    RPlan -->|has| EligRule
-    EligRule -->|customerProfile| CustProf
-    EligRule -->|usagePoint| UsageProf
-    
-    CustProf --> Prior
-    CustProf --> Program
-    CustProf --> CustClass
-    CustProf --> Geographic
-    
-    UsageProf --> MinUsage
-    UsageProf --> MaxUsage
-    UsageProf --> PeakDemand
-    
-    CustProf -.-> CDS
-    UsageProf -.-> CDS
-    
-    classDef titleClass fill:#DDDDDD,stroke:#BBBBBB,stroke-width:2px,color:#fff
-    classDef lightBlue fill:#77AADD,stroke:#5588BB,stroke-width:2px,color:#fff
-    classDef orange fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#fff
-    classDef mint fill:#44BB99,stroke:#228877,stroke-width:2px,color:#fff
-    classDef lightYellow fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#fff
-    classDef pear fill:#BBCC33,stroke:#99AA11,stroke-width:2px,color:#fff
-    classDef paleGrey fill:#DDDDDD,stroke:#BBBBBB,stroke-width:2px,color:#fff
-    
-    class Title titleClass
-    class RPlan lightBlue
-    class EligRule orange
-    class CustProf,UsageProf mint
-    class Prior,Program,CustClass,Geographic lightYellow
-    class MinUsage,MaxUsage,PeakDemand pear
-    class CDS paleGrey
-```
-
 **Prior Rate Plan Requirements**
 ```turtle
 ex:EVRateEligibility a urpx:PriorRatePlan ;
     urpx:name "Standard Residential Rate Plan" ;
-    urpx:minimumTenure "P12M"^^xsd:duration ;  # 12 months
-    urpx:isActive true .
+    urpx:minimumTenure "P12M"^^xsd:duration .  # 12 months 
 ```
 
 **Program Enrollment Requirements**
 ```turtle
 ex:DemandResponseProgram a urpx:ProgramEnrollment ;
     urpx:programName "SmartAC Program" ;
-    urpx:programType "demand_response" ;
-    urpx:enrollmentStatus "required" ;
+    urpx:programType "urpx:demandResponseProgram" ;
+    urpx:enrollmentStatus "urpx:activeStatus" ;
 ```
-
-### Standards Alignment
-
-URPX aligns with industry standards for maximum interoperability:
-
-#### CIM (Common Information Model)
-- Measurement kinds and units
-- Reading types and qualities
-- Geographic region concepts
-
-#### Green Button
-- Customer usage data formats
-- Interval reading structures
-- Authorization frameworks
-
-#### OpenEI
-- Utility identifiers
-- Rate structure patterns
-- Geographic coverage
-
-#### Regulatory Standards
-- EIA utility codes
-- FERC account classifications
-- State PSC filing formats
-
-#### LF Energy Standards
-- Customer Data Specification (CDS) Customer Data and Power Systems Data Specifications
-- OpenADR 2.0b and OpenADR 3.0
-- OpenSynth
 
 ### Data Quality & Validation
 
-URPX includes comprehensive validation rules organized into modular SHACL files:
+URPX includes SHACL (Shapes Constraint Language) validation shapes in a unified file ([`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl), pre-draft v0.1.1):
 
-**Core Validation** (`urpx-shacl.ttl`)
-- Rate plan structure integrity
-- Price consistency rules
-- Temporal constraint validation
+**Core Validation** — Rate plan structure integrity, price consistency rules, temporal constraint validation
 
-**Organization Validation** (`urpx-organization-shacl.ttl`)
-- Identity tracking consistency
-- Corporate relationship rules
-- Regulatory jurisdiction validation
+**Organization Validation** — Identity tracking consistency, corporate relationship rules, regulatory jurisdiction validation
 
-**Geography Validation** (`urpx-geography-shacl.ttl`)
-- Territory coverage rules
-- Hierarchical boundary consistency
-- Coordinate range validation
+**Geography Validation** — Territory coverage rules, hierarchical boundary consistency, coordinate range validation
+
+Because SHACL shapes are modular and composable, additional shape definitions can be authored to enforce jurisdiction-specific constraints — such as required fields, value ranges, or expected relationships between classes that vary by regulatory context.
 
 ### Benefits of URPX
 
@@ -402,8 +301,7 @@ URPX includes comprehensive validation rules organized into modular SHACL files:
 Ready to work with URPX data? Here are your next steps:
 
 1. **[Read the Tutorial](urpx-tutorial.md)** - Learn by building a simple rate plan
-2. **[Explore Examples](urpx-examples.md)** - See real-world implementations
-3. **[Review the Data Dictionary](urpx-data-dictionary.md)** - Understand all classes and properties
+2. **[Review the Data Dictionary](urpx-data-dictionary.md)** - Understand all classes and properties
 
 ### Summary
 

@@ -1,5 +1,8 @@
 # Semantic Web Guide for URPX
 
+**Version:** 0.1.1  
+**Last Updated:** 2026-03-02
+
 **A beginner-friendly introduction to semantic web technologies for the URPX working group**
 
 [← Back to Index](../index.md)
@@ -67,7 +70,7 @@ The semantic web represents data as **interconnected graphs** of meaning, not ju
 **Traditional Approach (Tables/JSON):**
 ```json
 {
-  "charge_id": "CHG-001",
+  "price_id": "PRC-001",
   "type": "energy",
   "price": 0.12,
   "unit": "kWh"
@@ -81,9 +84,10 @@ The semantic web represents data as **interconnected graphs** of meaning, not ju
     "urpx": "https://schema.urpx.org/",
     "ex": "https://example.com/"
   },
-  "@id": "ex:CHG-001",
-  "@type": "urpx:Charge",
-  "urpx:chargeType": {"@id": "urpx:energyCharge"},
+  "@id": "ex:PRC-001",
+  "@type": "urpx:Price",
+  "urpx:chargeType": {"@id": "urpx:usageCharge"},
+  "urpx:chargeCategory": {"@id": "urpx:auxiliaryCharge"},
   "urpx:unitPrice": 0.12,
   "urpx:hasMetricSpecification": {
     "urpx:commodity": {"@id": "urpx:electricity"},
@@ -94,7 +98,7 @@ The semantic web represents data as **interconnected graphs** of meaning, not ju
 ```
 
 Notice how the semantic version explicitly **links** the charge to:
-- Its type via IRI reference (`urpx:energyCharge`)
+- Its type via IRI reference (`urpx:usageCharge`)
 - Its measurement specification with commodity, kind, and unit
 - All values are dereferenceable IRIs that machines can follow
 
@@ -112,77 +116,25 @@ Every statement has three parts:
 
 **Example 1: Simple Property**
 ```
-:CHG-001 → urpx:unitPrice → 0.12
-(This charge) (has unit price) (0.12)
+:PRC-001 → urpx:unitPrice → 0.12
+(This price) (has unit price) (0.12)
 ```
 
 **Example 2: Relationship**
 ```
-:CHG-001 → urpx:partOfRatePlan → :RES-TOU-2025
+:PRC-001 → urpx:partOfRatePlan → :RES-TOU-2025
 (This charge) (is part of rate plan) (RES-TOU-2025)
 ```
 
 **Example 3: Type Declaration**
 ```
-:CHG-001 → rdf:type → urpx:Charge
-(CHG-001) (is a) (Charge)
+:PRC-001 → rdf:type → urpx:Price
+(PRC-001) (is a) (Price)
 ```
 
 ### Graph Visualization
 
-Here's how a simple rate plan forms an interconnected graph:
-
-```
-[Rate Plan: RES-TOU-2025]
-        |
-        |-- hasRatePlanVersion --> [Version: 2025-Q1]
-                                        |
-                                        |-- hasEligibilityRule --> [EligibilityRule]
-                                        |                               |
-                                        |                               |-- hasCustomerProfile --> [CustomerProfile]
-                                        |                               |                               |-- hasCustomerKind --> urpx:residentialKind
-                                        |                               |                               |-- entityType --> urpx:individualEntity
-                                        |                               |
-                                        |                               |-- hasServicePointProfile --> [ServicePointProfile]
-                                        |                                                                   |-- voltageLevel --> urpx:secondaryVoltage
-                                        |                                                                   |-- connectionKind --> urpx:overheadConnection
-                                        |
-                                        |-- hasPlanElements --> [PlanElements]
-                                        |                            |
-                                        |                            |-- hasSeasons --> [Season: Summer]
-                                        |                            |                       |-- startMonth --> "06"
-                                        |                            |                       |-- endMonth --> "09"
-                                        |                            |
-                                        |                            |-- hasMetricInputRuleSet --> [MetricInputRuleSet]
-                                        |                            |                                  |
-                                        |                            |                                  |-- hasMetricSpecification --> [MetricSpec]
-                                        |                            |                                  |-- hasTOUSchedule --> [TOUSchedule]
-                                        |                            |                                  |-- hasServiceTier --> [ServiceTier]
-                                        |                            |
-                                        |                            |-- hasProfileAlternatives --> [ProfileAlternatives]
-                                        |                                                                |
-                                        |                                                                |-- hasAlternativeDimensions --> [AlternativeDimensions]
-                                        |                                                                             |
-                                        |                                                                             |-- hasAlternativeDimensionSet --> [ex:zone-h-secondary]
-                                        |                                                                                          |
-                                        |                                                                                          |-- hasDimensionValue:
-                                        |                                                                                          |     forDimension: ex:voltage-dimension
-                                        |                                                                                          |     valueIRI -----> urpx:secondaryVoltage
-                                        |                                                                                                  (points to ServicePointProfile value)
-                                        |
-                                        |-- hasCharges --> [Charges Container]
-                                                               |
-                                                               |-- hasChargeSet --> [ChargeSet: Base]
-                                                               |                        |-- hasCharge --> [Charge: Energy]
-                                                               |                        |-- hasCharge --> [Charge: Demand]
-                                                               |
-                                                               |-- hasChargeSetAlternatives --> [Alternatives Container]
-                                                                                                    |
-                                                                                                    |-- hasChargeSetAlternative --> [chargeSetAlternative]
-                                                                                                                                        |
-                                                                                                                                        |-- forAlternative -----> [ex:zone-h-secondary]
-                                                                                                                                                    (IRI link to PlanElements definition)
-```
+A simple rate plan forms an interconnected graph.
 
 This graph structure enables:
 - **Navigation**: Follow links to find related data
@@ -236,16 +188,17 @@ An ontology is a **formal specification** of a domain's concepts and relationshi
 
 **Example OWL Definition:**
 ```turtle
-urpx:Charge a owl:Class ;
-    rdfs:label "Charge" ;
-    skos:definition "An individual pricing component within a rate plan" ;
-    rdfs:subClassOf urpx:PricingComponent .
+urpx:Price a owl:Class ;
+    rdfs:label "Price" ;
+    skos:definition "An individual pricing component within a rate plan".
 
 urpx:chargeType a owl:ObjectProperty ;
-    rdfs:label "charge type" ;
-    rdfs:domain urpx:Charge ;
-    rdfs:range urpx:ChargeTypeValue ;
-    skos:definition "The specific type of charge (energy, demand, minimum, etc.)" .
+    rdfs:label "Charge Type"@en ;
+    dcterms:description "Identifies the specific type of charge implementation. Multiple chargeType values can be assigned to a single charge."@en ;
+    rdfs:comment "Specific implementation type of a charge"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet ) ] ;
+    rdfs:range urpx:ChargeTypeValue .
 ```
 
 ### JSON-LD
@@ -261,10 +214,11 @@ JSON-LD is **JSON with a semantic layer**. Developers work with familiar JSON sy
     "urpx": "https://schema.urpx.org/",
     "ex": "https://example.com/"
   },
-  "@id": "ex:CHG-001",
-  "@type": "urpx:Charge",
-  "urpx:chargeName": "Summer Energy Charge",
-  "urpx:chargeType": {"@id": "urpx:energyCharge"},
+  "@id": "ex:PRC-001",
+  "@type": "urpx:Price",
+  "urpx:name": "Summer Energy Price",
+  "urpx:chargeType": {"@id": "urpx:usageCharge"},
+  "urpx:chargeCategory": {"@id": "urpx:auxiliaryCharge"},
   "urpx:unitPrice": 0.12,
   "urpx:currency": "USD",
   "urpx:hasMetricSpecification": {
@@ -275,9 +229,9 @@ JSON-LD is **JSON with a semantic layer**. Developers work with familiar JSON sy
 }
 ```
 
-**Charge Set Alternatives with IRI Linking:**
+**Price Set Alternatives with IRI Linking:**
 
-This example demonstrates how charge alternatives link to dimension sets via IRIs:
+This example demonstrates how price alternatives link to dimension sets via IRIs:
 
 ```json
 {
@@ -288,8 +242,7 @@ This example demonstrates how charge alternatives link to dimension sets via IRI
   "@graph": [
     {
       "@id": "ex:zone-h-secondary",
-      "@type": "urpx:AlternativeDimensionSet",
-      "urpx:alternativesType": {"@id": "urpx:geographicAlternatives"},
+      "@type": "urpx:ProfileAlternative",
       "urpx:hasDimensionValue": [
         {
           "urpx:forDimension": {"@id": "ex:nyiso-zone-dimension"},
@@ -303,10 +256,10 @@ This example demonstrates how charge alternatives link to dimension sets via IRI
     },
     {
       "@id": "ex:charges-zone-h-secondary",
-      "@type": "urpx:chargeSetAlternative",
-      "urpx:forAlternative": {"@id": "ex:zone-h-secondary"},
-      "urpx:alternativeLabel": "Zone H - Secondary Voltage",
-      "urpx:hasCharge": [
+      "@type": "urpx:PriceSetAlternative",
+      "urpx:referencesProfileAlternative": {"@id": "ex:zone-h-secondary"},
+      "urpx:name": "Zone H - Secondary Voltage",
+      "urpx:hasPrice": [
         {"@id": "ex:energy-charge-zone-h-secondary"},
         {"@id": "ex:demand-charge-zone-h-secondary"}
       ]
@@ -315,7 +268,7 @@ This example demonstrates how charge alternatives link to dimension sets via IRI
 }
 ```
 
-The `forAlternative` property uses an **IRI reference** (`ex:zone-h-secondary`) to link the charge set to its dimension set. This enables:
+The `referencesProfileAlternative` property uses an **IRI reference** (`ex:zone-h-secondary`) to link the price set alternative to its profile alternative. This enables:
 - Dereferenceable links for metadata lookup
 - Clean separation between dimension definitions and charges
 - Reusable dimension sets across multiple rate plans
@@ -340,20 +293,12 @@ SHACL defines **shapes** that data must conform to. Think of it as "JSON Schema 
 
 **Example SHACL Shape:**
 ```turtle
-urpx-shacl:ChargeShape a sh:NodeShape ;
-    sh:targetClass urpx:Charge ;
+urpx-shacl:PriceShape a sh:NodeShape ;
+    sh:targetClass urpx:Price ;
     sh:property [
         sh:path urpx:chargeType ;
-        sh:class urpx:ChargeTypeValue ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:message "Every charge must have exactly one charge type"
-    ] ;
-    sh:property [
-        sh:path urpx:unitPrice ;
-        sh:datatype xsd:decimal ;
-        sh:minInclusive 0 ;
-        sh:message "Unit price must be a non-negative decimal"
+        sh:node urpx-shacl:ChargeTypeValueShape ;
+        sh:minCount 0 ;
     ] .
 ```
 
@@ -388,26 +333,10 @@ PREFIX urpx: <https://schema.urpx.org/>
 SELECT ?charge ?chargeName ?unitPrice
 WHERE {
   ?ratePlan urpx:ratePlanIdentifier "RES-TOU-2025" ;
-            urpx:hasRatePlanVersion/urpx:hasCharges/urpx:hasChargeSet/urpx:hasCharge ?charge .
-  ?charge urpx:chargeName ?chargeName ;
-          urpx:unitPrice ?unitPrice .
+            urpx:hasRatePlanVersion/urpx:hasPrices/urpx:hasPriceSet/urpx:hasPrice ?price .
+  ?price    urpx:name ?name ;
+            urpx:unitPrice ?unitPrice .
 }
-```
-
-**Example 2: Compare Rate Plans Across Utilities**
-```sparql
-PREFIX urpx: <https://schema.urpx.org/>
-
-SELECT ?utility ?ratePlan ?avgPrice
-WHERE {
-  ?utility urpx:publishes ?ratePlan .
-  ?ratePlan urpx:hasRatePlanVersion/urpx:hasCharges/urpx:hasChargeSet/urpx:hasCharge ?charge .
-  ?charge urpx:chargeType urpx:energyCharge ;
-          urpx:unitPrice ?price .
-}
-GROUP BY ?utility ?ratePlan
-HAVING (AVG(?price) AS ?avgPrice)
-ORDER BY ?avgPrice
 ```
 
 **SPARQL Use Cases:**

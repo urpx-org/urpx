@@ -144,6 +144,6 @@ When generating or validating URPX data:
 
 ---
 
-*For implementation examples, see [URPX Examples](urpx-examples.md). For technical details, see [Data Dictionary](urpx-data-dictionary.md).*
+*For technical details, see [Data Dictionary](urpx-data-dictionary.md).*
 
 [← Back to Index](../index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)

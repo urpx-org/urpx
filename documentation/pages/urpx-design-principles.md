@@ -1,7 +1,7 @@
 # URPX Design Principles
 
 **Version**: 0.1.1  
-**Last Updated**: 2025-12-17  
+**Last Updated**: 2026-03-02  
 **Status**: Active
 
 ---
@@ -102,7 +102,7 @@ urpx:PhaseCodeKindValue owl:oneOf (
 
 **Examples**:
 - `urpx:hasCalculationMethod`
-- `urpx:priceId`
+- `urpx:unitPrice`
 - `urpx:effectiveDate`
 
 ### 2.3 Enumeration Classes
@@ -158,7 +158,6 @@ urpx:BillingModel a owl:Class ;
 - Focus on essential information
 - Avoid verbose explanations that belong in separate documentation
 - Use clear, technical language
-- Reference standards where applicable (e.g., "Aligned with CIM Price class")
 
 **Anti-pattern** (too verbose):
 ```turtle
@@ -169,17 +168,6 @@ skos:note "This class is really important because it does many things. First, it
 ```turtle
 skos:note "Defines billing calculation rules and proration patterns. Supports ledger-based organization for supply/delivery separation." .
 ```
-
-### 3.3 Standards Alignment
-
-**Rule**: When aligning with external standards, cite them in `skos:note`.
-
-**Pattern**: "Aligned with [Standard Name] [specific element]"
-
-**Examples**:
-- "Aligned with CIM Price class"
-- "Follows Green Button ReadingType patterns"
-- "Based on IEC 61968-9 metering properties"
 
 ---
 
@@ -210,7 +198,6 @@ urpx:RateGroup a owl:Class ;
 **Guidelines**:
 - Use `owl:unionOf` for multiple possible domains/ranges
 - Document cardinality constraints in `skos:note`
-- Use `owl:cardinality` or SHACL for formal constraints
 
 **Example**:
 ```turtle
@@ -238,39 +225,13 @@ urpx:EnumerationNameValue a owl:Class ;
 
 ---
 
-## 5. Deprecation and Migration
 
-### 5.1 Deprecation Pattern
-
-**Rule**: When deprecating classes or properties, use `owl:deprecated` and provide migration guidance.
-
-**Pattern**:
-```turtle
-urpx:OldClass a owl:Class ;
-    rdfs:label "Old Class"@en ;
-    rdfs:comment "DEPRECATED: Use NewClass instead" ;
-    owl:deprecated true ;
-    skos:note "Deprecated in v0.1.1. Replaced by urpx:NewClass. Migration: [specific guidance]. Will be removed in v0.1.2." .
-```
-
-### 5.2 Breaking Changes
-
-**Rule**: Document all breaking changes in:
-1. The ontology file (in affected class/property definitions)
-2. The epic/task documentation
-3. The changelog
-
-**Required Information**:
-- What changed
-- Why it changed
-- Migration path
-- Timeline for removal (if applicable)
 
 ---
 
-## 6. Version Control
+## 5. Version Control
 
-### 6.1 Ontology Versioning
+### 5.1 Ontology Versioning
 
 **Rule**: Update `owl:versionInfo` and `dcterms:modified` with each release.
 
@@ -282,7 +243,7 @@ urpx: a owl:Ontology ;
     ...
 ```
 
-### 6.2 Backup Before Major Changes
+### 5.2 Backup Before Major Changes
 
 **Rule**: Create timestamped backups before major refactoring.
 
@@ -292,49 +253,15 @@ urpx: a owl:Ontology ;
 
 ---
 
-## 7. AI-Assisted Development
+## 6. Quality Assurance
 
-### 7.1 Context Efficiency
-
-**Principle**: Organize ontology to minimize AI context window usage.
-
-**Guidelines**:
-- Alphabetical organization enables quick location
-- Concise documentation reduces token count
-- Consistent patterns improve AI comprehension
-- Clear structure enables efficient file navigation
-
-### 7.2 Instruction Clarity
-
-**Principle**: Provide clear, unambiguous instructions to AI assistants.
-
-**Guidelines**:
-- Reference this document when requesting ontology changes
-- Specify exact line numbers or class names
-- Request validation after each change
-- Use systematic approaches (file-by-file, not all-at-once)
-
-**Example Instruction**:
-```
-Add the CalculationMethod class to urpx-ontology.ttl following URPX design principles:
-1. Place alphabetically after BillingModel
-2. Include rdfs:label, rdfs:comment, and skos:note
-3. Keep skos:note concise and W3C-compliant
-4. Validate Turtle syntax after adding
-```
-
----
-
-## 8. Quality Assurance
-
-### 8.1 Validation Requirements
+### 6.1 Validation Requirements
 
 **Rule**: All ontology changes MUST pass:
 1. Turtle syntax validation (rapper, rdflib)
 2. OWL consistency checking
-3. SHACL constraint validation (where applicable)
 
-### 8.2 Review Checklist
+### 6.2 Review Checklist
 
 Before committing ontology changes, verify:
 - [ ] Alphabetical organization maintained
@@ -342,16 +269,14 @@ Before committing ontology changes, verify:
 - [ ] All properties have domain and range
 - [ ] Naming conventions followed
 - [ ] Documentation is concise and W3C-compliant
-- [ ] Standards alignments cited
-- [ ] Breaking changes documented
 - [ ] Turtle syntax validates
 - [ ] No duplicate definitions
 
 ---
 
-## 9. Collaboration Guidelines
+## 7. Collaboration Guidelines
 
-### 9.1 Pull Request Standards
+### 7.1 Pull Request Standards
 
 **Rule**: PRs modifying ontology files MUST include:
 1. Description of changes
@@ -360,18 +285,17 @@ Before committing ontology changes, verify:
 4. Validation results
 5. Updated documentation (if applicable)
 
-### 9.2 Review Focus Areas
+### 7.2 Review Focus Areas
 
 Reviewers should verify:
 - Adherence to design principles
 - Semantic correctness
 - Documentation quality
-- Standards alignment
 - Migration guidance (for breaking changes)
 
 ---
 
-## 10. References
+## 8. References
 
 ### Related Documents
 - [URPX Syntax Guidelines](./urpx-syntax-guidelines.md) - Turtle syntax and formatting
@@ -382,14 +306,6 @@ Reviewers should verify:
 - [OWL 2 Web Ontology Language](https://www.w3.org/TR/owl2-overview/)
 - [RDF 1.1 Turtle](https://www.w3.org/TR/turtle/)
 - [SKOS Simple Knowledge Organization System](https://www.w3.org/TR/skos-reference/)
-
----
-
-## Changelog
-
-| Date | Version | Changes |
-|------|---------|---------|
-| 2025-12-17 | 0.1.0 | Initial design principles document created |
 
 ---
 

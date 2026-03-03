@@ -1,7 +1,7 @@
 %%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#77AADD', 'primaryTextColor':'#000', 'primaryBorderColor':'#000', 'lineColor':'#000', 'secondaryColor':'#EEDD88', 'tertiaryColor':'#FFAABB', 'background':'transparent'}}}%%
 graph LR
     subgraph "SPARQL Query"
-        Q["SELECT ?price ?name ?price<br/>WHERE {<br/>  ?ratePlan urpx:identifier 'RES-TOU-2025' ;<br/>    hasRatePlanVersion/hasPrices/<br/>    hasPriceSet/hasPrice ?Price .<br/>  ?Price urpx:PriceName ?name ;<br/>    urpx:unitPrice ?price .<br/>}"]
+        Q["SELECT ?price ?name ?price<br/>WHERE {<br/>  ?ratePlan urpx:identifier 'RES-TOU-2025' ;<br/>    hasRatePlanVersion/hasPrices/<br/>    hasPriceSet/hasPrice ?Price .<br/>  ?Price urpx:name ?name ;<br/>    urpx:unitPrice ?price .<br/>}"]
     end
     
     subgraph "Graph Traversal"

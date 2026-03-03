@@ -11,7 +11,6 @@ Welcome to the URPX documentation. URPX is an open standard for exchanging utili
 ### Getting Started
 - **[Overview](pages/urpx-overview.md)** - Understanding URPX and rate plan data exchange
 - **[Tutorial](pages/urpx-tutorial.md)** - Step-by-step guide to creating rate plan data
-- **[Examples](pages/urpx-examples.md)** - Real-world rate plan implementations
 - **[FAQ](pages/urpx-faq.md)** - Frequently asked questions
 
 ### Technical Reference
@@ -21,7 +20,6 @@ Welcome to the URPX documentation. URPX is an open standard for exchanging utili
 - **[Quality Assurance](pages/urpx-quality-assurance.md)** - Validation and quality standards
 
 ### Advanced Topics
-- **[Complex Condition Modeling](pages/urpx-complex-condition-modeling.md)** - Advanced eligibility patterns
 - **[Design Principles](pages/urpx-design-principles.md)** - Ontology development standards
 - **[Design Decisions 001-040](pages/urpx-design-decisions-001-040.md)** - Architectural decision log (Part 1)
 - **[Design Decisions 041-080](pages/urpx-design-decisions-041-080.md)** - Architectural decision log (Part 2)

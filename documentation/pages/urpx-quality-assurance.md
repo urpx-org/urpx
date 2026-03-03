@@ -1,5 +1,9 @@
 # URPX Quality Assurance Guidelines
 
+**Version**: 0.1.1  
+**Last Updated**: 2026-03-02  
+**Status**: Active
+
 **Validation and quality standards for URPX v0.1.1 rate plan data**
 
 [← Back to Index](../index.md)
@@ -27,7 +31,6 @@ URPX v0.1.1 maintains rigorous quality standards to ensure rate plan data accura
 2. **SHACL Validation** - Business rules enforced through SHACL constraints
 3. **Semantic Consistency** - Proper use of properties, classes, and enumerations
 4. **Data Completeness** - Required fields populated with valid values
-5. **Standards Alignment** - Integration with Green Button, LF Energy CDS, CIM
 
 ---
 
@@ -38,19 +41,6 @@ URPX v0.1.1 maintains rigorous quality standards to ensure rate plan data accura
 URPX v0.1.1 uses a core ontology file:
 
 - `../../ontology/urpx-ontology.ttl` - Complete URPX ontology with all classes and properties
-
-### Validation Commands
-
-```bash
-# Validate Turtle syntax
-jena.riot --validate ontology/urpx-ontology.ttl
-
-# Check OWL consistency
-pellet consistency ontology/urpx-ontology.ttl
-
-# Verify imports resolve
-jena.infer --rdfs ontology/urpx-ontology.ttl
-```
 
 ### Common Validation Errors
 
@@ -67,39 +57,25 @@ jena.infer --rdfs ontology/urpx-ontology.ttl
 
 ### SHACL Validation Files
 
-- `shacl/urpx-core-shacl.ttl` - Core constraints
-- `shacl/urpx-charge-classification-shacl.ttl` - Price classification validation
-- `shacl/urpx-geography-shacl.ttl` - Geographic constraints
-- `shacl/urpx-organization-shacl.ttl` - Organization validation
-
-### Running SHACL Validation
-
-```bash
-# Validate rate plan document
-jena.shacl --shapes shacl/urpx-core-shacl.ttl \
-          --data my-rate-plan.ttl
-
-# Validate with all constraint files
-jena.shacl --shapes shacl/ --data my-rate-plan.ttl
-```
+- [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl) - Unified SHACL validation shapes (~3,500 lines, draft). Contains comprehensive shapes for all major URPX classes.
 
 ### Critical SHACL Constraints
 
 **RatePlan Requirements:**
 - Must have at least one RatePlanVersion
 - Must have ratePlanIdentifier
-- Must specify serviceRole (distribution, retail, or bundled)
+- Must specify serviceRole (from ServiceRoleValue enumeration)
 
 **Price Requirements:**
-- Must have exactly one chargeCategory
-- Must have at least one chargeType
-- Must have hasMetricSpecification with billPortion
-- Must have one pricing field (amount, unitPrice, or basePrice)
+- chargeCategory is optional (0..1)
+- chargeType is optional (0..*)
+- Must have one pricing field (amount, unitPrice, basedOnPrice, currentPrice, or basePrice)
+- Must have start and end dates when available (startDate, startDateTime, endDate, endDateTime)
 
 **Temporal Requirements:**
-- effectiveDateTime must include timezone
+- Time zone must be specified with `timeZoneIdentifier` on LocationDataSet, URPXDocument, RatePlan, or RatePlanModifier
 - Versions must not overlap temporally
-- expirationDateTime must be after effectiveDateTime
+- expirationDate or expirationDateTime must be after effectiveDate or effectiveDateTime
 
 ---
 
@@ -110,22 +86,25 @@ jena.shacl --shapes shacl/ --data my-rate-plan.ttl
 **Every RatePlan must have:**
 - ratePlanIdentifier (alphanumeric + hyphen only)
 - name (human-readable)
-- serviceRole (delivery, supply, or bundled)
+- serviceRole (from ServiceRoleValue enumeration)
 - hasRatePlanVersion (at least one)
 
 **Every RatePlanVersion must have:**
-- versionNumber (semantic versioning)
-- effectiveDateTime (with timezone)
+- version (semantic versioning)
+- effectiveDateTime or effectiveDate
 - changeReason (from ChangeReasonValue enumeration)
 - publishedBy (Organization reference)
 - hasPrices (Prices container)
 
 **Every Price must have:**
-- chargeType (at least one from ChargeTypeValue)
-- chargeCategory (exactly one from ChargeCategoryValue)
-- hasMetricSpecification with billPortion
-- One pricing field (amount, unitPrice, or basePrice)
-- currency (ISO 4217 code)
+- One pricing field (amount, unitPrice, basedOnPrice, currentPrice, or basePrice)
+- startDate or startDateTime and endDate or endDateTime when available
+
+**Every Price may have:**
+- chargeType (from ChargeTypeValue) — optional, recommended
+- chargeCategory (from ChargeCategoryValue) — optional, recommended
+- billPortion (from BillPortionValue) — optional
+- referencesPriceDefinition (link to PriceDefinition) — optional, recommended
 
 ### Enumeration Value Validation
 
@@ -136,18 +115,19 @@ jena.shacl --shapes shacl/ --data my-rate-plan.ttl
 - `urpx:taxState` (not "TaxState" or "state_tax")
 
 **BillPortionValue** - Must use exact values:
-- `urpx:delivery` (not "Delivery" or "deliveryCharge")
-- `urpx:supply` (not "Supply" or "supplyCharge")
-- `urpx:bundled` (not "Bundled" or "bundledCharge")
+- `urpx:bundledPortion` (not "bundled" or "Bundled")
+- `urpx:deliveryPortion` (not "delivery" or "Delivery")
+- `urpx:supplyPortion` (not "supply" or "Supply")
 
 **ChargeCategoryValue** - Must use exact instances:
-- `urpx:serviceCharge`
-- `urpx:auxiliaryCharge`
-- `urpx:infrastructure`
 - `urpx:adjustment`
-- `urpx:taxes`
-- `urpx:regulatory`
+- `urpx:auxiliaryCharge`
+- `urpx:discount`
 - `urpx:environmental`
+- `urpx:infrastructure`
+- `urpx:regulatory`
+- `urpx:serviceCharge`
+- `urpx:taxes`
 
 ### JSON-LD Pattern Requirements
 
@@ -156,7 +136,7 @@ jena.shacl --shapes shacl/ --data my-rate-plan.ttl
 {
   "chargeType": {"@id": "urpx:minimumCharge"},
   "chargeCategory": {"@id": "urpx:serviceCharge"},
-  "billPortion": {"@id": "urpx:bundled"}
+  "billPortion": {"@id": "urpx:bundledPortion"}
 }
 ```
 
@@ -165,7 +145,7 @@ jena.shacl --shapes shacl/ --data my-rate-plan.ttl
 {
   "chargeType": "minimumCharge",
   "chargeCategory": "serviceCharge",
-  "billPortion": "bundled"
+  "billPortion": "bundledPortion"
 }
 ```
 
@@ -175,10 +155,7 @@ jena.shacl --shapes shacl/ --data my-rate-plan.ttl
 ```turtle
 ex:price1 a urpx:Price ;
     urpx:chargeType urpx:minimumCharge ;
-    urpx:chargeCategory urpx:serviceCharge ;
-    urpx:hasMetricSpecification [
-        urpx:billPortion urpx:bundled
-    ] .
+    urpx:chargeCategory urpx:serviceCharge .
 ```
 
 **Incorrect:**
@@ -232,7 +209,7 @@ ex:price1 a urpx:Price ;
 From `urpx-ontology.ttl`:
 - Charge types: `minimumCharge`, `usageCharge`, `demandDirect`, `taxState`
 - Charge categories: `serviceCharge`, `auxiliaryCharge`, `infrastructure`, `taxes`
-- Bill portions: `delivery`, `supply`, `bundled`
+- Bill portions: `bundledPortion`, `deliveryPortion`, `supplyPortion`
 - Customer kinds: `residentialKind`, `commercialKind`, `industrialKind`
 - Measurement types: `energy`, `demand`, `power`, `voltage`
 - Units: `kWh`, `kW`, `therm`, `ccf`
@@ -255,35 +232,20 @@ From `urpx-ontology.ttl`:
 
 **1. Create Rate Plan Data**
 - Use v0.1.1 ontology as reference
-- Follow examples from urpx-examples.md
 - Include all required properties
 
 **2. Syntax Validation**
-```bash
-# Validate JSON-LD syntax
-jsonld validate my-rate-plan.jsonld
-
-# Validate Turtle syntax  
-jena.riot --validate my-rate-plan.ttl
-```
+- Validate JSON-LD syntax
+- Validate Turtle syntax
 
 **3. SHACL Validation**
-```bash
-# Run all constraint checks
-jena.shacl --shapes shacl/ --data my-rate-plan.ttl
-```
+- Perform SHACL validation using [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl) 
 
 **4. Business Logic Verification**
 - Verify price classification combinations make sense
 - Check temporal consistency
 - Validate geographic applicability
 - Confirm eligibility rules are complete
-
-**5. Standards Alignment Check**
-- Verify Green Button mapping compatibility
-- Check LF Energy CDS alignment
-- Validate CIM property usage
-- Confirm timezone compliance (ISO 8601)
 
 ---
 
@@ -319,10 +281,9 @@ jena.shacl --shapes shacl/ --data my-rate-plan.ttl
 ### Development Workflow
 
 1. **Reference ontology first** - Check urpx-ontology.ttl for all classes and properties
-2. **Use complete examples** - Start from urpx-examples.md templates
-3. **Validate early** - Run SHACL validation during development
-4. **Test with real data** - Verify with actual utility tariff information
-5. **Document sources** - Include tariff book references and filing numbers
+2. **Validate early** - Run SHACL validation during development
+3. **Test with real data** - Verify with actual utility tariff information
+4. **Document sources** - Include tariff book references and filing numbers
 
 ### Common Pitfalls to Avoid
 
