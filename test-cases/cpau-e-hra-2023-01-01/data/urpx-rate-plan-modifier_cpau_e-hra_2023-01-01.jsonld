@@ -1,0 +1,308 @@
+{
+  "@context": {
+    "urpx": "https://schema.urpx.org/",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "urpx:unitPrice": { "@type": "xsd:decimal" },
+    "urpx:effectiveDate": { "@type": "xsd:date" },
+    "urpx:effectiveDateTime": { "@type": "xsd:dateTime" },
+    "urpx:startDate": { "@type": "xsd:date" },
+    "urpx:initialEffectiveDate": { "@type": "xsd:date" },
+    "urpx:url": { "@type": "xsd:anyURI" }
+  },
+  "@type": "urpx:RatePlanModifier",
+  "@id": "urpx:cpau-e-hra",
+  "urpx:ratePlanIdentifier": "E-HRA",
+  "urpx:name": "Electric Hydro Rate Adjuster",
+  "urpx:initialEffectiveDate": "2023-01-01",
+  "urpx:hasRatePlanModifierVersion": {
+    "@type": "urpx:RatePlanModifierVersion",
+    "@id": "urpx:cpau-e-hra-2023-01-01",
+    "urpx:versionNumber": "2023-01-01",
+    "urpx:description": "A surcharge or discount applied to all CPAU electric rate schedules based on the strength of the City's hydrological generation portfolio. Applied to manage volatility in energy costs and the impact on customer rates. The adjustment value is determined annually in May (or when conditions warrant) by a 4x4 matrix of Hydro Stabilization Reserve level vs. projected hydro generation, and falls within the range ($0.066) credit to $0.048 surcharge per kWh. Applied upon Council approval.",
+    "urpx:effectiveDateTime": "2023-01-01T00:00:00",
+    "urpx:priceCurrency": "USD",
+    "urpx:commodity": { "@id": "urpx:electricity" },
+    "urpx:serviceRole": { "@id": "urpx:bundledServiceRole" },
+    "urpx:applicableToRatePlan": [
+      { "@id": "urpx:cpau-e-1" },
+      { "@id": "urpx:cpau-e-1-tou" }
+    ],
+    "urpx:publishedBy": {
+      "@type": "urpx:Organization",
+      "@id": "urpx:utility-cpau",
+      "urpx:legalName": "City of Palo Alto Utilities",
+      "urpx:eiaId": "3203",
+      "urpx:organizationType": { "@id": "urpx:municipalOrganization" }
+    },
+    "urpx:hasDataSourceReference": {
+      "@type": "urpx:DataSourceReference",
+      "urpx:url": "file://./assets/CPAU_E-HRA_2023-01-01.pdf",
+      "urpx:fileName": "CPAU_E-HRA_2023-01-01.pdf",
+      "urpx:mediaType": "application/pdf"
+    },
+    "urpx:hasPlanElements": {
+      "@type": "urpx:PlanElements",
+      "urpx:hasMetricInput": [
+        {
+          "@type": "urpx:MetricInput",
+          "@id": "urpx:cpau-hra-mi-energy",
+          "urpx:metricInputType": { "@id": "urpx:measuredMetricInput" },
+          "urpx:hasMetricSpecification": {
+            "@type": "urpx:MetricSpecification",
+            "@id": "urpx:cpau-hra-ms-energy",
+            "urpx:measurementKind": { "@id": "urpx:energy" },
+            "urpx:unitOfMeasure": { "@id": "urpx:kWh" },
+            "urpx:flowDirection": { "@id": "urpx:forward" }
+          }
+        }
+      ],
+      "urpx:hasBillingModel": {
+        "@type": "urpx:BillingModel",
+        "urpx:hasLedger": [
+          {
+            "@type": "urpx:Ledger",
+            "@id": "urpx:cpau-hra-ledger-adjustment",
+            "urpx:name": "Hydro Rate Adjustment",
+            "urpx:ledgerType": { "@id": "urpx:bundledLedger" },
+            "urpx:referencesMetricInput": { "@id": "urpx:cpau-hra-mi-energy" },
+            "urpx:hasPriceDefinition": {
+              "@type": "urpx:PriceDefinition",
+              "@id": "urpx:cpau-hra-pd-adjustment",
+              "urpx:name": "Hydro Rate Adjustment",
+              "urpx:description": "Surcharge or discount per kWh determined by a matrix of Hydro Stabilization Reserve level (4 rows) vs. projected hydro generation relative to average (4 columns). Value ranges from ($0.066) credit to $0.048 surcharge. One value from the matrix is in effect at any given time, set annually by staff and approved by Council.",
+              "urpx:chargeType": { "@id": "urpx:adjustmentPowerCost" },
+              "urpx:chargeCategory": { "@id": "urpx:adjustment" },
+              "urpx:billPortion": { "@id": "urpx:supplyPortion" }
+            }
+          }
+        ]
+      }
+    },
+    "urpx:hasPrices": {
+      "@type": "urpx:Prices",
+      "urpx:hasPriceSet": [
+        {
+          "@type": "urpx:PriceSet",
+          "@id": "urpx:cpau-hra-ps-reserve-above-max",
+          "urpx:name": "Hydro Adjustment — Reserve Above Maximum",
+          "urpx:startDate": "2023-01-01",
+          "urpx:hasApplicabilityRule": {
+            "@type": "urpx:ApplicabilityRule",
+            "urpx:hasCondition": {
+              "@type": "urpx:Condition",
+              "@id": "urpx:cpau-hra-cond-reserve-above-max",
+              "urpx:conditionType": "hydroStabilizationReserveLevel",
+              "urpx:operator": { "@id": "urpx:greaterThanOperator" },
+              "urpx:conditionValue": "Maximum"
+            }
+          },
+          "urpx:hasPrice": [
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-hra-price-above-max-gen-lt319",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-hra-pd-adjustment" },
+              "urpx:name": "Reserve Above Max / Generation < 319 GWh",
+              "urpx:unitPrice": "0.000",
+              "urpx:hasApplicabilityRule": {
+                "@type": "urpx:ApplicabilityRule",
+                "urpx:hasCondition": {
+                  "@type": "urpx:Condition",
+                  "urpx:conditionType": "projectedHydroGeneration",
+                  "urpx:operator": { "@id": "urpx:lessThanOperator" },
+                  "urpx:conditionValue": "319 GWh/year"
+                }
+              }
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-hra-price-above-max-gen-319-480",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-hra-pd-adjustment" },
+              "urpx:name": "Reserve Above Max / Generation 319–480 GWh",
+              "urpx:unitPrice": "-0.024",
+              "urpx:hasApplicabilityRule": {
+                "@type": "urpx:ApplicabilityRule",
+                "urpx:hasCondition": {
+                  "@type": "urpx:Condition",
+                  "urpx:conditionType": "projectedHydroGeneration",
+                  "urpx:operator": { "@id": "urpx:betweenOperator" },
+                  "urpx:conditionValue": "319–480 GWh/year"
+                }
+              }
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-hra-price-above-max-gen-480-642",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-hra-pd-adjustment" },
+              "urpx:name": "Reserve Above Max / Generation 480–642 GWh",
+              "urpx:unitPrice": "-0.024",
+              "urpx:hasApplicabilityRule": {
+                "@type": "urpx:ApplicabilityRule",
+                "urpx:hasCondition": {
+                  "@type": "urpx:Condition",
+                  "urpx:conditionType": "projectedHydroGeneration",
+                  "urpx:operator": { "@id": "urpx:betweenOperator" },
+                  "urpx:conditionValue": "480–642 GWh/year"
+                }
+              }
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-hra-price-above-max-gen-gt642",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-hra-pd-adjustment" },
+              "urpx:name": "Reserve Above Max / Generation > 642 GWh",
+              "urpx:unitPrice": "-0.066",
+              "urpx:hasApplicabilityRule": {
+                "@type": "urpx:ApplicabilityRule",
+                "urpx:hasCondition": {
+                  "@type": "urpx:Condition",
+                  "urpx:conditionType": "projectedHydroGeneration",
+                  "urpx:operator": { "@id": "urpx:greaterThanOperator" },
+                  "urpx:conditionValue": "642 GWh/year"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "@type": "urpx:PriceSet",
+          "@id": "urpx:cpau-hra-ps-reserve-75-100",
+          "urpx:name": "Hydro Adjustment — Reserve 75%–100%",
+          "urpx:startDate": "2023-01-01",
+          "urpx:hasApplicabilityRule": {
+            "@type": "urpx:ApplicabilityRule",
+            "urpx:hasCondition": {
+              "@type": "urpx:Condition",
+              "@id": "urpx:cpau-hra-cond-reserve-75-100",
+              "urpx:conditionType": "hydroStabilizationReserveLevel",
+              "urpx:operator": { "@id": "urpx:betweenOperator" },
+              "urpx:conditionValue": "75%–100%"
+            }
+          },
+          "urpx:hasPrice": [
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-hra-price-75-100-gen-lt319",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-hra-pd-adjustment" },
+              "urpx:name": "Reserve 75–100% / Generation < 319 GWh",
+              "urpx:unitPrice": "0.000"
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-hra-price-75-100-gen-319-480",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-hra-pd-adjustment" },
+              "urpx:name": "Reserve 75–100% / Generation 319–480 GWh",
+              "urpx:unitPrice": "0.000"
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-hra-price-75-100-gen-480-642",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-hra-pd-adjustment" },
+              "urpx:name": "Reserve 75–100% / Generation 480–642 GWh",
+              "urpx:unitPrice": "-0.024"
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-hra-price-75-100-gen-gt642",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-hra-pd-adjustment" },
+              "urpx:name": "Reserve 75–100% / Generation > 642 GWh",
+              "urpx:unitPrice": "-0.048"
+            }
+          ]
+        },
+        {
+          "@type": "urpx:PriceSet",
+          "@id": "urpx:cpau-hra-ps-reserve-25-75",
+          "urpx:name": "Hydro Adjustment — Reserve 25%–75%",
+          "urpx:startDate": "2023-01-01",
+          "urpx:hasApplicabilityRule": {
+            "@type": "urpx:ApplicabilityRule",
+            "urpx:hasCondition": {
+              "@type": "urpx:Condition",
+              "@id": "urpx:cpau-hra-cond-reserve-25-75",
+              "urpx:conditionType": "hydroStabilizationReserveLevel",
+              "urpx:operator": { "@id": "urpx:betweenOperator" },
+              "urpx:conditionValue": "25%–75%"
+            }
+          },
+          "urpx:hasPrice": [
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-hra-price-25-75-gen-lt319",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-hra-pd-adjustment" },
+              "urpx:name": "Reserve 25–75% / Generation < 319 GWh",
+              "urpx:unitPrice": "0.000"
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-hra-price-25-75-gen-319-480",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-hra-pd-adjustment" },
+              "urpx:name": "Reserve 25–75% / Generation 319–480 GWh",
+              "urpx:unitPrice": "0.000"
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-hra-price-25-75-gen-480-642",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-hra-pd-adjustment" },
+              "urpx:name": "Reserve 25–75% / Generation 480–642 GWh",
+              "urpx:unitPrice": "0.000"
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-hra-price-25-75-gen-gt642",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-hra-pd-adjustment" },
+              "urpx:name": "Reserve 25–75% / Generation > 642 GWh",
+              "urpx:unitPrice": "0.000"
+            }
+          ]
+        },
+        {
+          "@type": "urpx:PriceSet",
+          "@id": "urpx:cpau-hra-ps-reserve-below-25",
+          "urpx:name": "Hydro Adjustment — Reserve 25% and Below",
+          "urpx:startDate": "2023-01-01",
+          "urpx:hasApplicabilityRule": {
+            "@type": "urpx:ApplicabilityRule",
+            "urpx:hasCondition": {
+              "@type": "urpx:Condition",
+              "@id": "urpx:cpau-hra-cond-reserve-below-25",
+              "urpx:conditionType": "hydroStabilizationReserveLevel",
+              "urpx:operator": { "@id": "urpx:lessThanOrEqualOperator" },
+              "urpx:conditionValue": "25%"
+            }
+          },
+          "urpx:hasPrice": [
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-hra-price-below-25-gen-lt319",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-hra-pd-adjustment" },
+              "urpx:name": "Reserve ≤25% / Generation < 319 GWh",
+              "urpx:unitPrice": "0.048"
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-hra-price-below-25-gen-319-480",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-hra-pd-adjustment" },
+              "urpx:name": "Reserve ≤25% / Generation 319–480 GWh",
+              "urpx:unitPrice": "0.024"
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-hra-price-below-25-gen-480-642",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-hra-pd-adjustment" },
+              "urpx:name": "Reserve ≤25% / Generation 480–642 GWh",
+              "urpx:unitPrice": "0.000"
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-hra-price-below-25-gen-gt642",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-hra-pd-adjustment" },
+              "urpx:name": "Reserve ≤25% / Generation > 642 GWh",
+              "urpx:unitPrice": "0.000"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
