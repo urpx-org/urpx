@@ -21,7 +21,7 @@
     dcterms:date "2026-01-23"^^xsd:date ;
     dcterms:description "URPX ontology for utility rate plan exchange" ;
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
-    dcterms:modified "2026-03-02"^^xsd:date ;
+    dcterms:modified "2026-03-03"^^xsd:date ;
     dcterms:title "URPX - Unified Ontology" ;
     owl:versionInfo "0.1.1" ;
     dcat:version "0.1.1" .
