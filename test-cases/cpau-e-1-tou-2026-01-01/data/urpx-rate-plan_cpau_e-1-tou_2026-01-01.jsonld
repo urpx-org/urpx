@@ -1,0 +1,475 @@
+{
+  "@context": {
+    "urpx": "https://schema.urpx.org/",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "urpx:unitPrice": { "@type": "xsd:decimal" },
+    "urpx:effectiveDate": { "@type": "xsd:date" },
+    "urpx:effectiveDateTime": { "@type": "xsd:dateTime" },
+    "urpx:baseQuantity": { "@type": "xsd:decimal" },
+    "urpx:startDate": { "@type": "xsd:date" },
+    "urpx:startTime": { "@type": "xsd:time" },
+    "urpx:endTime": { "@type": "xsd:time" },
+    "urpx:initialEffectiveDate": { "@type": "xsd:date" },
+    "urpx:url": { "@type": "xsd:anyURI" },
+    "urpx:month": { "@type": "xsd:gMonth" },
+    "urpx:intervalDuration": { "@type": "xsd:duration" },
+    "urpx:touTierNumber": { "@type": "xsd:integer" },
+    "urpx:touPeriodNumber": { "@type": "xsd:integer" }
+  },
+  "@type": "urpx:RatePlan",
+  "@id": "urpx:cpau-e-1-tou",
+  "urpx:ratePlanIdentifier": "E-1 TOU",
+  "urpx:name": "Residential Electric Time of Use Service",
+  "urpx:initialEffectiveDate": "2026-01-01",
+  "urpx:hasRatePlanVersion": {
+    "@type": "urpx:RatePlanVersion",
+    "@id": "urpx:cpau-e-1-tou-2026-01-01",
+    "urpx:versionNumber": "2026-01-01",
+    "urpx:description": "This voluntary Rate Schedule applies to separately metered single-family residential dwellings receiving Electric Service from the City of Palo Alto Utilities (CPAU) who have an Advanced Metering Infrastructure meter installed. This Rate Schedule is not available to Net Energy Metered (NEM) customers and is provided at the sole discretion of CPAU.",
+    "urpx:effectiveDateTime": "2026-01-01T00:00:00",
+    "urpx:priceCurrency": "USD",
+    "urpx:commodity": { "@id": "urpx:electricity" },
+    "urpx:serviceRole": { "@id": "urpx:bundledServiceRole" },
+    "urpx:publishedBy": {
+      "@type": "urpx:Organization",
+      "@id": "urpx:utility-cpau",
+      "urpx:legalName": "City of Palo Alto Utilities",
+      "urpx:eiaId": "3203",
+      "urpx:organizationType": { "@id": "urpx:municipalOrganization" }
+    },
+    "urpx:hasDataSourceReference": {
+      "@type": "urpx:DataSourceReference",
+      "urpx:url": "file://./assets/CPAU_E-1-TOU_2026-01-01.pdf",
+      "urpx:fileName": "CPAU_E-1-TOU_2026-01-01.pdf",
+      "urpx:mediaType": "application/pdf"
+    },
+    "urpx:hasEligibilityRule": [
+      {
+        "@type": "urpx:EligibilityRule",
+        "@id": "urpx:cpau-tou-er-residential",
+        "urpx:hasCustomerProfile": {
+          "@type": "urpx:CustomerProfile",
+          "@id": "urpx:cpau-tou-cp-residential-sf",
+          "urpx:hasCustomerKind": { "@id": "urpx:residentialKind" }
+        },
+        "urpx:logicExpression": "urpx:cpau-tou-condition-single-family AND urpx:cpau-tou-condition-single-meter AND urpx:cpau-tou-condition-ami AND NOT urpx:cpau-tou-condition-nem",
+        "urpx:hasCondition": [
+          {
+            "@type": "urpx:Condition",
+            "@id": "urpx:cpau-tou-condition-single-family",
+            "urpx:conditionType": "dwellingType",
+            "urpx:operator": { "@id": "urpx:equalsOperator" },
+            "urpx:conditionValue": "Single-family dwelling"
+          },
+          {
+            "@type": "urpx:Condition",
+            "@id": "urpx:cpau-tou-condition-single-meter",
+            "urpx:conditionType": "metering",
+            "urpx:operator": { "@id": "urpx:equalsOperator" },
+            "urpx:conditionValue": "Separately metered"
+          },
+          {
+            "@type": "urpx:Condition",
+            "@id": "urpx:cpau-tou-condition-ami",
+            "urpx:conditionType": "metering",
+            "urpx:operator": { "@id": "urpx:equalsOperator" },
+            "urpx:conditionValue": "Advanced Metering Infrastructure (AMI) meter"
+          },
+          {
+            "@type": "urpx:Condition",
+            "@id": "urpx:cpau-tou-condition-nem",
+            "urpx:conditionType": "Other customer enrollment",
+            "urpx:operator": { "@id": "urpx:notEqualOperator" },
+            "urpx:conditionValue": "Net Energy Metering (NEM)"
+          }
+        ]
+      }
+    ],
+    "urpx:hasPlanElements": {
+      "@type": "urpx:PlanElements",
+      "urpx:hasSeasons": [
+        {
+          "@type": "urpx:Season",
+          "@id": "urpx:cpau-tou-season-summer",
+          "urpx:seasonName": "Summer",
+          "urpx:month": [
+            "--06",
+            "--07",
+            "--08",
+            "--09"
+          ]
+        },
+        {
+          "@type": "urpx:Season",
+          "@id": "urpx:cpau-tou-season-winter",
+          "urpx:seasonName": "Winter",
+          "urpx:month": [
+            "--10",
+            "--11",
+            "--12",
+            "--01",
+            "--02",
+            "--03",
+            "--04",
+            "--05"
+          ]
+        }
+      ],
+      "urpx:hasMetricInput": [
+        {
+          "@type": "urpx:MetricInput",
+          "@id": "urpx:cpau-tou-mi-energy",
+          "urpx:metricInputType": { "@id": "urpx:measuredMetricInput" },
+          "urpx:hasMetricSpecification": {
+            "@type": "urpx:MetricSpecification",
+            "@id": "urpx:cpau-tou-ms-energy",
+            "urpx:measurementKind": { "@id": "urpx:energy" },
+            "urpx:unitOfMeasure": { "@id": "urpx:kWh" },
+            "urpx:flowDirection": { "@id": "urpx:forward" }
+          }
+        },
+        {
+          "@type": "urpx:MetricInput",
+          "@id": "urpx:cpau-tou-mi-meter-count",
+          "urpx:metricInputType": { "@id": "urpx:profileMetricInput" },
+          "urpx:profileMetricProperty": { "@id": "urpx:numberOfMeters" }
+        }
+      ],
+      "urpx:hasBillingModel": {
+        "@type": "urpx:BillingModel",
+        "urpx:hasTOUSchedule": {
+          "@type": "urpx:TOUSchedule",
+          "@id": "urpx:cpau-tou-schedule",
+          "urpx:referencesMetricInput": { "@id": "urpx:cpau-tou-mi-energy" },
+          "urpx:hasTOUTier": [
+            {
+              "@type": "urpx:TOUTier",
+              "urpx:tierSourceName": "Peak",
+              "urpx:touTierStandardName": { "@id": "urpx:peakTier" },
+              "urpx:touTierNumber": 1,
+              "urpx:hasTOUPeriod": [
+                {
+                  "@type": "urpx:TOUPeriod",
+                  "@id": "urpx:cpau-tou-period-summer-peak",
+                  "urpx:name": "Summer Peak",
+                  "urpx:touPeriodNumber": 1,
+                  "urpx:hasTimeBracket": [
+                    {
+                      "@type": "urpx:TimeBracket",
+                      "urpx:startTime": "16:00:00",
+                      "urpx:endTime": "21:00:00",
+                      "urpx:appliesInSeason": { "@id": "urpx:cpau-tou-season-summer" },
+                      "urpx:dayType": { "@id": "urpx:allDays" }
+                    }
+                  ]
+                },
+                {
+                  "@type": "urpx:TOUPeriod",
+                  "@id": "urpx:cpau-tou-period-winter-peak",
+                  "urpx:name": "Winter Peak",
+                  "urpx:touPeriodNumber": 2,
+                  "urpx:hasTimeBracket": [
+                    {
+                      "@type": "urpx:TimeBracket",
+                      "urpx:startTime": "16:00:00",
+                      "urpx:endTime": "21:00:00",
+                      "urpx:appliesInSeason": { "@id": "urpx:cpau-tou-season-winter" },
+                      "urpx:dayType": { "@id": "urpx:allDays" }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@type": "urpx:TOUTier",
+              "urpx:tierSourceName": "Off-Peak",
+              "urpx:touTierStandardName": { "@id": "urpx:offPeakTier" },
+              "urpx:touTierNumber": 2,
+              "urpx:hasTOUPeriod": [
+                {
+                  "@type": "urpx:TOUPeriod",
+                  "@id": "urpx:cpau-tou-period-summer-off-peak",
+                  "urpx:name": "Summer Off-Peak",
+                  "urpx:touPeriodNumber": 3,
+                  "urpx:hasTimeBracket": [
+                    {
+                      "@type": "urpx:TimeBracket",
+                      "urpx:startTime": "21:00:00",
+                      "urpx:endTime": "09:00:00",
+                      "urpx:appliesInSeason": { "@id": "urpx:cpau-tou-season-summer" },
+                      "urpx:dayType": { "@id": "urpx:allDays" }
+                    },
+                    {
+                      "@type": "urpx:TimeBracket",
+                      "urpx:startTime": "15:00:00",
+                      "urpx:endTime": "16:00:00",
+                      "urpx:appliesInSeason": { "@id": "urpx:cpau-tou-season-summer" },
+                      "urpx:dayType": { "@id": "urpx:allDays" }
+                    }
+                  ]
+                },
+                {
+                  "@type": "urpx:TOUPeriod",
+                  "@id": "urpx:cpau-tou-period-winter-off-peak",
+                  "urpx:name": "Winter Off-Peak",
+                  "urpx:touPeriodNumber": 4,
+                  "urpx:hasTimeBracket": [
+                    {
+                      "@type": "urpx:TimeBracket",
+                      "urpx:startTime": "21:00:00",
+                      "urpx:endTime": "09:00:00",
+                      "urpx:appliesInSeason": { "@id": "urpx:cpau-tou-season-winter" },
+                      "urpx:dayType": { "@id": "urpx:allDays" }
+                    },
+                    {
+                      "@type": "urpx:TimeBracket",
+                      "urpx:startTime": "15:00:00",
+                      "urpx:endTime": "16:00:00",
+                      "urpx:appliesInSeason": { "@id": "urpx:cpau-tou-season-winter" },
+                      "urpx:dayType": { "@id": "urpx:allDays" }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@type": "urpx:TOUTier",
+              "urpx:tierSourceName": "Super Off-Peak",
+              "urpx:touTierStandardName": { "@id": "urpx:superOffPeakTier" },
+              "urpx:touTierNumber": 3,
+              "urpx:hasTOUPeriod": [
+                {
+                  "@type": "urpx:TOUPeriod",
+                  "@id": "urpx:cpau-tou-period-summer-super-off-peak",
+                  "urpx:name": "Summer Super Off-Peak",
+                  "urpx:touPeriodNumber": 5,
+                  "urpx:hasTimeBracket": [
+                    {
+                      "@type": "urpx:TimeBracket",
+                      "urpx:startTime": "09:00:00",
+                      "urpx:endTime": "15:00:00",
+                      "urpx:appliesInSeason": { "@id": "urpx:cpau-tou-season-summer" },
+                      "urpx:dayType": { "@id": "urpx:allDays" }
+                    }
+                  ]
+                },
+                {
+                  "@type": "urpx:TOUPeriod",
+                  "@id": "urpx:cpau-tou-period-winter-super-off-peak",
+                  "urpx:name": "Winter Super Off-Peak",
+                  "urpx:touPeriodNumber": 6,
+                  "urpx:hasTimeBracket": [
+                    {
+                      "@type": "urpx:TimeBracket",
+                      "urpx:startTime": "09:00:00",
+                      "urpx:endTime": "15:00:00",
+                      "urpx:appliesInSeason": { "@id": "urpx:cpau-tou-season-winter" },
+                      "urpx:dayType": { "@id": "urpx:allDays" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "urpx:hasLedger": [
+          {
+            "@type": "urpx:Ledger",
+            "@id": "urpx:cpau-tou-ledger-commodity",
+            "urpx:name": "Commodity (Supply)",
+            "urpx:ledgerType": { "@id": "urpx:supplyLedger" },
+            "urpx:referencesMetricInput": { "@id": "urpx:cpau-tou-mi-energy" },
+            "urpx:hasPriceDefinition": [
+              {
+                "@type": "urpx:PriceDefinition",
+                "@id": "urpx:cpau-tou-pd-commodity-summer-peak",
+                "urpx:name": "Commodity Summer Peak",
+                "urpx:chargeType": { "@id": "urpx:usageCharge" },
+                "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
+                "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+                "urpx:touPeriodNumber": 1
+              },
+              {
+                "@type": "urpx:PriceDefinition",
+                "@id": "urpx:cpau-tou-pd-commodity-winter-peak",
+                "urpx:name": "Commodity Winter Peak",
+                "urpx:chargeType": { "@id": "urpx:usageCharge" },
+                "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
+                "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+                "urpx:touPeriodNumber": 2
+              },
+              {
+                "@type": "urpx:PriceDefinition",
+                "@id": "urpx:cpau-tou-pd-commodity-summer-off-peak",
+                "urpx:name": "Commodity Summer Off-Peak",
+                "urpx:chargeType": { "@id": "urpx:usageCharge" },
+                "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
+                "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+                "urpx:touPeriodNumber": 3
+              },
+              {
+                "@type": "urpx:PriceDefinition",
+                "@id": "urpx:cpau-tou-pd-commodity-winter-off-peak",
+                "urpx:name": "Commodity Winter Off-Peak",
+                "urpx:chargeType": { "@id": "urpx:usageCharge" },
+                "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
+                "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+                "urpx:touPeriodNumber": 4
+              },
+              {
+                "@type": "urpx:PriceDefinition",
+                "@id": "urpx:cpau-tou-pd-commodity-summer-super-off-peak",
+                "urpx:name": "Commodity Summer Super Off-Peak",
+                "urpx:chargeType": { "@id": "urpx:usageCharge" },
+                "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
+                "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+                "urpx:touPeriodNumber": 5
+              },
+              {
+                "@type": "urpx:PriceDefinition",
+                "@id": "urpx:cpau-tou-pd-commodity-winter-super-off-peak",
+                "urpx:name": "Commodity Winter Super Off-Peak",
+                "urpx:chargeType": { "@id": "urpx:usageCharge" },
+                "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
+                "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+                "urpx:touPeriodNumber": 6
+              }
+            ]
+          },
+          {
+            "@type": "urpx:Ledger",
+            "@id": "urpx:cpau-tou-ledger-distribution",
+            "urpx:name": "Distribution (Delivery)",
+            "urpx:ledgerType": { "@id": "urpx:deliveryLedger" },
+            "urpx:referencesMetricInput": { "@id": "urpx:cpau-tou-mi-energy" },
+            "urpx:hasPriceDefinition": {
+              "@type": "urpx:PriceDefinition",
+              "@id": "urpx:cpau-tou-pd-distribution",
+              "urpx:name": "Distribution",
+              "urpx:chargeType": { "@id": "urpx:usageCharge" },
+              "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
+              "urpx:billPortion": { "@id": "urpx:deliveryPortion" }
+            }
+          },
+          {
+            "@type": "urpx:Ledger",
+            "@id": "urpx:cpau-tou-ledger-public-benefits",
+            "urpx:name": "Public Benefits",
+            "urpx:ledgerType": { "@id": "urpx:bundledLedger" },
+            "urpx:referencesMetricInput": { "@id": "urpx:cpau-tou-mi-energy" },
+            "urpx:hasPriceDefinition": {
+              "@type": "urpx:PriceDefinition",
+              "@id": "urpx:cpau-tou-pd-public-benefits",
+              "urpx:name": "Public Benefits",
+              "urpx:chargeType": { "@id": "urpx:publicBenefits" },
+              "urpx:chargeCategory": { "@id": "urpx:regulatory" },
+              "urpx:billPortion": { "@id": "urpx:bundledPortion" }
+            }
+          },
+          {
+            "@type": "urpx:Ledger",
+            "@id": "urpx:cpau-tou-ledger-customer-charge",
+            "urpx:name": "Customer Charge",
+            "urpx:ledgerType": { "@id": "urpx:bundledLedger" },
+            "urpx:referencesMetricInput": { "@id": "urpx:cpau-tou-mi-meter-count" },
+            "urpx:hasPriceDefinition": {
+              "@type": "urpx:PriceDefinition",
+              "@id": "urpx:cpau-tou-pd-customer-charge",
+              "urpx:name": "Customer Charge",
+              "urpx:chargeType": { "@id": "urpx:minimumCharge" },
+              "urpx:chargeCategory": { "@id": "urpx:serviceCharge" },
+              "urpx:billPortion": { "@id": "urpx:bundledPortion" },
+              "urpx:baseQuantity": "1",
+              "urpx:hasCalculationMethod": {
+                "@type": "urpx:CalculationMethod",
+                "urpx:intervalDuration": "P1M"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "urpx:hasPrices": {
+      "@type": "urpx:Prices",
+      "urpx:hasPrice": [
+        {
+          "@type": "urpx:Price",
+          "@id": "urpx:cpau-tou-price-customer-charge",
+          "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-tou-pd-customer-charge" },
+          "urpx:startDate": "2026-01-01",
+          "urpx:name": "Customer Charge",
+          "urpx:unitPrice": "5.15"
+        },
+        {
+          "@type": "urpx:Price",
+          "@id": "urpx:cpau-tou-price-distribution",
+          "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-tou-pd-distribution" },
+          "urpx:startDate": "2026-01-01",
+          "urpx:name": "Distribution",
+          "urpx:unitPrice": "0.09351"
+        },
+        {
+          "@type": "urpx:Price",
+          "@id": "urpx:cpau-tou-price-public-benefits",
+          "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-tou-pd-public-benefits" },
+          "urpx:startDate": "2026-01-01",
+          "urpx:name": "Public Benefits",
+          "urpx:unitPrice": "0.00604"
+        }
+      ],
+      "urpx:hasPriceSet": [
+        {
+          "@type": "urpx:PriceSet",
+          "@id": "urpx:cpau-tou-ps-commodity",
+          "urpx:name": "Commodity Charges",
+          "urpx:startDate": "2026-01-01",
+          "urpx:hasPrice": [
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-tou-price-commodity-summer-peak",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-tou-pd-commodity-summer-peak" },
+              "urpx:name": "Commodity Summer Peak",
+              "urpx:unitPrice": "0.23354"
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-tou-price-commodity-summer-off-peak",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-tou-pd-commodity-summer-off-peak" },
+              "urpx:name": "Commodity Summer Off-Peak",
+              "urpx:unitPrice": "0.08249"
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-tou-price-commodity-summer-super-off-peak",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-tou-pd-commodity-summer-super-off-peak" },
+              "urpx:name": "Commodity Summer Super Off-Peak",
+              "urpx:unitPrice": "0.06690"
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-tou-price-commodity-winter-peak",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-tou-pd-commodity-winter-peak" },
+              "urpx:name": "Commodity Winter Peak",
+              "urpx:unitPrice": "0.16705"
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-tou-price-commodity-winter-off-peak",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-tou-pd-commodity-winter-off-peak" },
+              "urpx:name": "Commodity Winter Off-Peak",
+              "urpx:unitPrice": "0.11033"
+            },
+            {
+              "@type": "urpx:Price",
+              "@id": "urpx:cpau-tou-price-commodity-winter-super-off-peak",
+              "urpx:referencesPriceDefinition": { "@id": "urpx:cpau-tou-pd-commodity-winter-super-off-peak" },
+              "urpx:name": "Commodity Winter Super Off-Peak",
+              "urpx:unitPrice": "0.07835"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
