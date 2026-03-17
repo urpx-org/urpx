@@ -1,0 +1,15 @@
+URPX — Utility Rate Plan Exchange
+Copyright (c) Flux Tailor LLC
+
+This project is licensed under the Apache License, Version 2.0.
+See the LICENSE file for the full license text.
+
+=========================================================================
+Third-Party Content
+=========================================================================
+
+PGE_E-ELEC_2026-01-01.pdf
+  Location: test-cases/pge-e-elec-2026-01-01/assets/PGE_E-ELEC_2026-01-01.pdf
+  Source: Pacific Gas and Electric Company (PG&E)
+  Status: Public-record document included for test case purposes.
+  License: Public record — no license restriction applies.
