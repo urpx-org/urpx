@@ -524,7 +524,7 @@ urpx:CustomerSubKindValue a owl:Class ;
 urpx:DataSourceTypeValue a owl:Class ;
     rdfs:label "Data Source Type Value"@en ;
     rdfs:comment "Data source type enumeration values for structured references" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:apiSource urpx:csvSource urpx:databaseSource urpx:jsonSource urpx:manualSource urpx:pdfSource urpx:spreadsheetSource urpx:xmlSource ) ] ;
+    owl:equivalentClass [ owl:oneOf ( urpx:apiSource urpx:databaseSource urpx:manualSource urpx:utilityWebsiteSource urpx:regulatoryWebsiteSource ) ] ;
     skos:note "Enumeration class for data source types enabling better traceability and validation of price information sources." .
 
 urpx:DayTypeValue a owl:Class ;
@@ -647,6 +647,12 @@ urpx:MeasurementTypeValue a owl:Class ;
     rdfs:comment "Measurement type enumeration values" ;
     owl:equivalentClass [ owl:oneOf ( urpx:current urpx:demand urpx:energy urpx:frequency urpx:power urpx:powerFactor urpx:pressure urpx:temperature urpx:voltage urpx:volume urpx:volumetricFlow ) ] ;
     skos:note "Enumeration class for measurement types covering comprehensive utility measurement categories including energy, demand, power quality, flow, and environmental measurements." .
+
+urpx:MediaTypeValue a owl:Class ;
+    rdfs:label "Media Type Value"@en ;
+    rdfs:comment "Media type enumeration values for communication channels" ;
+    owl:equivalentClass [ owl:oneOf ( urpx:applicationJson urpx:applicationPdf urpx:applicationVndMsExcel urpx:applicationVndOasisOpendocumentSpreadsheet urpx:applicationVndOasisOpendocumentText urpx:applicationVndOpenxmlformatsOfficedocumentSpreadsheetmlSheet urpx:imageGif urpx:imageJpeg urpx:imagePng urpx:textCsv urpx:textHtml urpx:textPlain urpx:textRtf urpx:textXml ) ] ;
+    skos:note "Enumeration class for communication media types used in customer interactions and notifications." .
 
 urpx:MeteringConfigurationValue a owl:Class ;
     rdfs:label "Metering Configuration Value"@en ;
@@ -2063,11 +2069,11 @@ urpx:measurementKind a owl:ObjectProperty ;
     rdfs:range urpx:MeasurementTypeValue ;
     skos:note "Specifies what is being measured: energy, demand, power, current, voltage, powerFactor, frequency, pressure, temperature, volume, or volumetricFlow. Used in MetricSpecification for price measurement specifications." .
 
-urpx:mediaType a owl:DatatypeProperty ;
+urpx:mediaType a owl:ObjectProperty ;
     rdfs:label "Media Type"@en ;
     rdfs:comment "Document media type as published by IANA." ;
     rdfs:domain urpx:DataSourceReference ;
-    rdfs:range xsd:string ;
+    rdfs:range urpx:MediaTypeValue ;
     skos:note "See https://www.iana.org/assignments/media-types for more information." .
 
 urpx:hasMeteringConfiguration a owl:ObjectProperty ;
@@ -2141,7 +2147,7 @@ urpx:name a owl:DatatypeProperty ;
     rdfs:label "Name"@en ;
     rdfs:comment "The name of the item" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceSet urpx:PriceSetAlternatives urpx:PriceDefinition urpx:TariffPublication urpx:TOUPeriod urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:OrganizationName urpx:ProfileAlternatives urpx:ProfileAlternative ) ] ;
+            owl:unionOf ( urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceSet urpx:PriceSetAlternatives urpx:PriceDefinition urpx:TariffPublication urpx:TOUPeriod urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:OrganizationName urpx:ProfileAlternatives urpx:ProfileAlternative urpx:DataSourceReference ) ] ;
     rdfs:range xsd:string ;
     skos:note "Human-readable name for entities. Keep concise for display purposes (max 255 chars recommended). Universal naming property used across all entity types." .
 
@@ -3700,40 +3706,25 @@ urpx:apiSource rdf:type urpx:DataSourceTypeValue ;
     skos:definition "Data sourced from a web API or REST/GraphQL endpoint" ;
     skos:prefLabel "API" .
 
-urpx:csvSource rdf:type urpx:DataSourceTypeValue ;
-    rdfs:label "CSV Source"@en ;
-    skos:definition "Data sourced from a comma-separated values (CSV) file" ;
-    skos:prefLabel "CSV" .
-
 urpx:databaseSource rdf:type urpx:DataSourceTypeValue ;
     rdfs:label "Database Source"@en ;
     skos:definition "Data sourced directly from a relational or non-relational database" ;
     skos:prefLabel "Database" .
-
-urpx:jsonSource rdf:type urpx:DataSourceTypeValue ;
-    rdfs:label "JSON Source"@en ;
-    skos:definition "Data sourced from a JSON file or JSON-formatted response" ;
-    skos:prefLabel "JSON" .
 
 urpx:manualSource rdf:type urpx:DataSourceTypeValue ;
     rdfs:label "Manual Source"@en ;
     skos:definition "Data entered manually by a human operator" ;
     skos:prefLabel "Manual" .
 
-urpx:pdfSource rdf:type urpx:DataSourceTypeValue ;
-    rdfs:label "PDF Source"@en ;
-    skos:definition "Data sourced from a PDF document such as a tariff filing or rate schedule" ;
-    skos:prefLabel "PDF" .
+urpx:utilityWebsiteSource rdf:type urpx:DataSourceTypeValue ;
+    rdfs:label "Utility Website Source"@en ;
+    skos:definition "Data sourced from a utility's official website or customer portal" ;
+    skos:prefLabel "Utility Website" .
 
-urpx:spreadsheetSource rdf:type urpx:DataSourceTypeValue ;
-    rdfs:label "Spreadsheet Source"@en ;
-    skos:definition "Data sourced from a spreadsheet file (e.g., Excel .xlsx or Google Sheets)" ;
-    skos:prefLabel "Spreadsheet" .
-
-urpx:xmlSource rdf:type urpx:DataSourceTypeValue ;
-    rdfs:label "XML Source"@en ;
-    skos:definition "Data sourced from an XML file or XML-formatted response" ;
-    skos:prefLabel "XML" .
+urpx:regulatoryWebsiteSource rdf:type urpx:DataSourceTypeValue ;
+    rdfs:label "Regulatory Website Source"@en ;
+    skos:definition "Data sourced from a regulatory agency's official website or database" ;
+    skos:prefLabel "Regulatory Website" .    
 
 # --- Day Type Property (DayTypeValue) ---
 
@@ -4399,6 +4390,80 @@ urpx:volumetricFlow rdf:type urpx:MeasurementTypeValue ;
     rdfs:label "Volumetric Flow"@en ;
     skos:definition "Volumetric flow rate measurement (gallons/min, cubic feet/hour, etc.)" ;
     skos:prefLabel "Volumetric Flow" .
+
+
+# --- Media Type Property (MediaTypeValue) ---
+
+urpx:applicationJson rdf:type urpx:MediaTypeValue ;
+    rdfs:label "json"@en ;
+    skos:definition "application/json media type" ;
+    skos:prefLabel "json" .
+
+urpx:applicationPdf rdf:type urpx:MediaTypeValue ;
+    rdfs:label "pdf"@en ;
+    skos:definition "application/pdf media type" ;
+    skos:prefLabel "pdf" .
+
+urpx:applicationVndMsExcel rdf:type urpx:MediaTypeValue ;
+    rdfs:label "vnd.ms-excel"@en ;
+    skos:definition "application/vnd.ms-excel media type" ;
+    skos:prefLabel "vnd.ms-excel" .
+
+urpx:applicationVndOasisOpendocumentSpreadsheet rdf:type urpx:MediaTypeValue ;
+    rdfs:label "vnd.oasis.opendocument.spreadsheet"@en ;
+    skos:definition "application/vnd.oasis.opendocument.spreadsheet media type" ;
+    skos:prefLabel "vnd.oasis.opendocument.spreadsheet" .
+
+urpx:applicationVndOasisOpendocumentText rdf:type urpx:MediaTypeValue ;
+    rdfs:label "vnd.oasis.opendocument.text"@en ;
+    skos:definition "application/vnd.oasis.opendocument.text media type" ;
+    skos:prefLabel "vnd.oasis.opendocument.text" .
+
+urpx:applicationVndOpenxmlformatsOfficedocumentSpreadsheetmlSheet rdf:type urpx:MediaTypeValue ;
+    rdfs:label "vnd.openxmlformats-officedocument.spreadsheetml.sheet"@en ;
+    skos:definition "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet media type" ;
+    skos:prefLabel "vnd.openxmlformats-officedocument.spreadsheetml.sheet" .
+
+urpx:imageGif rdf:type urpx:MediaTypeValue ;
+    rdfs:label "gif"@en ;
+    skos:definition "image/gif media type" ;
+    skos:prefLabel "gif" .
+
+urpx:imageJpeg rdf:type urpx:MediaTypeValue ;
+    rdfs:label "jpeg"@en ;
+    skos:definition "image/jpeg media type" ;
+    skos:prefLabel "jpeg" .
+
+urpx:imagePng rdf:type urpx:MediaTypeValue ;
+    rdfs:label "png"@en ;
+    skos:definition "image/png media type" ;
+    skos:prefLabel "png" .
+
+urpx:textCsv rdf:type urpx:MediaTypeValue ;
+    rdfs:label "csv"@en ;
+    skos:definition "text/csv media type" ;
+    skos:prefLabel "csv" .
+
+urpx:textHtml rdf:type urpx:MediaTypeValue ;
+    rdfs:label "html"@en ;
+    skos:definition "text/html media type" ;
+    skos:prefLabel "html" .
+
+urpx:textPlain rdf:type urpx:MediaTypeValue ;
+    rdfs:label "plain"@en ;
+    skos:definition "text/plain media type" ;
+    skos:prefLabel "plain" .
+
+urpx:textRtf rdf:type urpx:MediaTypeValue ;
+    rdfs:label "rtf"@en ;
+    skos:definition "text/rtf media type" ;
+    skos:prefLabel "rtf" .
+
+urpx:textXml rdf:type urpx:MediaTypeValue ;
+    rdfs:label "xml"@en ;
+    skos:definition "text/xml media type" ;
+    skos:prefLabel "xml" .
+
 
 # --- Metering Configuration Property (MeteringConfigurationValue) ---
 

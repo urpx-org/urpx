@@ -517,8 +517,14 @@ urpx-shacl:DataSourceReferenceShape
     ] ;
     sh:property [
         sh:path urpx:mediaType ;
-        sh:datatype xsd:string ;
+        sh:node urpx-shacl:MediaTypeValueShape ;
         sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -1875,7 +1881,7 @@ urpx-shacl:PriorRatePlanShape
     sh:property [
         sh:path urpx:enrollmentStatus ;
         sh:node urpx-shacl:EnrollmentStatusValueShape ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -1954,7 +1960,7 @@ urpx-shacl:ProgramEnrollmentShape
     sh:property [
         sh:path urpx:enrollmentStatus ;
         sh:node urpx-shacl:EnrollmentStatusValueShape ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -2067,7 +2073,7 @@ urpx-shacl:RatePlanShape
     sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -2172,7 +2178,7 @@ urpx-shacl:RatePlanModifierShape
     sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -2774,7 +2780,7 @@ urpx-shacl:ServiceTierShape
         sh:node urpx-shacl:OperatorValueShape ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-    ] .
+    ] .  
 
 urpx-shacl:TariffAddendumDocumentShape
     a sh:NodeShape ;
@@ -2864,7 +2870,7 @@ urpx-shacl:TariffPublicationShape
     sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -2955,7 +2961,7 @@ urpx-shacl:TOUPeriodShape
     sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -3143,7 +3149,7 @@ urpx-shacl:URPXDocumentShape
     sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -3284,7 +3290,7 @@ urpx-shacl:DataSourceTypeValueShape
     rdfs:label "DataSourceTypeValue Shape"@en ;
     sh:targetClass urpx:DataSourceTypeValue ;
     sh:nodeKind sh:IRI ;
-    sh:in ( urpx:apiSource urpx:csvSource urpx:databaseSource urpx:jsonSource urpx:manualSource urpx:pdfSource urpx:spreadsheetSource urpx:xmlSource ) .
+    sh:in ( urpx:apiSource urpx:databaseSource urpx:manualSource urpx:utilityWebsiteSource urpx:regulatoryWebsiteSource ) .
 
 urpx-shacl:DayTypeValueShape
     a sh:NodeShape ;
@@ -3418,6 +3424,13 @@ urpx-shacl:MeasurementTypeValueShape
     sh:targetClass urpx:MeasurementTypeValue ;
     sh:nodeKind sh:IRI ;
     sh:in ( urpx:current urpx:demand urpx:energy urpx:frequency urpx:power urpx:powerFactor urpx:pressure urpx:temperature urpx:voltage urpx:volume urpx:volumetricFlow ) .
+
+urpx-shacl:MediaTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "MediaTypeValue Shape"@en ;
+    sh:targetClass urpx:MediaTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:applicationJson urpx:applicationPdf urpx:applicationVndMsExcel urpx:applicationVndOasisOpendocumentSpreadsheet urpx:applicationVndOasisOpendocumentText urpx:applicationVndOpenxmlformatsOfficedocumentSpreadsheetmlSheet urpx:imageGif urpx:imageJpeg urpx:imagePng urpx:textCsv urpx:textHtml urpx:textPlain urpx:textRtf urpx:textXml ) .
 
 urpx-shacl:MeteringConfigurationValueShape
     a sh:NodeShape ;
