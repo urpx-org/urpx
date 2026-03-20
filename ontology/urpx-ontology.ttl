@@ -350,7 +350,12 @@ urpx:ServiceTerritory a owl:Class ;
 urpx:ServiceTier a owl:Class ;
     rdfs:label "Service Tier"@en ;
     rdfs:comment "Usage tier definition with upper/lower bounds and inclusivity for tiered pricing" ;
-    skos:note "Defines usage, demand, or other service tiers for tiered pricing structures with precise boundary handling. Tiers are defined at BillingModel level and reference the MetricInput they apply to. Prices reference tiers via serviceTierNumber or referencesServiceTier properties." .
+    skos:note "Defines usage, demand, or other service tiers for tiered pricing structures with precise boundary handling.  Prices reference tiers via serviceTierNumber or referencesServiceTier properties." .
+
+urpx:ServiceTiers a owl:Class ;
+    rdfs:label "Service Tiers"@en ;
+    rdfs:comment "Container for multiple service tiers within a billing model" ;
+    skos:note "Organizes multiple ServiceTier instances within a BillingModel and references the MetricInput they apply to. Multiple ServiceTiers objects can be defined for complex pricing scenarios. Provides structure for tiered pricing scenarios." .
 
 urpx:State a owl:Class ;
     rdfs:label "State"@en ;
@@ -1629,6 +1634,13 @@ urpx:hasMetricSpecification a owl:ObjectProperty ;
     rdfs:range urpx:MetricSpecification ;
     skos:note """Defines what is being measured. Supports two complementary usage patterns: Multiple prices reference same MetricSpec IRI via hasMetricSpecification or embed in Price or PriceSet.""" .
 
+urpx:hasModifierOptions a owl:ObjectProperty ;
+    rdfs:label "Has Modifier Options"@en ;
+    rdfs:comment "Links rate plan version to its available modifier options" ;
+    rdfs:domain urpx:RatePlanVersion ;
+    rdfs:range urpx:RatePlanModifier ;
+    skos:note "A RatePlanVersion may have zero or more associated RatePlanModifiers representing optional modifiers that can be applied to the base rate plan." .
+
 urpx:hasName a owl:ObjectProperty ;
     rdfs:label "Has Name"@en ;
     rdfs:comment "Links identity to organization names" ;
@@ -1800,9 +1812,16 @@ urpx:hasServicePointProfile a owl:ObjectProperty ;
 urpx:hasServiceTier a owl:ObjectProperty ;
     rdfs:label "Has Service Tier"@en ;
     rdfs:comment "Service tier definitions for tiered pricing structures" ;
-    rdfs:domain urpx:BillingModel ;
+    rdfs:domain urpx:ServiceTiers ;
     rdfs:range urpx:ServiceTier ;
     skos:note "Defines upfront service tiers with upper/lower bounds and operator-based comparison logic. Prices reference tiers via serviceTierNumber property." .
+
+urpx:hasServiceTiers a owl:ObjectProperty ;
+    rdfs:label "Has Service Tiers"@en ;
+    rdfs:comment "Container for multiple service tier definitions" ;
+    rdfs:domain urpx:BillingModel ;
+    rdfs:range urpx:ServiceTiers ;
+    skos:note "Enables definition of multiple service tiers within a billing model for complex tiered pricing structures." .
 
 urpx:hasTariffPublication a owl:ObjectProperty ;
     rdfs:label "Has Tariff Publication"@en ;
@@ -2147,7 +2166,7 @@ urpx:name a owl:DatatypeProperty ;
     rdfs:label "Name"@en ;
     rdfs:comment "The name of the item" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceSet urpx:PriceSetAlternatives urpx:PriceDefinition urpx:TariffPublication urpx:TOUPeriod urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:OrganizationName urpx:ProfileAlternatives urpx:ProfileAlternative urpx:DataSourceReference ) ] ;
+            owl:unionOf ( urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceSet urpx:PriceSetAlternatives urpx:PriceDefinition urpx:PriceSummary urpx:TariffPublication urpx:TOUPeriod urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:OrganizationName urpx:ProfileAlternatives urpx:ProfileAlternative urpx:DataSourceReference urpx:EligibilityRule urpx:TOUSchedule urpx:ServiceTier urpx:ApplicabilityRule urpx:ApplicabilityGroup ) ] ;
     rdfs:range xsd:string ;
     skos:note "Human-readable name for entities. Keep concise for display purposes (max 255 chars recommended). Universal naming property used across all entity types." .
 
@@ -2712,7 +2731,7 @@ urpx:url a owl:DatatypeProperty ;
     rdfs:label "URL"@en ;
     rdfs:comment "URL of the item" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:TariffPublication urpx:URPXDocument urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:DataSourceReference ) ] ;
+            owl:unionOf ( urpx:TariffPublication urpx:URPXDocument urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:DataSourceReference urpx:ProgramEnrollment) ] ;
     rdfs:range xsd:anyURI ;
     skos:note "Direct link to PDF, HTML, or other document format." .
 
