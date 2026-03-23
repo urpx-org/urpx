@@ -552,6 +552,12 @@ urpx-shacl:DataSourceReferenceShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:fileName ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
@@ -2426,6 +2432,18 @@ urpx-shacl:PriceUpdateRuleShape
     sh:targetClass urpx:PriceUpdateRule ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
+    sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
     sh:property [
         sh:path urpx:priority ;
         sh:datatype xsd:integer ;

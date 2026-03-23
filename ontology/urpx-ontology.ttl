@@ -1233,7 +1233,7 @@ urpx:description a owl:DatatypeProperty ;
     rdfs:label "Description"@en ;
     rdfs:comment "Detailed description of the item" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:EligibilityRule urpx:Condition urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TariffPublication urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger) ] ;
+            owl:unionOf ( urpx:EligibilityRule urpx:Condition urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TariffPublication urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:DataSourceReference urpx:PriceUpdateRule ) ] ;
     rdfs:range xsd:string ;
     skos:note "Comprehensive explanation for documentation (max 1000 chars recommended)." .
 
@@ -2166,7 +2166,7 @@ urpx:name a owl:DatatypeProperty ;
     rdfs:label "Name"@en ;
     rdfs:comment "The name of the item" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceSet urpx:PriceSetAlternatives urpx:PriceDefinition urpx:PriceSummary urpx:TariffPublication urpx:TOUPeriod urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:OrganizationName urpx:ProfileAlternatives urpx:ProfileAlternative urpx:DataSourceReference urpx:EligibilityRule urpx:TOUSchedule urpx:ServiceTier urpx:ApplicabilityRule urpx:ApplicabilityGroup ) ] ;
+            owl:unionOf ( urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceSet urpx:PriceSetAlternatives urpx:PriceDefinition urpx:PriceSummary urpx:TariffPublication urpx:TOUPeriod urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:OrganizationName urpx:ProfileAlternatives urpx:ProfileAlternative urpx:DataSourceReference urpx:EligibilityRule urpx:TOUSchedule urpx:ServiceTier urpx:ApplicabilityRule urpx:ApplicabilityGroup urpx:PriceUpdateRule ) ] ;
     rdfs:range xsd:string ;
     skos:note "Human-readable name for entities. Keep concise for display purposes (max 255 chars recommended). Universal naming property used across all entity types." .
 
