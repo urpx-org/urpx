@@ -2419,7 +2419,7 @@ urpx:referencesMetricInput a owl:ObjectProperty ;
     rdfs:label "References Metric Input"@en ;
     rdfs:comment "Links to metric inputs for measurement and profile metric input definitions" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:AlternativeDimension urpx:Ledger urpx:TOUSchedule urpx:ServiceTier urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:Condition) ] ;
+            owl:unionOf ( urpx:AlternativeDimension urpx:Ledger urpx:TOUSchedule urpx:ServiceTiers urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:Condition) ] ;
     rdfs:range urpx:MetricInput ;
     skos:note "Many-to-many relationship between ledgers/TOU schedules/service tiers and MetricInputs. Ledgers reference MetricInputs rather than containing them. TOU schedules link to the metric input they apply to." .
 
@@ -2434,7 +2434,7 @@ urpx:referencesPriceDefinition a owl:ObjectProperty ;
 urpx:referencesProfileAlternative a owl:ObjectProperty ;
     rdfs:label "References Profile Alternative"@en ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:PriceSetAlternative urpx:PriceDefinition urpx:TOUSchedule urpx:ServiceTier ) ] ;
+            owl:unionOf ( urpx:PriceSetAlternative urpx:PriceDefinition urpx:TOUSchedule urpx:ServiceTiers ) ] ;
     rdfs:range urpx:ProfileAlternative ;
     rdfs:comment "IRI reference linking a price set alternative or price definition to its applicable ProfileAlternative. This property connects the price storage layer (Prices container) to the dimension definition layer (ProfileAlternatives), enabling the price set to indicate which dimension configuration it applies to." ;
     skos:note "Each PriceSetAlternative must reference exactly one ProfileAlternative. The referenced ProfileAlternative defines the dimension-value pairs that characterize when this price set applies." .
