@@ -15,10 +15,14 @@
   "urpx:ratePlanIdentifier": "E-NSE-1",
   "urpx:name": "Net Metering Net Surplus Electricity Compensation",
   "urpx:initialEffectiveDate": "2025-09-01",
+  "urpx:isOptional": false,
   "urpx:hasRatePlanModifierVersion": {
     "@type": "urpx:RatePlanModifierVersion",
     "@id": "urpx:cpau-e-nse-1-2025-09-01",
     "urpx:versionNumber": "2025-09-01",
+    "urpx:changeReason": { "@id": "urpx:initial" },
+    "urpx:modifierIdentifier": "E-NSE-1",
+    "urpx:modifierVersionNumber": "2025-09-01",
     "urpx:description": "Applies to eligible residential and small commercial Net Energy Metering Election A Customers who, at the end of an annual settlement period (per Rule 29), are Net Surplus Customer-Generators of electricity who elect to receive monetary compensation. Does not apply to customers on the City's Net Energy Metering Successor Rate. Net surplus electricity is multiplied by the compensation rate to determine annual monetary compensation.",
     "urpx:effectiveDateTime": "2025-09-01T00:00:00",
     "urpx:priceCurrency": "USD",
@@ -71,7 +75,7 @@
             "@type": "urpx:Condition",
             "@id": "urpx:cpau-nse-condition-nem-successor",
             "urpx:conditionType": "Other customer enrollment",
-            "urpx:operator": { "@id": "urpx:notEqualOperator" },
+            "urpx:operator": { "@id": "urpx:notEqualsOperator" },
             "urpx:conditionValue": "Net Energy Metering Successor Rate"
           }
         ]
@@ -83,6 +87,7 @@
         {
           "@type": "urpx:MetricInput",
           "@id": "urpx:cpau-nse-mi-energy-net-surplus",
+          "urpx:name": "Net Surplus Energy",
           "urpx:metricInputType": { "@id": "urpx:measuredMetricInput" },
           "urpx:hasMetricSpecification": {
             "@type": "urpx:MetricSpecification",

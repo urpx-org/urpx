@@ -26,6 +26,7 @@
     "@type": "urpx:RatePlanVersion",
     "@id": "urpx:cpau-e-1-tou-2026-01-01",
     "urpx:versionNumber": "2026-01-01",
+    "urpx:changeReason": { "@id": "urpx:initial" },
     "urpx:description": "This voluntary Rate Schedule applies to separately metered single-family residential dwellings receiving Electric Service from the City of Palo Alto Utilities (CPAU) who have an Advanced Metering Infrastructure meter installed. This Rate Schedule is not available to Net Energy Metered (NEM) customers and is provided at the sole discretion of CPAU.",
     "urpx:effectiveDateTime": "2026-01-01T00:00:00",
     "urpx:priceCurrency": "USD",
@@ -80,7 +81,7 @@
             "@type": "urpx:Condition",
             "@id": "urpx:cpau-tou-condition-nem",
             "urpx:conditionType": "Other customer enrollment",
-            "urpx:operator": { "@id": "urpx:notEqualOperator" },
+            "urpx:operator": { "@id": "urpx:notEqualsOperator" },
             "urpx:conditionValue": "Net Energy Metering (NEM)"
           }
         ]
@@ -120,6 +121,7 @@
         {
           "@type": "urpx:MetricInput",
           "@id": "urpx:cpau-tou-mi-energy",
+          "urpx:name": "Energy Consumption",
           "urpx:metricInputType": { "@id": "urpx:measuredMetricInput" },
           "urpx:hasMetricSpecification": {
             "@type": "urpx:MetricSpecification",
@@ -132,6 +134,7 @@
         {
           "@type": "urpx:MetricInput",
           "@id": "urpx:cpau-tou-mi-meter-count",
+          "urpx:name": "Meter Count",
           "urpx:metricInputType": { "@id": "urpx:profileMetricInput" },
           "urpx:profileMetricProperty": { "@id": "urpx:numberOfMeters" }
         }
