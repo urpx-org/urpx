@@ -546,8 +546,38 @@ urpx-shacl:DataSourceReferenceShape
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:property [
+        sh:path urpx:accessURL ;
+        sh:datatype xsd:anyURI ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:approvalDate ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:dataSourceType ;
         sh:node urpx-shacl:DataSourceTypeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:dateModified ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:datePublished ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:dateRetrieved ;
+        sh:datatype xsd:date ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
@@ -558,10 +588,44 @@ urpx-shacl:DataSourceReferenceShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:effectiveDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:effectiveDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expirationDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:expirationDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:fileName ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasTariffBookReference ;
+        sh:class urpx:TariffBookReference ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasTariffStatementReference ;
+        sh:class urpx:TariffStatementReference ;
+        sh:minCount 0 ;
     ] ;
     sh:property [
         sh:path urpx:mediaType ;
@@ -572,6 +636,18 @@ urpx-shacl:DataSourceReferenceShape
     sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:pageEnd ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:pageStart ;
+        sh:datatype xsd:integer ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
@@ -1723,18 +1799,6 @@ urpx-shacl:PriceShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:tariffBookReference ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:tariffStatementReference ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:touPeriodNumber ;
         sh:datatype xsd:integer ;
         sh:minCount 0 ;
@@ -1890,18 +1954,6 @@ urpx-shacl:PriceDefinitionShape
     sh:property [
         sh:path urpx:serviceTierNumber ;
         sh:datatype xsd:integer ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:tariffBookReference ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:tariffStatementReference ;
-        sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
@@ -2129,18 +2181,6 @@ urpx-shacl:PriceSetShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:tariffBookReference ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:tariffStatementReference ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:touPeriodNumber ;
         sh:datatype xsd:integer ;
         sh:minCount 0 ;
@@ -2350,18 +2390,6 @@ urpx-shacl:PriceSetAlternativeShape
     sh:property [
         sh:path urpx:startDateTime ;
         sh:datatype xsd:dateTime ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:tariffBookReference ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:tariffStatementReference ;
-        sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
@@ -2828,6 +2856,11 @@ urpx-shacl:RatePlanModifierVersionShape
         sh:minCount 0 ;
     ] ;
     sh:property [
+        sh:path urpx:applicableToRatePlanVersion ;
+        sh:class urpx:RatePlanVersion ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
         sh:path urpx:approvalDate ;
         sh:datatype xsd:dateTime ;
         sh:minCount 0 ;
@@ -3078,6 +3111,11 @@ urpx-shacl:RatePlanVersionShape
     sh:property [
         sh:path urpx:hasModifierOptions ;
         sh:class urpx:RatePlanModifier ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasModifierVersionOptions ;
+        sh:class urpx:RatePlanModifierVersion ;
         sh:minCount 0 ;
     ] ;
     sh:property [
@@ -3766,6 +3804,37 @@ urpx-shacl:TariffBookDocumentShape
         sh:maxCount 1 ;
     ] .
 
+urpx-shacl:TariffBookReferenceShape
+    a sh:NodeShape ;
+    rdfs:label "TariffBookReference Shape"@en ;
+    sh:targetClass urpx:TariffBookReference ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [
+        sh:path urpx:anchorLink ;
+        sh:datatype xsd:anyURI ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:leafEnd ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:leafStart ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
 urpx-shacl:TariffPublicationShape
     a sh:NodeShape ;
     rdfs:label "TariffPublication Shape"@en ;
@@ -3978,6 +4047,37 @@ urpx-shacl:TariffStatementDocumentShape
     sh:property [
         sh:path urpx:version ;
         sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:TariffStatementReferenceShape
+    a sh:NodeShape ;
+    rdfs:label "TariffStatementReference Shape"@en ;
+    sh:targetClass urpx:TariffStatementReference ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [
+        sh:path urpx:anchorLink ;
+        sh:datatype xsd:anyURI ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:leafEnd ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:leafStart ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:tariffStatementType ;
+        sh:node urpx-shacl:TariffStatementTypeValueShape ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] .
