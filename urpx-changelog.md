@@ -1,9 +1,70 @@
 # 📋 URPX Changelog
 
 **Version:** 0.1.1
-**Last Updated:** 2026-04-07
+**Last Updated:** 2026-04-10
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-04-10
+---
+
+### Ontology Property Changes
+
+#### Renamed: `urpx:approvalDate` → `urpx:dateApproved`
+- Renamed for consistency with `date`-prefixed naming convention (`datePublished`, `dateModified`, etc.).
+- Expanded domain to include `urpx:TariffPublication`, `urpx:TariffBookReference`, `urpx:TariffStatementReference`, `urpx:RatePlan`, and `urpx:RatePlanModifier` in addition to existing `urpx:DataSourceReference`, `urpx:RatePlanVersion`, and `urpx:RatePlanModifierVersion`.
+- **Design Decision:** [#091](documentation/pages/urpx-design-decisions-081-120.md#decision-091)
+
+#### Added: `urpx:dateCreated` (DatatypeProperty)
+- **Range:** `xsd:date`
+- **Domain:** `urpx:DataSourceReference`, `urpx:URPXDocument`, `urpx:TariffPublication`, `urpx:TariffBookReference`, `urpx:TariffStatementReference`, `urpx:RatePlan`, `urpx:RatePlanModifier`, `urpx:RatePlanVersion`, `urpx:RatePlanModifierVersion`
+- **Design Decision:** [#091](documentation/pages/urpx-design-decisions-081-120.md#decision-091)
+
+#### Added: `urpx:dateReceived` (DatatypeProperty)
+- **Range:** `xsd:date`
+- **Domain:** `urpx:URPXDocument`, `urpx:TariffPublication`, `urpx:TariffBookReference`, `urpx:TariffStatementReference`
+- **Design Decision:** [#091](documentation/pages/urpx-design-decisions-081-120.md#decision-091)
+
+#### Domain Expanded: `urpx:dateModified`
+- Added `urpx:TariffBookReference`, `urpx:TariffStatementReference`, `urpx:TariffPublication`.
+- **Design Decision:** [#091](documentation/pages/urpx-design-decisions-081-120.md#decision-091)
+
+#### Domain Expanded: `urpx:datePublished`
+- Added `urpx:RatePlan`, `urpx:RatePlanModifier`, `urpx:RatePlanVersion`, `urpx:RatePlanModifierVersion`, `urpx:TariffBookReference`, `urpx:TariffStatementReference`.
+- **Design Decision:** [#091](documentation/pages/urpx-design-decisions-081-120.md#decision-091)
+
+#### Domain Expanded: `urpx:anchorLink`
+- Added `urpx:DataSourceReference` to the existing union of `urpx:TariffBookReference` and `urpx:TariffStatementReference`.
+- **Design Decision:** [#091](documentation/pages/urpx-design-decisions-081-120.md#decision-091)
+
+#### Domain Expanded: `urpx:pageStart` and `urpx:pageEnd`
+- Added `urpx:TariffBookReference` and `urpx:TariffStatementReference`.
+- **Design Decision:** [#091](documentation/pages/urpx-design-decisions-081-120.md#decision-091)
+
+#### Domain Expanded: `urpx:hasDataSourceReference`
+- Added `urpx:TariffPublication` and `urpx:TariffStatementDocument`.
+- **Design Decision:** [#091](documentation/pages/urpx-design-decisions-081-120.md#decision-091)
+
+#### Added: `TariffStatementTypeValue` Enum Instances
+- Materialized individual definitions for: `distributionStatement`, `fuelAdjustmentStatement`, `purchasedPowerStatement`, `statementTypeOther`, `transmissionStatement`.
+- **Design Decision:** [#092](documentation/pages/urpx-design-decisions-081-120.md#decision-092)
+
+#### Comment and Annotation Refinements
+- Clarified `rdfs:comment` and `skos:note` on `TariffAddendumDocument`, `TariffBookReference`, `TariffPublication`, `TariffStatementReference`, `hasModifierVersionOptions`, `hasTariffBookReference`, and `dateRetrieved`.
+
+#### Cleanup: Removed Duplicate `profileMetricInput` Individual
+- Removed duplicate individual definition; primary definition remains in the MetricInputTypeValue enum section.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- Renamed `approvalDate` → `dateApproved` in `DataSourceReferenceShape`, `RatePlanVersionShape`, `RatePlanModifierVersionShape`.
+- Added `dateCreated`, `dateReceived`, and expanded date property constraints across applicable shapes.
+- Added `anchorLink` to `DataSourceReferenceShape`; added `pageStart`/`pageEnd` to `TariffBookReferenceShape` and `TariffStatementReferenceShape`.
+- Added `hasDataSourceReference` to `TariffPublicationShape` and `TariffStatementDocumentShape`.
+- Added date property blocks to `RatePlanShape`, `RatePlanModifierShape`, `TariffBookReferenceShape`, `TariffStatementReferenceShape`, `TariffPublicationShape`.
+- Removed `rateStatement` from `TariffStatementTypeValueShape` `sh:in` list.
+- **Design Decisions:** [#091](documentation/pages/urpx-design-decisions-081-120.md#decision-091), [#092](documentation/pages/urpx-design-decisions-081-120.md#decision-092)
+
+---
 
 2026-04-07
 ---

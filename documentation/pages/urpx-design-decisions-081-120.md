@@ -54,6 +54,8 @@ Quick links to all design decisions:
 - ✅ [Decision #088: DataSourceReference Provenance Metadata Expansion](#decision-088)
 - ✅ [Decision #089: TariffBookReference and TariffStatementReference Nested Citation Classes](#decision-089)
 - ✅ [Decision #090: Add Version-Level Modifier Reference Properties](#decision-090)
+- ✅ [Decision #091: Date Property Normalization and Provenance Domain Expansion](#decision-091)
+- ✅ [Decision #092: TariffStatementTypeValue Enum Instance Materialization](#decision-092)
 
 ---
 
@@ -692,3 +694,117 @@ These properties mirror the structure and cardinality of their document-level co
 - File: [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
 - File: [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
 - Related Decision: #084 (RatePlanVersion Modifier Options Relationship)
+
+---
+
+<a id="decision-091"></a>
+### 🔗 Decision #091: Date Property Normalization and Provenance Domain Expansion
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-04-10
+- **Issue:** Date property naming inconsistency; provenance metadata gaps across reference and version classes
+- **Category:** Naming Convention, Architecture
+- **Impact:** Medium - Renames one property (breaking), adds two new properties, expands domains for five existing properties
+
+**Context:**
+The ontology had an inconsistent naming pattern: most date properties used a `date`-prefixed convention (`datePublished`, `dateModified`, `dateRetrieved`) while `approvalDate` used the reverse pattern. Additionally, several provenance-related properties (`anchorLink`, `pageStart`, `pageEnd`, `dateModified`, `datePublished`) had narrower domains than needed — nested citation classes like `TariffBookReference` and `TariffStatementReference` lacked direct access to pagination and date metadata, and rate plan document classes lacked publication dates.
+
+Two common date concepts — creation date and receipt date — had no dedicated properties, forcing producers to overload `datePublished` or `dateModified` for these distinct semantics.
+
+**Decision:**
+1. Rename `approvalDate` → `dateApproved` for naming consistency.
+2. Add `dateCreated` (xsd:date) and `dateReceived` (xsd:date) as new properties with appropriate domains.
+3. Expand domains of `dateModified`, `datePublished`, `anchorLink`, `pageStart`, `pageEnd`, and `hasDataSourceReference` to cover the full set of classes that logically carry this metadata.
+
+**Alternatives Considered:**
+
+1. **Normalize Naming + Expand Domains Together** ⭐ **SELECTED**
+   - ✅ Single coherent change that addresses naming and coverage in one pass
+   - ✅ Consistent `date`-prefixed convention across all temporal properties
+   - ✅ Eliminates semantic overloading of existing date properties
+   - ❌ Breaking rename of `approvalDate`
+
+2. **Keep `approvalDate`, Only Add New Properties**
+   - ✅ Non-breaking for existing producers
+   - ❌ Perpetuates naming inconsistency
+   - ❌ Harder to document and remember which properties use which convention
+
+3. **Deprecate `approvalDate` Instead of Removing**
+   - ✅ Backwards compatible
+   - ❌ Two properties meaning the same thing creates ambiguity
+   - ❌ URPX is pre-1.0; clean renames are expected
+
+**Rationale:**
+- Pre-1.0 ontology allows breaking renames without deprecation ceremony
+- Consistent `date`-prefixed naming reduces cognitive load for producers and consumers
+- Separate `dateCreated` and `dateReceived` properties eliminate ambiguity vs. `datePublished`
+- Expanding provenance domains to nested citation classes supports page-level and section-level citation metadata without routing through the parent `DataSourceReference`
+
+**Implementation Details:**
+- Removed `urpx:approvalDate`; added `urpx:dateApproved` with expanded domain in [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
+- Added `urpx:dateCreated` and `urpx:dateReceived` with broad provenance-oriented domains
+- Extended `dateModified` domain to `TariffBookReference`, `TariffStatementReference`, `TariffPublication`
+- Extended `datePublished` domain to `RatePlan`, `RatePlanModifier`, `RatePlanVersion`, `RatePlanModifierVersion`, `TariffBookReference`, `TariffStatementReference`
+- Extended `anchorLink` domain to include `DataSourceReference`
+- Extended `pageStart`/`pageEnd` domains to `TariffBookReference`, `TariffStatementReference`
+- Extended `hasDataSourceReference` domain to `TariffPublication`, `TariffStatementDocument`
+- SHACL shapes updated to match all domain changes
+
+**Impact Assessment:**
+- **Positive**: Consistent naming, comprehensive provenance metadata, elimination of semantic overloading
+- **Breaking Change**: `approvalDate` → `dateApproved` rename requires producer/consumer updates
+- **Requirements**: Existing data using `approvalDate` must be migrated to `dateApproved`
+
+**References:**
+- File: [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
+- File: [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- Related Decision: #088 (DataSourceReference Provenance Metadata Expansion)
+- Related Decision: #089 (TariffBookReference and TariffStatementReference Nested Citation Classes)
+
+---
+
+<a id="decision-092"></a>
+### 🔗 Decision #092: TariffStatementTypeValue Enum Instance Materialization
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-04-10
+- **Issue:** `TariffStatementTypeValue` class defined enum members in `owl:oneOf` but lacked individual instance definitions
+- **Category:** Validation, Architecture
+- **Impact:** Low - Additive, non-breaking; brings enum into alignment with all other Value classes
+
+**Context:**
+All other enumeration classes in the ontology (e.g., `TaxExemptStatusValue`, `SpecialNeedsStatusValue`, `DataSourceTypeValue`) had both an `owl:oneOf` declaration on the class and individual instance triples with `rdf:type`, `rdfs:label`, `skos:definition`, and `skos:prefLabel`. `TariffStatementTypeValue` had the class declaration but was missing the individual definitions. This meant SHACL validation via `sh:in` worked (matching IRIs), but consumers lacked human-readable labels and definitions for these enum values.
+
+**Decision:**
+Materialize individual instance definitions for all `TariffStatementTypeValue` members following the established enum pattern: `rdf:type`, `rdfs:label`, `skos:definition`, `skos:prefLabel`.
+
+**Alternatives Considered:**
+
+1. **Add Individual Definitions Following Existing Pattern** ⭐ **SELECTED**
+   - ✅ Consistent with all other 58 enum value classes
+   - ✅ Provides human-readable labels and definitions for tooling and documentation
+   - ✅ No impact on existing SHACL validation
+
+2. **Leave as IRI-Only Enum Members**
+   - ✅ No changes needed
+   - ❌ Inconsistent with every other enum in the ontology
+   - ❌ Consumers cannot discover labels or definitions via standard SPARQL
+
+**Rationale:**
+- Consistency across all enum value classes is a core URPX design principle
+- Human-readable metadata on enum instances supports documentation generation and UI tooling
+- The SHACL `TariffStatementTypeValueShape` already expected these IRIs to exist
+
+**Implementation Details:**
+- Added individual definitions for `distributionStatement`, `fuelAdjustmentStatement`, `purchasedPowerStatement`, `statementTypeOther`, and `transmissionStatement` in [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
+- Each individual follows the pattern: `rdf:type urpx:TariffStatementTypeValue`, `rdfs:label`, `skos:definition`, `skos:prefLabel`
+- Placed in a dedicated `# --- Tariff Statement Type Property (TariffStatementTypeValue) ---` section, alphabetically between SpecialNeedsStatusValue and TaxExemptStatusValue
+
+**Impact Assessment:**
+- **Positive**: Complete enum coverage, consistent with all other Value classes
+- **Breaking Change**: None — additive only
+- **Requirements**: None
+
+**References:**
+- File: [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
+- Related Decision: #089 (TariffBookReference and TariffStatementReference Nested Citation Classes)

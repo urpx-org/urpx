@@ -393,7 +393,7 @@ urpx:TOUTier a owl:Class ;
 
 urpx:TariffAddendumDocument a owl:Class ;
     rdfs:label "Tariff Addendum Document"@en ;
-    rdfs:comment "Addendum filing containing only rate plan modifiers" ;
+    rdfs:comment "Addendum filing for corrections or clarifications" ;
     rdfs:subClassOf urpx:URPXDocument ;
     skos:note "Tariff addendum for corrections or clarifications." .
 
@@ -406,12 +406,12 @@ urpx:TariffBookDocument a owl:Class ;
 urpx:TariffBookReference a owl:Class ;
     rdfs:label "Tariff Book Reference"@en ;
     rdfs:comment "Structured reference to a specific location within a tariff book PDF" ;
-    skos:note "Reachable from DataSourceReference via hasTariffBookReference. Captures leaf and page position within the PDF." .
+    skos:note "Nested within DataSourceReference via hasTariffBookReference. Captures leaf and page position within the PDF." .
 
 urpx:TariffPublication a owl:Class ;
     rdfs:label "Tariff Publication"@en ;
-    rdfs:comment "Reference to formal tariff document or regulatory filing" ;
-    skos:note "Links to official tariff documents, PDFs, or regulatory filings that contain the authoritative rate information. Supports document metadata and versioning." .
+    rdfs:comment "Formal regulatory filing" ;
+    skos:note "Official regulatory filing that contains rate plan information, pricing, and rules." .
 
 urpx:TariffStatementDocument a owl:Class ;
     rdfs:label "Tariff Statement Document"@en ;
@@ -422,7 +422,7 @@ urpx:TariffStatementDocument a owl:Class ;
 urpx:TariffStatementReference a owl:Class ;
     rdfs:label "Tariff Statement Reference"@en ;
     rdfs:comment "Structured reference to a PSC statement filing PDF with provenance and statement type" ;
-    skos:note "Nested within DataSourceReference via hasTariffStatementReference. Reached from Price, PriceSet, or PriceDefinition via hasDataSourceReference." .
+    skos:note "Nested within DataSourceReference via hasTariffStatementReference." .
 
 urpx:TariffSupplementDocument a owl:Class ;
     rdfs:label "Tariff Supplement Document"@en ;
@@ -786,7 +786,7 @@ urpx:SpecialNeedsStatusValue a owl:Class ;
 urpx:TariffStatementTypeValue a owl:Class ;
     rdfs:label "Statement Type Value"@en ;
     rdfs:comment "PSC statement filing types enumeration values" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:distributionStatement urpx:fuelAdjustmentStatement urpx:purchasedPowerStatement urpx:rateStatement urpx:statementTypeOther urpx:transmissionStatement ) ] ;
+    owl:equivalentClass [ owl:oneOf ( urpx:distributionStatement urpx:fuelAdjustmentStatement urpx:purchasedPowerStatement urpx:statementTypeOther urpx:transmissionStatement ) ] ;
     skos:note "Enumeration class for statement document categorization. Standardized statement type definitions." .
 
 urpx:TaxExemptStatusValue a owl:Class ;
@@ -888,7 +888,7 @@ urpx:anchorLink a owl:DatatypeProperty ;
     rdfs:label "Anchor Link"@en ;
     rdfs:comment "URL or fragment identifier pointing to a specific location within a tariff book PDF" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:TariffBookReference urpx:TariffStatementReference ) ] ;
+            owl:unionOf ( urpx:DataSourceReference urpx:TariffBookReference urpx:TariffStatementReference ) ] ;
     rdfs:range xsd:anyURI ;
     skos:note "Deep link into a PDF section or named anchor. Typically a PDF page anchor or named destination." .
 
@@ -985,14 +985,6 @@ urpx:appliesForCustomerSubKind a owl:ObjectProperty ;
     rdfs:domain urpx:ApplicabilityGroup ;
     rdfs:range urpx:CustomerSubKindValue ;
     skos:note "Defines customer sub-kind applicability for prices. Enables price filtering based on detailed customer subcategory classification." .
-
-urpx:approvalDate a owl:DatatypeProperty ;
-    rdfs:label "Approval Date"@en ;
-    rdfs:comment "Regulatory approval date" ;
-    rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:DataSourceReference urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
-    rdfs:range xsd:dateTime ;
-    skos:note "When regulatory authority approved this version." .
 
 urpx:approves a owl:ObjectProperty ;
     rdfs:label "Approves"@en ;
@@ -1212,27 +1204,52 @@ urpx:dataSourceType a owl:ObjectProperty ;
     rdfs:range urpx:DataSourceTypeValue ;
     skos:note "Identifies the source of the data, such as the database name or specific API endpoint. Useful for tracking data provenance." .
 
+urpx:dateApproved a owl:DatatypeProperty ;
+    rdfs:label "Approval Date"@en ;
+    rdfs:comment "Regulatory approval date" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:TariffPublication urpx:DataSourceReference urpx:TariffBookReference  urpx:TariffStatementReference urpx:RatePlan urpx:RatePlanModifier urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
+    rdfs:range xsd:dateTime ;
+    skos:note "When regulatory authority approved this version." .
+
+urpx:dateCreated a owl:DatatypeProperty ;
+    rdfs:label "Date Created"@en ;
+    rdfs:comment "Date the source document or data was created" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:DataSourceReference urpx:URPXDocument urpx:TariffPublication urpx:TariffBookReference urpx:TariffStatementReference urpx:RatePlan urpx:RatePlanModifier urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
+    rdfs:range xsd:date ;
+    skos:note "ISO 8601 date format. Sourced from document metadata or publisher statement." .
+
 urpx:dateModified a owl:DatatypeProperty ;
     rdfs:label "Date Modified"@en ;
     rdfs:comment "Date the source document or data was last updated" ;
-    rdfs:domain urpx:DataSourceReference ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:DataSourceReference urpx:TariffBookReference urpx:TariffStatementReference urpx:TariffPublication ) ] ;
     rdfs:range xsd:date ;
     skos:note "ISO 8601 date format. Sourced from document metadata or publisher statement." .
+
+urpx:dateReceived a owl:DatatypeProperty ;
+    rdfs:label "Date Received"@en ;
+    rdfs:comment "Date the document was received" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:URPXDocument urpx:TariffPublication urpx:TariffBookReference urpx:TariffStatementReference ) ] ;
+    rdfs:range xsd:date ;
+    skos:note "ISO 8601 date format. Captures when the document was received, which may differ from publication or approval dates." .
 
 urpx:datePublished a owl:DatatypeProperty ;
     rdfs:label "Date Published"@en ;
     rdfs:comment "Date of first broadcast/publication" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:TariffPublication urpx:DataSourceReference ) ] ;
+            owl:unionOf ( urpx:TariffPublication urpx:DataSourceReference urpx:RatePlan urpx:RatePlanModifier urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:TariffBookReference  urpx:TariffStatementReference ) ] ;
     rdfs:range xsd:date ;
     skos:note "Official publication or filing date for tariff documents." .
 
 urpx:dateRetrieved a owl:DatatypeProperty ;
     rdfs:label "Date Retrieved"@en ;
-    rdfs:comment "Date the data was retrieved or downloaded from its source" ;
+    rdfs:comment "Date on which data was retrieved";
     rdfs:domain urpx:DataSourceReference ;
     rdfs:range xsd:date ;
-    skos:note "ISO 8601 date format. Records the access date for provenance and cache invalidation." .
+    skos:note "ISO 8601 date format. Records the access date for provenance." .
 
 urpx:dayType a owl:ObjectProperty ;
     rdfs:label "Day Type"@en ;
@@ -1561,7 +1578,7 @@ urpx:hasDataSourceReference a owl:ObjectProperty ;
     rdfs:label "Has Data Source Reference"@en ;
     rdfs:comment "Links an entity to a structured data source reference." ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:PriceSet urpx:Price urpx:PriceDefinition urpx:PriceSetAlternative urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:TariffBookDocument urpx:EligibilityRule ) ] ;
+            owl:unionOf ( urpx:PriceSet urpx:Price urpx:PriceDefinition urpx:PriceSetAlternative urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:TariffBookDocument urpx:TariffPublication urpx:TariffStatementDocument urpx:EligibilityRule ) ] ;
     rdfs:range urpx:DataSourceReference ;
     skos:note "Enables traceability for data points back to their original source files or APIs with structured metadata." .
 
@@ -1693,7 +1710,7 @@ urpx:hasModifierVersionOptions a owl:ObjectProperty ;
     rdfs:comment "Modifier versions available as options for this rate plan version" ;
     rdfs:domain urpx:RatePlanVersion ;
     rdfs:range urpx:RatePlanModifierVersion ;
-    skos:note "Links a rate plan version to one or more compatible rate plan modifier versions for version-level option modeling." .
+    skos:note "Links a rate plan version to one or more applicable rate plan modifier versions for version level option modeling." .
 
 urpx:hasName a owl:ObjectProperty ;
     rdfs:label "Has Name"@en ;
@@ -1879,10 +1896,10 @@ urpx:hasServiceTiers a owl:ObjectProperty ;
 
 urpx:hasTariffBookReference a owl:ObjectProperty ;
     rdfs:label "Has Tariff Book Reference"@en ;
-    rdfs:comment "Links a DataSourceReference to a structured tariff book location" ;
+    rdfs:comment "Links a DataSourceReference to tariff book sections" ;
     rdfs:domain urpx:DataSourceReference ;
     rdfs:range urpx:TariffBookReference ;
-    skos:note "Links from DataSourceReference to tariff book leaf and page details." .
+    skos:note "Links DataSourceReference to tariff book leaf identifiers." .
 
 urpx:hasTariffPublication a owl:ObjectProperty ;
     rdfs:label "Has Tariff Publication"@en ;
@@ -2336,7 +2353,7 @@ urpx:pageEnd a owl:DatatypeProperty ;
     rdfs:label "Page End"@en ;
     rdfs:comment "Ending page number in the source document" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:DataSourceReference ) ];
+            owl:unionOf ( urpx:DataSourceReference urpx:TariffBookReference urpx:TariffStatementReference ) ];
     rdfs:range xsd:integer ;
     skos:note "PDF or document page number. Use leafStart/leafEnd on TariffBookReference for tariff book leaf numbers." .
 
@@ -2344,7 +2361,7 @@ urpx:pageStart a owl:DatatypeProperty ;
     rdfs:label "Page Start"@en ;
     rdfs:comment "Starting page number in the source document" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:DataSourceReference ) ];
+            owl:unionOf ( urpx:DataSourceReference urpx:TariffBookReference urpx:TariffStatementReference ) ];
     rdfs:range xsd:integer ;
     skos:note "PDF or document page number. Use leafStart/leafEnd on TariffBookReference for tariff book leaf numbers." .
 
@@ -2525,11 +2542,11 @@ urpx:referencesMetricInput a owl:ObjectProperty ;
 
 urpx:referencesPriceDefinition a owl:ObjectProperty ;
     rdfs:label "References Price Definition"@en ;
-    rdfs:comment "IRI reference linking a Price instance to its PriceDefinition" ;
+    rdfs:comment "IRI reference linking a Price, PriceSet, or PriceSetAlternative instance to its PriceDefinition" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceSet ) ] ;
+            owl:unionOf ( urpx:Price urpx:PriceSet urpx:PriceSetAlternative ) ] ;
     rdfs:range urpx:PriceDefinition ;
-    skos:note "IRI-based reference from Price to PriceDefinition. Enables Price instances to reference the structural definition established at the Ledger level via hasPriceDefinition. Supports n:1 relationship between Price instances and their price definition." .
+    skos:note "IRI-based reference from Price, PriceSet, or PriceSetAlternative to PriceDefinition. Enables Price instances to reference the structural definition established at the Ledger level via hasPriceDefinition. Supports n:1 relationship between Price instances and their price definition." .
 
 urpx:referencesProfileAlternative a owl:ObjectProperty ;
     rdfs:label "References Profile Alternative"@en ;
@@ -5424,6 +5441,34 @@ urpx:vulnerableCustomer rdf:type urpx:SpecialNeedsStatusValue ;
     skos:prefLabel "Vulnerable Customer" .
 
 
+# --- Tariff Statement Type Property (TariffStatementTypeValue) ---
+
+urpx:distributionStatement rdf:type urpx:TariffStatementTypeValue ;
+    rdfs:label "Distribution Statement"@en ;
+    skos:definition "Distribution-related statement filing type for PSC tariff documentation" ;
+    skos:prefLabel "Distribution Statement" .
+
+urpx:fuelAdjustmentStatement rdf:type urpx:TariffStatementTypeValue ;
+    rdfs:label "Fuel Adjustment Statement"@en ;
+    skos:definition "Fuel adjustment-related statement filing type for PSC tariff documentation" ;
+    skos:prefLabel "Fuel Adjustment Statement" .
+
+urpx:purchasedPowerStatement rdf:type urpx:TariffStatementTypeValue ;
+    rdfs:label "Purchased Power Statement"@en ;
+    skos:definition "Purchased power-related statement filing type for PSC tariff documentation" ;
+    skos:prefLabel "Purchased Power Statement" .
+
+urpx:statementTypeOther rdf:type urpx:TariffStatementTypeValue ;
+    rdfs:label "Other Statement Type"@en ;
+    skos:definition "Other or unclassified statement filing type for PSC tariff documentation" ;
+    skos:prefLabel "Other" .
+
+urpx:transmissionStatement rdf:type urpx:TariffStatementTypeValue ;
+    rdfs:label "Transmission Statement"@en ;
+    skos:definition "Transmission-related statement filing type for PSC tariff documentation" ;
+    skos:prefLabel "Transmission Statement" .
+
+
 # --- Tax Exempt Status Property (TaxExemptStatusValue) ---
 
 urpx:exempt rdf:type urpx:TaxExemptStatusValue ;
@@ -5850,10 +5895,6 @@ urpx:weeklyUpdates rdf:type urpx:UpdateFrequencyValue ;
     skos:definition "Price updates weekly (P1W)" ;
     skos:prefLabel "Weekly" .
 
-urpx:profileMetricInput a urpx:MetricInputTypeValue ;
-    rdfs:label "Profile Metric Input"@en ;
-    skos:definition "Metric input from customer/service point profile characteristics" ;
-    skos:note "Used for profile characteristics (not meter measurements). Examples: numberOfMeters, numberOfOccupants, buildingSquareFootage, billedDemand (utility estimate). NOT for values calculated from meter data like averageMonthlyUsage or loadFactor (use calculatedMetricInput). Profile characteristics can change over time. References profile properties via profileMetricProperty." .
 
 
 # --- Voltage Level Property (VoltageLevel) ---
