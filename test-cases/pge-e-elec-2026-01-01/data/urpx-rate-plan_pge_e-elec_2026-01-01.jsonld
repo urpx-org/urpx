@@ -17,7 +17,11 @@
     "urpx:month": { "@type": "xsd:gMonth" },
     "urpx:intervalDuration": { "@type": "xsd:duration" },
     "urpx:touTierNumber": { "@type": "xsd:integer" },
-    "urpx:touPeriodNumber": { "@type": "xsd:integer" }
+    "urpx:touPeriodNumber": { "@type": "xsd:integer" },
+    "urpx:pageStart": { "@type": "xsd:integer" },
+    "urpx:pageEnd": { "@type": "xsd:integer" },
+    "urpx:accessURL": { "@type": "xsd:anyURI" },
+    "urpx:dateRetrieved": { "@type": "xsd:date" }
   },
   "@type": "urpx:RatePlan",
   "@id": "pge:e-elec",
@@ -43,7 +47,17 @@
       "@type": "urpx:DataSourceReference",
       "urpx:url": "file://./assets/PGE_E-ELEC_2026-01-01.pdf",
       "urpx:fileName": "ELEC_SCHEDS_E-ELEC.pdf",
-      "urpx:mediaType": { "@id": "urpx:applicationPdf" }
+      "urpx:mediaType": { "@id": "urpx:applicationPdf" },
+      "urpx:accessURL": "https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_SCHEDS_E-ELEC.pdf",
+      "urpx:dateRetrieved": "2026-01-05",
+      "urpx:dataSourceType": { "@id": "urpx:utilityWebsiteSource" },
+      "urpx:hasTariffBookReference": {
+        "@type": "urpx:TariffBookReference",
+        "urpx:pageStart": 1,
+        "urpx:pageEnd": 5,
+        "urpx:leafStart": "60519-E",
+        "urpx:leafEnd": "54740-E"
+      }
     },
     "urpx:hasEligibilityRule": [
       {

@@ -149,7 +149,8 @@ URPXDocument
         │        ├── TOUSchedule (time-of-use rules)
         │           └── TOUTier (price level)
         │               └── TOUPeriod (time window)
-        │        ├── ServiceTier (service tier constraints)      
+        │        ├── ServiceTiers (service tier group container)
+        │            └── ServiceTier (service tier constraints)      
         └── Prices (container for all prices)
             ├── PriceSet (logical grouping)
                 └── Price (individual price component)
@@ -196,7 +197,7 @@ A major enhancement in URPX is support for regulatory statement prices:
 ```turtle
 # Statement document from PSC filing
 ex:PSC-Filing-2025-001 a urpx:TariffStatementDocument ;
-    urpx:tariffStatementType "psc_filing" ;
+    urpx:tariffStatementType urpx:transmissionStatement ;
     urpx:filingNumber "2025-EL-0123" ;
     urpx:effectiveDate "2025-01-15"^^xsd:date ;
     urpx:contains ex:TransmissionCharge-001 .
