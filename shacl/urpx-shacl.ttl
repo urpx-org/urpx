@@ -322,6 +322,11 @@ urpx-shacl:BillingModelShape
         sh:minCount 0 ;
     ] ;
     sh:property [
+        sh:path urpx:hasPriceDefinition ;
+        sh:class urpx:PriceDefinition ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:hasServiceTiers ;
         sh:class urpx:ServiceTiers ;
         sh:minCount 0 ;
@@ -1184,11 +1189,6 @@ urpx-shacl:LedgerShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:hasPriceDefinition ;
-        sh:class urpx:PriceDefinition ;
-        sh:minCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:ledgerType ;
         sh:node urpx-shacl:LedgerTypeValueShape ;
         sh:minCount 0 ;
@@ -1939,6 +1939,12 @@ urpx-shacl:PriceDefinitionShape
         sh:path urpx:primaryChargeType ;
         sh:node urpx-shacl:ChargeTypeValueShape ;
         sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesLedger ;
+        sh:class urpx:Ledger ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
