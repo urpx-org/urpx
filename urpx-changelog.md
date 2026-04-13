@@ -1,9 +1,244 @@
 # 📋 URPX Changelog
 
 **Version:** 0.1.1
-**Last Updated:** 2026-03-03
+**Last Updated:** 2026-04-10
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-04-10
+---
+
+### Ontology Property Changes
+
+#### Renamed: `urpx:approvalDate` → `urpx:dateApproved`
+- Renamed for consistency with `date`-prefixed naming convention (`datePublished`, `dateModified`, etc.).
+- Expanded domain to include `urpx:TariffPublication`, `urpx:TariffBookReference`, `urpx:TariffStatementReference`, `urpx:RatePlan`, and `urpx:RatePlanModifier` in addition to existing `urpx:DataSourceReference`, `urpx:RatePlanVersion`, and `urpx:RatePlanModifierVersion`.
+- **Design Decision:** [#091](documentation/pages/urpx-design-decisions-081-120.md#decision-091)
+
+#### Added: `urpx:dateCreated` (DatatypeProperty)
+- **Range:** `xsd:date`
+- **Domain:** `urpx:DataSourceReference`, `urpx:URPXDocument`, `urpx:TariffPublication`, `urpx:TariffBookReference`, `urpx:TariffStatementReference`, `urpx:RatePlan`, `urpx:RatePlanModifier`, `urpx:RatePlanVersion`, `urpx:RatePlanModifierVersion`
+- **Design Decision:** [#091](documentation/pages/urpx-design-decisions-081-120.md#decision-091)
+
+#### Added: `urpx:dateReceived` (DatatypeProperty)
+- **Range:** `xsd:date`
+- **Domain:** `urpx:URPXDocument`, `urpx:TariffPublication`, `urpx:TariffBookReference`, `urpx:TariffStatementReference`
+- **Design Decision:** [#091](documentation/pages/urpx-design-decisions-081-120.md#decision-091)
+
+#### Domain Expanded: `urpx:dateModified`
+- Added `urpx:TariffBookReference`, `urpx:TariffStatementReference`, `urpx:TariffPublication`.
+- **Design Decision:** [#091](documentation/pages/urpx-design-decisions-081-120.md#decision-091)
+
+#### Domain Expanded: `urpx:datePublished`
+- Added `urpx:RatePlan`, `urpx:RatePlanModifier`, `urpx:RatePlanVersion`, `urpx:RatePlanModifierVersion`, `urpx:TariffBookReference`, `urpx:TariffStatementReference`.
+- **Design Decision:** [#091](documentation/pages/urpx-design-decisions-081-120.md#decision-091)
+
+#### Domain Expanded: `urpx:anchorLink`
+- Added `urpx:DataSourceReference` to the existing union of `urpx:TariffBookReference` and `urpx:TariffStatementReference`.
+- **Design Decision:** [#091](documentation/pages/urpx-design-decisions-081-120.md#decision-091)
+
+#### Domain Expanded: `urpx:pageStart` and `urpx:pageEnd`
+- Added `urpx:TariffBookReference` and `urpx:TariffStatementReference`.
+- **Design Decision:** [#091](documentation/pages/urpx-design-decisions-081-120.md#decision-091)
+
+#### Domain Expanded: `urpx:hasDataSourceReference`
+- Added `urpx:TariffPublication` and `urpx:TariffStatementDocument`.
+- **Design Decision:** [#091](documentation/pages/urpx-design-decisions-081-120.md#decision-091)
+
+#### Added: `TariffStatementTypeValue` Enum Instances
+- Materialized individual definitions for: `distributionStatement`, `fuelAdjustmentStatement`, `purchasedPowerStatement`, `statementTypeOther`, `transmissionStatement`.
+- **Design Decision:** [#092](documentation/pages/urpx-design-decisions-081-120.md#decision-092)
+
+#### Comment and Annotation Refinements
+- Clarified `rdfs:comment` and `skos:note` on `TariffAddendumDocument`, `TariffBookReference`, `TariffPublication`, `TariffStatementReference`, `hasModifierVersionOptions`, `hasTariffBookReference`, and `dateRetrieved`.
+
+#### Cleanup: Removed Duplicate `profileMetricInput` Individual
+- Removed duplicate individual definition; primary definition remains in the MetricInputTypeValue enum section.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- Renamed `approvalDate` → `dateApproved` in `DataSourceReferenceShape`, `RatePlanVersionShape`, `RatePlanModifierVersionShape`.
+- Added `dateCreated`, `dateReceived`, and expanded date property constraints across applicable shapes.
+- Added `anchorLink` to `DataSourceReferenceShape`; added `pageStart`/`pageEnd` to `TariffBookReferenceShape` and `TariffStatementReferenceShape`.
+- Added `hasDataSourceReference` to `TariffPublicationShape` and `TariffStatementDocumentShape`.
+- Added date property blocks to `RatePlanShape`, `RatePlanModifierShape`, `TariffBookReferenceShape`, `TariffStatementReferenceShape`, `TariffPublicationShape`.
+- Removed `rateStatement` from `TariffStatementTypeValueShape` `sh:in` list.
+- **Design Decisions:** [#091](documentation/pages/urpx-design-decisions-081-120.md#decision-091), [#092](documentation/pages/urpx-design-decisions-081-120.md#decision-092)
+
+---
+
+2026-04-07
+---
+
+### Ontology Property Changes
+
+#### Added: `urpx:hasModifierVersionOptions` (ObjectProperty)
+- **Domain:** `urpx:RatePlanVersion`
+- **Range:** `urpx:RatePlanModifierVersion`
+- **Rationale:** Enables precise version-to-version compatibility modeling between a specific rate plan version and the modifier versions that are valid options for it.
+- **Design Decision:** [#090](documentation/pages/urpx-design-decisions-081-120.md#decision-090)
+
+#### Added: `urpx:applicableToRatePlanVersion` (ObjectProperty)
+- **Domain:** `urpx:RatePlanModifierVersion`
+- **Range:** `urpx:RatePlanVersion`
+- **Rationale:** Allows modifier versions to declare which specific rate plan versions they may be applied to, parallel to the existing document-level applicability pattern.
+- **Design Decision:** [#090](documentation/pages/urpx-design-decisions-081-120.md#decision-090)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- Added optional `urpx:hasModifierVersionOptions` property constraint to `RatePlanVersionShape`.
+- Added optional `urpx:applicableToRatePlanVersion` property constraint to `RatePlanModifierVersionShape`.
+- **Design Decision:** [#090](documentation/pages/urpx-design-decisions-081-120.md#decision-090)
+
+---
+
+2026-04-06
+---
+
+### Ontology Changes
+
+#### Expanded: `urpx:DataSourceReference`
+- Added provenance and pagination properties: `urpx:accessURL`, `urpx:dateRetrieved`, `urpx:dateModified`, `urpx:pageStart`, and `urpx:pageEnd`.
+- Extended `approvalDate`, `datePublished`, `effectiveDate`, `effectiveDateTime`, `expirationDate`, and `expirationDateTime` to include `urpx:DataSourceReference` in their domains.
+- Extended the domain of `urpx:hasDataSourceReference` to include `urpx:PriceSetAlternative`.
+- **Rationale:** Captures retrieval provenance, publication metadata, and page-level citation details directly on the source reference object.
+- **Design Decision:** [#088](documentation/pages/urpx-design-decisions-081-120.md#decision-088)
+
+#### Added: Structured Tariff Citation Classes
+- Added `urpx:TariffBookReference` and `urpx:TariffStatementReference` as nested citation classes under `DataSourceReference`.
+- Added linking properties `urpx:hasTariffBookReference` and `urpx:hasTariffStatementReference`.
+- Added structured location properties `urpx:anchorLink`, `urpx:leafStart`, and `urpx:leafEnd`; extended `urpx:tariffStatementType` to support `TariffStatementReference`.
+- Removed legacy datatype properties `urpx:tariffBookReference` and `urpx:tariffStatementReference`.
+- **Rationale:** Replaces opaque string citations with structured, queryable reference objects while keeping provenance metadata centralized on `DataSourceReference`.
+- **Design Decision:** [#089](documentation/pages/urpx-design-decisions-081-120.md#decision-089)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Expanded: `DataSourceReferenceShape`
+- Added validation for provenance, pagination, and nested tariff citation properties.
+- **Design Decision:** [#088](documentation/pages/urpx-design-decisions-081-120.md#decision-088)
+
+#### Added: `TariffBookReferenceShape` and `TariffStatementReferenceShape`
+- Added dedicated node shapes for the new structured tariff citation classes.
+- Removed direct string-based `tariffBookReference` and `tariffStatementReference` constraints from `PriceShape`, `PriceDefinitionShape`, `PriceSetShape`, and `PriceSetAlternativeShape`.
+- **Design Decision:** [#089](documentation/pages/urpx-design-decisions-081-120.md#decision-089)
+
+---
+
+2026-03-24
+---
+
+### Ontology Changes
+
+#### Added: `urpx:ServiceTiers` (Class)
+- Added new container class `urpx:ServiceTiers` between `BillingModel` and individual `ServiceTier` instances.
+- Added `urpx:hasServiceTiers` (`BillingModel` → `ServiceTiers`).
+- Changed the domain of `urpx:hasServiceTier` from `urpx:BillingModel` to `urpx:ServiceTiers`.
+- Moved `urpx:referencesMetricInput` and `urpx:referencesProfileAlternative` from `ServiceTier` to `ServiceTiers`.
+- **Rationale:** Supports multiple independently scoped groups of tiers within one billing model, with metric/profile references attached at the correct grouping level.
+- **Design Decision:** [#087](documentation/pages/urpx-design-decisions-081-120.md#decision-087)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- Added `urpx-shacl:ServiceTiersShape`.
+- Updated `BillingModelShape` to use `urpx:hasServiceTiers` instead of linking directly to `ServiceTier`.
+- Updated tier validation to align with the new container pattern.
+- **Design Decision:** [#087](documentation/pages/urpx-design-decisions-081-120.md#decision-087)
+
+---
+
+2026-03-23
+---
+
+### Ontology Property Changes
+
+#### Domain Extended: `urpx:name`
+- Added `urpx:PriceSummary`, `urpx:DataSourceReference`, `urpx:EligibilityRule`, `urpx:TOUSchedule`, `urpx:ServiceTier`, `urpx:ApplicabilityRule`, `urpx:ApplicabilityGroup`, and `urpx:PriceUpdateRule`.
+- **Rationale:** Standardizes human-readable labels across user-facing and documentation-facing entities.
+- **Design Decision:** [#083](documentation/pages/urpx-design-decisions-081-120.md#decision-083)
+
+#### Domain Extended: `urpx:description`
+- Added `urpx:DataSourceReference` and `urpx:PriceUpdateRule`.
+- **Design Decision:** [#083](documentation/pages/urpx-design-decisions-081-120.md#decision-083)
+
+#### Domain Extended: `urpx:url`
+- Added `urpx:ProgramEnrollment`.
+- **Rationale:** Supports linking program enrollment records to enrollment portals or program documentation.
+- **Design Decision:** [#083](documentation/pages/urpx-design-decisions-081-120.md#decision-083)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Added or Expanded: Human-Readable Metadata Constraints
+- Added or expanded `urpx:name` property constraints on `DataSourceReferenceShape`, `EligibilityRuleShape`, `TOUScheduleShape`, `ServiceTierShape`, `ApplicabilityRuleShape`, `ApplicabilityGroupShape`, `PriceSummaryShape`, and `PriceUpdateRuleShape`.
+- **Design Decision:** [#083](documentation/pages/urpx-design-decisions-081-120.md#decision-083)
+
+#### Required: `name` on Core Published Entities
+- Made `urpx:name` required on `RatePlanShape`, `RatePlanModifierShape`, `TariffPublicationShape`, and `TOUPeriodShape`.
+- **Design Decision:** [#083](documentation/pages/urpx-design-decisions-081-120.md#decision-083)
+
+---
+
+2026-03-20
+---
+
+### Ontology Property Changes
+
+#### Added: `urpx:hasModifierOptions` (ObjectProperty)
+- **Domain:** `urpx:RatePlanVersion`
+- **Range:** `urpx:RatePlanModifier`
+- **Rationale:** Adds an explicit version-level link to available modifier documents without relying on indirect inference.
+- **Design Decision:** [#084](documentation/pages/urpx-design-decisions-081-120.md#decision-084)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Hardened: Closed Node Shapes
+- Added `sh:closed true` and `sh:ignoredProperties ( rdf:type )` broadly across existing node shapes.
+- **Rationale:** Rejects undeclared properties and reinforces URPX as a single central exchange model rather than a schema intended for ad hoc local extensions.
+- **Design Decision:** [#085](documentation/pages/urpx-design-decisions-081-120.md#decision-085)
+
+#### Expanded: Organization and Authority Validation
+- Expanded `EnergyServiceProviderShape` to validate broader organization metadata including `alternateName`, `commodity`, `hasIdentity`, `hasLocationDataSet`, `legalName`, `operatesIn`, `organizationType`, and `publishes`.
+- Expanded `RegulatoryAuthorityShape` with broader organization and publication/jurisdiction validation.
+- Added `SystemOperatorShape`.
+- Added `nameType` validation to `OrganizationNameShape`.
+- **Design Decision:** [#086](documentation/pages/urpx-design-decisions-081-120.md#decision-086)
+
+#### Added: `hasModifierOptions` on `RatePlanVersionShape`
+- Added optional `urpx:hasModifierOptions` property constraint.
+- **Design Decision:** [#084](documentation/pages/urpx-design-decisions-081-120.md#decision-084)
+
+---
+
+2026-03-18
+---
+
+### Ontology Changes
+
+#### Added: `urpx:MediaTypeValue` (Enumeration Class)
+- Added controlled vocabulary class `urpx:MediaTypeValue` with 14 supported media-type instances.
+- **Rationale:** Replaces free-text media type strings with a controlled, machine-validatable vocabulary.
+- **Design Decision:** [#080](documentation/pages/urpx-design-decisions-041-080.md#decision-080)
+
+#### Changed: `urpx:mediaType`
+- Converted from `owl:DatatypeProperty` with range `xsd:string` to `owl:ObjectProperty` with range `urpx:MediaTypeValue`.
+- **Design Decision:** [#080](documentation/pages/urpx-design-decisions-041-080.md#decision-080)
+
+#### Refactored: `urpx:DataSourceTypeValue`
+- Removed file-format-based source values: `urpx:csvSource`, `urpx:jsonSource`, `urpx:pdfSource`, `urpx:spreadsheetSource`, `urpx:xmlSource`.
+- Added origin-based source values: `urpx:utilityWebsiteSource`, `urpx:regulatoryWebsiteSource`.
+- **Rationale:** Source type now expresses provenance origin, while media format is captured separately by `urpx:mediaType`.
+- **Design Decision:** [#081](documentation/pages/urpx-design-decisions-081-120.md#decision-081)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Updated: Data Source Media and Source-Type Validation
+- Added `MediaTypeValueShape`.
+- Updated `DataSourceTypeValueShape` to the refactored provenance-oriented enumeration.
+- Updated `DataSourceReferenceShape` to validate `urpx:mediaType` via `sh:node` rather than `sh:datatype`.
+- **Design Decision:** [#080](documentation/pages/urpx-design-decisions-041-080.md#decision-080)
+- **Design Decision:** [#081](documentation/pages/urpx-design-decisions-081-120.md#decision-081)
+
+#### Relaxed: `enrollmentStatus` cardinality
+- Made `urpx:enrollmentStatus` optional on `ProgramEnrollmentShape` and `PriorRatePlanShape`.
+- **Rationale:** Enrollment status can be required in a customer scenario model, but not in generic representations of available or applicable programs and prior rate plans.
+- **Design Decision:** [#082](documentation/pages/urpx-design-decisions-081-120.md#decision-082)
 
 2026-03-03 (continued)
 ---

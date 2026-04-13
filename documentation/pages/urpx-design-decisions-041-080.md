@@ -2,7 +2,7 @@
 
 **Version:** 1.0
 **Created:** 2026-01-05
-**Last Updated:** 2026-03-03
+**Last Updated:** 2026-04-07
 
 > **Note:** Design decisions reference the original modular ontology files (urpx-core-ontology.ttl, urpx-profile.ttl, urpx-organization.ttl, urpx-geography.ttl, urpx-charge-classification.ttl). As of v0.1.1, these files have been consolidated into a single `ontology/urpx-ontology.ttl` file. See [urpx-changelog.md](../../urpx-changelog.md) for consolidation details.
 
@@ -82,6 +82,7 @@ Quick links to all design decisions:
 - ✅ [Decision #077: hasMetricInput Domain Narrowed to PlanElements Only](#decision-077)
 - ✅ [Decision #078: name Property Extended to ProfileAlternative and ProfileAlternatives; Made Required on Key Entities](#decision-078)
 - ✅ [Decision #079: referencesProfileAlternative Domain Extended to TOUSchedule and ServiceTier](#decision-079)
+- ✅ [Decision #080: Controlled Media Type Vocabulary for Data Sources](#decision-080)
 
 ---
 
@@ -2442,3 +2443,55 @@ Similarly, `PriceDefinition` needed the ability to reference a `ProfileAlternati
 - Related Decision: #049 (ProfileAlternative Architecture and Naming)
 - Related Decision: #078 (name Property Extended to ProfileAlternative and ProfileAlternatives)
 
+---
+
+<a id="decision-080"></a>
+### 🔗 Decision #080: Controlled Media Type Vocabulary for Data Sources
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-03-18
+- **Issue:** Data source media metadata normalization
+- **Category:** Architecture, Validation
+- **Impact:** High - Breaking change; replaces free-text media types with controlled IRIs
+
+**Context:**
+`urpx:mediaType` was modeled as a free-text `xsd:string` on `DataSourceReference`. That made media types difficult to validate consistently and duplicated concerns already implicit in file-format-style `DataSourceTypeValue` instances. As URPX data source modeling became more explicit, media format needed to be represented as a controlled value separate from provenance origin.
+
+**Decision:**
+Convert `urpx:mediaType` from a datatype property to an object property with range `urpx:MediaTypeValue`, and define a controlled `MediaTypeValue` enumeration covering the supported IANA-aligned media types used by URPX data sources.
+
+**Alternatives Considered:**
+
+1. **Controlled `MediaTypeValue` Enumeration** ⭐ **SELECTED**
+   - ✅ Enforces machine-validatable media type values
+   - ✅ Separates file format from provenance/origin classification
+   - ✅ Aligns ontology and SHACL validation semantics
+   - ✅ Improves interoperability for JSON-LD and RDF consumers
+
+2. **Keep `mediaType` as Free-Text String**
+   - ✅ Simpler for manual authoring
+   - ❌ Allows spelling drift and inconsistent casing
+   - ❌ Cannot be constrained cleanly in SHACL
+   - ❌ Overlaps with other source classification properties
+
+**Rationale:**
+- Media type is a bounded vocabulary problem, not an open-text field
+- URPX already uses object-property enumerations for controlled values
+- Separating media type from source origin makes both properties more precise
+- Enumerated values support consistent citations, tooling, and downstream transformations
+
+**Implementation Details:**
+- Added `urpx:MediaTypeValue` as an enumeration class in [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
+- Added 14 supported media type instances across `application/*`, `image/*`, and `text/*`
+- Changed `urpx:mediaType` from `owl:DatatypeProperty` with `xsd:string` range to `owl:ObjectProperty` with `urpx:MediaTypeValue` range
+- Added `urpx-shacl:MediaTypeValueShape` in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- Updated `urpx-shacl:DataSourceReferenceShape` to validate `mediaType` with `sh:node` instead of `sh:datatype`
+
+**Impact Assessment:**
+- **Positive**: Consistent media type semantics, stronger validation, clearer separation of format vs. provenance
+- **Breaking Change**: Yes - existing string literals for `mediaType` must migrate to `urpx:MediaTypeValue` IRIs
+- **Requirements**: Data producers should map legacy string values to the new enumeration before validation
+
+**References:**
+- Commit: `d86f096`
+- Related Decision: #052 (Structured Data Source Reference Architecture)
