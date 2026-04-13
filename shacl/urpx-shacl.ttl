@@ -212,8 +212,8 @@ urpx-shacl:ApplicabilityRuleShape
         sh:minCount 0 ;
     ] ;
     sh:property [
-        sh:path urpx:logicExpression ;
-        sh:datatype xsd:string ;
+        sh:path urpx:hasConditionLogic ;
+        sh:class urpx:ConditionLogic ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
@@ -225,12 +225,6 @@ urpx-shacl:ApplicabilityRuleShape
     sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:operator ;
-        sh:node urpx-shacl:OperatorValueShape ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] .
@@ -343,6 +337,27 @@ urpx-shacl:BillingModelShape
         sh:maxCount 1 ;
     ] .
 
+urpx-shacl:BooleanOperationNodeShape
+    a sh:NodeShape ;
+    rdfs:label "BooleanOperationNode Shape"@en ;
+    sh:targetClass urpx:BooleanOperationNode ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [
+        sh:path urpx:operator ;
+        sh:node urpx-shacl:BooleanOperatorValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:conditionOperands ;
+        sh:or (
+            [ sh:class urpx:Condition ]
+            [ sh:class urpx:BooleanOperationNode ]
+        ) ;
+        sh:minCount 1 ;
+    ] .
+
 urpx-shacl:CalculationMethodShape
     a sh:NodeShape ;
     rdfs:label "CalculationMethod Shape"@en ;
@@ -405,44 +420,67 @@ urpx-shacl:ConditionShape
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:property [
-        sh:path urpx:conditionType ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:conditionValue ;
-        sh:nodeKind sh:Literal ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:description ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:hasMetricSpecification ;
-        sh:class urpx:MetricSpecification ;
+        sh:path urpx:leftOperand ;
+        sh:or (
+            [ sh:class urpx:TerminalNode ]
+            [ sh:class urpx:DatatypeTerminalNode ]
+            [ sh:class urpx:ObjectTerminalNode ]
+            [ sh:class urpx:CustomTerminalNode ]
+            [ sh:class urpx:OperationNode ]
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
         sh:minCount 0 ;
+        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:operator ;
         sh:node urpx-shacl:OperatorValueShape ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:referencesMetricInput ;
-        sh:class urpx:MetricInput ;
-        sh:minCount 0 ;
+        sh:path urpx:rightOperand ;
+        sh:or (
+            [ sh:class urpx:TerminalNode ]
+            [ sh:class urpx:DatatypeTerminalNode ]
+            [ sh:class urpx:ObjectTerminalNode ]
+            [ sh:class urpx:CustomTerminalNode ]
+            [ sh:class urpx:OperationNode ]
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:ConditionLogicShape
+    a sh:NodeShape ;
+    rdfs:label "ConditionLogic Shape"@en ;
+    sh:targetClass urpx:ConditionLogic ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [
+        sh:path urpx:operator ;
+        sh:node urpx-shacl:BooleanOperatorValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:unitOfMeasure ;
-        sh:node urpx-shacl:UnitOfMeasureValueShape ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
+        sh:path urpx:conditionOperands ;
+        sh:or (
+            [ sh:class urpx:Condition ]
+            [ sh:class urpx:BooleanOperationNode ]
+        ) ;
+        sh:minCount 1 ;
     ] .
 
 urpx-shacl:CustomerProfileShape
@@ -543,6 +581,192 @@ urpx-shacl:CustomerProfileShape
         sh:datatype xsd:decimal ;
         sh:minCount 0 ;
     ] .
+
+urpx-shacl:CustomTerminalNodeShape
+    a sh:NodeShape ;
+    rdfs:label "CustomTerminalNode Shape"@en ;
+    sh:targetClass urpx:CustomTerminalNode ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [
+        sh:path urpx:customConditionProperty ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:literalType ;
+        sh:class urpx:LiteralTypeValue ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:booleanValue ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:dateValue ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:dateTimeValue ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:decimalValue ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:durationValue ;
+        sh:datatype xsd:duration ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:gMonthValue ;
+        sh:datatype xsd:gMonth ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:integerValue ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:stringValue ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:timeValue ;
+        sh:datatype xsd:time ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:xone (
+        [
+            sh:property [
+                sh:path urpx:customConditionProperty ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ] ;
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:hasValue urpx:booleanDatatype ;
+            ] ;
+            sh:property [
+                sh:path urpx:booleanValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:hasValue urpx:dateDatatype ;
+            ] ;
+            sh:property [
+                sh:path urpx:dateValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:hasValue urpx:dateTimeDatatype ;
+            ] ;
+            sh:property [
+                sh:path urpx:dateTimeValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:hasValue urpx:decimalDatatype ;
+            ] ;
+            sh:property [
+                sh:path urpx:decimalValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:hasValue urpx:durationDatatype ;
+            ] ;
+            sh:property [
+                sh:path urpx:durationValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:hasValue urpx:gMonthDatatype ;
+            ] ;
+            sh:property [
+                sh:path urpx:gMonthValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:hasValue urpx:integerDatatype ;
+            ] ;
+            sh:property [
+                sh:path urpx:integerValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:hasValue urpx:stringDatatype ;
+            ] ;
+            sh:property [
+                sh:path urpx:stringValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:hasValue urpx:timeDatatype ;
+            ] ;
+            sh:property [
+                sh:path urpx:timeValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+    ) .
 
 urpx-shacl:DataSourceReferenceShape
     a sh:NodeShape ;
@@ -680,6 +904,192 @@ urpx-shacl:DataSourceReferenceShape
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] .
+
+urpx-shacl:DatatypeTerminalNodeShape
+    a sh:NodeShape ;
+    rdfs:label "DatatypeTerminalNode Shape"@en ;
+    sh:targetClass urpx:DatatypeTerminalNode ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [
+        sh:path urpx:conditionProperty ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:literalType ;
+        sh:class urpx:LiteralTypeValue ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:booleanValue ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:dateValue ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:dateTimeValue ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:decimalValue ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:durationValue ;
+        sh:datatype xsd:duration ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:gMonthValue ;
+        sh:datatype xsd:gMonth ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:integerValue ;
+        sh:datatype xsd:integer ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:stringValue ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:timeValue ;
+        sh:datatype xsd:time ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:xone (
+        [
+            sh:property [
+                sh:path urpx:conditionProperty ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ] ;
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:hasValue urpx:booleanDatatype ;
+            ] ;
+            sh:property [
+                sh:path urpx:booleanValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:hasValue urpx:dateDatatype ;
+            ] ;
+            sh:property [
+                sh:path urpx:dateValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:hasValue urpx:dateTimeDatatype ;
+            ] ;
+            sh:property [
+                sh:path urpx:dateTimeValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:hasValue urpx:decimalDatatype ;
+            ] ;
+            sh:property [
+                sh:path urpx:decimalValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:hasValue urpx:durationDatatype ;
+            ] ;
+            sh:property [
+                sh:path urpx:durationValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:hasValue urpx:gMonthDatatype ;
+            ] ;
+            sh:property [
+                sh:path urpx:gMonthValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:hasValue urpx:integerDatatype ;
+            ] ;
+            sh:property [
+                sh:path urpx:integerValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:hasValue urpx:stringDatatype ;
+            ] ;
+            sh:property [
+                sh:path urpx:stringValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:literalType ;
+                sh:hasValue urpx:timeDatatype ;
+            ] ;
+            sh:property [
+                sh:path urpx:timeValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+    ) .
 
 urpx-shacl:DERExportsDocumentShape
     a sh:NodeShape ;
@@ -933,6 +1343,11 @@ urpx-shacl:EligibilityRuleShape
             sh:class urpx:ServicePointProfile ;
             sh:minCount 1 ;
         ]
+        [
+            sh:path urpx:hasConditionLogic ;
+            sh:class urpx:ConditionLogic ;
+            sh:minCount 1 ;
+        ]
     ) ;
     sh:property [
         sh:path urpx:description ;
@@ -944,6 +1359,12 @@ urpx-shacl:EligibilityRuleShape
         sh:path urpx:hasCondition ;
         sh:class urpx:Condition ;
         sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasConditionLogic ;
+        sh:class urpx:ConditionLogic ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:hasCustomerProfile ;
@@ -961,20 +1382,8 @@ urpx-shacl:EligibilityRuleShape
         sh:minCount 0 ;
     ] ;
     sh:property [
-        sh:path urpx:logicExpression ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:operator ;
-        sh:node urpx-shacl:OperatorValueShape ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] .
@@ -1373,6 +1782,91 @@ urpx-shacl:MetricSpecificationShape
         sh:maxCount 1 ;
     ] .
 
+urpx-shacl:ObjectTerminalNodeShape
+    a sh:NodeShape ;
+    rdfs:label "ObjectTerminalNode Shape"@en ;
+    sh:targetClass urpx:ObjectTerminalNode ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [
+        sh:path urpx:conditionProperty ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesMetricInput ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesValue ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:xone (
+        [
+            sh:property [
+                sh:path urpx:conditionProperty ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:referencesValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:referencesMetricInput ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+    ) .
+
+urpx-shacl:OperationNodeShape
+    a sh:NodeShape ;
+    rdfs:label "OperationNode Shape"@en ;
+    sh:targetClass urpx:OperationNode ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [
+        sh:path urpx:leftOperand ;
+        sh:or (
+            [ sh:class urpx:TerminalNode ]
+            [ sh:class urpx:DatatypeTerminalNode ]
+            [ sh:class urpx:ObjectTerminalNode ]
+            [ sh:class urpx:CustomTerminalNode ]
+            [ sh:class urpx:OperationNode ]
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:operator ;
+        sh:node urpx-shacl:OperatorValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:rightOperand ;
+        sh:or (
+            [ sh:class urpx:TerminalNode ]
+            [ sh:class urpx:DatatypeTerminalNode ]
+            [ sh:class urpx:ObjectTerminalNode ]
+            [ sh:class urpx:CustomTerminalNode ]
+            [ sh:class urpx:OperationNode ]
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
 urpx-shacl:OrganizationShape
     a sh:NodeShape ;
     rdfs:label "Organization Shape"@en ;
@@ -1581,32 +2075,42 @@ urpx-shacl:PriceShape
     sh:ignoredProperties ( rdf:type ) ;
     sh:xone (
         [
-            sh:path urpx:amount ;
-            sh:datatype xsd:decimal ;
-            sh:minCount 1 ;
-            sh:maxCount 1 ;
+            sh:property [
+                sh:path urpx:amount ;
+                sh:datatype xsd:decimal ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
         ]
         [
-            sh:path urpx:unitPrice ;
-            sh:datatype xsd:decimal ;
-            sh:minCount 1 ;
-            sh:maxCount 1 ;
+            sh:property [
+                sh:path urpx:basePrice ;
+                sh:datatype xsd:decimal ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
         ]
         [
-            sh:path urpx:basedOnPrice ;
-            sh:minCount 1 ;
+            sh:property [
+                sh:path urpx:basedOnPrice ;
+                sh:minCount 1 ;
+            ]
         ]
         [
-            sh:path urpx:basePrice ;
-            sh:datatype xsd:decimal ;
-            sh:minCount 1 ;
-            sh:maxCount 1 ;
+            sh:property [
+                sh:path urpx:currentPrice ;
+                sh:datatype xsd:decimal ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
         ]
         [
-            sh:path urpx:currentPrice ;
-            sh:datatype xsd:decimal ;
-            sh:minCount 1 ;
-            sh:maxCount 1 ;
+            sh:property [
+                sh:path urpx:unitPrice ;
+                sh:datatype xsd:decimal ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ]
         ]
     ) ;
     sh:property [
@@ -4693,6 +5197,13 @@ urpx-shacl:BillPortionValueShape
     sh:nodeKind sh:IRI ;
     sh:in ( urpx:bundledPortion urpx:deliveryPortion urpx:supplyPortion ) .
 
+urpx-shacl:BooleanOperatorValueShape
+    a sh:NodeShape ;
+    rdfs:label "BooleanOperatorValue Shape"@en ;
+    sh:targetClass urpx:BooleanOperatorValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:andOperator urpx:notOperator urpx:orOperator ) .
+
 urpx-shacl:ChangeReasonValueShape
     a sh:NodeShape ;
     rdfs:label "ChangeReasonValue Shape"@en ;
@@ -4943,7 +5454,7 @@ urpx-shacl:OperatorValueShape
     rdfs:label "OperatorValue Shape"@en ;
     sh:targetClass urpx:OperatorValue ;
     sh:nodeKind sh:IRI ;
-    sh:in ( urpx:betweenOperator urpx:containsOperator urpx:equalsOperator urpx:greaterThanOperator urpx:greaterThanOrEqualOperator urpx:inOperator urpx:lessThanOperator urpx:lessThanOrEqualOperator urpx:notEqualsOperator urpx:notInOperator ) .
+    sh:in ( urpx:addOperator urpx:andOperator urpx:betweenOperator urpx:containsOperator urpx:divideOperator urpx:equalsOperator urpx:greaterThanOperator urpx:greaterThanOrEqualOperator urpx:inOperator urpx:lessThanOperator urpx:lessThanOrEqualOperator urpx:multiplyOperator urpx:notEqualsOperator urpx:notInOperator urpx:notOperator urpx:orOperator urpx:subtractOperator ) .
 
 urpx-shacl:OrganizationTypeValueShape
     a sh:NodeShape ;

@@ -75,6 +75,11 @@ urpx:BillingModel a owl:Class ;
     rdfs:comment "Billing-specific rules and calculation patterns for rate plan version with ledger-based organization" ;
     skos:note """Defines billing calculation rules, proration patterns, and adjustment mechanisms. Contains one or more ledgers for organizing prices by billing category (supply, delivery, etc.). Each ledger can have multiple MetricInputs for per-meter or per-service-point pricing.""" .
 
+urpx:BooleanOperationNode a owl:Class ;
+    rdfs:label "Boolean Operation Node"@en ;
+    rdfs:comment "Boolean-only node used for nested condition composition"@en ;
+    skos:note "Boolean-only node for nested AND OR NOT composition inside ConditionLogic. Uses conditionOperands only and never leftOperand or rightOperand." .
+
 urpx:CalculationMethod a owl:Class ;
     rdfs:label "Calculation Method"@en ;
     rdfs:comment "Defines how prices are calculated over billing intervals" ;
@@ -84,6 +89,11 @@ urpx:Condition a owl:Class ;
     rdfs:label "Condition"@en ;
     rdfs:comment "Single logical condition for rules with operator and value" ;
     skos:note "Atomic condition for rule evaluation. Used within eligibility and applicability rules. Supports various operators (equals, greater than, between, etc.)." .
+
+urpx:ConditionLogic a owl:Class ;
+    rdfs:label "Condition Logic"@en ;
+    rdfs:comment "Boolean composition structure for combining conditions"@en ;
+    skos:note "Combines one or more Condition instances using boolean operators only. Carries the authoritative executable applicability structure for conditions and replaces logicExpression for structured condition logic." .
 
 urpx:County a owl:Class ;
     rdfs:label "County"@en ;
@@ -103,10 +113,22 @@ urpx:CustomerProfile a owl:Class ;
     rdfs:subClassOf urpx:Profile ;
     skos:note "Represents customer business, social, and program participation characteristics. Includes assistance program support." .
 
+urpx:CustomTerminalNode a owl:Class ;
+    rdfs:label "Custom Terminal Node"@en ;
+    rdfs:comment "Fallback terminal node for custom condition properties"@en ;
+    rdfs:subClassOf urpx:TerminalNode ;
+    skos:note "Fallback-only terminal node for customConditionProperty when no suitable URPX property exists. Less compute-efficient than URPX-native property conditions." .
+
 urpx:DataSourceReference a owl:Class ;
     rdfs:label "Data Source Reference"@en ;
     rdfs:comment "Structured reference to a data source including filename, URL, and media type." ;
     skos:note "Used to provide traceability for data points back to their original source files or APIs." .
+
+urpx:DatatypeTerminalNode a owl:Class ;
+    rdfs:label "Datatype Terminal Node"@en ;
+    rdfs:comment "Terminal node for datatype-valued condition properties and literal values"@en ;
+    rdfs:subClassOf urpx:TerminalNode ;
+    skos:note "Used for datatype-valued conditions and literal thresholds. Must declare literalType and use exactly one datatype-specific value property when carrying a literal value." .
 
 urpx:DERExportsDocument a owl:Class ;
     rdfs:label "DER Exports Document"@en ;
@@ -175,6 +197,17 @@ urpx:Municipality a owl:Class ;
     rdfs:comment "City, town, or incorporated municipal area" ;
     rdfs:subClassOf urpx:AdministrativeBoundary ;
     skos:note "Incorporated municipal areas with local government authority." .
+
+urpx:ObjectTerminalNode a owl:Class ;
+    rdfs:label "Object Terminal Node"@en ;
+    rdfs:comment "Terminal node for object-valued condition properties and referenced values"@en ;
+    rdfs:subClassOf urpx:TerminalNode ;
+    skos:note "Used for object-property comparisons, enumeration references, and IRI-based values. Uses referencesValue and never datatype-specific literal value properties." .
+
+urpx:OperationNode a owl:Class ;
+    rdfs:label "Operation Node"@en ;
+    rdfs:comment "Expression node for nested arithmetic or ordered comparison preparation"@en ;
+    skos:note "Used inside Condition for nested expressions. Uses leftOperand and rightOperand and is distinct from BooleanOperationNode used in ConditionLogic." .
 
 urpx:Organization a owl:Class ;
     rdfs:label "Organization"@en ;
@@ -376,6 +409,11 @@ urpx:SystemOperator a owl:Class ;
     skos:note """Independent system operators and regional transmission organizations.
                  Manages wholesale markets and grid reliability for multiple jurisdictions.""" .
 
+urpx:TerminalNode a owl:Class ;
+    rdfs:label "Terminal Node"@en ;
+    rdfs:comment "Abstract superclass for terminal condition nodes"@en ;
+    skos:note "Abstract superclass for DatatypeTerminalNode ObjectTerminalNode and CustomTerminalNode." .
+
 urpx:TOUPeriod a owl:Class ;
     rdfs:label "Time-of-Use Period"@en ;
     rdfs:comment "Specific time period with unique ID for linking to prices" ;
@@ -489,6 +527,12 @@ urpx:BillPortionValue a owl:Class ;
     rdfs:label "Bill Portion Value"@en ;
     rdfs:comment "Enumeration of valid bill portion values"@en ;
     owl:equivalentClass [ owl:oneOf ( urpx:bundledPortion urpx:deliveryPortion urpx:supplyPortion ) ] .
+
+urpx:BooleanOperatorValue a owl:Class ;
+    rdfs:label "Boolean Operator Value"@en ;
+    rdfs:comment "Enumeration class for boolean-only operators used in condition logic"@en ;
+    owl:equivalentClass [ owl:oneOf ( urpx:andOperator urpx:notOperator urpx:orOperator ) ] ;
+    skos:note "Enumeration class for boolean-only operators used in ConditionLogic and BooleanOperationNode" .
 
 urpx:ChangeReasonValue a owl:Class ;
     rdfs:label "Change Reason Value"@en ;
@@ -651,6 +695,13 @@ urpx:LedgerTypeValue a owl:Class ;
     owl:equivalentClass [ owl:oneOf ( urpx:bundledLedger urpx:calculatedLedger urpx:deliveryLedger urpx:distributionLedger urpx:measuredLedger urpx:profileMetricLedger urpx:supplyLedger urpx:transmissionLedger ) ] ;
     skos:note "Enumeration for ledger types enabling separation of supply, delivery, transmission, distribution, and bundled charges." .
 
+urpx:LiteralTypeValue a owl:Class ;
+    rdfs:label "Literal Type Value"@en ;
+    rdfs:comment "Enumeration of supported literal datatypes for condition values"@en ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:oneOf ( urpx:booleanDatatype urpx:dateDatatype urpx:dateTimeDatatype urpx:decimalDatatype urpx:durationDatatype urpx:gMonthDatatype urpx:integerDatatype urpx:stringDatatype urpx:timeDatatype ) ] ;
+    skos:note "Closed enumeration for literalType on DatatypeTerminalNode and CustomTerminalNode. Mirrors the supported condition datatypes in the URPX condition model." .
+
 urpx:LoadProfileValue a owl:Class ;
     rdfs:label "Load Profile Value"@en ;
     rdfs:comment "Load profile classification enumeration values" ;
@@ -707,9 +758,9 @@ urpx:ObservanceRuleValue a owl:Class ;
 
 urpx:OperatorValue a owl:Class ;
     rdfs:label "Operator Value"@en ;
-    rdfs:comment "SQL/programming operators enumeration values" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:betweenOperator urpx:containsOperator urpx:equalsOperator urpx:greaterThanOperator urpx:greaterThanOrEqualOperator urpx:inOperator urpx:lessThanOperator urpx:lessThanOrEqualOperator urpx:notEqualsOperator urpx:notInOperator ) ] ;
-    skos:note "Enumeration class for comparison operators. standardized operator definitions for consistent rule evaluation." .
+    rdfs:comment "Enumeration class for operators used in condition evaluation and service tier boundary definitions" ;
+    owl:equivalentClass [ owl:oneOf ( urpx:addOperator urpx:andOperator urpx:betweenOperator urpx:containsOperator urpx:divideOperator urpx:equalsOperator urpx:greaterThanOperator urpx:greaterThanOrEqualOperator urpx:inOperator urpx:lessThanOperator urpx:lessThanOrEqualOperator urpx:multiplyOperator urpx:notEqualsOperator urpx:notInOperator urpx:notOperator urpx:orOperator urpx:subtractOperator ) ] ;
+    skos:note "Enumeration class for comparison and calculation operators. Standardized operator definitions for consistent rule evaluation." .
 
 urpx:OrganizationTypeValue a owl:Class ;
     rdfs:label "Organization Type Value"@en ;
@@ -1056,6 +1107,14 @@ urpx:billPortion a owl:ObjectProperty ;
     rdfs:range urpx:BillPortionValue ;
     skos:note "Specifies whether a charge applies to delivery, supply, or bundled service. Typically defined at MetricSpecification level for consistent application across prices."@en .
 
+urpx:booleanValue a owl:DatatypeProperty ;
+    rdfs:label "Boolean Value"@en ;
+    rdfs:comment "Boolean literal value used in a condition terminal node"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:TerminalNode urpx:DatatypeTerminalNode urpx:CustomTerminalNode ) ] ;
+    rdfs:range xsd:boolean ;
+    skos:note "Boolean literal value for condition modeling. Requires literalType booleanDatatype." .    
+
 urpx:buildingSquareFootage a owl:DatatypeProperty ;
     rdfs:label "Building Square Footage"@en ;
     rdfs:comment "Building size in square feet" ;
@@ -1114,6 +1173,23 @@ urpx:chargeType a owl:ObjectProperty ;
             owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet ) ] ;
     rdfs:range urpx:ChargeTypeValue .
 
+urpx:conditionOperands a owl:ObjectProperty ;
+    rdfs:label "Condition Operands"@en ;
+    rdfs:comment "Condition or boolean-operation operands for ConditionLogic"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:ConditionLogic urpx:BooleanOperationNode ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( urpx:Condition urpx:BooleanOperationNode ) ] ;
+    skos:note "Boolean operand property for ConditionLogic and BooleanOperationNode." .
+
+urpx:conditionProperty a owl:ObjectProperty ;
+    rdfs:label "Condition Property"@en ;
+    rdfs:comment "IRI reference to the ontology property evaluated by a condition terminal node"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:TerminalNode urpx:DatatypeTerminalNode urpx:ObjectTerminalNode ) ] ;
+    rdfs:range rdf:Property ;
+    skos:note "Points to the URPX ontology property being evaluated. Use for URPX-native properties only." .
+
 urpx:connectionKind a owl:ObjectProperty ;
     rdfs:label "Connection Kind"@en ;
     rdfs:comment "Type of connection at service point" ;
@@ -1149,19 +1225,6 @@ urpx:commodity a owl:ObjectProperty ;
     rdfs:range urpx:CommodityValue ;
     skos:note "Industry-standard commodity enumeration used throughout ontology. Consolidated single property for commodity specification at multiple levels: price specification (MetricSpecification), direct price assignment (Price, PriceSet), rate plan classification (RatePlanVersion, RatePlanModifierVersion), and organization service type (Organization). with full commodity type coverage. User-facing name: 'Service Type' for application interfaces." .
 
-urpx:conditionType a owl:DatatypeProperty ;
-    rdfs:label "Condition Type"@en ;
-    rdfs:comment "Type of condition being evaluated" ;
-    rdfs:domain urpx:Condition ;
-    rdfs:range xsd:string ;
-    skos:note "Type of condition being evaluated; either applicability or eligibility conditions." .
-
-urpx:conditionValue a owl:DatatypeProperty ;
-    rdfs:label "Condition Value"@en ;
-    rdfs:comment "Value to compare against" ;
-    rdfs:domain urpx:Condition ;
-    skos:note "Can be string, number, or list depending on operator." .
-
 urpx:contractEffectiveDate a owl:DatatypeProperty ;
     rdfs:label "Contract Effective Date"@en ;
     rdfs:comment "Effective date and time of service agreement contract" ;
@@ -1189,6 +1252,14 @@ urpx:currentPrice a owl:DatatypeProperty ;
     rdfs:domain urpx:Price ;
     rdfs:range xsd:decimal ;
     skos:note "For dynamic pricing, represents current calculated price." .
+
+urpx:customConditionProperty a owl:DatatypeProperty ;
+    rdfs:label "Custom Condition Property"@en ;
+    rdfs:comment "Fallback custom property identifier for condition terminal nodes in human-readable language"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:TerminalNode urpx:CustomTerminalNode ) ] ;
+    rdfs:range xsd:string ;
+    skos:note "Fallback-only property name for custom conditions when no suitable URPX property exists. Must be in human-readable plain language. Use only as a last resort because compute is less efficient than URPX-native property-based conditions." .
 
 urpx:cycleStartDay a owl:DatatypeProperty ;
     rdfs:label "Cycle Start Day"@en ;
@@ -1228,14 +1299,6 @@ urpx:dateModified a owl:DatatypeProperty ;
     rdfs:range xsd:date ;
     skos:note "ISO 8601 date format. Sourced from document metadata or publisher statement." .
 
-urpx:dateReceived a owl:DatatypeProperty ;
-    rdfs:label "Date Received"@en ;
-    rdfs:comment "Date the document was received" ;
-    rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:URPXDocument urpx:TariffPublication urpx:TariffBookReference urpx:TariffStatementReference ) ] ;
-    rdfs:range xsd:date ;
-    skos:note "ISO 8601 date format. Captures when the document was received, which may differ from publication or approval dates." .
-
 urpx:datePublished a owl:DatatypeProperty ;
     rdfs:label "Date Published"@en ;
     rdfs:comment "Date of first broadcast/publication" ;
@@ -1244,12 +1307,36 @@ urpx:datePublished a owl:DatatypeProperty ;
     rdfs:range xsd:date ;
     skos:note "Official publication or filing date for tariff documents." .
 
+urpx:dateReceived a owl:DatatypeProperty ;
+    rdfs:label "Date Received"@en ;
+    rdfs:comment "Date the document was received" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:URPXDocument urpx:TariffPublication urpx:TariffBookReference urpx:TariffStatementReference ) ] ;
+    rdfs:range xsd:date ;
+    skos:note "ISO 8601 date format. Captures when the document was received, which may differ from publication or approval dates." .
+
 urpx:dateRetrieved a owl:DatatypeProperty ;
     rdfs:label "Date Retrieved"@en ;
     rdfs:comment "Date on which data was retrieved";
     rdfs:domain urpx:DataSourceReference ;
     rdfs:range xsd:date ;
     skos:note "ISO 8601 date format. Records the access date for provenance." .
+
+urpx:dateTimeValue a owl:DatatypeProperty ;
+    rdfs:label "DateTime Value"@en ;
+    rdfs:comment "DateTime literal value used in a condition terminal node"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:TerminalNode urpx:DatatypeTerminalNode urpx:CustomTerminalNode ) ] ;
+    rdfs:range xsd:dateTime ;
+    skos:note "DateTime literal value for condition modeling. Requires literalType dateTimeDatatype." .
+
+urpx:dateValue a owl:DatatypeProperty ;
+    rdfs:label "Date Value"@en ;
+    rdfs:comment "Date literal value used in a condition terminal node"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:TerminalNode urpx:DatatypeTerminalNode urpx:CustomTerminalNode ) ] ;
+    rdfs:range xsd:date ;
+    skos:note "Date literal value for condition modeling. Requires literalType dateDatatype." .
 
 urpx:dayType a owl:ObjectProperty ;
     rdfs:label "Day Type"@en ;
@@ -1264,6 +1351,14 @@ urpx:daylightSavingRules a owl:DatatypeProperty ;
     rdfs:domain urpx:LocationDataSet ;
     rdfs:range xsd:string ;
     skos:note "DST transition rules and offsets. Can reference standard DST rules or specify custom rules for location." .
+
+urpx:decimalValue a owl:DatatypeProperty ;
+    rdfs:label "Decimal Value"@en ;
+    rdfs:comment "Decimal literal value used in a condition terminal node"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:TerminalNode urpx:DatatypeTerminalNode urpx:CustomTerminalNode ) ] ;
+    rdfs:range xsd:decimal ;
+    skos:note "Decimal literal value for condition modeling. Requires literalType decimalDatatype." .
 
 urpx:defaultSelectionLogic a owl:DatatypeProperty ;
     rdfs:label "Default Selection Logic"@en ;
@@ -1286,6 +1381,14 @@ urpx:derType a owl:ObjectProperty ;
     rdfs:range urpx:DERTypeValue ;
     skos:note "DER types: solar, storage, ev charging, wind, generator. Categorizes the primary type of distributed energy resource." .
 
+urpx:description a owl:DatatypeProperty ;
+    rdfs:label "Description"@en ;
+    rdfs:comment "Detailed description of the item" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:EligibilityRule urpx:Condition urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TariffPublication urpx:TariffBookReference urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:DataSourceReference urpx:PriceUpdateRule urpx:ApplicabilityRule urpx:ConditionLogic urpx:OperationNode urpx:BooleanOperationNode ) ] ;
+    rdfs:range xsd:string ;
+    skos:note "Comprehensive explanation for documentation (max 1000 chars recommended)." .
+
 urpx:dimensionDisplayName a owl:DatatypeProperty ;
     rdfs:label "Dimension Display Name"@en ;
     rdfs:comment "Human-readable name for UI display" ;
@@ -1293,20 +1396,20 @@ urpx:dimensionDisplayName a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     skos:note "E.g., 'NYISO Zone', 'Voltage Level', 'Billing Cycle'." .
 
-urpx:description a owl:DatatypeProperty ;
-    rdfs:label "Description"@en ;
-    rdfs:comment "Detailed description of the item" ;
-    rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:EligibilityRule urpx:Condition urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TariffPublication urpx:TariffBookReference urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:DataSourceReference urpx:PriceUpdateRule ) ] ;
-    rdfs:range xsd:string ;
-    skos:note "Comprehensive explanation for documentation (max 1000 chars recommended)." .
-
 urpx:dimensionProperty a owl:DatatypeProperty ;
     rdfs:label "Dimension Property"@en ;
     rdfs:comment "URI of the ontology property this dimension represents" ;
     rdfs:domain urpx:AlternativeDimension ;
     rdfs:range xsd:anyURI ;
     skos:note "References actual property like urpx:appliesInServiceTerritory, urpx:voltageLevel, urpx:billingCycleId. Enables type-safe validation." .
+
+urpx:durationValue a owl:DatatypeProperty ;
+    rdfs:label "Duration Value"@en ;
+    rdfs:comment "Duration literal value used in a condition terminal node"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:TerminalNode urpx:DatatypeTerminalNode urpx:CustomTerminalNode ) ] ;
+    rdfs:range xsd:duration ;
+    skos:note "Duration literal value for condition modeling. Requires literalType durationDatatype." .
 
 urpx:dynamicPricingType a owl:ObjectProperty ;
     rdfs:label "Dynamic Pricing Type"@en ;
@@ -1479,6 +1582,14 @@ urpx:geographicZone a owl:ObjectProperty ;
     rdfs:range urpx:GeographicZoneValue ;
     skos:note "Census geographic types enumeration for customer location classification. with standardized geographic zone definitions for consistent location-based analysis across utilities." .
 
+urpx:gMonthValue a owl:DatatypeProperty ;
+    rdfs:label "GMonth Value"@en ;
+    rdfs:comment "gMonth literal value used in a condition terminal node"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:TerminalNode urpx:DatatypeTerminalNode urpx:CustomTerminalNode ) ] ;
+    rdfs:range xsd:gMonth ;
+    skos:note "gMonth literal value for condition modeling. Requires literalType gMonthDatatype." .
+
 urpx:hasAlternative a owl:ObjectProperty ;
     rdfs:label "Has Alternative"@en ;
     rdfs:comment "Links alternatives container to specific price set options" ;
@@ -1547,11 +1658,19 @@ urpx:hasCalendar a owl:ObjectProperty ;
 
 urpx:hasCondition a owl:ObjectProperty ;
     rdfs:label "Has Condition"@en ;
-    rdfs:comment "Sub-conditions for composite rules" ;
+    rdfs:comment "Links a rule to a condition associated with that rule"@en ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:EligibilityRule urpx:ApplicabilityRule ) ] ;
     rdfs:range urpx:Condition ;
-    skos:note "Used when rule requires multiple conditions with AND/OR logic." .
+    skos:note "Attaches Condition resources to a rule for condition inventory and reuse. Authoritative applicability semantics are carried by hasConditionLogic, not by hasCondition alone. A rule using conditions should use hasConditionLogic to express how one or more attached conditions apply." .
+
+urpx:hasConditionLogic a owl:ObjectProperty ;
+    rdfs:label "Has Condition Logic"@en ;
+    rdfs:comment "Links a rule to structured boolean condition logic"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:EligibilityRule urpx:ApplicabilityRule ) ] ;
+    rdfs:range urpx:ConditionLogic ;
+    skos:note "Structured boolean rule composition. Required whenever a rule uses conditions. Carries the authoritative applicability logic for both single-condition and multi-condition rules." .
 
 urpx:hasCustomerKind a owl:ObjectProperty ;
     rdfs:label "Has Customer Kind"@en ;
@@ -1682,6 +1801,13 @@ urpx:hasLocationDataSet a owl:ObjectProperty ;
             owl:unionOf ( urpx:Organization urpx:RatePlan urpx:RatePlanModifier ) ] ;
     rdfs:range urpx:LocationDataSet ;
     skos:note "Organizations publish versioned LocationDataSet instances containing holidays, timezone, and DST rules. Multiple versions can exist for temporal evolution." .
+
+urpx:hasMeteringConfiguration a owl:ObjectProperty ;
+    rdfs:label "Metering Configuration"@en ;
+    rdfs:comment "Metering configuration type" ;
+    rdfs:domain urpx:ServicePointProfile ;
+    rdfs:range urpx:MeteringConfigurationValue ;
+    skos:note "Metering types: net, interval, demandConfiguration, prepaid, ami, manual. Affects billing and rate application." .
 
 urpx:hasMetricInput a owl:ObjectProperty ;
     rdfs:label "Has Metric Input"@en ;
@@ -2035,6 +2161,14 @@ urpx:initialEffectiveDate a owl:DatatypeProperty ;
     rdfs:range xsd:date ;
     skos:note "Tracks the original introduction date of the rate plan, independent of version changes." .
 
+urpx:integerValue a owl:DatatypeProperty ;
+    rdfs:label "Integer Value"@en ;
+    rdfs:comment "Integer literal value used in a condition terminal node"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:TerminalNode urpx:DatatypeTerminalNode urpx:CustomTerminalNode ) ] ;
+    rdfs:range xsd:integer ;
+    skos:note "Integer literal value for condition modeling. Requires literalType integerDatatype." .
+
 urpx:interconnectionStatus a owl:ObjectProperty ;
     rdfs:label "Interconnection Status"@en ;
     rdfs:comment "Grid interconnection status" ;
@@ -2146,6 +2280,15 @@ urpx:ledgerType a owl:ObjectProperty ;
     rdfs:range urpx:LedgerTypeValue ;
     skos:note "Identifies ledger purpose: supply, delivery, transmission, distribution, or bundled." .
 
+urpx:leftOperand a owl:ObjectProperty ;
+    rdfs:label "Left Operand"@en ;
+    rdfs:comment "Left operand for ordered condition or operation evaluation"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:Condition urpx:OperationNode ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( urpx:TerminalNode urpx:DatatypeTerminalNode urpx:ObjectTerminalNode urpx:CustomTerminalNode urpx:OperationNode ) ] ;
+    skos:note "Explicit left operand for ordered comparison and arithmetic evaluation. Never used on BooleanOperationNode or ConditionLogic." .
+
 urpx:legalName a owl:DatatypeProperty ;
     rdfs:label "Legal Name"@en ;
     rdfs:comment "Official legal name of the organization" ;
@@ -2153,20 +2296,20 @@ urpx:legalName a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     skos:note "Official legal utility name including corporate designations (Inc., LLC)." .
 
+urpx:literalType a owl:ObjectProperty ;
+    rdfs:label "Literal Type"@en ;
+    rdfs:comment "Declares the literal datatype used by a terminal node"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:TerminalNode urpx:DatatypeTerminalNode urpx:CustomTerminalNode ) ] ;
+    rdfs:range urpx:LiteralTypeValue ;
+    skos:note "Explicit datatype declaration for datatype-bearing terminal nodes. Enables SHACL validation without relying on a generic mixed-type value property." .
+
 urpx:loadProfile a owl:ObjectProperty ;
     rdfs:label "Load Profile"@en ;
     rdfs:comment "Load profile classification" ;
     rdfs:domain urpx:ServicePointProfile ;
     rdfs:range urpx:LoadProfileValue ;
     skos:note "Load characteristics: baseload, peaking, variable, seasonal, intermittent, other. Used for rate plan matching." .
-
-urpx:logicExpression a owl:DatatypeProperty ;
-    rdfs:label "Logic Expression"@en ;
-    rdfs:comment "Boolean logic expression for rule evaluation" ;
-    rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:EligibilityRule urpx:ApplicabilityRule ) ] ;
-    rdfs:range xsd:string ;
-    skos:note "Supports AND, OR, NOT operations with parentheses." .
 
 urpx:lowerBound a owl:DatatypeProperty ;
     rdfs:label "Lower Bound"@en ;
@@ -2195,13 +2338,6 @@ urpx:mediaType a owl:ObjectProperty ;
     rdfs:domain urpx:DataSourceReference ;
     rdfs:range urpx:MediaTypeValue ;
     skos:note "See https://www.iana.org/assignments/media-types for more information." .
-
-urpx:hasMeteringConfiguration a owl:ObjectProperty ;
-    rdfs:label "Metering Configuration"@en ;
-    rdfs:comment "Metering configuration type" ;
-    rdfs:domain urpx:ServicePointProfile ;
-    rdfs:range urpx:MeteringConfigurationValue ;
-    skos:note "Metering types: net, interval, demandConfiguration, prepaid, ami, manual. Affects billing and rate application." .
 
 urpx:metricInputType a owl:ObjectProperty ;
     rdfs:label "Metric Input Type"@en ;
@@ -2267,7 +2403,7 @@ urpx:name a owl:DatatypeProperty ;
     rdfs:label "Name"@en ;
     rdfs:comment "The name of the item" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceSet urpx:PriceSetAlternatives urpx:PriceDefinition urpx:PriceSummary urpx:TariffPublication urpx:TOUPeriod urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:OrganizationName urpx:ProfileAlternatives urpx:ProfileAlternative urpx:DataSourceReference urpx:EligibilityRule urpx:TOUSchedule urpx:ServiceTier urpx:ApplicabilityRule urpx:ApplicabilityGroup urpx:PriceUpdateRule ) ] ;
+            owl:unionOf ( urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceSet urpx:PriceSetAlternatives urpx:PriceDefinition urpx:PriceSummary urpx:TariffPublication urpx:TOUPeriod urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:OrganizationName urpx:ProfileAlternatives urpx:ProfileAlternative urpx:DataSourceReference urpx:EligibilityRule urpx:TOUSchedule urpx:ServiceTier urpx:ApplicabilityRule urpx:ApplicabilityGroup urpx:PriceUpdateRule urpx:Condition urpx:ConditionLogic ) ] ;
     rdfs:range xsd:string ;
     skos:note "Human-readable name for entities. Keep concise for display purposes (max 255 chars recommended). Universal naming property used across all entity types." .
 
@@ -2322,11 +2458,20 @@ urpx:operatesIn a owl:ObjectProperty ;
 
 urpx:operator a owl:ObjectProperty ;
     rdfs:label "Operator"@en ;
-    rdfs:comment "Comparison operator (SQL/programming operators)" ;
+    rdfs:comment "References the operator used by a condition logic structure or expression node"@en ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:EligibilityRule urpx:ApplicabilityRule urpx:Condition ) ] ;
-    rdfs:range urpx:OperatorValue ;
-    skos:note "SQL/programming operators enumeration for comparison logic. with standardized operator definitions." .
+            owl:unionOf (
+                urpx:Condition
+                urpx:ConditionLogic
+                urpx:BooleanOperationNode
+                urpx:OperationNode
+            ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf (
+                urpx:BooleanOperatorValue
+                urpx:OperatorValue
+            ) ] ;
+    skos:note "Shared operator property for condition modeling. Allowed operator subsets are constrained by SHACL for each node type" .    
 
 urpx:organizationType a owl:ObjectProperty ;
     rdfs:label "Organization Type"@en ;
@@ -2594,6 +2739,14 @@ urpx:referencesTouPeriod a owl:ObjectProperty ;
     rdfs:range urpx:TOUPeriod ;
     skos:note "IRI-based reference to TOUPeriod instance defined in MetricInput. Enables direct dereferencing for period metadata including time brackets and multipliers." .
 
+urpx:referencesValue a owl:ObjectProperty ;
+    rdfs:label "References Value"@en ;
+    rdfs:comment "IRI reference to an enumeration value used in a condition terminal node"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:TerminalNode urpx:ObjectTerminalNode ) ] ;
+    rdfs:range owl:Thing ;
+    skos:note "IRI-based value slot for object-property and enumeration comparisons in condition modeling." .
+
 urpx:regulatoryApproval a owl:DatatypeProperty ;
     rdfs:label "Regulatory Approval"@en ;
     rdfs:comment "Reference to regulatory approval document" ;
@@ -2608,6 +2761,15 @@ urpx:regulatoryScope a owl:ObjectProperty ;
     rdfs:domain urpx:RegulatoryAuthority ;
     rdfs:range urpx:RegulatoryScopeValue ;
     skos:note "Regulatory functions enumeration. Standardized regulatory authority categorization for energy systems." .
+
+urpx:rightOperand a owl:ObjectProperty ;
+    rdfs:label "Right Operand"@en ;
+    rdfs:comment "Right operand for ordered condition or operation evaluation"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:Condition urpx:OperationNode ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( urpx:TerminalNode urpx:DatatypeTerminalNode urpx:ObjectTerminalNode urpx:CustomTerminalNode urpx:OperationNode ) ] ;
+    skos:note "Explicit right operand for ordered comparison and arithmetic evaluation. Never used on BooleanOperationNode or ConditionLogic." .
 
 urpx:roundTripEfficiency a owl:DatatypeProperty ;
     rdfs:label "Round Trip Efficiency"@en ;
@@ -2732,6 +2894,14 @@ urpx:storageCapacity a owl:DatatypeProperty ;
     rdfs:range xsd:decimal ;
     skos:note "Battery storage capacity. Used for storage-specific rates and grid services." .
 
+urpx:stringValue a owl:DatatypeProperty ;
+    rdfs:label "String Value"@en ;
+    rdfs:comment "String literal value used in a condition terminal node"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:TerminalNode urpx:DatatypeTerminalNode urpx:CustomTerminalNode ) ] ;
+    rdfs:range xsd:string ;
+    skos:note "String literal value for condition modeling. Requires literalType stringDatatype." .
+
 urpx:summaryAmount a owl:DatatypeProperty ;
     rdfs:label "Summary Amount"@en ;
     rdfs:comment "Calculated total value for this summary" ;
@@ -2769,6 +2939,14 @@ urpx:tierSourceName a owl:DatatypeProperty ;
     rdfs:domain urpx:TOUTier ;
     rdfs:range xsd:string ;
     skos:note "Preserves utility's terminology for reference and mapping." .
+
+urpx:timeValue a owl:DatatypeProperty ;
+    rdfs:label "Time Value"@en ;
+    rdfs:comment "Time literal value used in a condition terminal node"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:TerminalNode urpx:DatatypeTerminalNode urpx:CustomTerminalNode ) ] ;
+    rdfs:range xsd:time ;
+    skos:note "Time literal value for condition modeling. Requires literalType timeDatatype." .
 
 urpx:timezoneIdentifier a owl:DatatypeProperty ;
     rdfs:label "Timezone Identifier"@en ;
@@ -2937,7 +3115,6 @@ urpx:summation rdf:type urpx:AccumulationValue ;
     skos:prefLabel "Summation" .
 
 
-
 # --- Aggregation Method Property (AggregationMethodValue) ---
 
 urpx:average rdf:type urpx:AggregationMethodValue ;
@@ -2988,6 +3165,7 @@ urpx:veryLowIncome rdf:type urpx:AnnualIncomeRangeValue ;
     rdfs:label "Very Low Income"@en ;
     skos:definition "Very low income range - typically below 50% of area median income" ;
     skos:prefLabel "Very Low Income" .
+
 
 # --- Assistance Eligibility Level Property (AssistanceEligibilityLevelValue) ---
 
@@ -3662,32 +3840,39 @@ urpx:wind rdf:type urpx:CommodityValue ;
     skos:definition "Wind energy generation" ;
     skos:prefLabel "Wind" .
 
+
 # --- Connection Kind Property (ConnectionKindValue) ---
 
 urpx:directConnection rdf:type urpx:ConnectionKindValue ;
     rdfs:label "Direct Connection"@en ;
     skos:definition "Direct service connection without transformation" ;
     skos:prefLabel "Direct" .
+
 urpx:overheadConnection rdf:type urpx:ConnectionKindValue ;
     rdfs:label "Overhead Connection"@en ;
     skos:definition "Overhead power line service connection" ;
     skos:prefLabel "Overhead" .
+
 urpx:padMountedConnection rdf:type urpx:ConnectionKindValue ;
     rdfs:label "Pad Mounted Connection"@en ;
     skos:definition "Pad-mounted transformer service connection" ;
     skos:prefLabel "Pad Mounted" .
+
 urpx:permanentConnection rdf:type urpx:ConnectionKindValue ;
     rdfs:label "Permanent Connection"@en ;
     skos:definition "Permanent service connection to the electrical grid" ;
     skos:prefLabel "Permanent" .
+
 urpx:temporaryConnection rdf:type urpx:ConnectionKindValue ;
     rdfs:label "Temporary Connection"@en ;
     skos:definition "Temporary service connection for construction or events" ;
     skos:prefLabel "Temporary" .
+
 urpx:undergroundConnection rdf:type urpx:ConnectionKindValue ;
     rdfs:label "Underground Connection"@en ;
     skos:definition "Underground cable service connection" ;
     skos:prefLabel "Underground" .
+
 
 # --- Connector Type Property (ConnectorTypeValue) ---
 
@@ -3724,7 +3909,6 @@ urpx:teslaSupercharger rdf:type urpx:ConnectorTypeValue ;
 
 # --- CustomerKindValue (used by: Applies For Customer Kind, Has Customer Kind) ---
 
-
 urpx:commercialKind rdf:type urpx:CustomerKindValue ;
     rdfs:label "Commercial"@en ;
     skos:definition "Commercial customer - business and office service" ;
@@ -3754,6 +3938,7 @@ urpx:serviceProviderKind rdf:type urpx:CustomerKindValue ;
     skos:definition "Service provider customer - energy suppliers, schedulers, and wholesale market participants" ;
     skos:prefLabel "Service Provider" .
 
+
 # --- CustomerSubKindValue (used by: Applies For Customer Sub Kind, Has Customer Sub Kind) ---
 
 urpx:commercialPumping rdf:type urpx:CustomerSubKindValue ;
@@ -3761,71 +3946,85 @@ urpx:commercialPumping rdf:type urpx:CustomerSubKindValue ;
     skos:definition "Commercial pumping service - water pumping and irrigation operations" ;
     skos:prefLabel "Commercial Pumping" ;
     skos:broader urpx:commercialKind .
+
 urpx:commercialStandard rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Commercial Standard"@en ;
     skos:definition "Standard commercial service - general business, retail, and office operations" ;
     skos:prefLabel "Commercial Standard" ;
     skos:broader urpx:commercialKind .
+
 urpx:commercialStreetlight rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Commercial Streetlight"@en ;
     skos:definition "Commercial streetlight service - municipal and private street lighting" ;
     skos:prefLabel "Commercial Streetlight" ;
     skos:broader urpx:commercialKind .
+
 urpx:energyScheduler rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Energy Scheduler"@en ;
     skos:definition "Energy scheduler service - wholesale market schedulers and aggregators" ;
     skos:prefLabel "Energy Scheduler" ;
     skos:broader urpx:serviceProviderKind .
+
 urpx:energySupplier rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Energy Supplier"@en ;
     skos:definition "Energy supplier service - retail energy providers and competitive suppliers" ;
     skos:prefLabel "Energy Supplier" ;
     skos:broader urpx:serviceProviderKind .
+
 urpx:industrialLargeLoad rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Industrial Large Load"@en ;
     skos:definition "Industrial large load service - high-demand manufacturing and processing facilities" ;
     skos:prefLabel "Industrial Large Load" ;
     skos:broader urpx:industrialKind .
+
 urpx:industrialStandard rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Industrial Standard"@en ;
     skos:definition "Standard industrial service - manufacturing and production facilities" ;
     skos:prefLabel "Industrial Standard" ;
     skos:broader urpx:industrialKind .
+
 urpx:regionalOperator rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Regional Operator"@en ;
     skos:definition "Regional operator service - large-scale regional facility operations" ;
     skos:prefLabel "Regional Operator" ;
     skos:broader urpx:enterpriseKind .
+
 urpx:religiousInstitution rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Religious Institution"@en ;
     skos:definition "Service for religious institutions" ;
     skos:prefLabel "Religious Institutions" ;
     skos:broader urpx:nonResidentialKind .
+
 urpx:residentialFarm rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Residential Farm"@en ;
     skos:definition "Residential farm service - agricultural operations with residential characteristics" ;
     skos:prefLabel "Residential Farm" ;
     skos:broader urpx:residentialKind .
+
 urpx:residentialMultiUnit rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Residential Multi-Unit"@en ;
     skos:definition "Residential multi-unit service - apartments, condominiums, and multi-family dwellings" ;
     skos:prefLabel "Residential Multi-Unit" ;
     skos:broader urpx:residentialKind .
+
 urpx:residentialStandard rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Residential Standard"@en ;
     skos:definition "Standard residential service - single-family homes and standard household service" ;
     skos:prefLabel "Residential Standard" ;
     skos:broader urpx:residentialKind .
+
 urpx:subsidiary rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Subsidiary"@en ;
     skos:definition "Subsidiary service - corporate subsidiary operations" ;
     skos:prefLabel "Subsidiary" ;
     skos:broader urpx:enterpriseKind .
+
 urpx:windMachine rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Wind Machine"@en ;
     skos:definition "Wind machine service - renewable energy generation facilities" ;
     skos:prefLabel "Wind Machine" ;
     skos:broader urpx:serviceProviderKind .
+
 
 # --- Data Source Type Property (DataSourceTypeValue) ---
 
@@ -3854,6 +4053,7 @@ urpx:regulatoryWebsiteSource rdf:type urpx:DataSourceTypeValue ;
     skos:definition "Data sourced from a regulatory agency's official website or database" ;
     skos:prefLabel "Regulatory Website" .    
 
+
 # --- Day Type Property (DayTypeValue) ---
 
 urpx:allDays rdf:type urpx:DayTypeValue ;
@@ -3876,44 +4076,54 @@ urpx:weekendDays rdf:type urpx:DayTypeValue ;
     skos:definition "Saturday and Sunday (ISO 8601 weekend)" ;
     skos:prefLabel "Weekend" .
 
+
 # --- DER Type Property (DERTypeValue) ---
 
 urpx:evChargingDER rdf:type urpx:DERTypeValue ;
     rdfs:label "EV Charging DER"@en ;
     skos:definition "Electric vehicle charging station" ;
     skos:prefLabel "EV Charging" .
+
 urpx:generatorDER rdf:type urpx:DERTypeValue ;
     rdfs:label "Generator DER"@en ;
     skos:definition "Backup generator or combined heat and power system" ;
     skos:prefLabel "Generator" .
+
 urpx:geothermalDER rdf:type urpx:DERTypeValue ;
     rdfs:label "Geothermal DER"@en ;
     skos:definition "Geothermal heat pump or generation system" ;
     skos:prefLabel "Geothermal" .
+
 urpx:hydroDER rdf:type urpx:DERTypeValue ;
     rdfs:label "Hydro DER"@en ;
     skos:definition "Hydroelectric power generation system" ;
     skos:prefLabel "Water Generation" .
+
 urpx:nuclearDER rdf:type urpx:DERTypeValue ;
     rdfs:label "Nuclear DER"@en ;
     skos:definition "Nuclear power generation system" ;
     skos:prefLabel "Nuclear Generation" .
+
 urpx:solarDER rdf:type urpx:DERTypeValue ;
     rdfs:label "Solar DER"@en ;
     skos:definition "Solar photovoltaic generation system" ;
     skos:prefLabel "Solar" .
+
 urpx:storageDER rdf:type urpx:DERTypeValue ;
     rdfs:label "Storage DER"@en ;
     skos:definition "Battery energy storage system" ;
     skos:prefLabel "Storage" .
+
 urpx:wasteDigestionDER rdf:type urpx:DERTypeValue ;
     rdfs:label "Waste Digestion DER"@en ;
     skos:definition "Waste digestion or biogas generation system" ;
     skos:prefLabel "Waste Digestion" .
+
 urpx:windDER rdf:type urpx:DERTypeValue ;
     rdfs:label "Wind DER"@en ;
     skos:definition "Small-scale wind turbine generation" ;
     skos:prefLabel "Wind" .
+
 
 # --- Dynamic Pricing Type Property (DynamicPricingTypeValue) ---
 
@@ -3946,6 +4156,7 @@ urpx:timeVaryingPricing rdf:type urpx:DynamicPricingTypeValue ;
     rdfs:label "Time-Varying Pricing"@en ;
     skos:definition "Pricing that varies over time based on predetermined schedules" ;
     skos:prefLabel "Time-Varying" .
+
 
 # --- End Use Property (EndUseValue) ---
 
@@ -4036,26 +4247,32 @@ urpx:activeStatus rdf:type urpx:EnrollmentStatusValue ;
     rdfs:label "Active Status"@en ;
     skos:definition "Active enrollment status - currently participating in rate plan or program" ;
     skos:prefLabel "Active" .
+
 urpx:expiredStatus rdf:type urpx:EnrollmentStatusValue ;
     rdfs:label "Expired Status"@en ;
     skos:definition "Expired enrollment status - enrollment period has ended" ;
     skos:prefLabel "Expired" .
+
 urpx:inactiveStatus rdf:type urpx:EnrollmentStatusValue ;
     rdfs:label "Inactive Status"@en ;
     skos:definition "Inactive enrollment status - not currently participating" ;
     skos:prefLabel "Inactive" .
+
 urpx:pendingStatus rdf:type urpx:EnrollmentStatusValue ;
     rdfs:label "Pending Status"@en ;
     skos:definition "Pending enrollment status - enrollment request awaiting approval or processing" ;
     skos:prefLabel "Pending" .
+
 urpx:suspendedStatus rdf:type urpx:EnrollmentStatusValue ;
     rdfs:label "Suspended Status"@en ;
     skos:definition "Suspended enrollment status - temporarily paused participation" ;
     skos:prefLabel "Suspended" .
+
 urpx:terminatedStatus rdf:type urpx:EnrollmentStatusValue ;
     rdfs:label "Terminated Status"@en ;
     skos:definition "Terminated enrollment status - participation ended before normal completion" ;
     skos:prefLabel "Terminated" .
+
 
 # --- Entity Type Property (EntityTypeValue) ---
 
@@ -4063,34 +4280,42 @@ urpx:corporationEntity rdf:type urpx:EntityTypeValue ;
     rdfs:label "Corporation Entity"@en ;
     skos:definition "Corporate legal entity (C-Corp, S-Corp)" ;
     skos:prefLabel "Corporation" .
+
 urpx:entityOther rdf:type urpx:EntityTypeValue ;
     rdfs:label "Other Entity Type"@en ;
     skos:definition "Other legal entity type not specifically categorized" ;
     skos:prefLabel "Other" .
+
 urpx:governmentEntity rdf:type urpx:EntityTypeValue ;
     rdfs:label "Government Entity"@en ;
     skos:definition "Government agency or department legal entity" ;
     skos:prefLabel "Government" .
+
 urpx:individualEntity rdf:type urpx:EntityTypeValue ;
     rdfs:label "Individual Entity"@en ;
     skos:definition "Individual person legal entity" ;
     skos:prefLabel "Individual" .
+
 urpx:llcEntity rdf:type urpx:EntityTypeValue ;
     rdfs:label "LLC Entity"@en ;
     skos:definition "Limited Liability Company legal entity" ;
     skos:prefLabel "LLC" .
+
 urpx:nonprofitEntity rdf:type urpx:EntityTypeValue ;
     rdfs:label "Nonprofit Entity"@en ;
     skos:definition "Nonprofit organization legal entity" ;
     skos:prefLabel "Nonprofit" .
+
 urpx:partnershipEntity rdf:type urpx:EntityTypeValue ;
     rdfs:label "Partnership Entity"@en ;
     skos:definition "Partnership legal entity (general or limited partnership)" ;
     skos:prefLabel "Partnership" .
+
 urpx:trustEntity rdf:type urpx:EntityTypeValue ;
     rdfs:label "Trust Entity"@en ;
     skos:definition "Trust legal entity" ;
     skos:prefLabel "Trust" .
+
 
 # --- Flow Direction Property (FlowDirectionValue) ---
 
@@ -4142,40 +4367,49 @@ urpx:statewideScope rdf:type urpx:GeographicScopeValue ;
     skos:definition "State-level geographic scope for broad applicability rules" ;
     skos:prefLabel "Statewide" .
 
+
 # --- Geographic Zone Property (GeographicZoneValue) ---
 
 urpx:coastalZone rdf:type urpx:GeographicZoneValue ;
     rdfs:label "Coastal Zone"@en ;
     skos:definition "Coastal geographic zone - areas near oceans, lakes, or major waterways" ;
     skos:prefLabel "Coastal" .
+
 urpx:desertZone rdf:type urpx:GeographicZoneValue ;
     rdfs:label "Desert Zone"@en ;
     skos:definition "Desert geographic zone - arid and semi-arid regions" ;
     skos:prefLabel "Desert" .
+
 urpx:geographicZoneOther rdf:type urpx:GeographicZoneValue ;
     rdfs:label "Other Geographic Zone"@en ;
     skos:definition "Other geographic zone not specifically categorized" ;
     skos:prefLabel "Other" .
+
 urpx:industrialZone rdf:type urpx:GeographicZoneValue ;
     rdfs:label "Industrial Zone"@en ;
     skos:definition "Industrial geographic zone - manufacturing and heavy industry areas" ;
     skos:prefLabel "Industrial" .
+
 urpx:mountainZone rdf:type urpx:GeographicZoneValue ;
     rdfs:label "Mountain Zone"@en ;
     skos:definition "Mountain geographic zone - elevated terrain and mountainous regions" ;
     skos:prefLabel "Mountain" .
+
 urpx:ruralZone rdf:type urpx:GeographicZoneValue ;
     rdfs:label "Rural Zone"@en ;
     skos:definition "Rural geographic zone - countryside and agricultural areas" ;
     skos:prefLabel "Rural" .
+
 urpx:suburbanZone rdf:type urpx:GeographicZoneValue ;
     rdfs:label "Suburban Zone"@en ;
     skos:definition "Suburban geographic zone - residential areas outside city centers" ;
     skos:prefLabel "Suburban" .
+
 urpx:urbanZone rdf:type urpx:GeographicZoneValue ;
     rdfs:label "Urban Zone"@en ;
     skos:definition "Urban geographic zone - densely populated city areas" ;
     skos:prefLabel "Urban" .
+
 
 # --- HVAC Kind Property (HVACKindValue) ---
 
@@ -4252,24 +4486,29 @@ urpx:vatScheme rdf:type urpx:IdentifierSchemeValue ;
     skos:definition "VAT identifier scheme - Value Added Tax registration number" ;
     skos:prefLabel "VAT" .
 
+
 # --- Interconnection Status Property (InterconnectionStatusValue) ---
 
 urpx:disconnectedStatus rdf:type urpx:InterconnectionStatusValue ;
     rdfs:label "Disconnected Status"@en ;
     skos:definition "DER is physically installed but not connected to grid" ;
     skos:prefLabel "Disconnected" .
+
 urpx:interconnectedStatus rdf:type urpx:InterconnectionStatusValue ;
     rdfs:label "Interconnected Status"@en ;
     skos:definition "DER is connected and operational on the grid" ;
     skos:prefLabel "Interconnected" .
+
 urpx:notApplicableInterconnection rdf:type urpx:InterconnectionStatusValue ;
     rdfs:label "Not Applicable Interconnection"@en ;
     skos:definition "Interconnection status not applicable to this resource type" ;
     skos:prefLabel "Not Applicable" .
+
 urpx:pendingInterconnection rdf:type urpx:InterconnectionStatusValue ;
     rdfs:label "Pending Interconnection"@en ;
     skos:definition "DER interconnection application is pending utility approval" ;
     skos:prefLabel "Pending" .
+
 
 # --- Interval Selection Property (IntervalSelectionValue) ---
 
@@ -4369,28 +4608,34 @@ urpx:customInterval rdf:type urpx:IntervalTypeValue ;
     skos:definition "Custom or non-standard time interval, must use intervalDuration property" ;
     skos:prefLabel "Custom" .
 
+
 # --- Inverter Type Property (InverterTypeValue) ---
 
 urpx:centralInverter rdf:type urpx:InverterTypeValue ;
     rdfs:label "Central Inverter"@en ;
     skos:definition "Central inverter - large-scale inverter for commercial installations" ;
     skos:prefLabel "Central" .
+
 urpx:hybridInverter rdf:type urpx:InverterTypeValue ;
     rdfs:label "Hybrid Inverter"@en ;
     skos:definition "Hybrid inverter - combined solar and battery storage inverter" ;
     skos:prefLabel "Hybrid" .
+
 urpx:microInverter rdf:type urpx:InverterTypeValue ;
     rdfs:label "Micro Inverter"@en ;
     skos:definition "Micro inverter - individual inverter for each solar panel" ;
     skos:prefLabel "Micro" .
+
 urpx:powerOptimizer rdf:type urpx:InverterTypeValue ;
     rdfs:label "Power Optimizer"@en ;
     skos:definition "Power optimizer - panel-level optimization with centralized inverter" ;
     skos:prefLabel "Power Optimizer" .
+
 urpx:stringInverter rdf:type urpx:InverterTypeValue ;
     rdfs:label "String Inverter"@en ;
     skos:definition "String inverter - centralized inverter for multiple solar panels" ;
     skos:prefLabel "String" .
+
 
 # --- Ledger Type Property (LedgerTypeValue) ---
 
@@ -4434,28 +4679,82 @@ urpx:transmissionLedger rdf:type urpx:LedgerTypeValue ;
     skos:definition "Ledger specifically for transmission charges" ;
     skos:prefLabel "Transmission" .
 
+
+# --- Literal Type Property (LiteralTypeValue) ---
+
+urpx:booleanDatatype rdf:type urpx:LiteralTypeValue ;
+    rdfs:label "Boolean Datatype"@en ;
+    rdfs:comment "Represents xsd:boolean for condition literal typing"@en ;
+    skos:note "Use with booleanValue." .
+
+urpx:dateDatatype rdf:type urpx:LiteralTypeValue ;
+    rdfs:label "Date Datatype"@en ;
+    rdfs:comment "Represents xsd:date for condition literal typing"@en ;
+    skos:note "Use with dateValue." .
+
+urpx:dateTimeDatatype rdf:type urpx:LiteralTypeValue ;
+    rdfs:label "DateTime Datatype"@en ;
+    rdfs:comment "Represents xsd:dateTime for condition literal typing"@en ;
+    skos:note "Use with dateTimeValue." .
+
+urpx:decimalDatatype rdf:type urpx:LiteralTypeValue ;
+    rdfs:label "Decimal Datatype"@en ;
+    rdfs:comment "Represents xsd:decimal for condition literal typing"@en ;
+    skos:note "Use with decimalValue." .
+
+urpx:durationDatatype rdf:type urpx:LiteralTypeValue ;
+    rdfs:label "Duration Datatype"@en ;
+    rdfs:comment "Represents xsd:duration for condition literal typing"@en ;
+    skos:note "Use with durationValue." .
+
+urpx:gMonthDatatype rdf:type urpx:LiteralTypeValue ;
+    rdfs:label "GMonth Datatype"@en ;
+    rdfs:comment "Represents xsd:gMonth for condition literal typing"@en ;
+    skos:note "Use with gMonthValue." .
+
+urpx:integerDatatype rdf:type urpx:LiteralTypeValue ;
+    rdfs:label "Integer Datatype"@en ;
+    rdfs:comment "Represents xsd:integer for condition literal typing"@en ;
+    skos:note "Use with integerValue." .
+
+urpx:stringDatatype rdf:type urpx:LiteralTypeValue ;
+    rdfs:label "String Datatype"@en ;
+    rdfs:comment "Represents xsd:string for condition literal typing"@en ;
+    skos:note "Use with stringValue." .
+
+urpx:timeDatatype rdf:type urpx:LiteralTypeValue ;
+    rdfs:label "Time Datatype"@en ;
+    rdfs:comment "Represents xsd:time for condition literal typing"@en ;
+    skos:note "Use with timeValue." .
+
+
 # --- Load Profile Property (LoadProfileValue) ---
 
 urpx:baseload rdf:type urpx:LoadProfileValue ;
     rdfs:label "Baseload"@en ;
     skos:definition "Baseload profile - consistent usage with minimal variation" ;
     skos:prefLabel "Baseload" .
+
 urpx:intermittent rdf:type urpx:LoadProfileValue ;
     rdfs:label "Intermittent"@en ;
     skos:definition "Intermittent profile - sporadic or occasional usage" ;
     skos:prefLabel "Intermittent" .
+
 urpx:loadProfileOther rdf:type urpx:LoadProfileValue ;
     rdfs:label "Other Load Profile"@en ;
     skos:definition "Other load profile not specifically categorized" ;
     skos:prefLabel "Other" .
+
 urpx:peaking rdf:type urpx:LoadProfileValue ;
     rdfs:label "Peaking"@en ;
     skos:definition "Peaking profile - high demand during specific periods" ;
     skos:prefLabel "Peaking" .
+
 urpx:seasonal rdf:type urpx:LoadProfileValue ;
     rdfs:label "Seasonal"@en ;
     skos:definition "Seasonal profile - usage varies by season" ;
     skos:prefLabel "Seasonal" .
+
 urpx:variable rdf:type urpx:LoadProfileValue ;
     rdfs:label "Variable"@en ;
     skos:definition "Variable profile - irregular usage patterns" ;
@@ -4649,6 +4948,7 @@ urpx:profileMetricInput a urpx:MetricInputTypeValue ;
     skos:definition "Metric input from customer/service point profile characteristics" ;
     skos:note "Used for profile characteristics (not meter measurements). Examples: numberOfMeters, numberOfOccupants, buildingSquareFootage, billedDemand (utility estimate). NOT for values calculated from meter data like averageMonthlyUsage or loadFactor (use calculatedMetricInput). Profile characteristics can change over time. References profile properties via profileMetricProperty." .
 
+
 # --- Modifier Category Property (ModifierCategoryValue) ---
 
 urpx:billingCategory rdf:type urpx:ModifierCategoryValue ;
@@ -4739,6 +5039,7 @@ urpx:rider rdf:type urpx:ModifierTypeValue ;
     skos:definition "Rider modifier for regulatory surcharges or adjustments" ;
     skos:prefLabel "Rider" .
 
+
 # --- Name Type Property (NameTypeValue) ---
 
 urpx:abbreviationName rdf:type urpx:NameTypeValue ;
@@ -4781,6 +5082,7 @@ urpx:tradeName rdf:type urpx:NameTypeValue ;
     skos:definition "Trade name - commercial trading name used in business transactions" ;
     skos:prefLabel "Trade" .
 
+
 # --- Observance Rule Property (ObservanceRuleValue) ---
 
 urpx:actualDateObservance rdf:type urpx:ObservanceRuleValue ;
@@ -4806,6 +5108,16 @@ urpx:nearestWeekdayObservance rdf:type urpx:ObservanceRuleValue ;
 
 # --- Operator Property (OperatorValue) ---
 
+urpx:addOperator rdf:type urpx:OperatorValue ;
+    rdfs:label "Add Operator"@en ;
+    rdfs:comment "Represents addition in condition expressions"@en ;
+    skos:note "Used in OperationNode for arithmetic addition" .
+
+urpx:andOperator rdf:type urpx:BooleanOperatorValue, urpx:OperatorValue ;
+    rdfs:label "And Operator"@en ;
+    rdfs:comment "Represents logical conjunction in condition logic"@en ;
+    skos:note "Used in ConditionLogic and BooleanOperationNode for boolean AND composition" .
+
 urpx:betweenOperator rdf:type urpx:OperatorValue ;
     rdfs:label "Between Operator"@en ;
     skos:definition "Range comparison operator (BETWEEN)" ;
@@ -4815,6 +5127,11 @@ urpx:containsOperator rdf:type urpx:OperatorValue ;
     rdfs:label "Contains Operator"@en ;
     skos:definition "String contains comparison operator (LIKE, CONTAINS)" ;
     skos:prefLabel "Contains" .
+
+urpx:divideOperator rdf:type urpx:OperatorValue ;
+    rdfs:label "Divide Operator"@en ;
+    rdfs:comment "Represents division in condition expressions"@en ;
+    skos:note "Used in OperationNode for arithmetic division" .
 
 urpx:equalsOperator rdf:type urpx:OperatorValue ;
     rdfs:label "Equals Operator"@en ;
@@ -4846,6 +5163,11 @@ urpx:lessThanOrEqualOperator rdf:type urpx:OperatorValue ;
     skos:definition "Less than or equal comparison operator (<=)" ;
     skos:prefLabel "Less Than Or Equal" .
 
+urpx:multiplyOperator rdf:type urpx:OperatorValue ;
+    rdfs:label "Multiply Operator"@en ;
+    rdfs:comment "Represents multiplication in condition expressions"@en ;
+    skos:note "Used in OperationNode for arithmetic multiplication" .
+
 urpx:notEqualsOperator rdf:type urpx:OperatorValue ;
     rdfs:label "Not Equals Operator"@en ;
     skos:definition "Inequality comparison operator (!=, <>)" ;
@@ -4855,6 +5177,39 @@ urpx:notInOperator rdf:type urpx:OperatorValue ;
     rdfs:label "Not In Operator"@en ;
     skos:definition "Set exclusion operator (NOT IN)" ;
     skos:prefLabel "Not In" .
+
+urpx:notOperator rdf:type urpx:BooleanOperatorValue, urpx:OperatorValue ;
+    rdfs:label "Not Operator"@en ;
+    rdfs:comment "Represents logical negation in condition logic"@en ;
+    skos:note "Used in ConditionLogic and BooleanOperationNode for boolean NOT composition" .
+
+urpx:orOperator rdf:type urpx:BooleanOperatorValue, urpx:OperatorValue ;
+    rdfs:label "Or Operator"@en ;
+    rdfs:comment "Represents logical disjunction in condition logic"@en ;
+    skos:note "Used in ConditionLogic and BooleanOperationNode for boolean OR composition" .
+
+urpx:subtractOperator rdf:type urpx:OperatorValue ;
+    rdfs:label "Subtract Operator"@en ;
+    rdfs:comment "Represents subtraction in condition expressions"@en ;
+    skos:note "Used in OperationNode for arithmetic subtraction" .
+
+
+# --- Operator Property (BooleanOperatorValue) ---
+
+urpx:andOperator rdf:type urpx:BooleanOperatorValue, urpx:OperatorValue ;
+    rdfs:label "And Operator"@en ;
+    rdfs:comment "Represents logical conjunction in condition logic"@en ;
+    skos:note "Used in ConditionLogic and BooleanOperationNode for boolean AND composition" .
+
+urpx:notOperator rdf:type urpx:BooleanOperatorValue, urpx:OperatorValue ;
+    rdfs:label "Not Operator"@en ;
+    rdfs:comment "Represents logical negation in condition logic"@en ;
+    skos:note "Used in ConditionLogic and BooleanOperationNode for boolean NOT composition" .
+
+urpx:orOperator rdf:type urpx:BooleanOperatorValue, urpx:OperatorValue ;
+    rdfs:label "Or Operator"@en ;
+    rdfs:comment "Represents logical disjunction in condition logic"@en ;
+    skos:note "Used in ConditionLogic and BooleanOperationNode for boolean OR composition" .
 
 
 # --- Ownership Type Property (OwnershipTypeValue) ---
@@ -4994,6 +5349,7 @@ urpx:west rdf:type urpx:PanelOrientationValue ;
     rdfs:label "West"@en ;
     skos:definition "West-facing panel orientation - afternoon generation peak" ;
     skos:prefLabel "West" .
+
 
 # --- Phase Code Kind Property (PhaseCodeKindValue) ---
 
@@ -5146,6 +5502,7 @@ urpx:S2N rdf:type urpx:PhaseCodeKindValue ;
     skos:notation "S2N" ;
     skos:definition "Phase S2 to Neutral" ;
     skos:broader urpx:splitPhaseCategory .
+
 
 # --- Premise Type Property (PremiseTypeValue) ---
 
@@ -5901,7 +6258,6 @@ urpx:weeklyUpdates rdf:type urpx:UpdateFrequencyValue ;
     rdfs:label "Weekly Updates"@en ;
     skos:definition "Price updates weekly (P1W)" ;
     skos:prefLabel "Weekly" .
-
 
 
 # --- Voltage Level Property (VoltageLevel) ---

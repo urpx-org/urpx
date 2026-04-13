@@ -56,6 +56,8 @@ Quick links to all design decisions:
 - ✅ [Decision #090: Add Version-Level Modifier Reference Properties](#decision-090)
 - ✅ [Decision #091: Date Property Normalization and Provenance Domain Expansion](#decision-091)
 - ✅ [Decision #092: TariffStatementTypeValue Enum Instance Materialization](#decision-092)
+- ✅ [Decision #093: BillingModel-Owned PriceDefinition with referencesLedger](#decision-093)
+- ✅ [Decision #094: Condition Logic Modeling v3](#decision-094)
 
 ---
 
@@ -808,3 +810,108 @@ Materialize individual instance definitions for all `TariffStatementTypeValue` m
 **References:**
 - File: [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
 - Related Decision: #089 (TariffBookReference and TariffStatementReference Nested Citation Classes)
+
+---
+
+<a id="decision-093"></a>
+### 🔗 Decision #093: BillingModel-Owned PriceDefinition with referencesLedger
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-04-13
+- **Issue:** Restructure `PriceDefinition` ownership and make ledger association explicit
+- **Category:** Architecture
+- **Impact:** High - Breaking change for billing and price-definition attachment structure
+
+**Context:**
+`PriceDefinition` was previously attached to `Ledger` via `hasPriceDefinition`. That containment pattern made structural price definitions harder to manage at the `BillingModel` level and left ledger association implicit in the containment hierarchy.
+
+**Decision:**
+Move `hasPriceDefinition` ownership to `BillingModel` and require every `PriceDefinition` to declare its ledger association explicitly through `referencesLedger`.
+
+**Alternatives Considered:**
+
+1. **BillingModel owns PriceDefinition + explicit referencesLedger** ⭐ **SELECTED**
+   - ✅ Flattens the graph
+   - ✅ Makes ledger association explicit
+   - ✅ Supports shared structural management at the billing-model level
+
+2. **Keep Ledger-owned PriceDefinition**
+   - ✅ No migration required
+   - ❌ Ledger association remains implicit
+   - ❌ Harder to manage structural price definitions independently from ledger containment
+
+**Rationale:**
+- `PriceDefinition` is structural metadata, not ledger containment
+- `BillingModel` is the correct ownership level for structural billing configuration
+- `referencesLedger` makes the ledger relationship explicit, queryable, and SHACL-validatable
+- The change aligns documentation and data modeling around a flatter, clearer price-definition architecture
+
+**Implementation Details:**
+- Changed `hasPriceDefinition` domain from `Ledger` to `BillingModel`
+- Added `referencesLedger` on `PriceDefinition` with required cardinality
+- Updated SHACL to remove `hasPriceDefinition` from `LedgerShape`, add it to `BillingModelShape`, and require `referencesLedger` on `PriceDefinitionShape`
+- Updated `referencesPriceDefinition` documentation to reflect billing-model ownership
+
+**Impact Assessment:**
+- **Positive**: Clearer ownership, explicit ledger association, better queryability, better documentation structure
+- **Breaking Change**: Yes — existing data must move `hasPriceDefinition` triples and add `referencesLedger`
+- **Requirements**: Existing producers, examples, and generated documentation must be updated
+
+**References:**
+- Plan: [`dev-docs/plans/pricedefinition-migration-plan.md`](../../../dev-docs/plans/pricedefinition-migration-plan.md)
+- Related Decision: #045 (PriceDefinition Architecture Clarification)
+- Related Decision: #059 (referencesPriceDefinition Object Property Creation)
+
+---
+
+<a id="decision-094"></a>
+### 🔗 Decision #094: Condition Logic Modeling v3
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-04-13
+- **Issue:** Replace generic condition-value handling with structured rule logic
+- **Category:** Architecture, Validation
+- **Impact:** High - Breaking change for condition modeling and rule execution structure
+
+**Context:**
+The existing condition architecture relied on generic `conditionValue` and `conditionType`, string-oriented `logicExpression`, and a mixed-value modeling pattern that was difficult to validate. The model also needed a clear distinction between atomic predicates and executable boolean rule composition.
+
+**Decision:**
+Adopt the v3 condition architecture based on atomic `Condition` resources plus explicit `ConditionLogic`, `BooleanOperationNode`, `OperationNode`, terminal-node specialization, mandatory `literalType` on datatype-bearing terminal nodes, and datatype-specific value properties.
+
+**Alternatives Considered:**
+
+1. **Adopt explicit v3 condition architecture** ⭐ **SELECTED**
+   - ✅ Separates atomic predicates from boolean rule composition
+   - ✅ Supports strong SHACL validation
+   - ✅ Supports JSON-LD datatype coercion with explicit value properties
+   - ✅ Eliminates ambiguity from generic mixed-type values
+
+2. **Keep generic `conditionValue` and string-based rule logic**
+   - ✅ Smaller immediate change
+   - ❌ Weak validation
+   - ❌ Ambiguous datatype handling
+   - ❌ Inconsistent executable rule structure
+
+**Rationale:**
+- `Condition` remains the atomic logical unit
+- `ConditionLogic` becomes the authoritative executable rule structure
+- `BooleanOperationNode` cleanly separates nested boolean composition from arithmetic or ordered comparison structure
+- `literalType` plus datatype-specific value properties make intended datatypes explicit and machine-validatable
+- `CustomTerminalNode` remains available only as a fallback path
+
+**Implementation Details:**
+- Added `ConditionLogic`, `BooleanOperationNode`, `OperationNode`, `DatatypeTerminalNode`, `ObjectTerminalNode`, `CustomTerminalNode`, and `LiteralTypeValue`
+- Added `conditionOperands`, `hasConditionLogic`, `referencesValue`, `literalType`, and datatype-specific value properties
+- Deprecated `conditionValue`, `conditionType`, and `logicExpression`
+- Updated SHACL so rules using conditions also require explicit `ConditionLogic`
+
+**Impact Assessment:**
+- **Positive**: Clear executable semantics, stronger validation, cleaner JSON-LD authoring, better documentation opportunities
+- **Breaking Change**: Yes — existing rule data using `conditionValue`, `conditionType`, or `logicExpression` must migrate
+- **Requirements**: Producers and examples must adopt `hasConditionLogic`, terminal-node specialization, and datatype-specific value properties
+
+**References:**
+- Recommendation: [`dev-docs/reports/urpx-condition-model-v3-recommendation.md`](../../../dev-docs/reports/urpx-condition-model-v3-recommendation.md)
+- Related Decision: #040 (Eligibility Properties Deprecation - Unified Condition Pattern)
+- Related Decision: #068 (conditionType and conditionValue Domain Removal from Rule Classes)
