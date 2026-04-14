@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HDP Diagrams — Current State &amp; Proposed Extensions</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+    <script src="assets/mermaid.min.js"></script>
+    <style>
+      .mermaid { background: var(--urpx-surface); border: 1px solid var(--urpx-border); border-radius: 6px; padding: 8px; }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <p class="eyebrow">URPX Highly Dynamic Pricing</p>
+      <h1>Current State &amp; Proposed Extensions</h1>
+      <p class="subtitle">Visual overview of what URPX v0.1.1 can represent today versus what needs to be added.</p>
+    </header>
+    <main>
+      <section class="card">
+        <p><a href="index.html">Back to package index</a></p>
+      </section>
+
+      <section class="card">
+        <h2>1. Current URPX v0.1.1 — HDP Representation</h2>
+        <p>What the ontology can express today for dynamic pricing. The core structure is present but limited to metadata and single-scalar current prices.</p>
+        <div class="mermaid">
+flowchart TD
+    subgraph doc["HighlyDynamicPricesDocument"]
+        RP[RatePlan] --> RPV[RatePlanVersion]
+        RPV --> PE[PlanElements]
+        PE --> BM[BillingModel]
+        BM --> L[Ledger]
+        L --> PD[PriceDefinition]
+        PD --> PS[PriceSet]
+        PS --> P["Price<br/>(startDate, unitPrice, currentPrice)"]
+    end
+
+    subgraph dyn["Dynamic Pricing Config"]
+        DP[DynamicPricing] --> DPT["DynamicPricingTypeValue<br/>(realTimePricing, criticalPeakPricing, ...)"]
+        DP --> PUR[PriceUpdateRule]
+        DP --> PSrc["PriceSourceValue<br/>(wholesaleMarketSource, ...)"]
+        DP --> UF["UpdateFrequencyValue<br/>(hourlyUpdates, every5Minutes, ...)"]
+        DP --> FC["priceFloor / priceCeiling"]
+    end
+
+    subgraph geo["Geography &amp; Eligibility"]
+        AG[ApplicabilityGroup] --> ST[ServiceTerritory]
+        AG --> GZ[GeographicZone]
+        ER[EligibilityRule] --> CP[CustomerProfile]
+    end
+
+    RPV --> DP
+    PS --> AG
+    RPV --> ER
+
+    style doc fill:#e8f4fd,stroke:#2196F3
+    style dyn fill:#fff3e0,stroke:#FF9800
+    style geo fill:#e8f5e9,stroke:#4CAF50
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>2. Proposed Extensions — Confirmed Gaps</h2>
+        <p>New classes and properties needed based on gap analysis and 2026-03-17 discussion. Red nodes are missing from the current ontology.</p>
+        <div class="mermaid">
+flowchart TD
+    subgraph current["Existing (v0.1.1)"]
+        DP[DynamicPricing]
+        PS[PriceSet / Price]
+        DSR[DataSourceReference]
+        SO[SystemOperator]
+        CM["CalculationMethod<br/>(calculationFormula as string)"]
+    end
+
+    subgraph gap1["GAP-1: Compact Ingestion"]
+        PTS["PriceTimeSeries<br/>(timeSeriesType, intervalDuration)"]
+        PO["PriceObservation<br/>(timestamp, price, status)"]
+        PTS --> PO
+    end
+
+    subgraph gap4["GAP-4: Event Model"]
+        DPE["DynamicPricingEvent<br/>(callTime, start, end, status)"]
+        DPEC["EventConstraints<br/>(maxEvents/year, season, notice)"]
+    end
+
+    subgraph gap8["GAP-8: Settlement"]
+        SV["SettlementStatus<br/>(dayAhead, realTime, final, revised)"]
+    end
+
+    subgraph gap9["NEW: Computation Rules"]
+        CR["ComputationRule<br/>(structured, not string)"]
+        PC["PriceComponent<br/>(dynamic vs fixed, source link)"]
+    end
+
+    subgraph gap10["NEW: Split Metrics"]
+        SM["SplitMetricInput<br/>(heating, EV, non-heating)"]
+        EU["EndUseCategory"]
+    end
+
+    PS --> PTS
+    DP --> DPE
+    DP --> DPEC
+    PO --> SV
+    DP --> CR
+    CR --> PC
+    PS --> SM
+    SM --> EU
+
+    style current fill:#e8f4fd,stroke:#2196F3
+    style gap1 fill:#ffebee,stroke:#f44336
+    style gap4 fill:#ffebee,stroke:#f44336
+    style gap8 fill:#ffebee,stroke:#f44336
+    style gap9 fill:#ffebee,stroke:#f44336
+    style gap10 fill:#ffebee,stroke:#f44336
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>3. OpenADR 3.0 Alignment</h2>
+        <p>How URPX concepts map to OpenADR 3.0. Bruce recommended OpenADR3 for wide-area communication and Matter for intra-building.</p>
+        <div class="mermaid">
+flowchart LR
+    subgraph urpx["URPX"]
+        U_RP["RatePlan +<br/>DynamicPricing"]
+        U_EV["DynamicPricingEvent<br/>(proposed)"]
+        U_TS["PriceTimeSeries<br/>(proposed)"]
+        U_ER["EligibilityRule +<br/>CustomerProfile"]
+    end
+
+    subgraph oadr["OpenADR 3.0"]
+        O_PR[Program]
+        O_EV["Event<br/>(intervals[], programID)"]
+        O_INT["Interval<br/>(payloads[].values)"]
+        O_TG["targets<br/>(venID, groupID)"]
+    end
+
+    U_RP -.->|"maps to"| O_PR
+    U_EV -.->|"maps to"| O_EV
+    U_TS -.->|"maps to"| O_INT
+    U_ER -.->|"maps to"| O_TG
+
+    style urpx fill:#e8f4fd,stroke:#2196F3
+    style oadr fill:#f3e5f5,stroke:#9C27B0
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>4. Dynamic Price Output Structure</h2>
+        <p>From discussion: the output stream for device automation should contain only the dynamic part (import price, export price, non-financial factors). Fixed charges are excluded from automation.</p>
+        <div class="mermaid">
+flowchart TD
+    subgraph input["Rate Plan Inputs"]
+        WM["Wholesale Market LMP<br/>(e.g., PJM ComEd zone)"]
+        RA["Retail Adder<br/>(fixed component)"]
+        CAP["Capacity Obligation<br/>(seasonal)"]
+        TX["Transmission<br/>(fixed component)"]
+    end
+
+    subgraph compute["Computation (structured rules)"]
+        COMP["ComputationRule<br/>LMP + adder + capacity + transmission"]
+    end
+
+    subgraph output["Device Output Stream"]
+        IP["Import Price<br/>(current + forecast)"]
+        EP["Export Price"]
+        NF["Non-financial Factors<br/>(grid stress, carbon)"]
+    end
+
+    WM --> COMP
+    RA --> COMP
+    CAP --> COMP
+    TX --> COMP
+    COMP --> IP
+    COMP --> EP
+    COMP --> NF
+
+    style input fill:#fff3e0,stroke:#FF9800
+    style compute fill:#ffebee,stroke:#f44336
+    style output fill:#e8f5e9,stroke:#4CAF50
+        </div>
+      </section>
+    </main>
+    <script>
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', theme: 'default' });
+    </script>
+  </body>
+</html>

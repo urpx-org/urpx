@@ -1,0 +1,74 @@
+body.md-page {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  color: #1a2332;
+  background: #f8fafb;
+}
+
+.md-shell {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+}
+
+.md-toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #d0e4f0;
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+}
+
+.md-toolbar a {
+  color: #00adef;
+  text-decoration: none;
+}
+
+.md-status {
+  color: #5d6d7e;
+  font-size: 0.9rem;
+}
+
+.md-content {
+  border: 1px solid #d0e4f0;
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 18px;
+  overflow-x: auto;
+}
+
+.md-content h1,
+.md-content h2,
+.md-content h3,
+.md-content h4 {
+  color: #00386e;
+}
+
+.md-content h1,
+.md-content h2,
+.md-content h3 {
+  margin-top: 1.2em;
+}
+
+.md-content table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.md-content th,
+.md-content td {
+  border: 1px solid #d0e4f0;
+  padding: 6px 8px;
+  text-align: left;
+}
+
+.md-content pre {
+  background: #f0f4f8;
+  padding: 10px;
+  border-radius: 4px;
+  overflow-x: auto;
+}

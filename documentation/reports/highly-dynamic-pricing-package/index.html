@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URPX HDP Review Package for Bruce</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <p class="eyebrow">URPX Highly Dynamic Pricing</p>
+      <h1>Review Package for Bruce Nordman</h1>
+      <p class="subtitle">Following our 2026-03-17 discussion. Please review at your own pace and add notes to <code>REVIEW-NOTES.md</code>.</p>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>How To Use This Package</h2>
+        <ol>
+          <li>Read the <strong>gap analysis</strong> — updated with outcomes from our conversation.</li>
+          <li>Review the <strong>HDP diagrams</strong> showing current URPX state and proposed extensions.</li>
+          <li>Inspect the two <strong>JSON-LD instances</strong> (ComEd RRTP, PG&amp;E B-6 PDP) — feel free to edit these directly.</li>
+          <li>Open <code>REVIEW-NOTES.md</code> to add your feedback, corrections, or proposed changes.</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2>Gap Analysis</h2>
+        <p>Ontology assessment against HDP requirements, OpenADR alignment, and confirmed gaps from our discussion. Includes priority ranking, proposed classes, and open items for your review.</p>
+        <a href="docs/urpx-highly-dynamic-pricing-gap-analysis-2026-03-17.html">Open rendered gap analysis</a>
+      </section>
+
+      <section class="card">
+        <h2>HDP Diagrams</h2>
+        <p>Visual overview of what URPX v0.1.1 currently represents for dynamic pricing versus proposed extensions.</p>
+        <p><a href="gap-analysis-diagrams.html">Open HDP diagrams</a></p>
+      </section>
+
+      <section class="card">
+        <h2>HDP Instances (JSON-LD)</h2>
+        <p>Two complete <code>HighlyDynamicPricesDocument</code> instances with geography applicability groups. These are editable — if you want to propose structural changes, edit the files directly.</p>
+        <ul>
+          <li><a href="instances/URPX-HDP-COMED-RRTP-RTP-001.jsonld">ComEd RRTP — Residential Real-Time Pricing (PJM LMP-based)</a></li>
+          <li><a href="instances/URPX-HDP-PGE-B6-CPP-001.jsonld">PG&amp;E B-6 PDP — Small General TOU with Peak Day Pricing (CAISO)</a></li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Rate Plan Structure Diagrams</h2>
+        <p>Full Graphviz renderings of each HDP rate plan structure showing ledgers, price definitions, and dynamic pricing elements.</p>
+        <p><a href="urpx-website-examples-gallery.html">Open diagram gallery</a></p>
+      </section>
+
+      <section class="card">
+        <h2>Tariffbook and Source Links</h2>
+        <ul>
+          <li><a href="https://www.comed.com/MyAccount/MyBillUsage/Pages/CurrentRatesTariffs.aspx">ComEd Current Rates and Tariffs</a></li>
+          <li><a href="https://icc.illinois.gov/docket/P2012-0365/documents/186510/files/328312.pdf">ComEd Rider RRTP ICC Filing (PDF)</a></li>
+          <li><a href="https://hourlypricing.comed.com/hp-api/">ComEd Hourly Pricing API</a></li>
+          <li><a href="https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_SCHEDS_B-6.pdf">PG&amp;E Schedule B-6 (PDF)</a></li>
+          <li><a href="https://www.pge.com/en/account/rate-plans/peak-day-pricing.html">PG&amp;E Peak Day Pricing</a></li>
+          <li><a href="https://www.pge.com/en/account/rate-plans/hourly-flex-pricing.html">PG&amp;E Hourly Flex Pricing</a></li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Your Feedback</h2>
+        <p>We've included <code>REVIEW-NOTES.md</code> in this package. You can:</p>
+        <ul>
+          <li>Edit <code>REVIEW-NOTES.md</code> with comments on the gap analysis, priority adjustments, or OpenADR alignment notes.</li>
+          <li>Edit the JSON-LD instance files directly to propose structural changes.</li>
+          <li>Add new files (e.g., OpenADR mapping notes, ontology term suggestions) anywhere in this folder.</li>
+        </ul>
+        <p>Send the folder back when you're ready and we'll integrate your feedback.</p>
+      </section>
+    </main>
+  </body>
+</html>
