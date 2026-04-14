@@ -85,6 +85,12 @@
     "urpx:serviceRole": {
       "@id": "urpx:bundledServiceRole"
     },
+    "urpx:hasRateCase": {
+      "@type": "urpx:RateCase",
+      "@id": "pge:rate-case-2025",
+      "urpx:caseNumber": "A2409015",
+      "urpx:url": "https://apps.cpuc.ca.gov/c/A2409015"
+    },
     "urpx:hasDataSourceReference": {
       "@type": "urpx:DataSourceReference",
       "urpx:url": "file://./assets/PGE_E-ELEC_2026-01-01.pdf",
