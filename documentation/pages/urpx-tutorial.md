@@ -1,7 +1,7 @@
 # URPX Tutorial: Building Your First Rate Plan
 
-**Version**: 0.1.1  
-**Last Updated**: 2026-03-02  
+**Version**: 0.2.0 (Pre-draft)
+**Last Updated**: 2026-04-13
 **Status**: Active
 
 **Learn the basics of creating and validating utility rate plan data using the URPX v0.1.1 ontology**
@@ -67,11 +67,11 @@ Understanding these distinctions is critical for working with URPX. For a more d
 - May have a **chargeType** (specific implementation like `minimumCharge`, `usageCharge`)
 - May have a **chargeCategory** (business purpose like `serviceCharge`, `auxiliaryCharge`)
 - May reference a **MetricInput** to define what is being measured for pricing.
-- May reference a **PriceDefinition** for structural price information.
+- May reference a **PriceDefinition** for structural price information through `referencesPriceDefinition`.
 
 **MetricInput & MetricSpecification**:
 - **MetricSpecification**: Defines the technical details of *what* is being measured (e.g., energy, kWh, supply-side).
-- **MetricInput**: Organizational unit for pricing rules supporting measured MetricInputs (raw meter data), calculated MetricInputs (derived metrics), aggregated MetricInputs (sum of MetricInputs), and profile MetricInputs (based on Customer and Service Point Profile properties) that may contain one or more `MetricSpecification` objects. It acts as a centralized, reusable definition that Ledger, Price, Price Definition, Service Tier, and TOU Schedule objects can reference. This prevents repetition and ensures consistency.
+- **MetricInput**: Organizational unit for pricing rules supporting measured MetricInputs (raw meter data), calculated MetricInputs (derived metrics), aggregated MetricInputs (sum of MetricInputs), and profile MetricInputs (based on Customer and Service Point Profile properties) that may contain one or more `MetricSpecification` objects. It acts as a centralized, reusable definition that Ledger, PriceDefinition, Price, ServiceTier, and TOUSchedule objects can reference.
 
 ### Key Terminology
 
@@ -552,7 +552,74 @@ Every Price must have:
 
 1. **amount, unitPrice, basedOnPrice, basePrice, or currentPrice** - Exactly one
 2. **startDate or startDateTime** - Either directly on the Price object or on a parent PriceSet. Also include endDate or endDateTime on Price or parent PriceSet when available.
-3. **Measurement Definition** - Each `Price` that depends on a measured quantity must reference a `MetricInput` via `referencesMetricInput` or via `referencesPriceDefinition` on a `Ledger` object containing property `referencesMetricInput`. Each `Price` that depends on a non-measured quantity must reference a `MetricInput` with `ProfileMetricProperty` via `referencesMetricInput`. Prices with a fixed `amount` (like `minimumCharge`) only require interval definition in `MetricSpecification`.
+3. **Measurement Definition** - Each `Price` that depends on a measured quantity MUST connect to a `MetricInput` either directly via `referencesMetricInput` or indirectly through `referencesPriceDefinition` -> `PriceDefinition` -> `referencesLedger` -> `Ledger` -> `referencesMetricInput`. Each `PriceDefinition` MUST declare exactly one `referencesLedger` value. Each `Price` that depends on a non-measured quantity must reference a profile-based or scenario-based metric input pattern appropriate to the modeled charge either directly or indirectly. Prices with a fixed `amount` (like `minimumCharge`) only require interval definition in `MetricSpecification`.
+
+### Structured Rule Logic
+
+URPX separates atomic conditions from executable rule logic. `Condition` represents one predicate, while `ConditionLogic` declares the authoritative boolean structure for the rule.
+
+```json
+{
+  "@id": "ex:eligibility-rule-usage-threshold",
+  "@type": "urpx:EligibilityRule",
+  "urpx:description": "Average monthly usage must be greater than 500.",
+  "urpx:hasCondition": [
+    {
+      "@id": "ex:condition-usage-threshold",
+      "@type": "urpx:Condition",
+      "urpx:name": "Usage threshold",
+      "urpx:operator": { "@id": "urpx:greaterThanOperator" },
+      "urpx:leftOperand": {
+        "@id": "ex:left2",
+        "@type": "urpx:DatatypeTerminalNode",
+        "urpx:conditionProperty": { "@id": "urpx:averageMonthlyUsage" },
+        "urpx:literalType": { "@id": "urpx:integerDatatype" }
+      },
+      "urpx:rightOperand": {
+        "@id": "ex:right2",
+        "@type": "urpx:DatatypeTerminalNode",
+        "urpx:literalType": { "@id": "urpx:integerDatatype" },
+        "urpx:integerValue": 500
+      }
+    }
+  ],
+  "urpx:hasConditionLogic": {
+    "@id": "ex:condition-logic-usage-threshold",
+    "@type": "urpx:ConditionLogic",
+    "urpx:operator": { "@id": "urpx:andOperator" },
+    "urpx:conditionOperands": [
+      { "@id": "ex:condition-usage-threshold" }
+    ]
+  }
+}
+```
+
+Even when a rule has only one condition, `ConditionLogic` is still required. This keeps eligibility and applicability modeling consistent and makes SHACL validation straightforward.
+
+### Regulatory Traceability with `RateCase`
+
+Use `changeReason` to classify why a version changed, and use `hasRateCase` to identify the formal proceeding behind the change.
+
+```json
+{
+  "@id": "ex:version-basic-res-v2",
+  "@type": "urpx:RatePlanVersion",
+  "urpx:version": "2.0",
+  "urpx:effectiveDateTime": "2026-01-01T00:00:00-05:00",
+  "urpx:changeReason": { "@id": "urpx:rateCase" },
+  "urpx:hasRateCase": [
+    {
+      "@id": "ex:ratecase-2026-001",
+      "@type": "urpx:RateCase",
+      "urpx:caseNumber": "2026-001-E",
+      "urpx:name": "Residential rate adjustment proceeding",
+      "urpx:url": "https://example.org/regulator/dockets/2026-001-e"
+    }
+  ]
+}
+```
+
+`changeReason` categorizes the change. `hasRateCase` provides the reusable proceeding record and may also be used on `PriceDefinition`, `PriceSet`, `PriceSetAlternative`, or `Price` when only part of a pricing structure is affected.
 
 ### Sample Valid Charge Type Values
 

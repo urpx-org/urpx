@@ -1,5 +1,5 @@
 # URPX SHACL Shapes - Unified File
-# Version: 0.1.1 Pre-Draft
+# Version: 0.2.0 Pre-Draft
 # Generated: 2026-02-06
 # Description: SHACL shapes for validating URPX data against the URPX Ontology.
 
@@ -21,10 +21,10 @@
     dcterms:date "2026-02-06"^^xsd:date ;
     dcterms:description "SHACL shapes for validating URPX data against the URPX Ontology." ;
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
-    dcterms:modified "2026-03-03"^^xsd:date ;
+    dcterms:modified "2026-04-13"^^xsd:date ;
     dcterms:title "URPX - SHACL" ;    
-    owl:versionInfo "0.1.1" ;
-    dcat:version "0.1.1" .
+    owl:versionInfo "0.2.0" ;
+    dcat:version "0.2.0" .
 
 # ============================================================================
 # NODE SHAPES
@@ -596,7 +596,7 @@ urpx-shacl:CustomTerminalNodeShape
     ] ;
     sh:property [
         sh:path urpx:literalType ;
-        sh:class urpx:LiteralTypeValue ;
+        sh:node urpx-shacl:LiteralTypeValue ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
@@ -955,7 +955,7 @@ urpx-shacl:DatatypeTerminalNodeShape
     ] ;
     sh:property [
         sh:path urpx:literalType ;
-        sh:class urpx:LiteralTypeValue ;
+        sh:node urpx-shacl:LiteralTypeValue ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
@@ -5657,6 +5657,13 @@ urpx-shacl:LedgerTypeValueShape
     sh:targetClass urpx:LedgerTypeValue ;
     sh:nodeKind sh:IRI ;
     sh:in ( urpx:bundledLedger urpx:calculatedLedger urpx:deliveryLedger urpx:distributionLedger urpx:measuredLedger urpx:profileMetricLedger urpx:supplyLedger urpx:transmissionLedger ) .
+
+urpx-shacl:LiteralTypeValueShape
+    a sh:NodeShape ;
+    rdfs:label "LiteralTypeValue Shape"@en ;
+    sh:targetClass urpx:LiteralTypeValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:booleanDatatype urpx:dateDatatype urpx:dateTimeDatatype urpx:decimalDatatype urpx:durationDatatype urpx:gMonthDatatype urpx:integerDatatype urpx:stringDatatype urpx:timeDatatype ) .
 
 urpx-shacl:LoadProfileValueShape
     a sh:NodeShape ;

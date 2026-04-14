@@ -1,6 +1,6 @@
 # URPX Diagram Index
 
-**Version:** 0.1.1 Pre-Draft  
+**Version:** 0.2.0 (Pre-draft)
 **Last Updated:** January 26, 2026
 
 [← Back to Index](../index.md)

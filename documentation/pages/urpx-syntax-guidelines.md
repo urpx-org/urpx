@@ -1,6 +1,6 @@
 # URPX Syntax Guidelines
 
-**Version:** 0.1.1
+**Version:** 0.2.0 (Pre-draft)
 **Last Updated:** December 2, 2025
 
 [← Back to Index](../index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)

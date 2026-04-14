@@ -1,6 +1,6 @@
 # Diagrams for LF Energy Transfer
 
-**Version:** 0.1.1 Pre-Draft  
+**Version:** 0.2.0 (Pre-draft) 
 **Date:** January 26, 2026  
 **Purpose:** Documentation diagrams for URPX working group review
 

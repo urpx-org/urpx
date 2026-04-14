@@ -1,8 +1,8 @@
 # URPX API Specification
 
-**Version:** 0.1.1 (Draft)  
+**Version:** 0.2.0 (Pre-draft)
 **Status:** Requirements Phase  
-**Last Updated:** 2025-11-23
+**Last Updated:** 2026-04-13
 
 [← Back to Index](../index.md) | [Overview](urpx-overview.md) | [URPX Interoperability & Standards Integration](urpx-interoperability.md)
 
@@ -14,7 +14,7 @@ The URPX API specification is currently in requirements gathering phase. A worki
 
 This document provides initial pre-draft requirements, use cases, and example API patterns to guide development.
 
-**Scope Note**: URPX APIs focus on consuming published rate plan data. Rate plan submission and regulatory approval tracking are outside the standard's scope.
+**Scope Note**: URPX APIs focus on consuming published rate plan data. Rate plan submission workflows are outside the standard's scope, but published URPX data MAY expose regulatory traceability metadata such as linked `RateCase` resources, filing references, and approval dates.
 
 ---
 
@@ -181,7 +181,7 @@ sequenceDiagram
     API->>Engine: Evaluate eligibility rules
     Engine->>Store: Query rate plans
     Store->>Engine: Return candidates
-    Engine->>Engine: Apply CustomerProfileSet<br/>boolean logic
+    Engine->>Engine: Resolve `hasCondition` inventory<br/>and execute `ConditionLogic`
     Engine->>API: Eligible rate plans
     API->>Portal: 200 OK with results
     Portal->>Customer: Display qualified options
@@ -205,6 +205,8 @@ Content-Type: application/json
   }
 }
 ```
+
+**Implementation Note:** Eligibility evaluation in URPX is based on structured `Condition` resources plus `ConditionLogic`. API responses should surface matched rule names, condition names, or stable identifiers rather than serialized logic-expression strings.
 
 **Response Example**:
 ```json

@@ -1,9 +1,71 @@
 # 📋 URPX Changelog
 
-**Version:** 0.1.1
-**Last Updated:** 2026-04-10
+**Version:** 0.2.0 (Pre-draft)
+**Last Updated:** 2026-04-13
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-04-13
+---
+
+### ⚠️ Breaking Changes
+
+#### Refactored: `urpx:hasPriceDefinition` — Ownership Moved to `BillingModel`
+- Domain changed from `urpx:Ledger` to `urpx:BillingModel`; existing data must be migrated.
+- Added `urpx:referencesLedger` on `urpx:PriceDefinition` (required); ledger association is now explicit rather than implied by containment hierarchy.
+- **Rationale:** `PriceDefinition` is structural billing metadata, not ledger content. `BillingModel` is the correct ownership level; `referencesLedger` makes the ledger relationship queryable and SHACL-validatable.
+- **Design Decision:** [#093](documentation/pages/urpx-design-decisions-081-120.md#decision-093)
+
+#### Replaced: Condition Modeling Architecture
+- Removed `urpx:conditionValue`, `urpx:conditionType`, and `urpx:logicExpression`; existing rule data using these properties must migrate.
+- Added structured condition classes: `ConditionLogic`, `BooleanOperationNode`, `OperationNode`, `DatatypeTerminalNode`, `ObjectTerminalNode`, `CustomTerminalNode`, `LiteralTypeValue`.
+- Added structural properties: `hasConditionLogic`, `conditionOperands`, `leftOperand`, `rightOperand`, `conditionProperty`, `customConditionProperty`, `literalType`, `referencesValue`.
+- Added datatype-specific value properties: `booleanValue`, `dateValue`, `dateTimeValue`, `decimalValue`, `durationValue`, `gMonthValue`, `integerValue`, `stringValue`, `timeValue`.
+- `Condition` remains the atomic predicate unit; `ConditionLogic` becomes the authoritative executable rule structure for boolean composition. `CustomTerminalNode` is retained as a fallback path only.
+- Expanded `urpx:name` and `urpx:description` domains to include condition and logic resources.
+- **Design Decision:** [#094](documentation/pages/urpx-design-decisions-081-120.md#decision-094)
+
+### Ontology Changes
+
+#### Added: `urpx:RateCase` (Class)
+- New class representing formal regulatory proceedings that establish or revise rate plan and pricing artifacts.
+- Added `urpx:caseNumber` (DatatypeProperty, `xsd:string`) and `urpx:hasRateCase` (ObjectProperty) to associate regulatory proceedings with applicable resources.
+- `urpx:hasRateCase` domain includes: `Price`, `PriceDefinition`, `PriceSet`, `PriceSetAlternative`, `RatePlanVersion`, `RatePlanModifierVersion`.
+- Expanded domains of `urpx:name`, `urpx:description`, `urpx:priority`, and `urpx:url` to include `urpx:RateCase`.
+- **Design Decision:** [#095](documentation/pages/urpx-design-decisions-081-120.md#decision-095)
+
+#### Added: Datetime Provenance Properties
+- Added `xsd:dateTime` companions for all existing `xsd:date` provenance properties:
+  `urpx:dateTimeApproved`, `urpx:dateTimeCreated`, `urpx:dateTimeModified`, `urpx:dateTimePublished`, `urpx:dateTimeReceived`, `urpx:dateTimeRetrieved`.
+- Domains mirror the corresponding `xsd:date` properties; existing date-only fields are preserved.
+- **Rationale:** Enables full timestamp-level provenance for sources that report at sub-day precision, without overloading the `xsd:date` fields used where only date precision is available or intended.
+- **Design Decision:** [#096](documentation/pages/urpx-design-decisions-081-120.md#decision-096)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Updated: `BillingModelShape` and `LedgerShape`
+- Moved `hasPriceDefinition` constraint from `LedgerShape` to `BillingModelShape`.
+- Added required `referencesLedger` constraint on `PriceDefinitionShape`.
+- **Design Decision:** [#093](documentation/pages/urpx-design-decisions-081-120.md#decision-093)
+
+#### Replaced: Condition and Rule Shapes
+- Replaced `logicExpression` constraints on applicability and eligibility rule shapes with `hasConditionLogic`.
+- Redefined `ConditionShape` as an atomic predicate with required `operator`, `leftOperand`, and `rightOperand`.
+- Added shapes: `ConditionLogicShape`, `BooleanOperationNodeShape`, `OperationNodeShape`, `DatatypeTerminalNodeShape`, `ObjectTerminalNodeShape`, `CustomTerminalNodeShape`.
+- `DatatypeTerminalNodeShape` enforces `literalType` plus the matching datatype-specific value property.
+- `ConditionLogicShape` and `BooleanOperationNodeShape` constrain to boolean operators and `conditionOperands`-based composition.
+- **Design Decision:** [#094](documentation/pages/urpx-design-decisions-081-120.md#decision-094)
+
+#### Added: `RateCaseShape`
+- Required: `caseNumber`, `url`.
+- Optional: `name`, `description`, `priority` (`sh:minInclusive 1`).
+- **Design Decision:** [#095](documentation/pages/urpx-design-decisions-081-120.md#decision-095)
+
+#### Added: Datetime Provenance Constraints
+- Added `dateTimeApproved`, `dateTimeCreated`, `dateTimeModified`, `dateTimePublished`, `dateTimeReceived`, and `dateTimeRetrieved` property constraints to all shapes that carry the corresponding `xsd:date` fields.
+- **Design Decision:** [#096](documentation/pages/urpx-design-decisions-081-120.md#decision-096)
+
+---
 
 2026-04-10
 ---

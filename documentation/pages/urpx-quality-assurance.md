@@ -1,7 +1,7 @@
 # URPX Quality Assurance Guidelines
 
-**Version**: 0.1.1  
-**Last Updated**: 2026-03-02  
+**Version**: 0.2.0 (Pre-draft)
+**Last Updated**: 2026-04-13 
 **Status**: Active
 
 **Validation and quality standards for URPX v0.1.1 rate plan data**
@@ -72,6 +72,28 @@ URPX v0.1.1 uses a core ontology file:
 - Must have one pricing field (amount, unitPrice, basedOnPrice, currentPrice, or basePrice)
 - Must have start and end dates when available (startDate, startDateTime, endDate, endDateTime)
 
+**Condition Rule Requirements:**
+- If an `EligibilityRule` or `ApplicabilityRule` uses `hasCondition`, it MUST also provide `hasConditionLogic`
+- `ConditionLogic` and `BooleanOperationNode` MUST use `conditionOperands`
+- `ConditionLogic` and `BooleanOperationNode` MUST NOT use `leftOperand` or `rightOperand`
+- `OperationNode` is used only for ordered arithmetic or comparison subexpressions inside `Condition`
+- `DatatypeTerminalNode` and `CustomTerminalNode` MUST include `literalType`
+- Datatype-bearing terminal nodes MUST carry exactly one matching datatype-specific value property
+- `conditionValue`, `conditionType`, and `logicExpression` are deprecated and MUST NOT appear in new examples or test data
+
+**PriceDefinition Requirements:**
+- `BillingModel` owns `hasPriceDefinition`
+- `Ledger` MUST NOT carry `hasPriceDefinition`
+- Every `PriceDefinition` MUST include exactly one `referencesLedger`
+- Either `Price` and `PriceSet` MUST use `referencesPriceDefinition` to link to structural price definitions so that each `Price` references a price definition either through direct use of `referencesPriceDefinition` or through inheritance of `referencesPriceDefinition` from a parent `PriceSet`
+
+**RateCase Requirements:**
+- Every `RateCase` MUST include `caseNumber`
+- Every `RateCase` MUST include `url`
+- `priority`, if present, MUST be an integer greater than or equal to 1
+- `hasRateCase` MAY appear on `RatePlanVersion`, `RatePlanModifierVersion`, `PriceDefinition`, `Price`, `PriceSet`, and `PriceSetAlternative`
+- `changeReason` classifies the change category; `hasRateCase` identifies the actual proceeding
+
 **Temporal Requirements:**
 - Time zone must be specified with `timeZoneIdentifier` on LocationDataSet, URPXDocument, RatePlan, or RatePlanModifier
 - Versions must not overlap temporally
@@ -106,6 +128,21 @@ URPX v0.1.1 uses a core ontology file:
 - billPortion (from BillPortionValue) — optional
 - referencesPriceDefinition (link to PriceDefinition) — optional, recommended
 
+**Every rule using structured conditions must have:**
+- `hasCondition` for the condition resources used by the rule
+- `hasConditionLogic` for the authoritative boolean structure
+
+**Every datatype-bearing terminal node must have:**
+- `literalType`
+- exactly one matching value property such as `booleanValue`, `dateValue`, `dateTimeValue`, `decimalValue`, `durationValue`, `gMonthValue`, `integerValue`, `stringValue`, or `timeValue`
+
+**Every PriceDefinition must have:**
+- `referencesLedger` (exactly one)
+
+**Every RateCase must have:**
+- `caseNumber` (exactly one)
+- `url` (exactly one)
+
 ### Enumeration Value Validation
 
 **ChargeTypeValue** - Must use exact instance names:
@@ -134,18 +171,59 @@ URPX v0.1.1 uses a core ontology file:
 **Correct enum reference:**
 ```json
 {
-  "chargeType": {"@id": "urpx:minimumCharge"},
-  "chargeCategory": {"@id": "urpx:serviceCharge"},
-  "billPortion": {"@id": "urpx:bundledPortion"}
+  "urpx:chargeType": {"@id": "urpx:minimumCharge"},
+  "urpx:chargeCategory": {"@id": "urpx:serviceCharge"},
+  "urpx:billPortion": {"@id": "urpx:bundledPortion"}
 }
 ```
 
 **Incorrect (will fail validation):**
 ```json
 {
-  "chargeType": "minimumCharge",
-  "chargeCategory": "serviceCharge",
-  "billPortion": "bundledPortion"
+  "urpx:chargeType": "minimumCharge",
+  "urpx:chargeCategory": "serviceCharge",
+  "urpx:billPortion": "bundledPortion"
+}
+```
+
+**Invalid condition pattern (deprecated):**
+```json
+{
+  "@type": "urpx:Condition",
+  "urpx:conditionValue": 500
+}
+```
+
+**Valid condition pattern:**
+```json
+{
+  "@type": "Condition",
+  "urpx:operator": { "@id": "urpx:greaterThanOperator" },
+  "urpx:leftOperand": {
+    "@type": "urpx:DatatypeTerminalNode",
+    "urpx:conditionProperty": { "@id": "urpx:averageMonthlyUsage" },
+    "urpx:literalType": { "@id": "urpx:integerDatatype" }
+  },
+  "urpx:rightOperand": {
+    "@type": "urpx:DatatypeTerminalNode",
+    "urpx:literalType": { "@id": "urpx:integerDatatype" },
+    "urpx:integerValue": 500
+  }
+}
+```
+
+**Valid rate case traceability pattern:**
+```json
+{
+  "@type": "urpx:RatePlanVersion",
+  "urpx:changeReason": { "@id": "urpx:rateCase" },
+  "urpx:hasRateCase": [
+    {
+      "@type": "urpx:RateCase",
+      "urpx:caseNumber": "2026-001-E",
+      "urpx:url": "https://example.org/regulator/dockets/2026-001-e"
+    }
+  ]
 }
 ```
 

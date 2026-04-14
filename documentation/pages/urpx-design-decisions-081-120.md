@@ -2,7 +2,7 @@
 
 **Version:** 1.0
 **Created:** 2026-04-07
-**Last Updated:** 2026-04-07
+**Last Updated:** 2026-04-13
 
 > **Note:** Design decisions reference the original modular ontology files (urpx-core-ontology.ttl, urpx-profile.ttl, urpx-organization.ttl, urpx-geography.ttl, urpx-charge-classification.ttl). As of v0.1.1, these files have been consolidated into a single `ontology/urpx-ontology.ttl` file. See [urpx-changelog.md](../../urpx-changelog.md) for consolidation details.
 
@@ -57,7 +57,9 @@ Quick links to all design decisions:
 - ✅ [Decision #091: Date Property Normalization and Provenance Domain Expansion](#decision-091)
 - ✅ [Decision #092: TariffStatementTypeValue Enum Instance Materialization](#decision-092)
 - ✅ [Decision #093: BillingModel-Owned PriceDefinition with referencesLedger](#decision-093)
-- ✅ [Decision #094: Condition Logic Modeling v3](#decision-094)
+- ✅ [Decision #094: Condition Logic Modeling](#decision-094)
+- ✅ [Decision #095: RateCase Traceability for Regulated Proceeding Links](#decision-095)
+- ✅ [Decision #096: Parallel dateTime Provenance Properties for Core date Fields](#decision-096)
 
 ---
 
@@ -858,14 +860,13 @@ Move `hasPriceDefinition` ownership to `BillingModel` and require every `PriceDe
 - **Requirements**: Existing producers, examples, and generated documentation must be updated
 
 **References:**
-- Plan: [`dev-docs/plans/pricedefinition-migration-plan.md`](../../../dev-docs/plans/pricedefinition-migration-plan.md)
 - Related Decision: #045 (PriceDefinition Architecture Clarification)
 - Related Decision: #059 (referencesPriceDefinition Object Property Creation)
 
 ---
 
 <a id="decision-094"></a>
-### 🔗 Decision #094: Condition Logic Modeling v3
+### 🔗 Decision #094: Condition Logic Modeling
 
 - **Status:** ✅ Implemented
 - **Date:** 2026-04-13
@@ -877,11 +878,11 @@ Move `hasPriceDefinition` ownership to `BillingModel` and require every `PriceDe
 The existing condition architecture relied on generic `conditionValue` and `conditionType`, string-oriented `logicExpression`, and a mixed-value modeling pattern that was difficult to validate. The model also needed a clear distinction between atomic predicates and executable boolean rule composition.
 
 **Decision:**
-Adopt the v3 condition architecture based on atomic `Condition` resources plus explicit `ConditionLogic`, `BooleanOperationNode`, `OperationNode`, terminal-node specialization, mandatory `literalType` on datatype-bearing terminal nodes, and datatype-specific value properties.
+Adopt the new condition architecture based on atomic `Condition` resources plus explicit `ConditionLogic`, `BooleanOperationNode`, `OperationNode`, terminal-node specialization, mandatory `literalType` on datatype-bearing terminal nodes, and datatype-specific value properties.
 
 **Alternatives Considered:**
 
-1. **Adopt explicit v3 condition architecture** ⭐ **SELECTED**
+1. **Adopt new condition architecture** ⭐ **SELECTED**
    - ✅ Separates atomic predicates from boolean rule composition
    - ✅ Supports strong SHACL validation
    - ✅ Supports JSON-LD datatype coercion with explicit value properties
@@ -912,6 +913,124 @@ Adopt the v3 condition architecture based on atomic `Condition` resources plus e
 - **Requirements**: Producers and examples must adopt `hasConditionLogic`, terminal-node specialization, and datatype-specific value properties
 
 **References:**
-- Recommendation: [`dev-docs/reports/urpx-condition-model-v3-recommendation.md`](../../../dev-docs/reports/urpx-condition-model-v3-recommendation.md)
 - Related Decision: #040 (Eligibility Properties Deprecation - Unified Condition Pattern)
 - Related Decision: #068 (conditionType and conditionValue Domain Removal from Rule Classes)
+
+---
+
+<a id="decision-095"></a>
+### 🔗 Decision #095: RateCase Traceability for Regulated Proceeding Links
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-04-13
+- **Issue:** URPX lacked a first-class resource for formal rate proceedings affecting versions and pricing artifacts
+- **Category:** Architecture, Validation
+- **Impact:** Medium - Additive regulatory-traceability model with new optional links from rate artifacts
+
+**Context:**
+URPX already captured high-level change categorization through `changeReason` and date metadata such as `dateApproved`, but it did not provide a structured way to identify the actual proceeding that established or revised a rate plan version, modifier version, price definition, price, price set, or price set alternative. Producers had to rely on prose, filing references, or repeated citation text instead of a reusable proceeding object.
+
+**Decision:**
+Add `RateCase` as a first-class class, require `caseNumber` and `url` on each `RateCase`, and allow affected rate artifacts to link to one or more rate cases through `hasRateCase`.
+
+**Alternatives Considered:**
+
+1. **Add a reusable `RateCase` resource and `hasRateCase` links** ⭐ **SELECTED**
+   - ✅ Separates categorical change reason from the actual proceeding record
+   - ✅ Makes regulatory provenance queryable across versions and pricing artifacts
+   - ✅ Avoids duplicating case metadata on every affected node
+
+2. **Use `changeReason` and free-form citation text only**
+   - ✅ No new class required
+   - ❌ Cannot identify the actual proceeding as a reusable node
+   - ❌ Makes cross-artifact regulatory traceability difficult
+
+3. **Store proceeding details only in `DataSourceReference`**
+   - ✅ Reuses existing citation structures
+   - ❌ Blends source-document provenance with proceeding identity
+   - ❌ Does not create a shared domain object that multiple artifacts can reference
+
+**Rationale:**
+- `changeReason` and `RateCase` serve different roles: one categorizes a change, the other identifies the proceeding
+- A reusable `RateCase` object supports traceability when one proceeding affects multiple artifacts
+- The model stays additive and lightweight while giving regulated-utility workflows a concrete anchor point
+- Reusing `name`, `description`, `priority`, and `url` on `RateCase` keeps the model aligned with existing URPX patterns
+
+**Implementation Details:**
+- Added `urpx:RateCase`, `urpx:caseNumber`, and `urpx:hasRateCase`
+- Expanded the domains of `urpx:name`, `urpx:description`, `urpx:priority`, and `urpx:url` to include `RateCase`
+- Added `urpx-shacl:RateCaseShape` with required `caseNumber` and `url`
+- Extended `RatePlanVersion`, `RatePlanModifierVersion`, `PriceDefinition`, `Price`, `PriceSet`, and `PriceSetAlternative` shapes to allow `hasRateCase`
+
+**Impact Assessment:**
+- **Positive**: Explicit proceeding traceability, reusable regulatory metadata, better API and documentation examples
+- **Breaking Change**: None — additive only
+- **Requirements**: Documentation and examples using `changeReason` of `rateCase` should also show `hasRateCase` when a specific proceeding is known
+
+**References:**
+- Related Decision: #091 (Date Property Normalization and Provenance Domain Expansion)
+- Related Decision: #093 (BillingModel-Owned PriceDefinition with referencesLedger)
+
+---
+
+<a id="decision-096"></a>
+### 🔗 Decision #096: Parallel dateTime Provenance Properties for Core date Fields
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-04-13
+- **Issue:** URPX needed timestamp-capable provenance fields without overloading existing date-only properties
+- **Category:** Architecture, Validation, Provenance
+- **Impact:** Medium - Additive provenance expansion affecting ontology, SHACL, and documentation guidance
+
+**Context:**
+URPX already used `dateApproved`, `dateCreated`, `dateModified`, `datePublished`, `dateReceived`, and `dateRetrieved` to capture provenance metadata. Those properties work well when only a calendar date is known, but they are too coarse when source systems, APIs, filings, or ingestion workflows provide full timestamps. Replacing the existing date properties outright would have broken current data patterns and removed support for date-only values.
+
+**Decision:**
+Keep the existing date-only provenance properties and add parallel `xsd:dateTime` companions for the same concepts:
+
+- `dateTimeApproved`
+- `dateTimeCreated`
+- `dateTimeModified`
+- `dateTimePublished`
+- `dateTimeReceived`
+- `dateTimeRetrieved`
+
+**Alternatives Considered:**
+
+1. **Add parallel `dateTime*` properties while retaining existing `date*` properties** ⭐ **SELECTED**
+   - ✅ Preserves compatibility with existing date-only data
+   - ✅ Supports full timestamp fidelity when available
+   - ✅ Keeps semantic intent explicit instead of overloading one field
+   - ✅ Allows documentation and APIs to describe both coarse and precise provenance
+
+2. **Replace existing `date*` properties with `dateTime` only**
+   - ✅ Reduces property count
+   - ❌ Breaks existing patterns and examples
+   - ❌ Forces timestamp semantics where only a date may be known
+
+3. **Change existing `date*` properties to accept both `xsd:date` and `xsd:dateTime`**
+   - ✅ Avoids adding new property names
+   - ❌ Weakens validation clarity
+   - ❌ Makes data typing less explicit in RDF and SHACL
+   - ❌ Creates ambiguity in JSON-LD authoring and downstream consumers
+
+**Rationale:**
+- Provenance data often exists at mixed precision levels depending on the source
+- Parallel properties keep the model explicit and easy to validate
+- Existing date-only properties remain useful for publisher metadata that is known only to the day
+- New datetime properties support richer API payloads, ingestion records, and filing metadata when precise times are available
+
+**Implementation Details:**
+- Added `dateTimeApproved`, `dateTimeCreated`, `dateTimeModified`, `dateTimePublished`, `dateTimeReceived`, and `dateTimeRetrieved` to the ontology
+- Added corresponding SHACL property constraints to the relevant shapes
+- Preserved the existing `dateApproved`, `dateCreated`, `dateModified`, `datePublished`, `dateReceived`, and `dateRetrieved` properties
+- Documentation and examples should distinguish date-only provenance from timestamp-level provenance rather than implying one property serves both roles
+
+**Impact Assessment:**
+- **Positive**: Better provenance fidelity, clearer validation, improved compatibility with timestamped source systems
+- **Breaking Change**: None - additive only
+- **Requirements**: Documentation, examples, and generated dictionary output should explain when to use the date-only property versus the datetime companion
+
+**References:**
+- Related Decision: #091 (Date Property Normalization and Provenance Domain Expansion)
+- Related Decision: #095 (RateCase Traceability for Regulated Proceeding Links)

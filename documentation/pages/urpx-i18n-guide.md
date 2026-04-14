@@ -46,7 +46,8 @@ The following fields MUST support multiple languages:
 - `urpx:changeDescription`
 - `urpx:holidayName`
 - `urpx:periodName`
-- `urpx:logicExpression` (with localized formula notation)
+
+Structured condition logic MUST NOT rely on localized executable text. If localized condition explanations are needed, provide them through `urpx:name` and `urpx:description` on `Condition`.
 
 ### Language Fallback Chain
 

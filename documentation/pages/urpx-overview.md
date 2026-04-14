@@ -1,7 +1,7 @@
 # URPX Overview
 
-**Version**: 0.1.1  
-**Last Updated**: 2026-03-02  
+**Version**: 0.2.0 (Pre-draft)
+**Last Updated**: 2026-04-13  
 **Status**: Active
 
 ## Understanding the Utility Rate Plan Exchange Standard
@@ -23,7 +23,7 @@ Utility rate plans are surprisingly complex. A single rate plan might include:
 - **Seasonal variations** - Summer and winter pricing schedules
 - **Tiered structures** - Prices that change based on usage levels
 - **Eligibility requirements** - Restrictions based on customer type, location, or usage patterns
-- **Regulatory metadata** - Approval dates, filing references, and legal citations
+- **Regulatory traceability** - Rate case proceedings, case numbers, filing references, approval dates, and legal citations
 
 Without a standard format, each system must custom-build parsers for every utility's rate plan structure - a massive duplication of effort that slows innovation and limits data accessibility.
 
@@ -70,7 +70,7 @@ URPX is built on a core ontology ([`urpx-ontology.ttl`](../../ontology/urpx-onto
 - Time-of-use schedules with seasonal variations
 - Customer eligibility and profile requirements
 - Geographic applicability rules
-- Temporal versioning with regulatory tracking
+- Temporal versioning with explicit `RateCase` traceability
 
 **Semantic Web Foundation**
 - RDF/OWL ontology for formal semantics
@@ -164,7 +164,9 @@ Rate plans evolve over time. URPX captures this through versioning:
 
 - **RatePlan** - The permanent structure for a rate plan
 - **RatePlanVersion** - A specific version effective during a time period
-- **Version Transitions** - Tracked with reasons and regulatory approvals
+- **Version Transitions** - Tracked with `changeReason` plus optional linked `RateCase` records
+
+When a rate plan version, rate plan modifier version, price definition, price set, price set alternative, or price is established or revised through a formal proceeding, URPX links the affected artifact to one or more `RateCase` resources via `hasRateCase`. Each `RateCase` carries the proceeding `caseNumber`, a source `url`, optional `name` and `description`, and optional `priority` when multiple proceedings overlap.
 
 #### Charge Types
 

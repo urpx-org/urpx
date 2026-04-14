@@ -1,6 +1,6 @@
 # 🔗 URPX Documentation
 
-## Utility Rate Plan Exchange Standard v0.1.1
+## Utility Rate Plan Exchange Standard v0.2.0
 
 Welcome to the URPX documentation. URPX is an open standard for exchanging utility rate plan information using semantic web technologies.
 

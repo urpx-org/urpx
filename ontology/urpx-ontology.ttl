@@ -1,5 +1,5 @@
 # URPX Ontology
-# Version: 0.1.1 pre-draft
+# Version: 0.2.0 pre-draft
 # Generated: 2026-01-20
 
 # ============================================================================
@@ -17,14 +17,14 @@
 
 <https://schema.urpx.org/> a owl:Ontology ;
     rdfs:label "URPX Ontology"@en ;
-    dcterms:creator "Klaar De Schepper, Flux Tailor LLC" ;
+    dcterms:creator "Klaar De Schepper, Una Smithsimon, Flux Tailor LLC" ;
     dcterms:date "2026-01-23"^^xsd:date ;
     dcterms:description "URPX ontology for utility rate plan exchange" ;
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
-    dcterms:modified "2026-03-03"^^xsd:date ;
+    dcterms:modified "2026-04-13"^^xsd:date ;
     dcterms:title "URPX - Unified Ontology" ;
-    owl:versionInfo "0.1.1" ;
-    dcat:version "0.1.1" .
+    owl:versionInfo "0.2.0" ;
+    dcat:version "0.2.0" .
 
 # ============================================================================
 # ****************    CLASSES    *********************************************
