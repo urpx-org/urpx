@@ -88,12 +88,12 @@ urpx:CalculationMethod a owl:Class ;
 urpx:Condition a owl:Class ;
     rdfs:label "Condition"@en ;
     rdfs:comment "Single logical condition for rules with operator and value" ;
-    skos:note "Atomic condition for rule evaluation. Used within eligibility and applicability rules. Supports various operators (equals, greater than, between, etc.)." .
+    skos:note "Atomic condition for rule evaluation. Used within eligibility and applicability rules. Supports various operators (equals, greater than, between, etc.). Applicability of Conditions is determined exclusively through the use of ConditionLogic." .
 
 urpx:ConditionLogic a owl:Class ;
     rdfs:label "Condition Logic"@en ;
     rdfs:comment "Boolean composition structure for combining conditions"@en ;
-    skos:note "Combines one or more Condition instances using boolean operators only. Carries the authoritative executable applicability structure for conditions and replaces logicExpression for structured condition logic." .
+    skos:note "Combines one or more Condition instances using boolean operators only. Carries the authoritative executable applicability." .
 
 urpx:County a owl:Class ;
     rdfs:label "County"@en ;
