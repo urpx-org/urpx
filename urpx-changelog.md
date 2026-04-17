@@ -1,9 +1,41 @@
 # 📋 URPX Changelog
 
 **Version:** 0.2.0 (Pre-draft)
-**Last Updated:** 2026-04-13
+**Last Updated:** 2026-04-17
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-04-17
+---
+
+### ⚠️ Breaking Changes
+
+#### Replaced: Condition Modeling with Rooted Condition Expressions
+- Rule data must use `urpx:hasConditionExpression` instead of `urpx:hasCondition` and `urpx:hasConditionLogic`.
+- Atomic predicates must be represented as `urpx:ComparisonNode`.
+- Boolean composition must use `urpx:operandNodes` on `urpx:BooleanOperationNode`.
+- Operand values must use `urpx:DatatypeOperandNode`, `urpx:ObjectOperandNode`, or `urpx:CustomOperandNode` with datatype-specific value properties instead of `urpx:literalType`.
+- Removed legacy classes and properties: `urpx:Condition`, `urpx:ConditionLogic`, `urpx:TerminalNode`, `urpx:DatatypeTerminalNode`, `urpx:ObjectTerminalNode`, `urpx:CustomTerminalNode`, `urpx:LiteralTypeValue`, `urpx:hasCondition`, `urpx:hasConditionLogic`, `urpx:conditionOperands`, `urpx:literalType`, and datatype enum instances previously used only to declare operand literal types.
+- **Design Decisions:** [#097](documentation/pages/urpx-design-decisions-081-120.md#decision-097), [#098](documentation/pages/urpx-design-decisions-081-120.md#decision-098)
+
+### Ontology Changes
+
+#### Added: Rooted Condition Expression Model
+- Added `urpx:ConditionExpression` as the single rule-linked wrapper for condition logic.
+- Added `urpx:ConditionNode`, `urpx:ComparisonNode`, `urpx:DatatypeOperandNode`, `urpx:ObjectOperandNode`, and `urpx:CustomOperandNode`.
+- Added `urpx:hasConditionExpression` and `urpx:rootNode` to anchor each expression to a `urpx:ComparisonNode` or `urpx:BooleanOperationNode`.
+- Updated `urpx:BooleanOperationNode` to use `urpx:logicExpression` and `urpx:operandNodes`.
+- Updated `urpx:operator`, `urpx:leftOperand`, `urpx:rightOperand`, `urpx:conditionProperty`, `urpx:customConditionProperty`, `urpx:referencesValue`, and datatype-specific value properties to align with the new expression model.
+- **Design Decisions:** [#097](documentation/pages/urpx-design-decisions-081-120.md#decision-097), [#098](documentation/pages/urpx-design-decisions-081-120.md#decision-098)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Updated: Condition Expression Validation
+- Updated `ApplicabilityRuleShape` and `EligibilityRuleShape` to use `urpx:hasConditionExpression`.
+- Added `ConditionExpressionShape`, `ComparisonNodeShape`, `DatatypeOperandNodeShape`, `ObjectOperandNodeShape`, and `CustomOperandNodeShape`.
+- Updated `BooleanOperationNodeShape` and `OperationNodeShape` to validate the new rooted expression and operand-node structure.
+- Removed legacy condition, condition-logic, terminal-node, and literal-type shapes.
+- **Design Decisions:** [#097](documentation/pages/urpx-design-decisions-081-120.md#decision-097), [#098](documentation/pages/urpx-design-decisions-081-120.md#decision-098)
 
 2026-04-13
 ---

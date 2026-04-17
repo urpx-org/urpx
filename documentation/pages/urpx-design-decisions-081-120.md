@@ -2,7 +2,7 @@
 
 **Version:** 1.0
 **Created:** 2026-04-07
-**Last Updated:** 2026-04-13
+**Last Updated:** 2026-04-17
 
 > **Note:** Design decisions reference the original modular ontology files (urpx-core-ontology.ttl, urpx-profile.ttl, urpx-organization.ttl, urpx-geography.ttl, urpx-charge-classification.ttl). As of v0.1.1, these files have been consolidated into a single `ontology/urpx-ontology.ttl` file. See [urpx-changelog.md](../../urpx-changelog.md) for consolidation details.
 
@@ -57,9 +57,11 @@ Quick links to all design decisions:
 - ✅ [Decision #091: Date Property Normalization and Provenance Domain Expansion](#decision-091)
 - ✅ [Decision #092: TariffStatementTypeValue Enum Instance Materialization](#decision-092)
 - ✅ [Decision #093: BillingModel-Owned PriceDefinition with referencesLedger](#decision-093)
-- ✅ [Decision #094: Condition Logic Modeling](#decision-094)
+- 📚 [Decision #094: Condition Logic Modeling](#decision-094)
 - ✅ [Decision #095: RateCase Traceability for Regulated Proceeding Links](#decision-095)
 - ✅ [Decision #096: Parallel dateTime Provenance Properties for Core date Fields](#decision-096)
+- ✅ [Decision #097: ConditionExpression Wrapper and Rooted Rule Graph](#decision-097)
+- ✅ [Decision #098: Operand Node Specialization and Typed Value Properties for Condition Expressions](#decision-098)
 
 ---
 
@@ -868,11 +870,12 @@ Move `hasPriceDefinition` ownership to `BillingModel` and require every `PriceDe
 <a id="decision-094"></a>
 ### 🔗 Decision #094: Condition Logic Modeling
 
-- **Status:** ✅ Implemented
+- **Status:** 📚 Superseded
 - **Date:** 2026-04-13
 - **Issue:** Replace generic condition-value handling with structured rule logic
 - **Category:** Architecture, Validation
 - **Impact:** High - Breaking change for condition modeling and rule execution structure
+- **Superseded Note:** Superseded by Decisions #097 and #098, which replaced the original condition graph with a rooted `ConditionExpression` wrapper and specialized operand-node model.
 
 **Context:**
 The existing condition architecture relied on generic `conditionValue` and `conditionType`, string-oriented `logicExpression`, and a mixed-value modeling pattern that was difficult to validate. The model also needed a clear distinction between atomic predicates and executable boolean rule composition.
@@ -1034,3 +1037,132 @@ Keep the existing date-only provenance properties and add parallel `xsd:dateTime
 **References:**
 - Related Decision: #091 (Date Property Normalization and Provenance Domain Expansion)
 - Related Decision: #095 (RateCase Traceability for Regulated Proceeding Links)
+
+---
+
+<a id="decision-097"></a>
+### 🔗 Decision #097: ConditionExpression Wrapper and Rooted Rule Graph
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-04-16
+- **Issue:** Rule conditions needed a single attachable expression resource with a consistent internal graph structure
+- **Category:** Architecture, Validation
+- **Impact:** High - Breaking change for rule modeling, validation, and example data
+
+**Context:**
+URPX condition logic had been split across separate rule-linked resources for atomic predicates and boolean composition. That pattern made rule attachments harder to reason about, required SHACL to coordinate sibling structures, and did not provide a single resource representing the full condition expression. The model also needed a clearer boundary between rule attachment and the internal executable logic graph.
+
+**Decision:**
+Adopt a rooted condition-expression architecture in which rules link to a single `ConditionExpression` through `hasConditionExpression`. Each `ConditionExpression` has exactly one `rootNode`, and that root is a `ComparisonNode` or `BooleanOperationNode`. `ComparisonNode` represents an atomic predicate, while `BooleanOperationNode` represents boolean composition over one or more condition nodes.
+
+**Alternatives Considered:**
+
+1. **Adopt a single `ConditionExpression` wrapper with a rooted node graph** ⭐ **SELECTED**
+   - ✅ Gives each rule one clear entry point for condition evaluation
+   - ✅ Simplifies SHACL validation by anchoring the full expression at one resource
+   - ✅ Supports expression-level metadata such as `name` and `description`
+   - ✅ Separates rule attachment from internal logical composition
+
+2. **Keep separate rule links for predicate resources and boolean logic resources**
+   - ✅ Smaller immediate change
+   - ❌ Splits one expression across multiple top-level resources
+   - ❌ Makes validation and documentation harder to follow
+   - ❌ Preserves ambiguity about the authoritative expression entry point
+
+3. **Embed boolean logic directly on rules without an intermediate wrapper**
+   - ✅ Reduces one level of nesting
+   - ❌ Prevents a reusable named expression resource
+   - ❌ Couples rule ownership too tightly to expression internals
+   - ❌ Makes future expression-level metadata harder to model
+
+**Rationale:**
+- A single `ConditionExpression` gives each rule one authoritative condition attachment point
+- `rootNode` makes the structure explicit and machine-traversable
+- `ComparisonNode` and `BooleanOperationNode` clearly separate atomic evaluation from boolean composition
+- The wrapper resource supports metadata and future extensibility without overloading rule classes
+- SHACL becomes easier to understand because validation starts from one expression root
+
+**Implementation Details:**
+- Added `urpx:ConditionExpression`, `urpx:ConditionNode`, and `urpx:ComparisonNode`
+- Added `urpx:hasConditionExpression` and `urpx:rootNode`
+- Updated `urpx:BooleanOperationNode` to use `urpx:logicExpression` and `urpx:operandNodes`
+- Updated rule shapes to reference `hasConditionExpression`
+- Added `ConditionExpressionShape` and `ComparisonNodeShape`
+- Updated `BooleanOperationNodeShape` to validate boolean operand cardinality through the rooted graph structure
+
+**Impact Assessment:**
+- **Positive**: Clearer expression ownership, stronger validation, cleaner documentation, more explicit rule graph semantics
+- **Breaking Change**: Yes - data using parallel rule links for condition resources and boolean logic resources must migrate
+- **Requirements**: Examples, test cases, and documentation must use `hasConditionExpression` and the rooted node graph pattern
+
+**References:**
+- Supersedes Decision: #094 (Condition Logic Modeling)
+- Related Decision: #040 (Eligibility Properties Deprecation - Unified Condition Pattern)
+- Related Decision: #068 (conditionType and conditionValue Domain Removal from Rule Classes)
+
+---
+
+<a id="decision-098"></a>
+### 🔗 Decision #098: Operand Node Specialization and Typed Value Properties for Condition Expressions
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-04-16
+- **Issue:** Condition operands needed clearer semantics and validation without a separate datatype-declaration layer
+- **Category:** Architecture, Validation
+- **Impact:** High - Breaking change for operand modeling, property domains/ranges, and literal-value authoring
+
+**Context:**
+URPX condition expressions needed a consistent way to represent property-based operands, referenced-value operands, and custom literal operands. The prior approach required separate terminal-node naming and explicit datatype declarations alongside datatype-specific value properties. That duplicated meaning, increased authoring overhead, and made operand validation more complex than necessary.
+
+**Decision:**
+Use specialized operand-node classes for condition expressions:
+- `DatatypeOperandNode`
+- `ObjectOperandNode`
+- `CustomOperandNode`
+
+Represent literal operand types through the specific value property in use, such as `booleanValue`, `dateValue`, `decimalValue`, `integerValue`, `stringValue`, or `timeValue`, rather than through a separate `literalType` property and supporting datatype enum resources.
+
+**Alternatives Considered:**
+
+1. **Use specialized operand nodes with datatype-specific value properties** ⭐ **SELECTED**
+   - ✅ Makes operand intent explicit through class and property choice
+   - ✅ Removes redundant datatype declarations
+   - ✅ Simplifies JSON-LD authoring
+   - ✅ Produces cleaner SHACL constraints and ontology ranges
+
+2. **Keep explicit datatype declarations alongside datatype-specific value properties**
+   - ✅ Preserves a separate declared datatype field
+   - ❌ Duplicates information already conveyed by the value property
+   - ❌ Adds avoidable authoring and validation complexity
+   - ❌ Requires maintaining extra enum resources
+
+3. **Use one generic mixed-value operand pattern**
+   - ✅ Minimizes class count
+   - ❌ Weakens validation
+   - ❌ Obscures whether a value is object-backed, property-backed, or literal-backed
+   - ❌ Makes downstream processing less predictable
+
+**Rationale:**
+- Operand specialization communicates purpose directly: property lookup, object reference, or custom literal value
+- Datatype-specific value properties already provide the needed type signal
+- Removing separate datatype declarations reduces redundancy and opportunities for mismatch
+- Updated domains and ranges make operand usage more discoverable and more strongly constrained
+- The model stays expressive while becoming easier to author and validate
+
+**Implementation Details:**
+- Added `urpx:DatatypeOperandNode`, `urpx:ObjectOperandNode`, and `urpx:CustomOperandNode`
+- Removed legacy terminal-node classes and `urpx:LiteralTypeValue`
+- Removed `urpx:literalType` and supporting datatype enum instances used for operand typing
+- Updated `urpx:leftOperand` and `urpx:rightOperand` to target operand-node classes
+- Updated `urpx:conditionProperty`, `urpx:customConditionProperty`, `urpx:referencesValue`, and datatype-specific value properties to align with operand-node domains
+- Added `DatatypeOperandNodeShape`, `ObjectOperandNodeShape`, and `CustomOperandNodeShape`
+- Updated `OperationNodeShape` to accept operand nodes and nested operations
+
+**Impact Assessment:**
+- **Positive**: Less redundancy, simpler operand authoring, stronger validation, clearer property semantics
+- **Breaking Change**: Yes - data using terminal-node classes, `literalType`, or datatype enum instances must migrate
+- **Requirements**: Producers and examples must express literal operand typing through operand-node class selection and datatype-specific value properties
+
+**References:**
+- Related Decision: #097 (ConditionExpression Wrapper and Rooted Rule Graph)
+- Related Decision: #068 (conditionType and conditionValue Domain Removal from Rule Classes)
