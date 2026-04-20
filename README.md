@@ -1,3 +1,6 @@
+<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
 # URPX: Utility Rate Plan Exchange Ontology
 
 **Version 0.1.1** | **W3C-Ready Semantic Standard**
@@ -40,7 +43,13 @@ urpx/
 
 ## License
 
-This pre-draft version is licensed under [Apache 2.0](LICENSE). Intended for working group review purposes only. Any subsequent versions incorporating contributions will be published under a W3C license.
+This **pre-Draft** version is licensed under [Apache 2.0](LICENSE). Intended for working group review purposes only.
+
+Upon acceptance as a Working Group Draft, specification files will transition to the **W3C Document License** and dataset files to **CDLA-Permissive-2.0**. Source code and meta files remain Apache-2.0. See [TRANSITION.md](TRANSITION.md) for the full license transition plan and file-classification manifest.
+
+Contributions are governed by the Developer Certificate of Origin v1.1. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+Security issues: see [SECURITY.md](SECURITY.md).
 
 ---
 

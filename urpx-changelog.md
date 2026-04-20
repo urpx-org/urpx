@@ -1,3 +1,6 @@
+<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
 # 📋 URPX Changelog
 
 **Version:** 0.2.0 (Pre-draft)

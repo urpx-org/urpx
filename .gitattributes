@@ -1,0 +1,19 @@
+* text=auto eol=lf
+
+# Binary file types
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.svg binary
+
+# Keep text files with LF line endings
+*.ttl text eol=lf
+*.md  text eol=lf
+*.mmd text eol=lf
+*.jsonld text eol=lf
+*.json text eol=lf
+*.csv text eol=lf
+*.toml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf

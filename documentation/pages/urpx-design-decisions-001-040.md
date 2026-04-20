@@ -1,10 +1,15 @@
+<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
+<!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
+
 # URPX (Utility Rate Plan Exchange) Design Decisions Log
 
 **Version:** 1.0
 **Created:** 2025-09-25
 **Last Updated:** 2026-01-28
 
-> **Note:** Design decisions reference the original modular ontology files (urpx-core-ontology.ttl, urpx-profile.ttl, urpx-organization.ttl, urpx-geography.ttl, urpx-charge-classification.ttl). As of v0.1.1, these files have been consolidated into a single `ontology/urpx-ontology.ttl` file. See [urpx-changelog.md](../../urpx-changelog.md) for consolidation details.
+> **Note:** Design decisions reference the original modular ontology files (urpx-core-ontology.ttl, urpx-profile.ttl, urpx-organization.ttl, urpx-geography.ttl, urpx-charge-classification.ttl). As of v0.1.1, these files have been consolidated into a single `ontology/urpx-ontology.ttl` file.
 
 ## Welcome!
 
@@ -1043,7 +1048,6 @@ urpx:hasCustomerProfile
 **References:**
 - Green Button V4 CustomerKind specification
 - SKOS vocabulary standards
-- [Changelog v0.1.1 Evening Update](../urpx-changelog.md)
 
 ---
 
@@ -1152,7 +1156,6 @@ urpx:ServicePointProfile a owl:Class ;
 - CIM IEC 61968-9 (Metering) specification
 - Green Button DER extensions
 - [Measurement Framework Design](measurement-framework-design.md)
-- [Changelog October 16-20, 2025](../urpx-changelog.md)
 
 ---
 
