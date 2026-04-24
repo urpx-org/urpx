@@ -67,6 +67,10 @@ Quick links to all design decisions:
 - ✅ [Decision #096: Parallel dateTime Provenance Properties for Core date Fields](#decision-096)
 - ✅ [Decision #097: ConditionExpression Wrapper and Rooted Rule Graph](#decision-097)
 - ✅ [Decision #098: Operand Node Specialization and Typed Value Properties for Condition Expressions](#decision-098)
+- ✅ [Decision #099: GeneralRule Tariff-Book Shared Rule Architecture](#decision-099)
+- ✅ [Decision #100: RatePlanVersion Enrollment Choice and Default Selection Semantics](#decision-100)
+- ✅ [Decision #101: Compatibility Relationship Domain Expansion for Rate Plans and Versions](#decision-101)
+- ✅ [Decision #102: Profile Count Terminology Normalization and Threshold Cleanup](#decision-102)
 
 ---
 
@@ -1171,3 +1175,257 @@ Represent literal operand types through the specific value property in use, such
 **References:**
 - Related Decision: #097 (ConditionExpression Wrapper and Rooted Rule Graph)
 - Related Decision: #068 (conditionType and conditionValue Domain Removal from Rule Classes)
+
+---
+
+<a id="decision-099"></a>
+### 🔗 Decision #099: GeneralRule Tariff-Book Shared Rule Architecture
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-04-24
+- **Issue:** Tariff-book-level rules needed a reusable resource instead of duplication across rate plan versions and modifier versions
+- **Category:** Architecture, Validation
+- **Impact:** Medium - Additive shared-rule layer with new ontology and SHACL resources
+
+**Context:**
+URPX already modeled rate-plan-specific rules such as `EligibilityRule` and `ApplicabilityRule`, but tariff books also contain general rules and statements that apply across multiple rate plans or modifier versions. Without a shared rule resource, producers had to duplicate the same rule text and provenance metadata on each versioned artifact, weakening reuse and traceability.
+
+**Decision:**
+Add a first-class `urpx:GeneralRule` resource for tariff-book-level reusable rules. A `TariffBookDocument` may publish general rules through `urpx:hasGeneralRule`, and `RatePlanVersion` / `RatePlanModifierVersion` may reference applicable rules through `urpx:referencesGeneralRule`. Each `GeneralRule` carries its own identifier, optional human-readable metadata, provenance, and optional `ApplicabilityRule` attachments.
+
+**Alternatives Considered:**
+
+1. **Add a reusable `GeneralRule` class with tariff-book ownership and version references** ⭐ **SELECTED**
+   - ✅ Eliminates duplication of shared rule content across versions
+   - ✅ Gives tariff-book-level rules stable IRIs and identifiers
+   - ✅ Preserves provenance and applicability metadata on the shared rule itself
+   - ✅ Makes shared-rule discovery queryable from both document and version layers
+
+2. **Duplicate general-rule text and provenance on each `RatePlanVersion` / `RatePlanModifierVersion`**
+   - ✅ Avoids adding new classes and properties
+   - ❌ Repeats the same rule content across multiple resources
+   - ❌ Increases drift risk when a shared rule changes or is corrected
+   - ❌ Weakens the tariff-book layer as the canonical source of shared statements
+
+3. **Attach free-text general rules only to `TariffBookDocument` without a reusable resource**
+   - ✅ Keeps shared rules at the tariff-book level
+   - ❌ Does not support version-level references to specific rules
+   - ❌ Makes provenance, applicability, and rule identity harder to manage
+   - ❌ Limits downstream reuse in APIs and graph queries
+
+**Rationale:**
+- General rules are conceptually distinct from plan-specific eligibility or applicability rules
+- Shared tariff-book statements need stable IRIs so multiple versions can point to the same authoritative source
+- Provenance and optional applicability metadata belong on the shared rule resource, not repeated per consumer
+- A dedicated resource keeps the tariff-book layer expressive without overloading version objects
+
+**Implementation Details:**
+- Added `urpx:GeneralRule` and `urpx:generalRuleID` in [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
+- Added `urpx:hasGeneralRule` from `TariffBookDocument` to `GeneralRule`
+- Added `urpx:referencesGeneralRule` from `RatePlanVersion` and `RatePlanModifierVersion` to `GeneralRule`
+- Extended `urpx:name`, `urpx:description`, `urpx:hasDataSourceReference`, and `urpx:hasApplicabilityRule` domains to include `GeneralRule`
+- Added `urpx-shacl:GeneralRuleShape`
+- Extended `TariffBookDocumentShape`, `RatePlanVersionShape`, and `RatePlanModifierVersionShape` to validate the new shared-rule links
+
+**Impact Assessment:**
+- **Positive**: Cleaner shared-rule reuse, stronger provenance, less duplication, and more accurate tariff-book modeling
+- **Breaking Change**: None - the change is additive
+- **Requirements**: Producers should model tariff-book-wide reusable rules as `GeneralRule` resources rather than duplicating the same text across versions
+
+**References:**
+- Related Decision: #089 (TariffBookReference and TariffStatementReference Nested Citation Classes)
+- Related Decision: #091 (Date Property Normalization and Provenance Domain Expansion)
+
+---
+
+<a id="decision-100"></a>
+### 🔗 Decision #100: RatePlanVersion Enrollment Choice and Default Selection Semantics
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-04-24
+- **Issue:** `isOptional` on `RatePlanModifier` conflated modifier availability with enrollment semantics of base rate plan versions
+- **Category:** Architecture, Naming Convention, Validation
+- **Impact:** High - Breaking change for modifier optionality modeling and rate-plan version enrollment metadata
+
+**Context:**
+The prior `urpx:isOptional` property lived on `RatePlanModifier`, which suggested that optionality was an intrinsic property of the modifier document itself. In practice, optionality is contextual: a modifier is available or not available relative to a specific rate plan version, while the base rate plan version itself may be voluntary or mandatory for qualifying customers and may or may not be the default enrollment. The model needed to separate these concerns more cleanly.
+
+**Decision:**
+Move customer-facing enrollment semantics to `RatePlanVersion` by:
+
+1. Adding `urpx:customerChoice` with range `urpx:CustomerChoiceValue` (`urpx:voluntaryChoice`, `urpx:mandatoryChoice`)
+2. Renaming the old `urpx:isOptional` concept to `urpx:isDefault` on `RatePlanVersion`
+3. Removing `urpx:isOptional` from `RatePlanModifier` and its SHACL shape
+
+Modifier availability remains contextual through version-to-modifier relationships such as `hasModifierOptions`, rather than through a document-level boolean on the modifier itself.
+
+**Alternatives Considered:**
+
+1. **Model enrollment choice and default status on `RatePlanVersion`, not on `RatePlanModifier`** ⭐ **SELECTED**
+   - ✅ Separates base-plan enrollment semantics from modifier availability
+   - ✅ Makes voluntary vs mandatory enrollment explicit through a controlled vocabulary
+   - ✅ Gives default-rate-plan selection a dedicated property with clear semantics
+   - ✅ Aligns optional modifier availability with version-scoped compatibility relationships
+
+2. **Keep `isOptional` on `RatePlanModifier` and add version-level enrollment properties separately**
+   - ✅ Minimizes migration for modifier data
+   - ❌ Leaves the misleading implication that modifier optionality is intrinsic and global
+   - ❌ Preserves two different places where "optional" style semantics can drift apart
+   - ❌ Blurs document-level metadata and version-scoped availability
+
+3. **Express all enrollment and modifier availability semantics through free text or external business logic**
+   - ✅ Avoids ontology changes
+   - ❌ Loses machine-readable enrollment semantics
+   - ❌ Weakens validation and queryability
+   - ❌ Pushes core interchange meaning into application-specific interpretation
+
+**Rationale:**
+- Customer enrollment choice is a property of a rate plan version, not a modifier document
+- Default enrollment is distinct from voluntary vs mandatory choice and deserves its own explicit signal
+- Optional modifier availability already has a better home in version-to-modifier relationship modeling
+- Controlled vocabulary values for customer choice are easier to validate and explain than overloaded booleans
+
+**Implementation Details:**
+- Added `urpx:CustomerChoiceValue` with instances `urpx:voluntaryChoice` and `urpx:mandatoryChoice`
+- Added `urpx:customerChoice` on `RatePlanVersion`
+- Replaced `urpx:isOptional` with `urpx:isDefault` on `RatePlanVersion`
+- Added `CustomerChoiceValueShape`
+- Extended `RatePlanVersionShape` with optional `customerChoice` and `isDefault`
+- Removed `isOptional` validation from `RatePlanModifierShape`
+
+**Impact Assessment:**
+- **Positive**: Cleaner enrollment semantics, clearer default selection modeling, and less ambiguity about modifier optionality
+- **Breaking Change**: Yes - data using `urpx:isOptional` on `RatePlanModifier` must migrate
+- **Requirements**: Producers should use `customerChoice` and `isDefault` for rate-plan version enrollment semantics and use modifier-option relationships to express contextual modifier availability
+
+**References:**
+- Related Decision: #084 (RatePlanVersion Modifier Options Relationship)
+- Related Decision: #090 (Add Version-Level Modifier Reference Properties)
+
+---
+
+<a id="decision-101"></a>
+### 🔗 Decision #101: Compatibility Relationship Domain Expansion for Rate Plans and Versions
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-04-24
+- **Issue:** Compatibility properties had narrower ontology domains than the semantics implied by document-level and version-level usage
+- **Category:** Architecture
+- **Impact:** Low - Additive ontology-domain expansion for compatibility relationships
+
+**Context:**
+URPX already used `applicableToRatePlan` and `applicableToRatePlanVersion` to express compatibility between rate plans and modifiers. However, the ontology domains were narrower than the broader compatibility semantics the model was moving toward. In particular, document-level plan resources and reciprocal version-level assertions needed a cleaner semantic footing without inventing a separate parallel property family for every direction of assertion.
+
+**Decision:**
+Broaden the ontology domains of existing compatibility properties rather than introducing new inverse-style properties:
+
+1. Expand `urpx:applicableToRatePlan` to allow `urpx:RatePlan` in addition to `urpx:RatePlanVersion` and `urpx:RatePlanModifierVersion`
+2. Expand `urpx:applicableToRatePlanVersion` from `urpx:RatePlanModifierVersion` to a union of `urpx:RatePlanModifierVersion` and `urpx:RatePlanVersion`
+
+The ranges remain unchanged. This keeps the property vocabulary compact while allowing compatibility assertions to be attached to the rate-plan side when needed.
+
+**Alternatives Considered:**
+
+1. **Broaden the existing compatibility-property domains** ⭐ **SELECTED**
+   - ✅ Preserves the current property vocabulary
+   - ✅ Supports a more symmetric compatibility model without introducing more near-duplicate predicates
+   - ✅ Aligns better with document-level and version-level compatibility semantics
+   - ✅ Keeps query patterns simpler for clients
+
+2. **Add separate inverse properties for each compatibility direction**
+   - ✅ Makes directionality explicit in predicate names
+   - ❌ Increases vocabulary size and maintenance burden
+   - ❌ Creates parallel properties with overlapping meaning
+   - ❌ Makes compatibility querying more fragmented
+
+3. **Keep modifier-side domains only and rely on inference or application logic**
+   - ✅ Avoids ontology changes
+   - ❌ Leaves the intended compatibility semantics under-modeled
+   - ❌ Makes some authoring patterns look invalid even when they are conceptually sound
+   - ❌ Pushes more burden onto application-specific interpretation
+
+**Rationale:**
+- Compatibility is conceptually a relationship between artifacts, not a fact owned only by modifier versions
+- Domain broadening is lighter-weight and cleaner than minting a second family of inverse predicates
+- The model already has both document-level and version-level compatibility concepts; the ontology should support assertions from either side
+- This change keeps the vocabulary expressive while avoiding predicate proliferation
+
+**Implementation Details:**
+- Added `urpx:RatePlan` to the domain union of `urpx:applicableToRatePlan`
+- Expanded the domain of `urpx:applicableToRatePlanVersion` to a union of `RatePlanModifierVersion` and `RatePlanVersion`
+- Left the property ranges unchanged
+- Kept the existing SHACL authoring surface for compatibility links intact rather than duplicating property blocks broadly across additional shapes in this change set
+
+**Impact Assessment:**
+- **Positive**: Cleaner semantics for compatibility assertions and less pressure to introduce redundant inverse properties
+- **Breaking Change**: None - this is an additive domain expansion
+- **Requirements**: Future SHACL expansion should remain aligned with this broader semantic intent when additional authoring surfaces are exposed
+
+**References:**
+- Related Decision: #084 (RatePlanVersion Modifier Options Relationship)
+- Related Decision: #090 (Add Version-Level Modifier Reference Properties)
+
+---
+
+<a id="decision-102"></a>
+### 🔗 Decision #102: Profile Count Terminology Normalization and Threshold Cleanup
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-04-24
+- **Issue:** Profile count properties used inconsistent naming, and deprecated threshold properties required deprecation
+- **Category:** Naming Convention, Architecture, Validation
+- **Impact:** High - Breaking change for profile-property names and legacy threshold usage
+
+**Context:**
+The consolidated ontology still used verbose count-property names such as `numberOfMeters` and `numberOfOccupants`, while related properties already followed a more consistent noun-plus-count style such as `householdCount`. The profile-metric notes and examples also still referenced the older names. At the same time, `demandThreshold` remained in the unified ontology and SHACL even though earlier architecture work had already concluded that threshold-style eligibility properties should be removed in favor of the rule and metric-input pattern.
+
+**Decision:**
+Normalize the profile count property names and complete the threshold cleanup:
+
+1. Rename `urpx:numberOfMeters` to `urpx:meterCount`
+2. Rename `urpx:numberOfOccupants` to `urpx:occupancyCount`
+3. Remove `urpx:demandThreshold` from the consolidated ontology and SHACL
+4. Update related explanatory notes so profile-metric examples reference the normalized property names
+
+**Alternatives Considered:**
+
+1. **Rename the count properties and remove the deprecated threshold property** ⭐ **SELECTED**
+   - ✅ Produces shorter, more consistent property names
+   - ✅ Aligns profile count naming with existing patterns like `householdCount`
+   - ✅ Removes lingering threshold-model redundancy
+   - ✅ Clarifies `profileMetricProperty` examples and documentation
+
+2. **Keep legacy names and add aliases**
+   - ✅ Reduces immediate migration pressure
+   - ❌ Preserves duplicate names for the same concepts
+   - ❌ Increases documentation and validation burden
+   - ❌ Encourages long-term schema drift
+
+3. **Rename the count properties but keep `demandThreshold` for convenience**
+   - ✅ Smaller immediate cleanup
+   - ❌ Leaves an already-deprecated modeling pattern in place
+   - ❌ Continues to blur profile facts and eligibility-threshold rules
+   - ❌ Undercuts earlier deprecation work
+
+**Rationale:**
+- `meterCount` and `occupancyCount` are clearer and more consistent with the surrounding vocabulary
+- Shorter normalized names reduce noise in `profileMetricProperty` references and examples
+- Removing `demandThreshold` completes a previously approved move away from property-specific eligibility thresholds
+- Updating the surrounding notes prevents stale property names from lingering in author guidance
+
+**Implementation Details:**
+- Added `urpx:meterCount` and removed `urpx:numberOfMeters`
+- Added `urpx:occupancyCount` and removed `urpx:numberOfOccupants`
+- Removed `urpx:demandThreshold` from [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl) and [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- Updated `CustomerProfileShape` and `ServicePointProfileShape` to validate the normalized property names
+- Updated notes on `householdCount`, `profileMetricProperty`, and `profileMetricInput` examples to use `meterCount` and `occupancyCount`
+
+**Impact Assessment:**
+- **Positive**: More consistent profile-property naming, cleaner metric-property references, and better alignment with prior eligibility cleanup work
+- **Breaking Change**: Yes - data using `numberOfMeters`, `numberOfOccupants`, or `demandThreshold` must migrate
+- **Requirements**: Producers should use `meterCount` and `occupancyCount`, and express eligibility thresholds through rule / metric patterns rather than `demandThreshold`
+
+**References:**
+- Related Decision: #040 (Eligibility Properties Deprecation - Unified Condition Pattern)
+- Related Decision: #048 (ProfileMetric Architecture)
+- Related Decision: #050 (householdCount and baseQuantity Properties)

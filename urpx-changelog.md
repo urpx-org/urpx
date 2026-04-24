@@ -4,9 +4,87 @@
 # 📋 URPX Changelog
 
 **Version:** 0.2.0 (Pre-draft)
-**Last Updated:** 2026-04-17
+**Last Updated:** 2026-04-24
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-04-24
+---
+
+### ⚠️ Breaking Changes
+
+#### Reworked: Rate Plan Enrollment and Default Semantics
+- Removed `urpx:isOptional` from `RatePlanModifier`; modifier optionality should be expressed through version-scoped option or compatibility relationships rather than a document-level boolean.
+- Added `urpx:customerChoice` on `RatePlanVersion` with controlled values `urpx:voluntaryChoice` and `urpx:mandatoryChoice`.
+- Added `urpx:isDefault` on `RatePlanVersion` to indicate the default enrollment or fallback version.
+- **Design Decision:** [#100](documentation/pages/urpx-design-decisions-081-120.md#decision-100)
+
+#### Renamed: Profile Count Properties and Removed Legacy Threshold
+- Renamed `urpx:numberOfMeters` → `urpx:meterCount`.
+- Renamed `urpx:numberOfOccupants` → `urpx:occupancyCount`.
+- Removed `urpx:demandThreshold` from the ontology and SHACL.
+- Updated profile-metric notes and examples to use the normalized property names.
+- **Design Decision:** [#102](documentation/pages/urpx-design-decisions-081-120.md#decision-102)
+
+### Ontology Changes
+
+#### Added: `urpx:GeneralRule` (Class)
+- Added `urpx:GeneralRule` as a reusable tariff-book-level shared rule resource.
+- Added `urpx:generalRuleID` for stable rule identification.
+- Added `urpx:hasGeneralRule` from `TariffBookDocument` and `urpx:referencesGeneralRule` from `RatePlanVersion` / `RatePlanModifierVersion`.
+- Expanded domains of `urpx:name`, `urpx:description`, `urpx:hasDataSourceReference`, and `urpx:hasApplicabilityRule` to include `urpx:GeneralRule`.
+- **Design Decision:** [#099](documentation/pages/urpx-design-decisions-081-120.md#decision-099)
+
+#### Added: `urpx:CustomerChoiceValue` (Enumeration Class)
+- Added `urpx:CustomerChoiceValue` with enum instances `urpx:voluntaryChoice` and `urpx:mandatoryChoice`.
+- Added `urpx:customerChoice` on `urpx:RatePlanVersion`.
+- **Design Decision:** [#100](documentation/pages/urpx-design-decisions-081-120.md#decision-100)
+
+### Ontology Property Changes
+
+#### Replaced: `urpx:isOptional` → `urpx:isDefault`
+- Replaced the old modifier-level optionality property with a version-level default-selection flag.
+- New domain: `urpx:RatePlanVersion`.
+- **Design Decision:** [#100](documentation/pages/urpx-design-decisions-081-120.md#decision-100)
+
+#### Domain Expanded: `urpx:applicableToRatePlan`
+- Added `urpx:RatePlan` to the property domain union.
+- **Design Decision:** [#101](documentation/pages/urpx-design-decisions-081-120.md#decision-101)
+
+#### Domain Expanded: `urpx:applicableToRatePlanVersion`
+- Added `urpx:RatePlanVersion` to the property domain union.
+- **Design Decision:** [#101](documentation/pages/urpx-design-decisions-081-120.md#decision-101)
+
+#### Cleanup: Profile Metric Property References
+- Updated `urpx:profileMetricProperty`, `urpx:profileMetricInput`, and related notes to reference `urpx:meterCount` and `urpx:occupancyCount`.
+- Updated `urpx:householdCount` notes to refer to `occupancyCount` instead of `numberOfOccupants`.
+- **Design Decision:** [#102](documentation/pages/urpx-design-decisions-081-120.md#decision-102)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Added: `GeneralRuleShape`
+- Added `urpx-shacl:GeneralRuleShape` with validation for `generalRuleID`, optional metadata, provenance, and optional `hasApplicabilityRule`.
+- Added `hasGeneralRule` to `TariffBookDocumentShape`.
+- Added `referencesGeneralRule` to `RatePlanVersionShape` and `RatePlanModifierVersionShape`.
+- **Design Decision:** [#099](documentation/pages/urpx-design-decisions-081-120.md#decision-099)
+
+#### Updated: Rate Plan Enrollment Validation
+- Added `customerChoice` and `isDefault` to `RatePlanVersionShape`.
+- Added `CustomerChoiceValueShape` for the new controlled vocabulary.
+- Removed `isOptional` from `RatePlanModifierShape`.
+- **Design Decision:** [#100](documentation/pages/urpx-design-decisions-081-120.md#decision-100)
+
+#### Updated: Profile Count Validation
+- Replaced `numberOfOccupants` with `occupancyCount` on `CustomerProfileShape`.
+- Replaced `numberOfMeters` with `meterCount` on `ServicePointProfileShape`.
+- Removed `demandThreshold` from `CustomerProfileShape`.
+- **Design Decision:** [#102](documentation/pages/urpx-design-decisions-081-120.md#decision-102)
+
+### Documentation Updates
+
+#### Added: Design Decisions #099-#102
+- Added design-decision entries covering `GeneralRule`, rate-plan enrollment/default semantics, compatibility-domain expansion, and profile count terminology normalization.
+- Updated the decision index in `documentation/pages/urpx-design-decisions-081-120.md`.
 
 2026-04-17
 ---

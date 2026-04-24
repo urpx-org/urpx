@@ -743,11 +743,6 @@ urpx-shacl:CustomerProfileShape
         sh:minCount 0 ;
     ] ;
     sh:property [
-        sh:path urpx:demandThreshold ;
-        sh:datatype xsd:decimal ;
-        sh:minCount 0 ;
-    ] ;
-    sh:property [
         sh:path urpx:entityType ;
         sh:node urpx-shacl:EntityTypeValueShape ;
         sh:minCount 0 ;
@@ -794,10 +789,10 @@ urpx-shacl:CustomerProfileShape
         sh:minCount 0 ;
     ] ;
     sh:property [
-        sh:path urpx:numberOfOccupants ;
+        sh:path urpx:occupancyCount ;
         sh:datatype xsd:integer ;
         sh:minCount 0 ;
-        sh:minInclusive 1 ;
+        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:specialNeedsStatus ;
@@ -1526,6 +1521,41 @@ urpx-shacl:EnergyServiceProviderShape
         sh:node urpx-shacl:ServiceRoleValueShape ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:GeneralRuleShape
+    a sh:NodeShape ;
+    rdfs:label "GeneralRule Shape"@en ;
+    sh:targetClass urpx:GeneralRule ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [
+        sh:path urpx:generalRuleID ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasDataSourceReference ;
+        sh:class urpx:DataSourceReference ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasApplicabilityRule ;
+        sh:class urpx:ApplicabilityRule ;
+        sh:minCount 0 ;
     ] .
 
 urpx-shacl:HighlyDynamicPricesDocumentShape
@@ -3319,6 +3349,11 @@ urpx-shacl:RatePlanShape
         sh:minCount 0 ;
     ] ;
     sh:property [
+        sh:path urpx:applicableToRatePlan ;
+        sh:class urpx:RatePlan ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
         sh:path urpx:description ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
@@ -3548,12 +3583,6 @@ urpx-shacl:RatePlanModifierShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:isOptional ;
-        sh:datatype xsd:boolean ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
@@ -3775,6 +3804,11 @@ urpx-shacl:RatePlanModifierVersionShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:referencesGeneralRule ;
+        sh:class urpx:GeneralRule ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
         sh:path urpx:serviceRole ;
         sh:node urpx-shacl:ServiceRoleValueShape ;
         sh:minCount 1 ;
@@ -3811,6 +3845,11 @@ urpx-shacl:RatePlanVersionShape
         sh:minCount 0 ;
     ] ;
     sh:property [
+        sh:path urpx:applicableToRatePlanVersion ;
+        sh:class urpx:RatePlanVersion ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
         sh:path urpx:changeDescription ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
@@ -3826,6 +3865,12 @@ urpx-shacl:RatePlanVersionShape
         sh:path urpx:commodity ;
         sh:node urpx-shacl:CommodityValueShape ;
         sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:customerChoice ;
+        sh:node urpx-shacl:CustomerChoiceValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:dateApproved ;
@@ -3931,6 +3976,12 @@ urpx-shacl:RatePlanVersionShape
         sh:minCount 0 ;
     ] ;
     sh:property [
+        sh:path urpx:isDefault ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:minimumTenure ;
         sh:datatype xsd:duration ;
         sh:minCount 0 ;
@@ -3959,6 +4010,11 @@ urpx-shacl:RatePlanVersionShape
         sh:class urpx:Organization ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:referencesGeneralRule ;
+        sh:class urpx:GeneralRule ;
+        sh:minCount 0 ;
     ] ;
     sh:property [
         sh:path urpx:serviceRole ;
@@ -4189,17 +4245,16 @@ urpx-shacl:ServicePointProfileShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:nominalVoltage ;
-        sh:datatype xsd:decimal ;
+        sh:path urpx:meterCount ;
+        sh:datatype xsd:integer ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:numberOfMeters ;
-        sh:datatype xsd:integer ;
+        sh:path urpx:nominalVoltage ;
+        sh:datatype xsd:decimal ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
-        sh:minInclusive 0 ;
     ] ;
     sh:property [
         sh:path urpx:phaseCodeKind ;
@@ -4559,6 +4614,11 @@ urpx-shacl:TariffBookDocumentShape
     sh:property [
         sh:path urpx:hasDataSourceReference ;
         sh:class urpx:DataSourceReference ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasGeneralRule ;
+        sh:class urpx:GeneralRule ;
         sh:minCount 0 ;
     ] ;
     sh:property [
@@ -5565,6 +5625,12 @@ urpx-shacl:ConnectorTypeValueShape
     sh:targetClass urpx:ConnectorTypeValue ;
     sh:nodeKind sh:IRI ;
     sh:in ( urpx:level1 urpx:level2 urpx:dcFast urpx:teslaSupercharger urpx:chademo urpx:ccs ) .
+
+urpx-shacl:CustomerChoiceValueShape
+    a sh:NodeShape ;
+    rdfs:label "CustomerChoiceValue Shape"@en ;
+    sh:targetClass urpx:CustomerChoiceValue ;
+    sh:in ( urpx:voluntaryChoice urpx:mandatoryChoice ) .
 
 urpx-shacl:CustomerKindValueShape
     a sh:NodeShape ;

@@ -167,6 +167,11 @@ urpx:EligibilityRule a owl:Class ;
     rdfs:comment "Conditions determining customer and service point qualification" ;
     skos:note "Defines who is eligible for sign up. Can reference measurement limits or types of customers and express complex boolean conditions. Provides criteria for matching customers and service delivery points and with rate plans and rate plan modifiers." .
 
+urpx:GeneralRule a owl:Class ;
+    rdfs:label "General Rule"@en ;
+    rdfs:comment "A rule or statement that applies across rate plans and rate plan versions, not tied to a single billing context" ;
+    skos:note "Used for tariff book-level rules that are defined once and referenced by multiple RatePlanVersion and RatePlanModifierVersion instances." .
+
 urpx:HighlyDynamicPricesDocument a owl:Class ;
     rdfs:label "Highly Dynamic Prices Document"@en ;
     rdfs:comment "Real-time pricing data requiring smart home and EMS integration" ;
@@ -578,6 +583,12 @@ urpx:ConnectorTypeValue a owl:Class ;
     owl:equivalentClass [ owl:oneOf ( urpx:level1 urpx:level2 urpx:dcFast urpx:teslaSupercharger urpx:chademo urpx:ccs ) ] ;
     skos:note "Enumeration class for electric vehicle charging connector types affecting charging capabilities." .
 
+urpx:CustomerChoiceValue a owl:Class ;
+    rdfs:label "Customer Choice Value"@en ;
+    rdfs:comment "Enrollment choice type for rate plan versions" ;
+    owl:equivalentClass [ owl:oneOf ( urpx:voluntaryChoice urpx:mandatoryChoice ) ] ;
+    skos:note "Indicates whether customer enrollment in a rate plan version is voluntary or mandatory." .
+
 urpx:CustomerKindValue a owl:Class ;
     rdfs:label "Customer Kind Value"@en ;
     rdfs:comment "Customer classification enumeration values" ;
@@ -972,14 +983,15 @@ urpx:applicableToRatePlan a owl:ObjectProperty ;
     rdfs:label "Applicable To Rate Plan"@en ;
     rdfs:comment "Rate plans this modifier or supply plan can be applied to" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
+            owl:unionOf ( urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
     rdfs:range urpx:RatePlan ;
     skos:note "Defines which rate plans are compatible with this modifier or supply plan complement. For simple modifier-to-plan associations use this property. For complex enrollment-based or conditional modifier application use hasEligibilityRule." .
 
 urpx:applicableToRatePlanVersion a owl:ObjectProperty ;
     rdfs:label "Applicable To Rate Plan Version"@en ;
     rdfs:comment "Rate plan versions this modifier can be applied to" ;
-    rdfs:domain urpx:RatePlanModifierVersion ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:RatePlanModifierVersion urpx:RatePlanVersion ) ] ;
     rdfs:range urpx:RatePlanVersion ;
     skos:note "Defines which specific rate plan versions are compatible with this modifier version." .
 
@@ -1261,6 +1273,13 @@ urpx:customConditionProperty a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     skos:note "Fallback-only property name for custom conditions when no suitable URPX property exists." .
 
+urpx:customerChoice a owl:ObjectProperty ;
+    rdfs:label "Customer Choice"@en ;
+    rdfs:comment "Indicates whether enrollment in this rate plan version is voluntary or mandatory" ;
+    rdfs:domain urpx:RatePlanVersion ;
+    rdfs:range urpx:CustomerChoiceValue ;
+    skos:note "Optional. When absent, enrollment type is unspecified." .
+
 urpx:cycleStartDay a owl:DatatypeProperty ;
     rdfs:label "Cycle Start Day"@en ;
     rdfs:comment "Day of month when billing cycle starts" ;
@@ -1414,13 +1433,6 @@ urpx:defaultSelectionLogic a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     skos:note "E.g., 'lowest_price', 'most_common', 'first_listed'." .
 
-urpx:demandThreshold a owl:DatatypeProperty ;
-    rdfs:label "Demand Threshold"@en ;
-    rdfs:comment "Maximum demand threshold in kW" ;
-    rdfs:domain urpx:CustomerProfile ;
-    rdfs:range xsd:decimal ;
-    skos:note "Used for demand-based rate eligibility." .
-
 urpx:derType a owl:ObjectProperty ;
     rdfs:label "DER Type"@en ;
     rdfs:comment "Type of distributed energy resource" ;
@@ -1432,7 +1444,7 @@ urpx:description a owl:DatatypeProperty ;
     rdfs:label "Description"@en ;
     rdfs:comment "Detailed description of the item" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:EligibilityRule urpx:ConditionExpression urpx:ComparisonNode urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TariffPublication urpx:TariffBookReference urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:DataSourceReference urpx:PriceUpdateRule urpx:ApplicabilityRule urpx:OperationNode urpx:BooleanOperationNode urpx:RateCase ) ] ;
+            owl:unionOf ( urpx:GeneralRule urpx:EligibilityRule urpx:ConditionExpression urpx:ComparisonNode urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:TariffPublication urpx:TariffBookReference urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:DataSourceReference urpx:PriceUpdateRule urpx:ApplicabilityRule urpx:OperationNode urpx:BooleanOperationNode urpx:RateCase ) ] ;
     rdfs:range xsd:string ;
     skos:note "Comprehensive explanation for documentation (max 1000 chars recommended)." .
 
@@ -1615,6 +1627,13 @@ urpx:forDimension a owl:ObjectProperty ;
     rdfs:comment "IRI reference to the AlternativeDimension this value belongs to. Used within a DimensionValuePair to specify which dimension is being valued. Enables metadata lookup via dereferencing the AlternativeDimension IRI." ;
     skos:note "Used in conjunction with valueIRI to form dimension-value pairs. The referenced AlternativeDimension provides metadata like display name, property mapping, and dimension description." .
 
+urpx:generalRuleID a owl:DatatypeProperty ;
+    rdfs:label "General Rule ID"@en ;
+    rdfs:comment "Unique identifier for a general rule" ;
+    rdfs:domain urpx:GeneralRule ;
+    rdfs:range xsd:string ;
+    skos:note "Stable identifier for referencing this rule from RatePlanVersion and RatePlanModifierVersion instances across rate plans." .
+
 urpx:geographicScope a owl:ObjectProperty ;
     rdfs:label "Geographic Scope"@en ;
     rdfs:comment "Geographic scope of applicability (ISO 3166 admin levels)" ;
@@ -1670,7 +1689,7 @@ urpx:hasApplicabilityRule a owl:ObjectProperty ;
     rdfs:label "Has Applicability Rule"@en ;
     rdfs:comment "Conditions for price application" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet ) ] ;
+            owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:GeneralRule ) ] ;
     rdfs:range urpx:ApplicabilityRule ;
     skos:note "Determines when price applies during billing calculation." .
 
@@ -1736,7 +1755,7 @@ urpx:hasDataSourceReference a owl:ObjectProperty ;
     rdfs:label "Has Data Source Reference"@en ;
     rdfs:comment "Links an entity to a structured data source reference." ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:PriceSet urpx:Price urpx:PriceDefinition urpx:PriceSetAlternative urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:TariffBookDocument urpx:TariffPublication urpx:TariffStatementDocument urpx:EligibilityRule ) ] ;
+            owl:unionOf ( urpx:GeneralRule urpx:PriceSet urpx:Price urpx:PriceDefinition urpx:PriceSetAlternative urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:TariffBookDocument urpx:TariffPublication urpx:TariffStatementDocument urpx:EligibilityRule ) ] ;
     rdfs:range urpx:DataSourceReference ;
     skos:note "Enables traceability for data points back to their original source files or APIs with structured metadata." .
 
@@ -1775,6 +1794,13 @@ urpx:hasExclusionConstraint a owl:ObjectProperty ;
     rdfs:range urpx:ApplicabilityConstraint ;
     rdfs:comment "Links applicability group to exclusion constraint. Price does not apply when customer or service property matches the constraint's specified value. Multiple exclusion constraints are evaluated with logical AND." ;
     skos:note "ApplicabilityGroup may have zero or more exclusion constraints. Explicit property name (vs boolean flag) provides clear semantics. Use for negative applicability rules." .
+
+urpx:hasGeneralRule a owl:ObjectProperty ;
+    rdfs:label "Has General Rule"@en ;
+    rdfs:comment "Links a TariffBookDocument to its general rules" ;
+    rdfs:domain urpx:TariffBookDocument ;
+    rdfs:range urpx:GeneralRule ;
+    skos:note "General rules defined at the tariff book level, shared across rate plans." .
 
 urpx:hasHoliday a owl:ObjectProperty ;
     rdfs:label "Has Holiday"@en ;
@@ -2142,7 +2168,7 @@ urpx:householdCount a owl:DatatypeProperty ;
     rdfs:comment "Number of households served by this customer account" ;
     rdfs:domain urpx:CustomerProfile ;
     rdfs:range xsd:integer ;
-    skos:note "Used for per-household rate calculations and credits like California Climate Credit. Typically 1 for single-family residential, but can be >1 for multi-unit buildings with master-metered service or community solar arrangements. Distinct from householdSize (number of people in household) and numberOfOccupants (people at premises)." .
+    skos:note "Used for per-household rate calculations and credits like California Climate Credit. Typically 1 for single-family residential, but can be >1 for multi-unit buildings with master-metered service or community solar arrangements. Distinct from householdSize (number of people in household) and occupancyCount (people at premises)." .
 
 urpx:householdSize a owl:DatatypeProperty ;
     rdfs:label "Household Size"@en ;
@@ -2283,12 +2309,12 @@ urpx:isCommunitySolarCustomer a owl:DatatypeProperty ;
     rdfs:range xsd:boolean ;
     skos:note "Enables eligibility and billing calculations for community solar participants." .
 
-urpx:isOptional a owl:DatatypeProperty ;
-    rdfs:label "Is Optional"@en ;
-    rdfs:comment "Whether this modifier is optional for customers" ;
-    rdfs:domain urpx:RatePlanModifier ;
+urpx:isDefault a owl:DatatypeProperty ;
+    rdfs:label "Is Default"@en ;
+    rdfs:comment "Indicates this rate plan version is the default selection" ;
+    rdfs:domain urpx:RatePlanVersion ;
     rdfs:range xsd:boolean ;
-    skos:note "True if customer can choose to add/remove, false if automatically applied." .
+    skos:note "True if this version is the default rate plan version for new or unspecified enrollments." .
 
 urpx:isPreferred a owl:DatatypeProperty ;
     rdfs:label "Is Preferred"@en ;
@@ -2386,6 +2412,13 @@ urpx:mediaType a owl:ObjectProperty ;
     rdfs:range urpx:MediaTypeValue ;
     skos:note "See https://www.iana.org/assignments/media-types for more information." .
 
+urpx:meterCount a owl:DatatypeProperty ;
+    rdfs:label "Meter Count"@en ;
+    rdfs:comment "Count of meters at service point" ;
+    rdfs:domain urpx:ServicePointProfile ;
+    rdfs:range xsd:integer ;
+    skos:note "Number of meters installed at service delivery point. Profile characteristic (not meter measurement). Used for per-meter charges and multi-meter service configurations. Can change when meters added/removed." .
+
 urpx:metricInputType a owl:ObjectProperty ;
     rdfs:label "Metric Input Type"@en ;
     rdfs:comment "Type of MetricInput for measurement organization" ;
@@ -2450,7 +2483,7 @@ urpx:name a owl:DatatypeProperty ;
     rdfs:label "Name"@en ;
     rdfs:comment "The name of the item" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceSet urpx:PriceSetAlternatives urpx:PriceDefinition urpx:PriceSummary urpx:TariffPublication urpx:TOUPeriod urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:OrganizationName urpx:ProfileAlternatives urpx:ProfileAlternative urpx:DataSourceReference urpx:EligibilityRule urpx:TOUSchedule urpx:ServiceTier urpx:ApplicabilityRule urpx:ApplicabilityGroup urpx:PriceUpdateRule urpx:ConditionExpression urpx:ComparisonNode urpx:RateCase ) ] ;
+            owl:unionOf ( urpx:GeneralRule urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceSet urpx:PriceSetAlternatives urpx:PriceDefinition urpx:PriceSummary urpx:TariffPublication urpx:TOUPeriod urpx:URPXDocument urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:OrganizationName urpx:ProfileAlternatives urpx:ProfileAlternative urpx:DataSourceReference urpx:EligibilityRule urpx:TOUSchedule urpx:ServiceTier urpx:ApplicabilityRule urpx:ApplicabilityGroup urpx:PriceUpdateRule urpx:ConditionExpression urpx:ComparisonNode urpx:RateCase ) ] ;
     rdfs:range xsd:string ;
     skos:note "Human-readable name for entities. Keep concise for display purposes (max 255 chars recommended). Universal naming property used across all entity types." .
 
@@ -2468,20 +2501,6 @@ urpx:nominalVoltage a owl:DatatypeProperty ;
     rdfs:range xsd:decimal ;
     skos:note "Service voltage level in volts. E.g., 120, 240, 480, 13800, 69000. Used for voltage-based rate classification." .
 
-urpx:numberOfMeters a owl:DatatypeProperty ;
-    rdfs:label "Number of Meters"@en ;
-    rdfs:comment "Count of meters at service point" ;
-    rdfs:domain urpx:ServicePointProfile ;
-    rdfs:range xsd:integer ;
-    skos:note "Number of meters installed at service delivery point. Profile characteristic (not meter measurement). Used for per-meter charges and multi-meter service configurations. Can change when meters added/removed. Typical range: 1-10 for most service points." .
-
-urpx:numberOfOccupants a owl:DatatypeProperty ;
-    rdfs:label "Number of Occupants"@en ;
-    rdfs:comment "Number of occupants at premises" ;
-    rdfs:domain urpx:CustomerProfile ;
-    rdfs:range xsd:integer ;
-    skos:note "Count of people residing or working at premises. Profile characteristic (not meter measurement). Used for per-capita rate calculations and assistance program eligibility. Can change as occupancy changes. Privacy-preserving alternative to detailed household composition." .
-
 urpx:observanceRule a owl:ObjectProperty ;
     rdfs:label "Observance Rule"@en ;
     rdfs:comment "How the holiday is observed when it falls on weekends (government holiday standards)" ;
@@ -2495,6 +2514,13 @@ urpx:observesHoliday a owl:ObjectProperty ;
     rdfs:domain urpx:RatePlanVersion ;
     rdfs:range urpx:Holiday ;
     skos:note "Enables rate plans to reference specific holidays by name for GUI/API access (option B). Allows selection of subset from calendar. Dates retrieved from holiday calendar for given time series." .
+
+urpx:occupancyCount a owl:DatatypeProperty ;
+    rdfs:label "Occupancy Count"@en ;
+    rdfs:comment "Number of occupants at premises" ;
+    rdfs:domain urpx:CustomerProfile ;
+    rdfs:range xsd:integer ;
+    skos:note "Count of people residing or working at premises. Profile characteristic (not meter measurement). Used for per-capita rate calculations and assistance program eligibility. Can change as occupancy changes. Privacy-preserving alternative to detailed household composition." .
 
 urpx:operandNodes a owl:ObjectProperty ;
     rdfs:label "Operand Nodes"@en ;
@@ -2669,7 +2695,7 @@ urpx:profileMetricProperty a owl:ObjectProperty ;
     rdfs:domain urpx:MetricInput ;
     rdfs:range rdf:Property ;
     rdfs:comment "IRI reference to the profile property this metric uses" ;
-    skos:note "Used when metricInputType is profileMetricInput. Points to properties like urpx:numberOfMeters, urpx:buildingSquareFootage, urpx:voltageLevel. Enables MetricInput to reference profile characteristics for calculations. Required when metricInputType=profileMetricInput)." .
+    skos:note "Used when metricInputType is profileMetricInput. Points to properties like urpx:meterCount, urpx:buildingSquareFootage, urpx:voltageLevel. Enables MetricInput to reference profile characteristics for calculations. Required when metricInputType=profileMetricInput)." .
 
 urpx:programName a owl:DatatypeProperty ;
     rdfs:label "Program Name"@en ;
@@ -2734,6 +2760,14 @@ urpx:ratePlanIdentifier a owl:DatatypeProperty ;
     rdfs:domain urpx:RatePlan ;
     rdfs:range xsd:string ;
     skos:note "Must match pattern ^[A-Z0-9-]+$ for system compatibility." .
+
+urpx:referencesGeneralRule a owl:ObjectProperty ;
+    rdfs:label "References General Rule"@en ;
+    rdfs:comment "References a general rule applicable to this rate plan version or modifier version" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
+    rdfs:range urpx:GeneralRule ;
+    skos:note "Links a versioned rate plan or modifier to one or more tariff book-level general rules that apply to it." .
 
 urpx:referencesLedger a owl:ObjectProperty ;
     rdfs:label "References Ledger"@en ;
@@ -3975,6 +4009,19 @@ urpx:teslaSupercharger rdf:type urpx:ConnectorTypeValue ;
     skos:prefLabel "Tesla Supercharger" .
 
 
+# --- Customer Choice Property (CustomerChoiceValue) ---
+
+urpx:voluntaryChoice rdf:type urpx:CustomerChoiceValue ;
+    rdfs:label "Voluntary"@en ;
+    skos:definition "Customer may opt in or out of this rate plan version" ;
+    skos:prefLabel "Voluntary" .
+
+urpx:mandatoryChoice rdf:type urpx:CustomerChoiceValue ;
+    rdfs:label "Mandatory"@en ;
+    skos:definition "Enrollment in this rate plan version is mandatory for qualifying customers" ;
+    skos:prefLabel "Mandatory" .
+
+
 # --- CustomerKindValue (used by: Applies For Customer Kind, Has Customer Kind) ---
 
 urpx:commercialKind rdf:type urpx:CustomerKindValue ;
@@ -4966,7 +5013,7 @@ urpx:virtualMetricInput a urpx:MetricInputTypeValue ;
 urpx:profileMetricInput a urpx:MetricInputTypeValue ;
     rdfs:label "Profile Metric Input"@en ;
     skos:definition "Metric input from customer/service point profile characteristics" ;
-    skos:note "Used for profile characteristics (not meter measurements). Examples: numberOfMeters, numberOfOccupants, buildingSquareFootage, billedDemand (utility estimate). NOT for values calculated from meter data like averageMonthlyUsage or loadFactor (use calculatedMetricInput). Profile characteristics can change over time. References profile properties via profileMetricProperty." .
+    skos:note "Used for profile characteristics (not meter measurements). Examples: meterCount, occupancyCount, buildingSquareFootage, billedDemand (utility estimate). NOT for values calculated from meter data like averageMonthlyUsage or loadFactor (use calculatedMetricInput). Profile characteristics can change over time. References profile properties via profileMetricProperty." .
 
 
 # --- Modifier Category Property (ModifierCategoryValue) ---
