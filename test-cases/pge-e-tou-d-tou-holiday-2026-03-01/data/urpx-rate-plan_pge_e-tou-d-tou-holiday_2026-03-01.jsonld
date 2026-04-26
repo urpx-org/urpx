@@ -1,0 +1,335 @@
+{
+  "@context": {
+    "urpx": "https://schema.urpx.org/",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "org": "https://example.com/organizations/",
+    "pge": "https://example.com/pge/",
+    "urpx:unitPrice": { "@type": "xsd:decimal" },
+    "urpx:effectiveDate": { "@type": "xsd:date" },
+    "urpx:effectiveDateTime": { "@type": "xsd:dateTime" },
+    "urpx:initialEffectiveDate": { "@type": "xsd:date" },
+    "urpx:startDate": { "@type": "xsd:date" },
+    "urpx:url": { "@type": "xsd:anyURI" },
+    "urpx:accessURL": { "@type": "xsd:anyURI" },
+    "urpx:dateRetrieved": { "@type": "xsd:date" },
+    "urpx:pageStart": { "@type": "xsd:integer" },
+    "urpx:pageEnd": { "@type": "xsd:integer" },
+    "urpx:startTime": { "@type": "xsd:time" },
+    "urpx:endTime": { "@type": "xsd:time" },
+    "urpx:touTierNumber": { "@type": "xsd:integer" },
+    "urpx:touPeriodNumber": { "@type": "xsd:integer" },
+    "urpx:month": { "@type": "xsd:gMonth" },
+    "urpx:holidayDate": { "@type": "xsd:date" },
+    "urpx:includeHolidays": { "@type": "xsd:boolean" },
+    "urpx:includeNonHolidays": { "@type": "xsd:boolean" }
+  },
+  "@type": "urpx:RatePlan",
+  "@id": "pge:e-tou-d",
+  "urpx:ratePlanIdentifier": "E-TOU-D",
+  "urpx:name": "Residential Time-Of-Use (Peak Pricing 5-8 p.m. Non-Holiday Weekdays)",
+  "urpx:initialEffectiveDate": "2018-03-01",
+  "urpx:hasRatePlanVersion": {
+    "@type": "urpx:RatePlanVersion",
+    "@id": "pge:e-tou-d-2026-03-01-tou-holiday",
+    "urpx:publishedBy": {
+      "@type": "urpx:Organization",
+      "@id": "org:utility-pge",
+      "urpx:legalName": "Pacific Gas & Electric Company",
+      "urpx:organizationType": { "@id": "urpx:utilityOrganization" }
+    },
+    "urpx:description": "Pattern-demonstration slice of PG&E E-TOU-D — only the TOU schedule + energy rates are modeled, to illustrate the URPX pattern for 'peak applies on weekdays EXCLUDING holidays' using urpx:includeHolidays / urpx:includeNonHolidays on TimeBracket. The full E-TOU-D conversion (income tiers, baseline credit, vintage PCIA, full unbundled rates) is tracked in urpx-tariffs (URPXT-mdk).",
+    "urpx:effectiveDateTime": "2026-03-01T00:00:00",
+    "urpx:changeReason": { "@id": "urpx:rateCase" },
+    "urpx:priceCurrency": "USD",
+    "urpx:commodity": { "@id": "urpx:electricity" },
+    "urpx:serviceRole": { "@id": "urpx:bundledServiceRole" },
+    "urpx:hasDataSourceReference": {
+      "@type": "urpx:DataSourceReference",
+      "urpx:fileName": "ELEC_SCHEDS_E-TOU-D.pdf",
+      "urpx:mediaType": { "@id": "urpx:applicationPdf" },
+      "urpx:accessURL": "https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_SCHEDS_E-TOU-D.pdf",
+      "urpx:dateRetrieved": "2026-04-26",
+      "urpx:dataSourceType": { "@id": "urpx:utilityWebsiteSource" },
+      "urpx:hasTariffBookReference": {
+        "@type": "urpx:TariffBookReference",
+        "urpx:pageStart": 2,
+        "urpx:pageEnd": 4,
+        "urpx:leafStart": "61134-E",
+        "urpx:leafEnd": "61137-E"
+      }
+    },
+    "urpx:hasEligibilityRule": [
+      {
+        "@type": "urpx:EligibilityRule",
+        "@id": "pge:er-residential-tou-d",
+        "urpx:name": "Eligibility for E-TOU-D Residential Service",
+        "urpx:hasCustomerProfile": {
+          "@id": "pge:cp-residential",
+          "@type": "urpx:CustomerProfile",
+          "urpx:hasCustomerKind": { "@id": "urpx:residentialKind" }
+        }
+      }
+    ],
+    "urpx:hasPlanElements": {
+      "@type": "urpx:PlanElements",
+      "urpx:hasSeasons": [
+        {
+          "@type": "urpx:Season",
+          "@id": "pge:season-summer",
+          "urpx:seasonName": "Summer",
+          "urpx:month": ["--06", "--07", "--08", "--09"]
+        },
+        {
+          "@type": "urpx:Season",
+          "@id": "pge:season-winter",
+          "urpx:seasonName": "Winter",
+          "urpx:month": ["--10", "--11", "--12", "--01", "--02", "--03", "--04", "--05"]
+        }
+      ],
+      "urpx:hasHolidayCalendar": {
+        "@type": "urpx:HolidayCalendar",
+        "@id": "pge:holidays-e-tou-d",
+        "urpx:hasHoliday": [
+          { "@type": "urpx:Holiday", "@id": "pge:holiday-new-years-day", "urpx:holidayName": "New Year's Day", "urpx:holidayRule": "January 1 (legally observed)" },
+          { "@type": "urpx:Holiday", "@id": "pge:holiday-presidents-day", "urpx:holidayName": "President's Day", "urpx:holidayRule": "Third Monday in February" },
+          { "@type": "urpx:Holiday", "@id": "pge:holiday-memorial-day", "urpx:holidayName": "Memorial Day", "urpx:holidayRule": "Last Monday in May" },
+          { "@type": "urpx:Holiday", "@id": "pge:holiday-independence-day", "urpx:holidayName": "Independence Day", "urpx:holidayRule": "July 4 (legally observed)" },
+          { "@type": "urpx:Holiday", "@id": "pge:holiday-labor-day", "urpx:holidayName": "Labor Day", "urpx:holidayRule": "First Monday in September" },
+          { "@type": "urpx:Holiday", "@id": "pge:holiday-veterans-day", "urpx:holidayName": "Veterans Day", "urpx:holidayRule": "November 11 (legally observed)" },
+          { "@type": "urpx:Holiday", "@id": "pge:holiday-thanksgiving", "urpx:holidayName": "Thanksgiving Day", "urpx:holidayRule": "Fourth Thursday in November" },
+          { "@type": "urpx:Holiday", "@id": "pge:holiday-christmas", "urpx:holidayName": "Christmas Day", "urpx:holidayRule": "December 25 (legally observed)" }
+        ]
+      },
+      "urpx:hasMetricInput": [
+        {
+          "@type": "urpx:MetricInput",
+          "@id": "pge:mi-energy",
+          "urpx:name": "kWh Energy Consumption",
+          "urpx:metricInputType": { "@id": "urpx:measuredMetricInput" },
+          "urpx:hasMetricSpecification": {
+            "@type": "urpx:MetricSpecification",
+            "@id": "pge:ms-energy",
+            "urpx:measurementKind": { "@id": "urpx:energy" },
+            "urpx:unitOfMeasure": { "@id": "urpx:kWh" }
+          }
+        }
+      ],
+      "urpx:hasBillingModel": {
+        "@type": "urpx:BillingModel",
+        "urpx:hasTOUSchedule": {
+          "@type": "urpx:TOUSchedule",
+          "@id": "pge:tou-e-tou-d",
+          "urpx:referencesMetricInput": { "@id": "pge:mi-energy" },
+          "urpx:hasCalendar": { "@id": "pge:holidays-e-tou-d" },
+          "urpx:hasTOUTier": [
+            {
+              "@type": "urpx:TOUTier",
+              "@id": "pge:tou-tier-peak",
+              "urpx:tierSourceName": "Peak",
+              "urpx:touTierStandardName": { "@id": "urpx:peakTier" },
+              "urpx:touTierNumber": 1,
+              "urpx:hasTOUPeriod": [
+                {
+                  "@type": "urpx:TOUPeriod",
+                  "@id": "pge:tou-period-summer-peak",
+                  "urpx:name": "Summer Peak Period (weekday non-holiday 5-8 p.m.)",
+                  "urpx:touPeriodNumber": 1,
+                  "urpx:hasTimeBracket": [
+                    {
+                      "@type": "urpx:TimeBracket",
+                      "@id": "pge:tb-summer-peak",
+                      "urpx:appliesInSeason": { "@id": "pge:season-summer" },
+                      "urpx:startTime": "17:00:00",
+                      "urpx:endTime": "20:00:00",
+                      "urpx:dayType": { "@id": "urpx:weekdayDays" },
+                      "urpx:includeHolidays": false,
+                      "urpx:includeNonHolidays": true
+                    }
+                  ]
+                },
+                {
+                  "@type": "urpx:TOUPeriod",
+                  "@id": "pge:tou-period-winter-peak",
+                  "urpx:name": "Winter Peak Period (weekday non-holiday 5-8 p.m.)",
+                  "urpx:touPeriodNumber": 2,
+                  "urpx:hasTimeBracket": [
+                    {
+                      "@type": "urpx:TimeBracket",
+                      "@id": "pge:tb-winter-peak",
+                      "urpx:appliesInSeason": { "@id": "pge:season-winter" },
+                      "urpx:startTime": "17:00:00",
+                      "urpx:endTime": "20:00:00",
+                      "urpx:dayType": { "@id": "urpx:weekdayDays" },
+                      "urpx:includeHolidays": false,
+                      "urpx:includeNonHolidays": true
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@type": "urpx:TOUTier",
+              "@id": "pge:tou-tier-off-peak",
+              "urpx:tierSourceName": "Off-Peak",
+              "urpx:touTierStandardName": { "@id": "urpx:offPeakTier" },
+              "urpx:touTierNumber": 2,
+              "urpx:hasTOUPeriod": [
+                {
+                  "@type": "urpx:TOUPeriod",
+                  "@id": "pge:tou-period-summer-off-peak",
+                  "urpx:name": "Summer Off-Peak Period (all other times including holidays)",
+                  "urpx:touPeriodNumber": 3,
+                  "urpx:hasTimeBracket": [
+                    {
+                      "@type": "urpx:TimeBracket",
+                      "@id": "pge:tb-summer-offpeak-weekday-morning",
+                      "urpx:appliesInSeason": { "@id": "pge:season-summer" },
+                      "urpx:startTime": "00:00:00",
+                      "urpx:endTime": "17:00:00",
+                      "urpx:dayType": { "@id": "urpx:weekdayDays" },
+                      "urpx:includeHolidays": true,
+                      "urpx:includeNonHolidays": true
+                    },
+                    {
+                      "@type": "urpx:TimeBracket",
+                      "@id": "pge:tb-summer-offpeak-weekday-evening",
+                      "urpx:appliesInSeason": { "@id": "pge:season-summer" },
+                      "urpx:startTime": "20:00:00",
+                      "urpx:endTime": "23:59:59",
+                      "urpx:dayType": { "@id": "urpx:weekdayDays" },
+                      "urpx:includeHolidays": true,
+                      "urpx:includeNonHolidays": true
+                    },
+                    {
+                      "@type": "urpx:TimeBracket",
+                      "@id": "pge:tb-summer-offpeak-weekday-holiday-peak-window",
+                      "urpx:appliesInSeason": { "@id": "pge:season-summer" },
+                      "urpx:startTime": "17:00:00",
+                      "urpx:endTime": "20:00:00",
+                      "urpx:dayType": { "@id": "urpx:weekdayDays" },
+                      "urpx:includeHolidays": true,
+                      "urpx:includeNonHolidays": false
+                    },
+                    {
+                      "@type": "urpx:TimeBracket",
+                      "@id": "pge:tb-summer-offpeak-weekend",
+                      "urpx:appliesInSeason": { "@id": "pge:season-summer" },
+                      "urpx:startTime": "00:00:00",
+                      "urpx:endTime": "23:59:59",
+                      "urpx:dayType": { "@id": "urpx:weekendDays" }
+                    }
+                  ]
+                },
+                {
+                  "@type": "urpx:TOUPeriod",
+                  "@id": "pge:tou-period-winter-off-peak",
+                  "urpx:name": "Winter Off-Peak Period (all other times including holidays)",
+                  "urpx:touPeriodNumber": 4,
+                  "urpx:hasTimeBracket": [
+                    {
+                      "@type": "urpx:TimeBracket",
+                      "@id": "pge:tb-winter-offpeak-weekday-morning",
+                      "urpx:appliesInSeason": { "@id": "pge:season-winter" },
+                      "urpx:startTime": "00:00:00",
+                      "urpx:endTime": "17:00:00",
+                      "urpx:dayType": { "@id": "urpx:weekdayDays" },
+                      "urpx:includeHolidays": true,
+                      "urpx:includeNonHolidays": true
+                    },
+                    {
+                      "@type": "urpx:TimeBracket",
+                      "@id": "pge:tb-winter-offpeak-weekday-evening",
+                      "urpx:appliesInSeason": { "@id": "pge:season-winter" },
+                      "urpx:startTime": "20:00:00",
+                      "urpx:endTime": "23:59:59",
+                      "urpx:dayType": { "@id": "urpx:weekdayDays" },
+                      "urpx:includeHolidays": true,
+                      "urpx:includeNonHolidays": true
+                    },
+                    {
+                      "@type": "urpx:TimeBracket",
+                      "@id": "pge:tb-winter-offpeak-weekday-holiday-peak-window",
+                      "urpx:appliesInSeason": { "@id": "pge:season-winter" },
+                      "urpx:startTime": "17:00:00",
+                      "urpx:endTime": "20:00:00",
+                      "urpx:dayType": { "@id": "urpx:weekdayDays" },
+                      "urpx:includeHolidays": true,
+                      "urpx:includeNonHolidays": false
+                    },
+                    {
+                      "@type": "urpx:TimeBracket",
+                      "@id": "pge:tb-winter-offpeak-weekend",
+                      "urpx:appliesInSeason": { "@id": "pge:season-winter" },
+                      "urpx:startTime": "00:00:00",
+                      "urpx:endTime": "23:59:59",
+                      "urpx:dayType": { "@id": "urpx:weekendDays" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "urpx:hasLedger": [
+          {
+            "@type": "urpx:Ledger",
+            "@id": "pge:ledger-energy",
+            "urpx:name": "Energy",
+            "urpx:ledgerType": { "@id": "urpx:bundledLedger" },
+            "urpx:referencesMetricInput": { "@id": "pge:mi-energy" },
+            "urpx:hasPriceDefinition": {
+              "@type": "urpx:PriceDefinition",
+              "@id": "pge:pd-energy",
+              "urpx:name": "Total Energy Rate",
+              "urpx:chargeType": { "@id": "urpx:usageCharge" },
+              "urpx:chargeCategory": { "@id": "urpx:infrastructure" },
+              "urpx:billPortion": { "@id": "urpx:bundledPortion" }
+            }
+          }
+        ]
+      }
+    },
+    "urpx:hasPrices": {
+      "@type": "urpx:Prices",
+      "urpx:hasPrice": [
+        {
+          "@type": "urpx:Price",
+          "@id": "pge:price-summer-peak",
+          "urpx:referencesPriceDefinition": { "@id": "pge:pd-energy" },
+          "urpx:startDate": "2026-03-01",
+          "urpx:name": "Summer Peak (Total)",
+          "urpx:unitPrice": "0.47708",
+          "urpx:touPeriodNumber": 1
+        },
+        {
+          "@type": "urpx:Price",
+          "@id": "pge:price-summer-off-peak",
+          "urpx:referencesPriceDefinition": { "@id": "pge:pd-energy" },
+          "urpx:startDate": "2026-03-01",
+          "urpx:name": "Summer Off-Peak (Total)",
+          "urpx:unitPrice": "0.34212",
+          "urpx:touPeriodNumber": 3
+        },
+        {
+          "@type": "urpx:Price",
+          "@id": "pge:price-winter-peak",
+          "urpx:referencesPriceDefinition": { "@id": "pge:pd-energy" },
+          "urpx:startDate": "2026-03-01",
+          "urpx:name": "Winter Peak (Total)",
+          "urpx:unitPrice": "0.38747",
+          "urpx:touPeriodNumber": 2
+        },
+        {
+          "@type": "urpx:Price",
+          "@id": "pge:price-winter-off-peak",
+          "urpx:referencesPriceDefinition": { "@id": "pge:pd-energy" },
+          "urpx:startDate": "2026-03-01",
+          "urpx:name": "Winter Off-Peak (Total)",
+          "urpx:unitPrice": "0.34886",
+          "urpx:touPeriodNumber": 4
+        }
+      ]
+    }
+  }
+}
