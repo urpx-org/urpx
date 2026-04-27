@@ -15,6 +15,7 @@
   "urpx:ratePlanIdentifier": "E-HRA",
   "urpx:name": "Electric Hydro Rate Adjuster",
   "urpx:initialEffectiveDate": "2023-01-01",
+  "urpx:timezoneIdentifier": "America/Los_Angeles",
   "urpx:isOptional": false,
   "urpx:hasRatePlanModifierVersion": {
     "@type": "urpx:RatePlanModifierVersion",

@@ -22,6 +22,7 @@
   "urpx:ratePlanIdentifier": "E-1 TOU",
   "urpx:name": "Residential Electric Time of Use Service",
   "urpx:initialEffectiveDate": "2026-01-01",
+  "urpx:timezoneIdentifier": "America/Los_Angeles",
   "urpx:hasRatePlanVersion": {
     "@type": "urpx:RatePlanVersion",
     "@id": "urpx:cpau-e-1-tou-2026-01-01",

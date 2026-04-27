@@ -15,6 +15,7 @@
   "urpx:ratePlanIdentifier": "E-EEC-1",
   "urpx:name": "Export Electricity Compensation",
   "urpx:initialEffectiveDate": "2025-09-01",
+  "urpx:timezoneIdentifier": "America/Los_Angeles",
   "urpx:isOptional": false,
   "urpx:hasRatePlanModifierVersion": {
     "@type": "urpx:RatePlanModifierVersion",

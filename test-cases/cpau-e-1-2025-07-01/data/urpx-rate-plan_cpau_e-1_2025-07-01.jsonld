@@ -20,6 +20,7 @@
   "urpx:ratePlanIdentifier": "E-1",
   "urpx:name": "Residential Electric Service",
   "urpx:initialEffectiveDate": "2025-07-01",
+  "urpx:timezoneIdentifier": "America/Los_Angeles",
   "urpx:hasRatePlanVersion": {
     "@type": "urpx:RatePlanVersion",
     "@id": "urpx:cpau-e-1-2025-07-01",
