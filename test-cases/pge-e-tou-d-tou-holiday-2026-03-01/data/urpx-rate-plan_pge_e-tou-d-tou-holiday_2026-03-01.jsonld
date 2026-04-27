@@ -29,6 +29,7 @@
   "urpx:ratePlanIdentifier": "E-TOU-D",
   "urpx:name": "Residential Time-Of-Use (Peak Pricing 5-8 p.m. Non-Holiday Weekdays)",
   "urpx:initialEffectiveDate": "2018-03-01",
+  "urpx:timezoneIdentifier": "America/Los_Angeles",
   "urpx:hasRatePlanVersion": {
     "@type": "urpx:RatePlanVersion",
     "@id": "pge:e-tou-d-2026-03-01-tou-holiday",
