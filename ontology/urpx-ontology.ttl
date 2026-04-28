@@ -2442,10 +2442,10 @@ urpx:modifierCategory a owl:ObjectProperty ;
     rdfs:range urpx:ModifierCategoryValue ;
     skos:note "Business categorization enumeration for rate plan modifier organization. with standardized category definitions." .
 
-urpx:modifierIdentifier a owl:DatatypeProperty ;
-    rdfs:label "Modifier Identifier"@en ;
+urpx:modifierUniqueIdentifier a owl:DatatypeProperty ;
+    rdfs:label "Modifier Unique Identifier"@en ;
     rdfs:comment "Unique modifier identifier using alphanumeric and hyphen only" ;
-    rdfs:domain urpx:RatePlanModifierVersion ;
+    rdfs:domain urpx:RatePlanModifier ;
     rdfs:range xsd:string ;
     skos:note "Must match pattern ^[A-Z0-9-]+$ for system compatibility." .
 
@@ -2754,8 +2754,8 @@ urpx:rateGroupName a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     skos:note "E.g., 'Rate I', 'Rate II' as used in regulatory filings." .
 
-urpx:ratePlanIdentifier a owl:DatatypeProperty ;
-    rdfs:label "Rate Plan Identifier"@en ;
+urpx:ratePlanUniqueIdentifier a owl:DatatypeProperty ;
+    rdfs:label "Rate Plan Unique Identifier"@en ;
     rdfs:comment "Unique rate plan identifier using alphanumeric and hyphen only" ;
     rdfs:domain urpx:RatePlan ;
     rdfs:range xsd:string ;
@@ -3020,6 +3020,13 @@ urpx:supersedes a owl:ObjectProperty ;
     rdfs:range [ a owl:Class ;
             owl:unionOf ( urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
     skos:note "Creates version chain for audit trail. Superseded version should end when this begins. Rate plan versions can supersede other rate plan versions, and modifier versions can supersede other modifier versions." .
+
+urpx:targetURPXVersion a owl:DatatypeProperty ;
+    rdfs:label "Target URPX Version"@en ;
+    rdfs:domain urpx:URPXDocument ;
+    rdfs:range xsd:anyURI ;
+    rdfs:comment "The URPX ontology version this document was authored against." ;
+    skos:note "Required on all URPXDocument instances. Enables version-aware parsing and validation. Value should be the ontology version IRI, e.g. 'https://github.com/urpx-org/urpx/blob/v0.1.2/ontology/urpx-ontology.ttl'." .
 
 urpx:tariffStatementType a owl:ObjectProperty ;
     rdfs:label "Tariff Statement Type"@en ;

@@ -3459,7 +3459,7 @@ urpx-shacl:RatePlanShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:ratePlanIdentifier ;
+        sh:path urpx:ratePlanUniqueIdentifier ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
@@ -3581,6 +3581,13 @@ urpx-shacl:RatePlanModifierShape
         sh:datatype xsd:date ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:modifierUniqueIdentifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern "^[A-Z0-9-]+$" ;
     ] ;
     sh:property [
         sh:path urpx:name ;
@@ -3764,13 +3771,6 @@ urpx-shacl:RatePlanModifierVersionShape
         sh:node urpx-shacl:ModifierCategoryValueShape ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:modifierIdentifier ;
-        sh:datatype xsd:string ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:pattern "^[A-Z0-9-]+$" ;
     ] ;
     sh:property [
         sh:path urpx:modifierType ;
@@ -5505,6 +5505,12 @@ urpx-shacl:URPXDocumentShape
         sh:datatype xsd:string ;
         sh:maxLength 3 ;
         sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:targetURPXVersion ;
+        sh:datatype xsd:anyURI ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
