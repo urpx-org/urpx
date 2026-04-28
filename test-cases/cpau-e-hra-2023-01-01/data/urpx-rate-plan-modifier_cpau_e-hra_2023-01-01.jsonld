@@ -12,7 +12,6 @@
   },
   "@type": "urpx:RatePlanModifier",
   "@id": "urpx:cpau-e-hra",
-  "urpx:ratePlanIdentifier": "E-HRA",
   "urpx:name": "Electric Hydro Rate Adjuster",
   "urpx:initialEffectiveDate": "2023-01-01",
   "urpx:timezoneIdentifier": "America/Los_Angeles",
@@ -20,7 +19,7 @@
   "urpx:hasRatePlanModifierVersion": {
     "@type": "urpx:RatePlanModifierVersion",
     "@id": "urpx:cpau-e-hra-2023-01-01",
-    "urpx:versionNumber": "2023-01-01",
+    "urpx:version": "2023-01-01",
     "urpx:changeReason": { "@id": "urpx:initial" },
     "urpx:modifierIdentifier": "E-HRA",
     "urpx:modifierVersionNumber": "2023-01-01",
@@ -44,7 +43,7 @@
       "@type": "urpx:DataSourceReference",
       "urpx:url": "file://./assets/CPAU_E-HRA_2023-01-01.pdf",
       "urpx:fileName": "CPAU_E-HRA_2023-01-01.pdf",
-      "urpx:mediaType": "application/pdf"
+      "urpx:mediaType": { "@id": "urpx:applicationPdf" }
     },
     "urpx:hasPlanElements": {
       "@type": "urpx:PlanElements",

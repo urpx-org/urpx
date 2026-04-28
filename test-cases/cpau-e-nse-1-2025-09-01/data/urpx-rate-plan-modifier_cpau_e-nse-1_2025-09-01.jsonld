@@ -12,7 +12,6 @@
   },
   "@type": "urpx:RatePlanModifier",
   "@id": "urpx:cpau-e-nse-1",
-  "urpx:ratePlanIdentifier": "E-NSE-1",
   "urpx:name": "Net Metering Net Surplus Electricity Compensation",
   "urpx:initialEffectiveDate": "2025-09-01",
   "urpx:timezoneIdentifier": "America/Los_Angeles",
@@ -20,7 +19,7 @@
   "urpx:hasRatePlanModifierVersion": {
     "@type": "urpx:RatePlanModifierVersion",
     "@id": "urpx:cpau-e-nse-1-2025-09-01",
-    "urpx:versionNumber": "2025-09-01",
+    "urpx:version": "2025-09-01",
     "urpx:changeReason": { "@id": "urpx:initial" },
     "urpx:modifierIdentifier": "E-NSE-1",
     "urpx:modifierVersionNumber": "2025-09-01",
@@ -44,18 +43,18 @@
       "@type": "urpx:DataSourceReference",
       "urpx:url": "file://./assets/CPAU_E-NSE-1_2025-09-01.pdf",
       "urpx:fileName": "CPAU_E-NSE-1_2025-09-01.pdf",
-      "urpx:mediaType": "application/pdf"
+      "urpx:mediaType": { "@id": "urpx:applicationPdf" }
     },
     "urpx:hasEligibilityRule": [
       {
         "@type": "urpx:EligibilityRule",
         "@id": "urpx:cpau-nse-er-nem-surplus",
+        "urpx:description": "Eligible residential and small commercial customers",
         "urpx:logicExpression": "urpx:cpau-nse-condition-nem-election-a AND urpx:cpau-nse-condition-net-surplus AND NOT urpx:cpau-nse-condition-nem-successor",
         "urpx:hasCustomerProfile": {
           "@type": "urpx:CustomerProfile",
           "@id": "urpx:cpau-nse-cp-res-smallcomm",
-          "urpx:hasCustomerKind": { "@id": "urpx:residentialKind" },
-          "urpx:description": "Eligible residential and small commercial customers"
+          "urpx:hasCustomerKind": { "@id": "urpx:residentialKind" }
         },
         "urpx:hasCondition": [
           {

@@ -12,7 +12,6 @@
   },
   "@type": "urpx:RatePlanModifier",
   "@id": "urpx:cpau-e-eec-1",
-  "urpx:ratePlanIdentifier": "E-EEC-1",
   "urpx:name": "Export Electricity Compensation",
   "urpx:initialEffectiveDate": "2025-09-01",
   "urpx:timezoneIdentifier": "America/Los_Angeles",
@@ -20,7 +19,7 @@
   "urpx:hasRatePlanModifierVersion": {
     "@type": "urpx:RatePlanModifierVersion",
     "@id": "urpx:cpau-e-eec-1-2025-09-01",
-    "urpx:versionNumber": "2025-09-01",
+    "urpx:version": "2025-09-01",
     "urpx:changeReason": { "@id": "urpx:initial" },
     "urpx:modifierIdentifier": "E-EEC-1",
     "urpx:modifierVersionNumber": "2025-09-01",
@@ -41,18 +40,14 @@
       "@type": "urpx:DataSourceReference",
       "urpx:url": "file://./assets/CPAU_E-EEC-1_2025-09-01.pdf",
       "urpx:fileName": "CPAU_E-EEC-1_2025-09-01.pdf",
-      "urpx:mediaType": "application/pdf"
+      "urpx:mediaType": { "@id": "urpx:applicationPdf" }
     },
     "urpx:hasEligibilityRule": [
       {
         "@type": "urpx:EligibilityRule",
         "@id": "urpx:cpau-er-customer-generator",
+        "urpx:description": "Customer-Generators not eligible for or not electing Net Energy Metering",
         "urpx:logicExpression": "urpx:cpau-condition-customer-generator AND NOT urpx:cpau-condition-nem-eligible",
-        "urpx:hasCustomerProfile": {
-          "@type": "urpx:CustomerProfile",
-          "@id": "urpx:cpau-eec-cp-customer-generator",
-          "urpx:description": "Customer-Generators not eligible for or not electing Net Energy Metering"
-        },
         "urpx:hasCondition": [
           {
             "@type": "urpx:Condition",

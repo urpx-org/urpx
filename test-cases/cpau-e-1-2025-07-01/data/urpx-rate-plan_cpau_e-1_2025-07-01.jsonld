@@ -24,7 +24,7 @@
   "urpx:hasRatePlanVersion": {
     "@type": "urpx:RatePlanVersion",
     "@id": "urpx:cpau-e-1-2025-07-01",
-    "urpx:versionNumber": "2025-07-01",
+    "urpx:version": "2025-07-01",
     "urpx:changeReason": { "@id": "urpx:initial" },
     "urpx:description": "Applies to all single-family residential electric service supplied through one meter at one point of delivery for domestic purposes in a single-family dwelling unit within the City of Palo Alto electric service area.",
     "urpx:effectiveDateTime": "2025-07-01T00:00:00",
@@ -42,7 +42,7 @@
       "@type": "urpx:DataSourceReference",
       "urpx:url": "file://./assets/CPAU_E-1_2025-07-01.pdf",
       "urpx:fileName": "CPAU_E-1_2025-07-01.pdf",
-      "urpx:mediaType": "application/pdf"
+      "urpx:mediaType": { "@id": "urpx:applicationPdf" }
     },
     "urpx:hasEligibilityRule": [
       {
@@ -97,40 +97,42 @@
       ],
       "urpx:hasBillingModel": {
         "@type": "urpx:BillingModel",
-        "urpx:hasServiceTier": [
-          {
-            "@type": "urpx:ServiceTier",
-            "@id": "urpx:cpau-tier-1",
-            "urpx:name": "Tier 1 — Baseline",
-            "urpx:description": "Usage up to baseline allowance of 15 kWh per day, prorated by meter reading days in billing period",
-            "urpx:serviceTierNumber": 1,
-            "urpx:referencesMetricInput": { "@id": "urpx:cpau-mi-energy" },
-            "urpx:lowerBound": "0",
-            "urpx:lowerBoundOperator": { "@id": "urpx:greaterThanOrEqualOperator" },
-            "urpx:upperBound": "15",
-            "urpx:upperBoundOperator": { "@id": "urpx:lessThanOrEqualOperator" },
-            "urpx:hasCalculationMethod": {
-              "@type": "urpx:CalculationMethod",
-              "urpx:intervalDuration": "P1D"
+        "urpx:hasServiceTiers": {
+          "@type": "urpx:ServiceTiers",
+          "urpx:referencesMetricInput": { "@id": "urpx:cpau-mi-energy" },
+          "urpx:hasServiceTier": [
+            {
+              "@type": "urpx:ServiceTier",
+              "@id": "urpx:cpau-tier-1",
+              "urpx:name": "Tier 1 — Baseline",
+              "urpx:description": "Usage up to baseline allowance of 15 kWh per day, prorated by meter reading days in billing period",
+              "urpx:serviceTierNumber": 1,
+              "urpx:lowerBound": "0",
+              "urpx:lowerBoundOperator": { "@id": "urpx:greaterThanOrEqualOperator" },
+              "urpx:upperBound": "15",
+              "urpx:upperBoundOperator": { "@id": "urpx:lessThanOrEqualOperator" },
+              "urpx:hasCalculationMethod": {
+                "@type": "urpx:CalculationMethod",
+                "urpx:intervalDuration": "P1D"
+              }
+            },
+            {
+              "@type": "urpx:ServiceTier",
+              "@id": "urpx:cpau-tier-2",
+              "urpx:name": "Tier 2 — Over Baseline",
+              "urpx:description": "Usage exceeding baseline allowance of 15 kWh per day",
+              "urpx:serviceTierNumber": 2,
+              "urpx:lowerBound": "15",
+              "urpx:lowerBoundOperator": { "@id": "urpx:greaterThanOperator" },
+              "urpx:upperBound": "999999",
+              "urpx:upperBoundOperator": { "@id": "urpx:lessThanOrEqualOperator" },
+              "urpx:hasCalculationMethod": {
+                "@type": "urpx:CalculationMethod",
+                "urpx:intervalDuration": "P1D"
+              }
             }
-          },
-          {
-            "@type": "urpx:ServiceTier",
-            "@id": "urpx:cpau-tier-2",
-            "urpx:name": "Tier 2 — Over Baseline",
-            "urpx:description": "Usage exceeding baseline allowance of 15 kWh per day",
-            "urpx:serviceTierNumber": 2,
-            "urpx:referencesMetricInput": { "@id": "urpx:cpau-mi-energy" },
-            "urpx:lowerBound": "15",
-            "urpx:lowerBoundOperator": { "@id": "urpx:greaterThanOperator" },
-            "urpx:upperBound": "999999",
-            "urpx:upperBoundOperator": { "@id": "urpx:lessThanOrEqualOperator" },
-            "urpx:hasCalculationMethod": {
-              "@type": "urpx:CalculationMethod",
-              "urpx:intervalDuration": "P1D"
-            }
-          }
-        ],
+          ]
+        },
         "urpx:hasLedger": [
           {
             "@type": "urpx:Ledger",

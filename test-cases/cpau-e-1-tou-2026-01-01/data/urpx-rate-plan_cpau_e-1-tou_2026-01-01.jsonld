@@ -26,7 +26,7 @@
   "urpx:hasRatePlanVersion": {
     "@type": "urpx:RatePlanVersion",
     "@id": "urpx:cpau-e-1-tou-2026-01-01",
-    "urpx:versionNumber": "2026-01-01",
+    "urpx:version": "2026-01-01",
     "urpx:changeReason": { "@id": "urpx:initial" },
     "urpx:description": "This voluntary Rate Schedule applies to separately metered single-family residential dwellings receiving Electric Service from the City of Palo Alto Utilities (CPAU) who have an Advanced Metering Infrastructure meter installed. This Rate Schedule is not available to Net Energy Metered (NEM) customers and is provided at the sole discretion of CPAU.",
     "urpx:effectiveDateTime": "2026-01-01T00:00:00",
@@ -44,7 +44,7 @@
       "@type": "urpx:DataSourceReference",
       "urpx:url": "file://./assets/CPAU_E-1-TOU_2026-01-01.pdf",
       "urpx:fileName": "CPAU_E-1-TOU_2026-01-01.pdf",
-      "urpx:mediaType": "application/pdf"
+      "urpx:mediaType": { "@id": "urpx:applicationPdf" }
     },
     "urpx:hasEligibilityRule": [
       {
