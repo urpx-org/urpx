@@ -96,28 +96,6 @@ urpx-shacl:AlternativeDimensionsShape
         sh:minCount 1 ;
     ] .
 
-urpx-shacl:ApplicabilityConstraintShape
-    a sh:NodeShape ;
-    rdfs:label "ApplicabilityConstraint Shape"@en ;
-    sh:targetClass urpx:ApplicabilityConstraint ;
-    sh:closed true ;
-    sh:ignoredProperties ( rdf:type ) ;
-    sh:property [
-        sh:path urpx:constraintProperty ;
-        sh:datatype xsd:anyURI ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:constraintValue ;
-        sh:or (
-            [ sh:nodeKind sh:IRI ]
-            [ sh:nodeKind sh:Literal ]
-        ) ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-    ] .
-
 urpx-shacl:ApplicabilityGroupShape
     a sh:NodeShape ;
     rdfs:label "ApplicabilityGroup Shape"@en ;
@@ -178,14 +156,10 @@ urpx-shacl:ApplicabilityGroupShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:hasExclusionConstraint ;
-        sh:class urpx:ApplicabilityConstraint ;
+        sh:path urpx:hasConditionExpression ;
+        sh:class urpx:ConditionExpression ;
         sh:minCount 0 ;
-    ] ;
-    sh:property [
-        sh:path urpx:hasInclusionConstraint ;
-        sh:class urpx:ApplicabilityConstraint ;
-        sh:minCount 0 ;
+        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:name ;
@@ -1418,23 +1392,6 @@ urpx-shacl:EligibilityRuleShape
     sh:targetClass urpx:EligibilityRule ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:or (
-        [
-            sh:path urpx:hasCustomerProfile ;
-            sh:class urpx:CustomerProfile ;
-            sh:minCount 1 ;
-        ]
-        [
-            sh:path urpx:hasServicePointProfile ;
-            sh:class urpx:ServicePointProfile ;
-            sh:minCount 1 ;
-        ]
-        [
-            sh:path urpx:hasConditionExpression ;
-            sh:class urpx:ConditionExpression ;
-            sh:minCount 1 ;
-        ]
-    ) ;
     sh:property [
         sh:path urpx:description ;
         sh:datatype xsd:string ;
@@ -1448,18 +1405,8 @@ urpx-shacl:EligibilityRuleShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:hasCustomerProfile ;
-        sh:class urpx:CustomerProfile ;
-        sh:minCount 0 ;
-    ] ;
-    sh:property [
         sh:path urpx:hasDataSourceReference ;
         sh:class urpx:DataSourceReference ;
-        sh:minCount 0 ;
-    ] ;
-    sh:property [
-        sh:path urpx:hasServicePointProfile ;
-        sh:class urpx:ServicePointProfile ;
         sh:minCount 0 ;
     ] ;
     sh:property [
@@ -3192,9 +3139,10 @@ urpx-shacl:ProfileAlternativeShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:hasDimensionValue ;
-        sh:class urpx:DimensionValuePair ;
-        sh:minCount 1 ;
+        sh:path urpx:hasConditionExpression ;
+        sh:class urpx:ConditionExpression ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:name ;
@@ -4102,6 +4050,25 @@ urpx-shacl:RegulatoryAuthorityShape
         sh:path urpx:regulatoryScope ;
         sh:node urpx-shacl:RegulatoryScopeValueShape ;
         sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:ScenarioShape
+    a sh:NodeShape ;
+    rdfs:label "Scenario Shape"@en ;
+    sh:targetClass urpx:Scenario ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [
+        sh:path urpx:hasCustomerProfile ;
+        sh:class urpx:CustomerProfile ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasServicePointProfile ;
+        sh:class urpx:ServicePointProfile ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] .
 

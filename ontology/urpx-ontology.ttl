@@ -56,11 +56,6 @@ urpx:AlternativeDimensions a owl:Class ;
     rdfs:comment "Dimensions defining the set of profileAlternatives. " ;
     skos:note "Wrapper for multiple alternative dimensions within a ProfileAlternatives context. Organizes related dimensions and their metadata, enabling complex alternative structures with multiple dimensions of variation." .
 
-urpx:ApplicabilityConstraint a owl:Class ;
-    rdfs:label "Applicability Constraint"@en ;
-    rdfs:comment "Generic inclusion or exclusion rule for price applicability. Enables flexible applicability rules without requiring new properties for each constraint type." ;
-    skos:note "Used with ApplicabilityGroup via hasInclusionConstraint (price applies when property matches value) or hasExclusionConstraint (price does not apply when property matches value). Provides systematic constraint structure for flexible applicability rules." .
-
 urpx:ApplicabilityGroup a owl:Class ;
     rdfs:label "Applicability Group"@en ;
     rdfs:comment "Geographic and service class applicability rules for statement prices" ;
@@ -100,7 +95,7 @@ urpx:ComparisonNode a owl:Class ;
 
 urpx:ConditionExpression a owl:Class ;
     rdfs:label "Condition Expression"@en ;
-    rdfs:comment "Rule-level wrapper for structured condition applicability"@en ;
+    rdfs:comment "Rule-level wrapper for structured condition applicability used in EligibilityRule, ApplicabilityRule, ApplicabilityGroup, ProfileAlternative"@en ;
     skos:note "Carries exactly one rootNode. The root is a ConditionNode, either a ComparisonNode or a BooleanOperationNode." .
 
 urpx:ConditionNode a owl:Class ;
@@ -127,7 +122,7 @@ urpx:CustomOperandNode a owl:Class ;
 
 urpx:CustomerProfile a owl:Class ;
     rdfs:label "Customer Profile"@en ;
-    rdfs:comment "Customer business and social characteristics for rate eligibility and program participation" ;
+    rdfs:comment "Customer business and social characteristics for rate eligibility and program participation evaluation" ;
     rdfs:subClassOf urpx:Profile ;
     skos:note "Represents customer business, social, and program participation characteristics. Includes assistance program support." .
 
@@ -151,11 +146,6 @@ urpx:DistributedEnergyResource a owl:Class ;
     rdfs:label "Distributed Energy Resource"@en ;
     rdfs:comment "On-site generation and storage capabilities" ;
     skos:note "Represents distributed energy resources (DER) including solar, storage, EV charging, and wind. Enables rate plan selection for customers with generation and storage capabilities." .
-
-urpx:DimensionValuePair a owl:Class ;
-    rdfs:label "Dimension Value Pair"@en ;
-    rdfs:comment "A key-value pair associating an AlternativeDimension with a specific value, used to define a ProfileAlternative." ;
-    skos:note "This class formalizes the reification pattern for the n-ary relationship between a ProfileAlternative, an AlternativeDimension, and its value. An instance of this class represents one constraint in a set that defines an alternative." .
 
 urpx:DynamicPricing a owl:Class ;
     rdfs:label "Dynamic Pricing"@en ;
@@ -316,7 +306,7 @@ urpx:PriorRatePlan a owl:Class ;
 
 urpx:Profile a owl:Class ;
     rdfs:label "Profile"@en ;
-    rdfs:comment "Abstract parent for all profile types used in rate plan eligibility and service delivery" ;
+    rdfs:comment "Abstract parent for all profile types used in rate plan eligibility and service delivery evaluation" ;
     skos:note "Subclasses define specific profile characteristics: CustomerProfile for business and social characteristics, ServicePointProfile for physical service delivery characteristics. No properties defined at this level - all properties live on concrete subclasses." .
 
 urpx:ProfileAlternative a owl:Class ;
@@ -391,7 +381,7 @@ urpx:ServiceClass a owl:Class ;
 
 urpx:ServicePointProfile a owl:Class ;
     rdfs:label "Service Point Profile"@en ;
-    rdfs:comment "Service delivery point characteristics for rate plan eligibility and service configuration" ;
+    rdfs:comment "Service delivery point characteristics for rate plan eligibility and service configuration evaluation" ;
     rdfs:subClassOf urpx:Profile ;
     skos:note """Represents the physical and technical characteristics of a utility service delivery point.""" .
 
@@ -830,6 +820,11 @@ urpx:RegulatoryScopeValue a owl:Class ;
     owl:equivalentClass [ owl:oneOf ( urpx:distributionRegulation urpx:environmentalRegulation urpx:marketRegulation urpx:ratesRegulation urpx:safetyRegulation urpx:transmissionRegulation ) ] ;
     skos:note "Enumeration class for regulatory oversight classification with standardized regulatory scope definitions for regulatory authority categorization for energy systems" .
 
+urpx:Scenario a owl:Class ;
+    rdfs:label "Scenario"@en ;
+    rdfs:comment "Input container grouping customer and service point profiles for broad rate plan eligibility evaluation." ;
+    skos:note "Not used within a rate plan. Used to model a scenario against which EligibilityRule conditions on RatePlanVersions can be evaluated. A Scenario holds a CustomerProfile and/or ServicePointProfile representing the subject of evaluation." .
+
 urpx:SeasonalPatternValue a owl:Class ;
     rdfs:label "Seasonal Pattern Value"@en ;
     rdfs:comment "Usage patterns enumeration values" ;
@@ -1216,19 +1211,6 @@ urpx:connectorType a owl:ObjectProperty ;
     rdfs:domain urpx:DistributedEnergyResource ;
     rdfs:range urpx:ConnectorTypeValue ;
     skos:note "Connector types: Level 1, Level 2, DC Fast, Tesla Supercharger, CHAdeMO, CCS. Affects charging capabilities." .
-
-urpx:constraintProperty a owl:DatatypeProperty ;
-    rdfs:label "Constraint Property"@en ;
-    rdfs:domain urpx:ApplicabilityConstraint ;
-    rdfs:range xsd:anyURI ;
-    rdfs:comment "IRI of the property to test for this constraint. Specifies which customer or service characteristic to evaluate." ;
-    skos:note "Common constraint properties include urpx:hasCustomerKind, urpx:entityType, urpx:endUse, urpx:appliesInServiceTerritory. Flexible URI pattern allows any property without ontology changes." .
-
-urpx:constraintValue a rdf:Property ;
-    rdfs:label "Constraint Value"@en ;
-    rdfs:domain urpx:ApplicabilityConstraint ;
-    rdfs:comment "Value to match for this constraint. Can be IRI reference or literal depending on constraint property type." ;
-    skos:note "Flexible range allows both IRIs (e.g., urpx:residentialKind, urpx:nonprofitEntity) and literals (e.g., zip codes, dates). Type determined by constraintProperty's range specification." .
 
 urpx:commodity a owl:ObjectProperty ;
     rdfs:label "Service Type"@en ;
@@ -1620,13 +1602,6 @@ urpx:formula a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     skos:note "String expression defining calculation logic. Example: 'generation - gridImport' for net export. Used within calculationRule blank node." .
 
-urpx:forDimension a owl:ObjectProperty ;
-    rdfs:label "For Dimension"@en ;
-    rdfs:domain urpx:DimensionValuePair ;
-    rdfs:range urpx:AlternativeDimension ;
-    rdfs:comment "IRI reference to the AlternativeDimension this value belongs to. Used within a DimensionValuePair to specify which dimension is being valued. Enables metadata lookup via dereferencing the AlternativeDimension IRI." ;
-    skos:note "Used in conjunction with valueIRI to form dimension-value pairs. The referenced AlternativeDimension provides metadata like display name, property mapping, and dimension description." .
-
 urpx:generalRuleID a owl:DatatypeProperty ;
     rdfs:label "General Rule ID"@en ;
     rdfs:comment "Unique identifier for a general rule" ;
@@ -1726,7 +1701,7 @@ urpx:hasConditionExpression a owl:ObjectProperty ;
     rdfs:label "Has Condition Expression"@en ;
     rdfs:comment "Links a rule to its structured condition expression"@en ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:EligibilityRule urpx:ApplicabilityRule ) ] ;
+            owl:unionOf ( urpx:EligibilityRule urpx:ApplicabilityRule urpx:ApplicabilityGroup urpx:ProfileAlternative ) ] ;
     rdfs:range urpx:ConditionExpression ;
     skos:note "The rule-level entry point for structured condition applicability." .
 
@@ -1739,10 +1714,10 @@ urpx:hasCustomerKind a owl:ObjectProperty ;
 
 urpx:hasCustomerProfile a owl:ObjectProperty ;
     rdfs:label "Has Customer Profile"@en ;
-    rdfs:comment "Links eligibility rule to customer profile for business/social characteristics" ;
-    rdfs:domain urpx:EligibilityRule ;
+    rdfs:comment "Links scenario to customer profile for business/social characteristics" ;
+    rdfs:domain urpx:Scenario ;
     rdfs:range urpx:CustomerProfile ;
-    skos:note "Parallel property with hasServicePointProfile. Enables eligibility rules based on customer business, social, and program participation characteristics. Used for rate plan qualification and program eligibility." .
+    skos:note "Parallel property with hasServicePointProfile. Evaluates eligibility rules based on customer business, social, and program participation characteristics. Used for rate plan qualification and program eligibility." .
 
 urpx:hasCustomerSubKind a owl:ObjectProperty ;
     rdfs:label "Has Customer Sub Kind"@en ;
@@ -1758,13 +1733,6 @@ urpx:hasDataSourceReference a owl:ObjectProperty ;
             owl:unionOf ( urpx:GeneralRule urpx:PriceSet urpx:Price urpx:PriceDefinition urpx:PriceSetAlternative urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:TariffBookDocument urpx:TariffPublication urpx:TariffStatementDocument urpx:EligibilityRule ) ] ;
     rdfs:range urpx:DataSourceReference ;
     skos:note "Enables traceability for data points back to their original source files or APIs with structured metadata." .
-
-urpx:hasDimensionValue a owl:ObjectProperty ;
-    rdfs:label "Has Dimension Value"@en ;
-    rdfs:domain urpx:ProfileAlternative ;
-    rdfs:range urpx:DimensionValuePair ;
-    rdfs:comment "Links a ProfileAlternative to a DimensionValuePair, which pairs a dimension with its value. This IRI-only pattern enables dereferenceable labels and reduces redundancy." ;
-    skos:note "Each ProfileAlternative must have at least one dimension-value pair. The object of this property is an instance of DimensionValuePair, containing forDimension and valueIRI properties." .
 
 urpx:hasDistributedEnergyResource a owl:ObjectProperty ;
     rdfs:label "Has Distributed Energy Resource"@en ;
@@ -1787,13 +1755,6 @@ urpx:hasEligibilityRule a owl:ObjectProperty ;
             owl:unionOf ( urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
     rdfs:range urpx:EligibilityRule ;
     skos:note "Rules determine customer qualification for the rate plan version or rate plan modifier version." .
-
-urpx:hasExclusionConstraint a owl:ObjectProperty ;
-    rdfs:label "Has Exclusion Constraint"@en ;
-    rdfs:domain urpx:ApplicabilityGroup ;
-    rdfs:range urpx:ApplicabilityConstraint ;
-    rdfs:comment "Links applicability group to exclusion constraint. Price does not apply when customer or service property matches the constraint's specified value. Multiple exclusion constraints are evaluated with logical AND." ;
-    skos:note "ApplicabilityGroup may have zero or more exclusion constraints. Explicit property name (vs boolean flag) provides clear semantics. Use for negative applicability rules." .
 
 urpx:hasGeneralRule a owl:ObjectProperty ;
     rdfs:label "Has General Rule"@en ;
@@ -1837,13 +1798,6 @@ urpx:hasIdentity a owl:ObjectProperty ;
     rdfs:domain urpx:Organization ;
     rdfs:range urpx:OrganizationIdentity ;
     skos:note "Temporal identity tracking for organization names and identifiers over time." .
-
-urpx:hasInclusionConstraint a owl:ObjectProperty ;
-    rdfs:label "Has Inclusion Constraint"@en ;
-    rdfs:domain urpx:ApplicabilityGroup ;
-    rdfs:range urpx:ApplicabilityConstraint ;
-    rdfs:comment "Links applicability group to inclusion constraint. Price applies when customer or service property matches the constraint's specified value. Multiple inclusion constraints are evaluated with logical AND." ;
-    skos:note "ApplicabilityGroup may have zero or more inclusion constraints. Explicit property name (vs boolean flag) provides clear semantics. Use for positive applicability rules." .
 
 urpx:hasJurisdictionOver a owl:ObjectProperty ;
     rdfs:label "Has Jurisdiction Over"@en ;
@@ -2074,10 +2028,10 @@ urpx:hasServiceClass a owl:ObjectProperty ;
 
 urpx:hasServicePointProfile a owl:ObjectProperty ;
     rdfs:label "Has Service Point Profile"@en ;
-    rdfs:comment "Links eligibility rule to service point profile for physical service delivery characteristics" ;
-    rdfs:domain urpx:EligibilityRule ;
+    rdfs:comment "Links scenario to service point profile for physical service delivery characteristics" ;
+    rdfs:domain urpx:Scenario ;
     rdfs:range urpx:ServicePointProfile ;
-    skos:note "Parallel property with hasCustomerProfile. Enables eligibility rules based on physical service point characteristics. Used for rate plan qualification and price selection based on service delivery point attributes." .
+    skos:note "Parallel property with hasCustomerProfile. Evaluates eligibility rules based on physical service point characteristics. Used for rate plan qualification and price selection based on service delivery point attributes." .
 
 urpx:hasServiceTier a owl:ObjectProperty ;
     rdfs:label "Has Service Tier"@en ;
@@ -3153,13 +3107,6 @@ urpx:utilityId a owl:DatatypeProperty ;
     rdfs:subPropertyOf urpx:identifierValue ;
     skos:note "Generic utility identifier property. Each URPX implementation specifies the identifier system used (e.g., US EIA ID, UK MPAN, EU EIC code). For standard identifier types, use identifierScheme to specify the system." ;
     skos:example "US: EIA-12345, UK: S12345678901, EU: 12X-UTILITY-A" .
-
-urpx:valueIRI a owl:ObjectProperty ;
-    rdfs:label "Value IRI"@en ;
-    rdfs:domain urpx:DimensionValuePair ;
-    rdfs:range rdfs:Resource ;
-    rdfs:comment "IRI reference to the actual value instance for a dimension. Used within a DimensionValuePair to specify the dimension's value. The IRI can be dereferenced to retrieve labels, descriptions, and other value metadata." ;
-    skos:note "Range is rdfs:Resource to allow any IRI. Common value types include geographic zones, customer classifications, service types, and other enumerated values. Labels retrieved via SPARQL dereferencing." .
 
 urpx:version a owl:DatatypeProperty ;
     rdfs:label "Version"@en ;
