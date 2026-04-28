@@ -667,3 +667,108 @@ If exact decimal fidelity matters in a specific toolchain, implementations shoul
   }
 }
 ```
+
+### Full End-to-End ConditionExpression Graph
+
+The examples above show individual parts of the model. The following
+JSON-LD example shows one complete `ConditionExpression` graph in a
+single document, including the owning `EligibilityRule`, the
+`ConditionExpression`, the boolean root node, and the comparison nodes
+embedded directly in `urpx:operandNodes`.
+
+The same graph pattern can also be attached to `ApplicabilityRule`,
+`ApplicabilityGroup`, or `ProfileAlternative`.
+
+### Expanded ConditionExpression Tree
+
+The following Mermaid diagram shows the same full structure at a glance
+before the complete JSON-LD serialization.
+
+```mermaid
+graph TD
+    ER["EligibilityRule"]
+    CE["ConditionExpression"]
+    ROOT["BooleanOperationNode<br/>operator = andOperator"]
+    C1["ComparisonNode<br/>hasCustomerKind = residentialKind"]
+    C2["ComparisonNode<br/>averageMonthlyUsage > 500"]
+    C1L["ObjectOperandNode<br/>conditionProperty = hasCustomerKind"]
+    C1R["ObjectOperandNode<br/>referencesValue = residentialKind"]
+    C2L["DatatypeOperandNode<br/>conditionProperty = averageMonthlyUsage"]
+    C2R["DatatypeOperandNode<br/>integerValue = 500<br/>referencesMetricInput = mi-average-monthly-usage"]
+
+    ER -- "hasConditionExpression" --> CE
+    CE -- "rootNode" --> ROOT
+    ROOT -- "operandNodes" --> C1
+    ROOT -- "operandNodes" --> C2
+    C1 -- "leftOperand" --> C1L
+    C1 -- "rightOperand" --> C1R
+    C2 -- "leftOperand" --> C2L
+    C2 -- "rightOperand" --> C2R
+```
+
+```json
+{
+  "@context": {
+    "urpx": "https://schema.urpx.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "urpx:booleanValue": { "@id": "urpx:booleanValue", "@type": "xsd:boolean" },
+    "urpx:dateValue": { "@id": "urpx:dateValue", "@type": "xsd:date" },
+    "urpx:dateTimeValue": { "@id": "urpx:dateTimeValue", "@type": "xsd:dateTime" },
+    "urpx:decimalValue": { "@id": "urpx:decimalValue", "@type": "xsd:decimal" },
+    "urpx:durationValue": { "@id": "urpx:durationValue", "@type": "xsd:duration" },
+    "urpx:gMonthValue": { "@id": "urpx:gMonthValue", "@type": "xsd:gMonth" },
+    "urpx:integerValue": { "@id": "urpx:integerValue", "@type": "xsd:integer" },
+    "urpx:stringValue": { "@id": "urpx:stringValue", "@type": "xsd:string" },
+    "urpx:timeValue": { "@id": "urpx:timeValue", "@type": "xsd:time" }
+  },
+  "@graph": [
+    {
+      "@id": "urpx:eligibility-rule-1",
+      "@type": "urpx:EligibilityRule",
+      "urpx:name": "Residential usage threshold eligibility",
+      "urpx:hasConditionExpression": { "@id": "urpx:eligibility-expression-1" }
+    },
+    {
+      "@id": "urpx:eligibility-expression-1",
+      "@type": "urpx:ConditionExpression",
+      "urpx:rootNode": {
+        "@id": "urpx:eligibility-root-1",
+        "@type": "urpx:BooleanOperationNode",
+        "urpx:logicExpression": "customer kind is residential AND average monthly usage exceeds 500",
+        "urpx:operator": { "@id": "urpx:andOperator" },
+        "urpx:operandNodes": [
+          {
+            "@id": "urpx:condition-customer-kind-1",
+            "@type": "urpx:ComparisonNode",
+            "urpx:logicExpression": "hasCustomerKind = residentialKind",
+            "urpx:operator": { "@id": "urpx:equalsOperator" },
+            "urpx:leftOperand": {
+              "@type": "urpx:ObjectOperandNode",
+              "urpx:conditionProperty": { "@id": "urpx:hasCustomerKind" }
+            },
+            "urpx:rightOperand": {
+              "@type": "urpx:ObjectOperandNode",
+              "urpx:referencesValue": { "@id": "urpx:residentialKind" }
+            }
+          },
+          {
+            "@id": "urpx:condition-usage-threshold-1",
+            "@type": "urpx:ComparisonNode",
+            "urpx:logicExpression": "averageMonthlyUsage > 500",
+            "urpx:operator": { "@id": "urpx:greaterThanOperator" },
+            "urpx:leftOperand": {
+              "@type": "urpx:DatatypeOperandNode",
+              "urpx:conditionProperty": { "@id": "urpx:averageMonthlyUsage" }
+            },
+            "urpx:rightOperand": {
+              "@type": "urpx:DatatypeOperandNode",
+              "urpx:integerValue": 500,
+              "urpx:referencesMetricInput": { "@id": "urpx:mi-average-monthly-usage" }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+```

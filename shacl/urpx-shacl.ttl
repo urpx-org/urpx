@@ -1401,7 +1401,7 @@ urpx-shacl:EligibilityRuleShape
     sh:property [
         sh:path urpx:hasConditionExpression ;
         sh:class urpx:ConditionExpression ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -4059,6 +4059,20 @@ urpx-shacl:ScenarioShape
     sh:targetClass urpx:Scenario ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
+    sh:or (
+        [
+            sh:property [
+                sh:path urpx:hasCustomerProfile ;
+                sh:minCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:hasServicePointProfile ;
+                sh:minCount 1 ;
+            ]
+        ]
+    ) ;
     sh:property [
         sh:path urpx:hasCustomerProfile ;
         sh:class urpx:CustomerProfile ;
