@@ -27,9 +27,10 @@
     dcterms:date "2026-02-06"^^xsd:date ;
     dcterms:description "SHACL shapes for validating URPX data against the URPX Ontology." ;
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
-    dcterms:modified "2026-04-13"^^xsd:date ;
+    dcterms:modified "2026-04-29"^^xsd:date ;
     dcterms:title "URPX - SHACL" ;    
     owl:versionInfo "0.2.0" ;
+    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.2.0/shacl/urpx-shacl.ttl> ;
     dcat:version "0.2.0" .
 
 # ============================================================================
