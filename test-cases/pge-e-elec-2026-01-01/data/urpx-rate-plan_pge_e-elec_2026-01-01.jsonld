@@ -66,7 +66,7 @@
   "urpx:hasRatePlan": {
     "@type": "urpx:RatePlan",
     "@id": "pge:e-elec",
-    "urpx:ratePlanIdentifier": "E-ELEC",
+    "urpx:ratePlanUniqueIdentifier": "E-ELEC",
     "urpx:name": "Residential Time-of-Use (Electric Home) Service",
     "urpx:initialEffectiveDate": "2022-12-01",
     "urpx:timezoneIdentifier": "America/Los_Angeles",
@@ -124,114 +124,121 @@
           "@type": "urpx:EligibilityRule",
           "@id": "pge:er-residential-service",
           "urpx:name": "Eligibility for Residential Service",
-          "urpx:hasCustomerProfile": {
-            "@id": "pge:cp-residential",
-            "@type": "urpx:CustomerProfile",
-            "urpx:hasCustomerKind": {
-              "@id": "urpx:residentialKind"
-            }
-          },
-          "urpx:hasCondition": [
-            {
-              "@id": "pge:condition-storage",
-              "@type": "urpx:Condition",
-              "urpx:leftOperand": {
-                "@type": "urpx:ObjectTerminalNode",
-                "urpx:conditionProperty": {
-                  "@id": "urpx:derType"
-                }
-              },
+          "urpx:hasConditionExpression": {
+            "@type": "urpx:ConditionExpression",
+            "@id": "pge:ce-residential-service",
+            "urpx:rootNode": {
+              "@type": "urpx:BooleanOperationNode",
+              "@id": "pge:eligibility-root-residential-service",
+              "urpx:logicExpression": "customer kind is residential AND customer has a qualifying electric technology or NBT enrollment",
               "urpx:operator": {
-                "@id": "urpx:equalsOperator"
+                "@id": "urpx:andOperator"
               },
-              "urpx:rightOperand": {
-                "@type": "urpx:ObjectTerminalNode",
-                "urpx:referencesValue": {
-                  "@id": "urpx:storageDER"
-                }
-              }
-            },
-            {
-              "@id": "pge:condition-EVCharging",
-              "@type": "urpx:Condition",
-              "urpx:leftOperand": {
-                "@type": "urpx:ObjectTerminalNode",
-                "urpx:conditionProperty": {
-                  "@id": "urpx:derType"
-                }
-              },
-              "urpx:operator": {
-                "@id": "urpx:equalsOperator"
-              },
-              "urpx:rightOperand": {
-                "@type": "urpx:ObjectTerminalNode",
-                "urpx:referencesValue": {
-                  "@id": "urpx:evChargingDER"
-                }
-              }
-            },
-            {
-              "@id": "pge:condition-heatpump",
-              "@type": "urpx:Condition",
-              "urpx:leftOperand": {
-                "@type": "urpx:CustomTerminalNode",
-                "urpx:customConditionProperty": "Has Heat Pump",
-                "urpx:literalType": {
-                  "@id": "urpx:booleanDatatype"
-                }
-              },
-              "urpx:operator": {
-                "@id": "urpx:equalsOperator"
-              },
-              "urpx:rightOperand": {
-                "@type": "urpx:CustomTerminalNode",
-                "urpx:literalType": {
-                  "@id": "urpx:booleanDatatype"
+              "urpx:operandNodes": [
+                {
+                  "@id": "pge:condition-customer-kind",
+                  "@type": "urpx:ComparisonNode",
+                  "urpx:logicExpression": "hasCustomerKind = residentialKind",
+                  "urpx:operator": {
+                    "@id": "urpx:equalsOperator"
+                  },
+                  "urpx:leftOperand": {
+                    "@type": "urpx:ObjectOperandNode",
+                    "urpx:conditionProperty": {
+                      "@id": "urpx:hasCustomerKind"
+                    }
+                  },
+                  "urpx:rightOperand": {
+                    "@type": "urpx:ObjectOperandNode",
+                    "urpx:referencesValue": {
+                      "@id": "urpx:residentialKind"
+                    }
+                  }
                 },
-                "urpx:booleanValue": true
-              }
-            },
-            {
-              "@id": "pge:condition-NBT",
-              "@type": "urpx:Condition",
-              "urpx:leftOperand": {
-                "@type": "urpx:CustomTerminalNode",
-                "urpx:customConditionProperty": "Program Enrollment",
-                "urpx:literalType": {
-                  "@id": "urpx:stringDatatype"
+                {
+                  "@id": "pge:condition-qualifying-technology-or-program",
+                  "@type": "urpx:BooleanOperationNode",
+                  "urpx:logicExpression": "storage OR EV charging OR heat pump OR Net Billing Tariff enrollment",
+                  "urpx:operator": {
+                    "@id": "urpx:orOperator"
+                  },
+                  "urpx:operandNodes": [
+                    {
+                      "@id": "pge:condition-storage",
+                      "@type": "urpx:ComparisonNode",
+                      "urpx:logicExpression": "derType = storageDER",
+                      "urpx:operator": {
+                        "@id": "urpx:equalsOperator"
+                      },
+                      "urpx:leftOperand": {
+                        "@type": "urpx:ObjectOperandNode",
+                        "urpx:conditionProperty": {
+                          "@id": "urpx:derType"
+                        }
+                      },
+                      "urpx:rightOperand": {
+                        "@type": "urpx:ObjectOperandNode",
+                        "urpx:referencesValue": {
+                          "@id": "urpx:storageDER"
+                        }
+                      }
+                    },
+                    {
+                      "@id": "pge:condition-EVCharging",
+                      "@type": "urpx:ComparisonNode",
+                      "urpx:logicExpression": "derType = evChargingDER",
+                      "urpx:operator": {
+                        "@id": "urpx:equalsOperator"
+                      },
+                      "urpx:leftOperand": {
+                        "@type": "urpx:ObjectOperandNode",
+                        "urpx:conditionProperty": {
+                          "@id": "urpx:derType"
+                        }
+                      },
+                      "urpx:rightOperand": {
+                        "@type": "urpx:ObjectOperandNode",
+                        "urpx:referencesValue": {
+                          "@id": "urpx:evChargingDER"
+                        }
+                      }
+                    },
+                    {
+                      "@id": "pge:condition-heatpump",
+                      "@type": "urpx:ComparisonNode",
+                      "urpx:logicExpression": "Has Heat Pump = true",
+                      "urpx:operator": {
+                        "@id": "urpx:equalsOperator"
+                      },
+                      "urpx:leftOperand": {
+                        "@type": "urpx:CustomOperandNode",
+                        "urpx:customConditionProperty": "Has Heat Pump"
+                      },
+                      "urpx:rightOperand": {
+                        "@type": "urpx:CustomOperandNode",
+                        "urpx:booleanValue": true
+                      }
+                    },
+                    {
+                      "@id": "pge:condition-NBT",
+                      "@type": "urpx:ComparisonNode",
+                      "urpx:logicExpression": "Program Enrollment = Net Billing Tariff (NBT)",
+                      "urpx:operator": {
+                        "@id": "urpx:equalsOperator"
+                      },
+                      "urpx:leftOperand": {
+                        "@type": "urpx:CustomOperandNode",
+                        "urpx:customConditionProperty": "Program Enrollment"
+                      },
+                      "urpx:rightOperand": {
+                        "@type": "urpx:CustomOperandNode",
+                        "urpx:stringValue": "Net Billing Tariff (NBT)"
+                      }
+                    }
+                  ]
                 }
-              },
-              "urpx:operator": {
-                "@id": "urpx:equalsOperator"
-              },
-              "urpx:rightOperand": {
-                "@type": "urpx:CustomTerminalNode",
-                "urpx:literalType": {
-                  "@id": "urpx:stringDatatype"
-                },
-                "urpx:stringValue": "Net Billing Tariff (NBT)"
-              }
+              ]
             }
-          ],
-          "urpx:hasConditionLogic": {
-            "@type": "urpx:ConditionLogic",
-            "urpx:operator": {
-              "@id": "urpx:orOperator"
-            },
-            "urpx:conditionOperands": [
-              {
-                "@id": "pge:condition-storage"
-              },
-              {
-                "@id": "pge:condition-EVCharging"
-              },
-              {
-                "@id": "pge:condition-heatpump"
-              },
-              {
-                "@id": "pge:condition-NBT"
-              }
-            ]
           }
         }
       ],
@@ -292,7 +299,7 @@
               "@id": "urpx:profileMetricInput"
             },
             "urpx:profileMetricProperty": {
-              "@id": "urpx:numberOfMeters"
+              "@id": "urpx:meterCount"
             }
           },
           {
