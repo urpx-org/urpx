@@ -62,6 +62,7 @@
   "urpx:ratePlanIdentifier": "E-ELEC",
   "urpx:name": "Residential Time-of-Use (Electric Home) Service",
   "urpx:initialEffectiveDate": "2022-12-01",
+  "urpx:timeZoneIdentifier": "America/Los_Angeles",
   "urpx:hasRatePlanVersion": {
     "@type": "urpx:RatePlanVersion",
     "@id": "pge:e-elec-2026-01-01",

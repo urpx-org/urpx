@@ -7,7 +7,7 @@
 
 **Version:** 1.0
 **Created:** 2026-04-07
-**Last Updated:** 2026-04-17
+**Last Updated:** 2026-04-29
 
 > **Note:** Design decisions reference the original modular ontology files (urpx-core-ontology.ttl, urpx-profile.ttl, urpx-organization.ttl, urpx-geography.ttl, urpx-charge-classification.ttl). As of v0.1.1, these files have been consolidated into a single `ontology/urpx-ontology.ttl` file.
 
@@ -71,6 +71,10 @@ Quick links to all design decisions:
 - ✅ [Decision #100: RatePlanVersion Enrollment Choice and Default Selection Semantics](#decision-100)
 - ✅ [Decision #101: Compatibility Relationship Domain Expansion for Rate Plans and Versions](#decision-101)
 - ✅ [Decision #102: Profile Count Terminology Normalization and Threshold Cleanup](#decision-102)
+- ✅ [Decision #103: Unique Identifier Normalization and Required Document Target Version Metadata](#decision-103)
+- ✅ [Decision #104: Structured ConditionExpression Consolidation and Scenario-Owned Eligibility Inputs](#decision-104)
+- ✅ [Decision #105: SHACL Enforcement of Structured Eligibility and Minimum Scenario Inputs](#decision-105)
+- ✅ [Decision #106: PriorRatePlan ServiceRole Coverage](#decision-106)
 
 ---
 
@@ -1429,3 +1433,225 @@ Normalize the profile count property names and complete the threshold cleanup:
 - Related Decision: #040 (Eligibility Properties Deprecation - Unified Condition Pattern)
 - Related Decision: #048 (ProfileMetric Architecture)
 - Related Decision: #050 (householdCount and baseQuantity Properties)
+
+---
+
+<a id="decision-103"></a>
+### 🔗 Decision #103: Unique Identifier Normalization and Required Document Target Version Metadata
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-04-28
+- **Issue:** Identifier properties and document metadata did not clearly distinguish stable artifact identity from version-specific data, and URPX documents lacked an explicit target-version signal for validation
+- **Category:** Naming Convention, Architecture, Validation
+- **Impact:** High - Breaking identifier rename plus required URPXDocument target-version metadata
+
+**Context:**
+`urpx:ratePlanIdentifier` and `urpx:modifierIdentifier` were ambiguous about whether they described stable document identity or version-specific state. The modifier identifier also lived on `RatePlanModifierVersion`, even though the identifier is intended to identify the modifier itself. At the same time, v0.2.0 introduced enough schema churn that URPX documents needed an explicit machine-readable signal for the ontology version they target.
+
+**Decision:**
+Normalize the identifier vocabulary around stable uniqueness and require document-level version targeting metadata:
+
+1. Rename `urpx:ratePlanIdentifier` to `urpx:ratePlanUniqueIdentifier` on `urpx:RatePlan`
+2. Rename `urpx:modifierIdentifier` to `urpx:modifierUniqueIdentifier` and move it to `urpx:RatePlanModifier`
+3. Require `urpx:targetURPXVersion` on every `urpx:URPXDocument`
+
+**Alternatives Considered:**
+
+1. **Rename the properties, move modifier identity to `RatePlanModifier`, and require target-version metadata** ⭐ **SELECTED**
+   - ✅ Makes stable identifiers explicit
+   - ✅ Aligns modifier identity with the modifier resource rather than its versions
+   - ✅ Supports version-aware parsing and validation
+
+2. **Keep the legacy names and rely on documentation alone**
+   - ✅ Avoids migration
+   - ❌ Leaves ownership and uniqueness semantics ambiguous
+   - ❌ Makes version-aware validation harder as the ontology evolves
+
+3. **Add aliases while leaving target-version metadata optional**
+   - ✅ Softens migration pressure
+   - ❌ Preserves duplicate names for the same concepts
+   - ❌ Weakens interoperability because consumers cannot rely on a required target-version signal
+
+**Rationale:**
+- Stable identifiers should read as stable identifiers in the ontology itself
+- Modifier identity belongs to the modifier resource, not to each modifier version
+- Required target-version metadata gives validators and downstream tools an explicit compatibility hook
+- A single canonical property name per identifier avoids long-term alias drift
+
+**Implementation Details:**
+- Renamed `urpx:ratePlanIdentifier` to `urpx:ratePlanUniqueIdentifier`
+- Renamed `urpx:modifierIdentifier` to `urpx:modifierUniqueIdentifier`
+- Moved `modifierUniqueIdentifier` from `RatePlanModifierVersion` to `RatePlanModifier`
+- Added required `urpx:targetURPXVersion` to [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl) and `URPXDocumentShape` in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- Updated `RatePlanShape`, `RatePlanModifierShape`, and `RatePlanModifierVersionShape` to validate the renamed ownership model
+
+**Impact Assessment:**
+- **Positive**: Clearer identity semantics, cleaner modifier ownership, and better version-aware interoperability
+- **Breaking Change**: Yes - datasets using `ratePlanIdentifier` or `modifierIdentifier`, or omitting `targetURPXVersion`, must migrate
+- **Requirements**: Producers should populate the renamed identifier properties and include the raw tagged `ontology/urpx-ontology.ttl` URL in `targetURPXVersion`
+
+**References:**
+- Commit: `4d83cd5`
+
+---
+
+<a id="decision-104"></a>
+### 🔗 Decision #104: Structured ConditionExpression Consolidation and Scenario-Owned Eligibility Inputs
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-04-28
+- **Issue:** Eligibility and applicability modeling still mixed profile inputs, structured condition logic, and separate constraint patterns
+- **Category:** Architecture, Validation
+- **Impact:** High - Breaking move to Scenario-backed eligibility inputs and removal of less specific constraint structures
+
+**Context:**
+Decisions #097 and #098 established `ConditionExpression` as the structured rule graph for condition logic, but the surrounding authoring surface was still fragmented. `EligibilityRule` directly owned customer and service-point profiles, `ApplicabilityGroup` used separate inclusion and exclusion constraint resources, and `ProfileAlternative` used reified dimension-value pairs. That fragmentation meant equivalent rule intent could still be modeled through several competing structures.
+
+**Decision:**
+Consolidate structured evaluation around `ConditionExpression` and separate evaluation inputs from rule logic:
+
+1. Add `urpx:Scenario` as the owner of `urpx:hasCustomerProfile` and `urpx:hasServicePointProfile` for eligibility queries
+2. Expand `urpx:hasConditionExpression` domain so it can also be used on `urpx:ApplicabilityGroup` and `urpx:ProfileAlternative`
+3. Remove `ApplicabilityConstraint` and `DimensionValuePair` patterns and their related properties and shapes
+
+**Alternatives Considered:**
+
+1. **Use `Scenario` plus expanded `ConditionExpression` coverage and retire the older constraint models** ⭐ **SELECTED**
+   - ✅ Separates evaluation inputs from rule logic
+   - ✅ Gives eligibility, applicability, and profile-alternative contexts one structured condition pattern
+   - ✅ Removes duplicate ways to express similar constraint intent
+
+2. **Keep direct profile attachment on `EligibilityRule` and preserve the older constraint models**
+   - ✅ Reduces migration work
+   - ❌ Leaves multiple competing modeling patterns in place
+   - ❌ Keeps rule logic tightly coupled to a specific input container
+
+3. **Add new wrapper resources without retiring the older ones**
+   - ✅ Minimizes immediate breakage
+   - ❌ Expands vocabulary surface area without reducing ambiguity
+   - ❌ Makes validation and guidance harder to keep consistent
+
+**Rationale:**
+- Scenario inputs and rule logic are different concerns and should not share the same owning node
+- One structured condition pattern is easier to teach, validate, and query than several partially overlapping ones
+- Removing the older ad hoc constraint constructs reduces ambiguity about the canonical URPX authoring path
+- Expanded `ConditionExpression` coverage keeps applicability and profile-alternative logic aligned with eligibility logic
+
+**Implementation Details:**
+- Added `urpx:Scenario` in [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
+- Moved `hasCustomerProfile` and `hasServicePointProfile` domains from `EligibilityRule` to `Scenario`
+- Expanded the domain of `hasConditionExpression` to include `ApplicabilityGroup` and `ProfileAlternative`
+- Removed `ApplicabilityConstraint`, `DimensionValuePair`, `constraintProperty`, `constraintValue`, `forDimension`, `hasDimensionValue`, `hasInclusionConstraint`, `hasExclusionConstraint`, and `valueIRI`
+- Added `ScenarioShape`, updated applicability/profile-alternative shapes, and added [`documentation/pages/urpx-condition-modeling.md`](urpx-condition-modeling.md)
+
+**Impact Assessment:**
+- **Positive**: Cleaner separation of concerns, fewer competing constraint models, and clearer guidance for producers
+- **Breaking Change**: Yes - data using direct eligibility-rule profile links or the retired applicability / dimension-value constructs must migrate
+- **Requirements**: Producers should attach profile inputs through `Scenario` and express structured rule logic through `hasConditionExpression`
+
+**References:**
+- Commit: `5ea3adc`
+- Related Decision: #097 (ConditionExpression Wrapper and Rooted Rule Graph)
+- Related Decision: #098 (Operand Node Specialization and Typed Value Properties for Condition Expressions)
+
+---
+
+<a id="decision-105"></a>
+### 🔗 Decision #105: SHACL Enforcement of Structured Eligibility and Minimum Scenario Inputs
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-04-28
+- **Issue:** After the Scenario and ConditionExpression refactor, SHACL still allowed incomplete eligibility graphs that did not reflect the intended authoring model
+- **Category:** Validation
+- **Impact:** Medium - Breaking validation tightening for eligibility and scenario resources
+
+**Context:**
+The architecture introduced in Decision #104 made `ConditionExpression` the canonical path for structured eligibility logic and moved profile inputs into `Scenario`. However, the initial SHACL pass still allowed `EligibilityRule` instances without `hasConditionExpression`, and it allowed empty `Scenario` instances with neither a customer profile nor a service-point profile. Those gaps made it possible to author graphs that technically validated but could not be evaluated meaningfully.
+
+**Decision:**
+Tighten SHACL so the intended model is enforceable:
+
+1. Require `urpx:hasConditionExpression` on `EligibilityRule`
+2. Require each `Scenario` to include at least one of `urpx:hasCustomerProfile` or `urpx:hasServicePointProfile`
+3. Expand the condition-model documentation with a full end-to-end example of the required graph pattern
+
+**Alternatives Considered:**
+
+1. **Enforce the stricter SHACL contract now** ⭐ **SELECTED**
+   - ✅ Prevents structurally incomplete eligibility graphs
+   - ✅ Aligns validation with the intended architecture immediately
+   - ✅ Gives producers a concrete example to follow
+
+2. **Leave the properties optional and rely on application logic**
+   - ✅ Avoids short-term validation failures
+   - ❌ Permits graphs that cannot be evaluated consistently
+   - ❌ Pushes core structural requirements out of the shared contract
+
+**Rationale:**
+- Eligibility rules should not validate unless they carry the structured logic they are meant to express
+- A scenario without any profile input does not provide usable evaluation context
+- SHACL should encode the minimum structure that downstream tools can rely on
+- A full example lowers migration friction when validation gets stricter
+
+**Implementation Details:**
+- Changed `EligibilityRuleShape` so `hasConditionExpression` has `sh:minCount 1`
+- Added a `sh:or` requirement to `ScenarioShape` so at least one of `hasCustomerProfile` or `hasServicePointProfile` must be present
+- Expanded [`documentation/pages/urpx-condition-modeling.md`](urpx-condition-modeling.md) with a full JSON-LD graph and Mermaid diagram
+
+**Impact Assessment:**
+- **Positive**: Stronger validation, fewer incomplete graphs, and clearer producer guidance
+- **Breaking Change**: Yes - eligibility rules without condition expressions and empty scenarios no longer validate
+- **Requirements**: Producers should provide structured condition graphs for eligibility rules and ensure each scenario includes at least one relevant profile
+
+**References:**
+- Commit: `7abaa39`
+- Related Decision: #104 (Structured ConditionExpression Consolidation and Scenario-Owned Eligibility Inputs)
+
+---
+
+<a id="decision-106"></a>
+### 🔗 Decision #106: PriorRatePlan ServiceRole Coverage
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-04-29
+- **Issue:** Prior-rate-plan relationships needed service-role context, but the ontology and SHACL exposed `serviceRole` only on versions and providers
+- **Category:** Architecture, Validation
+- **Impact:** Low - Additive domain and shape expansion for prior-rate-plan context
+
+**Context:**
+`urpx:serviceRole` already provides the controlled vocabulary needed to distinguish bundled, distribution, and retail roles on rate-plan versions and energy service providers. Prior-rate-plan references can carry the same distinction when documenting migration or compatibility context, but `PriorRatePlan` was not included in the ontology domain or SHACL surface.
+
+**Decision:**
+Extend the existing `serviceRole` property rather than inventing a prior-plan-specific variant:
+
+1. Add `urpx:PriorRatePlan` to the domain of `urpx:serviceRole`
+2. Add optional `serviceRole` validation to `PriorRatePlanShape`
+
+**Alternatives Considered:**
+
+1. **Reuse `serviceRole` on `PriorRatePlan`** ⭐ **SELECTED**
+   - ✅ Reuses an existing controlled vocabulary and query surface
+   - ✅ Avoids introducing a near-duplicate prior-plan-specific property
+   - ✅ Keeps prior-plan context aligned with rate-plan and provider modeling
+
+2. **Infer prior-plan role from the referenced plan or leave it in free text**
+   - ✅ Avoids ontology changes
+   - ❌ Loses explicit role context when the prior plan reference stands on its own
+   - ❌ Weakens validation and makes downstream interpretation less consistent
+
+**Rationale:**
+- Prior-rate-plan context uses the same role semantics already captured by `serviceRole`
+- Reusing the existing property is lighter-weight than minting a parallel property family
+- Optional validation keeps the change additive while allowing more expressive historical context
+
+**Implementation Details:**
+- Expanded the `serviceRole` domain union in [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl) to include `PriorRatePlan`
+- Added optional `serviceRole` validation to `PriorRatePlanShape` in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+
+**Impact Assessment:**
+- **Positive**: More expressive prior-plan context with no new vocabulary family
+- **Breaking Change**: None - the change is additive
+- **Requirements**: Producers may populate `serviceRole` on `PriorRatePlan` when the historical or compatibility context needs it
+
+**References:**
+- Implemented in the 2026-04-29 ontology and SHACL update

@@ -4,9 +4,112 @@
 # 📋 URPX Changelog
 
 **Version:** 0.2.0 (Pre-draft)
-**Last Updated:** 2026-04-24
+**Last Updated:** 2026-04-29
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-04-29
+---
+
+### Ontology Changes
+
+#### Added: `owl:versionIRI` Release Metadata
+- Added `owl:versionIRI` to the ontology header to publish the ontology-version IRI expected by `urpx:targetURPXVersion`.
+- Clarified the `targetURPXVersion` note to point to the raw ontology file URL.
+- **Design Decision:** [#103](documentation/pages/urpx-design-decisions-081-120.md#decision-103)
+
+#### Domain Expanded: `urpx:serviceRole`
+- Added `urpx:PriorRatePlan` to the property domain union.
+- **Design Decision:** [#106](documentation/pages/urpx-design-decisions-081-120.md#decision-106)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Updated: `PriorRatePlanShape`
+- Added optional `serviceRole` validation to align with the ontology domain expansion.
+- **Design Decision:** [#106](documentation/pages/urpx-design-decisions-081-120.md#decision-106)
+
+### Test Data Updates
+
+#### Updated: PGE E-ELEC Example
+- Added time zone metadata to `test-cases/pge-e-elec-2026-01-01/data/urpx-rate-plan_pge_e-elec_2026-01-01.jsonld`.
+
+2026-04-28
+---
+
+### ⚠️ Breaking Changes
+
+#### Renamed: Unique Identifier Properties and Required Document Target Version
+- Renamed `urpx:ratePlanIdentifier` → `urpx:ratePlanUniqueIdentifier`.
+- Renamed `urpx:modifierIdentifier` → `urpx:modifierUniqueIdentifier`.
+- Moved modifier unique identifier ownership from `urpx:RatePlanModifierVersion` to `urpx:RatePlanModifier`.
+- Added required `urpx:targetURPXVersion` on `urpx:URPXDocument`.
+- **Design Decision:** [#103](documentation/pages/urpx-design-decisions-081-120.md#decision-103)
+
+#### Reworked: Scenario-Backed Eligibility and Structured Condition Coverage
+- Added `urpx:Scenario` as the holder for `urpx:hasCustomerProfile` and `urpx:hasServicePointProfile`.
+- Expanded `urpx:hasConditionExpression` to `urpx:ApplicabilityGroup` and `urpx:ProfileAlternative` in addition to rule classes.
+- Removed `urpx:ApplicabilityConstraint`, `urpx:DimensionValuePair`, and the related applicability and dimension-value properties.
+- **Design Decision:** [#104](documentation/pages/urpx-design-decisions-081-120.md#decision-104)
+
+### Ontology Changes
+
+#### Added: `urpx:Scenario` (Class)
+- Added `urpx:Scenario` to group the profile inputs used when evaluating eligibility conditions.
+- Moved `hasCustomerProfile` and `hasServicePointProfile` domains from `EligibilityRule` to `Scenario`.
+- **Design Decision:** [#104](documentation/pages/urpx-design-decisions-081-120.md#decision-104)
+
+#### Expanded: `urpx:hasConditionExpression`
+- Domain now includes `urpx:ApplicabilityGroup` and `urpx:ProfileAlternative`.
+- `ConditionExpression` is now the single structured condition entry point across eligibility, applicability, and profile-alternative contexts.
+- **Design Decision:** [#104](documentation/pages/urpx-design-decisions-081-120.md#decision-104)
+
+#### Removed: Obsolete Applicability Constraint and Dimension-Value Constructs
+- Removed `urpx:ApplicabilityConstraint`, `urpx:DimensionValuePair`, `urpx:constraintProperty`, `urpx:constraintValue`, `urpx:forDimension`, `urpx:hasDimensionValue`, `urpx:hasInclusionConstraint`, `urpx:hasExclusionConstraint`, and `urpx:valueIRI`.
+- **Design Decision:** [#104](documentation/pages/urpx-design-decisions-081-120.md#decision-104)
+
+### Ontology Property Changes
+
+#### Renamed: `urpx:ratePlanIdentifier` → `urpx:ratePlanUniqueIdentifier`
+- Retained `urpx:RatePlan` as the owning class while making the uniqueness semantics explicit.
+- **Design Decision:** [#103](documentation/pages/urpx-design-decisions-081-120.md#decision-103)
+
+#### Renamed and Moved: `urpx:modifierIdentifier` → `urpx:modifierUniqueIdentifier`
+- Renamed the property and moved its domain to `urpx:RatePlanModifier`.
+- Removed identifier ownership from `urpx:RatePlanModifierVersion`.
+- **Design Decision:** [#103](documentation/pages/urpx-design-decisions-081-120.md#decision-103)
+
+#### Added: `urpx:targetURPXVersion`
+- Added required document-level metadata pointing to the URPX ontology version a document targets.
+- **Design Decision:** [#103](documentation/pages/urpx-design-decisions-081-120.md#decision-103)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Updated: Identifier and Document Version Validation
+- Updated `RatePlanShape` to require `ratePlanUniqueIdentifier`.
+- Added `modifierUniqueIdentifier` to `RatePlanModifierShape` and removed the legacy identifier from `RatePlanModifierVersionShape`.
+- Added required `targetURPXVersion` to `URPXDocumentShape`.
+- **Design Decision:** [#103](documentation/pages/urpx-design-decisions-081-120.md#decision-103)
+
+#### Added: `ScenarioShape`
+- Added `ScenarioShape` for `urpx:Scenario` with `hasCustomerProfile` and `hasServicePointProfile`.
+- Tightened the shape so a scenario must carry at least one of the two profile links.
+- **Design Decisions:** [#104](documentation/pages/urpx-design-decisions-081-120.md#decision-104), [#105](documentation/pages/urpx-design-decisions-081-120.md#decision-105)
+
+#### Updated: Structured Condition Validation
+- Added `hasConditionExpression` validation to `ApplicabilityGroupShape` and `ProfileAlternativeShape`.
+- Removed direct `hasCustomerProfile` and `hasServicePointProfile` validation from `EligibilityRuleShape`.
+- Tightened `EligibilityRuleShape` so `hasConditionExpression` is required.
+- Removed `ApplicabilityConstraintShape`.
+- **Design Decisions:** [#104](documentation/pages/urpx-design-decisions-081-120.md#decision-104), [#105](documentation/pages/urpx-design-decisions-081-120.md#decision-105)
+
+### Documentation Updates
+
+#### Added: `documentation/pages/urpx-condition-modeling.md`
+- Added a dedicated condition-modeling guide covering `ConditionExpression`, operand-node usage, Scenario-based evaluation context, and a full JSON-LD example.
+- **Design Decisions:** [#104](documentation/pages/urpx-design-decisions-081-120.md#decision-104), [#105](documentation/pages/urpx-design-decisions-081-120.md#decision-105)
+
+#### Updated: Contribution and Agent Guidance
+- Added `AGENTS.md` and revised `CONTRIBUTING.md` with concise issue, pull request, and review expectations for the repository.
 
 2026-04-24
 ---

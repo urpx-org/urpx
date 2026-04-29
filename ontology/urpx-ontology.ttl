@@ -30,6 +30,7 @@
     dcterms:modified "2026-04-13"^^xsd:date ;
     dcterms:title "URPX - Unified Ontology" ;
     owl:versionInfo "0.2.0" ;
+    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl> ;
     dcat:version "0.2.0" .
 
 # ============================================================================
@@ -2881,7 +2882,7 @@ urpx:serviceRole a owl:ObjectProperty ;
     rdfs:label "Service Role"@en ;
     rdfs:comment "Service role for rate plan (distribution/retail/bundled)" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:EnergyServiceProvider ) ] ;
+            owl:unionOf ( urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:EnergyServiceProvider urpx:PriorRatePlan ) ] ;
     rdfs:range urpx:ServiceRoleValue ;
     skos:note "Service roles: distribution, retail, bundled. Indicates the utility's role in service delivery." .
 
@@ -2980,7 +2981,7 @@ urpx:targetURPXVersion a owl:DatatypeProperty ;
     rdfs:domain urpx:URPXDocument ;
     rdfs:range xsd:anyURI ;
     rdfs:comment "The URPX ontology version this document was authored against." ;
-    skos:note "Required on all URPXDocument instances. Enables version-aware parsing and validation. Value should be the ontology version IRI, e.g. 'https://github.com/urpx-org/urpx/blob/v0.1.2/ontology/urpx-ontology.ttl'." .
+    skos:note "Required on all URPXDocument instances. Enables version-aware parsing and validation. Value should be the ontology version IRI, e.g. 'https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl'." .
 
 urpx:tariffStatementType a owl:ObjectProperty ;
     rdfs:label "Tariff Statement Type"@en ;
