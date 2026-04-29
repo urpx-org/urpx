@@ -6,10 +6,10 @@
 # URPX Tutorial: Building Your First Rate Plan
 
 **Version**: 0.2.0 (Pre-draft)
-**Last Updated**: 2026-04-13
+**Last Updated**: 2026-04-29
 **Status**: Active
 
-**Learn the basics of creating and validating utility rate plan data using the URPX v0.1.1 ontology**
+**Learn the basics of creating and validating utility rate plan data using the URPX v0.2.0 ontology**
 
 ---
 
@@ -115,14 +115,15 @@ Let's build a basic residential rate plan step by step using JSON-LD.
   },
   "@id": "ex:doc-tutorial-basic",
   "@type": "URPXDocument",
-  "version": "0.1.1",
+  "version": "0.2.0",
+  "targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl",
   "name": "Tutorial Basic Residential Rate Plan",
   "description": "Simple residential rate plan with minimum price and energy price",
   "effectiveDateTime": {
     "@type": "xsd:dateTime",
     "@value": "2025-01-01T00:00:00-05:00"
   },
-  "timeZoneIdentifier": "America/New_York"
+  "timezoneIdentifier": "America/New_York"
 }
 ```
 
@@ -133,14 +134,13 @@ Let's build a basic residential rate plan step by step using JSON-LD.
   "hasRatePlan": {
     "@id": "ex:rateplan-basic-res",
     "@type": "RatePlan",
-    "ratePlanIdentifier": "TUTORIAL-BASIC-RES-001",
+    "ratePlanUniqueIdentifier": "TUTORIAL-BASIC-RES-001",
     "name": "Residential Service - Basic Rate Plan",
     "description": "Simple residential rate plan with fixed and usage prices",
     "initialEffectiveDate": {
       "@type": "xsd:date",
       "@value": "2025-01-01"
     },
-    "serviceRole": {"@id": "urpx:bundledServiceRole"},
     "hasRatePlanVersion": {
       "@id": "ex:version-basic-res-v1",
       "@type": "RatePlanVersion",
@@ -156,6 +156,7 @@ Let's build a basic residential rate plan step by step using JSON-LD.
         "@type": "urpx-org:Organization",
         "name": "Tutorial Electric Company"
       },
+      "serviceRole": {"@id": "urpx:bundledServiceRole"},
       "hasPlanElements": {
         "@id": "ex:plan-elements-basic",
         "@type": "PlanElements",
@@ -338,7 +339,7 @@ Fuel adjustment mechanisms that vary monthly based on generation costs.
     "@value": "2026-01-01"
   },
   "unitPrice": 0.025,
-  "schema:priceCurrency": "USD",
+  "priceCurrency": "USD",
   "referencesMetricInput": {"@id": "ex:metric-input-energy"}
 }
 ```
@@ -365,7 +366,7 @@ Delivery system prices separated from generation costs.
     "@value": "2026-01-01"
   },
   "unitPrice": 0.058,
-  "schema:priceCurrency": "USD",
+  "priceCurrency": "USD",
   "referencesMetricInput": {"@id": "ex:metric-input-energy"}
 }
 ```
@@ -382,7 +383,7 @@ Time-of-use rates vary pricing based on time of day, day of week, and season.
 {
   "@id": "ex:version-tou",
   "@type": "RatePlanVersion",
-  "versionNumber": "1.0",
+  "version": "1.0",
   "effectiveDateTime": {
     "@type": "xsd:dateTime",
     "@value": "2025-06-01T00:00:00-04:00"
@@ -407,7 +408,7 @@ Time-of-use rates vary pricing based on time of day, day of week, and season.
       "@id": "ex:calendar-federal",
       "@type": "HolidayCalendar",
       "name": "US Federal Holidays",
-      "timeZone": "America/New_York",
+      "timezoneIdentifier": "America/New_York",
       "hasHoliday": [
         {
           "@type": "Holiday",
@@ -420,7 +421,6 @@ Time-of-use rates vary pricing based on time of day, day of week, and season.
         }
       ]
     },
-    "referencesMetricInput": { "@id": "ex:metric-input-energy" },
     "hasBillingModel": {
       "@id": "ex-example-billing-model",
       "@type": "BillingModel",
@@ -428,7 +428,8 @@ Time-of-use rates vary pricing based on time of day, day of week, and season.
         "@id": "ex:tou-schedule-summer",
         "@type": "TOUSchedule",
         "name": "Summer TOU Schedule",
-        "timeZone": "America/New_York",
+        "timezoneIdentifier": "America/New_York",
+        "referencesMetricInput": { "@id": "ex:metric-input-energy" },
         "hasTOUTier": [
           {
             "@id": "ex:tier-peak",
@@ -561,45 +562,35 @@ Every Price must have:
 
 ### Structured Rule Logic
 
-URPX separates atomic conditions from executable rule logic. `Condition` represents one predicate, while `ConditionLogic` declares the authoritative boolean structure for the rule.
+URPX models rule logic with `ConditionExpression`. Every `EligibilityRule` carries exactly one expression, and that expression points to a single root node for evaluation.
 
 ```json
 {
   "@id": "ex:eligibility-rule-usage-threshold",
   "@type": "urpx:EligibilityRule",
   "urpx:description": "Average monthly usage must be greater than 500.",
-  "urpx:hasCondition": [
-    {
+  "urpx:hasConditionExpression": {
+    "@id": "ex:eligibility-expression-usage-threshold",
+    "@type": "urpx:ConditionExpression",
+    "urpx:rootNode": {
       "@id": "ex:condition-usage-threshold",
-      "@type": "urpx:Condition",
-      "urpx:name": "Usage threshold",
+      "@type": "urpx:ComparisonNode",
       "urpx:operator": { "@id": "urpx:greaterThanOperator" },
       "urpx:leftOperand": {
-        "@id": "ex:left2",
-        "@type": "urpx:DatatypeTerminalNode",
-        "urpx:conditionProperty": { "@id": "urpx:averageMonthlyUsage" },
-        "urpx:literalType": { "@id": "urpx:integerDatatype" }
+        "@type": "urpx:DatatypeOperandNode",
+        "urpx:conditionProperty": { "@id": "urpx:averageMonthlyUsage" }
       },
       "urpx:rightOperand": {
-        "@id": "ex:right2",
-        "@type": "urpx:DatatypeTerminalNode",
-        "urpx:literalType": { "@id": "urpx:integerDatatype" },
-        "urpx:integerValue": 500
+        "@type": "urpx:DatatypeOperandNode",
+        "urpx:integerValue": 500,
+        "urpx:referencesMetricInput": { "@id": "ex:metric-input-energy" }
       }
     }
-  ],
-  "urpx:hasConditionLogic": {
-    "@id": "ex:condition-logic-usage-threshold",
-    "@type": "urpx:ConditionLogic",
-    "urpx:operator": { "@id": "urpx:andOperator" },
-    "urpx:conditionOperands": [
-      { "@id": "ex:condition-usage-threshold" }
-    ]
   }
 }
 ```
 
-Even when a rule has only one condition, `ConditionLogic` is still required. This keeps eligibility and applicability modeling consistent and makes SHACL validation straightforward.
+Even a single-predicate rule uses the `ConditionExpression` wrapper. When a rule combines multiple predicates, use a `BooleanOperationNode` under `rootNode` and connect child nodes with `operandNodes`.
 
 ### Regulatory Traceability with `RateCase`
 
@@ -728,19 +719,17 @@ Extracted from the full list of possible values in `urpx-ontology.ttl`:
 
 ### Production Examples
 
-For complete production-ready examples with full TOU schedules and tariff references:
-- See `test-data/urpx-jsonld/rate-plans/` directory
-- Examples 0003-0007 show ConEd SC-2 implementations
-- Example 0004 demonstrates efficient property consolidation
+For complete current examples with tariff-linked test data:
+- See the `test-cases/` directory
 
 ---
 
 ## Support
 
-- **Issues**: [Report on GitHub](https://github.com/Flux-Tailor/urpx/issues)
-- **Questions**: [GitHub Discussions](https://github.com/Flux-Tailor/urpx/discussions)
+- **Issues**: [Report on GitHub](https://github.com/urpx-org/urpx/issues)
+- **Questions**: [GitHub Discussions](https://github.com/urpx-org/urpx/discussions)
 - **Documentation**: [Full Documentation](../index.md)
 
 ---
 
-*Tutorial based on URPX v0.1.1 ontology. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
+*Tutorial based on URPX v0.2.0 ontology. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*

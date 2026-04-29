@@ -22,10 +22,10 @@ The model is designed to express rule logic in a way that is:
 
 URPX uses the same condition-expression architecture for:
 
-- `urpx:EligibilityRule`, which determines qualification for a rate or modifier,
+- `urpx:EligibilityRule`, which must carry one structured condition expression and determines qualification for a rate or modifier,
 - `urpx:ApplicabilityRule`, which determines when a price, price set, or price definition applies,
 - `urpx:ApplicabilityGroup`, where it may be used for additional structured applicability logic, and
-- `urpx:ProfileAlternative`, where it may be attached when an alternative needs structured condition logic.
+- `urpx:ProfileAlternative`, which carries exactly one structured condition expression that defines the alternative.
 
 ## Design Goals
 
@@ -54,7 +54,7 @@ URPX uses the same condition-expression architecture for:
 URPX condition modeling separates five concerns:
 
 1. **Rule attachment**  
-   `EligibilityRule`, `ApplicabilityRule`, `ApplicabilityGroup`, and `ProfileAlternative` may attach one structured condition expression through `urpx:hasConditionExpression`.
+   `EligibilityRule` and `ProfileAlternative` must each attach exactly one structured condition expression through `urpx:hasConditionExpression`. `ApplicabilityRule` and `ApplicabilityGroup` may attach at most one.
 
 2. **Rule-level wrapper**  
    `ConditionExpression` is the rule-level wrapper. It points to exactly one `urpx:rootNode`.
@@ -173,7 +173,7 @@ These are optional and non-semantic. They are intended for human readability, au
 
 | Property | Cardinality | Range | Description |
 |----------|-------------|-------|-------------|
-| `urpx:hasConditionExpression` | `0..1` | `urpx:ConditionExpression` | Attaches the structured condition expression used for rule evaluation |
+| `urpx:hasConditionExpression` | `1..1` | `urpx:ConditionExpression` | Attaches the structured condition expression used for rule evaluation |
 
 #### `urpx:ApplicabilityRule`
 
@@ -203,13 +203,13 @@ These are optional and non-semantic. They are intended for human readability, au
 
 **Description:** Specific combination of dimension values representing one alternative choice.
 
-**Condition Model Role:** A profile alternative may optionally use `urpx:hasConditionExpression` when the alternative needs structured condition logic.
+**Condition Model Role:** A profile alternative uses `urpx:hasConditionExpression` as its defining structured condition expression.
 
 **Relevant Properties:**
 
 | Property | Cardinality | Range | Description |
 |----------|-------------|-------|-------------|
-| `urpx:hasConditionExpression` | `0..1` | `urpx:ConditionExpression` | Attaches optional structured condition logic to the profile alternative |
+| `urpx:hasConditionExpression` | `1..1` | `urpx:ConditionExpression` | Attaches the defining structured condition expression for the profile alternative |
 
 ### Expression Classes
 
@@ -441,9 +441,10 @@ URPX SHACL defines the condition model as a set of closed node shapes. In practi
 
 ### Core Expression Shapes
 
-- `EligibilityRule` may carry at most one `urpx:hasConditionExpression`.
+- `EligibilityRule` must carry exactly one `urpx:hasConditionExpression`.
 - `EligibilityRule` does not use `urpx:hasCustomerProfile` or `urpx:hasServicePointProfile`.
-- `ApplicabilityRule`, `ApplicabilityGroup`, and `ProfileAlternative` may each carry at most one `urpx:hasConditionExpression`.
+- `ApplicabilityRule` and `ApplicabilityGroup` may each carry at most one `urpx:hasConditionExpression`.
+- `ProfileAlternative` must carry exactly one `urpx:hasConditionExpression`.
 - `ConditionExpression` requires exactly one `urpx:rootNode`.
 - `ComparisonNode` requires exactly one `urpx:operator`, exactly one `urpx:leftOperand`, and exactly one `urpx:rightOperand`.
 - `BooleanOperationNode` requires exactly one boolean `urpx:operator`.

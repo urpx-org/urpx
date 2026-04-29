@@ -23,11 +23,13 @@ Welcome to the URPX documentation. URPX is an open standard for exchanging utili
 - **[Syntax Guidelines](pages/urpx-syntax-guidelines.md)** - Labeling conventions and ontology syntax standards
 - **[API Specification](pages/urpx-api-spec.md)** - REST and SPARQL API patterns
 - **[Quality Assurance](pages/urpx-quality-assurance.md)** - Validation and quality standards
+- **[Condition Model](pages/urpx-condition-modeling.md)** - Structured condition-expression architecture and validation patterns
 
 ### Advanced Topics
 - **[Design Principles](pages/urpx-design-principles.md)** - Ontology development standards
 - **[Design Decisions 001-040](pages/urpx-design-decisions-001-040.md)** - Architectural decision log (Part 1)
 - **[Design Decisions 041-080](pages/urpx-design-decisions-041-080.md)** - Architectural decision log (Part 2)
+- **[Design Decisions 081-120](pages/urpx-design-decisions-081-120.md)** - Architectural decision log (Part 3)
 
 ### Learning & Education
 - **[Semantic Web Guide](pages/urpx-semantic-web-guide.md)** - Introduction to RDF, ontologies, and linked data

@@ -3,110 +3,60 @@
 <!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
 <!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
 
-# Diagrams for LF Energy Transfer
+# URPX Diagram Catalog
 
-**Version:** 0.2.0 (Pre-draft) 
-**Date:** January 26, 2026  
-**Purpose:** Documentation diagrams for URPX working group review
-
----
-
-## Diagrams Used in Documentation Pages
-
-### Core Architecture
-
-1. **urpx-core-schema-diagram.mmd + .svg**
-   - **Used in:** urpx-overview.md
-   - **Shows:** Complete URPX architecture with document hierarchy, rate plan structure, charges container, plan elements, eligibility rules, and standards alignment
-   - **Format:** Mermaid + SVG export
-   - **Colors:** Paul Tol 2.7 Light scheme
-
-2. **urpx-price-structure-diagram.mmd + .svg**
-   - **Used in:** urpx-data-dictionary.md (planned)
-   - **Shows:** Prices → PriceSet → Price hierarchy with properties and examples
-   - **Format:** Mermaid + SVG export
-   - **Colors:** Paul Tol 2.7 Light scheme
-
-3. **urpx-tou-structure-diagram.mmd + .svg**
-   - **Used in:** urpx-data-dictionary.md (planned)
-   - **Shows:** TOUSchedule → TOUTier → TOUPeriod → TimeBracket hierarchy
-   - **Format:** Mermaid + SVG export
-   - **Colors:** Paul Tol 2.7 Light scheme
-
-### Temporal & Versioning
-
-4. **urpx-temporal-versioning-diagram.mmd + .svg**
-   - **Used in:** urpx-overview.md
-   - **Shows:** Rate plan version timeline, version properties, change events, and regulatory tracking
-   - **Format:** Mermaid + SVG export
-   - **Colors:** Paul Tol 2.7 Light scheme
-
-### Rules & Eligibility
-
-5. **urpx-rules-eligibility-diagram.mmd + .svg**
-   - **Used in:** urpx-overview.md
-   - **Shows:** Eligibility patterns with customer and service point profiles
-   - **Format:** Mermaid + SVG export
-   - **Colors:** Paul Tol 2.7 Light scheme
-
-6. **urpx-charge-types-diagram.mmd + .svg**
-   - **Used in:** urpx-overview.md
-   - **Shows:** Charge type taxonomy, commodities, units of measure, and standards compliance
-   - **Format:** Mermaid + SVG export
-   - **Colors:** Paul Tol 2.7 Light scheme
-
-### Educational (Mermaid only - no SVG needed)
-
-7. **urpx-rate-plan-graph.mmd**
-   - **Used in:** urpx-semantic-web-guide.md
-   - **Shows:** Knowledge graph representation of rate plan data
-   - **Format:** Mermaid only
-
-8. **urpx-rdf-triple-example.mmd**
-   - **Used in:** urpx-semantic-web-guide.md
-   - **Shows:** RDF triple basics and structure
-   - **Format:** Mermaid only
-
-9. **urpx-sparql-query-visual.mmd**
-   - **Used in:** urpx-semantic-web-guide.md
-   - **Shows:** SPARQL query patterns and examples
-   - **Format:** Mermaid only
+**Version:** 0.2.0 (Pre-draft)
+**Date:** 2026-04-29
+**Purpose:** Inventory of diagram assets currently checked into `documentation/diagrams/`
 
 ---
 
-## SVG Export Instructions
+## Documentation Diagrams
 
-For diagrams 1-6, export SVGs using:
+1. **urpx-sparql-query-visual.mmd**
+   - **Used in:** `urpx-semantic-web-guide.md`
+   - **Shows:** SPARQL graph traversal using `ratePlanUniqueIdentifier`
+   - **Format:** Mermaid
 
-```bash
-# Using Mermaid CLI (if available)
-mmdc -i <diagram>.mmd -o <diagram>.svg -t dark -b transparent
-
-# Or use online tool: https://mermaid.live/
-# Copy .mmd content, render, and export as SVG
-```
-
----
-
-## Color Scheme
-
-All diagrams use **Paul Tol 2.7 Light** color palette for consistency and accessibility:
-
-- **Light Blue** `#77AADD` - Primary classes, documents
-- **Cyan** `#99DDFF` - Secondary elements, components
-- **Teal** `#44BB99` - Containers, active elements
-- **Yellow** `#EEDD88` - Data, details
-- **Peach** `#EE8866` - Specialized, standards
-- **Pink** `#FFAABB` - Core content, profiles
+2. **urpx-temporal-versioning-summary.svg**
+   - **Used in:** `urpx-overview.md`
+   - **Shows:** High-level temporal versioning summary
+   - **Format:** SVG
 
 ---
 
-## Total Diagram Count
+## Unreferenced Diagram Assets
 
-- **9 diagrams total**
-- **6 with SVG exports** (diagrams 1-6)
-- **3 Mermaid-only** (diagrams 7-9)
+3. **urpx-price-structure-diagram.mmd**
+   - **Purpose:** Available price-structure reference diagram not currently embedded in a documentation page
+   - **Format:** Mermaid
+
+4. **urpx-tou-structure-diagram.mmd**
+   - **Purpose:** Available TOU-structure reference diagram not currently embedded in a documentation page
+   - **Format:** Mermaid
 
 ---
 
-*Last Updated: January 26, 2026*
+## Project Planning Assets
+
+5. **urpx-gantt.mmd**
+   - **Purpose:** Historical roadmap / planning view
+   - **Format:** Mermaid
+
+6. **urpx_development_chart.png**
+   - **Purpose:** Historical development snapshot
+   - **Format:** PNG
+
+---
+
+## Companion Documentation
+
+7. **urpx-diagram-index.md**
+   - **Purpose:** User-facing diagram index for the documentation set
+
+---
+
+## Notes
+
+- This catalog intentionally lists only files that are currently present in the repository.
+- Draft-only diagram references that are not checked into `documentation/diagrams/` are not included here.

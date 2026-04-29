@@ -3147,7 +3147,7 @@ urpx-shacl:ProfileAlternativeShape
     sh:property [
         sh:path urpx:hasConditionExpression ;
         sh:class urpx:ConditionExpression ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
