@@ -28,12 +28,20 @@
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
     dcterms:modified "2026-04-29"^^xsd:date ;
     dcterms:title "URPX Ontology" ;
+    dcterms:hasVersion <https://urpx-org.github.io/urpx/releases/v0.2.0/ontology> ;
     owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl> .
 
-<https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl>
-    owl:versionInfo "0.2.0" ;
+<https://urpx-org.github.io/urpx/releases/v0.2.0/ontology>
+    a owl:Ontology ;
     dcterms:isVersionOf <https://urpx-org.github.io/urpx/ontology> ;
-    dcterms:issued "2026-04-29"^^xsd:date .
+    dcterms:issued "2026-04-29"^^xsd:date ;
+    owl:versionInfo "0.2.0" ;
+    dcat:version "0.2.0" ;
+    dcat:distribution [
+        a dcat:Distribution ;
+        dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl> ;
+        dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle>
+    ] .
 
 
 # ============================================================================
