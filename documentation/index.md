@@ -23,6 +23,7 @@ Welcome to the URPX documentation. URPX is an open standard for exchanging utili
 - **[Syntax Guidelines](pages/urpx-syntax-guidelines.md)** - Labeling conventions and ontology syntax standards
 - **[API Specification](pages/urpx-api-spec.md)** - REST and SPARQL API patterns
 - **[Quality Assurance](pages/urpx-quality-assurance.md)** - Validation and quality standards
+- **[Test Data Review Guide](pages/urpx-test-data-review-guide.md)** - How to review tariff-to-URPX test cases for structural validity and source fidelity
 - **[Condition Model](pages/urpx-condition-modeling.md)** - Structured condition-expression architecture and validation patterns
 
 ### Advanced Topics
