@@ -6,7 +6,7 @@
 # URPX Test Data Review Guide
 
 **Version**: 0.2.0 (Pre-draft)
-**Last Updated**: 2026-04-30
+**Last Updated**: 2026-05-01
 **Status**: Active
 
 **How to review a URPX JSON-LD test case against its source tariff book**
@@ -49,20 +49,62 @@ Example review pair in this repository:
 
 Use this order:
 
-1. Confirm the review scope.
-2. Run SHACL validation.
-3. Compare top-level tariff book metadata and rate plan scope.
-4. Compare rule logic: eligibility, applicability, and customer choice.
-5. Compare plan elements: seasons, TOU schedules, service tiers, calendars, and metric inputs.
-6. Compare billing structure and prices.
-7. Verify provenance back to the tariff book pages.
-8. Record findings and open questions.
+1. [Clone the repository](#1-clone-the-repository).
+2. [Confirm the review scope](#2-confirm-scope-before-comparing-details).
+3. [Run SHACL validation](#3-run-shacl-validation).
+4. [Review rule logic: eligibility, applicability, and customer choice](#4-review-rule-logic-carefully).
+5. [Review TOU schedules and time brackets](#5-review-tou-schedules-and-time-brackets).
+6. [Review service tiers, metrics, and calculation basis](#6-review-service-tiers-metrics-and-calculation-basis).
+7. [Review billing structure and prices](#7-review-billing-structure-and-prices).
+8. [Verify provenance back to the tariff](#8-verify-provenance-back-to-the-tariff).
+9. [Record findings and open questions](#9-record-findings-and-open-questions).
 
-The remainder of this guide expands steps 3 through 7, since that is where most substantive review happens.
+The sections below expand each step in order.
 
 ---
 
-## Running SHACL Validation
+## 1. Clone the Repository
+
+Clone the repository before starting review so you can inspect the current ontology, SHACL, examples, and supporting notes together.
+
+From this document, the current ontology and SHACL files are at:
+
+- [`../../ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
+- [`../../shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+
+---
+
+## 2. Confirm Scope Before Comparing Details
+
+Start with the basic question: **Did the transform model the right tariff book artifact?**
+
+Check:
+
+- the correct utility and schedule name
+- the correct effective date or effective datetime
+- whether the source is a full rate plan, one tariff book sheet, or only part of a larger filing
+- whether the JSON-LD represents one version or several versions
+- whether optional riders, credits, and special conditions from the source are intentionally in or out of scope
+
+Common mistakes:
+
+- a tariff book contains multiple rate plans but the JSON-LD silently mixes them
+- a filing effective date is captured, but the price values are copied from a different revision
+- only table data is modeled, while eligibility prose and footnotes are dropped
+
+At this stage, also check:
+
+- `urpx:targetURPXVersion`
+- `urpx:ratePlanUniqueIdentifier`
+- `urpx:initialEffectiveDate`
+- `urpx:effectiveDate` or `urpx:effectiveDateTime`
+- `urpx:changeReason`
+- `urpx:priceCurrency`
+- `urpx:hasRateCase`, if the tariff book references a rate case or docket
+
+---
+
+## 3. Run SHACL Validation
 
 Run SHACL first so structural and datatype issues do not distract from the tariff book review.
 
@@ -79,6 +121,9 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install pyshacl
 python3 -m pyshacl \
+  -df json-ld \
+  -sf turtle \
+  -ef turtle \
   -s shacl/urpx-shacl.ttl \
   -e ontology/urpx-ontology.ttl \
   -i rdfs \
@@ -97,37 +142,7 @@ Passing SHACL means the file is structurally acceptable. It does **not** prove t
 
 ---
 
-## 1. Confirm Scope Before Comparing Details
-
-Start with the basic question: **Did the transform model the right tariff book artifact?**
-
-Check:
-
-- the correct utility and schedule name
-- the correct effective date or effective datetime
-- whether the source is a full rate plan, one tariff book sheet, or only part of a larger filing
-- whether the JSON-LD represents one version or several versions
-- whether optional riders, credits, and special conditions from the source are intentionally in or out of scope
-
-Common mistakes:
-
-- a tariff book contains multiple schedules but the JSON-LD silently mixes them
-- a filing effective date is captured, but the rate values are copied from a different revision
-- only table data is modeled, while eligibility prose and footnotes are dropped
-
-At this stage, also check:
-
-- `urpx:targetURPXVersion`
-- `urpx:ratePlanUniqueIdentifier`
-- `urpx:initialEffectiveDate`
-- `urpx:effectiveDate` or `urpx:effectiveDateTime`
-- `urpx:changeReason`
-- `urpx:priceCurrency`
-- `urpx:hasRateCase`, if the tariff book references a rate case or docket
-
----
-
-## 2. Review Rule Logic Carefully
+## 4. Review Rule Logic Carefully
 
 This is the part most likely to pass a superficial review while still being wrong.
 
@@ -197,7 +212,7 @@ Do **not** treat an explicit customer choice as if it were only generic applicab
 
 ---
 
-## 3. Review TOU Schedules and Time Brackets
+## 5. Review TOU Schedules and Time Brackets
 
 Time-of-use modeling deserves its own pass. Small mistakes here can materially change the meaning of the tariff book.
 
@@ -238,7 +253,7 @@ If the tariff book combines TOU with seasons, tiers, or both, check that those d
 
 ---
 
-## 4. Review Service Tiers, Metrics, and Calculation Basis
+## 6. Review Service Tiers, Metrics, and Calculation Basis
 
 Next, confirm that the JSON-LD captures **what is being measured** and **how the tariff book calculates the price**.
 
@@ -261,7 +276,7 @@ Common mistakes:
 
 ---
 
-## 5. Review Billing Structure and Prices
+## 7. Review Billing Structure and Prices
 
 After the structural review, do a line-by-line comparison of tariff book prices to URPX prices.
 
@@ -323,7 +338,7 @@ Check:
 
 ---
 
-## 6. Verify Provenance Back to the Tariff
+## 8. Verify Provenance Back to the Tariff
 
 Every review should end with a provenance pass.
 
@@ -351,7 +366,16 @@ Review expectation:
 
 ---
 
-## 7. What to Flag in Review
+## 9. Record Findings and Open Questions
+
+Share review results in the place that best matches the state of the work:
+
+- if the PR is still open and you can make the fix, push changes to the PR branch
+- if the PR is still open and you are unsure how to resolve an issue, leave an inline review comment or a natural-language review note on the pull request
+- if the PR has already merged and you can make the fix, open a new PR with the proposed change
+- if the PR has already merged and you still have review comments or open questions, file a GitHub Issue
+
+### What to Flag in Review
 
 Flag the file if any of the following are true:
 
@@ -365,9 +389,7 @@ Flag the file if any of the following are true:
 - provenance is too weak to trace the source
 - the JSON-LD contains data that cannot be justified from the tariff book or documented review decisions
 
----
-
-## Suggested Review Record
+### Suggested Review Record
 
 Capture findings in a short review note with:
 
