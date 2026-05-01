@@ -16,22 +16,31 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix urpx: <https://schema.urpx.org/> .
-@prefix urpx-shacl: <https://schema.urpx.org/shacl/> .
+@prefix urpx: <https://urpx-org.github.io/urpx/ontology/> .
+@prefix urpx-shacl: <https://urpx-org.github.io/urpx/shacl/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://schema.urpx.org/shacl/>
+<https://urpx-org.github.io/urpx/shacl>
     a owl:Ontology, sh:ShapesGraph ;
     rdfs:label "URPX SHACL Shapes"@en ;
     dcterms:creator "Una Smithsimon, Klaar De Schepper, Flux Tailor LLC" ;
-    dcterms:date "2026-02-06"^^xsd:date ;
     dcterms:description "SHACL shapes for validating URPX data against the URPX Ontology." ;
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
     dcterms:modified "2026-04-29"^^xsd:date ;
-    dcterms:title "URPX - SHACL" ;    
-    owl:versionInfo "0.2.0" ;
-    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.2.0/shacl/urpx-shacl.ttl> ;
-    dcat:version "0.2.0" .
+    dcterms:title "URPX SHACL Shapes" ;
+    dcterms:hasVersion <https://urpx-org.github.io/urpx/releases/v0.2.0/shacl> ;
+    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.2.0/shacl/urpx-shacl.ttl> .
+
+<https://urpx-org.github.io/urpx/releases/v0.2.0/shacl>
+    a dcat:Dataset ;
+    dcterms:isVersionOf <https://urpx-org.github.io/urpx/shacl> ;
+    dcterms:issued "2026-04-29"^^xsd:date ;
+    dcat:version "0.2.0" ;
+    dcat:distribution [
+        a dcat:Distribution ;
+        dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.2.0/shacl/urpx-shacl.ttl> ;
+        dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle>
+    ] .
 
 # ============================================================================
 # NODE SHAPES
