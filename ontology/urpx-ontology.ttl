@@ -1642,6 +1642,14 @@ urpx:gMonthValue a owl:DatatypeProperty ;
     rdfs:range xsd:gMonth ;
     skos:note "gMonth literal value for condition modeling." .
 
+urpx:gYearValue a owl:DatatypeProperty ;
+    rdfs:label "GYear Value"@en ;
+    rdfs:comment "gYear literal value used in a condition operand node"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:DatatypeOperandNode urpx:CustomOperandNode ) ] ;
+    rdfs:range xsd:gYear ;
+    skos:note "gYear literal value for condition modeling." .
+
 urpx:hasAlternative a owl:ObjectProperty ;
     rdfs:label "Has Alternative"@en ;
     rdfs:comment "Links alternatives container to specific price set options" ;

@@ -4,9 +4,30 @@
 # 📋 URPX Changelog
 
 **Version:** 0.2.0 (Pre-draft)
-**Last Updated:** 2026-04-29
+**Last Updated:** 2026-05-01
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-05-01
+---
+
+### Ontology Changes
+
+#### Added: `urpx:gYearValue`
+- Added `urpx:gYearValue` (DatatypeProperty, range `xsd:gYear`) for calendar-year literal operands in condition expressions.
+- Domain is the union of `urpx:DatatypeOperandNode` and `urpx:CustomOperandNode`, mirroring the other datatype-specific value properties.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Updated: `DatatypeOperandNodeShape` and `CustomOperandNodeShape`
+- Added an optional `gYearValue` property declaration (`xsd:gYear`, `0..1`) on both shapes.
+- Added a `gYearValue` literal branch to each shape's `sh:xone` so the gYear branch is mutually exclusive with the other literal and property-reference branches and may optionally carry `urpx:referencesMetricInput`.
+
+### Documentation Updates
+
+#### Updated: Condition Modeling and Data Dictionary
+- Listed `urpx:gYearValue` alongside the other datatype-specific value properties in [urpx-condition-modeling.md](documentation/pages/urpx-condition-modeling.md) and the JSON-LD context examples.
+- Added `urpx:gYearValue` rows to the `CustomOperandNode` and `DatatypeOperandNode` property tables in [urpx-data-dictionary.md](documentation/pages/urpx-data-dictionary.md).
 
 2026-04-29
 ---

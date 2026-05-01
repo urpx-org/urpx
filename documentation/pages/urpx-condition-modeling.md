@@ -1,7 +1,7 @@
 # URPX Condition Model
 
 **Version:** 0.2.0  
-**Last Updated:** 2026-04-28  
+**Last Updated:** 2026-05-01  
 **Status:** Adopted for URPX 0.2.0  
 **Scope:** Structured condition-expression modeling in eligibility, applicability, and related contexts  
 **Ontology Source:** [`urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)  
@@ -125,6 +125,7 @@ URPX does not require a separate datatype enumeration on operand nodes. Instead,
 - `urpx:decimalValue`
 - `urpx:durationValue`
 - `urpx:gMonthValue`
+- `urpx:gYearValue`
 - `urpx:integerValue`
 - `urpx:stringValue`
 - `urpx:timeValue`
@@ -388,6 +389,7 @@ In the literal form, `urpx:referencesMetricInput` may also be present when the l
 | `urpx:decimalValue` | `xsd:decimal` | Decimal literal value |
 | `urpx:durationValue` | `xsd:duration` | ISO 8601 duration literal value |
 | `urpx:gMonthValue` | `xsd:gMonth` | Month-of-year literal value |
+| `urpx:gYearValue` | `xsd:gYear` | Calendar year literal value |
 | `urpx:integerValue` | `xsd:integer` | Integer literal value |
 | `urpx:stringValue` | `xsd:string` | String literal value |
 | `urpx:timeValue` | `xsd:time` | Time-of-day literal value |
@@ -494,6 +496,7 @@ Datatype-specific value properties allow compact JSON-LD authoring by declaring 
     "urpx:decimalValue": { "@id": "urpx:decimalValue", "@type": "xsd:decimal" },
     "urpx:durationValue": { "@id": "urpx:durationValue", "@type": "xsd:duration" },
     "urpx:gMonthValue": { "@id": "urpx:gMonthValue", "@type": "xsd:gMonth" },
+    "urpx:gYearValue": { "@id": "urpx:gYearValue", "@type": "xsd:gYear" },
     "urpx:integerValue": { "@id": "urpx:integerValue", "@type": "xsd:integer" },
     "urpx:stringValue": { "@id": "urpx:stringValue", "@type": "xsd:string" },
     "urpx:timeValue": { "@id": "urpx:timeValue", "@type": "xsd:time" }
@@ -718,6 +721,7 @@ graph TD
     "urpx:decimalValue": { "@id": "urpx:decimalValue", "@type": "xsd:decimal" },
     "urpx:durationValue": { "@id": "urpx:durationValue", "@type": "xsd:duration" },
     "urpx:gMonthValue": { "@id": "urpx:gMonthValue", "@type": "xsd:gMonth" },
+    "urpx:gYearValue": { "@id": "urpx:gYearValue", "@type": "xsd:gYear" },
     "urpx:integerValue": { "@id": "urpx:integerValue", "@type": "xsd:integer" },
     "urpx:stringValue": { "@id": "urpx:stringValue", "@type": "xsd:string" },
     "urpx:timeValue": { "@id": "urpx:timeValue", "@type": "xsd:time" }

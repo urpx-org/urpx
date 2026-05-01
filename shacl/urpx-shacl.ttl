@@ -555,6 +555,12 @@ urpx-shacl:CustomOperandNodeShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:gYearValue ;
+        sh:datatype xsd:gYear ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:integerValue ;
         sh:datatype xsd:integer ;
         sh:minCount 0 ;
@@ -653,6 +659,18 @@ urpx-shacl:CustomOperandNodeShape
         [
             sh:property [
                 sh:path urpx:gMonthValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ] ;
+            sh:property [
+                sh:path urpx:referencesMetricInput ;
+                sh:minCount 0 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:gYearValue ;
                 sh:minCount 1 ;
                 sh:maxCount 1 ;
             ] ;
@@ -1016,6 +1034,12 @@ urpx-shacl:DatatypeOperandNodeShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:gYearValue ;
+        sh:datatype xsd:gYear ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:integerValue ;
         sh:datatype xsd:integer ;
         sh:minCount 0 ;
@@ -1114,6 +1138,18 @@ urpx-shacl:DatatypeOperandNodeShape
         [
             sh:property [
                 sh:path urpx:gMonthValue ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ] ;
+            sh:property [
+                sh:path urpx:referencesMetricInput ;
+                sh:minCount 0 ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:gYearValue ;
                 sh:minCount 1 ;
                 sh:maxCount 1 ;
             ] ;
