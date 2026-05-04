@@ -80,7 +80,13 @@ urpx-shacl:AlternativeDimensionShape
     sh:property [
         sh:path urpx:dimensionProperty ;
         sh:datatype xsd:anyURI ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:customDimensionProperty ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -92,6 +98,30 @@ urpx-shacl:AlternativeDimensionShape
         sh:path urpx:referencesMetricInput ;
         sh:class urpx:MetricInput ;
         sh:minCount 0 ;
+    ] ;
+    sh:xone (
+        [
+            sh:property [
+                sh:path urpx:dimensionProperty ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ] ;
+            sh:property [
+                sh:path urpx:customDimensionProperty ;
+                sh:maxCount 0 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:customDimensionProperty ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ] ;
+            sh:property [
+                sh:path urpx:dimensionProperty ;
+                sh:maxCount 0 ;
+            ]
+        ]
     ] .
 
 urpx-shacl:AlternativeDimensionsShape
@@ -5928,7 +5958,7 @@ urpx-shacl:ProgramTypeValueShape
     rdfs:label "ProgramTypeValue Shape"@en ;
     sh:targetClass urpx:ProgramTypeValue ;
     sh:nodeKind sh:IRI ;
-    sh:in ( urpx:demandResponseProgram urpx:energyEfficiencyProgram urpx:greenEnergyProgram urpx:lowIncomeProgram urpx:timeOfUseProgram urpx:communityChoiceAggregation urpx:communitySolar ) .
+    sh:in ( urpx:demandResponseProgram urpx:energyEfficiencyProgram urpx:greenEnergyProgram urpx:lowIncomeProgram urpx:moderateIncomeProgram urpx:timeOfUseProgram urpx:communityChoiceAggregation urpx:communitySolar ) .
 
 urpx-shacl:PublicationTypeValueShape
     a sh:NodeShape ;

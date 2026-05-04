@@ -60,7 +60,7 @@ urpx:AdministrativeBoundary a owl:Class ;
 urpx:AlternativeDimension a owl:Class ;
     rdfs:label "Alternative Dimension"@en ;
     rdfs:comment "Dimension along which price set alternatives differ using ontology properties" ;
-    skos:note "Defines the customer profile attribute that determines which PriceSetAlternative applies. Uses actual ontology properties from ApplicabilityGroup (e.g., urpx:appliesInServiceTerritory, urpx:voltageLevel)." .
+    skos:note "Defines the customer profile attribute that determines which PriceSetAlternative applies. Uses actual ontology properties from ApplicabilityGroup (e.g., urpx:appliesInServiceTerritory, urpx:voltageLevel). When no suitable URPX property exists, customDimensionProperty may provide a fallback identifier." .
 
 urpx:AlternativeDimensions a owl:Class ;
     rdfs:label "Alternative Dimensions"@en ;
@@ -816,7 +816,7 @@ urpx:PriceSourceValue a owl:Class ;
 urpx:ProgramTypeValue a owl:Class ;
     rdfs:label "Program Type Value"@en ;
     rdfs:comment "Program types enumeration values" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:demandResponseProgram urpx:energyEfficiencyProgram urpx:greenEnergyProgram urpx:lowIncomeProgram urpx:timeOfUseProgram urpx:communityChoiceAggregation urpx:communitySolar ) ] ;
+    owl:equivalentClass [ owl:oneOf ( urpx:demandResponseProgram urpx:energyEfficiencyProgram urpx:greenEnergyProgram urpx:lowIncomeProgram urpx:moderateIncomeProgram urpx:timeOfUseProgram urpx:communityChoiceAggregation urpx:communitySolar ) ] ;
     skos:note "Enumeration class for utility program categorization. standardized program type definitions including CCA and community solar." .
     
 urpx:PublicationTypeValue a owl:Class ;
@@ -1265,6 +1265,13 @@ urpx:customConditionProperty a owl:DatatypeProperty ;
     rdfs:domain urpx:CustomOperandNode ;
     rdfs:range xsd:string ;
     skos:note "Fallback-only property name for custom conditions when no suitable URPX property exists." .
+
+urpx:customDimensionProperty a owl:DatatypeProperty ;
+    rdfs:label "Custom Dimension Property"@en ;
+    rdfs:comment "Fallback custom property identifier for alternative dimensions in human-readable form"@en ;
+    rdfs:domain urpx:AlternativeDimension ;
+    rdfs:range xsd:string ;
+    skos:note "Fallback-only property name for alternative dimensions when no suitable URPX property exists." .
 
 urpx:customerChoice a owl:ObjectProperty ;
     rdfs:label "Customer Choice"@en ;
@@ -5661,6 +5668,11 @@ urpx:lowIncomeProgram rdf:type urpx:ProgramTypeValue ;
     rdfs:label "Low Income Program"@en ;
     skos:definition "Low income assistance program for customer financial support" ;
     skos:prefLabel "Low Income" .
+
+urpx:moderateIncomeProgram rdf:type urpx:ProgramTypeValue ;
+    rdfs:label "Moderate Income Program"@en ;
+    skos:definition "Moderate income assistance program for customer financial support" ;
+    skos:prefLabel "Moderate Income" .
 
 urpx:timeOfUseProgram rdf:type urpx:ProgramTypeValue ;
     rdfs:label "Time of Use Program"@en ;

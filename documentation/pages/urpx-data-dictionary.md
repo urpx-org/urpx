@@ -1427,8 +1427,9 @@ installations, and connection type.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
+| `urpx:customDimensionProperty` | Datatype | 0..1 | `xsd:string` | Fallback custom property identifier used when no suitable URPX-vocabulary dimension exists |
 | `urpx:dimensionDisplayName` | Datatype | 1..1 | `xsd:string` | Human-readable name for UI display |
-| `urpx:dimensionProperty` | Datatype | 1..1 | `xsd:anyURI` | URI of the ontology property this dimension represents |
+| `urpx:dimensionProperty` | Datatype | 0..1 | `xsd:anyURI` | URI of the ontology property this dimension represents when modeled in URPX vocabulary |
 | `urpx:hasPossibleValues` | Datatype | 1..* | — | List of possible values |
 | `urpx:referencesMetricInput` | Object | 0..* | [`MetricInput`](#urpxmetricinput) | Links to metric inputs for measurement and profile metric input definitions |
 
