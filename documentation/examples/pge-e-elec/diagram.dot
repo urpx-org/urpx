@@ -1,0 +1,459 @@
+digraph "Residential Time-of-Use (Electric Home) Service" {
+    rankdir=TB;
+    bgcolor="white";
+    pad=0.5;
+    nodesep=0.5;
+    ranksep=0.7;
+    fontname="Inter, Helvetica, Arial, sans-serif";
+    label="Residential Time-of-Use (Electric Home) Service";
+    labelloc="t";
+    fontsize=16;
+    fontcolor="#1a365d";
+    node [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=9, style=filled, shape=Mrecord];
+    edge [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=8, fontcolor="#1a365d"];
+
+    n_pge_e_elec [
+        label="{RatePlan|ratePlanIdentifier: E-ELEC\lname: Residential Time-of-Use (Electric Hom...\linitialEffectiveDate: 2022-12-01\l}"
+        fillcolor="#00386e"
+        color="#002244"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_pge_e_elec_2026_01_01 [
+        label="{RatePlanVersion|effectiveDateTime: 2026-01-01T00:00:00\lpriceCurrency: USD\l}"
+        fillcolor="#1c5a8f"
+        color="#0e3a5f"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_org_utility_pge [
+        label="{Organization|legalName: Pacific Gas & Electric Company\leiaId: 14328\l}"
+        fillcolor="#BBCC33"
+        color="#99aa11"
+        fontcolor="#333333"
+        penwidth=2
+    ];
+    n__anon_3 [
+        label="{DataSourceReference|fileName: ELEC_SCHEDS_E-ELEC.pdf\lmediaType: application/pdf\l}"
+        fillcolor="#A8D8CF"
+        color="#86b6ad"
+        fontcolor="#333333"
+        penwidth=2
+    ];
+    n_pge_er_residential_service [
+        label="{EligibilityRule|logicExpression: condition-EV OR condition-storage OR ...\l}"
+        fillcolor="#AA3377"
+        color="#882255"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_pge_cp_residential [
+        label="CustomerProfile"
+        fillcolor="#CC6677"
+        color="#aa4455"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_pge_condition_EV [
+        label="{Condition|conditionType: derType\lconditionValue: evChargingDER\l}"
+        fillcolor="#EE8866"
+        color="#cc6644"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_pge_condition_storage [
+        label="{Condition|conditionType: derType\lconditionValue: storageDER\l}"
+        fillcolor="#EE8866"
+        color="#cc6644"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n__anon_8 [
+        label="PlanElements"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_pge_season_summer [
+        label="{Season|seasonName: Summer\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_pge_season_winter [
+        label="{Season|seasonName: Winter\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_pge_mi_energy [
+        label="{MetricInput|name: kWh Energy Consumption\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_pge_ms_energy [
+        label="MetricSpecification"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_pge_mi_meter_count [
+        label="{MetricInput|name: Per Meter\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n__anon_14 [
+        label="BillingModel"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_pge_tou_e_elec [
+        label="TOUSchedule"
+        fillcolor="#77AADD"
+        color="#5588bb"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_pge_tou_tier_peak [
+        label="{TOUTier|tierSourceName: Peak\ltouTierNumber: 1\l}"
+        fillcolor="#6699CC"
+        color="#4477aa"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_pge_tou_period_summer_peak [
+        label="{TOUPeriod|name: Summer Peak\ltouPeriodNumber: 1\l}"
+        fillcolor="#EEDD88"
+        color="#ccbb66"
+        fontcolor="#333333"
+        penwidth=2
+    ];
+    n_pge_tb_summer_peak [
+        label="{TimeBracket|startTime: 16:00:00\lendTime: 21:00:00\l}"
+        fillcolor="#EE8866"
+        color="#cc6644"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_pge_tou_tier_off_peak [
+        label="{TOUTier|tierSourceName: Off-Peak\ltouTierNumber: 3\l}"
+        fillcolor="#6699CC"
+        color="#4477aa"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_pge_tou_period_summer_off_peak [
+        label="{TOUPeriod|name: Summer Off-Peak\ltouPeriodNumber: 5\l}"
+        fillcolor="#EEDD88"
+        color="#ccbb66"
+        fontcolor="#333333"
+        penwidth=2
+    ];
+    n_pge_tb_summer_off_peak [
+        label="{TimeBracket|startTime: 00:00:00\lendTime: 15:00:00\l}"
+        fillcolor="#EE8866"
+        color="#cc6644"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_pge_ledger_energy_supply [
+        label="{Ledger|name: Energy Supply\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_pge_pd_gen_summer_peak [
+        label="{PriceDefinition|name: Generation Summer Peak\ltouPeriodNumber: 1\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_pge_pd_gen_summer_off_peak [
+        label="{PriceDefinition|name: Generation Summer Off-Peak\ltouPeriodNumber: 5\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_pge_ledger_service [
+        label="{Ledger|name: Service\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_pge_pd_base_charge [
+        label="{PriceDefinition|name: Base Services Charge\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n__anon_27 [
+        label="Prices"
+        fillcolor="#00bd7e"
+        color="#009966"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_pge_price_base_charge [
+        label="{Price|startDate: 2026-01-01\lname: Base Services Charge\lunitPrice: 0.49281\l}"
+        fillcolor="#44BB99"
+        color="#339977"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_pge_ps_generation_charges [
+        label="{PriceSet|startDate: 2026-01-01\l}"
+        fillcolor="#00ADEF"
+        color="#0088cc"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_pge_price_gen_summer_peak [
+        label="{Price|name: Generation Summer Peak\lunitPrice: 0.26299\l}"
+        fillcolor="#44BB99"
+        color="#339977"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_pge_price_gen_summer_off_peak [
+        label="{Price|name: Generation Summer Off-Peak\lunitPrice: 0.11878\l}"
+        fillcolor="#44BB99"
+        color="#339977"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+
+    n_pge_e_elec -> n_pge_e_elec_2026_01_01 [
+        label="hasRatePlanVersion"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_e_elec_2026_01_01 -> n_org_utility_pge [
+        label="publishedBy"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_e_elec_2026_01_01 -> n__anon_3 [
+        label="hasDataSourceReference"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_e_elec_2026_01_01 -> n_pge_er_residential_service [
+        label="hasEligibilityRule"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_er_residential_service -> n_pge_cp_residential [
+        label="hasCustomerProfile"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_er_residential_service -> n_pge_condition_EV [
+        label="hasCondition"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_er_residential_service -> n_pge_condition_storage [
+        label="hasCondition"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_e_elec_2026_01_01 -> n__anon_8 [
+        label="hasPlanElements"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n__anon_8 -> n_pge_season_summer [
+        label="hasSeasons"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n__anon_8 -> n_pge_season_winter [
+        label="hasSeasons"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n__anon_8 -> n_pge_mi_energy [
+        label="hasMetricInput"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_mi_energy -> n_pge_ms_energy [
+        label="hasMetricSpecification"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n__anon_8 -> n_pge_mi_meter_count [
+        label="hasMetricInput"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n__anon_8 -> n__anon_14 [
+        label="hasBillingModel"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n__anon_14 -> n_pge_tou_e_elec [
+        label="hasTOUSchedule"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_tou_e_elec -> n_pge_tou_tier_peak [
+        label="hasTOUTier"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_tou_tier_peak -> n_pge_tou_period_summer_peak [
+        label="hasTOUPeriod"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_tou_period_summer_peak -> n_pge_tb_summer_peak [
+        label="hasTimeBracket"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_tou_e_elec -> n_pge_tou_tier_off_peak [
+        label="hasTOUTier"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_tou_tier_off_peak -> n_pge_tou_period_summer_off_peak [
+        label="hasTOUPeriod"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_tou_period_summer_off_peak -> n_pge_tb_summer_off_peak [
+        label="hasTimeBracket"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n__anon_14 -> n_pge_ledger_energy_supply [
+        label="hasLedger"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_ledger_energy_supply -> n_pge_pd_gen_summer_peak [
+        label="hasPriceDefinition"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_ledger_energy_supply -> n_pge_pd_gen_summer_off_peak [
+        label="hasPriceDefinition"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n__anon_14 -> n_pge_ledger_service [
+        label="hasLedger"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_ledger_service -> n_pge_pd_base_charge [
+        label="hasPriceDefinition"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_e_elec_2026_01_01 -> n__anon_27 [
+        label="hasPrices"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n__anon_27 -> n_pge_price_base_charge [
+        label="hasPrice"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n__anon_27 -> n_pge_ps_generation_charges [
+        label="hasPriceSet"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_ps_generation_charges -> n_pge_price_gen_summer_peak [
+        label="hasPrice"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_ps_generation_charges -> n_pge_price_gen_summer_off_peak [
+        label="hasPrice"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+
+    subgraph cluster_legend {
+        label="Legend — Node Colors by @type";
+        fontname="Inter, Helvetica, Arial, sans-serif";
+        fontsize=10;
+        fontcolor="#1a365d";
+        style=rounded;
+        color="#cccccc";
+        bgcolor="#f8f8f8";
+        margin=12;
+        leg_0 [label="RatePlan", shape=box, fillcolor="#00386e", color="#002244", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_1 [label="RatePlanVersion", shape=box, fillcolor="#1c5a8f", color="#0e3a5f", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_2 [label="Organization", shape=box, fillcolor="#BBCC33", color="#99aa11", fontcolor="#333333", fontsize=9, penwidth=1.5];
+        leg_3 [label="DataSourceReference", shape=box, fillcolor="#A8D8CF", color="#86b6ad", fontcolor="#333333", fontsize=9, penwidth=1.5];
+        leg_4 [label="EligibilityRule", shape=box, fillcolor="#AA3377", color="#882255", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_5 [label="CustomerProfile", shape=box, fillcolor="#CC6677", color="#aa4455", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_6 [label="Condition", shape=box, fillcolor="#EE8866", color="#cc6644", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_7 [label="PlanElements", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_8 [label="Season", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_9 [label="MetricInput", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_10 [label="MetricSpecification", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_11 [label="BillingModel", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_12 [label="TOUSchedule", shape=box, fillcolor="#77AADD", color="#5588bb", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_13 [label="TOUTier", shape=box, fillcolor="#6699CC", color="#4477aa", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_14 [label="TOUPeriod", shape=box, fillcolor="#EEDD88", color="#ccbb66", fontcolor="#333333", fontsize=9, penwidth=1.5];
+        leg_15 [label="TimeBracket", shape=box, fillcolor="#EE8866", color="#cc6644", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_16 [label="Ledger", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_17 [label="PriceDefinition", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_18 [label="Prices", shape=box, fillcolor="#00bd7e", color="#009966", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_19 [label="Price", shape=box, fillcolor="#44BB99", color="#339977", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_20 [label="PriceSet", shape=box, fillcolor="#00ADEF", color="#0088cc", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_0 -> leg_1 -> leg_2 -> leg_3 -> leg_4 -> leg_5 -> leg_6 -> leg_7 -> leg_8 -> leg_9 -> leg_10 -> leg_11 -> leg_12 -> leg_13 -> leg_14 -> leg_15 -> leg_16 -> leg_17 -> leg_18 -> leg_19 -> leg_20 [style=invis];
+    }
+}

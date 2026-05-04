@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0.0",
+  "generator": "urpx-website-dev/scripts/codegen/generate-all.py@a6ff1d1",
+  "generatedAt": "2026-05-04T11:05:08Z",
+  "examples": [
+    {
+      "id": "pge-e-elec",
+      "title": "Residential Time-of-Use (Electric Home) Service",
+      "description": "This optional schedule applies to individually-metered electric service to residential customers who have one or more of the following qualifying electric technologies: Electric vehicle charging; Energy storage; or Electric heat pump for water heating or climate control.",
+      "utility": "Pacific Gas & Electric Company",
+      "instanceJsonld": "pge-e-elec/instance.jsonld",
+      "diagramSvg": "pge-e-elec/diagram.svg",
+      "tariffBookPdf": null,
+      "detailMarkdown": "pge-e-elec/index.md"
+    },
+    {
+      "id": "pge-e-elec-sp",
+      "title": "Residential Time-of-Use (Electric Home) Service \u2014 Smart Meter / Tiered",
+      "description": "Variant of E-ELEC requiring an AMI smart meter at the service point, with a 2,000 kWh monthly consumption eligibility limit and two service tiers (Baseline 0\u2013500 kWh, Over-Baseline 500\u20132,000 kWh). Demonstrates ServicePointProfile, consumption-based eligibility Conditions, and ServiceTier structures.",
+      "utility": "Pacific Gas & Electric Company",
+      "instanceJsonld": "pge-e-elec-sp/instance.jsonld",
+      "diagramSvg": "pge-e-elec-sp/diagram.svg",
+      "tariffBookPdf": null,
+      "detailMarkdown": "pge-e-elec-sp/index.md"
+    },
+    {
+      "id": "comed-rrtp",
+      "title": "Residential Real-Time Pricing (RRTP)",
+      "description": "ComEd's Residential Real-Time Pricing program where hourly supply prices are based on PJM day-ahead LMP plus a retail adder. Demonstrates DynamicPricing with realTimePricing type, PriceUpdateRule for wholesale market integration, seasonal structure, and a full billing model with supply, delivery, service, and adjustment ledgers.",
+      "utility": "Commonwealth Edison Company",
+      "instanceJsonld": "comed-rrtp/instance.jsonld",
+      "diagramSvg": "comed-rrtp/diagram.svg",
+      "tariffBookPdf": null,
+      "detailMarkdown": "comed-rrtp/index.md"
+    },
+    {
+      "id": "pge-b6-pdp",
+      "title": "Small General TOU with Peak Day Pricing (B-6 PDP)",
+      "description": "PG&E's small general service time-of-use rate with a Peak Day Pricing overlay. On PDP event days (up to 15 per year), peak period prices (14:00\u201318:00) are replaced with a critical peak adder. Demonstrates DynamicPricing with criticalPeakPricing type, TOUSchedule with peak/off-peak tiers, demand charges, and event-triggered PriceUpdateRule driven by CAISO grid conditions.",
+      "utility": "Pacific Gas & Electric Company",
+      "instanceJsonld": "pge-b6-pdp/instance.jsonld",
+      "diagramSvg": "pge-b6-pdp/diagram.svg",
+      "tariffBookPdf": null,
+      "detailMarkdown": "pge-b6-pdp/index.md"
+    }
+  ]
+}

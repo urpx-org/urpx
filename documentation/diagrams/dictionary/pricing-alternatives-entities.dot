@@ -1,0 +1,404 @@
+digraph "Pricing & Alternatives Entities" {
+    rankdir=TB;
+    bgcolor="white";
+    pad=0.4;
+    nodesep=0.6;
+    ranksep=0.8;
+    fontname="Inter, Helvetica, Arial, sans-serif";
+    label="Pricing & Alternatives Entities (URPX v0.2.0)";
+    labelloc="t";
+    fontsize=14;
+    fontcolor="#1a365d";
+    node [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=10, style=filled, fontcolor="#1a365d"];
+    edge [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=8, fontcolor="#1a365d"];
+
+    // Section classes
+    Prices [
+        label="Prices"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    PriceSet [
+        label="PriceSet"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    PriceSetAlternative [
+        label="PriceSetAlternative"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    PriceSetAlternatives [
+        label="PriceSetAlternatives"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    Price [
+        label="Price"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    PriceDefinition [
+        label="PriceDefinition"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    PriceSummary [
+        label="PriceSummary"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    PriceUpdateRule [
+        label="PriceUpdateRule"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+
+    // Cross-section references
+    ApplicabilityGroup [
+        label="ApplicabilityGroup"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    ApplicabilityRule [
+        label="ApplicabilityRule"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    CalculationMethod [
+        label="CalculationMethod"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    DataSourceReference [
+        label="DataSource\nReference"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    DynamicPricing [
+        label="DynamicPricing"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    Ledger [
+        label="Ledger"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    MetricInput [
+        label="MetricInput"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    MetricSpecification [
+        label="MetricSpecification"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    ProfileAlternative [
+        label="ProfileAlternative"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    ProfileAlternatives [
+        label="ProfileAlternatives"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    RateCase [
+        label="RateCase"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    Season [
+        label="Season"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    ServiceTier [
+        label="ServiceTier"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    TOUPeriod [
+        label="TOUPeriod"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+
+    // Per-class datatype nodes
+    PriceSet_dt_decimal [
+        label="xsd:decimal"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    PriceSetAlternative_dt_decimal [
+        label="xsd:decimal"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    PriceSetAlternative_dt_string [
+        label="xsd:string"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    PriceSetAlternatives_dt_string [
+        label="xsd:string"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    Price_dt_decimal [
+        label="xsd:decimal"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    PriceDefinition_dt_decimal [
+        label="xsd:decimal"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    PriceDefinition_dt_string [
+        label="xsd:string"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    PriceSummary_dt_decimal [
+        label="xsd:decimal"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    PriceUpdateRule_dt_integer [
+        label="xsd:integer"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+
+    // Object property edges
+    Prices -> Price [
+        label="hasPrice\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Prices -> PriceSet [
+        label="hasPriceSet\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=10
+    ];
+    Prices -> PriceSetAlternatives [
+        label="hasPriceSetAlternatives\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=8
+    ];
+    PriceSet -> Season [
+        label="appliesInSeason\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSet -> ProfileAlternative [
+        label="hasAlternative\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSet -> ApplicabilityGroup [
+        label="hasApplicabilityGroup\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSet -> ApplicabilityRule [
+        label="hasApplicabilityRule\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSet -> CalculationMethod [
+        label="hasCalculationMethod\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSet -> DataSourceReference [
+        label="hasDataSourceReference\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSet -> MetricSpecification [
+        label="hasMetricSpecification\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSet -> Price [
+        label="hasPrice\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=8
+    ];
+    PriceSet -> PriceSummary [
+        label="hasPriceSummary\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSet -> RateCase [
+        label="hasRateCase\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSet -> MetricInput [
+        label="referencesMetricInput\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSet -> PriceDefinition [
+        label="referencesPriceDefinition\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSet -> ServiceTier [
+        label="referencesServiceTier\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSet -> TOUPeriod [
+        label="referencesTouPeriod\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSetAlternative -> Season [
+        label="appliesInSeason\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSetAlternative -> ProfileAlternative [
+        label="hasAlternative\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSetAlternative -> ApplicabilityGroup [
+        label="hasApplicabilityGroup\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSetAlternative -> ApplicabilityRule [
+        label="hasApplicabilityRule\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSetAlternative -> CalculationMethod [
+        label="hasCalculationMethod\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSetAlternative -> DataSourceReference [
+        label="hasDataSourceReference\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSetAlternative -> MetricSpecification [
+        label="hasMetricSpecification\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSetAlternative -> Price [
+        label="hasPrice\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSetAlternative -> PriceSummary [
+        label="hasPriceSummary\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSetAlternative -> RateCase [
+        label="hasRateCase\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSetAlternative -> MetricInput [
+        label="referencesMetricInput\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSetAlternative -> PriceDefinition [
+        label="referencesPriceDefinition\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSetAlternative -> ProfileAlternative [
+        label="referencesProfileAlternative\n1..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSetAlternative -> ServiceTier [
+        label="referencesServiceTier\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSetAlternative -> TOUPeriod [
+        label="referencesTouPeriod\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSetAlternatives -> PriceSetAlternative [
+        label="hasPriceSetAlternative\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSetAlternatives -> ProfileAlternatives [
+        label="referencesProfileAlternatives\n1..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Price -> Season [
+        label="appliesInSeason\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Price -> ApplicabilityGroup [
+        label="hasApplicabilityGroup\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Price -> ApplicabilityRule [
+        label="hasApplicabilityRule\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Price -> CalculationMethod [
+        label="hasCalculationMethod\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Price -> DataSourceReference [
+        label="hasDataSourceReference\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Price -> DynamicPricing [
+        label="hasDynamicPricing\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Price -> MetricSpecification [
+        label="hasMetricSpecification\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Price -> RateCase [
+        label="hasRateCase\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Price -> MetricInput [
+        label="referencesMetricInput\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Price -> PriceDefinition [
+        label="referencesPriceDefinition\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Price -> ServiceTier [
+        label="referencesServiceTier\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Price -> TOUPeriod [
+        label="referencesTouPeriod\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceDefinition -> Season [
+        label="appliesInSeason\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceDefinition -> ApplicabilityGroup [
+        label="hasApplicabilityGroup\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceDefinition -> ApplicabilityRule [
+        label="hasApplicabilityRule\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceDefinition -> CalculationMethod [
+        label="hasCalculationMethod\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceDefinition -> DataSourceReference [
+        label="hasDataSourceReference\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceDefinition -> MetricSpecification [
+        label="hasMetricSpecification\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceDefinition -> RateCase [
+        label="hasRateCase\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceDefinition -> Ledger [
+        label="referencesLedger\n1..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceDefinition -> MetricInput [
+        label="referencesMetricInput\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceDefinition -> ProfileAlternative [
+        label="referencesProfileAlternative\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceDefinition -> ProfileAlternatives [
+        label="referencesProfileAlternatives\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceDefinition -> ServiceTier [
+        label="referencesServiceTier\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceDefinition -> TOUPeriod [
+        label="referencesTouPeriod\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceSummary -> Price [
+        label="includesPrice\n2..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+
+    // Datatype property edges
+    PriceSet -> PriceSet_dt_decimal [
+        label="adder\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    PriceSet -> PriceSet_dt_decimal [
+        label="baseQuantity\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    PriceSetAlternative -> PriceSetAlternative_dt_decimal [
+        label="adder\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    PriceSetAlternative -> PriceSetAlternative_dt_string [
+        label="alternativeLabel\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    PriceSetAlternatives -> PriceSetAlternatives_dt_string [
+        label="priceMatchingKey\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    Price -> Price_dt_decimal [
+        label="adder\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    Price -> Price_dt_decimal [
+        label="amount\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    PriceDefinition -> PriceDefinition_dt_decimal [
+        label="baseQuantity\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    PriceDefinition -> PriceDefinition_dt_string [
+        label="billingCycleCode\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    PriceSummary -> PriceSummary_dt_decimal [
+        label="summaryAmount\n1..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    PriceUpdateRule -> PriceUpdateRule_dt_integer [
+        label="priority\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+
+    // Layout-specified rank groups
+    { rank=same; Prices; }
+    { rank=same; PriceSet; PriceSetAlternatives; }
+    PriceSet -> PriceSetAlternatives [style=invis];
+    { rank=same; PriceSetAlternative; Price; }
+    PriceSetAlternative -> Price [style=invis];
+    { rank=same; PriceDefinition; PriceSummary; PriceUpdateRule; }
+    PriceDefinition -> PriceSummary [style=invis];
+    PriceSummary -> PriceUpdateRule [style=invis];
+
+    subgraph cluster_legend {
+        label="Legend";
+        fontname="Inter, Helvetica, Arial, sans-serif";
+        fontsize=11;
+        fontcolor="#1a365d";
+        style=rounded;
+        color="#cccccc";
+        bgcolor="#f8f8f8";
+        margin=12;
+
+        leg_class [label="OWL Class\n(this section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
+        leg_xref [label="OWL Class\n(other section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"];
+        leg_dt [label="XSD Datatype", shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"];
+        leg_src [label=" ", shape=point, width=0.01];
+        leg_tgt1 [label=" ", shape=point, width=0.01];
+        leg_tgt2 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+        leg_src -> leg_tgt2 [label="cross-section ref", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+        leg_tgt3 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt3 [label="datatype property", style=dashed, color="#22c55e", fontcolor="#166534", penwidth=1.5];
+    }
+}

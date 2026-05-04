@@ -1,0 +1,267 @@
+digraph "Organization Entities" {
+    rankdir=TB;
+    bgcolor="white";
+    pad=0.4;
+    nodesep=0.5;
+    ranksep=0.9;
+    fontname="Inter, Helvetica, Arial, sans-serif";
+    label="Organization Entities (URPX v0.2.0)";
+    labelloc="t";
+    fontsize=14;
+    fontcolor="#1a365d";
+    node [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=10, style=filled, fontcolor="#1a365d"];
+    edge [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=8, fontcolor="#1a365d"];
+
+    // Section classes
+    Organization [
+        label="Organization"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    RegulatoryAuthority [
+        label="Regulatory\nAuthority"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    SystemOperator [
+        label="SystemOperator"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    UtilityOperator [
+        label="UtilityOperator"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    EnergyServiceProvider [
+        label="EnergyService\nProvider"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    OrganizationEvent [
+        label="OrganizationEvent"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    OrganizationIdentity [
+        label="Organization\nIdentity"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    OrganizationIdentifier [
+        label="Organization\nIdentifier"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    OrganizationName [
+        label="OrganizationName"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    OrganizationTransition [
+        label="Organization\nTransition"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+
+    // Cross-section references
+    LocationDataSet [
+        label="LocationDataSet"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    RatePlan [
+        label="RatePlan"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+
+    // Per-class datatype nodes
+    Organization_dt_string [
+        label="xsd:string"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    RegulatoryAuthority_dt_string [
+        label="xsd:string"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    SystemOperator_dt_string [
+        label="xsd:string"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    EnergyServiceProvider_dt_string [
+        label="xsd:string"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    OrganizationEvent_dt_string [
+        label="xsd:string"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    OrganizationIdentity_dt_dateTime [
+        label="xsd:dateTime"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    OrganizationIdentifier_dt_string [
+        label="xsd:string"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    OrganizationName_dt_string [
+        label="xsd:string"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    OrganizationName_dt_boolean [
+        label="xsd:boolean"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    OrganizationTransition_dt_string [
+        label="xsd:string"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+
+    // Object property edges
+    Organization -> OrganizationIdentity [
+        label="hasIdentity\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Organization -> LocationDataSet [
+        label="hasLocationDataSet\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Organization -> SystemOperator [
+        label="operatesIn\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Organization -> RatePlan [
+        label="publishes\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RegulatoryAuthority -> RatePlan [
+        label="approves\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RegulatoryAuthority -> OrganizationIdentity [
+        label="hasIdentity\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RegulatoryAuthority -> Organization [
+        label="hasJurisdictionOver\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RegulatoryAuthority -> LocationDataSet [
+        label="hasLocationDataSet\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RegulatoryAuthority -> SystemOperator [
+        label="operatesIn\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RegulatoryAuthority -> RatePlan [
+        label="publishes\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    SystemOperator -> OrganizationIdentity [
+        label="hasIdentity\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    SystemOperator -> LocationDataSet [
+        label="hasLocationDataSet\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    SystemOperator -> RatePlan [
+        label="publishes\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    EnergyServiceProvider -> OrganizationIdentity [
+        label="hasIdentity\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    EnergyServiceProvider -> LocationDataSet [
+        label="hasLocationDataSet\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    EnergyServiceProvider -> SystemOperator [
+        label="operatesIn\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    EnergyServiceProvider -> RatePlan [
+        label="publishes\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    OrganizationIdentity -> OrganizationIdentifier [
+        label="hasIdentifier\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    OrganizationIdentity -> OrganizationName [
+        label="hasName\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+
+    // Datatype property edges
+    Organization -> Organization_dt_string [
+        label="alternateName\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    Organization -> Organization_dt_string [
+        label="legalName\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    RegulatoryAuthority -> RegulatoryAuthority_dt_string [
+        label="alternateName\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    RegulatoryAuthority -> RegulatoryAuthority_dt_string [
+        label="legalName\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    SystemOperator -> SystemOperator_dt_string [
+        label="alternateName\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    SystemOperator -> SystemOperator_dt_string [
+        label="legalName\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    EnergyServiceProvider -> EnergyServiceProvider_dt_string [
+        label="alternateName\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    EnergyServiceProvider -> EnergyServiceProvider_dt_string [
+        label="legalName\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    OrganizationEvent -> OrganizationEvent_dt_string [
+        label="regulatoryApproval\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    OrganizationIdentity -> OrganizationIdentity_dt_dateTime [
+        label="identityValidFrom\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    OrganizationIdentity -> OrganizationIdentity_dt_dateTime [
+        label="identityValidTo\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    OrganizationIdentifier -> OrganizationIdentifier_dt_string [
+        label="identifierJurisdiction\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    OrganizationIdentifier -> OrganizationIdentifier_dt_string [
+        label="utilityId\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    OrganizationName -> OrganizationName_dt_string [
+        label="abbreviation\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    OrganizationName -> OrganizationName_dt_boolean [
+        label="isCanonical\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    OrganizationTransition -> OrganizationTransition_dt_string [
+        label="regulatoryApproval\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+
+    // Layout-specified rank groups
+    { rank=same; Organization; }
+    { rank=same; RegulatoryAuthority; SystemOperator; UtilityOperator; EnergyServiceProvider; }
+    RegulatoryAuthority -> SystemOperator [style=invis];
+    SystemOperator -> UtilityOperator [style=invis];
+    UtilityOperator -> EnergyServiceProvider [style=invis];
+    { rank=same; OrganizationEvent; OrganizationIdentity; }
+    OrganizationEvent -> OrganizationIdentity [style=invis];
+    { rank=same; OrganizationIdentifier; OrganizationName; OrganizationTransition; }
+    OrganizationIdentifier -> OrganizationName [style=invis];
+    OrganizationName -> OrganizationTransition [style=invis];
+
+    subgraph cluster_legend {
+        label="Legend";
+        fontname="Inter, Helvetica, Arial, sans-serif";
+        fontsize=11;
+        fontcolor="#1a365d";
+        style=rounded;
+        color="#cccccc";
+        bgcolor="#f8f8f8";
+        margin=12;
+
+        leg_class [label="OWL Class\n(this section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
+        leg_xref [label="OWL Class\n(other section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"];
+        leg_dt [label="XSD Datatype", shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"];
+        leg_src [label=" ", shape=point, width=0.01];
+        leg_tgt1 [label=" ", shape=point, width=0.01];
+        leg_tgt2 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+        leg_src -> leg_tgt2 [label="cross-section ref", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+        leg_tgt3 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt3 [label="datatype property", style=dashed, color="#22c55e", fontcolor="#166534", penwidth=1.5];
+    }
+}

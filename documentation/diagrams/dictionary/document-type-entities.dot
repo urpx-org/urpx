@@ -1,0 +1,239 @@
+digraph "Document Type Entities" {
+    rankdir=TB;
+    bgcolor="white";
+    pad=0.4;
+    nodesep=0.5;
+    ranksep=0.8;
+    fontname="Inter, Helvetica, Arial, sans-serif";
+    label="Document Type Entities (URPX v0.2.0)";
+    labelloc="t";
+    fontsize=14;
+    fontcolor="#1a365d";
+    node [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=10, style=filled, fontcolor="#1a365d"];
+    edge [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=8, fontcolor="#1a365d"];
+
+    // Section classes
+    TariffPublication [
+        label="TariffPublication"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    TariffBookDocument [
+        label="TariffBookDocument"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    TariffStatementDocument [
+        label="TariffStatement\nDocument"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    TariffSupplementDocument [
+        label="TariffSupplement\nDocument"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    TariffAddendumDocument [
+        label="TariffAddendum\nDocument"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    SupplyChargesDocument [
+        label="SupplyCharges\nDocument"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    HighlyDynamicPricesDocument [
+        label="HighlyDynamic\nPricesDocument"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    DERExportsDocument [
+        label="DERExportsDocument"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    DataSourceReference [
+        label="DataSource\nReference"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    TariffBookReference [
+        label="TariffBook\nReference"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    TariffStatementReference [
+        label="TariffStatement\nReference"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+
+    // Cross-section references
+    GeneralRule [
+        label="GeneralRule"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    Prices [
+        label="Prices"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    RatePlan [
+        label="RatePlan"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    RatePlanModifier [
+        label="RatePlanModifier"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+
+    // Per-class datatype nodes
+    TariffPublication_dt_date [
+        label="xsd:date"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    DataSourceReference_dt_anyURI [
+        label="xsd:anyURI"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    TariffBookReference_dt_anyURI [
+        label="xsd:anyURI"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    TariffBookReference_dt_date [
+        label="xsd:date"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    TariffStatementReference_dt_anyURI [
+        label="xsd:anyURI"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    TariffStatementReference_dt_date [
+        label="xsd:date"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+
+    // Object property edges
+    TariffPublication -> DataSourceReference [
+        label="hasDataSourceReference\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TariffPublication -> RatePlan [
+        label="hasRatePlan\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TariffPublication -> RatePlanModifier [
+        label="hasRatePlanModifier\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TariffBookDocument -> DataSourceReference [
+        label="hasDataSourceReference\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TariffBookDocument -> GeneralRule [
+        label="hasGeneralRule\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TariffBookDocument -> RatePlan [
+        label="hasRatePlan\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TariffBookDocument -> RatePlanModifier [
+        label="hasRatePlanModifier\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TariffStatementDocument -> DataSourceReference [
+        label="hasDataSourceReference\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TariffStatementDocument -> Prices [
+        label="hasPrices\n1..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TariffStatementDocument -> RatePlanModifier [
+        label="hasRatePlanModifier\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TariffSupplementDocument -> Prices [
+        label="hasPrices\n1..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TariffAddendumDocument -> Prices [
+        label="hasPrices\n1..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TariffAddendumDocument -> RatePlanModifier [
+        label="hasRatePlanModifier\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    SupplyChargesDocument -> Prices [
+        label="hasPrices\n1..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    HighlyDynamicPricesDocument -> RatePlan [
+        label="hasRatePlan\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    HighlyDynamicPricesDocument -> RatePlanModifier [
+        label="hasRatePlanModifier\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    HighlyDynamicPricesDocument -> TariffPublication [
+        label="hasTariffPublication\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    DERExportsDocument -> RatePlan [
+        label="hasRatePlan\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    DERExportsDocument -> RatePlanModifier [
+        label="hasRatePlanModifier\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    DERExportsDocument -> TariffPublication [
+        label="hasTariffPublication\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    DataSourceReference -> TariffBookReference [
+        label="hasTariffBookReference\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    DataSourceReference -> TariffStatementReference [
+        label="hasTariffStatementReference\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+
+    // Datatype property edges
+    TariffPublication -> TariffPublication_dt_date [
+        label="dateApproved\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    TariffPublication -> TariffPublication_dt_date [
+        label="dateCreated\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    DataSourceReference -> DataSourceReference_dt_anyURI [
+        label="accessURL\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    DataSourceReference -> DataSourceReference_dt_anyURI [
+        label="anchorLink\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    TariffBookReference -> TariffBookReference_dt_anyURI [
+        label="anchorLink\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    TariffBookReference -> TariffBookReference_dt_date [
+        label="dateApproved\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    TariffStatementReference -> TariffStatementReference_dt_anyURI [
+        label="anchorLink\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    TariffStatementReference -> TariffStatementReference_dt_date [
+        label="dateApproved\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+
+    // Layout-specified rank groups
+    { rank=same; TariffPublication; }
+    { rank=same; TariffBookDocument; TariffStatementDocument; }
+    TariffBookDocument -> TariffStatementDocument [style=invis];
+    { rank=same; TariffSupplementDocument; TariffAddendumDocument; }
+    TariffSupplementDocument -> TariffAddendumDocument [style=invis];
+    { rank=same; SupplyChargesDocument; HighlyDynamicPricesDocument; DERExportsDocument; }
+    SupplyChargesDocument -> HighlyDynamicPricesDocument [style=invis];
+    HighlyDynamicPricesDocument -> DERExportsDocument [style=invis];
+    { rank=same; DataSourceReference; }
+
+    subgraph cluster_legend {
+        label="Legend";
+        fontname="Inter, Helvetica, Arial, sans-serif";
+        fontsize=11;
+        fontcolor="#1a365d";
+        style=rounded;
+        color="#cccccc";
+        bgcolor="#f8f8f8";
+        margin=12;
+
+        leg_class [label="OWL Class\n(this section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
+        leg_xref [label="OWL Class\n(other section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"];
+        leg_dt [label="XSD Datatype", shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"];
+        leg_src [label=" ", shape=point, width=0.01];
+        leg_tgt1 [label=" ", shape=point, width=0.01];
+        leg_tgt2 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+        leg_src -> leg_tgt2 [label="cross-section ref", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+        leg_tgt3 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt3 [label="datatype property", style=dashed, color="#22c55e", fontcolor="#166534", penwidth=1.5];
+    }
+}
