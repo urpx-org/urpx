@@ -122,7 +122,7 @@ urpx-shacl:AlternativeDimensionShape
                 sh:maxCount 0 ;
             ]
         ]
-    ] .
+    ) .
 
 urpx-shacl:AlternativeDimensionsShape
     a sh:NodeShape ;
