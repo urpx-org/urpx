@@ -21,26 +21,28 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
 
-<https://urpx-org.github.io/urpx/ontology> a owl:Ontology ;
+<https://urpx-org.github.io/urpx/ontology>
+    a owl:Ontology ;
     rdfs:label "URPX Ontology"@en ;
     dcterms:creator "Klaar De Schepper, Una Smithsimon, Flux Tailor LLC" ;
     dcterms:description "URPX ontology for utility rate plan exchange" ;
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
     dcterms:modified "2026-04-29"^^xsd:date ;
     dcterms:title "URPX Ontology" ;
-    dcterms:hasVersion <https://urpx-org.github.io/urpx/releases/v0.2.0/ontology> ;
+    dcterms:hasVersion <https://urpx-org.github.io/urpx/releases/ontology/v0.2.0> ;
     owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl> .
 
-<https://urpx-org.github.io/urpx/releases/v0.2.0/ontology>
-    a dcat:Dataset ;
+<https://urpx-org.github.io/urpx/releases/ontology/v0.2.0>
+    a owl:Ontology ;
     dcterms:isVersionOf <https://urpx-org.github.io/urpx/ontology> ;
     dcterms:issued "2026-04-29"^^xsd:date ;
-    dcat:version "0.2.0" ;
-    dcat:distribution [
-        a dcat:Distribution ;
-        dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl> ;
-        dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle>
-    ] .
+    owl:versionInfo "0.2.0" ;
+    dcat:distribution <https://urpx-org.github.io/urpx/releases/ontology/v0.2.0/ttl> .
+
+<https://urpx-org.github.io/urpx/releases/ontology/v0.2.0/ttl>
+    a dcat:Distribution ;
+    dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl> ;
+    dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> .
 
 
 # ============================================================================
