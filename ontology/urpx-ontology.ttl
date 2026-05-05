@@ -1017,11 +1017,11 @@ urpx:appliesInMunicipality a owl:ObjectProperty ;
 
 urpx:appliesInSeason a owl:ObjectProperty ;
     rdfs:label "Applies In Season"@en ;
-    rdfs:comment "Season(s) this time bracket applies to" ;
+    rdfs:comment "Season(s) this resource applies to" ;
     rdfs:domain [ a owl:Class ;
-        owl:unionOf ( urpx:TimeBracket urpx:Price urpx:PriceDefinition urpx:PriceSet ) ] ;
+        owl:unionOf ( urpx:TimeBracket urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:ServiceTiers ) ] ;
     rdfs:range urpx:Season ;
-    skos:note "URI references to seasons defined in PlanElements. Enables TimeBrackets to reference seasons without nesting. Multiple seasons can be referenced for brackets that apply across seasonal boundaries." .
+    skos:note "URI references to seasons defined in PlanElements. Enables TimeBrackets, pricing resources, and ServiceTiers groups to reference seasons without nesting. Multiple seasons can be referenced for resources that apply across seasonal boundaries." .
 
 urpx:appliesInServiceTerritory a owl:ObjectProperty ;
     rdfs:label "Applies In Service Territory"@en ;

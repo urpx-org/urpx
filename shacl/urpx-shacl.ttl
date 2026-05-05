@@ -4362,16 +4362,80 @@ urpx-shacl:ServiceTierShape
     sh:targetClass urpx:ServiceTier ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
+    sh:or (
+        [
+            sh:property [
+                sh:path urpx:lowerBound ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ] ;
+            sh:property [
+                sh:path urpx:lowerBoundOperator ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ] ;
+            sh:property [
+                sh:path urpx:upperBound ;
+                sh:maxCount 0 ;
+            ] ;
+            sh:property [
+                sh:path urpx:upperBoundOperator ;
+                sh:maxCount 0 ;
+            ] ;
+        ]
+        [
+            sh:property [
+                sh:path urpx:lowerBound ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ] ;
+            sh:property [
+                sh:path urpx:lowerBoundOperator ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ] ;
+            sh:property [
+                sh:path urpx:upperBound ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ] ;
+            sh:property [
+                sh:path urpx:upperBoundOperator ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ] ;
+        ]
+        [
+            sh:property [
+                sh:path urpx:lowerBound ;
+                sh:maxCount 0 ;
+            ] ;
+            sh:property [
+                sh:path urpx:lowerBoundOperator ;
+                sh:maxCount 0 ;
+            ] ;
+            sh:property [
+                sh:path urpx:upperBound ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ] ;
+            sh:property [
+                sh:path urpx:upperBoundOperator ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ] ;
+        ]
+    ) ;
     sh:property [
         sh:path urpx:lowerBound ;
         sh:datatype xsd:decimal ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:lowerBoundOperator ;
         sh:node urpx-shacl:OperatorValueShape ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -4389,13 +4453,13 @@ urpx-shacl:ServiceTierShape
     sh:property [
         sh:path urpx:upperBound ;
         sh:datatype xsd:decimal ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:upperBoundOperator ;
         sh:node urpx-shacl:OperatorValueShape ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] .
 
@@ -4405,6 +4469,11 @@ urpx-shacl:ServiceTiersShape
     sh:targetClass urpx:ServiceTiers ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
+    sh:property [
+        sh:path urpx:appliesInSeason ;
+        sh:class urpx:Season ;
+        sh:minCount 0 ;
+    ] ;
     sh:property [
         sh:path urpx:hasServiceTier ;
         sh:class urpx:ServiceTier ;
