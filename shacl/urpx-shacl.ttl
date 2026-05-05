@@ -150,53 +150,6 @@ urpx-shacl:ApplicabilityGroupShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:appliesForCustomerKind ;
-        sh:node urpx-shacl:CustomerKindValueShape ;
-        sh:minCount 0 ;
-    ] ;
-    sh:property [
-        sh:path urpx:appliesForCustomerSubKind ;
-        sh:node urpx-shacl:CustomerSubKindValueShape ;
-        sh:minCount 0 ;
-    ] ;
-    sh:property [
-        sh:path urpx:appliesInCounty ;
-        sh:class urpx:County ;
-        sh:minCount 0 ;
-    ] ;
-    sh:property [
-        sh:path urpx:appliesInMunicipality ;
-        sh:class urpx:Municipality ;
-        sh:minCount 0 ;
-    ] ;
-    sh:property [
-        sh:path urpx:appliesInServiceTerritory ;
-        sh:class urpx:ServiceTerritory ;
-        sh:minCount 0 ;
-    ] ;
-    sh:property [
-        sh:path urpx:appliesInState ;
-        sh:class urpx:State ;
-        sh:minCount 0 ;
-    ] ;
-    sh:property [
-        sh:path urpx:appliesInGeographicZone ;
-        sh:node urpx-shacl:GeographicZoneValueShape ;
-        sh:minCount 0 ;
-    ] ;
-    sh:property [
-        sh:path urpx:endUse ;
-        sh:node urpx-shacl:EndUseValueShape ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:geographicScope ;
-        sh:node urpx-shacl:GeographicScopeValueShape ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:hasConditionExpression ;
         sh:class urpx:ConditionExpression ;
         sh:minCount 0 ;
@@ -205,18 +158,6 @@ urpx-shacl:ApplicabilityGroupShape
     sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:serviceClassPattern ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:voltageLevel ;
-        sh:node urpx-shacl:VoltageLevelValueShape ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] .
@@ -4282,13 +4223,29 @@ urpx-shacl:ServicePointProfileShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:geographicScope ;
+        sh:node urpx-shacl:GeographicScopeValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:geographicZone ;
         sh:node urpx-shacl:GeographicZoneValueShape ;
         sh:minCount 0 ;
     ] ;
     sh:property [
+        sh:path urpx:hasCounty ;
+        sh:class urpx:County ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
         sh:path urpx:hasDistributedEnergyResource ;
         sh:class urpx:DistributedEnergyResource ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasMunicipality ;
+        sh:class urpx:Municipality ;
         sh:minCount 0 ;
     ] ;
     sh:property [
@@ -4301,6 +4258,16 @@ urpx-shacl:ServicePointProfileShape
         sh:node urpx-shacl:MeteringConfigurationValueShape ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasServiceTerritory ;
+        sh:class urpx:ServiceTerritory ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasState ;
+        sh:class urpx:State ;
+        sh:minCount 0 ;
     ] ;
     sh:property [
         sh:path urpx:loadProfile ;
@@ -4341,6 +4308,12 @@ urpx-shacl:ServicePointProfileShape
     sh:property [
         sh:path urpx:seasonalPattern ;
         sh:node urpx-shacl:SeasonalPatternValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:serviceClassPattern ;
+        sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
