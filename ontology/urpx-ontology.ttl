@@ -21,26 +21,28 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
 
-<https://urpx-org.github.io/urpx/ontology> a owl:Ontology ;
+<https://urpx-org.github.io/urpx/ontology>
+    a owl:Ontology ;
     rdfs:label "URPX Ontology"@en ;
     dcterms:creator "Klaar De Schepper, Una Smithsimon, Flux Tailor LLC" ;
     dcterms:description "URPX ontology for utility rate plan exchange" ;
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
     dcterms:modified "2026-04-29"^^xsd:date ;
     dcterms:title "URPX Ontology" ;
-    dcterms:hasVersion <https://urpx-org.github.io/urpx/releases/v0.2.0/ontology> ;
+    dcterms:hasVersion <https://urpx-org.github.io/urpx/releases/ontology/v0.2.0> ;
     owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl> .
 
-<https://urpx-org.github.io/urpx/releases/v0.2.0/ontology>
-    a dcat:Dataset ;
+<https://urpx-org.github.io/urpx/releases/ontology/v0.2.0>
+    a owl:Ontology ;
     dcterms:isVersionOf <https://urpx-org.github.io/urpx/ontology> ;
     dcterms:issued "2026-04-29"^^xsd:date ;
-    dcat:version "0.2.0" ;
-    dcat:distribution [
-        a dcat:Distribution ;
-        dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl> ;
-        dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle>
-    ] .
+    owl:versionInfo "0.2.0" ;
+    dcat:distribution <https://urpx-org.github.io/urpx/releases/ontology/v0.2.0/ttl> .
+
+<https://urpx-org.github.io/urpx/releases/ontology/v0.2.0/ttl>
+    a dcat:Distribution ;
+    dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl> ;
+    dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> .
 
 
 # ============================================================================
@@ -60,7 +62,7 @@ urpx:AdministrativeBoundary a owl:Class ;
 urpx:AlternativeDimension a owl:Class ;
     rdfs:label "Alternative Dimension"@en ;
     rdfs:comment "Dimension along which price set alternatives differ using ontology properties" ;
-    skos:note "Defines the customer profile attribute that determines which PriceSetAlternative applies. Uses actual ontology properties from ApplicabilityGroup (e.g., urpx:appliesInServiceTerritory, urpx:voltageLevel)." .
+    skos:note "Defines the customer profile attribute that determines which PriceSetAlternative applies. Uses actual ontology properties from Customer Profile or Service Point Profile (e.g., urpx:hasCustomerKind, urpx:voltageLevel). When no suitable URPX property exists, customDimensionProperty may provide a fallback identifier." .
 
 urpx:AlternativeDimensions a owl:Class ;
     rdfs:label "Alternative Dimensions"@en ;
@@ -816,7 +818,7 @@ urpx:PriceSourceValue a owl:Class ;
 urpx:ProgramTypeValue a owl:Class ;
     rdfs:label "Program Type Value"@en ;
     rdfs:comment "Program types enumeration values" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:demandResponseProgram urpx:energyEfficiencyProgram urpx:greenEnergyProgram urpx:lowIncomeProgram urpx:timeOfUseProgram urpx:communityChoiceAggregation urpx:communitySolar ) ] ;
+    owl:equivalentClass [ owl:oneOf ( urpx:demandResponseProgram urpx:energyEfficiencyProgram urpx:greenEnergyProgram urpx:lowIncomeProgram urpx:moderateIncomeProgram urpx:timeOfUseProgram urpx:communityChoiceAggregation urpx:communitySolar ) ] ;
     skos:note "Enumeration class for utility program categorization. standardized program type definitions including CCA and community solar." .
     
 urpx:PublicationTypeValue a owl:Class ;
@@ -1001,62 +1003,13 @@ urpx:applicableToRatePlanVersion a owl:ObjectProperty ;
     rdfs:range urpx:RatePlanVersion ;
     skos:note "Defines which specific rate plan versions are compatible with this modifier version." .
 
-urpx:appliesInCounty a owl:ObjectProperty ;
-    rdfs:label "Applies In County"@en ;
-    rdfs:comment "Links applicability group to county-level geographic scope" ;
-    rdfs:domain urpx:ApplicabilityGroup ;
-    rdfs:range urpx:County ;
-    skos:note "Defines county-level applicability for statement prices." .
-
-urpx:appliesInMunicipality a owl:ObjectProperty ;
-    rdfs:label "Applies In Municipality"@en ;
-    rdfs:comment "Links applicability group to municipality-level geographic scope" ;
-    rdfs:domain urpx:ApplicabilityGroup ;
-    rdfs:range urpx:Municipality ;
-    skos:note "Defines municipality-level applicability for statement prices. Most specific geographic level." .
-
 urpx:appliesInSeason a owl:ObjectProperty ;
     rdfs:label "Applies In Season"@en ;
-    rdfs:comment "Season(s) this time bracket applies to" ;
+    rdfs:comment "Season(s) this resource applies to" ;
     rdfs:domain [ a owl:Class ;
-        owl:unionOf ( urpx:TimeBracket urpx:Price urpx:PriceDefinition urpx:PriceSet ) ] ;
+        owl:unionOf ( urpx:TimeBracket urpx:Price urpx:PriceDefinition urpx:PriceSetAlternative urpx:PriceSet urpx:ServiceTiers ) ] ;
     rdfs:range urpx:Season ;
-    skos:note "URI references to seasons defined in PlanElements. Enables TimeBrackets to reference seasons without nesting. Multiple seasons can be referenced for brackets that apply across seasonal boundaries." .
-
-urpx:appliesInServiceTerritory a owl:ObjectProperty ;
-    rdfs:label "Applies In Service Territory"@en ;
-    rdfs:comment "Links applicability group to service territory geographic scope" ;
-    rdfs:domain urpx:ApplicabilityGroup ;
-    rdfs:range urpx:ServiceTerritory ;
-    skos:note "Defines utility service territory applicability for statement prices." .
-
-urpx:appliesInState a owl:ObjectProperty ;
-    rdfs:label "Applies In State"@en ;
-    rdfs:comment "Links applicability group to state-level geographic scope" ;
-    rdfs:domain urpx:ApplicabilityGroup ;
-    rdfs:range urpx:State ;
-    skos:note "Defines state-level applicability for statement prices." .
-
-urpx:appliesInGeographicZone a owl:ObjectProperty ;
-    rdfs:label "Applies In Zone"@en ;
-    rdfs:comment "Links applicability group to geographic zone" ;
-    rdfs:domain urpx:ApplicabilityGroup ;
-    rdfs:range urpx:GeographicZoneValue ;
-    skos:note "Defines geographic zone applicability for prices. Zones can overlap with service territories but represent different geographic classifications such as wholesale market zones, climate zones, or utility-defined service areas." .
-
-urpx:appliesForCustomerKind a owl:ObjectProperty ;
-    rdfs:label "Applies For Customer Kind"@en ;
-    rdfs:comment "Links applicability group to customer kind classification" ;
-    rdfs:domain urpx:ApplicabilityGroup ;
-    rdfs:range urpx:CustomerKindValue ;
-    skos:note "Defines customer kind applicability for prices. Enables price filtering based on primary customer classification (residential, commercial, industrial, etc.)." .
-
-urpx:appliesForCustomerSubKind a owl:ObjectProperty ;
-    rdfs:label "Applies For Customer Sub Kind"@en ;
-    rdfs:comment "Links applicability group to customer sub-kind classification" ;
-    rdfs:domain urpx:ApplicabilityGroup ;
-    rdfs:range urpx:CustomerSubKindValue ;
-    skos:note "Defines customer sub-kind applicability for prices. Enables price filtering based on detailed customer subcategory classification." .
+    skos:note "URI references to seasons defined in PlanElements. Enables TimeBrackets, pricing resources, and ServiceTiers groups to reference seasons without nesting. Multiple seasons can be referenced for resources that apply across seasonal boundaries." .
 
 urpx:approves a owl:ObjectProperty ;
     rdfs:label "Approves"@en ;
@@ -1266,6 +1219,13 @@ urpx:customConditionProperty a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     skos:note "Fallback-only property name for custom conditions when no suitable URPX property exists." .
 
+urpx:customDimensionProperty a owl:DatatypeProperty ;
+    rdfs:label "Custom Dimension Property"@en ;
+    rdfs:comment "Fallback custom property identifier for alternative dimensions in human-readable form"@en ;
+    rdfs:domain urpx:AlternativeDimension ;
+    rdfs:range xsd:string ;
+    skos:note "Fallback-only property name for alternative dimensions when no suitable URPX property exists." .
+
 urpx:customerChoice a owl:ObjectProperty ;
     rdfs:label "Customer Choice"@en ;
     rdfs:comment "Indicates whether enrollment in this rate plan version is voluntary or mandatory" ;
@@ -1453,7 +1413,7 @@ urpx:dimensionProperty a owl:DatatypeProperty ;
     rdfs:comment "URI of the ontology property this dimension represents" ;
     rdfs:domain urpx:AlternativeDimension ;
     rdfs:range xsd:anyURI ;
-    skos:note "References actual property like urpx:appliesInServiceTerritory, urpx:voltageLevel, urpx:billingCycleId. Enables type-safe validation." .
+    skos:note "References actual property like urpx:hasCustomerKind, urpx:voltageLevel, urpx:billingCycleId. Enables type-safe validation." .
 
 urpx:durationValue a owl:DatatypeProperty ;
     rdfs:label "Duration Value"@en ;
@@ -1512,8 +1472,7 @@ urpx:endTime a owl:DatatypeProperty ;
 urpx:endUse a owl:ObjectProperty ;
     rdfs:label "End Use"@en ;
     rdfs:comment "End use classification for electric service (heating vs non-heating)" ;
-    rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:ApplicabilityGroup urpx:ServicePointProfile ) ] ;
+    rdfs:domain urpx:ServicePointProfile ;
     rdfs:range urpx:EndUseValue ;
     skos:note "End use classification enumeration for electric service categorization. Distinguishes heating from non-heating electric service for rate application. Used in ProfileAlternative for end-use-based rate variations and ServicePointProfile for site characterization." .
 
@@ -1622,10 +1581,10 @@ urpx:generalRuleID a owl:DatatypeProperty ;
 
 urpx:geographicScope a owl:ObjectProperty ;
     rdfs:label "Geographic Scope"@en ;
-    rdfs:comment "Geographic scope of applicability (ISO 3166 admin levels)" ;
-    rdfs:domain urpx:ApplicabilityGroup ;
+    rdfs:comment "Geographic scope of applicability or eligibility (ISO 3166 admin levels)" ;
+    rdfs:domain urpx:ServicePointProfile ;
     rdfs:range urpx:GeographicScopeValue ;
-    skos:note "ISO 3166 admin levels enumeration for geographic scope classification. with standardized administrative level definitions." .
+    skos:note "ISO 3166 admin levels enumeration for geographic scope classification with standardized administrative level definitions." .
 
 urpx:geographicZone a owl:ObjectProperty ;
     rdfs:label "Geographic Zone"@en ;
@@ -1723,6 +1682,13 @@ urpx:hasConditionExpression a owl:ObjectProperty ;
             owl:unionOf ( urpx:EligibilityRule urpx:ApplicabilityRule urpx:ApplicabilityGroup urpx:ProfileAlternative ) ] ;
     rdfs:range urpx:ConditionExpression ;
     skos:note "The rule-level entry point for structured condition applicability." .
+
+urpx:hasCounty a owl:ObjectProperty ;
+    rdfs:label "Has County"@en ;
+    rdfs:comment "Links service point profile to county-level geographic scope" ;
+    rdfs:domain urpx:ServicePointProfile ;
+    rdfs:range urpx:County ;
+    skos:note "Defines county-level eligibility and applicability through use in service point profile and within ConditionExpression." .
 
 urpx:hasCustomerKind a owl:ObjectProperty ;
     rdfs:label "Has Customer Kind"@en ;
@@ -1875,6 +1841,13 @@ urpx:hasModifierVersionOptions a owl:ObjectProperty ;
     rdfs:domain urpx:RatePlanVersion ;
     rdfs:range urpx:RatePlanModifierVersion ;
     skos:note "Links a rate plan version to one or more applicable rate plan modifier versions for version level option modeling." .
+
+urpx:hasMunicipality a owl:ObjectProperty ;
+    rdfs:label "Has Municipality"@en ;
+    rdfs:comment "Links service point profile to municipality-level geographic scope" ;
+    rdfs:domain urpx:ServicePointProfile ;
+    rdfs:range urpx:Municipality ;
+    skos:note "Defines municipality-level eligibility and applicability through use in service point profile and within ConditionExpression. Most specific geographic level." .
 
 urpx:hasName a owl:ObjectProperty ;
     rdfs:label "Has Name"@en ;
@@ -2052,6 +2025,13 @@ urpx:hasServicePointProfile a owl:ObjectProperty ;
     rdfs:range urpx:ServicePointProfile ;
     skos:note "Parallel property with hasCustomerProfile. Evaluates eligibility rules based on physical service point characteristics. Used for rate plan qualification and price selection based on service delivery point attributes." .
 
+urpx:hasServiceTerritory a owl:ObjectProperty ;
+    rdfs:label "Applies In Service Territory"@en ;
+    rdfs:comment "Links service point profile to service territory geographic scope" ;
+    rdfs:domain urpx:ServicePointProfile ;
+    rdfs:range urpx:ServiceTerritory ;
+    skos:note "Defines utility service territory eligibility and applicability through use in service point profile and within ConditionExpression." .
+
 urpx:hasServiceTier a owl:ObjectProperty ;
     rdfs:label "Has Service Tier"@en ;
     rdfs:comment "Service tier definitions for tiered pricing structures" ;
@@ -2065,6 +2045,13 @@ urpx:hasServiceTiers a owl:ObjectProperty ;
     rdfs:domain urpx:BillingModel ;
     rdfs:range urpx:ServiceTiers ;
     skos:note "Enables definition of multiple service tiers within a billing model for complex tiered pricing structures." .
+
+urpx:hasState a owl:ObjectProperty ;
+    rdfs:label "Applies In State"@en ;
+    rdfs:comment "Links service point profile to state-level geographic scope" ;
+    rdfs:domain urpx:ServicePointProfile ;
+    rdfs:range urpx:State ;
+    skos:note "Defines state-level eligibility and applicability through use in service point profile and within ConditionExpression." .
 
 urpx:hasTariffBookReference a owl:ObjectProperty ;
     rdfs:label "Has Tariff Book Reference"@en ;
@@ -2884,8 +2871,8 @@ urpx:serviceClassName a owl:DatatypeProperty ;
 
 urpx:serviceClassPattern a owl:DatatypeProperty ;
     rdfs:label "Service Class Pattern"@en ;
-    rdfs:comment "Service class pattern for applicability matching" ;
-    rdfs:domain urpx:ApplicabilityGroup ;
+    rdfs:comment "Service class pattern for applicability and eligibility matching" ;
+    rdfs:domain urpx:ServicePointProfile ;
     rdfs:range xsd:string ;
     skos:note "Supports regex patterns like 'SC 1 Rate II' or 'SC [1-3] Rate.*'." .
 
@@ -3137,11 +3124,10 @@ urpx:version a owl:DatatypeProperty ;
 
 urpx:voltageLevel a owl:ObjectProperty ;
     rdfs:label "Voltage Level"@en ;
-    rdfs:comment "Service voltage level classification for rate applicability and service point profiles" ;
-    rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:ApplicabilityGroup urpx:ServicePointProfile ) ] ;
+    rdfs:comment "Service voltage level classification for service point profiles" ;
+    rdfs:domain urpx:ServicePointProfile ;
     rdfs:range urpx:VoltageLevelValue ;
-    skos:note "Voltage level enumeration used for price applicability rules (ApplicabilityGroup) and service point voltage specification (ServicePointProfile). Standardized voltage class definitions enable consistent voltage-based rate application across utilities." .
+    skos:note "Voltage level enumeration used for service point voltage specification (ServicePointProfile) and price applicability rules (through ConditionExpression on ApplicabilityRule or ApplicabilityGroup). Standardized voltage class definitions enable consistent voltage-based rate application across utilities." .
 
 urpx:windCapacity a owl:DatatypeProperty ;
     rdfs:label "Wind Capacity"@en ;
@@ -5661,6 +5647,11 @@ urpx:lowIncomeProgram rdf:type urpx:ProgramTypeValue ;
     rdfs:label "Low Income Program"@en ;
     skos:definition "Low income assistance program for customer financial support" ;
     skos:prefLabel "Low Income" .
+
+urpx:moderateIncomeProgram rdf:type urpx:ProgramTypeValue ;
+    rdfs:label "Moderate Income Program"@en ;
+    skos:definition "Moderate income assistance program for customer financial support" ;
+    skos:prefLabel "Moderate Income" .
 
 urpx:timeOfUseProgram rdf:type urpx:ProgramTypeValue ;
     rdfs:label "Time of Use Program"@en ;

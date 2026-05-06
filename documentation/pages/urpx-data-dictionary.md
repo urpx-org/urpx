@@ -839,12 +839,12 @@ apply to that measurement.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
-| `urpx:lowerBound` | Datatype | 1..1 | `xsd:decimal` | Lower threshold value for tier applicability |
-| `urpx:lowerBoundOperator` | Datatype | 1..1 | — | Comparison operator for lower bound evaluation |
+| `urpx:lowerBound` | Datatype | 0..1 | `xsd:decimal` | Lower threshold value for tier applicability |
+| `urpx:lowerBoundOperator` | Datatype | 0..1 | — | Comparison operator for lower bound evaluation |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
 | `urpx:serviceTierNumber` | Datatype | 1..1 | `xsd:integer` | Integer reference to service tier for upfront-defined tiers |
-| `urpx:upperBound` | Datatype | 1..1 | `xsd:decimal` | Upper threshold value for tier applicability |
-| `urpx:upperBoundOperator` | Datatype | 1..1 | — | Comparison operator for upper bound evaluation |
+| `urpx:upperBound` | Datatype | 0..1 | `xsd:decimal` | Upper threshold value for tier applicability |
+| `urpx:upperBoundOperator` | Datatype | 0..1 | — | Comparison operator for upper bound evaluation |
 
 ---
 
@@ -859,6 +859,7 @@ apply to that measurement.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
+| `urpx:appliesInSeason` | Object | 0..* | [`Season`](#urpxseason) | Season(s) this service tier group applies to |
 | `urpx:hasServiceTier` | Object | 1..* | [`ServiceTier`](#urpxservicetier) | Service tier definitions for tiered pricing structures |
 | `urpx:referencesMetricInput` | Object | 0..* | [`MetricInput`](#urpxmetricinput) | Links to metric inputs for measurement and profile metric input definitions |
 | `urpx:referencesProfileAlternative` | Object | 0..1 | [`ProfileAlternative`](#urpxprofilealternative) | IRI reference linking a price set alternative or price definition to its applicable ProfileAlternative. This property connects the price storage layer (Prices container) to the dimension definition layer (ProfileAlternatives), enabling the price set to indicate which dimension configuration it applies to. |
@@ -1427,8 +1428,9 @@ installations, and connection type.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
+| `urpx:customDimensionProperty` | Datatype | 0..1 | `xsd:string` | Fallback custom property identifier used when no suitable URPX-vocabulary dimension exists |
 | `urpx:dimensionDisplayName` | Datatype | 1..1 | `xsd:string` | Human-readable name for UI display |
-| `urpx:dimensionProperty` | Datatype | 1..1 | `xsd:anyURI` | URI of the ontology property this dimension represents |
+| `urpx:dimensionProperty` | Datatype | 0..1 | `xsd:anyURI` | URI of the ontology property this dimension represents when modeled in URPX vocabulary |
 | `urpx:hasPossibleValues` | Datatype | 1..* | — | List of possible values |
 | `urpx:referencesMetricInput` | Object | 0..* | [`MetricInput`](#urpxmetricinput) | Links to metric inputs for measurement and profile metric input definitions |
 
