@@ -41,6 +41,7 @@
 <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.2.0/ttl>
     a dcat:Distribution ;
     dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.2.0/shacl/urpx-shacl.ttl> ;
+    dcat:downloadURL <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.2.0/ttl/urpx-shacl.ttl> ;
     dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> .
 
 # ============================================================================
