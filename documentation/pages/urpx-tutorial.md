@@ -97,6 +97,38 @@ Every price may belong to one billPortion:
 
 ---
 
+### What We're Building
+
+This tutorial builds a rate plan from the outside in. Here's the structure:
+
+```mermaid
+%%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
+
+graph TB
+    Doc["<b>URPXDocument</b><br/>Root container<br/><i>Step 1</i>"]
+    RP["<b>RatePlan</b><br/>Permanent plan identity<br/><i>Step 2</i>"]
+    RPV["<b>RatePlanVersion</b><br/>Time-bound instance<br/><i>Step 2</i>"]
+    PE["<b>PlanElements</b><br/>Seasons, metrics, billing<br/><i>Step 2</i>"]
+    Prices["<b>Prices</b><br/>All pricing data<br/><i>Steps 3–6</i>"]
+
+    Doc -->|"hasRatePlan"| RP
+    RP -->|"hasRatePlanVersion"| RPV
+    RPV -->|"hasPlanElements"| PE
+    RPV -->|"hasPrices"| Prices
+
+    classDef docClass fill:#77AADD,stroke:#5588BB,stroke-width:3px,color:#fff
+    classDef planClass fill:#44BB99,stroke:#228877,stroke-width:2px,color:#fff
+    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#333
+
+    class Doc docClass
+    class RP,RPV planClass
+    class PE,Prices priceClass
+```
+
+We'll build each piece in the steps below, starting with the URPXDocument wrapper.
+
+---
+
 ## Creating a Simple Rate Plan
 
 Let's build a basic residential rate plan step by step using JSON-LD.
@@ -194,6 +226,43 @@ Let's build a basic residential rate plan step by step using JSON-LD.
 }
 ```
 
+### How Prices Work
+
+Every Price in URPX has three classification dimensions plus a value:
+
+```mermaid
+%%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
+
+graph LR
+    Price["<b>Price</b>"]
+
+    subgraph Classification["Classification"]
+        direction TB
+        CT["<b>chargeType</b><br/>What kind of charge?<br/><i>minimumCharge · usageCharge<br/>demandDirect · taxState</i>"]
+        CC["<b>chargeCategory</b><br/>What business purpose?<br/><i>serviceCharge · auxiliaryCharge<br/>infrastructure · taxes</i>"]
+        BP["<b>billPortion</b><br/>Which bill section?<br/><i>deliveryPortion<br/>supplyPortion · bundledPortion</i>"]
+    end
+
+    subgraph Value["Value (exactly one)"]
+        direction TB
+        Amt["<b>amount</b><br/>Fixed: $18.75/month"]
+        UP["<b>unitPrice</b><br/>Per-unit: $0.12/kWh"]
+    end
+
+    Price --> Classification
+    Price --> Value
+
+    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:3px,color:#333
+    classDef classifyClass fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#fff
+    classDef valueClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#333
+
+    class Price priceClass
+    class CT,CC,BP classifyClass
+    class Amt,UP valueClass
+```
+
+The minimum price below uses `amount` (fixed). The energy price in Step 5 uses `unitPrice` (per-kWh).
+
 ### Step 4: Add Minimum Price
 
 ```json
@@ -245,6 +314,50 @@ Let's build a basic residential rate plan step by step using JSON-LD.
   "basedOnPrice": { "@id": "ex:price-energy" }
 }
 ```
+
+---
+
+### Understanding MetricInput
+
+Prices don't measure things directly — they reference a MetricInput that defines what's being measured. This keeps measurement definitions centralized and reusable:
+
+```mermaid
+%%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
+
+graph TB
+    PE["<b>PlanElements</b>"]
+
+    MI1["<b>MetricInput</b><br/>Energy Consumption<br/><i>type: measured</i>"]
+    MI2["<b>MetricInput</b><br/>Peak Demand<br/><i>type: measured</i>"]
+
+    MS1["<b>MetricSpecification</b><br/>commodity: electricity<br/>kind: energy<br/>unit: kWh"]
+    MS2["<b>MetricSpecification</b><br/>commodity: electricity<br/>kind: demand<br/>unit: kW<br/>aggregation: maximum"]
+
+    P1["Price<br/>Energy: $0.12/kWh"]
+    P2["Price<br/>Demand: $8.50/kW"]
+    P3["Price<br/>Power Cost Adj: $0.025/kWh"]
+
+    PE -->|"hasMetricInput"| MI1
+    PE -->|"hasMetricInput"| MI2
+    MI1 -->|"hasMetricSpecification"| MS1
+    MI2 -->|"hasMetricSpecification"| MS2
+
+    P1 -.->|"referencesMetricInput"| MI1
+    P3 -.->|"referencesMetricInput"| MI1
+    P2 -.->|"referencesMetricInput"| MI2
+
+    classDef elemClass fill:#44BB99,stroke:#228877,stroke-width:2px,color:#fff
+    classDef metricClass fill:#77AADD,stroke:#5588BB,stroke-width:2px,color:#fff
+    classDef specClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#333
+    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#333
+
+    class PE elemClass
+    class MI1,MI2 metricClass
+    class MS1,MS2 specClass
+    class P1,P2,P3 priceClass
+```
+
+Notice how both the energy price and the power cost adjustment reference the **same** MetricInput. Define once, reference everywhere.
 
 ---
 
@@ -370,6 +483,67 @@ Delivery system prices separated from generation costs.
   "referencesMetricInput": {"@id": "ex:metric-input-energy"}
 }
 ```
+
+---
+
+### TOU Structure Overview
+
+Time-of-use pricing uses a hierarchy that connects scheduling rules to prices:
+
+```mermaid
+%%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
+
+graph TB
+    PE["<b>PlanElements</b>"]
+    Season["<b>Season</b><br/>Summer<br/>Jun 1 – Sep 1"]
+    HC["<b>HolidayCalendar</b><br/>US Federal Holidays"]
+    BM["<b>BillingModel</b>"]
+
+    Schedule["<b>TOUSchedule</b><br/>Summer TOU Schedule"]
+    T1["<b>TOUTier</b> #1<br/>Peak"]
+    T2["<b>TOUTier</b> #2<br/>Off-Peak"]
+    P1["<b>TOUPeriod</b> #1<br/>Summer Peak"]
+    P2["<b>TOUPeriod</b> #2<br/>Summer Off-Peak"]
+    TB1["<b>TimeBracket</b><br/>14:00–19:00<br/>weekdays only"]
+    TB2["<b>TimeBracket</b><br/>All other hours"]
+
+    Price1["Price<br/>Peak: $0.285/kWh<br/>touPeriodNumber: 1"]
+    Price2["Price<br/>Off-Peak: $0.075/kWh<br/>touPeriodNumber: 2"]
+
+    PE -->|hasSeasons| Season
+    PE -->|hasHolidayCalendar| HC
+    PE -->|hasBillingModel| BM
+    BM -->|hasTOUSchedule| Schedule
+    Schedule -->|hasTOUTier| T1
+    Schedule -->|hasTOUTier| T2
+    T1 -->|hasTOUPeriod| P1
+    T2 -->|hasTOUPeriod| P2
+    P1 -->|hasTimeBracket| TB1
+    P2 -->|hasTimeBracket| TB2
+
+    TB1 -.->|appliesInSeason| Season
+    Price1 -.->|"references"| P1
+    Price2 -.->|"references"| P2
+
+    classDef elemClass fill:#44BB99,stroke:#228877,stroke-width:2px,color:#fff
+    classDef schedClass fill:#77AADD,stroke:#5588BB,stroke-width:3px,color:#fff
+    classDef tierClass fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#fff
+    classDef periodClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#333
+    classDef bracketClass fill:#FFAABB,stroke:#DD8899,stroke-width:2px,color:#333
+    classDef seasonClass fill:#BBCC33,stroke:#99AA11,stroke-width:2px,color:#333
+    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#333,stroke-dasharray: 5 5
+
+    class PE elemClass
+    class BM elemClass
+    class Season,HC seasonClass
+    class Schedule schedClass
+    class T1,T2 tierClass
+    class P1,P2 periodClass
+    class TB1,TB2 bracketClass
+    class Price1,Price2 priceClass
+```
+
+Prices connect to TOU periods via `touPeriodNumber` — a simple integer reference rather than a nested relationship. The JSON-LD below builds this structure from the inside out.
 
 ---
 
@@ -547,6 +721,71 @@ Time-of-use rates vary pricing based on time of day, day of week, and season.
   }
 }
 ```
+
+---
+
+### What You've Built
+
+Here's the complete structure of the rate plan you've assembled across this tutorial:
+
+```mermaid
+%%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
+
+graph TB
+    Doc["<b>URPXDocument</b>"]
+    RP["<b>RatePlan</b><br/>TUTORIAL-BASIC-RES-001"]
+    RPV["<b>RatePlanVersion</b><br/>Effective: 2025-01-01"]
+
+    subgraph Elements["PlanElements"]
+        direction LR
+        Season["Season<br/>Summer"]
+        HC["HolidayCalendar"]
+        BM["BillingModel"]
+        MI1["MetricInput<br/>Energy (kWh)"]
+        MI2["MetricInput<br/>Demand (kW)"]
+    end
+
+    subgraph TOU["TOU via BillingModel"]
+        direction LR
+        Sched["TOUSchedule"]
+        Peak["TOUTier: Peak<br/>14:00–19:00 weekdays"]
+        OffPeak["TOUTier: Off-Peak<br/>All other hours"]
+    end
+
+    subgraph Pricing["Prices"]
+        direction TB
+        PS["PriceSet"]
+        P1["minimumCharge<br/>$18.75/mo"]
+        P2["usageCharge<br/>$0.12/kWh"]
+        P3["demandDirect<br/>$8.50/kW"]
+        P4["adjustmentPowerCost<br/>$0.025/kWh"]
+        P5["distributionCharge<br/>$0.058/kWh"]
+        P6["taxState<br/>8.25%"]
+        P7["Peak Energy<br/>$0.285/kWh"]
+        P8["Off-Peak Energy<br/>$0.075/kWh"]
+    end
+
+    Doc -->|hasRatePlan| RP
+    RP -->|hasRatePlanVersion| RPV
+    RPV --> Elements
+    RPV --> Pricing
+    BM --> TOU
+    PS --> P1 & P2 & P3 & P4 & P5 & P6 & P7 & P8
+
+    classDef docClass fill:#77AADD,stroke:#5588BB,stroke-width:3px,color:#fff
+    classDef planClass fill:#44BB99,stroke:#228877,stroke-width:2px,color:#fff
+    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#333
+    classDef touClass fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#fff
+    classDef elemClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#333
+
+    class Doc docClass
+    class RP,RPV planClass
+    class Season,HC,BM,MI1,MI2 elemClass
+    class Sched,Peak,OffPeak touClass
+    class PS,P1,P2,P3,P4,P5,P6,P7,P8 priceClass
+```
+
+Each price references the measurement definitions in PlanElements, and TOU prices reference periods by `touPeriodNumber`.
 
 ---
 
