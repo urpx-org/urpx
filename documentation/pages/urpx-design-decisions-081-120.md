@@ -7,7 +7,7 @@
 
 **Version:** 1.0
 **Created:** 2026-04-07
-**Last Updated:** 2026-04-29
+**Last Updated:** 2026-05-07
 
 > **Note:** Design decisions reference the original modular ontology files (urpx-core-ontology.ttl, urpx-profile.ttl, urpx-organization.ttl, urpx-geography.ttl, urpx-charge-classification.ttl). As of v0.1.1, these files have been consolidated into a single `ontology/urpx-ontology.ttl` file.
 
@@ -75,6 +75,11 @@ Quick links to all design decisions:
 - ✅ [Decision #104: Structured ConditionExpression Consolidation and Scenario-Owned Eligibility Inputs](#decision-104)
 - ✅ [Decision #105: SHACL Enforcement of Structured Eligibility and Minimum Scenario Inputs](#decision-105)
 - ✅ [Decision #106: PriorRatePlan ServiceRole Coverage](#decision-106)
+- ✅ [Decision #107: AlternativeDimension Fallback Custom Property Identifier](#decision-107)
+- ✅ [Decision #108: Moderate Income Program Type Enumeration Expansion](#decision-108)
+- ✅ [Decision #109: Applicability Selectors Consolidated onto Profile Properties](#decision-109)
+- ✅ [Decision #110: Seasonal ServiceTiers and Flexible Open-Ended Tier Bounds](#decision-110)
+- ✅ [Decision #111: ServiceBracket Boundary Model for Contextual Tier Variants](#decision-111)
 
 ---
 
@@ -1655,3 +1660,258 @@ Extend the existing `serviceRole` property rather than inventing a prior-plan-sp
 
 **References:**
 - Implemented in the 2026-04-29 ontology and SHACL update
+
+---
+
+<a id="decision-107"></a>
+### 🔗 Decision #107: AlternativeDimension Fallback Custom Property Identifier
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-05-04
+- **Issue:** [urpx-org/urpx#30](https://github.com/urpx-org/urpx/issues/30)
+- **Category:** Architecture, Validation
+- **Impact:** Medium - Additive ontology and SHACL expansion for alternative dimensions outside the current URPX vocabulary
+
+**Context:**
+`AlternativeDimension` originally required `dimensionProperty` to point to a URI for an existing URPX property. That worked for dimensions already modeled in the ontology, but it blocked alternative dimensions that still needed a stable identifier even when no suitable URPX property existed yet.
+
+**Decision:**
+Add a fallback string identifier while preserving the URI-based pattern when it is available:
+
+1. Add `urpx:customDimensionProperty` on `AlternativeDimension`
+2. Allow `dimensionProperty` or `customDimensionProperty`
+3. Require exactly one of the two in SHACL
+
+**Alternatives Considered:**
+
+1. **Add an explicit fallback property** ⭐ **SELECTED**
+   - ✅ Preserves the URI-based path for modeled dimensions
+   - ✅ Supports dimensions that are not yet first-class URPX properties
+   - ✅ Keeps fallback usage explicit and machine-readable
+
+2. **Require only `dimensionProperty`**
+   - ✅ Keeps a single representation
+   - ❌ Blocks legitimate alternative dimensions that lack a suitable URPX term
+   - ❌ Pushes producers toward ad hoc workarounds outside the shared model
+
+**Rationale:**
+- Some alternative dimensions need stable identifiers before the ontology grows a canonical property for them
+- A dedicated fallback property is clearer than overloading the URI field with non-URI content
+- SHACL should ensure producers choose one representation per dimension rather than mixing both
+
+**Implementation Details:**
+- Added `urpx:customDimensionProperty` to [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
+- Updated `AlternativeDimensionShape` in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl) so exactly one of `dimensionProperty` or `customDimensionProperty` must be present
+
+**Impact Assessment:**
+- **Positive**: Alternative dimensions can now be modeled even when the ontology does not yet have a canonical property
+- **Breaking Change**: None - existing URI-based dimensions remain valid
+- **Requirements**: Producers should use `dimensionProperty` when a suitable URPX property exists and reserve `customDimensionProperty` for fallback cases
+
+**References:**
+- Commit: `c9d974f`
+- Issue: [urpx-org/urpx#30](https://github.com/urpx-org/urpx/issues/30)
+
+---
+
+<a id="decision-108"></a>
+### 🔗 Decision #108: Moderate Income Program Type Enumeration Expansion
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-05-04
+- **Issue:** [urpx-org/urpx#10](https://github.com/urpx-org/urpx/issues/10)
+- **Category:** Standards Compliance, Validation
+- **Impact:** Low - Additive controlled-vocabulary expansion for program categorization
+
+**Context:**
+`ProgramTypeValue` included `lowIncomeProgram` but did not provide a separate value for moderate-income assistance programs. That forced producers either to collapse distinct program types together or to omit the distinction entirely.
+
+**Decision:**
+Add `urpx:moderateIncomeProgram` as a first-class `ProgramTypeValue` and allow it in SHACL validation.
+
+**Alternatives Considered:**
+
+1. **Add a dedicated moderate-income value** ⭐ **SELECTED**
+   - ✅ Preserves the distinction between low-income and moderate-income assistance programs
+   - ✅ Keeps producers within the shared controlled vocabulary
+   - ✅ Requires only an additive enum update
+
+2. **Reuse `lowIncomeProgram` for both cases**
+   - ✅ Avoids vocabulary expansion
+   - ❌ Loses a meaningful program-classification distinction
+   - ❌ Makes downstream filtering and analysis less accurate
+
+**Rationale:**
+- Moderate-income assistance is a distinct program category in real utility program catalogs
+- A controlled vocabulary is more useful when it captures operationally meaningful distinctions
+- The change is additive and straightforward for producers and validators
+
+**Implementation Details:**
+- Added `urpx:moderateIncomeProgram` to the `ProgramTypeValue` enumeration in [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
+- Added `urpx:moderateIncomeProgram` to `ProgramTypeValueShape` in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+
+**Impact Assessment:**
+- **Positive**: Better fidelity for assistance-program categorization
+- **Breaking Change**: None - existing values remain valid
+- **Requirements**: Producers may use `moderateIncomeProgram` where a program targets moderate-income customers specifically
+
+**References:**
+- Commit: `c9d974f`
+- Issue: [urpx-org/urpx#10](https://github.com/urpx-org/urpx/issues/10)
+
+---
+
+<a id="decision-109"></a>
+### 🔗 Decision #109: Applicability Selectors Consolidated onto Profile Properties
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-05-05
+- **Issue:** Applicability selectors were split between rule nodes and profile nodes, creating duplicate ways to model the same facts
+- **Category:** Architecture, Validation
+- **Impact:** High - Breaking removal of direct `ApplicabilityGroup` selector properties in favor of profile-based condition inputs
+
+**Context:**
+After the condition-model consolidation work, URPX still exposed two overlapping ways to express many applicability facts. Geographic, end-use, service-class, and voltage selectors could be attached directly to `ApplicabilityGroup`, but lacked the flexibility ConditionExpression provides.
+
+**Decision:**
+Use profile properties as the canonical selector surface and retire the direct applicability-group selectors:
+
+1. Remove direct selector properties from `ApplicabilityGroup`
+2. Express applicability through `ConditionExpression` against `CustomerProfile` and `ServicePointProfile` properties
+3. Add service-point geography properties where no reusable profile property already existed
+
+**Alternatives Considered:**
+
+1. **Consolidate selectors onto profile properties** ⭐ **SELECTED**
+   - ✅ Gives applicability and eligibility one shared property surface
+   - ✅ Reduces duplicated vocabulary and guidance
+   - ✅ Aligns alternative-dimension references with real profile properties
+
+2. **Keep direct `ApplicabilityGroup` selectors alongside profile properties**
+   - ✅ Avoids migration work
+   - ❌ Preserves duplicate modeling paths for the same facts
+   - ❌ Makes validation and examples harder to keep consistent
+
+**Rationale:**
+- Applicability selectors should reuse the same profile facts that eligibility logic already evaluates
+- One property surface is easier to document, validate, and query than overlapping rule-local variants
+- Adding a few missing service-point geography properties is lighter than maintaining a parallel applicability-only vocabulary
+
+**Implementation Details:**
+- Removed direct applicability selector properties such as `appliesInCounty`, `appliesInMunicipality`, `appliesInServiceTerritory`, `appliesInState`, and `appliesInGeographicZone`
+- Added `hasCounty`, `hasMunicipality`, `hasServiceTerritory`, and `hasState` on `ServicePointProfile`
+- Moved `geographicScope`, `geographicZone`, `endUse`, `serviceClassPattern`, and `voltageLevel` onto the profile-based surface and updated `ApplicabilityGroupShape` / `ServicePointProfileShape` in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+
+**Impact Assessment:**
+- **Positive**: Cleaner applicability modeling, fewer duplicate selectors, and better alignment with the condition-expression architecture
+- **Breaking Change**: Yes - data using the retired direct `ApplicabilityGroup` selector properties must migrate
+- **Requirements**: Producers should express applicability through condition expressions over `CustomerProfile` and `ServicePointProfile` properties rather than direct `ApplicabilityGroup` selectors
+
+**References:**
+- Commit: `b682d31`
+- Related Decision: #104 (Structured ConditionExpression Consolidation and Scenario-Owned Eligibility Inputs)
+
+---
+
+<a id="decision-110"></a>
+### 🔗 Decision #110: Seasonal ServiceTiers and Flexible Open-Ended Tier Bounds
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-05-05
+- **Issue:** Tier groups needed seasonal qualifiers, and some service tiers needed to be open-ended on only one side
+- **Category:** Architecture, Validation
+- **Impact:** Medium - Additive seasonal scoping plus looser tier-bound validation
+
+**Context:**
+`ServiceTiers` could not previously carry season qualifiers, which made seasonal tier groups awkward to model. At the same time, `ServiceTierShape` required both lower and upper bounds, preventing open-ended first or last tiers even though those patterns are common in tiered pricing.
+
+**Decision:**
+Broaden the tier model to support seasonal grouping and open-ended tiers:
+
+1. Allow `urpx:appliesInSeason` on `ServiceTiers`
+2. Let a `ServiceTier` carry a lower bound only, an upper bound only, or both bound/operator pairs
+
+**Alternatives Considered:**
+
+1. **Support seasonal tier groups and open-ended tiers directly** ⭐ **SELECTED**
+   - ✅ Matches real tariff structures more closely
+   - ✅ Avoids forcing artificial bounds into first or last tiers
+   - ✅ Keeps seasonal scoping on the tier group rather than duplicating it elsewhere
+
+2. **Require both bounds and keep seasonal scoping off `ServiceTiers`**
+   - ✅ Simpler validation shape
+   - ❌ Cannot model common open-ended tier patterns cleanly
+   - ❌ Forces seasonal logic into adjacent structures instead of the tier group itself
+
+**Rationale:**
+- Tier groups often vary by season, so the container should be able to carry that qualifier directly
+- Open-ended tiers are common enough that SHACL should validate them without placeholder bounds
+- The change improves expressiveness without introducing a new vocabulary family
+
+**Implementation Details:**
+- Expanded the domain of `urpx:appliesInSeason` to include `ServiceTiers`
+- Updated `ServiceTierShape` with a `sh:or` pattern permitting lower-only, upper-only, or fully bounded tiers
+- Added optional `appliesInSeason` validation to `ServiceTiersShape`
+
+**Impact Assessment:**
+- **Positive**: Better coverage for seasonal tier groups and first/last open-ended tiers
+- **Breaking Change**: None - previously valid fully bounded tiers remain valid
+- **Requirements**: Producers may use `appliesInSeason` on `ServiceTiers` and may omit one side of the bound pair when the tier is intentionally open-ended
+
+**References:**
+- Commit: `0994aec`
+- Related Decision: #087 (ServiceTiers Container Architecture)
+
+---
+
+<a id="decision-111"></a>
+### 🔗 Decision #111: ServiceBracket Boundary Model for Contextual Tier Variants
+
+- **Status:** ✅ Implemented
+- **Date:** 2026-05-07
+- **Issue:** Service tiers needed stable logical identities while still supporting season-specific or profile-specific boundary variants
+- **Category:** Architecture, Validation
+- **Impact:** High - Breaking move of tier bounds from `ServiceTier` to a new `ServiceBracket` layer
+
+**Context:**
+Decision #110 made `ServiceTier` validation flexible enough for open-ended tiers, but the bounds still lived directly on the tier itself. That made it difficult to preserve one stable tier identity while varying the actual boundary set by season or profile alternative. Reifying each variant as a separate `ServiceTier` would duplicate tier numbers and weaken tier identity.
+
+**Decision:**
+Separate logical tier identity from contextual bracket definitions:
+
+1. Introduce `urpx:ServiceBracket` as the bound-bearing child of `urpx:ServiceTier`
+2. Move `lowerBound`, `lowerBoundOperator`, `upperBound`, and `upperBoundOperator` onto `ServiceBracket`
+3. Allow `ServiceBracket` to carry optional `appliesInSeason` and `referencesProfileAlternative`
+4. Add optional `referencesServiceBracket` from price resources while retaining logical references via `serviceTierNumber` and `referencesServiceTier`
+
+**Alternatives Considered:**
+
+1. **Add `ServiceBracket` beneath `ServiceTier`** ⭐ **SELECTED**
+   - ✅ Preserves one logical tier identity and number across contextual variants
+   - ✅ Supports season-specific and profile-specific bracket definitions cleanly
+   - ✅ Avoids duplicating whole `ServiceTier` nodes for each variant
+
+2. **Keep bounds directly on `ServiceTier` and duplicate tiers for each variant**
+   - ✅ Avoids a new class
+   - ❌ Duplicates tier identity and numbering
+   - ❌ Makes price references and tier documentation less stable
+
+**Rationale:**
+- Logical tier identity and contextual boundary variants are related but distinct modeling concerns
+- Prices often need to refer to a tier generally, while some use cases benefit from an exact bracket reference
+- Moving bounds to `ServiceBracket` keeps the model extensible without losing simple logical tier references
+
+**Implementation Details:**
+- Added `urpx:ServiceBracket`, `urpx:hasServiceBracket`, and `urpx:referencesServiceBracket` in [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
+- Moved bound properties onto `ServiceBracket` and expanded `referencesProfileAlternative`, `referencesServiceTier`, `serviceTierNumber`, and `appliesInSeason` for the new tier model where needed
+- Added `ServiceBracketShape`, updated `ServiceTierShape` to require brackets, added optional `referencesServiceBracket` validation to pricing shapes, and allowed optional `name` / `description` on `ServiceTiersShape` in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+
+**Impact Assessment:**
+- **Positive**: Stable tier identities, cleaner contextual bracket modeling, and optional exact bracket references from pricing resources
+- **Breaking Change**: Yes - bound data must move from `ServiceTier` onto one or more `ServiceBracket` nodes
+- **Requirements**: Producers should model each logical tier with `ServiceTier`, attach one or more bound-bearing `ServiceBracket` instances, and use `referencesServiceBracket` only when an exact bracket reference is needed
+
+**References:**
+- Based on the current unstaged ontology and SHACL changes as of 2026-05-07
+- Related Decision: #087 (ServiceTiers Container Architecture)
+- Related Decision: #110 (Seasonal ServiceTiers and Flexible Open-Ended Tier Bounds)

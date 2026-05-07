@@ -4,9 +4,81 @@
 # 📋 URPX Changelog
 
 **Version:** 0.2.0 (Pre-draft)
-**Last Updated:** 2026-05-01
+**Last Updated:** 2026-05-07
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-05-07
+---
+
+### ⚠️ Breaking Changes
+
+#### Introduced: `urpx:ServiceBracket` for contextual tier bounds
+- Added `urpx:ServiceBracket` plus `urpx:hasServiceBracket` so `urpx:ServiceTier` remains the logical tier identity while bracket-specific bounds live on attached bracket nodes.
+- Moved `urpx:lowerBound`, `urpx:lowerBoundOperator`, `urpx:upperBound`, and `urpx:upperBoundOperator` from `urpx:ServiceTier` to `urpx:ServiceBracket`.
+- Added `urpx:referencesServiceBracket` on `urpx:Price`, `urpx:PriceDefinition`, `urpx:PriceSet`, and `urpx:PriceSetAlternative`, and expanded `urpx:referencesServiceTier`, `urpx:serviceTierNumber`, `urpx:referencesProfileAlternative`, and `urpx:appliesInSeason` where needed for the bracketed tier model.
+- **Design Decision:** [#111](documentation/pages/urpx-design-decisions-081-120.md#decision-111)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Added: `ServiceBracketShape` and updated tier reference validation
+- Added `urpx-shacl:ServiceBracketShape` with the lower-only, upper-only, or bounded `sh:or` pattern plus optional `appliesInSeason` and `referencesProfileAlternative`.
+- Updated `ServiceTierShape` to require one or more `hasServiceBracket` links instead of validating bounds directly on the tier.
+- Added optional `referencesServiceBracket` validation to `PriceShape`, `PriceDefinitionShape`, `PriceSetShape`, and `PriceSetAlternativeShape`, and added optional `name` / `description` on `ServiceTiersShape`.
+- **Design Decision:** [#111](documentation/pages/urpx-design-decisions-081-120.md#decision-111)
+
+2026-05-05
+---
+
+### ⚠️ Breaking Changes
+
+#### Reworked: Applicability selectors onto profile properties
+- Retired direct `ApplicabilityGroup` selector properties such as `appliesInCounty`, `appliesInMunicipality`, `appliesInServiceTerritory`, `appliesInState`, `appliesInGeographicZone`, `endUse`, `geographicScope`, `serviceClassPattern`, and `voltageLevel`.
+- Applicability is now expressed through `ConditionExpression` using existing `CustomerProfile` / `ServicePointProfile` properties, with new service-point geography properties `hasCounty`, `hasMunicipality`, `hasServiceTerritory`, and `hasState` added where needed.
+- `geographicScope`, `geographicZone`, `endUse`, `serviceClassPattern`, and `voltageLevel` now belong on `ServicePointProfile`.
+- **Design Decision:** [#109](documentation/pages/urpx-design-decisions-081-120.md#decision-109)
+
+### Ontology Changes
+
+#### Expanded: `urpx:appliesInSeason`
+- Added `urpx:ServiceTiers` to the domain of `urpx:appliesInSeason` so tier groups can be season-specific.
+- **Design Decision:** [#110](documentation/pages/urpx-design-decisions-081-120.md#decision-110)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Updated: `ApplicabilityGroupShape` and `ServicePointProfileShape`
+- Removed direct applicability-selector validation from `ApplicabilityGroupShape`.
+- Added `geographicScope`, `hasCounty`, `hasMunicipality`, `hasServiceTerritory`, `hasState`, `serviceClassPattern`, and `voltageLevel` validation to `ServicePointProfileShape`.
+- **Design Decision:** [#109](documentation/pages/urpx-design-decisions-081-120.md#decision-109)
+
+#### Updated: `ServiceTierShape` and `ServiceTiersShape`
+- `ServiceTierShape` now accepts lower-only, upper-only, or fully bounded tiers.
+- Added optional `appliesInSeason` validation to `ServiceTiersShape`.
+- **Design Decision:** [#110](documentation/pages/urpx-design-decisions-081-120.md#decision-110)
+
+2026-05-04
+---
+
+### Ontology Changes
+
+#### Added: `urpx:customDimensionProperty`
+- Added fallback `xsd:string` identifier for `AlternativeDimension` when no suitable URPX property exists.
+- `AlternativeDimension` now allows either `dimensionProperty` or `customDimensionProperty`.
+- **Design Decision:** [#107](documentation/pages/urpx-design-decisions-081-120.md#decision-107)
+
+#### Added: `urpx:moderateIncomeProgram`
+- Added `urpx:moderateIncomeProgram` to the `ProgramTypeValue` enumeration.
+- **Design Decision:** [#108](documentation/pages/urpx-design-decisions-081-120.md#decision-108)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Updated: `AlternativeDimensionShape`
+- Made `dimensionProperty` optional, added `customDimensionProperty`, and required exactly one of the two with `sh:xone`.
+- **Design Decision:** [#107](documentation/pages/urpx-design-decisions-081-120.md#decision-107)
+
+#### Updated: `ProgramTypeValueShape`
+- Added `urpx:moderateIncomeProgram` to the allowed program-type IRIs.
+- **Design Decision:** [#108](documentation/pages/urpx-design-decisions-081-120.md#decision-108)
 
 2026-05-01
 ---
