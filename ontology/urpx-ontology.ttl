@@ -2342,14 +2342,6 @@ urpx:legalName a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     skos:note "Official legal utility name including corporate designations (Inc., LLC)." .
 
-urpx:logicExpression a owl:DatatypeProperty ;
-    rdfs:label "Logic Expression"@en ;
-    rdfs:comment "Optional textual expression attached to a comparison or boolean operation node"@en ;
-    rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:ComparisonNode urpx:BooleanOperationNode ) ] ;
-    rdfs:range xsd:string ;
-    skos:note "Optional node-level expression text. It supplements the structured condition graph and does not replace hasConditionExpression rootNode or operandNodes." .
-
 urpx:loadProfile a owl:ObjectProperty ;
     rdfs:label "Load Profile"@en ;
     rdfs:comment "Load profile classification" ;
@@ -2357,6 +2349,14 @@ urpx:loadProfile a owl:ObjectProperty ;
     rdfs:range urpx:LoadProfileValue ;
     skos:note "Load characteristics: baseload, peaking, variable, seasonal, intermittent, other. Used for rate plan matching." .
 
+urpx:logicExpression a owl:DatatypeProperty ;
+    rdfs:label "Logic Expression"@en ;
+    rdfs:comment "Optional textual expression attached to a comparison or boolean operation node"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:ComparisonNode urpx:BooleanOperationNode ) ] ;
+    rdfs:range xsd:string ;
+    skos:note "Optional node-level expression text. It supplements the structured condition graph and does not replace hasConditionExpression rootNode or operandNodes." .
+    
 urpx:lowerBound a owl:DatatypeProperty ;
     rdfs:label "Lower Bound"@en ;
     rdfs:comment "Lower threshold value for bracket applicability" ;
