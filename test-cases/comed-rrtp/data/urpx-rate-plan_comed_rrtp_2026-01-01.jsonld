@@ -19,10 +19,12 @@
     "urpx:touTierNumber": { "@type": "xsd:integer" },
     "urpx:touPeriodNumber": { "@type": "xsd:integer" },
     "urpx:priceCeiling": { "@type": "xsd:decimal" },
-    "urpx:priceFloor": { "@type": "xsd:decimal" }
+    "urpx:priceFloor": { "@type": "xsd:decimal" },
+    "urpx:targetURPXVersion": { "@type": "xsd:anyURI" }
   },
   "@type": "urpx:HighlyDynamicPricesDocument",
   "@id": "comed:hdp-rrtp-001",
+  "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.1.1/ontology/urpx-ontology.ttl",
   "urpx:name": "ComEd Residential Real-Time Pricing (RRTP)",
   "urpx:effectiveDateTime": "2026-01-01T00:00:00",
   "urpx:priceCurrency": "USD",
