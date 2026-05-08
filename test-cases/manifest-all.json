@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0.0",
+  "generator": "urpx-website-dev/scripts/codegen/generate-all.py@67c9b31",
+  "generatedAt": "2026-05-07T23:46:55Z",
+  "examples": [
+    {
+      "id": "comed-rrtp",
+      "instanceJsonld": "comed-rrtp/data/instance.jsonld",
+      "diagramSvg": "comed-rrtp/assets/diagram.svg",
+      "tariffBookPdf": null
+    },
+    {
+      "id": "pge-b6-pdp",
+      "instanceJsonld": "pge-b6-pdp/data/instance.jsonld",
+      "diagramSvg": "pge-b6-pdp/assets/diagram.svg",
+      "tariffBookPdf": null
+    },
+    {
+      "id": "pge-e-elec-2026-01-01",
+      "instanceJsonld": "pge-e-elec-2026-01-01/data/urpx-rate-plan_pge_e-elec_2026-01-01.jsonld",
+      "diagramSvg": "pge-e-elec-2026-01-01/assets/diagram.svg",
+      "tariffBookPdf": null
+    },
+    {
+      "id": "pge-e-elec-sp",
+      "instanceJsonld": "pge-e-elec-sp/data/instance.jsonld",
+      "diagramSvg": "pge-e-elec-sp/assets/diagram.svg",
+      "tariffBookPdf": null
+    }
+  ]
+}
