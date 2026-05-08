@@ -1,10 +1,15 @@
+<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
+<!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
+
 # URPX (Utility Rate Plan Exchange) Design Decisions Log (#041-#080)
 
 **Version:** 1.0
 **Created:** 2026-01-05
 **Last Updated:** 2026-04-07
 
-> **Note:** Design decisions reference the original modular ontology files (urpx-core-ontology.ttl, urpx-profile.ttl, urpx-organization.ttl, urpx-geography.ttl, urpx-charge-classification.ttl). As of v0.1.1, these files have been consolidated into a single `ontology/urpx-ontology.ttl` file. See [urpx-changelog.md](../../urpx-changelog.md) for consolidation details.
+> **Note:** Design decisions reference the original modular ontology files (urpx-core-ontology.ttl, urpx-profile.ttl, urpx-organization.ttl, urpx-geography.ttl, urpx-charge-classification.ttl). As of v0.1.1, these files have been consolidated into a single `ontology/urpx-ontology.ttl` file.
 
 ## Welcome!
 
@@ -1338,7 +1343,7 @@ Remove `urpx:isCredit` entirely. Use negative values in `unitPrice`/`amount` com
 **Implementation Details:**
 - Removed `urpx:isCredit` property definition from `ontology/urpx-ontology.ttl`
 - Removed `isCredit` constraints from `shacl/urpx-shacl.ttl`
-- Removed `isCredit` instances from test data (`test-cases/pge-e-elec-2026-01-01/`)
+- Removed `isCredit` instances from test data (`test-cases/pge-e-elec/`)
 
 **Impact Assessment:**
 - **Positive**: Eliminates data ambiguity, simplifies validation, reduces property count

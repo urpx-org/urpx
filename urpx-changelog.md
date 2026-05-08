@@ -1,9 +1,380 @@
+<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
 # 📋 URPX Changelog
 
-**Version:** 0.1.1
-**Last Updated:** 2026-04-10
+**Version:** 0.2.0 (Pre-draft)
+**Last Updated:** 2026-05-07
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-05-07
+---
+
+### ⚠️ Breaking Changes
+
+#### Introduced: `urpx:ServiceBracket` for contextual tier bounds
+- Added `urpx:ServiceBracket` plus `urpx:hasServiceBracket` so `urpx:ServiceTier` remains the logical tier identity while bracket-specific bounds live on attached bracket nodes.
+- Moved `urpx:lowerBound`, `urpx:lowerBoundOperator`, `urpx:upperBound`, and `urpx:upperBoundOperator` from `urpx:ServiceTier` to `urpx:ServiceBracket`.
+- Added `urpx:referencesServiceBracket` on `urpx:Price`, `urpx:PriceDefinition`, `urpx:PriceSet`, and `urpx:PriceSetAlternative`, and expanded `urpx:referencesServiceTier`, `urpx:serviceTierNumber`, `urpx:referencesProfileAlternative`, and `urpx:appliesInSeason` where needed for the bracketed tier model.
+- **Design Decision:** [#111](documentation/pages/urpx-design-decisions-081-120.md#decision-111)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Added: `ServiceBracketShape` and updated tier reference validation
+- Added `urpx-shacl:ServiceBracketShape` with the lower-only, upper-only, or bounded `sh:or` pattern plus optional `appliesInSeason` and `referencesProfileAlternative`.
+- Updated `ServiceTierShape` to require one or more `hasServiceBracket` links instead of validating bounds directly on the tier.
+- Added optional `referencesServiceBracket` validation to `PriceShape`, `PriceDefinitionShape`, `PriceSetShape`, and `PriceSetAlternativeShape`, and added optional `name` / `description` on `ServiceTiersShape`.
+- **Design Decision:** [#111](documentation/pages/urpx-design-decisions-081-120.md#decision-111)
+
+2026-05-05
+---
+
+### ⚠️ Breaking Changes
+
+#### Reworked: Applicability selectors onto profile properties
+- Retired direct `ApplicabilityGroup` selector properties such as `appliesInCounty`, `appliesInMunicipality`, `appliesInServiceTerritory`, `appliesInState`, `appliesInGeographicZone`, `endUse`, `geographicScope`, `serviceClassPattern`, and `voltageLevel`.
+- Applicability is now expressed through `ConditionExpression` using existing `CustomerProfile` / `ServicePointProfile` properties, with new service-point geography properties `hasCounty`, `hasMunicipality`, `hasServiceTerritory`, and `hasState` added where needed.
+- `geographicScope`, `geographicZone`, `endUse`, `serviceClassPattern`, and `voltageLevel` now belong on `ServicePointProfile`.
+- **Design Decision:** [#109](documentation/pages/urpx-design-decisions-081-120.md#decision-109)
+
+### Ontology Changes
+
+#### Expanded: `urpx:appliesInSeason`
+- Added `urpx:ServiceTiers` to the domain of `urpx:appliesInSeason` so tier groups can be season-specific.
+- **Design Decision:** [#110](documentation/pages/urpx-design-decisions-081-120.md#decision-110)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Updated: `ApplicabilityGroupShape` and `ServicePointProfileShape`
+- Removed direct applicability-selector validation from `ApplicabilityGroupShape`.
+- Added `geographicScope`, `hasCounty`, `hasMunicipality`, `hasServiceTerritory`, `hasState`, `serviceClassPattern`, and `voltageLevel` validation to `ServicePointProfileShape`.
+- **Design Decision:** [#109](documentation/pages/urpx-design-decisions-081-120.md#decision-109)
+
+#### Updated: `ServiceTierShape` and `ServiceTiersShape`
+- `ServiceTierShape` now accepts lower-only, upper-only, or fully bounded tiers.
+- Added optional `appliesInSeason` validation to `ServiceTiersShape`.
+- **Design Decision:** [#110](documentation/pages/urpx-design-decisions-081-120.md#decision-110)
+
+2026-05-04
+---
+
+### Ontology Changes
+
+#### Added: `urpx:customDimensionProperty`
+- Added fallback `xsd:string` identifier for `AlternativeDimension` when no suitable URPX property exists.
+- `AlternativeDimension` now allows either `dimensionProperty` or `customDimensionProperty`.
+- **Design Decision:** [#107](documentation/pages/urpx-design-decisions-081-120.md#decision-107)
+
+#### Added: `urpx:moderateIncomeProgram`
+- Added `urpx:moderateIncomeProgram` to the `ProgramTypeValue` enumeration.
+- **Design Decision:** [#108](documentation/pages/urpx-design-decisions-081-120.md#decision-108)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Updated: `AlternativeDimensionShape`
+- Made `dimensionProperty` optional, added `customDimensionProperty`, and required exactly one of the two with `sh:xone`.
+- **Design Decision:** [#107](documentation/pages/urpx-design-decisions-081-120.md#decision-107)
+
+#### Updated: `ProgramTypeValueShape`
+- Added `urpx:moderateIncomeProgram` to the allowed program-type IRIs.
+- **Design Decision:** [#108](documentation/pages/urpx-design-decisions-081-120.md#decision-108)
+
+2026-05-01
+---
+
+### Ontology Changes
+
+#### Added: `urpx:gYearValue`
+- Added `urpx:gYearValue` (DatatypeProperty, range `xsd:gYear`) for calendar-year literal operands in condition expressions.
+- Domain is the union of `urpx:DatatypeOperandNode` and `urpx:CustomOperandNode`, mirroring the other datatype-specific value properties.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Updated: `DatatypeOperandNodeShape` and `CustomOperandNodeShape`
+- Added an optional `gYearValue` property declaration (`xsd:gYear`, `0..1`) on both shapes.
+- Added a `gYearValue` literal branch to each shape's `sh:xone` so the gYear branch is mutually exclusive with the other literal and property-reference branches and may optionally carry `urpx:referencesMetricInput`.
+
+### Documentation Updates
+
+#### Updated: Condition Modeling and Data Dictionary
+- Listed `urpx:gYearValue` alongside the other datatype-specific value properties in [urpx-condition-modeling.md](documentation/pages/urpx-condition-modeling.md) and the JSON-LD context examples.
+- Added `urpx:gYearValue` rows to the `CustomOperandNode` and `DatatypeOperandNode` property tables in [urpx-data-dictionary.md](documentation/pages/urpx-data-dictionary.md).
+
+2026-04-29
+---
+
+### Ontology Changes
+
+#### Added: `owl:versionIRI` Release Metadata
+- Added `owl:versionIRI` to the ontology header to publish the ontology-version IRI expected by `urpx:targetURPXVersion`.
+- Clarified the `targetURPXVersion` note to point to the raw ontology file URL.
+- **Design Decision:** [#103](documentation/pages/urpx-design-decisions-081-120.md#decision-103)
+
+#### Domain Expanded: `urpx:serviceRole`
+- Added `urpx:PriorRatePlan` to the property domain union.
+- **Design Decision:** [#106](documentation/pages/urpx-design-decisions-081-120.md#decision-106)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Updated: `PriorRatePlanShape`
+- Added optional `serviceRole` validation to align with the ontology domain expansion.
+- **Design Decision:** [#106](documentation/pages/urpx-design-decisions-081-120.md#decision-106)
+
+### Test Data Updates
+
+#### Updated: PGE E-ELEC Example
+- Added time zone metadata to `test-cases/pge-e-elec/data/urpx-rate-plan_pge_e-elec.jsonld`.
+
+2026-04-28
+---
+
+### ⚠️ Breaking Changes
+
+#### Renamed: Unique Identifier Properties and Required Document Target Version
+- Renamed `urpx:ratePlanIdentifier` → `urpx:ratePlanUniqueIdentifier`.
+- Renamed `urpx:modifierIdentifier` → `urpx:modifierUniqueIdentifier`.
+- Moved modifier unique identifier ownership from `urpx:RatePlanModifierVersion` to `urpx:RatePlanModifier`.
+- Added required `urpx:targetURPXVersion` on `urpx:URPXDocument`.
+- **Design Decision:** [#103](documentation/pages/urpx-design-decisions-081-120.md#decision-103)
+
+#### Reworked: Scenario-Backed Eligibility and Structured Condition Coverage
+- Added `urpx:Scenario` as the holder for `urpx:hasCustomerProfile` and `urpx:hasServicePointProfile`.
+- Expanded `urpx:hasConditionExpression` to `urpx:ApplicabilityGroup` and `urpx:ProfileAlternative` in addition to rule classes.
+- Removed `urpx:ApplicabilityConstraint`, `urpx:DimensionValuePair`, and the related applicability and dimension-value properties.
+- **Design Decision:** [#104](documentation/pages/urpx-design-decisions-081-120.md#decision-104)
+
+### Ontology Changes
+
+#### Added: `urpx:Scenario` (Class)
+- Added `urpx:Scenario` to group the profile inputs used when evaluating eligibility conditions.
+- Moved `hasCustomerProfile` and `hasServicePointProfile` domains from `EligibilityRule` to `Scenario`.
+- **Design Decision:** [#104](documentation/pages/urpx-design-decisions-081-120.md#decision-104)
+
+#### Expanded: `urpx:hasConditionExpression`
+- Domain now includes `urpx:ApplicabilityGroup` and `urpx:ProfileAlternative`.
+- `ConditionExpression` is now the single structured condition entry point across eligibility, applicability, and profile-alternative contexts.
+- **Design Decision:** [#104](documentation/pages/urpx-design-decisions-081-120.md#decision-104)
+
+#### Removed: Obsolete Applicability Constraint and Dimension-Value Constructs
+- Removed `urpx:ApplicabilityConstraint`, `urpx:DimensionValuePair`, `urpx:constraintProperty`, `urpx:constraintValue`, `urpx:forDimension`, `urpx:hasDimensionValue`, `urpx:hasInclusionConstraint`, `urpx:hasExclusionConstraint`, and `urpx:valueIRI`.
+- **Design Decision:** [#104](documentation/pages/urpx-design-decisions-081-120.md#decision-104)
+
+### Ontology Property Changes
+
+#### Renamed: `urpx:ratePlanIdentifier` → `urpx:ratePlanUniqueIdentifier`
+- Retained `urpx:RatePlan` as the owning class while making the uniqueness semantics explicit.
+- **Design Decision:** [#103](documentation/pages/urpx-design-decisions-081-120.md#decision-103)
+
+#### Renamed and Moved: `urpx:modifierIdentifier` → `urpx:modifierUniqueIdentifier`
+- Renamed the property and moved its domain to `urpx:RatePlanModifier`.
+- Removed identifier ownership from `urpx:RatePlanModifierVersion`.
+- **Design Decision:** [#103](documentation/pages/urpx-design-decisions-081-120.md#decision-103)
+
+#### Added: `urpx:targetURPXVersion`
+- Added required document-level metadata pointing to the URPX ontology version a document targets.
+- **Design Decision:** [#103](documentation/pages/urpx-design-decisions-081-120.md#decision-103)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Updated: Identifier and Document Version Validation
+- Updated `RatePlanShape` to require `ratePlanUniqueIdentifier`.
+- Added `modifierUniqueIdentifier` to `RatePlanModifierShape` and removed the legacy identifier from `RatePlanModifierVersionShape`.
+- Added required `targetURPXVersion` to `URPXDocumentShape`.
+- **Design Decision:** [#103](documentation/pages/urpx-design-decisions-081-120.md#decision-103)
+
+#### Added: `ScenarioShape`
+- Added `ScenarioShape` for `urpx:Scenario` with `hasCustomerProfile` and `hasServicePointProfile`.
+- Tightened the shape so a scenario must carry at least one of the two profile links.
+- **Design Decisions:** [#104](documentation/pages/urpx-design-decisions-081-120.md#decision-104), [#105](documentation/pages/urpx-design-decisions-081-120.md#decision-105)
+
+#### Updated: Structured Condition Validation
+- Added `hasConditionExpression` validation to `ApplicabilityGroupShape` and `ProfileAlternativeShape`.
+- Removed direct `hasCustomerProfile` and `hasServicePointProfile` validation from `EligibilityRuleShape`.
+- Tightened `EligibilityRuleShape` so `hasConditionExpression` is required.
+- Removed `ApplicabilityConstraintShape`.
+- **Design Decisions:** [#104](documentation/pages/urpx-design-decisions-081-120.md#decision-104), [#105](documentation/pages/urpx-design-decisions-081-120.md#decision-105)
+
+### Documentation Updates
+
+#### Added: `documentation/pages/urpx-condition-modeling.md`
+- Added a dedicated condition-modeling guide covering `ConditionExpression`, operand-node usage, Scenario-based evaluation context, and a full JSON-LD example.
+- **Design Decisions:** [#104](documentation/pages/urpx-design-decisions-081-120.md#decision-104), [#105](documentation/pages/urpx-design-decisions-081-120.md#decision-105)
+
+#### Updated: Contribution and Agent Guidance
+- Added `AGENTS.md` and revised `CONTRIBUTING.md` with concise issue, pull request, and review expectations for the repository.
+
+2026-04-24
+---
+
+### ⚠️ Breaking Changes
+
+#### Reworked: Rate Plan Enrollment and Default Semantics
+- Removed `urpx:isOptional` from `RatePlanModifier`; modifier optionality should be expressed through version-scoped option or compatibility relationships rather than a document-level boolean.
+- Added `urpx:customerChoice` on `RatePlanVersion` with controlled values `urpx:voluntaryChoice` and `urpx:mandatoryChoice`.
+- Added `urpx:isDefault` on `RatePlanVersion` to indicate the default enrollment or fallback version.
+- **Design Decision:** [#100](documentation/pages/urpx-design-decisions-081-120.md#decision-100)
+
+#### Renamed: Profile Count Properties and Removed Legacy Threshold
+- Renamed `urpx:numberOfMeters` → `urpx:meterCount`.
+- Renamed `urpx:numberOfOccupants` → `urpx:occupancyCount`.
+- Removed `urpx:demandThreshold` from the ontology and SHACL.
+- Updated profile-metric notes and examples to use the normalized property names.
+- **Design Decision:** [#102](documentation/pages/urpx-design-decisions-081-120.md#decision-102)
+
+### Ontology Changes
+
+#### Added: `urpx:GeneralRule` (Class)
+- Added `urpx:GeneralRule` as a reusable tariff-book-level shared rule resource.
+- Added `urpx:generalRuleID` for stable rule identification.
+- Added `urpx:hasGeneralRule` from `TariffBookDocument` and `urpx:referencesGeneralRule` from `RatePlanVersion` / `RatePlanModifierVersion`.
+- Expanded domains of `urpx:name`, `urpx:description`, `urpx:hasDataSourceReference`, and `urpx:hasApplicabilityRule` to include `urpx:GeneralRule`.
+- **Design Decision:** [#099](documentation/pages/urpx-design-decisions-081-120.md#decision-099)
+
+#### Added: `urpx:CustomerChoiceValue` (Enumeration Class)
+- Added `urpx:CustomerChoiceValue` with enum instances `urpx:voluntaryChoice` and `urpx:mandatoryChoice`.
+- Added `urpx:customerChoice` on `urpx:RatePlanVersion`.
+- **Design Decision:** [#100](documentation/pages/urpx-design-decisions-081-120.md#decision-100)
+
+### Ontology Property Changes
+
+#### Replaced: `urpx:isOptional` → `urpx:isDefault`
+- Replaced the old modifier-level optionality property with a version-level default-selection flag.
+- New domain: `urpx:RatePlanVersion`.
+- **Design Decision:** [#100](documentation/pages/urpx-design-decisions-081-120.md#decision-100)
+
+#### Domain Expanded: `urpx:applicableToRatePlan`
+- Added `urpx:RatePlan` to the property domain union.
+- **Design Decision:** [#101](documentation/pages/urpx-design-decisions-081-120.md#decision-101)
+
+#### Domain Expanded: `urpx:applicableToRatePlanVersion`
+- Added `urpx:RatePlanVersion` to the property domain union.
+- **Design Decision:** [#101](documentation/pages/urpx-design-decisions-081-120.md#decision-101)
+
+#### Cleanup: Profile Metric Property References
+- Updated `urpx:profileMetricProperty`, `urpx:profileMetricInput`, and related notes to reference `urpx:meterCount` and `urpx:occupancyCount`.
+- Updated `urpx:householdCount` notes to refer to `occupancyCount` instead of `numberOfOccupants`.
+- **Design Decision:** [#102](documentation/pages/urpx-design-decisions-081-120.md#decision-102)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Added: `GeneralRuleShape`
+- Added `urpx-shacl:GeneralRuleShape` with validation for `generalRuleID`, optional metadata, provenance, and optional `hasApplicabilityRule`.
+- Added `hasGeneralRule` to `TariffBookDocumentShape`.
+- Added `referencesGeneralRule` to `RatePlanVersionShape` and `RatePlanModifierVersionShape`.
+- **Design Decision:** [#099](documentation/pages/urpx-design-decisions-081-120.md#decision-099)
+
+#### Updated: Rate Plan Enrollment Validation
+- Added `customerChoice` and `isDefault` to `RatePlanVersionShape`.
+- Added `CustomerChoiceValueShape` for the new controlled vocabulary.
+- Removed `isOptional` from `RatePlanModifierShape`.
+- **Design Decision:** [#100](documentation/pages/urpx-design-decisions-081-120.md#decision-100)
+
+#### Updated: Profile Count Validation
+- Replaced `numberOfOccupants` with `occupancyCount` on `CustomerProfileShape`.
+- Replaced `numberOfMeters` with `meterCount` on `ServicePointProfileShape`.
+- Removed `demandThreshold` from `CustomerProfileShape`.
+- **Design Decision:** [#102](documentation/pages/urpx-design-decisions-081-120.md#decision-102)
+
+### Documentation Updates
+
+#### Added: Design Decisions #099-#102
+- Added design-decision entries covering `GeneralRule`, rate-plan enrollment/default semantics, compatibility-domain expansion, and profile count terminology normalization.
+- Updated the decision index in `documentation/pages/urpx-design-decisions-081-120.md`.
+
+2026-04-17
+---
+
+### ⚠️ Breaking Changes
+
+#### Replaced: Condition Modeling with Rooted Condition Expressions
+- Rule data must use `urpx:hasConditionExpression` instead of `urpx:hasCondition` and `urpx:hasConditionLogic`.
+- Atomic predicates must be represented as `urpx:ComparisonNode`.
+- Boolean composition must use `urpx:operandNodes` on `urpx:BooleanOperationNode`.
+- Operand values must use `urpx:DatatypeOperandNode`, `urpx:ObjectOperandNode`, or `urpx:CustomOperandNode` with datatype-specific value properties instead of `urpx:literalType`.
+- Removed legacy classes and properties: `urpx:Condition`, `urpx:ConditionLogic`, `urpx:TerminalNode`, `urpx:DatatypeTerminalNode`, `urpx:ObjectTerminalNode`, `urpx:CustomTerminalNode`, `urpx:LiteralTypeValue`, `urpx:hasCondition`, `urpx:hasConditionLogic`, `urpx:conditionOperands`, `urpx:literalType`, and datatype enum instances previously used only to declare operand literal types.
+- **Design Decisions:** [#097](documentation/pages/urpx-design-decisions-081-120.md#decision-097), [#098](documentation/pages/urpx-design-decisions-081-120.md#decision-098)
+
+### Ontology Changes
+
+#### Added: Rooted Condition Expression Model
+- Added `urpx:ConditionExpression` as the single rule-linked wrapper for condition logic.
+- Added `urpx:ConditionNode`, `urpx:ComparisonNode`, `urpx:DatatypeOperandNode`, `urpx:ObjectOperandNode`, and `urpx:CustomOperandNode`.
+- Added `urpx:hasConditionExpression` and `urpx:rootNode` to anchor each expression to a `urpx:ComparisonNode` or `urpx:BooleanOperationNode`.
+- Updated `urpx:BooleanOperationNode` to use `urpx:logicExpression` and `urpx:operandNodes`.
+- Updated `urpx:operator`, `urpx:leftOperand`, `urpx:rightOperand`, `urpx:conditionProperty`, `urpx:customConditionProperty`, `urpx:referencesValue`, and datatype-specific value properties to align with the new expression model.
+- **Design Decisions:** [#097](documentation/pages/urpx-design-decisions-081-120.md#decision-097), [#098](documentation/pages/urpx-design-decisions-081-120.md#decision-098)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Updated: Condition Expression Validation
+- Updated `ApplicabilityRuleShape` and `EligibilityRuleShape` to use `urpx:hasConditionExpression`.
+- Added `ConditionExpressionShape`, `ComparisonNodeShape`, `DatatypeOperandNodeShape`, `ObjectOperandNodeShape`, and `CustomOperandNodeShape`.
+- Updated `BooleanOperationNodeShape` and `OperationNodeShape` to validate the new rooted expression and operand-node structure.
+- Removed legacy condition, condition-logic, terminal-node, and literal-type shapes.
+- **Design Decisions:** [#097](documentation/pages/urpx-design-decisions-081-120.md#decision-097), [#098](documentation/pages/urpx-design-decisions-081-120.md#decision-098)
+
+2026-04-13
+---
+
+### ⚠️ Breaking Changes
+
+#### Refactored: `urpx:hasPriceDefinition` — Ownership Moved to `BillingModel`
+- Domain changed from `urpx:Ledger` to `urpx:BillingModel`; existing data must be migrated.
+- Added `urpx:referencesLedger` on `urpx:PriceDefinition` (required); ledger association is now explicit rather than implied by containment hierarchy.
+- **Rationale:** `PriceDefinition` is structural billing metadata, not ledger content. `BillingModel` is the correct ownership level; `referencesLedger` makes the ledger relationship queryable and SHACL-validatable.
+- **Design Decision:** [#093](documentation/pages/urpx-design-decisions-081-120.md#decision-093)
+
+#### Replaced: Condition Modeling Architecture
+- Removed `urpx:conditionValue`, `urpx:conditionType`, and `urpx:logicExpression`; existing rule data using these properties must migrate.
+- Added structured condition classes: `ConditionLogic`, `BooleanOperationNode`, `OperationNode`, `DatatypeTerminalNode`, `ObjectTerminalNode`, `CustomTerminalNode`, `LiteralTypeValue`.
+- Added structural properties: `hasConditionLogic`, `conditionOperands`, `leftOperand`, `rightOperand`, `conditionProperty`, `customConditionProperty`, `literalType`, `referencesValue`.
+- Added datatype-specific value properties: `booleanValue`, `dateValue`, `dateTimeValue`, `decimalValue`, `durationValue`, `gMonthValue`, `integerValue`, `stringValue`, `timeValue`.
+- `Condition` remains the atomic predicate unit; `ConditionLogic` becomes the authoritative executable rule structure for boolean composition. `CustomTerminalNode` is retained as a fallback path only.
+- Expanded `urpx:name` and `urpx:description` domains to include condition and logic resources.
+- **Design Decision:** [#094](documentation/pages/urpx-design-decisions-081-120.md#decision-094)
+
+### Ontology Changes
+
+#### Added: `urpx:RateCase` (Class)
+- New class representing formal regulatory proceedings that establish or revise rate plan and pricing artifacts.
+- Added `urpx:caseNumber` (DatatypeProperty, `xsd:string`) and `urpx:hasRateCase` (ObjectProperty) to associate regulatory proceedings with applicable resources.
+- `urpx:hasRateCase` domain includes: `Price`, `PriceDefinition`, `PriceSet`, `PriceSetAlternative`, `RatePlanVersion`, `RatePlanModifierVersion`.
+- Expanded domains of `urpx:name`, `urpx:description`, `urpx:priority`, and `urpx:url` to include `urpx:RateCase`.
+- **Design Decision:** [#095](documentation/pages/urpx-design-decisions-081-120.md#decision-095)
+
+#### Added: Datetime Provenance Properties
+- Added `xsd:dateTime` companions for all existing `xsd:date` provenance properties:
+  `urpx:dateTimeApproved`, `urpx:dateTimeCreated`, `urpx:dateTimeModified`, `urpx:dateTimePublished`, `urpx:dateTimeReceived`, `urpx:dateTimeRetrieved`.
+- Domains mirror the corresponding `xsd:date` properties; existing date-only fields are preserved.
+- **Rationale:** Enables full timestamp-level provenance for sources that report at sub-day precision, without overloading the `xsd:date` fields used where only date precision is available or intended.
+- **Design Decision:** [#096](documentation/pages/urpx-design-decisions-081-120.md#decision-096)
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Updated: `BillingModelShape` and `LedgerShape`
+- Moved `hasPriceDefinition` constraint from `LedgerShape` to `BillingModelShape`.
+- Added required `referencesLedger` constraint on `PriceDefinitionShape`.
+- **Design Decision:** [#093](documentation/pages/urpx-design-decisions-081-120.md#decision-093)
+
+#### Replaced: Condition and Rule Shapes
+- Replaced `logicExpression` constraints on applicability and eligibility rule shapes with `hasConditionLogic`.
+- Redefined `ConditionShape` as an atomic predicate with required `operator`, `leftOperand`, and `rightOperand`.
+- Added shapes: `ConditionLogicShape`, `BooleanOperationNodeShape`, `OperationNodeShape`, `DatatypeTerminalNodeShape`, `ObjectTerminalNodeShape`, `CustomTerminalNodeShape`.
+- `DatatypeTerminalNodeShape` enforces `literalType` plus the matching datatype-specific value property.
+- `ConditionLogicShape` and `BooleanOperationNodeShape` constrain to boolean operators and `conditionOperands`-based composition.
+- **Design Decision:** [#094](documentation/pages/urpx-design-decisions-081-120.md#decision-094)
+
+#### Added: `RateCaseShape`
+- Required: `caseNumber`, `url`.
+- Optional: `name`, `description`, `priority` (`sh:minInclusive 1`).
+- **Design Decision:** [#095](documentation/pages/urpx-design-decisions-081-120.md#decision-095)
+
+#### Added: Datetime Provenance Constraints
+- Added `dateTimeApproved`, `dateTimeCreated`, `dateTimeModified`, `dateTimePublished`, `dateTimeReceived`, and `dateTimeRetrieved` property constraints to all shapes that carry the corresponding `xsd:date` fields.
+- **Design Decision:** [#096](documentation/pages/urpx-design-decisions-081-120.md#decision-096)
+
+---
 
 2026-04-10
 ---

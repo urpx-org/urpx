@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "1.0.0",
+  "generator": "urpx-website-dev/scripts/codegen/generate-all.py@a6ff1d1",
+  "generatedAt": "2026-05-04T11:05:08Z",
+  "examples": [
+    {
+      "id": "pge-e-elec",
+      "title": "Residential Time-of-Use (Electric Home) Service",
+      "description": "This optional schedule applies to individually-metered electric service to residential customers who have one or more of the following qualifying electric technologies: Electric vehicle charging; Energy storage; or Electric heat pump for water heating or climate control.",
+      "utility": "Pacific Gas & Electric Company",
+      "instanceJsonld": "../../test-cases/pge-e-elec/data/urpx-rate-plan_pge_e-elec.jsonld",
+      "tariffBookPdf": null
+    }
+  ]
+}

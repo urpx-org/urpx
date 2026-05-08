@@ -1,3 +1,8 @@
+%% SPDX-FileCopyrightText: Flux Tailor LLC
+%% SPDX-License-Identifier: Apache-2.0
+%% SPDX-Transition-License-After-Draft: W3C-20231102
+%% Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md.
+
 %% URPX Price Structure Diagram
 %% Shows: Prices → PriceSet → Price hierarchy
 %% Created: January 26, 2026
@@ -35,16 +40,16 @@ graph TB
     end
     
     %% Price Properties
-    subgraph PriceProps["Price Properties (Required)"]
+    subgraph PriceProps["Price Fields and Metadata"]
         direction TB
         
-        ChargeType[chargeType<br/>ObjectProperty<br/>minimumCharge, usageCharge,<br/>demandDirect, etc.]
+        PricingField[Exactly one pricing field required<br/>amount, unitPrice, basedOnPrice,<br/>basePrice, or currentPrice]
         
-        ChargeCategory[chargeCategory<br/>ObjectProperty<br/>serviceCharge, auxiliaryCharge,<br/>infrastructure, taxes, etc.]
+        ChargeType[chargeType<br/>Optional classification metadata<br/>minimumCharge, usageCharge,<br/>demandDirect, etc.]
         
-        BillPortion[billPortion<br/>ObjectProperty<br/>delivery, supply, bundled]
+        ChargeCategory[chargeCategory<br/>Optional classification metadata<br/>serviceCharge, auxiliaryCharge,<br/>infrastructure, taxes, etc.]
         
-        Amount[amount or unitPrice<br/>Numeric value<br/>Fixed or per-unit]
+        BillPortion[billPortion<br/>Optional classification metadata<br/>delivery, supply, bundled]
     end
     
     %% Price Types Examples
@@ -66,7 +71,7 @@ graph TB
     Price1 -.->|has properties| ChargeType
     Price1 -.->|has properties| ChargeCategory
     Price1 -.->|has properties| BillPortion
-    Price1 -.->|has properties| Amount
+    Price1 -.->|has properties| PricingField
     
     PriceProps -.->|examples| PriceExamples
     
@@ -82,5 +87,5 @@ graph TB
     class Prices containerClass
     class PriceSet1,PriceSet2 priceSetClass
     class Price1,Price2,Price3 priceClass
-    class ChargeType,ChargeCategory,BillPortion,Amount propClass
+    class PricingField,ChargeType,ChargeCategory,BillPortion propClass
     class Ex1,Ex2,Ex3,Ex4 exampleClass

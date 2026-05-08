@@ -1,3 +1,8 @@
+<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
+<!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
+
 # URPX Internationalization (i18n) Implementation Guide
 
 ## Overview
@@ -46,7 +51,8 @@ The following fields MUST support multiple languages:
 - `urpx:changeDescription`
 - `urpx:holidayName`
 - `urpx:periodName`
-- `urpx:logicExpression` (with localized formula notation)
+
+Structured condition logic MUST NOT rely on localized executable text. If localized condition explanations are needed, provide them through `urpx:name` and `urpx:description` on `Condition`.
 
 ### Language Fallback Chain
 

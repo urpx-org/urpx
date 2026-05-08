@@ -1,0 +1,21 @@
+LicenseRef-PublicRecord — US Public Record
+
+This license reference identifier denotes documents that are public record
+under US federal or state law and are therefore not subject to copyright
+restrictions on inclusion or redistribution.
+
+The file(s) this identifier is attached to in REUSE.toml are included in
+the URPX repository solely as test-case assets. They are regulatory filings
+or published tariff schedules made available by a US utility or regulatory
+body in the ordinary course of its public-facing duties. Such documents
+are not the copyrightable creative expression of any party; they are
+factual public records of regulatory processes.
+
+No warranty is made by the URPX authors regarding the accuracy,
+completeness, or currency of any public-record document included here.
+Users who require an authoritative copy must consult the issuing utility
+or regulator directly.
+
+This LicenseRef identifier is provided per the SPDX specification so that
+automated license scanners (ScanCode, FOSSology) can cleanly classify
+public-record content without surfacing false-positive copyright findings.

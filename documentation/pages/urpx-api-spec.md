@@ -1,8 +1,13 @@
+<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
+<!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
+
 # URPX API Specification
 
-**Version:** 0.1.1 (Draft)  
+**Version:** 0.2.0 (Pre-draft)
 **Status:** Requirements Phase  
-**Last Updated:** 2025-11-23
+**Last Updated:** 2026-04-29
 
 [← Back to Index](../index.md) | [Overview](urpx-overview.md) | [URPX Interoperability & Standards Integration](urpx-interoperability.md)
 
@@ -14,7 +19,7 @@ The URPX API specification is currently in requirements gathering phase. A worki
 
 This document provides initial pre-draft requirements, use cases, and example API patterns to guide development.
 
-**Scope Note**: URPX APIs focus on consuming published rate plan data. Rate plan submission and regulatory approval tracking are outside the standard's scope.
+**Scope Note**: URPX APIs focus on consuming published rate plan data. Rate plan submission workflows are outside the standard's scope, but published URPX data MAY expose regulatory traceability metadata such as linked `RateCase` resources, filing references, and approval dates.
 
 ---
 
@@ -83,7 +88,7 @@ GET /api/v1/rate-plans?territory=nyiso-zone-j&customerKind=residentialKind
 
 **Scenario**:
 ```
-GIVEN a rate plan identifier and date range
+GIVEN a rate plan unique identifier and date range
 WHEN I request version data
 THEN I receive all versions effective within that period
 AND each version includes complete price structure
@@ -177,11 +182,11 @@ sequenceDiagram
     
     Customer->>Portal: Enter profile characteristics
     Portal->>API: POST /eligibility/check
-    Note over Portal,API: Includes: customerKind,<br/>servicePointProfile,<br/>serviceTerritory
+    Note over Portal,API: Includes: scenario.hasCustomerProfile<br/>and scenario.hasServicePointProfile
     API->>Engine: Evaluate eligibility rules
     Engine->>Store: Query rate plans
     Store->>Engine: Return candidates
-    Engine->>Engine: Apply CustomerProfileSet<br/>boolean logic
+    Engine->>Engine: Resolve `hasConditionExpression` tree<br/>and evaluate the root node
     Engine->>API: Eligible rate plans
     API->>Portal: 200 OK with results
     Portal->>Customer: Display qualified options
@@ -193,18 +198,22 @@ POST /api/v1/eligibility/check
 Content-Type: application/json
 
 {
-  "CustomerProfile": {
-    "hasCustomerKind": "residentialKind",
-    "hasCustomerSubKind": "residentialStandard"
-  },
-  "ServicePointProfile": {
-    "endUse": "residentialService",
-    "voltageLevel": "secondaryVoltage",
-    "hasMeteringConfiguration": "ami"
-    "geographicZone": "urbanZone"
+  "scenario": {
+    "hasCustomerProfile": {
+      "hasCustomerKind": "residentialKind",
+      "hasCustomerSubKind": "residentialStandard"
+    },
+    "hasServicePointProfile": {
+      "endUse": "residentialService",
+      "voltageLevel": "secondaryVoltage",
+      "hasMeteringConfiguration": "ami",
+      "geographicZone": "urbanZone"
+    }
   }
 }
 ```
+
+**Implementation Note:** Eligibility evaluation in URPX is based on structured `ConditionExpression` trees. API responses should surface matched rule names or stable identifiers rather than serialized internal expression graphs unless explicitly requested.
 
 **Response Example**:
 ```json
@@ -212,7 +221,7 @@ Content-Type: application/json
   "data": {
     "eligibleRatePlans": [
       {
-        "ratePlanIdentifier": "RES-TOU-001",
+        "ratePlanUniqueIdentifier": "RES-TOU-001",
         "name": "Residential Time-of-Use Rate Plan",
         "serviceRole": "bundledServiceRole",
         "matchedCriteria": [
@@ -224,7 +233,7 @@ Content-Type: application/json
     ],
     "ineligibleRatePlans": [
       {
-        "ratePlanIdentifier": "COMM-DEMAND-001",
+        "ratePlanUniqueIdentifier": "COMM-DEMAND-001",
         "reason": "Requires commercialKind customer classification"
       }
     ]
@@ -247,9 +256,8 @@ Authorization: Bearer {token}
 {
   "@context": "https://schema.urpx.org/context.jsonld",
   "@type": "RatePlan",
-  "ratePlanIdentifier": "NEW-RES-PLAN-001",
+  "ratePlanUniqueIdentifier": "NEW-RES-PLAN-001",
   "name": "New Residential Rate Plan",
-  "serviceRole": {"@id": "urpx:bundledServiceRole"},
   "initialEffectiveDate": "2025-01-01"
 }
 ```
@@ -263,9 +271,8 @@ Location: /api/v1/rate-plans/NEW-RES-PLAN-001
   "@context": "https://schema.urpx.org/context.jsonld",
   "@id": "ex:rateplan-new-001",
   "@type": "RatePlan",
-  "ratePlanIdentifier": "NEW-RES-PLAN-001",
+  "ratePlanUniqueIdentifier": "NEW-RES-PLAN-001",
   "name": "New Residential Rate Plan",
-  "serviceRole": {"@id": "urpx:bundledServiceRole"},
   "initialEffectiveDate": "2025-01-01"
 }
 ```
@@ -287,9 +294,13 @@ Authorization: Bearer {token}
   "effectiveDateTime": "2025-07-01T00:00:00-04:00",
   "changeReason": {"@id": "urpx:rateCase"},
   "publishedBy": {"@id": "ex:utility-example"},
+  "serviceRole": {"@id": "urpx:bundledServiceRole"},
+  "hasPlanElements": {
+    "@type": "PlanElements"
+  },
   "hasPrices": {
-        "@type": "Prices",
-        "hasPriceSet": [...]
+    "@type": "Prices",
+    "hasPriceSet": [...]
   }
 }
 ```
@@ -325,9 +336,8 @@ Accept: application/ld+json
   "@context": "https://schema.urpx.org/context.jsonld",
   "@id": "ex:rateplan-res-tou-001",
   "@type": "RatePlan",
-  "ratePlanIdentifier": "RES-TOU-001",
+  "ratePlanUniqueIdentifier": "RES-TOU-001",
   "name": "Residential Time-of-Use Rate Plan",
-  "serviceRole": {"@id": "urpx:bundledServiceRole"},
   "initialEffectiveDate": "2025-01-01"
 }
 ```
@@ -369,14 +379,14 @@ Accept: application/ld+json
 
 **Endpoint**: `https://sparql.urpx.org/query`
 
-**Example: Find All Peak Period Charges**
+**Example: Find All Peak Period Prices**
 
 ```sparql
 PREFIX urpx: <https://schema.urpx.org/>
 
 SELECT ?price ?name ?unitPrice ?periodName
 WHERE {
-  ?ratePlan urpx:ratePlanIdentifier "RES-TOU-001" ;
+  ?ratePlan urpx:ratePlanUniqueIdentifier "RES-TOU-001" ;
            urpx:hasRatePlanVersion ?version .
   
   ?version urpx:hasPrices/urpx:hasPriceSet/urpx:hasPrice ?price .
@@ -430,7 +440,7 @@ WHERE {
 **Seeking**: API Working Group Lead
 
 **Responsibilities**:
-- Define comprehensive API specification aligned with v0.1.1 ontology
+- Define comprehensive API specification aligned with the v0.2.0 ontology and SHACL model
 - Coordinate with semantic web and integration teams
 - Develop reference implementation
 - Lead community adoption
@@ -441,11 +451,11 @@ WHERE {
 
 ## Additional Resources
 
-- [Standards Integration](urpx-standards-integration.md) - LF Energy standards alignment
+- [URPX Interoperability & Standards Integration](urpx-interoperability.md) - LF Energy standards alignment
 - [Tutorial](urpx-tutorial.md) - Rate plan data creation guide
 
 ---
 
-*API specification under development for URPX v0.1.1. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
+*API specification under development for URPX v0.2.0. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
 
 [← Back to Index](../index.md)

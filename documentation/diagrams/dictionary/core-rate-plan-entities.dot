@@ -1,0 +1,314 @@
+digraph "Core Rate Plan Entities" {
+    rankdir=TB;
+    bgcolor="white";
+    pad=0.4;
+    nodesep=0.6;
+    ranksep=0.9;
+    fontname="Inter, Helvetica, Arial, sans-serif";
+    label="Core Rate Plan Entities (URPX v0.2.0)";
+    labelloc="t";
+    fontsize=14;
+    fontcolor="#1a365d";
+    node [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=10, style=filled, fontcolor="#1a365d"];
+    edge [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=8, fontcolor="#1a365d"];
+
+    // Section classes
+    URPXDocument [
+        label="URPXDocument"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    RatePlan [
+        label="RatePlan"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    RatePlanVersion [
+        label="RatePlanVersion"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    RatePlanModifier [
+        label="RatePlanModifier"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    RatePlanModifierVersion [
+        label="RatePlanModifier\nVersion"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    AccountServiceAgreement [
+        label="AccountService\nAgreement"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+
+    // Cross-section references
+    DataSourceReference [
+        label="DataSource\nReference"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    EligibilityRule [
+        label="EligibilityRule"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    GeneralRule [
+        label="GeneralRule"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    Holiday [
+        label="Holiday"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    LocationDataSet [
+        label="LocationDataSet"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    Organization [
+        label="Organization"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    PlanElements [
+        label="PlanElements"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    Prices [
+        label="Prices"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    RateCase [
+        label="RateCase"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    RateGroup [
+        label="RateGroup"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    ServiceClass [
+        label="ServiceClass"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    TariffPublication [
+        label="TariffPublication"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+
+    // Per-class datatype nodes
+    URPXDocument_dt_date [
+        label="xsd:date"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    RatePlan_dt_date [
+        label="xsd:date"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    RatePlanVersion_dt_string [
+        label="xsd:string"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    RatePlanVersion_dt_date [
+        label="xsd:date"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    RatePlanModifier_dt_date [
+        label="xsd:date"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    RatePlanModifierVersion_dt_string [
+        label="xsd:string"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    RatePlanModifierVersion_dt_date [
+        label="xsd:date"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+    AccountServiceAgreement_dt_dateTime [
+        label="xsd:dateTime"
+        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ];
+
+    // Object property edges
+    URPXDocument -> RatePlan [
+        label="hasRatePlan\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=10
+    ];
+    URPXDocument -> RatePlanModifier [
+        label="hasRatePlanModifier\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    URPXDocument -> TariffPublication [
+        label="hasTariffPublication\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlan -> RateGroup [
+        label="applicableToRateGroup\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlan -> RatePlan [
+        label="applicableToRatePlan\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlan -> LocationDataSet [
+        label="hasLocationDataSet\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlan -> RateGroup [
+        label="hasRateGroup\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlan -> RatePlanVersion [
+        label="hasRatePlanVersion\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=10
+    ];
+    RatePlan -> ServiceClass [
+        label="hasServiceClass\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanVersion -> RatePlan [
+        label="applicableToRatePlan\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanVersion -> RatePlanVersion [
+        label="applicableToRatePlanVersion\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanVersion -> DataSourceReference [
+        label="hasDataSourceReference\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanVersion -> EligibilityRule [
+        label="hasEligibilityRule\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanVersion -> RatePlanModifier [
+        label="hasModifierOptions\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanVersion -> RatePlanModifierVersion [
+        label="hasModifierVersionOptions\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanVersion -> PlanElements [
+        label="hasPlanElements\n1..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanVersion -> Prices [
+        label="hasPrices\n1..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanVersion -> RateCase [
+        label="hasRateCase\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanVersion -> Holiday [
+        label="observesHoliday\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanVersion -> Organization [
+        label="publishedBy\n1..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanVersion -> GeneralRule [
+        label="referencesGeneralRule\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanVersion -> RatePlanVersion [
+        label="supersedes\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifier -> RateGroup [
+        label="applicableToRateGroup\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifier -> LocationDataSet [
+        label="hasLocationDataSet\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifier -> RatePlanModifierVersion [
+        label="hasRatePlanModifierVersion\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=10
+    ];
+    RatePlanModifier -> ServiceClass [
+        label="hasServiceClass\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifierVersion -> RatePlan [
+        label="applicableToRatePlan\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifierVersion -> RatePlanVersion [
+        label="applicableToRatePlanVersion\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifierVersion -> DataSourceReference [
+        label="hasDataSourceReference\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifierVersion -> EligibilityRule [
+        label="hasEligibilityRule\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifierVersion -> PlanElements [
+        label="hasPlanElements\n1..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifierVersion -> Prices [
+        label="hasPrices\n1..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifierVersion -> RateCase [
+        label="hasRateCase\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifierVersion -> Organization [
+        label="publishedBy\n1..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifierVersion -> GeneralRule [
+        label="referencesGeneralRule\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifierVersion -> RatePlanModifierVersion [
+        label="supersedes\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+
+    // Datatype property edges
+    URPXDocument -> URPXDocument_dt_date [
+        label="dateCreated\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    URPXDocument -> URPXDocument_dt_date [
+        label="dateReceived\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    RatePlan -> RatePlan_dt_date [
+        label="dateApproved\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    RatePlan -> RatePlan_dt_date [
+        label="dateCreated\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    RatePlanVersion -> RatePlanVersion_dt_string [
+        label="changeDescription\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    RatePlanVersion -> RatePlanVersion_dt_date [
+        label="dateApproved\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    RatePlanModifier -> RatePlanModifier_dt_date [
+        label="dateApproved\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    RatePlanModifier -> RatePlanModifier_dt_date [
+        label="dateCreated\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    RatePlanModifierVersion -> RatePlanModifierVersion_dt_string [
+        label="changeDescription\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    RatePlanModifierVersion -> RatePlanModifierVersion_dt_date [
+        label="dateApproved\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    AccountServiceAgreement -> AccountServiceAgreement_dt_dateTime [
+        label="contractEffectiveDate\n1..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+    AccountServiceAgreement -> AccountServiceAgreement_dt_dateTime [
+        label="contractExpirationDate\n0..1", color="#22c55e", fontcolor="#166534",
+        style=dashed, penwidth=1.5
+    ];
+
+    // Layout-specified rank groups
+    { rank=same; URPXDocument; }
+    { rank=same; RatePlan; RatePlanModifier; }
+    RatePlan -> RatePlanModifier [style=invis];
+    { rank=same; RatePlanVersion; RatePlanModifierVersion; }
+    RatePlanVersion -> RatePlanModifierVersion [style=invis];
+    { rank=same; AccountServiceAgreement; }
+
+    subgraph cluster_legend {
+        label="Legend";
+        fontname="Inter, Helvetica, Arial, sans-serif";
+        fontsize=11;
+        fontcolor="#1a365d";
+        style=rounded;
+        color="#cccccc";
+        bgcolor="#f8f8f8";
+        margin=12;
+
+        leg_class [label="OWL Class\n(this section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
+        leg_xref [label="OWL Class\n(other section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"];
+        leg_dt [label="XSD Datatype", shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"];
+        leg_src [label=" ", shape=point, width=0.01];
+        leg_tgt1 [label=" ", shape=point, width=0.01];
+        leg_tgt2 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+        leg_src -> leg_tgt2 [label="cross-section ref", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+        leg_tgt3 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt3 [label="datatype property", style=dashed, color="#22c55e", fontcolor="#166534", penwidth=1.5];
+    }
+}

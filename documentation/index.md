@@ -1,6 +1,11 @@
+<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
+<!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
+
 # 🔗 URPX Documentation
 
-## Utility Rate Plan Exchange Standard v0.1.1
+## Utility Rate Plan Exchange Standard v0.2.0
 
 Welcome to the URPX documentation. URPX is an open standard for exchanging utility rate plan information using semantic web technologies.
 
@@ -11,6 +16,7 @@ Welcome to the URPX documentation. URPX is an open standard for exchanging utili
 ### Getting Started
 - **[Overview](pages/urpx-overview.md)** - Understanding URPX and rate plan data exchange
 - **[Tutorial](pages/urpx-tutorial.md)** - Step-by-step guide to creating rate plan data
+- **[Release Notes v0.2.0](pages/urpx-release-notes-v0.2.0.md)** - Summary of changes and migration impact since v0.1.2
 - **[FAQ](pages/urpx-faq.md)** - Frequently asked questions
 
 ### Technical Reference
@@ -18,11 +24,14 @@ Welcome to the URPX documentation. URPX is an open standard for exchanging utili
 - **[Syntax Guidelines](pages/urpx-syntax-guidelines.md)** - Labeling conventions and ontology syntax standards
 - **[API Specification](pages/urpx-api-spec.md)** - REST and SPARQL API patterns
 - **[Quality Assurance](pages/urpx-quality-assurance.md)** - Validation and quality standards
+- **[Test Data Review Guide](pages/urpx-test-data-review-guide.md)** - How to review tariff-to-URPX test cases for structural validity and source fidelity
+- **[Condition Model](pages/urpx-condition-modeling.md)** - Structured condition-expression architecture and validation patterns
 
 ### Advanced Topics
 - **[Design Principles](pages/urpx-design-principles.md)** - Ontology development standards
 - **[Design Decisions 001-040](pages/urpx-design-decisions-001-040.md)** - Architectural decision log (Part 1)
 - **[Design Decisions 041-080](pages/urpx-design-decisions-041-080.md)** - Architectural decision log (Part 2)
+- **[Design Decisions 081-120](pages/urpx-design-decisions-081-120.md)** - Architectural decision log (Part 3)
 
 ### Learning & Education
 - **[Semantic Web Guide](pages/urpx-semantic-web-guide.md)** - Introduction to RDF, ontologies, and linked data

@@ -1,7 +1,12 @@
+<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
+<!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
+
 # Semantic Web Guide for URPX
 
-**Version:** 0.1.1  
-**Last Updated:** 2026-03-02
+**Version:** 0.2.0 (Pre-draft) 
+**Last Updated:** 2026-04-29
 
 **A beginner-friendly introduction to semantic web technologies for the URPX working group**
 
@@ -175,9 +180,9 @@ This graph structure enables:
 An ontology is a **formal specification** of a domain's concepts and relationships. Think of it as a "data dictionary with superpowers."
 
 **URPX Ontology Structure:**
-- **Classes**: RatePlan, Charge, TOUSchedule, Season, Organization
-- **Properties**: hasCharge, chargeType, unitPrice, effectiveDate
-- **Relationships**: Charges belong to ChargeSets, ChargeSets belong to RatePlans
+- **Classes**: RatePlan, Price, TOUSchedule, Season, Organization
+- **Properties**: hasPrice, chargeType, unitPrice, effectiveDate
+- **Relationships**: Prices belong to PriceSets, and PriceSets belong to RatePlanVersions through the Prices container
 - **Constraints**: Every RatePlan must have at least one RatePlanVersion
 
 **Why We Use OWL:**
@@ -220,7 +225,7 @@ JSON-LD is **JSON with a semantic layer**. Developers work with familiar JSON sy
   "urpx:chargeType": {"@id": "urpx:usageCharge"},
   "urpx:chargeCategory": {"@id": "urpx:auxiliaryCharge"},
   "urpx:unitPrice": 0.12,
-  "urpx:currency": "USD",
+  "urpx:priceCurrency": "USD",
   "urpx:hasMetricSpecification": {
     "urpx:commodity": {"@id": "urpx:electricity"},
     "urpx:measurementKind": {"@id": "urpx:energy"},
@@ -229,9 +234,9 @@ JSON-LD is **JSON with a semantic layer**. Developers work with familiar JSON sy
 }
 ```
 
-**Price Set Alternatives with IRI Linking:**
+**Price Set Alternatives with Profile-Alternative References:**
 
-This example demonstrates how price alternatives link to dimension sets via IRIs:
+This example demonstrates the current URPX v0.2.0 pattern in which a `PriceSetAlternative` links to a reusable `ProfileAlternative` by IRI:
 
 ```json
 {
@@ -243,16 +248,10 @@ This example demonstrates how price alternatives link to dimension sets via IRIs
     {
       "@id": "ex:zone-h-secondary",
       "@type": "urpx:ProfileAlternative",
-      "urpx:hasDimensionValue": [
-        {
-          "urpx:forDimension": {"@id": "ex:nyiso-zone-dimension"},
-          "urpx:valueIRI": {"@id": "ex:NYISO_Zone_H"}
-        },
-        {
-          "urpx:forDimension": {"@id": "ex:voltage-dimension"},
-          "urpx:valueIRI": {"@id": "urpx:secondaryVoltage"}
-        }
-      ]
+      "urpx:name": "Zone H - Secondary Voltage Alternative",
+      "urpx:hasConditionExpression": {
+        "@id": "ex:condition-expression-zone-h-secondary"
+      }
     },
     {
       "@id": "ex:charges-zone-h-secondary",
@@ -268,10 +267,11 @@ This example demonstrates how price alternatives link to dimension sets via IRIs
 }
 ```
 
-The `referencesProfileAlternative` property uses an **IRI reference** (`ex:zone-h-secondary`) to link the price set alternative to its profile alternative. This enables:
+The `referencesProfileAlternative` property uses an **IRI reference** (`ex:zone-h-secondary`) to link the price set alternative to its profile alternative. The `ProfileAlternative` points to its defining `ConditionExpression` by IRI instead of embedding the full expression graph inline. In v0.2.0, this replaces the older `hasDimensionValue` / `valueIRI` authoring pattern. This enables:
 - Dereferenceable links for metadata lookup
-- Clean separation between dimension definitions and charges
-- Reusable dimension sets across multiple rate plans
+- Clean separation between alternative metadata and charges
+- Reusable alternative resources across multiple rate plans
+- Required attachment of `hasConditionExpression` on the referenced `ProfileAlternative`
 
 **The @context Explained:**
 - Maps JSON keys to RDF predicates
@@ -326,13 +326,13 @@ urpx-shacl:PriceShape a sh:NodeShape ;
 
 SPARQL is the "SQL for RDF" - a query language for semantic data.
 
-**Example 1: Find All Charges in a Rate Plan**
+**Example 1: Find All Prices in a Rate Plan**
 ```sparql
 PREFIX urpx: <https://schema.urpx.org/>
 
-SELECT ?charge ?chargeName ?unitPrice
+SELECT ?price ?name ?unitPrice
 WHERE {
-  ?ratePlan urpx:ratePlanIdentifier "RES-TOU-2025" ;
+  ?ratePlan urpx:ratePlanUniqueIdentifier "RES-TOU-2025" ;
             urpx:hasRatePlanVersion/urpx:hasPrices/urpx:hasPriceSet/urpx:hasPrice ?price .
   ?price    urpx:name ?name ;
             urpx:unitPrice ?unitPrice .

@@ -1,10 +1,15 @@
+<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
+<!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
+
 # URPX Quality Assurance Guidelines
 
-**Version**: 0.1.1  
-**Last Updated**: 2026-03-02  
+**Version**: 0.2.0 (Pre-draft)
+**Last Updated**: 2026-04-29
 **Status**: Active
 
-**Validation and quality standards for URPX v0.1.1 rate plan data**
+**Validation and quality standards for URPX v0.2.0 rate plan data**
 
 [← Back to Index](../index.md)
 
@@ -23,14 +28,14 @@
 
 ## Overview
 
-URPX v0.1.1 maintains rigorous quality standards to ensure rate plan data accuracy, semantic consistency, and standards compliance. This guide covers validation requirements and quality assurance processes.
+URPX v0.2.0 maintains quality standards for ontology alignment, SHACL conformance, and semantic consistency. This guide summarizes the current validation expectations for rate plans, versions, prices, and structured rule logic.
 
 ### Quality Principles
 
-1. **Ontology Compliance** - All data must validate against v0.1.1 ontology
-2. **SHACL Validation** - Business rules enforced through SHACL constraints
-3. **Semantic Consistency** - Proper use of properties, classes, and enumerations
-4. **Data Completeness** - Required fields populated with valid values
+1. **Ontology Compliance** - Data must use current v0.2.0 classes and properties
+2. **SHACL Validation** - Business rules are enforced through the unified SHACL file
+3. **Semantic Consistency** - Property usage, enumerations, and cross-references must align with the ontology
+4. **Data Completeness** - Required identifiers, version metadata, and pricing structure must be present
 
 ---
 
@@ -38,18 +43,18 @@ URPX v0.1.1 maintains rigorous quality standards to ensure rate plan data accura
 
 ### Required Ontology Files
 
-URPX v0.1.1 uses a core ontology file:
+URPX v0.2.0 uses a core ontology file:
 
-- `../../ontology/urpx-ontology.ttl` - Complete URPX ontology with all classes and properties
+- `../../ontology/urpx-ontology.ttl` - Complete URPX ontology with classes, properties, enumerations, and notes
 
 ### Common Validation Errors
 
 | Error | Cause | Solution |
 |-------|-------|----------|
-| Undefined property | Using property not in ontology | Check ontology definition |
-| Wrong enum value | Incorrect enumeration instance | Use exact ontology enum values |
-| Missing required property | Omitted mandatory field | Add required property |
-| Type mismatch | Wrong datatype or object reference | Correct to ontology range |
+| Undefined property | Using a property no longer present in v0.2.0 | Check the ontology and rename to the current property |
+| Wrong enum value | Incorrect or invented enumeration instance | Use the exact URPX enumeration IRI |
+| Missing required property | Omitted mandatory identifier, version field, or container | Add the required property before SHACL validation |
+| Type mismatch | Literal used where an object reference is required, or vice versa | Correct to the ontology range |
 
 ---
 
@@ -57,25 +62,58 @@ URPX v0.1.1 uses a core ontology file:
 
 ### SHACL Validation Files
 
-- [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl) - Unified SHACL validation shapes (~3,500 lines, draft). Contains comprehensive shapes for all major URPX classes.
+- [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl) - Unified SHACL validation shapes for the current draft ontology
 
 ### Critical SHACL Constraints
 
+**URPXDocument Requirements:**
+- Must include `targetURPXVersion` exactly once
+- May include `timezoneIdentifier`
+- `targetURPXVersion` should point to the ontology version IRI used for authoring and validation
+
 **RatePlan Requirements:**
-- Must have at least one RatePlanVersion
-- Must have ratePlanIdentifier
-- Must specify serviceRole (from ServiceRoleValue enumeration)
+- Must have at least one `hasRatePlanVersion`
+- Must have `name`
+- Must have `initialEffectiveDate`
+- Must have `ratePlanUniqueIdentifier`
+
+**RatePlanVersion Requirements:**
+- Must have `changeReason`
+- Must have `publishedBy`
+- Must have `serviceRole`
+- Must have `hasPlanElements`
+- Must have `hasPrices`
+- Must have `effectiveDate` or `effectiveDateTime`
 
 **Price Requirements:**
-- chargeCategory is optional (0..1)
-- chargeType is optional (0..*)
-- Must have one pricing field (amount, unitPrice, basedOnPrice, currentPrice, or basePrice)
-- Must have start and end dates when available (startDate, startDateTime, endDate, endDateTime)
+- Must have exactly one pricing field: `amount`, `unitPrice`, `basedOnPrice`, `currentPrice`, or `basePrice`
+- `chargeType`, `chargeCategory`, and `billPortion` are optional classification metadata
+- Must have temporal boundaries when the source tariff provides them
+
+**Structured Rule Requirements:**
+- Every `EligibilityRule` MUST include exactly one `hasConditionExpression`
+- Every `ProfileAlternative` MUST include exactly one `hasConditionExpression`
+- `ApplicabilityRule` and `ApplicabilityGroup` MAY include at most one `hasConditionExpression`
+- Every `ConditionExpression` MUST include exactly one `rootNode`
+- `BooleanOperationNode` MUST use `operandNodes` and not `leftOperand` / `rightOperand`
+- `ComparisonNode` MUST use `leftOperand` and `rightOperand`
+- Literal-bearing `DatatypeOperandNode` and `CustomOperandNode` branches MUST carry exactly one matching datatype-specific value property
+- `referencesMetricInput` is allowed on literal-bearing datatype/custom operand branches, but not on their property-reference branches
+
+**Scenario Requirements:**
+- A `Scenario` MUST include `hasCustomerProfile`, `hasServicePointProfile`, or both
+- Eligibility evaluation inputs should be modeled through `Scenario`, not by attaching profiles directly to `EligibilityRule`
+
+**PriceDefinition and RateCase Requirements:**
+- Every `PriceDefinition` MUST include exactly one `referencesLedger`
+- Every `RateCase` MUST include `caseNumber`
+- Every `RateCase` MUST include `url`
+- `hasRateCase` may be used on `RatePlanVersion`, `RatePlanModifierVersion`, `PriceDefinition`, `Price`, `PriceSet`, and `PriceSetAlternative`
 
 **Temporal Requirements:**
-- Time zone must be specified with `timeZoneIdentifier` on LocationDataSet, URPXDocument, RatePlan, or RatePlanModifier
+- Use `timezoneIdentifier` where timezone metadata is needed
 - Versions must not overlap temporally
-- expirationDate or expirationDateTime must be after effectiveDate or effectiveDateTime
+- `expirationDate` / `expirationDateTime` must be later than `effectiveDate` / `effectiveDateTime`
 
 ---
 
@@ -83,43 +121,64 @@ URPX v0.1.1 uses a core ontology file:
 
 ### Required Properties
 
+**Every URPXDocument must have:**
+- `targetURPXVersion`
+
 **Every RatePlan must have:**
-- ratePlanIdentifier (alphanumeric + hyphen only)
-- name (human-readable)
-- serviceRole (from ServiceRoleValue enumeration)
-- hasRatePlanVersion (at least one)
+- `ratePlanUniqueIdentifier`
+- `name`
+- `initialEffectiveDate`
+- `hasRatePlanVersion` (at least one)
 
 **Every RatePlanVersion must have:**
-- version (semantic versioning)
-- effectiveDateTime or effectiveDate
-- changeReason (from ChangeReasonValue enumeration)
-- publishedBy (Organization reference)
-- hasPrices (Prices container)
+- `effectiveDate` or `effectiveDateTime`
+- `changeReason`
+- `publishedBy`
+- `serviceRole`
+- `hasPlanElements`
+- `hasPrices`
+
+**Every RatePlanVersion should include when version labeling is used:**
+- `version`
 
 **Every Price must have:**
-- One pricing field (amount, unitPrice, basedOnPrice, currentPrice, or basePrice)
-- startDate or startDateTime and endDate or endDateTime when available
+- Exactly one pricing field
+- Temporal boundaries when the source tariff provides them
 
-**Every Price may have:**
-- chargeType (from ChargeTypeValue) — optional, recommended
-- chargeCategory (from ChargeCategoryValue) — optional, recommended
-- billPortion (from BillPortionValue) — optional
-- referencesPriceDefinition (link to PriceDefinition) — optional, recommended
+**Every EligibilityRule must have:**
+- `hasConditionExpression`
+
+**Every ProfileAlternative must have:**
+- `hasConditionExpression`
+
+**Every ConditionExpression must have:**
+- `rootNode`
+
+**Every Scenario must have at least one of:**
+- `hasCustomerProfile`
+- `hasServicePointProfile`
+
+**Every PriceDefinition must have:**
+- `referencesLedger`
+
+**Every RateCase must have:**
+- `caseNumber`
+- `url`
 
 ### Enumeration Value Validation
 
-**ChargeTypeValue** - Must use exact instance names:
-- `urpx:minimumCharge` (not "MinimumCharge" or "minimum")
-- `urpx:usageCharge` (not "UsageCharge" or "usage")
-- `urpx:demandDirect` (not "DemandCharge" or "demand")
-- `urpx:taxState` (not "TaxState" or "state_tax")
+**ChargeTypeValue** - Use exact instance names:
+- `urpx:minimumCharge`
+- `urpx:usageCharge`
+- `urpx:demandDirect`
+- `urpx:taxState`
 
-**BillPortionValue** - Must use exact values:
-- `urpx:bundledPortion` (not "bundled" or "Bundled")
-- `urpx:deliveryPortion` (not "delivery" or "Delivery")
-- `urpx:supplyPortion` (not "supply" or "Supply")
+**BillPortionValue** - Use exact instance names:
+- `urpx:bundledPortion`
+- `urpx:deliveryPortion`
+- `urpx:supplyPortion`
 
-**ChargeCategoryValue** - Must use exact instances:
+**ChargeCategoryValue** - Use exact instance names:
 - `urpx:adjustment`
 - `urpx:auxiliaryCharge`
 - `urpx:discount`
@@ -134,35 +193,71 @@ URPX v0.1.1 uses a core ontology file:
 **Correct enum reference:**
 ```json
 {
-  "chargeType": {"@id": "urpx:minimumCharge"},
-  "chargeCategory": {"@id": "urpx:serviceCharge"},
-  "billPortion": {"@id": "urpx:bundledPortion"}
+  "urpx:chargeType": { "@id": "urpx:minimumCharge" },
+  "urpx:chargeCategory": { "@id": "urpx:serviceCharge" },
+  "urpx:billPortion": { "@id": "urpx:bundledPortion" }
 }
 ```
 
-**Incorrect (will fail validation):**
+**Incorrect legacy identifier pattern:**
 ```json
 {
-  "chargeType": "minimumCharge",
-  "chargeCategory": "serviceCharge",
-  "billPortion": "bundledPortion"
+  "@type": "urpx:RatePlan",
+  "urpx:ratePlanIdentifier": "LEGACY-001"
 }
 ```
 
-### Turtle Pattern Requirements
-
-**Correct:**
-```turtle
-ex:price1 a urpx:Price ;
-    urpx:chargeType urpx:minimumCharge ;
-    urpx:chargeCategory urpx:serviceCharge .
+**Valid structured condition pattern:**
+```json
+{
+  "@type": "urpx:EligibilityRule",
+  "urpx:hasConditionExpression": {
+    "@type": "urpx:ConditionExpression",
+    "urpx:rootNode": {
+      "@type": "urpx:ComparisonNode",
+      "urpx:operator": { "@id": "urpx:greaterThanOperator" },
+      "urpx:leftOperand": {
+        "@type": "urpx:DatatypeOperandNode",
+        "urpx:conditionProperty": { "@id": "urpx:averageMonthlyUsage" }
+      },
+      "urpx:rightOperand": {
+        "@type": "urpx:DatatypeOperandNode",
+        "urpx:integerValue": 500,
+        "urpx:referencesMetricInput": { "@id": "ex:mi-average-monthly-usage" }
+      }
+    }
+  }
+}
 ```
 
-**Incorrect:**
-```turtle
-ex:price1 a urpx:Price ;
-    urpx:chargeType "minimumCharge" ;
-    urpx:chargeCategory "serviceCharge" .
+**Valid scenario pattern:**
+```json
+{
+  "@type": "urpx:Scenario",
+  "urpx:hasCustomerProfile": {
+    "@type": "urpx:CustomerProfile",
+    "urpx:hasCustomerKind": { "@id": "urpx:residentialKind" }
+  },
+  "urpx:hasServicePointProfile": {
+    "@type": "urpx:ServicePointProfile",
+    "urpx:voltageLevel": { "@id": "urpx:secondaryVoltage" }
+  }
+}
+```
+
+**Valid rate case traceability pattern:**
+```json
+{
+  "@type": "urpx:RatePlanVersion",
+  "urpx:changeReason": { "@id": "urpx:rateCase" },
+  "urpx:hasRateCase": [
+    {
+      "@type": "urpx:RateCase",
+      "urpx:caseNumber": "2026-001-E",
+      "urpx:url": "https://example.org/regulator/dockets/2026-001-e"
+    }
+  ]
+}
 ```
 
 ---
@@ -172,11 +267,13 @@ ex:price1 a urpx:Price ;
 ### Code Example Requirements
 
 **All examples must:**
-- Use correct v0.1.1 property names
-- Reference actual ontology enum values
-- Include proper @context in JSON-LD
-- Validate against SHACL constraints
-- Use timezone-aware dateTime values
+- Use current v0.2.0 property names
+- Use `ratePlanUniqueIdentifier`, not `ratePlanIdentifier`
+- Use `timezoneIdentifier`, not `timeZoneIdentifier`
+- Use `hasConditionExpression`, not `hasCondition` / `hasConditionLogic`
+- Include `targetURPXVersion` when the example includes a `URPXDocument`
+- Include proper `@context` in JSON-LD examples
+- Validate against the current SHACL file
 
 ---
 
@@ -184,134 +281,55 @@ ex:price1 a urpx:Price ;
 
 ### Rate Plan Terminology
 
-**CRITICAL REQUIREMENT**: Always use "rate plan" - never "rate" alone.
-
-**Rationale**: A "rate plan" is a complete package (prices + schedules + rules + eligibility) while a "rate" is just a single price value. Using "rate plan" consistently distinguishes the complete semantic structure from incomplete price references.
+**CRITICAL REQUIREMENT**: Use "rate plan" for the full pricing structure. Do not use "rate" alone when the meaning is the complete plan.
 
 **Correct Usage:**
 - "rate plan data"
 - "rate plan structure"
 - "residential rate plan"
-- "rate plan examples"
 - "rate plan information"
 
 **Incorrect Usage:**
-- "rate data" ❌
-- "rate structure" ❌
-- "residential rate" ❌
-- "rate examples" ❌
-- "rate information" ❌
+- "rate data"
+- "rate structure"
+- "residential rate"
+- "rate information"
 
-### Enumeration Value Standards
+### Validation Workflow
 
-**Use ontology-defined instances exactly:**
-
-From `urpx-ontology.ttl`:
-- Charge types: `minimumCharge`, `usageCharge`, `demandDirect`, `taxState`
-- Charge categories: `serviceCharge`, `auxiliaryCharge`, `infrastructure`, `taxes`
-- Bill portions: `bundledPortion`, `deliveryPortion`, `supplyPortion`
-- Customer kinds: `residentialKind`, `commercialKind`, `industrialKind`
-- Measurement types: `energy`, `demand`, `power`, `voltage`
-- Units: `kWh`, `kW`, `therm`, `ccf`
-
-**Always:**
-- Use camelCase for enum instances: `minimumCharge`, not `MinimumCharge`
-- Reference enumerations with @id wrapper in JSON-LD: `{"@id": "urpx:value"}`
-
-**Never use:**
-- String values without @id wrapper
-- PascalCase variants (MinimumCharge)
-- Abbreviated forms (res, comm, dist)
-- Custom/invented values not in ontology
-
----
-
-## Validation Workflow
-
-### Step-by-Step Quality Process
-
-**1. Create Rate Plan Data**
-- Use v0.1.1 ontology as reference
-- Include all required properties
-
-**2. Syntax Validation**
-- Validate JSON-LD syntax
-- Validate Turtle syntax
-
-**3. SHACL Validation**
-- Perform SHACL validation using [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl) 
-
-**4. Business Logic Verification**
-- Verify price classification combinations make sense
-- Check temporal consistency
-- Validate geographic applicability
-- Confirm eligibility rules are complete
-
----
-
-## Quality Metrics
-
-### Data Quality Indicators
-
-**Completeness**:
-- All required properties present
-- No null values for mandatory fields
-- Complete metadata and descriptions
-
-**Consistency**:
-- Enum values match ontology exactly
-- Property usage follows ontology domains/ranges
-- Cross-references resolve correctly
-
-**Accuracy**:
-- Price values match source tariff documents
-- Temporal periods align correctly
-- Geographic boundaries are precise
-
-**Standards Compliance**:
-- ISO 8601 datetime formats with timezones
-- ISO 4217 currency codes
-- W3C RDF/OWL patterns
-- SHACL validation passing
-
----
-
-## Best Practices
-
-### Development Workflow
-
-1. **Reference ontology first** - Check urpx-ontology.ttl for all classes and properties
-2. **Validate early** - Run SHACL validation during development
-3. **Test with real data** - Verify with actual utility tariff information
-4. **Document sources** - Include tariff book references and filing numbers
+1. **Reference the ontology first** - Confirm current classes and properties in `urpx-ontology.ttl`
+2. **Validate syntax** - Check JSON-LD or Turtle syntax before semantic review
+3. **Validate with SHACL** - Use `shacl/urpx-shacl.ttl`
+4. **Check business logic** - Verify price structure, time coverage, and rule intent against the source tariff
 
 ### Common Pitfalls to Avoid
 
 **Property Name Errors:**
-- Using properties that don't exist in ontology
-- Misspelling property names
-- Using wrong casing (camelCase vs PascalCase)
+- Using `ratePlanIdentifier` instead of `ratePlanUniqueIdentifier`
+- Using `timeZoneIdentifier` instead of `timezoneIdentifier`
+- Using legacy condition-model properties from pre-v0.2.0 drafts
 
 **Enum Value Errors:**
-- Using string values instead of IRI references
-- Wrong enum instance names
-- Invented values not in ontology
+- Using string literals instead of `@id` references where IRIs are required
+- Inventing values not defined in the ontology
 
 **Structural Errors:**
-- Missing required containers (Prices, PlanElements)
-- Incorrect nesting of classes
-- Missing @type declarations
+- Omitting `targetURPXVersion` on `URPXDocument`
+- Putting `serviceRole` on `RatePlan` instead of `RatePlanVersion`
+- Omitting `hasConditionExpression` on `EligibilityRule`
+- Omitting `hasConditionExpression` on `ProfileAlternative`
+- Modeling eligibility inputs outside a `Scenario`
 
 ---
 
 ## Support
 
-- **Validation Tools**: See `test-cases/` directory for examples
+- **Validation Tools**: See `test-cases/` for current example datasets
 - **Issue Reporting**: [GitHub Issues](https://github.com/urpx-org/urpx/issues)
 - **Questions**: [GitHub Discussions](https://github.com/urpx-org/urpx/discussions)
 
 ---
 
-*Quality assurance guidelines for URPX v0.1.1. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
+*Quality assurance guidelines for URPX v0.2.0. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
 
 [← Back to Index](../index.md)
