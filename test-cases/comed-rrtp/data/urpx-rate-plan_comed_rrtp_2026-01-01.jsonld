@@ -1,6 +1,6 @@
 {
   "@context": {
-    "urpx": "https://schema.urpx.org/",
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
     "schema": "http://schema.org/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "org": "https://example.com/organizations/",
@@ -24,7 +24,7 @@
   },
   "@type": "urpx:HighlyDynamicPricesDocument",
   "@id": "comed:hdp-rrtp-001",
-  "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.1.1/ontology/urpx-ontology.ttl",
+  "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl",
   "urpx:name": "ComEd Residential Real-Time Pricing (RRTP)",
   "urpx:effectiveDateTime": "2026-01-01T00:00:00",
   "urpx:priceCurrency": "USD",
@@ -32,7 +32,7 @@
   "urpx:hasRatePlan": {
     "@type": "urpx:RatePlan",
     "@id": "comed:rrtp",
-    "urpx:ratePlanIdentifier": "RRTP",
+    "urpx:ratePlanUniqueIdentifier": "RRTP",
     "urpx:name": "Residential Real-Time Pricing",
     "urpx:initialEffectiveDate": "2007-01-01",
     "urpx:hasRatePlanVersion": {
@@ -44,11 +44,11 @@
         "urpx:legalName": "Commonwealth Edison Company",
         "urpx:eiaId": "4110",
         "urpx:organizationType": { "@id": "urpx:utilityOrganization" },
-        "urpx:participatesInMarket": {
+        "urpx:operatesIn": {
           "@type": "urpx:SystemOperator",
           "@id": "org:iso-pjm",
           "urpx:legalName": "PJM Interconnection LLC",
-          "urpx:organizationType": { "@id": "urpx:isoOrganization" }
+          "urpx:organizationType": { "@id": "urpx:isoRtoOrganization" }
         }
       },
       "urpx:description": "ComEd's Residential Real-Time Pricing program allows residential customers to pay hourly electricity supply prices based on the PJM day-ahead wholesale market Locational Marginal Price (LMP) for the ComEd zone, plus a retail adder. Delivery charges remain fixed per the standard delivery tariff. Participants receive day-ahead hourly price signals to enable load shifting.",
@@ -60,9 +60,9 @@
       "urpx:hasDataSourceReference": [
         {
           "@type": "urpx:DataSourceReference",
-          "urpx:url": "file://./assets/ComEd_RRTP_Tariff_2026-01-01.pdf",
-          "urpx:fileName": "ComEd_RRTP_Tariff_2026-01-01.pdf",
-          "urpx:mediaType": "application/pdf"
+          "urpx:url": "file://./assets/ELEC_COMED_05_Rate_BESH.pdf",
+          "urpx:fileName": "ELEC_COMED_05_Rate_BESH.pdf",
+          "urpx:mediaType": { "@id": "urpx:applicationPdf" }
         },
         {
           "@type": "urpx:DataSourceReference",
@@ -70,19 +70,112 @@
           "urpx:url": "https://hourlypricing.comed.com/live-prices/",
           "urpx:name": "ComEd Hourly Pricing Live Prices API",
           "urpx:description": "Real-time and day-ahead hourly pricing data feed for ComEd RRTP program. Provides current and next-day hourly prices based on PJM wholesale market LMP.",
-          "urpx:mediaType": "text/html"
+          "urpx:mediaType": { "@id": "urpx:textHtml" }
         }
       ],
       "urpx:hasEligibilityRule": [
         {
           "@type": "urpx:EligibilityRule",
           "@id": "comed:er-rrtp-residential",
-          "urpx:hasCustomerProfile": {
-            "@id": "comed:cp-residential",
-            "@type": "urpx:CustomerProfile",
-            "urpx:hasCustomerKind": { "@id": "urpx:residentialKind" }
-          },
-          "urpx:description": "Available to all residential customers in ComEd's service territory with an interval meter (smart meter). Customer must enroll through an approved retail electricity supplier or through ComEd's hourly pricing program."
+          "urpx:description": "Available to all residential customers in ComEd's service territory with an interval meter (smart meter). Customer must enroll through an approved retail electricity supplier or through ComEd's hourly pricing program.",
+          "urpx:hasConditionExpression": {
+            "@type": "urpx:ConditionExpression",
+            "@id": "comed:ce-rrtp-residential",
+            "urpx:rootNode": {
+              "@type": "urpx:BooleanOperationNode",
+              "@id": "comed:eligibility-root-rrtp-residential",
+              "urpx:logicExpression": "customer kind is residential AND customer has an interval meter (smart meter) AND customer enrolls through an approved retail electricity supplier or through ComEd's hourly pricing program",
+              "urpx:operator": { "@id": "urpx:andOperator" },
+              "urpx:operandNodes": [
+                {
+                  "@type": "urpx:ComparisonNode",
+                  "@id": "comed:condition-residential-kind",
+                  "urpx:logicExpression": "hasCustomerKind = residentialKind",
+                  "urpx:operator": { "@id": "urpx:equalsOperator" },
+                  "urpx:leftOperand": {
+                    "@type": "urpx:ObjectOperandNode",
+                    "urpx:conditionProperty": { "@id": "urpx:hasCustomerKind" }
+                  },
+                  "urpx:rightOperand": {
+                    "@type": "urpx:ObjectOperandNode",
+                    "urpx:referencesValue": { "@id": "urpx:residentialKind" }
+                  }
+                },
+                {
+                  "@type": "urpx:BooleanOperationNode",
+                  "@id": "comed:condition-interval-meter",
+                  "urpx:logicExpression": "hasMeteringConfiguration = ami AND hasMeteringConfiguration = interval",
+                  "urpx:operator": { "@id": "urpx:andOperator" },
+                  "urpx:operandNodes": [
+                    {
+                      "@type": "urpx:ComparisonNode",
+                      "@id": "comed:condition-metering-configuration-ami",
+                      "urpx:logicExpression": "hasMeteringConfiguration = ami",
+                      "urpx:operator": { "@id": "urpx:equalsOperator" },
+                      "urpx:leftOperand": {
+                        "@type": "urpx:ObjectOperandNode",
+                        "urpx:conditionProperty": { "@id": "urpx:hasMeteringConfiguration" }
+                      },
+                      "urpx:rightOperand": {
+                        "@type": "urpx:ObjectOperandNode",
+                        "urpx:referencesValue": { "@id": "urpx:ami" }
+                      }
+                    },
+                    {
+                      "@type": "urpx:ComparisonNode",
+                      "@id": "comed:condition-metering-configuration-interval",
+                      "urpx:logicExpression": "hasMeteringConfiguration = interval",
+                      "urpx:operator": { "@id": "urpx:equalsOperator" },
+                      "urpx:leftOperand": {
+                        "@type": "urpx:ObjectOperandNode",
+                        "urpx:conditionProperty": { "@id": "urpx:hasMeteringConfiguration" }
+                      },
+                      "urpx:rightOperand": {
+                        "@type": "urpx:ObjectOperandNode",
+                        "urpx:referencesValue": { "@id": "urpx:interval" }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "@type": "urpx:BooleanOperationNode",
+                  "@id": "comed:condition-approved-enrollment-path",
+                  "urpx:logicExpression": "Other Enrollment = supply rate plan OR Other Enrollment = ComEd hourly pricing program",
+                  "urpx:operator": { "@id": "urpx:orOperator" },
+                  "urpx:operandNodes": [
+                    {
+                      "@type": "urpx:ComparisonNode",
+                      "@id": "comed:condition-other-enrollment-supply-rate-plan",
+                      "urpx:logicExpression": "Other Enrollment = supply rate plan",
+                      "urpx:operator": { "@id": "urpx:equalsOperator" },
+                      "urpx:leftOperand": {
+                        "@type": "urpx:CustomOperandNode",
+                        "urpx:customConditionProperty": "Other Enrollment"
+                      },
+                      "urpx:rightOperand": {
+                        "@type": "urpx:CustomOperandNode",
+                        "urpx:stringValue": "supply rate plan"
+                      }
+                    },
+                    {
+                      "@type": "urpx:ComparisonNode",
+                      "@id": "comed:condition-other-enrollment-hourly-pricing-program",
+                      "urpx:logicExpression": "Other Enrollment = ComEd hourly pricing program",
+                      "urpx:operator": { "@id": "urpx:equalsOperator" },
+                      "urpx:leftOperand": {
+                        "@type": "urpx:CustomOperandNode",
+                        "urpx:customConditionProperty": "Other Enrollment"
+                      },
+                      "urpx:rightOperand": {
+                        "@type": "urpx:CustomOperandNode",
+                        "urpx:stringValue": "ComEd hourly pricing program"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
         }
       ],
       "urpx:hasPlanElements": {
@@ -135,7 +228,7 @@
             "@id": "comed:mi-meter-count",
             "urpx:name": "Per Meter Charges",
             "urpx:metricInputType": { "@id": "urpx:profileMetricInput" },
-            "urpx:profileMetricProperty": { "@id": "urpx:numberOfMeters" }
+            "urpx:profileMetricProperty": { "@id": "urpx:meterCount" }
           }
         ],
         "urpx:hasBillingModel": {
@@ -146,132 +239,139 @@
               "@id": "comed:ledger-supply",
               "urpx:name": "Hourly Supply Prices",
               "urpx:ledgerType": { "@id": "urpx:supplyLedger" },
-              "urpx:referencesMetricInput": { "@id": "comed:mi-energy" },
-              "urpx:hasPriceDefinition": [
-                {
-                  "@type": "urpx:PriceDefinition",
-                  "@id": "comed:pd-hourly-energy-supply",
-                  "urpx:name": "Hourly Energy Supply Price",
-                  "urpx:chargeType": { "@id": "urpx:usageCharge" },
-                  "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
-                  "urpx:billPortion": { "@id": "urpx:supplyPortion" },
-                  "urpx:hasCalculationMethod": {
-                    "@type": "urpx:CalculationMethod",
-                    "urpx:intervalDuration": "PT1H",
-                    "urpx:calculationFormula": "hourlyLMP + retailAdder"
-                  }
-                },
-                {
-                  "@type": "urpx:PriceDefinition",
-                  "@id": "comed:pd-capacity-obligation",
-                  "urpx:name": "Capacity Obligation Charge",
-                  "urpx:chargeType": { "@id": "urpx:usageCharge" },
-                  "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
-                  "urpx:billPortion": { "@id": "urpx:supplyPortion" }
-                },
-                {
-                  "@type": "urpx:PriceDefinition",
-                  "@id": "comed:pd-transmission-services",
-                  "urpx:name": "Transmission Services Charge",
-                  "urpx:chargeType": { "@id": "urpx:transmission" },
-                  "urpx:chargeCategory": { "@id": "urpx:adjustment" },
-                  "urpx:billPortion": { "@id": "urpx:supplyPortion" }
-                }
-              ]
+              "urpx:referencesMetricInput": { "@id": "comed:mi-energy" }
             },
             {
               "@type": "urpx:Ledger",
               "@id": "comed:ledger-delivery",
               "urpx:name": "Delivery Charges",
               "urpx:ledgerType": { "@id": "urpx:deliveryLedger" },
-              "urpx:referencesMetricInput": { "@id": "comed:mi-energy" },
-              "urpx:hasPriceDefinition": [
-                {
-                  "@type": "urpx:PriceDefinition",
-                  "@id": "comed:pd-distribution-facilities",
-                  "urpx:name": "Distribution Facilities Charge",
-                  "urpx:chargeType": { "@id": "urpx:usageCharge" },
-                  "urpx:chargeCategory": { "@id": "urpx:infrastructure" },
-                  "urpx:billPortion": { "@id": "urpx:deliveryPortion" }
-                },
-                {
-                  "@type": "urpx:PriceDefinition",
-                  "@id": "comed:pd-il-electricity-distribution-tax",
-                  "urpx:name": "Illinois Electricity Distribution Tax",
-                  "urpx:chargeType": { "@id": "urpx:taxCharge" },
-                  "urpx:chargeCategory": { "@id": "urpx:taxes" },
-                  "urpx:billPortion": { "@id": "urpx:deliveryPortion" }
-                },
-                {
-                  "@type": "urpx:PriceDefinition",
-                  "@id": "comed:pd-storm-hardening",
-                  "urpx:name": "Storm Hardening and Infrastructure Investment",
-                  "urpx:chargeType": { "@id": "urpx:reliabilityCharge" },
-                  "urpx:chargeCategory": { "@id": "urpx:infrastructure" },
-                  "urpx:billPortion": { "@id": "urpx:deliveryPortion" }
-                }
-              ]
+              "urpx:referencesMetricInput": { "@id": "comed:mi-energy" }
             },
             {
               "@type": "urpx:Ledger",
               "@id": "comed:ledger-service",
               "urpx:name": "Customer Service Charges",
               "urpx:ledgerType": { "@id": "urpx:bundledLedger" },
-              "urpx:referencesMetricInput": { "@id": "comed:mi-meter-count" },
-              "urpx:hasPriceDefinition": {
-                "@type": "urpx:PriceDefinition",
-                "@id": "comed:pd-customer-charge",
-                "urpx:name": "Customer Charge",
-                "urpx:chargeType": { "@id": "urpx:minimumBill" },
-                "urpx:chargeCategory": { "@id": "urpx:serviceCharge" },
-                "urpx:billPortion": { "@id": "urpx:bundledPortion" },
-                "urpx:baseQuantity": "1",
-                "urpx:hasCalculationMethod": {
-                  "@type": "urpx:CalculationMethod",
-                  "urpx:intervalDuration": "P1M"
-                }
-              }
+              "urpx:referencesMetricInput": { "@id": "comed:mi-meter-count" }
             },
             {
               "@type": "urpx:Ledger",
               "@id": "comed:ledger-adjustments",
               "urpx:name": "Adjustment Charges",
               "urpx:ledgerType": { "@id": "urpx:bundledLedger" },
-              "urpx:referencesMetricInput": { "@id": "comed:mi-energy" },
-              "urpx:hasPriceDefinition": [
-                {
-                  "@type": "urpx:PriceDefinition",
-                  "@id": "comed:pd-environmental-cost-recovery",
-                  "urpx:name": "Environmental Cost Recovery Adjustment",
-                  "urpx:chargeType": { "@id": "urpx:environmentalFunding" },
-                  "urpx:chargeCategory": { "@id": "urpx:environmental" },
-                  "urpx:billPortion": { "@id": "urpx:bundledPortion" }
-                },
-                {
-                  "@type": "urpx:PriceDefinition",
-                  "@id": "comed:pd-energy-efficiency",
-                  "urpx:name": "Energy Efficiency Programs",
-                  "urpx:chargeType": { "@id": "urpx:publicBenefits" },
-                  "urpx:chargeCategory": { "@id": "urpx:regulatory" },
-                  "urpx:billPortion": { "@id": "urpx:bundledPortion" }
-                },
-                {
-                  "@type": "urpx:PriceDefinition",
-                  "@id": "comed:pd-renewable-portfolio-standard",
-                  "urpx:name": "Renewable Portfolio Standard Compliance",
-                  "urpx:chargeType": { "@id": "urpx:environmentalFunding" },
-                  "urpx:chargeCategory": { "@id": "urpx:environmental" },
-                  "urpx:billPortion": { "@id": "urpx:bundledPortion" }
-                },
-                {
-                  "@type": "urpx:PriceDefinition",
-                  "@id": "comed:pd-zero-emission-credit",
-                  "urpx:name": "Zero Emission Standard Charge",
-                  "urpx:chargeType": { "@id": "urpx:environmentalFunding" },
-                  "urpx:chargeCategory": { "@id": "urpx:environmental" },
-                  "urpx:billPortion": { "@id": "urpx:bundledPortion" }
-                }
-              ]
+              "urpx:referencesMetricInput": { "@id": "comed:mi-energy" }
+            }
+          ],
+          "urpx:hasPriceDefinition": [
+            {
+              "@type": "urpx:PriceDefinition",
+              "@id": "comed:pd-hourly-energy-supply",
+              "urpx:name": "Hourly Energy Supply Price",
+              "urpx:chargeType": { "@id": "urpx:usageCharge" },
+              "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
+              "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+              "urpx:referencesLedger": { "@id": "comed:ledger-supply" },
+              "urpx:hasCalculationMethod": {
+                "@type": "urpx:CalculationMethod",
+                "urpx:intervalDuration": "PT1H",
+                "urpx:calculationFormula": "hourlyLMP + retailAdder"
+              }
+            },
+            {
+              "@type": "urpx:PriceDefinition",
+              "@id": "comed:pd-capacity-obligation",
+              "urpx:name": "Capacity Obligation Charge",
+              "urpx:chargeType": { "@id": "urpx:usageCharge" },
+              "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
+              "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+              "urpx:referencesLedger": { "@id": "comed:ledger-supply" }
+            },
+            {
+              "@type": "urpx:PriceDefinition",
+              "@id": "comed:pd-transmission-services",
+              "urpx:name": "Transmission Services Charge",
+              "urpx:chargeType": { "@id": "urpx:transmission" },
+              "urpx:chargeCategory": { "@id": "urpx:adjustment" },
+              "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+              "urpx:referencesLedger": { "@id": "comed:ledger-supply" }
+            },
+            {
+              "@type": "urpx:PriceDefinition",
+              "@id": "comed:pd-distribution-facilities",
+              "urpx:name": "Distribution Facilities Charge",
+              "urpx:chargeType": { "@id": "urpx:usageCharge" },
+              "urpx:chargeCategory": { "@id": "urpx:infrastructure" },
+              "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+              "urpx:referencesLedger": { "@id": "comed:ledger-delivery" }
+            },
+            {
+              "@type": "urpx:PriceDefinition",
+              "@id": "comed:pd-il-electricity-distribution-tax",
+              "urpx:name": "Illinois Electricity Distribution Tax",
+              "urpx:chargeType": { "@id": "urpx:taxState" },
+              "urpx:chargeCategory": { "@id": "urpx:taxes" },
+              "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+              "urpx:referencesLedger": { "@id": "comed:ledger-delivery" }
+            },
+            {
+              "@type": "urpx:PriceDefinition",
+              "@id": "comed:pd-storm-hardening",
+              "urpx:name": "Storm Hardening and Infrastructure Investment",
+              "urpx:chargeType": { "@id": "urpx:reliabilityCharge" },
+              "urpx:chargeCategory": { "@id": "urpx:infrastructure" },
+              "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+              "urpx:referencesLedger": { "@id": "comed:ledger-delivery" }
+            },
+            {
+              "@type": "urpx:PriceDefinition",
+              "@id": "comed:pd-customer-charge",
+              "urpx:name": "Customer Charge",
+              "urpx:chargeType": { "@id": "urpx:minimumBill" },
+              "urpx:chargeCategory": { "@id": "urpx:serviceCharge" },
+              "urpx:billPortion": { "@id": "urpx:bundledPortion" },
+              "urpx:baseQuantity": "1",
+              "urpx:referencesLedger": { "@id": "comed:ledger-service" },
+              "urpx:hasCalculationMethod": {
+                "@type": "urpx:CalculationMethod",
+                "urpx:intervalDuration": "P1M"
+              }
+            },
+            {
+              "@type": "urpx:PriceDefinition",
+              "@id": "comed:pd-environmental-cost-recovery",
+              "urpx:name": "Environmental Cost Recovery Adjustment",
+              "urpx:chargeType": { "@id": "urpx:environmentalFunding" },
+              "urpx:chargeCategory": { "@id": "urpx:environmental" },
+              "urpx:billPortion": { "@id": "urpx:bundledPortion" },
+              "urpx:referencesLedger": { "@id": "comed:ledger-adjustments" }
+            },
+            {
+              "@type": "urpx:PriceDefinition",
+              "@id": "comed:pd-energy-efficiency",
+              "urpx:name": "Energy Efficiency Programs",
+              "urpx:chargeType": { "@id": "urpx:publicBenefits" },
+              "urpx:chargeCategory": { "@id": "urpx:regulatory" },
+              "urpx:billPortion": { "@id": "urpx:bundledPortion" },
+              "urpx:referencesLedger": { "@id": "comed:ledger-adjustments" }
+            },
+            {
+              "@type": "urpx:PriceDefinition",
+              "@id": "comed:pd-renewable-portfolio-standard",
+              "urpx:name": "Renewable Portfolio Standard Compliance",
+              "urpx:chargeType": { "@id": "urpx:environmentalFunding" },
+              "urpx:chargeCategory": { "@id": "urpx:environmental" },
+              "urpx:billPortion": { "@id": "urpx:bundledPortion" },
+              "urpx:referencesLedger": { "@id": "comed:ledger-adjustments" }
+            },
+            {
+              "@type": "urpx:PriceDefinition",
+              "@id": "comed:pd-zero-emission-credit",
+              "urpx:name": "Zero Emission Standard Charge",
+              "urpx:chargeType": { "@id": "urpx:environmentalFunding" },
+              "urpx:chargeCategory": { "@id": "urpx:environmental" },
+              "urpx:billPortion": { "@id": "urpx:bundledPortion" },
+              "urpx:referencesLedger": { "@id": "comed:ledger-adjustments" }
             }
           ]
         }
