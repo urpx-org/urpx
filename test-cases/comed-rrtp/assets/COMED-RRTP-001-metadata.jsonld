@@ -1,0 +1,22 @@
+{
+  "@context": "../../schema/datalib-context.jsonld",
+  "@id": "datalib:COMED-RRTP-001",
+  "@type": "dcat:Dataset",
+  "title": "ComEd Residential Real-Time Pricing - Electric",
+  "description": "Commonwealth Edison residential real-time pricing program (RRTP). Tests hourly dynamic pricing with day-ahead and real-time components.",
+  "origin": "datalib:real-world",
+  "complexity": "datalib:high",
+  "targetURPXVersion": "0.1.1",
+  "creator": [
+    "Klaartje"
+  ],
+  "issued": "2026-03-17",
+  "distribution": [
+    {
+      "@type": "dcat:Distribution",
+      "datasetPath": "../data/COMED-RRTP-001-v0-1-1.jsonld",
+      "mediaType": "application/ld+json"
+    }
+  ],
+  "notes": "Real-world ComEd RRTP. Versioned file ingested from spec-doc/urpx-test-cases per SPEC-DATA-LIB-002 Phase 2."
+}

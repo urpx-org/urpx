@@ -5,26 +5,14 @@
   "examples": [
     {
       "id": "comed-rrtp",
-      "instanceJsonld": "comed-rrtp/data/instance.jsonld",
+      "instanceJsonld": "comed-rrtp/data/urpx-rate-plan_comed_rrtp_2026-01-01.jsonld",
       "diagramSvg": "comed-rrtp/assets/diagram.svg",
       "tariffBookPdf": null
     },
     {
-      "id": "pge-b6-pdp",
-      "instanceJsonld": "pge-b6-pdp/data/instance.jsonld",
-      "diagramSvg": "pge-b6-pdp/assets/diagram.svg",
-      "tariffBookPdf": null
-    },
-    {
-      "id": "pge-e-elec-2026-01-01",
-      "instanceJsonld": "pge-e-elec-2026-01-01/data/urpx-rate-plan_pge_e-elec_2026-01-01.jsonld",
-      "diagramSvg": "pge-e-elec-2026-01-01/assets/diagram.svg",
-      "tariffBookPdf": null
-    },
-    {
-      "id": "pge-e-elec-sp",
-      "instanceJsonld": "pge-e-elec-sp/data/instance.jsonld",
-      "diagramSvg": "pge-e-elec-sp/assets/diagram.svg",
+      "id": "pge-e-elec",
+      "instanceJsonld": "pge-e-elec/data/urpx-rate-plan_pge_e-elec_2026-01-01.jsonld",
+      "diagramSvg": "pge-e-elec/assets/diagram.svg",
       "tariffBookPdf": null
     }
   ]
