@@ -120,7 +120,7 @@ name = "third_party"
 current_license = "governed by REUSE.toml"
 future_license = "governed by REUSE.toml"
 paths = [
-    "test-cases/pge-e-elec-2026-01-01/assets/PGE_E-ELEC_2026-01-01.pdf",
+    "test-cases/pge-e-elec/assets/PGE_E-ELEC_2026-01-01.pdf",
 ]
 ```
 

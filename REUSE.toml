@@ -25,7 +25,7 @@ SPDX-License-Identifier = "Apache-2.0"
 # to Flux Tailor copyright; see LICENSES/LicenseRef-PublicRecord.txt.
 # -----------------------------------------------------------------------------
 [[annotations]]
-path = "test-cases/pge-e-elec-2026-01-01/assets/PGE_E-ELEC_2026-01-01.pdf"
+path = "test-cases/pge-e-elec/assets/PGE_E-ELEC_2026-01-01.pdf"
 precedence = "override"
 SPDX-FileCopyrightText = "Pacific Gas and Electric Company"
 SPDX-License-Identifier = "LicenseRef-PublicRecord"
@@ -36,7 +36,7 @@ SPDX-License-Identifier = "LicenseRef-PublicRecord"
 # -----------------------------------------------------------------------------
 [[annotations]]
 path = [
-    "test-cases/pge-e-elec/data/urpx-rate-plan_pge_e-elec_2026-01-01.jsonld",
+    "test-cases/pge-e-elec/data/urpx-rate-plan_pge_e-elec.jsonld",
     "test-cases/test-cases-index.csv",
     "test-cases/urpx-edge-cases.csv",
 ]

@@ -4,14 +4,8 @@
   "generatedAt": "2026-05-07T23:46:55Z",
   "examples": [
     {
-      "id": "comed-rrtp",
-      "instanceJsonld": "comed-rrtp/data/urpx-rate-plan_comed_rrtp_2026-01-01.jsonld",
-      "diagramSvg": "comed-rrtp/assets/diagram.svg",
-      "tariffBookPdf": null
-    },
-    {
       "id": "pge-e-elec",
-      "instanceJsonld": "pge-e-elec/data/urpx-rate-plan_pge_e-elec_2026-01-01.jsonld",
+      "instanceJsonld": "pge-e-elec/data/urpx-rate-plan_pge_e-elec.jsonld",
       "diagramSvg": "pge-e-elec/assets/diagram.svg",
       "tariffBookPdf": null
     }
