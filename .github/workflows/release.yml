@@ -15,12 +15,13 @@ jobs:
       - name: Checkout urpx (this repo)
         uses: actions/checkout@v4
 
-      - name: Checkout urpx-website (for codegen scripts)
+      - name: Checkout urpx-website-staging (for release helper)
         uses: actions/checkout@v4
         with:
-          repository: urpx-org/urpx-website
+          repository: urpx-org/urpx-website-staging
           path: .urpx-website
           ref: main
+          token: ${{ secrets.URPX_AUTOMATION_TOKEN || github.token }}
 
       - name: Resolve release notes path
         id: notes
