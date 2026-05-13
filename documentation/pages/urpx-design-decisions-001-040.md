@@ -45,44 +45,44 @@ This document logs design decisions made during URPX ontology development with r
 
 Quick links to all design decisions:
 
-- ✅ [Decision #001: serviceType → utilityServiceKind Rename](#decision-001)
-- ✅ [Decision #002: ObjectProperty Pattern for Enumerations - 100% Complete](#decision-002)
-- ✅ [Decision #003: Architectural Boundaries (URPX vs CDS)](#decision-003)
-- ✅ [Decision #004: CustomerProfileSet Architecture Implementation](#decision-004)
-- ✅ [Decision #005: EligibilityRule Parallel Properties Architecture](#decision-005)
-- ✅ [Decision #006: LocationDataSet Versioned Auxiliary Data](#decision-006)
-- ✅ [Decision #007: URPXDocument Type Capability Matrix](#decision-007)
-- ✅ [Decision #008: AlternativeDimension Human-Readable Labels](#decision-008)
-- ✅ [Decision #009: Formal OWL Enumeration Architecture with camelCase Convention](#decision-009)
-- ✅ [Decision #010: SI Unit Symbol Preservation in Enumeration Naming](#decision-010)
-- ✅ [Decision #011: CustomerKind/CustomerSubKind Proper Enumeration Architecture](#decision-011)
-- ✅ [Decision #012: ServicePointProfile CIM Terminology Alignment](#decision-012)
-- ✅ [Decision #013: Dual-Level Currency Architecture](#decision-013)
-- ✅ [Decision #014: MetricSpecification Simplified Measurement Approach](#decision-014)
-- ✅ [Decision #015: MeasurementTypeValue Green Button Naming Alignment](#decision-015)
-- ✅ [Decision #016: Measurement Framework Enumeration Expansion](#decision-016)
-- ✅ [Decision #017: Measurement Framework Property Consolidation](#decision-017)
-- ✅ [Decision #018: Flat RatePlanVersion Architecture - TemporalDefinition, PricingModel, BillingModel](#decision-018)
-- ✅ [Decision #021: MetricInputRuleSet Semantic Clarity Rename](#decision-021)
-- ✅ [Decision #022: Single Profile Parent Class Architecture](#decision-022)
-- ✅ [Decision #023: Dual IRI+Integer Reference Pattern for TOUPeriod and ServiceTier](#decision-023)
-- ✅ [Decision #024: Dual-Pattern Architecture for MetricSpecification Reuse](#decision-024)
-- ✅ [Decision #025: baseQuantityUnit Scope - Infrastructure Quantities Only](#decision-025)
-- ✅ [Decision #026: Charge Interval Representation - Measurement Processing on Charge](#decision-026)
-- ✅ [Decision #027: ISO 8601 Two-Digit Month Format for Temporal Patterns](#decision-027)
-- ✅ [Decision #028: Flexible ISO 8601 Charge Applicability Properties](#decision-028)
-- ✅ [Decision #029: CalculationIntervalValue Enumeration for Time-Based Charges](#decision-029)
-- 📋 [Decision #030: CalculationMethod CIM Alignment - Future Research Task](#decision-030)
-- ✅ [Decision #031: Shared Namespace Strategy with rdfs:isDefinedBy](#decision-031)
-- 🚧 [Decision #032: Profile-Scenario Ontology Consolidation](#decision-032)
-- ✅ [Decision #033: Scenario Ontology Separation Strategy](#decision-033)
-- ✅ [Decision #034: Schema.org Vocabulary Reuse - Core Properties Replacement](#decision-034)
-- ✅ [Decision #035: Deferral of Financial Property Replacements](#decision-035)
-- ✅ [Decision #036: `ScenarioMetric` Class Definition](#decision-036)
-- ✅ [Decision #037: Generic Utility Identifier - eiaId to utilityId Rename](#decision-037)
-- ✅ [Decision #038: Season Temporal Simplification - xsd:gMonth Multi-Value Pattern](#decision-038)
-- 📋 [Decision #039: TOUSchedule Measurement Architecture Refinement - BillingModel Migration](#decision-039)
-- ✅ [Decision #040: Eligibility Properties Deprecation - Unified Condition Pattern](#decision-040)
+- ✅ Decision #001: serviceType → utilityServiceKind Rename
+- ✅ Decision #002: ObjectProperty Pattern for Enumerations - 100% Complete
+- ✅ Decision #003: Architectural Boundaries (URPX vs CDS)
+- ✅ Decision #004: CustomerProfileSet Architecture Implementation
+- ✅ Decision #005: EligibilityRule Parallel Properties Architecture
+- ✅ Decision #006: LocationDataSet Versioned Auxiliary Data
+- ✅ Decision #007: URPXDocument Type Capability Matrix
+- ✅ Decision #008: AlternativeDimension Human-Readable Labels
+- ✅ Decision #009: Formal OWL Enumeration Architecture with camelCase Convention
+- ✅ Decision #010: SI Unit Symbol Preservation in Enumeration Naming
+- ✅ Decision #011: CustomerKind/CustomerSubKind Proper Enumeration Architecture
+- ✅ Decision #012: ServicePointProfile CIM Terminology Alignment
+- ✅ Decision #013: Dual-Level Currency Architecture
+- ✅ Decision #014: MetricSpecification Simplified Measurement Approach
+- ✅ Decision #015: MeasurementTypeValue Green Button Naming Alignment
+- ✅ Decision #016: Measurement Framework Enumeration Expansion
+- ✅ Decision #017: Measurement Framework Property Consolidation
+- ✅ Decision #018: Flat RatePlanVersion Architecture - TemporalDefinition, PricingModel, BillingModel
+- ✅ Decision #021: MetricInputRuleSet Semantic Clarity Rename
+- ✅ Decision #022: Single Profile Parent Class Architecture
+- ✅ Decision #023: Dual IRI+Integer Reference Pattern for TOUPeriod and ServiceTier
+- ✅ Decision #024: Dual-Pattern Architecture for MetricSpecification Reuse
+- ✅ Decision #025: baseQuantityUnit Scope - Infrastructure Quantities Only
+- ✅ Decision #026: Charge Interval Representation - Measurement Processing on Charge
+- ✅ Decision #027: ISO 8601 Two-Digit Month Format for Temporal Patterns
+- ✅ Decision #028: Flexible ISO 8601 Charge Applicability Properties
+- ✅ Decision #029: CalculationIntervalValue Enumeration for Time-Based Charges
+- 📋 Decision #030: CalculationMethod CIM Alignment - Future Research Task
+- ✅ Decision #031: Shared Namespace Strategy with rdfs:isDefinedBy
+- 🚧 Decision #032: Profile-Scenario Ontology Consolidation
+- ✅ Decision #033: Scenario Ontology Separation Strategy
+- ✅ Decision #034: Schema.org Vocabulary Reuse - Core Properties Replacement
+- ✅ Decision #035: Deferral of Financial Property Replacements
+- ✅ Decision #036: `ScenarioMetric` Class Definition
+- ✅ Decision #037: Generic Utility Identifier - eiaId to utilityId Rename
+- ✅ Decision #038: Season Temporal Simplification - xsd:gMonth Multi-Value Pattern
+- 📋 Decision #039: TOUSchedule Measurement Architecture Refinement - BillingModel Migration
+- ✅ Decision #040: Eligibility Properties Deprecation - Unified Condition Pattern
 
 ---
 
@@ -253,7 +253,7 @@ Rename `urpx-geo:serviceType` to `urpx-geo:utilityServiceKind` to eliminate ambi
 **References:**
 - CIM ServiceKind enumeration specification
 - Geographic ontology CIM alignment requirements
-- [URPX Documentation Update Log](urpx-documentation-update-log.md)
+- URPX Documentation Update Log
 
 ---
 
@@ -343,10 +343,10 @@ urpx:enum_instance a urpx:PropertyNameValue ;
 Despite 100% ontology conversion, SHACL validation rules still expect string datatypes instead of ObjectProperty classes. This creates critical production blocker requiring immediate SHACL constraint updates for all 54 converted properties.
 
 **References:**
-- [URPX Enumeration Inventory](../documentation/urpx-enum-inventory.md)
+- URPX Enumeration Inventory
 - CIM enumeration pattern specifications
 - CDS integration requirements
-- [Production Readiness Plan](urpx-production-readiness-plan.md)
+- Production Readiness Plan
 
 ---
 
@@ -814,7 +814,7 @@ urpx:energyCharge a urpx:ChargeTypeValue ;
 - W3C Linked Data Best Practices: https://www.w3.org/TR/ld-bp/
 - Schema.org: https://schema.org
 - [Issue reference removed - file no longer exists]
-- [Documentation Update Log Batch #010](urpx-documentation-update-log.md#update-batch-010)
+- Documentation Update Log Batch #010
 
 ---
 
@@ -1155,7 +1155,7 @@ urpx:ServicePointProfile a owl:Class ;
 **References:**
 - CIM IEC 61968-9 (Metering) specification
 - Green Button DER extensions
-- [Measurement Framework Design](measurement-framework-design.md)
+- Measurement Framework Design
 
 ---
 
@@ -1263,7 +1263,7 @@ ex:charge2 urpx:amount 5.00 .          # Inherits USD from document
 **References:**
 - ISO 4217 currency code standard
 - International utility operations requirements
-- [Measurement Framework Design](measurement-framework-design.md)
+- Measurement Framework Design
 
 ---
 
@@ -1369,7 +1369,7 @@ ex:charge urpx:hasMetricSpecification [
 **References:**
 - Green Button ESPI ReadingType specification
 - CIM IEC 61968-9 measurement properties
-- [Measurement Framework Design](measurement-framework-design.md)
+- Measurement Framework Design
 
 ---
 
@@ -1462,7 +1462,7 @@ owl:oneOf (
 **References:**
 - Green Button MeasurementKind enumeration
 - CIM IEC 61968-9 measurement types
-- [Measurement Framework Design](measurement-framework-design.md)
+- Measurement Framework Design
 
 ---
 
@@ -1553,7 +1553,7 @@ FlowDirectionValue enables:
 **References:**
 - Green Button MeasurementKind enumeration
 - CIM IEC 61968-9 comprehensive measurement types
-- [Measurement Framework Design](measurement-framework-design.md)
+- Measurement Framework Design
 
 ---
 
@@ -2205,7 +2205,7 @@ Standardize on "rate plan" terminology throughout URPX with explicit documentati
 - FERC rate filing terminology  
 - State regulatory commission terminology
 - Green Button pricing structure documentation
-- [Documentation Update Log Batch #016](urpx-documentation-update-log.md#update-batch-016)
+- Documentation Update Log Batch #016
 
 ---
 
@@ -3467,7 +3467,7 @@ Separate `urpx-profile.ttl` and `urpx-scenario.ttl` into distinct ontology modul
 3.  **Dependency Direction**: Scenarios depend on Profiles ("Run this scenario for Profile X"), but Profiles do not depend on Scenarios. This allows a clean `Scenario -> Profile` dependency chain without circularity.
  
 **Implementation Results (v0.1.1):**
-- ✅ Created [`urpx-profile.ttl`](../ontology/urpx-profile.ttl) with 28 classes, 46 properties, 134 enumeration instances
+- ✅ Created `urpx-profile.ttl` with 28 classes, 46 properties, 134 enumeration instances
 - ✅ Moved `CustomerProfile`, `ServicePointProfile`, `DistributedEnergyResource`, `PriorRatePlan`, `ProgramEnrollment`
 - ✅ Moved 21 profile-related enumeration classes and all instances
 - ✅ Core ontology reduced from 4,900 to 3,811 lines (-22% reduction)
@@ -3476,9 +3476,9 @@ Separate `urpx-profile.ttl` and `urpx-scenario.ttl` into distinct ontology modul
 - ⏭️ Scenario separation deferred to v0.1.2
 
 **References:**
-- [`processing/ontology_separation_completion_report.md`](../processing/ontology_separation_completion_report.md)
-- [`plans/ontology-separation-strategy-v0.1.1-REVISED.md`](../plans/ontology-separation-strategy-v0.1.1-REVISED.md)
-- [`dev-documentation/v0.1.1/epics/epic_0010_comprehensive_completion/task_0012_ontology_separation.md`](../dev-documentation/v0.1.1/epics/epic_0010_comprehensive_completion/task_0012_ontology_separation.md)
+- `processing/ontology_separation_completion_report.md`
+- `plans/ontology-separation-strategy-v0.1.1-REVISED.md`
+- `dev-documentation/v0.1.1/epics/epic_0010_comprehensive_completion/task_0012_ontology_separation.md`
 ---
 ---
 
@@ -3661,8 +3661,8 @@ Generated comprehensive tracker: `epic_0001_task_0001_vocab_reuse.csv`
 - Schema.org priceCurrency: https://schema.org/priceCurrency
 - Epic 0001: Vocabulary Reuse (Schema.org Integration)
 - Task 0001: Replace Core Properties & Comprehensive Scan
-- [Vocabulary Reuse Scan Results](vocabulary_reuse_scan_results.md)
-- [CSV Tracker](../../../processing/shacl-update-process/shacl-tracker-updates/epic_0001_task_0001_vocab_reuse.csv)
+- Vocabulary Reuse Scan Results
+- CSV Tracker
 
 ---
 
@@ -3878,7 +3878,7 @@ sh:property [
 **References:**
 - Epic 0011: Ontology Refinements & Property Review
 - Task 0002: eiaId to utilityId Renaming
-- [urpx-todo-new.md](../urpx-todo-new.md) - Original note (line 145)
+- urpx-todo-new.md - Original note (line 145)
 - International utility identifier systems documentation
 <a id="decision-038"></a>
 ### 🔗 Decision #038: Season Temporal Simplification - xsd:gMonth Multi-Value Pattern
@@ -4071,8 +4071,8 @@ schema:endDate rdfs:domain [ owl:unionOf ( ... urpx:Season ... ) ] .
 **References:**
 - Epic 0011: Ontology Refinements & Property Review
 - Task 0003: Season Temporal Simplification
-- [urpx-todo-new.md](../urpx-todo-new.md) - Original note (line 130)
-- [Architectural Plan](../../plans/task_0003_season_simplification_architecture.md)
+- urpx-todo-new.md - Original note (line 130)
+- Architectural Plan
 - ISO 8601: Date and time representation standard
 - iCalendar RFC 5545: BYMONTH pattern for recurring events
 - CIM SeasonDayTypeSchedule patterns
@@ -4247,7 +4247,7 @@ urpx:referencesMetricInput a owl:ObjectProperty ;
 - Task 0001: Measurement Properties Review
 - Decision #018: Flat RatePlanVersion Architecture (established BillingModel)
 - Decision #036: ScenarioMetric Class Definition (MeteredMetric/ScenarioMetric architecture)
-- [Task File](v0.1.1/epics/epic_0012_property_investigation/task_0001_measurement_properties.md)
+- Task File
 ---
 
 <a id="decision-040"></a>
@@ -4260,10 +4260,10 @@ urpx:referencesMetricInput a owl:ObjectProperty ;
 - **Impact:** High - Deprecates four eligibility properties in favor of unified pattern
 
 **Context:**
-Investigation of four eligibility-related properties ([`demandThreshold`](ontology/urpx-profile.ttl:332), [`peakDemand`](ontology/urpx-profile.ttl:513), [`usageThreshold`](ontology/urpx-profile.ttl:638), [`powerRating`](ontology/urpx-profile.ttl:521)) revealed they are redundant with the existing [`Condition`](ontology/urpx-core-ontology.ttl:214) + [`MetricSpecification`](ontology/urpx-core-ontology.ttl:1238) pattern for eligibility rules. All four properties represent qualification thresholds that can be expressed more flexibly using the unified Condition architecture.
+Investigation of four eligibility-related properties (`demandThreshold`, `peakDemand`, `usageThreshold`, `powerRating`) revealed they are redundant with the existing `Condition` + `MetricSpecification` pattern for eligibility rules. All four properties represent qualification thresholds that can be expressed more flexibly using the unified Condition architecture.
 
 **Decision:**
-Deprecate all four eligibility properties and migrate to the unified [`Condition`](ontology/urpx-core-ontology.ttl:214) + [`MetricSpecification`](ontology/urpx-core-ontology.ttl:1238) pattern for consistency, flexibility, and architectural clarity.
+Deprecate all four eligibility properties and migrate to the unified `Condition` + `MetricSpecification` pattern for consistency, flexibility, and architectural clarity.
 
 **Properties to Deprecate:**
 
@@ -4471,9 +4471,9 @@ urpx:powerRating a owl:DatatypeProperty ;
 **References:**
 - Epic 0012: Property Investigation
 - Task 0002: Eligibility Properties Investigation
-- [Design Document](../../plans/eligibility-properties-investigation.md)
-- Condition Class: [`urpx-core-ontology.ttl:214`](../ontology/urpx-core-ontology.ttl:214)
-- MetricSpecification: [`urpx-core-ontology.ttl:1238`](../ontology/urpx-core-ontology.ttl:1238)
+- Design Document
+- Condition Class: `urpx-core-ontology.ttl:214`
+- MetricSpecification: `urpx-core-ontology.ttl:1238`
 - Decision #036: ScenarioMetric Class Definition
 
 ---

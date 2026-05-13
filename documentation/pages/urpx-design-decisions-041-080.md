@@ -48,46 +48,46 @@ This document logs design decisions #041-#080 made during URPX ontology developm
 
 Quick links to all design decisions:
 
-- ✅ [Decision #041: Ontology Syntax Validation and Duplicate Property Resolution](#decision-041)
-- ✅ [Decision #042: Profile Ontology Enumeration Completeness](#decision-042)
-- ✅ [Decision #043: Property Domain Migration to Profile Ontology](#decision-043)
-- 📚 [Decision #044: CalculationMethod Class Removal](#decision-044)
-- ✅ [Decision #045: PriceDefinition Architecture Clarification](#decision-045)
-- ✅ [Decision #046: hasPrices Range Specification](#decision-046)
-- ✅ [Decision #047: minimumTenure Property Addition](#decision-047)
-- ✅ [Decision #048: ProfileMetric Architecture](#decision-048)
-- ✅ [Decision #049: ProfileAlternative Architecture and Naming](#decision-049)
-- ✅ [Decision #050: householdCount and baseQuantity Properties](#decision-050)
-- ✅ [Decision #051: Time Interval Property Consolidation](#decision-051)
-- ✅ [Decision #052: Structured Data Source Reference Architecture](#decision-052)
-- 📋 [Decision #053: Removal of Misplaced Cardinality Constraints from Property Definitions](#decision-053)
-- ✅ [Decision #054: Data Dictionary MECE Restructuring and Repetition Elimination](#decision-054)
-- ✅ [Decision #055: Constraint Architecture Refactoring and Simplification](#decision-055)
-- 📋 [Decision #056: Enhancement Log for Inverse Properties](#decision-056)
-- ✅ [Decision #057: Removal of isCredit Property](#decision-057)
-- ✅ [Decision #058: Removal of priceId Property and @id Standardization](#decision-058)
-- ✅ [Decision #059: referencesPriceDefinition Object Property Creation](#decision-059)
-- ✅ [Decision #060: SHACL Validation Shapes Introduction](#decision-060)
-- ✅ [Decision #061: chargeType/chargeCategory Made Optional on Price](#decision-061)
-- ✅ [Decision #062: PriceDefinition Removed from Temporal Property Domains](#decision-062)
-- ✅ [Decision #063: Removal of alternativesType Property and AlternativesTypeValue](#decision-063)
-- ✅ [Decision #064: Removal of timeZone Property (timezoneIdentifier Standardization)](#decision-064)
-- ✅ [Decision #065: Rename StatementTypeValue to TariffStatementTypeValue](#decision-065)
-- ✅ [Decision #066: Addition of tariffStatementType Property](#decision-066)
-- ✅ [Decision #067: appliesInZone Renamed to appliesInGeographicZone](#decision-067)
-- ✅ [Decision #068: conditionType and conditionValue Domain Removal from Rule Classes](#decision-068)
-- ✅ [Decision #069: hasLocationDataSet Domain Extension to RatePlan and RatePlanModifier](#decision-069)
-- ✅ [Decision #070: nameType Property Creation for Organization Name Classification](#decision-070)
-- ✅ [Decision #071: profileId Property Removal and @id Standardization](#decision-071)
-- ✅ [Decision #072: Additional Properties in Price Shape xone Constraint](#decision-072)
-- ✅ [Decision #073: referencesPriceDefinition Made Optional on Price Shape](#decision-073)
-- ✅ [Decision #074: Removal of urpx:month, urpx:hour, and urpx:day from UnitOfMeasureValue](#decision-074)
-- ✅ [Decision #075: geographicZone Domain Update from CustomerProfile to ServicePointProfile](#decision-075)
-- ✅ [Decision #076: hasPrice Minimum Cardinality Reduced to 1 on PriceSet Shape](#decision-076)
-- ✅ [Decision #077: hasMetricInput Domain Narrowed to PlanElements Only](#decision-077)
-- ✅ [Decision #078: name Property Extended to ProfileAlternative and ProfileAlternatives; Made Required on Key Entities](#decision-078)
-- ✅ [Decision #079: referencesProfileAlternative Domain Extended to TOUSchedule and ServiceTier](#decision-079)
-- ✅ [Decision #080: Controlled Media Type Vocabulary for Data Sources](#decision-080)
+- ✅ Decision #041: Ontology Syntax Validation and Duplicate Property Resolution
+- ✅ Decision #042: Profile Ontology Enumeration Completeness
+- ✅ Decision #043: Property Domain Migration to Profile Ontology
+- 📚 Decision #044: CalculationMethod Class Removal
+- ✅ Decision #045: PriceDefinition Architecture Clarification
+- ✅ Decision #046: hasPrices Range Specification
+- ✅ Decision #047: minimumTenure Property Addition
+- ✅ Decision #048: ProfileMetric Architecture
+- ✅ Decision #049: ProfileAlternative Architecture and Naming
+- ✅ Decision #050: householdCount and baseQuantity Properties
+- ✅ Decision #051: Time Interval Property Consolidation
+- ✅ Decision #052: Structured Data Source Reference Architecture
+- 📋 Decision #053: Removal of Misplaced Cardinality Constraints from Property Definitions
+- ✅ Decision #054: Data Dictionary MECE Restructuring and Repetition Elimination
+- ✅ Decision #055: Constraint Architecture Refactoring and Simplification
+- 📋 Decision #056: Enhancement Log for Inverse Properties
+- ✅ Decision #057: Removal of isCredit Property
+- ✅ Decision #058: Removal of priceId Property and @id Standardization
+- ✅ Decision #059: referencesPriceDefinition Object Property Creation
+- ✅ Decision #060: SHACL Validation Shapes Introduction
+- ✅ Decision #061: chargeType/chargeCategory Made Optional on Price
+- ✅ Decision #062: PriceDefinition Removed from Temporal Property Domains
+- ✅ Decision #063: Removal of alternativesType Property and AlternativesTypeValue
+- ✅ Decision #064: Removal of timeZone Property (timezoneIdentifier Standardization)
+- ✅ Decision #065: Rename StatementTypeValue to TariffStatementTypeValue
+- ✅ Decision #066: Addition of tariffStatementType Property
+- ✅ Decision #067: appliesInZone Renamed to appliesInGeographicZone
+- ✅ Decision #068: conditionType and conditionValue Domain Removal from Rule Classes
+- ✅ Decision #069: hasLocationDataSet Domain Extension to RatePlan and RatePlanModifier
+- ✅ Decision #070: nameType Property Creation for Organization Name Classification
+- ✅ Decision #071: profileId Property Removal and @id Standardization
+- ✅ Decision #072: Additional Properties in Price Shape xone Constraint
+- ✅ Decision #073: referencesPriceDefinition Made Optional on Price Shape
+- ✅ Decision #074: Removal of urpx:month, urpx:hour, and urpx:day from UnitOfMeasureValue
+- ✅ Decision #075: geographicZone Domain Update from CustomerProfile to ServicePointProfile
+- ✅ Decision #076: hasPrice Minimum Cardinality Reduced to 1 on PriceSet Shape
+- ✅ Decision #077: hasMetricInput Domain Narrowed to PlanElements Only
+- ✅ Decision #078: name Property Extended to ProfileAlternative and ProfileAlternatives; Made Required on Key Entities
+- ✅ Decision #079: referencesProfileAlternative Domain Extended to TOUSchedule and ServiceTier
+- ✅ Decision #080: Controlled Media Type Vocabulary for Data Sources
 
 ---
 
@@ -294,7 +294,7 @@ These duplicates would cause RDF parsing issues and semantic ambiguity in proper
   - Test cases should verify ServiceTier metric references work correctly
 
 **References:**
-- Task: [`task_0004_ontology_updates_from_review.md`](v0.1.1/epics/epic_0014_final_qa_release/task_0004_ontology_updates_from_review.md)
+- Task: `task_0004_ontology_updates_from_review.md`
 - Validation Report: Section 16 in task file
 - Files Modified: [`ontology/urpx-core-ontology.ttl`](../../ontology/urpx-core-ontology.ttl)
 
@@ -349,7 +349,7 @@ Add missing enumeration values to profile ontology:
 - **Requirements**: Test cases should verify new enumeration values
 
 **References:**
-- Task: [`task_0004_ontology_updates_from_review.md`](v0.1.1/epics/epic_0014_final_qa_release/task_0004_ontology_updates_from_review.md)
+- Task: `task_0004_ontology_updates_from_review.md`
 - Profile Ontology: [`ontology/urpx-profile.ttl`](../../ontology/urpx-profile.ttl)
 
 ---
@@ -400,7 +400,7 @@ Migrate `billingCycleCode` and `phaseCodeKind` from core ontology to profile ont
 - **Requirements**: Update imports if applications directly reference property locations
 
 **References:**
-- Task: [`task_0004_ontology_updates_from_review.md`](v0.1.1/epics/epic_0014_final_qa_release/task_0004_ontology_updates_from_review.md)
+- Task: `task_0004_ontology_updates_from_review.md`
 
 ---
 
@@ -458,7 +458,7 @@ Remove `urpx:CalculationMethod` class and retain `urpx:calculationMethod` proper
 - **Requirements**: Update any code referencing CalculationMethod class
 
 **References:**
-- Task: [`task_0004_ontology_updates_from_review.md`](v0.1.1/epics/epic_0014_final_qa_release/task_0004_ontology_updates_from_review.md)
+- Task: `task_0004_ontology_updates_from_review.md`
 - Decision #030: CalculationMethod CIM Alignment (previous decisions log)
 
 ---
@@ -510,7 +510,7 @@ Remove `urpx:priceDefinition` property and retain `urpx:PriceDefinition` class f
 - **Requirements**: Use `hasPriceDefinition` property to link to PriceDefinition class
 
 **References:**
-- Task: [`task_0004_ontology_updates_from_review.md`](v0.1.1/epics/epic_0014_final_qa_release/task_0004_ontology_updates_from_review.md)
+- Task: `task_0004_ontology_updates_from_review.md`
 
 ---
 
@@ -560,7 +560,7 @@ Change range of `urpx:hasPrices` from `urpx:Price` to `urpx:Prices` to match con
 - **Requirements**: Use Prices container when referencing multiple prices
 
 **References:**
-- Task: [`task_0004_ontology_updates_from_review.md`](v0.1.1/epics/epic_0014_final_qa_release/task_0004_ontology_updates_from_review.md)
+- Task: `task_0004_ontology_updates_from_review.md`
 
 ---
 
@@ -623,7 +623,7 @@ urpx:minimumTenure a owl:DatatypeProperty ;
 - **Requirements**: Use ISO 8601 duration format (e.g., P12M for 12 months)
 
 **References:**
-- Task: [`task_0004_ontology_updates_from_review.md`](v0.1.1/epics/epic_0014_final_qa_release/task_0004_ontology_updates_from_review.md)
+- Task: `task_0004_ontology_updates_from_review.md`
 
 ---
 
@@ -683,8 +683,8 @@ The ontology had an incomplete `ScenarioMetric` class that was never fully imple
 - **Requirements**: SHACL rules and test cases need to be updated to reflect the new architecture.
 
 **References:**
-- Epic: [`EPIC_0015.md`](v0.1.1/epics/epic_0015_profile_metric_architecture/EPIC_0015.md)
-- Task: [`task_0001_core_ontology_updates.md`](v0.1.1/epics/epic_0015_profile_metric_architecture/task_0001_core_ontology_updates.md)
+- Epic: `EPIC_0015.md`
+- Task: `task_0001_core_ontology_updates.md`
 - Related Decisions: #041, #044
 
 ---
@@ -788,8 +788,8 @@ ProfileAlternatives (container)
   - Migration guide for existing implementations
 
 **References:**
-- Task: [`task_0003_calculation_method_architecture.md`](v0.1.1/epics/epic_0015_profile_metric_architecture/task_0003_calculation_method_architecture.md)
-- Epic: [`EPIC_0015.md`](v0.1.1/epics/epic_0015_profile_metric_architecture/EPIC_0015.md)
+- Task: `task_0003_calculation_method_architecture.md`
+- Epic: `EPIC_0015.md`
 - Core Ontology: [`ontology/urpx-core-ontology.ttl`](../../ontology/urpx-core-ontology.ttl) (lines 169-172, 378-386)
 
 ---
@@ -924,8 +924,8 @@ ex:climateCredit a urpx:Price ;
   - SHACL validation may need rules for baseQuantity defaults
 
 **References:**
-- Task: [`task_0005_household_count_base_quantity.md`](v0.1.1/epics/epic_0015_profile_metric_architecture/task_0005_household_count_base_quantity.md)
-- Plan: [`plans/household-count-per-metric-architecture.md`](../../plans/household-count-per-metric-architecture.md)
+- Task: `task_0005_household_count_base_quantity.md`
+- Plan: `plans/household-count-per-metric-architecture.md`
 - Profile Ontology: [`ontology/urpx-profile.ttl`](../../ontology/urpx-profile.ttl) (line 495-501)
 - Core Ontology: [`ontology/urpx-core-ontology.ttl`](../../ontology/urpx-core-ontology.ttl) (line 860-866)
 - Related Decision: #048 (ProfileMetric Architecture)
@@ -996,7 +996,7 @@ Consolidate to a duration-first pattern with a single, optional semantic type la
 - **Requirements**: Migration required for existing data instances. Update SHACL and documentation.
 
 **References:**
-- Task: [`task_0004_ontology_updates_from_review.md`](v0.1.1/epics/epic_0014_final_qa_release/task_0004_ontology_updates_from_review.md)
+- Task: `task_0004_ontology_updates_from_review.md`
 
 ---
 
@@ -1052,7 +1052,7 @@ Refactor the data source reference into a structured object:
 - **Requirements**: Existing data using the string property must be migrated to the new class structure.
 
 **References:**
-- Task: [`task_0002_refactor_data_source.md`](v0.1.1/epics/epic_0016_cleanup_and_consolidation/task_0002_refactor_data_source.md)
+- Task: `task_0002_refactor_data_source.md`
 - Green Button Standard (StatementRef pattern reference)
 
 ---
@@ -1192,8 +1192,8 @@ The goal of a *pre-draft* for the working group is to present a clean, authorita
 - **Requirements**: Continue implementation to complete all sections.
 
 **References:**
-- Epic: [`epic_0016_cleanup_and_consolidation/task_0004_documentation_updates_consolidated.md`](../../v0.1.1/epics/epic_0016_cleanup_and_consolidation/task_0004_documentation_updates_consolidated.md)
-- Internal Planning Docs: [`plans/data-dictionary-mece-consolidation-plan.md`](../../plans/data-dictionary-mece-consolidation-plan.md)
+- Epic: `epic_0016_cleanup_and_consolidation/task_0004_documentation_updates_consolidated.md`
+- Internal Planning Docs: `plans/data-dictionary-mece-consolidation-plan.md`
 
 
 
@@ -1512,7 +1512,7 @@ Introduce `shacl/urpx-shacl.ttl` as a unified SHACL validation file containing c
 
 **References:**
 - Commit: `8de0ce9`
-- File: [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- File: `shacl/urpx-shacl.ttl`
 
 ---
 
@@ -2489,7 +2489,7 @@ Convert `urpx:mediaType` from a datatype property to an object property with ran
 - Added `urpx:MediaTypeValue` as an enumeration class in [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
 - Added 14 supported media type instances across `application/*`, `image/*`, and `text/*`
 - Changed `urpx:mediaType` from `owl:DatatypeProperty` with `xsd:string` range to `owl:ObjectProperty` with `urpx:MediaTypeValue` range
-- Added `urpx-shacl:MediaTypeValueShape` in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- Added `urpx-shacl:MediaTypeValueShape` in `shacl/urpx-shacl.ttl`
 - Updated `urpx-shacl:DataSourceReferenceShape` to validate `mediaType` with `sh:node` instead of `sh:datatype`
 
 **Impact Assessment:**
