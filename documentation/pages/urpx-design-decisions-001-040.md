@@ -192,7 +192,6 @@ Quick links to all design decisions:
 
 - **Status:** ✅ Implemented
 - **Date:** 2025-09-25
-- **Issue:** [Issue reference removed - file no longer exists]
 - **Category:** Standards Compliance, Naming Convention
 - **Impact:** Medium - Property rename affecting geographic ontology
 
@@ -263,7 +262,6 @@ Rename `urpx-geo:serviceType` to `urpx-geo:utilityServiceKind` to eliminate ambi
 - **Status:** ✅ Implemented - COMPLETE  
 - **Date:** 2025-09-23 to 2025-09-26
 - **Completion:** 2025-09-26
-- **Issue:** [Issue reference removed - file no longer exists]
 - **Category:** Architecture, Standards Compliance
 - **Impact:** High - Core architectural pattern affecting entire ontology
 
@@ -355,7 +353,6 @@ Despite 100% ontology conversion, SHACL validation rules still expect string dat
 
 - **Status:** ✅ Implemented  
 - **Date:** 2025-09-18
-- **Issue:** [Issue reference removed - file no longer exists]
 - **Category:** Architecture, Data Boundaries
 - **Impact:** High - Core integration architecture
 
@@ -485,7 +482,6 @@ Implement comprehensive CustomerProfileSet architecture with boolean eligibility
 
 - **Status:** ✅ Implemented
 - **Date:** 2025-10-10
-- **Issue:** [Issue reference removed - file no longer exists]
 - **Category:** Architecture, Standards Compliance
 - **Impact:** High - Core eligibility architecture redesign
 
@@ -684,7 +680,6 @@ Enables UtiliPub GUI filter buttons, maintains RDF/linked data patterns.
 
 - **Status:** ✅ Implemented
 - **Date:** 2025-10-13
-- **Issue:** [Issue reference removed - file no longer exists]
 - **Category:** Standards Compliance, Architecture
 - **Impact:** Critical - Affects all 50+ enumeration classes and 500+ instances
 
@@ -813,7 +808,6 @@ urpx:energyCharge a urpx:ChargeTypeValue ;
 - W3C OWL 2 Primer: https://www.w3.org/TR/owl2-primer/
 - W3C Linked Data Best Practices: https://www.w3.org/TR/ld-bp/
 - Schema.org: https://schema.org
-- [Issue reference removed - file no longer exists]
 - Documentation Update Log Batch #010
 
 ---
@@ -912,7 +906,6 @@ if name in standard_units:
 
 - **Status:** ✅ Implemented
 - **Date:** 2025-10-14
-- **Issue:** [Issue reference removed - file no longer exists]
 - **Category:** Standards Compliance, Enumeration Architecture
 - **Impact:** High - Customer classification enumeration consistency
 
@@ -1716,7 +1709,6 @@ ex:metric urpx:commodity urpx:electricity ;
 
 - **Status:** ✅ Implemented
 - **Date:** 2025-10-20
-- **Issue:** [Issue reference removed - file no longer exists]
 - **Category:** Architecture, Temporal Structure, Pricing Model
 - **Impact:** Critical - Major architectural restructuring for v0.1.1
 
@@ -1956,7 +1948,6 @@ ex:touSchedule urpx:hasTOUTier [
 7. **Phase 7**: Documentation (1-2 hours)
 
 **References:**
-- [Issue reference removed - file no longer exists]
 - Green Button terminology documentation
 - ApplicabilityGroup architecture (separate system)
 - Measurement Framework Design v2.0
