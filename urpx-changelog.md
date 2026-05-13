@@ -124,7 +124,7 @@
 ### Test Data Updates
 
 #### Updated: PGE E-ELEC Example
-- Added time zone metadata to `test-cases/pge-e-elec-2026-01-01/data/urpx-rate-plan_pge_e-elec_2026-01-01.jsonld`.
+- Added time zone metadata to `test-cases/pge-e-elec/data/urpx-rate-plan_pge_e-elec.jsonld`.
 
 2026-04-28
 ---

@@ -6,6 +6,7 @@
 # URPX v0.2.0 Release Notes
 
 **Released:** 2026-05-01  
+**Updated:** 2026-05-07  
 **Type:** Pre-draft release  
 **Previous release:** `v0.1.2`
 
@@ -25,11 +26,14 @@ Compared with `v0.1.2`, this release is not backward-compatible. Existing URPX d
 
 - Reworked the billing model so `PriceDefinition` is owned by `BillingModel` and linked to its ledger with `urpx:referencesLedger`.
 - Replaced the legacy condition model with the rooted `ConditionExpression` architecture used across eligibility, applicability, and profile-alternative contexts.
-- Added `Scenario` to hold customer-profile and service-point-profile inputs used during eligibility evaluation.
+- Tightened eligibility modeling so each `EligibilityRule` uses a single `ConditionExpression`, and direct profile links on rules are no longer valid.
+- Retired direct `ApplicabilityGroup` selector properties in favor of `ConditionExpression` over profile-based properties.
+- Added `ServiceBracket` so tier bounds move off `ServiceTier` and can vary by context.
 - Added `GeneralRule` for reusable tariff-book-level shared rules.
 - Added `RateCase` and datetime provenance properties to improve regulatory and source traceability.
 - Renamed identifier properties to make uniqueness explicit and added required `urpx:targetURPXVersion` on `URPXDocument`.
 - Added `customerChoice` and `isDefault` semantics for rate plan versions.
+- Renamed `numberOfMeters` to `meterCount`, renamed `numberOfOccupants` to `occupancyCount`, and removed `demandThreshold`.
 - Expanded the documentation set with condition modeling, quality assurance, and test-data review guidance.
 
 ---
@@ -41,24 +45,29 @@ If you maintain datasets or downstream tooling, pay particular attention to thes
 1. `PriceDefinition` ownership moved from `Ledger` to `BillingModel`.
    Existing data must move definitions to the billing model layer and add `urpx:referencesLedger`.
 
-2. The condition model was replaced.
-   Legacy constructs such as `hasCondition`, `hasConditionLogic`, legacy terminal-node patterns, and earlier applicability/dimension-value structures were removed in favor of `ConditionExpression`, `rootNode`, `ComparisonNode`, `BooleanOperationNode`, and typed operand nodes.
+2. The applicability condition model was replaced.
+   Legacy constructs such as `hasCondition`, `hasConditionLogic`, legacy terminal-node patterns, earlier applicability/dimension-value structures, and direct `ApplicabilityGroup` selector properties were removed in favor of `ConditionExpression`, `rootNode`, `ComparisonNode`, `BooleanOperationNode`, typed operand nodes, and profile-based condition properties.
 
-3. Eligibility profile inputs moved to `Scenario`.
-   `hasCustomerProfile` and `hasServicePointProfile` no longer belong directly on `EligibilityRule`.
+3. Eligibility rules now require a single `ConditionExpression`.
+   `EligibilityRule` must use `urpx:hasConditionExpression`, and direct `hasCustomerProfile` / `hasServicePointProfile` links on `EligibilityRule` are no longer valid.
 
-4. Identifier properties were renamed.
+4. Tier bounds moved to `ServiceBracket`.
+   `lowerBound`, `lowerBoundOperator`, `upperBound`, and `upperBoundOperator` no longer belong on `ServiceTier`. Bound data must move to one or more `ServiceBracket` nodes, with `referencesServiceBracket` used where exact bracket linkage is needed.
+
+5. Identifier properties were renamed.
    `ratePlanIdentifier` became `ratePlanUniqueIdentifier`, and `modifierIdentifier` became `modifierUniqueIdentifier`.
 
-5. `URPXDocument` now requires `targetURPXVersion`.
-   Documents should point to the ontology version they were authored against.
+6. `URPXDocument` now requires `targetURPXVersion`.
+   Documents should point to the ontology version they were authored against using the raw tagged ontology URL, for example:
+   `https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl`
 
-6. Enrollment/default semantics changed.
+7. Enrollment/default semantics changed.
    `isOptional` was removed in favor of `customerChoice` and `isDefault` on `RatePlanVersion`.
 
-7. Profile count terminology changed.
-   `numberOfMeters` became `meterCount`, and `numberOfOccupants` became `occupancyCount`.
+8. Profile count terminology and threshold handling changed.
+   `numberOfMeters` became `meterCount`, `numberOfOccupants` became `occupancyCount`, and `demandThreshold` was removed.
 
+9. Eligibility profile inputs moved to `Scenario` for eligibility evaluation for an individual customer or scenario. `hasCustomerProfile` and `hasServicePointProfile` no longer belong directly on `EligibilityRule`, eligibility conditions are expressed on `EligibilityRule` using `hasConditionExpression`.
 ---
 
 ## Migration Guidance
@@ -67,9 +76,15 @@ To migrate a `v0.1.2` dataset to `v0.2.0`:
 
 - move `PriceDefinition` instances under `BillingModel`
 - add `urpx:referencesLedger` to every `PriceDefinition`
-- replace legacy condition structures with `urpx:hasConditionExpression`
+- replace legacy rule condition structures with a single `urpx:hasConditionExpression` on each `EligibilityRule`
+- migrate retired `ApplicabilityGroup` selector properties to `ConditionExpression` over `CustomerProfile` / `ServicePointProfile` properties
+- move tier bounds from `ServiceTier` to `ServiceBracket` and add `urpx:hasServiceBracket` where tier bounds are authored
 - rename legacy identifier properties
-- add `urpx:targetURPXVersion` to `URPXDocument`
+- replace `isOptional` with `customerChoice` and `isDefault`
+- rename `numberOfMeters` to `meterCount` and `numberOfOccupants` to `occupancyCount`
+- remove `demandThreshold` and express threshold logic through rules / metric patterns
+- add `urpx:targetURPXVersion` to `URPXDocument` using:
+  `https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl`
 - rerun SHACL validation against [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
 
 The updated PG&E E-ELEC example under [`test-cases/`](../../test-cases/) can be used as a current-model reference.
@@ -80,7 +95,7 @@ The updated PG&E E-ELEC example under [`test-cases/`](../../test-cases/) can be 
 
 v0.2.0 strengthens validation and reviewer support:
 
-- SHACL coverage was expanded to match the new billing, condition, scenario, identifier, and provenance models.
+- SHACL coverage was expanded to match the new billing, condition, applicability, service-bracket, identifier, and provenance models.
 - [`urpx-condition-modeling.md`](urpx-condition-modeling.md) documents the current structured condition pattern.
 - [`urpx-quality-assurance.md`](urpx-quality-assurance.md) summarizes validation expectations.
 - [`urpx-test-data-review-guide.md`](urpx-test-data-review-guide.md) provides a tariff-book-to-URPX review workflow for test cases.

@@ -40,8 +40,8 @@ Before review, gather:
 
 Example review pair in this repository:
 
-- PDF: [`test-cases/pge-e-elec-2026-01-01/assets/PGE_E-ELEC_2026-01-01.pdf`](../../test-cases/pge-e-elec-2026-01-01/assets/PGE_E-ELEC_2026-01-01.pdf)
-- JSON-LD: [`test-cases/pge-e-elec-2026-01-01/data/urpx-rate-plan_pge_e-elec_2026-01-01.jsonld`](../../test-cases/pge-e-elec-2026-01-01/data/urpx-rate-plan_pge_e-elec_2026-01-01.jsonld)
+- PDF: [`test-cases/pge-e-elec/assets/PGE_E-ELEC_2026-01-01.pdf`](../../test-cases/pge-e-elec/assets/PGE_E-ELEC_2026-01-01.pdf)
+- JSON-LD: [`test-cases/pge-e-elec/data/urpx-rate-plan_pge_e-elec.jsonld`](../../test-cases/pge-e-elec/data/urpx-rate-plan_pge_e-elec.jsonld)
 
 ---
 
@@ -128,7 +128,7 @@ python3 -m pyshacl \
   -e ontology/urpx-ontology.ttl \
   -i rdfs \
   -f human \
-  test-cases/pge-e-elec-2026-01-01/data/urpx-rate-plan_pge_e-elec_2026-01-01.jsonld
+  test-cases/pge-e-elec/data/urpx-rate-plan_pge_e-elec.jsonld
 ```
 
 If parser auto-detection has trouble with JSON-LD, rerun with `-df json-ld`.

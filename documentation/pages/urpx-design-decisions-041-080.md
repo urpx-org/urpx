@@ -1343,7 +1343,7 @@ Remove `urpx:isCredit` entirely. Use negative values in `unitPrice`/`amount` com
 **Implementation Details:**
 - Removed `urpx:isCredit` property definition from `ontology/urpx-ontology.ttl`
 - Removed `isCredit` constraints from `shacl/urpx-shacl.ttl`
-- Removed `isCredit` instances from test data (`test-cases/pge-e-elec-2026-01-01/`)
+- Removed `isCredit` instances from test data (`test-cases/pge-e-elec/`)
 
 **Impact Assessment:**
 - **Positive**: Eliminates data ambiguity, simplifies validation, reduces property count

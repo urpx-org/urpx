@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "1.0.0",
+  "generator": "urpx-website-dev/scripts/codegen/generate-all.py@67c9b31",
+  "generatedAt": "2026-05-07T23:46:55Z",
+  "examples": [
+    {
+      "id": "pge-e-elec",
+      "instanceJsonld": "pge-e-elec/data/urpx-rate-plan_pge_e-elec.jsonld",
+      "diagramSvg": "pge-e-elec/assets/diagram.svg",
+      "tariffBookPdf": null
+    }
+  ]
+}
