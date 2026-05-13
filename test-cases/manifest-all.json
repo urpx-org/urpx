@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "generator": "urpx-website-dev/scripts/codegen/generate-all.py@3477216",
-  "generatedAt": "2026-05-13T21:27:38Z",
+  "generator": "urpx-website-staging/scripts/codegen/generate-all.py",
+  "generatedAt": "2026-05-13T23:59:08Z",
   "examples": [
     {
       "id": "pge-e-elec",
