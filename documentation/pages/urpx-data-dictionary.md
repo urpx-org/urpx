@@ -4,13 +4,19 @@ title: "Data Dictionary"
 sidebar_label: "Data Dictionary"
 sidebar_position: 1
 ---
+
+import DictTopNav from '@site/src/components/DictTopNav';
+import DiagramViewer from '@site/src/components/DiagramViewer';
+
 # URPX Data Dictionary
 
-<!-- AUTO-GENERATED on 2026-05-04 from urpx-ontology.ttl and urpx-shacl.ttl -->
+<DictTopNav />
+
+<!-- AUTO-GENERATED on 2026-05-13 from urpx-ontology.ttl and urpx-shacl.ttl -->
 <!-- Do not edit directly. Regenerate with: generate-dictionary.sh -->
 
 **Version:** 0.2.0  
-**Last Updated:** 2026-05-04  
+**Last Updated:** 2026-05-13  
 **Ontology Source:** [`urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
 
 ---
@@ -43,10 +49,10 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 - [Temporal & Scheduling Entities](#temporal--scheduling-entities)
 - [Condition Modeling](#condition-modeling)
 - [Customer & Service Profile Entities](#customer--service-profile-entities)
+- [Regulatory Entities](#regulatory-entities)
 - [Organization Entities](#organization-entities)
 - [Geographic Entities](#geographic-entities)
 - [Document Type Entities](#document-type-entities)
-- [Regulatory Entities](#regulatory-entities)
 
 ### Enumerations (Controlled Vocabularies)
 - [AccumulationValue](#accumulationvalue)
@@ -115,7 +121,7 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 
 ## Core Rate Plan Entities
 
-![Core Rate Plan Entities diagram](../diagrams/dictionary/core-rate-plan-entities.svg)
+<DiagramViewer src="../diagrams/dictionary/core-rate-plan-entities.svg" alt="Core Rate Plan Entities diagram" />
 
 ### URPXDocument
 
@@ -365,7 +371,7 @@ Modifier versions track changes to rider rates and conditions over time.
 
 ## Pricing & Alternatives Entities
 
-![Pricing & Alternatives Entities diagram](../diagrams/dictionary/pricing-alternatives-entities.svg)
+<DiagramViewer src="../diagrams/dictionary/pricing-alternatives-entities.svg" alt="Pricing & Alternatives Entities diagram" />
 
 ### Prices
 
@@ -401,7 +407,7 @@ presentation.
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
 | `urpx:adder` | Datatype | 0..1 | `xsd:decimal` | Fixed amount added to calculated price |
-| `urpx:appliesInSeason` | Object | 0..* | [`Season`](#urpxseason) | Season(s) this time bracket applies to |
+| `urpx:appliesInSeason` | Object | 0..* | [`Season`](#urpxseason) | Season(s) this resource applies to |
 | `urpx:baseQuantity` | Datatype | 0..1 | `xsd:decimal` | Base quantity for per-unit pricing (e.g., 'per 2 households') |
 | `urpx:billPortion` | Datatype | 0..1 | — | Identifies which portion of the bill this charge, metric, or price set belongs to |
 | `urpx:billingCycleCode` | Datatype | 0..1 | `xsd:string` | Billing cycle identifier aligned with utility billing periods |
@@ -429,9 +435,10 @@ presentation.
 | `urpx:primaryChargeType` | Datatype | 0..1 | — | The primary charge type when multiple types apply |
 | `urpx:referencesMetricInput` | Object | 0..* | [`MetricInput`](#urpxmetricinput) | Links to metric inputs for measurement and profile metric input definitions |
 | `urpx:referencesPriceDefinition` | Object | 0..1 | [`PriceDefinition`](#urpxpricedefinition) | IRI reference linking a Price, PriceSet, or PriceSetAlternative instance to its PriceDefinition |
-| `urpx:referencesServiceTier` | Object | 0..1 | [`ServiceTier`](#urpxservicetier) | IRI reference to service tier for price application |
+| `urpx:referencesServiceBracket` | Object | 0..1 | [`ServiceBracket`](#urpxservicebracket) | IRI reference to an exact service bracket for price application |
+| `urpx:referencesServiceTier` | Object | 0..1 | [`ServiceTier`](#urpxservicetier) | IRI reference to a logical service tier for price application |
 | `urpx:referencesTouPeriod` | Object | 0..1 | [`TOUPeriod`](#urpxtouperiod) | IRI reference to TOU period for price application |
-| `urpx:serviceTierNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to service tier for upfront-defined tiers |
+| `urpx:serviceTierNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to the logical service tier |
 | `urpx:startDate` | Datatype | 0..1 | `xsd:date` | The start date and time of the item (in ISO 8601 date format) |
 | `urpx:startDateTime` | Datatype | 0..1 | `xsd:dateTime` | The start date and time of the item (in ISO 8601 date format) |
 | `urpx:touPeriodNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to TOU period ID for price application |
@@ -451,7 +458,7 @@ presentation.
 |----------|------|-------------|-------|-------------|
 | `urpx:adder` | Datatype | 0..1 | `xsd:decimal` | Fixed amount added to calculated price |
 | `urpx:alternativeLabel` | Datatype | 0..1 | `xsd:string` | Human-readable label describing this alternative's profile |
-| `urpx:appliesInSeason` | Object | 0..* | [`Season`](#urpxseason) | Season(s) this time bracket applies to |
+| `urpx:appliesInSeason` | Object | 0..* | [`Season`](#urpxseason) | Season(s) this resource applies to |
 | `urpx:baseQuantity` | Datatype | 0..1 | `xsd:decimal` | Base quantity for per-unit pricing (e.g., 'per 2 households') |
 | `urpx:billPortion` | Datatype | 0..1 | — | Identifies which portion of the bill this charge, metric, or price set belongs to |
 | `urpx:billingCycleCode` | Datatype | 0..1 | `xsd:string` | Billing cycle identifier aligned with utility billing periods |
@@ -479,10 +486,11 @@ presentation.
 | `urpx:primaryChargeType` | Datatype | 0..1 | — | The primary charge type when multiple types apply |
 | `urpx:referencesMetricInput` | Object | 0..* | [`MetricInput`](#urpxmetricinput) | Links to metric inputs for measurement and profile metric input definitions |
 | `urpx:referencesPriceDefinition` | Object | 0..1 | [`PriceDefinition`](#urpxpricedefinition) | IRI reference linking a Price, PriceSet, or PriceSetAlternative instance to its PriceDefinition |
-| `urpx:referencesProfileAlternative` | Object | 1..1 | [`ProfileAlternative`](#urpxprofilealternative) | IRI reference linking a price set alternative or price definition to its applicable ProfileAlternative. This property connects the price storage layer (Prices container) to the dimension definition layer (ProfileAlternatives), enabling the price set to indicate which dimension configuration it applies to. |
-| `urpx:referencesServiceTier` | Object | 0..1 | [`ServiceTier`](#urpxservicetier) | IRI reference to service tier for price application |
+| `urpx:referencesProfileAlternative` | Object | 1..1 | [`ProfileAlternative`](#urpxprofilealternative) | IRI reference linking pricing, schedule, or tier resources to their applicable ProfileAlternative. |
+| `urpx:referencesServiceBracket` | Object | 0..1 | [`ServiceBracket`](#urpxservicebracket) | IRI reference to an exact service bracket for price application |
+| `urpx:referencesServiceTier` | Object | 0..1 | [`ServiceTier`](#urpxservicetier) | IRI reference to a logical service tier for price application |
 | `urpx:referencesTouPeriod` | Object | 0..1 | [`TOUPeriod`](#urpxtouperiod) | IRI reference to TOU period for price application |
-| `urpx:serviceTierNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to service tier for upfront-defined tiers |
+| `urpx:serviceTierNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to the logical service tier |
 | `urpx:startDate` | Datatype | 0..1 | `xsd:date` | The start date and time of the item (in ISO 8601 date format) |
 | `urpx:startDateTime` | Datatype | 0..1 | `xsd:dateTime` | The start date and time of the item (in ISO 8601 date format) |
 | `urpx:touPeriodNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to TOU period ID for price application |
@@ -525,7 +533,7 @@ rules, and pricing parameters.
 |----------|------|-------------|-------|-------------|
 | `urpx:adder` | Datatype | 0..1 | `xsd:decimal` | Fixed amount added to calculated price |
 | `urpx:amount` | Datatype | 0..1 | `xsd:decimal` | Fixed amount for prices not based on consumption |
-| `urpx:appliesInSeason` | Object | 0..* | [`Season`](#urpxseason) | Season(s) this time bracket applies to |
+| `urpx:appliesInSeason` | Object | 0..* | [`Season`](#urpxseason) | Season(s) this resource applies to |
 | `urpx:basePrice` | Datatype | 0..1 | `xsd:decimal` | Base price before adjustments |
 | `urpx:baseQuantity` | Datatype | 0..1 | `xsd:decimal` | Base quantity for per-unit pricing (e.g., 'per 2 households') |
 | `urpx:basedOnPrice` | Datatype | 0..* | — | References another price or price summary that this price depends on for calculation |
@@ -554,9 +562,10 @@ rules, and pricing parameters.
 | `urpx:primaryChargeType` | Datatype | 0..1 | — | The primary charge type when multiple types apply |
 | `urpx:referencesMetricInput` | Object | 0..* | [`MetricInput`](#urpxmetricinput) | Links to metric inputs for measurement and profile metric input definitions |
 | `urpx:referencesPriceDefinition` | Object | 0..1 | [`PriceDefinition`](#urpxpricedefinition) | IRI reference linking a Price, PriceSet, or PriceSetAlternative instance to its PriceDefinition |
-| `urpx:referencesServiceTier` | Object | 0..1 | [`ServiceTier`](#urpxservicetier) | IRI reference to service tier for price application |
+| `urpx:referencesServiceBracket` | Object | 0..1 | [`ServiceBracket`](#urpxservicebracket) | IRI reference to an exact service bracket for price application |
+| `urpx:referencesServiceTier` | Object | 0..1 | [`ServiceTier`](#urpxservicetier) | IRI reference to a logical service tier for price application |
 | `urpx:referencesTouPeriod` | Object | 0..1 | [`TOUPeriod`](#urpxtouperiod) | IRI reference to TOU period for price application |
-| `urpx:serviceTierNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to service tier for upfront-defined tiers |
+| `urpx:serviceTierNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to the logical service tier |
 | `urpx:startDate` | Datatype | 0..1 | `xsd:date` | The start date and time of the item (in ISO 8601 date format) |
 | `urpx:startDateTime` | Datatype | 0..1 | `xsd:dateTime` | The start date and time of the item (in ISO 8601 date format) |
 | `urpx:touPeriodNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to TOU period ID for price application |
@@ -580,7 +589,7 @@ specifications.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
-| `urpx:appliesInSeason` | Object | 0..* | [`Season`](#urpxseason) | Season(s) this time bracket applies to |
+| `urpx:appliesInSeason` | Object | 0..* | [`Season`](#urpxseason) | Season(s) this resource applies to |
 | `urpx:baseQuantity` | Datatype | 0..1 | `xsd:decimal` | Base quantity for per-unit pricing (e.g., 'per 2 households') |
 | `urpx:basedOnPrice` | Datatype | 0..* | — | References another price or price summary that this price depends on for calculation |
 | `urpx:billPortion` | Datatype | 0..1 | — | Identifies which portion of the bill this charge, metric, or price set belongs to |
@@ -601,11 +610,12 @@ specifications.
 | `urpx:primaryChargeType` | Datatype | 0..1 | — | The primary charge type when multiple types apply |
 | `urpx:referencesLedger` | Object | 1..1 | [`Ledger`](#urpxledger) | Links a PriceDefinition to its associated Ledger. |
 | `urpx:referencesMetricInput` | Object | 0..* | [`MetricInput`](#urpxmetricinput) | Links to metric inputs for measurement and profile metric input definitions |
-| `urpx:referencesProfileAlternative` | Object | 0..* | [`ProfileAlternative`](#urpxprofilealternative) | IRI reference linking a price set alternative or price definition to its applicable ProfileAlternative. This property connects the price storage layer (Prices container) to the dimension definition layer (ProfileAlternatives), enabling the price set to indicate which dimension configuration it applies to. |
+| `urpx:referencesProfileAlternative` | Object | 0..* | [`ProfileAlternative`](#urpxprofilealternative) | IRI reference linking pricing, schedule, or tier resources to their applicable ProfileAlternative. |
 | `urpx:referencesProfileAlternatives` | Object | 0..1 | [`ProfileAlternatives`](#urpxprofilealternatives) | Links price set alternatives or price definition container to the profile alternatives definition. |
-| `urpx:referencesServiceTier` | Object | 0..1 | [`ServiceTier`](#urpxservicetier) | IRI reference to service tier for price application |
+| `urpx:referencesServiceBracket` | Object | 0..1 | [`ServiceBracket`](#urpxservicebracket) | IRI reference to an exact service bracket for price application |
+| `urpx:referencesServiceTier` | Object | 0..1 | [`ServiceTier`](#urpxservicetier) | IRI reference to a logical service tier for price application |
 | `urpx:referencesTouPeriod` | Object | 0..1 | [`TOUPeriod`](#urpxtouperiod) | IRI reference to TOU period for price application |
-| `urpx:serviceTierNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to service tier for upfront-defined tiers |
+| `urpx:serviceTierNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to the logical service tier |
 | `urpx:touPeriodNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to TOU period ID for price application |
 
 ---
@@ -623,7 +633,7 @@ specifications.
 |----------|------|-------------|-------|-------------|
 | `urpx:includesPrice` | Object | 2..* | [`Price`](#urpxprice) | Prices included in this summary for aggregation |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
-| `urpx:summaryAmount` | Datatype | 1..1 | `xsd:decimal` | Calculated total value for this summary |
+| `urpx:summaryAmount` | Datatype | 0..1 | `xsd:decimal` | Calculated total value for this summary |
 
 ---
 
@@ -646,7 +656,7 @@ specifications.
 
 ## Metric & Measurement Entities
 
-![Metric & Measurement Entities diagram](../diagrams/dictionary/metric-measurement-entities.svg)
+<DiagramViewer src="../diagrams/dictionary/metric-measurement-entities.svg" alt="Metric & Measurement Entities diagram" />
 
 ### MetricInput
 
@@ -728,7 +738,9 @@ Multiple MetricSpecifications can compose a single MetricInput.
 
 ## Plan Elements & Billing Entities
 
-![Plan Elements & Billing Entities diagram](../diagrams/dictionary/plan-elements-billing-entities.svg)
+<DiagramViewer src="../diagrams/dictionary/plan-elements-billing-entities.svg" alt="Plan Elements & Billing Entities diagram" />
+
+<DiagramViewer src="../diagrams/dictionary/plan-elements-billing-entities-billing-model-detail.svg" alt="BillingModel — Pricing References" />
 
 ### PlanElements
 
@@ -833,18 +845,15 @@ apply to that measurement.
 **URI:** `https://urpx-org.github.io/urpx/ontology/ServiceTier`  
 **Parent:** `owl:Thing`
 
-**Description:** Usage tier definition with upper/lower bounds and inclusivity for tiered pricing
+**Description:** Logical tier identity for tiered pricing
 
 **Properties:**
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
-| `urpx:lowerBound` | Datatype | 0..1 | `xsd:decimal` | Lower threshold value for tier applicability |
-| `urpx:lowerBoundOperator` | Datatype | 0..1 | — | Comparison operator for lower bound evaluation |
+| `urpx:hasServiceBracket` | Object | 1..* | [`ServiceBracket`](#urpxservicebracket) | Contextual boundary variants attached to a service tier |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
-| `urpx:serviceTierNumber` | Datatype | 1..1 | `xsd:integer` | Integer reference to service tier for upfront-defined tiers |
-| `urpx:upperBound` | Datatype | 0..1 | `xsd:decimal` | Upper threshold value for tier applicability |
-| `urpx:upperBoundOperator` | Datatype | 0..1 | — | Comparison operator for upper bound evaluation |
+| `urpx:serviceTierNumber` | Datatype | 1..1 | `xsd:integer` | Integer reference to the logical service tier |
 
 ---
 
@@ -859,16 +868,38 @@ apply to that measurement.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
-| `urpx:appliesInSeason` | Object | 0..* | [`Season`](#urpxseason) | Season(s) this service tier group applies to |
-| `urpx:hasServiceTier` | Object | 1..* | [`ServiceTier`](#urpxservicetier) | Service tier definitions for tiered pricing structures |
+| `urpx:appliesInSeason` | Object | 0..* | [`Season`](#urpxseason) | Season(s) this resource applies to |
+| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
+| `urpx:hasServiceTier` | Object | 1..* | [`ServiceTier`](#urpxservicetier) | Logical service tier definitions for tiered pricing structures |
+| `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
 | `urpx:referencesMetricInput` | Object | 0..* | [`MetricInput`](#urpxmetricinput) | Links to metric inputs for measurement and profile metric input definitions |
-| `urpx:referencesProfileAlternative` | Object | 0..1 | [`ProfileAlternative`](#urpxprofilealternative) | IRI reference linking a price set alternative or price definition to its applicable ProfileAlternative. This property connects the price storage layer (Prices container) to the dimension definition layer (ProfileAlternatives), enabling the price set to indicate which dimension configuration it applies to. |
+| `urpx:referencesProfileAlternative` | Object | 0..1 | [`ProfileAlternative`](#urpxprofilealternative) | IRI reference linking pricing, schedule, or tier resources to their applicable ProfileAlternative. |
+
+---
+
+### ServiceBracket
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/ServiceBracket`  
+**Parent:** `owl:Thing`
+
+**Description:** Contextual boundary definition for a service tier
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:appliesInSeason` | Object | 0..* | [`Season`](#urpxseason) | Season(s) this resource applies to |
+| `urpx:lowerBound` | Datatype | 0..1 | `xsd:decimal` | Lower threshold value for bracket applicability |
+| `urpx:lowerBoundOperator` | Datatype | 0..1 | — | Comparison operator for lower bound evaluation |
+| `urpx:referencesProfileAlternative` | Object | 0..1 | [`ProfileAlternative`](#urpxprofilealternative) | IRI reference linking pricing, schedule, or tier resources to their applicable ProfileAlternative. |
+| `urpx:upperBound` | Datatype | 0..1 | `xsd:decimal` | Upper threshold value for bracket applicability |
+| `urpx:upperBoundOperator` | Datatype | 0..1 | — | Comparison operator for upper bound evaluation |
 
 ---
 
 ## Temporal & Scheduling Entities
 
-![Temporal & Scheduling Entities diagram](../diagrams/dictionary/temporal-scheduling-entities.svg)
+<DiagramViewer src="../diagrams/dictionary/temporal-scheduling-entities.svg" alt="Temporal & Scheduling Entities diagram" />
 
 ### Season
 
@@ -916,7 +947,7 @@ periods with specific time brackets.
 | `urpx:hasTOUTier` | Object | 1..* | [`TOUTier`](#urpxtoutier) | Links TOU schedule to pricing tiers (peak, mid-peak, off-peak) |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
 | `urpx:referencesMetricInput` | Object | 1..* | [`MetricInput`](#urpxmetricinput) | Links to metric inputs for measurement and profile metric input definitions |
-| `urpx:referencesProfileAlternative` | Object | 0..1 | [`ProfileAlternative`](#urpxprofilealternative) | IRI reference linking a price set alternative or price definition to its applicable ProfileAlternative. This property connects the price storage layer (Prices container) to the dimension definition layer (ProfileAlternatives), enabling the price set to indicate which dimension configuration it applies to. |
+| `urpx:referencesProfileAlternative` | Object | 0..1 | [`ProfileAlternative`](#urpxprofilealternative) | IRI reference linking pricing, schedule, or tier resources to their applicable ProfileAlternative. |
 
 ---
 
@@ -973,7 +1004,7 @@ periods with specific time brackets.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
-| `urpx:appliesInSeason` | Object | 0..* | [`Season`](#urpxseason) | Season(s) this time bracket applies to |
+| `urpx:appliesInSeason` | Object | 0..* | [`Season`](#urpxseason) | Season(s) this resource applies to |
 | `urpx:dayType` | Datatype | 1..1 | — | Type of days this time bracket applies to (ISO 8601 aligned) |
 | `urpx:endTime` | Datatype | 1..1 | `xsd:time` | End time for this bracket |
 | `urpx:includeHolidays` | Datatype | 0..1 | `xsd:boolean` | Whether this bracket applies on holidays |
@@ -1056,7 +1087,7 @@ periods with specific time brackets.
 
 ## Condition Modeling
 
-![Condition Modeling diagram](../diagrams/dictionary/condition-modeling.svg)
+<DiagramViewer src="../diagrams/dictionary/condition-modeling.svg" alt="Condition Modeling diagram" />
 
 ### EligibilityRule
 
@@ -1078,40 +1109,6 @@ and proper rate application.
 | `urpx:hasConditionExpression` | Object | 1..1 | [`ConditionExpression`](#urpxconditionexpression) | Links a rule to its structured condition expression |
 | `urpx:hasDataSourceReference` | Object | 0..* | [`DataSourceReference`](#urpxdatasourcereference) | Links an entity to a structured data source reference. |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
-
----
-
-### GeneralRule
-
-**URI:** `https://urpx-org.github.io/urpx/ontology/GeneralRule`  
-**Parent:** `owl:Thing`
-
-**Description:** A rule or statement that applies across rate plans and rate plan versions, not tied to a single billing context
-
-**Properties:**
-
-| Property | Type | Cardinality | Range | Description |
-|----------|------|-------------|-------|-------------|
-| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
-| `urpx:generalRuleID` | Datatype | 1..1 | `xsd:string` | Unique identifier for a general rule |
-| `urpx:hasApplicabilityRule` | Object | 0..* | [`ApplicabilityRule`](#urpxapplicabilityrule) | Conditions for price application |
-| `urpx:hasDataSourceReference` | Object | 1..* | [`DataSourceReference`](#urpxdatasourcereference) | Links an entity to a structured data source reference. |
-| `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
-
----
-
-### ConditionExpression
-
-**URI:** `https://urpx-org.github.io/urpx/ontology/ConditionExpression`  
-**Parent:** `owl:Thing`
-
-**Description:** Rule-level wrapper for structured condition applicability used in EligibilityRule, ApplicabilityRule, ApplicabilityGroup, ProfileAlternative
-
-**Properties:**
-
-| Property | Type | Cardinality | Range | Description |
-|----------|------|-------------|-------|-------------|
-| `urpx:rootNode` | Datatype | 1..1 | — | Points from a ConditionExpression to its single root ConditionNode |
 
 ---
 
@@ -1149,19 +1146,32 @@ location, customer type, or usage patterns.
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
 | `urpx:applicabilityLogic` | Datatype | 0..1 | `xsd:string` | Boolean logic for complex applicability rules |
-| `urpx:appliesForCustomerKind` | Datatype | 0..* | — | Links applicability group to customer kind classification |
-| `urpx:appliesForCustomerSubKind` | Datatype | 0..* | — | Links applicability group to customer sub-kind classification |
-| `urpx:appliesInCounty` | Object | 0..* | [`County`](#urpxcounty) | Links applicability group to county-level geographic scope |
-| `urpx:appliesInGeographicZone` | Datatype | 0..* | — | Links applicability group to geographic zone |
-| `urpx:appliesInMunicipality` | Object | 0..* | [`Municipality`](#urpxmunicipality) | Links applicability group to municipality-level geographic scope |
-| `urpx:appliesInServiceTerritory` | Object | 0..* | [`ServiceTerritory`](#urpxserviceterritory) | Links applicability group to service territory geographic scope |
-| `urpx:appliesInState` | Object | 0..* | [`State`](#urpxstate) | Links applicability group to state-level geographic scope |
-| `urpx:endUse` | Datatype | 0..1 | — | End use classification for electric service (heating vs non-heating) |
-| `urpx:geographicScope` | Datatype | 0..1 | — | Geographic scope of applicability (ISO 3166 admin levels) |
 | `urpx:hasConditionExpression` | Object | 0..1 | [`ConditionExpression`](#urpxconditionexpression) | Links a rule to its structured condition expression |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
-| `urpx:serviceClassPattern` | Datatype | 0..1 | `xsd:string` | Service class pattern for applicability matching |
-| `urpx:voltageLevel` | Datatype | 0..1 | — | Service voltage level classification for rate applicability and service point profiles |
+
+---
+
+### ConditionExpression
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/ConditionExpression`  
+**Parent:** `owl:Thing`
+
+**Description:** Rule-level wrapper for structured condition applicability used in EligibilityRule, ApplicabilityRule, ApplicabilityGroup, ProfileAlternative
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:rootNode` | Datatype | 1..1 | — | Points from a ConditionExpression to its single root ConditionNode |
+
+---
+
+### ConditionNode
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/ConditionNode`  
+**Parent:** `owl:Thing`
+
+**Description:** Abstract superclass for nodes that may appear in a ConditionExpression tree
 
 ---
 
@@ -1216,15 +1226,6 @@ location, customer type, or usage patterns.
 | `urpx:leftOperand` | Datatype | 1..1 | — | Left operand for ordered comparison or nested operation evaluation |
 | `urpx:operator` | Datatype | 1..1 | — | References the operator used by a comparison boolean-operation or nested operation node |
 | `urpx:rightOperand` | Datatype | 1..1 | — | Right operand for ordered comparison or nested operation evaluation |
-
----
-
-### ConditionNode
-
-**URI:** `https://urpx-org.github.io/urpx/ontology/ConditionNode`  
-**Parent:** `owl:Thing`
-
-**Description:** Abstract superclass for nodes that may appear in a ConditionExpression tree
 
 ---
 
@@ -1297,9 +1298,28 @@ location, customer type, or usage patterns.
 
 ---
 
+### GeneralRule
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/GeneralRule`  
+**Parent:** `owl:Thing`
+
+**Description:** A rule or statement that applies across rate plans and rate plan versions, not tied to a single billing context
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
+| `urpx:generalRuleID` | Datatype | 1..1 | `xsd:string` | Unique identifier for a general rule |
+| `urpx:hasApplicabilityRule` | Object | 0..* | [`ApplicabilityRule`](#urpxapplicabilityrule) | Conditions for price application |
+| `urpx:hasDataSourceReference` | Object | 1..* | [`DataSourceReference`](#urpxdatasourcereference) | Links an entity to a structured data source reference. |
+| `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
+
+---
+
 ## Customer & Service Profile Entities
 
-![Customer & Service Profile Entities diagram](../diagrams/dictionary/customer-service-profile-entities.svg)
+<DiagramViewer src="../diagrams/dictionary/customer-service-profile-entities.svg" alt="Customer & Service Profile Entities diagram" />
 
 ### Profile
 
@@ -1367,10 +1387,15 @@ installations, and connection type.
 | `urpx:buildingSquareFootage` | Datatype | 0..1 | `xsd:decimal` | Building size in square feet |
 | `urpx:connectionKind` | Datatype | 0..1 | — | Type of connection at service point |
 | `urpx:endUse` | Datatype | 0..1 | — | End use classification for electric service (heating vs non-heating) |
+| `urpx:geographicScope` | Datatype | 0..1 | — | Geographic scope of applicability or eligibility (ISO 3166 admin levels) |
 | `urpx:geographicZone` | Datatype | 0..* | — | Geographic classification (Census geographic types) |
+| `urpx:hasCounty` | Object | 0..* | [`County`](#urpxcounty) | Links service point profile to county-level geographic scope |
 | `urpx:hasDistributedEnergyResource` | Object | 0..* | [`DistributedEnergyResource`](#urpxdistributedenergyresource) | Distributed energy resources associated with this service point |
 | `urpx:hasHVAC` | Datatype | 0..* | — | HVAC equipment associated with this service point |
 | `urpx:hasMeteringConfiguration` | Datatype | 0..1 | — | Metering configuration type |
+| `urpx:hasMunicipality` | Object | 0..* | [`Municipality`](#urpxmunicipality) | Links service point profile to municipality-level geographic scope |
+| `urpx:hasServiceTerritory` | Object | 0..* | [`ServiceTerritory`](#urpxserviceterritory) | Links service point profile to service territory geographic scope |
+| `urpx:hasState` | Object | 0..* | [`State`](#urpxstate) | Links service point profile to state-level geographic scope |
 | `urpx:loadProfile` | Datatype | 0..1 | — | Load profile classification |
 | `urpx:meterCount` | Datatype | 0..1 | `xsd:integer` | Count of meters at service point |
 | `urpx:nominalVoltage` | Datatype | 0..1 | `xsd:decimal` | Nominal service voltage in volts |
@@ -1378,8 +1403,9 @@ installations, and connection type.
 | `urpx:premiseType` | Datatype | 0..1 | — | Type of premise served |
 | `urpx:ratedPowerCapacity` | Datatype | 0..1 | `xsd:decimal` | Rated power capacity in kW |
 | `urpx:seasonalPattern` | Datatype | 0..1 | — | Seasonal usage pattern classification |
+| `urpx:serviceClassPattern` | Datatype | 0..1 | `xsd:string` | Service class pattern for applicability and eligibility matching |
 | `urpx:usageVariability` | Datatype | 0..1 | `xsd:decimal` | Usage variability coefficient |
-| `urpx:voltageLevel` | Datatype | 0..1 | — | Service voltage level classification for rate applicability and service point profiles |
+| `urpx:voltageLevel` | Datatype | 0..1 | — | Service voltage level classification for service point profiles |
 
 ---
 
@@ -1428,9 +1454,9 @@ installations, and connection type.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
-| `urpx:customDimensionProperty` | Datatype | 0..1 | `xsd:string` | Fallback custom property identifier used when no suitable URPX-vocabulary dimension exists |
+| `urpx:customDimensionProperty` | Datatype | 0..1 | `xsd:string` | Fallback custom property identifier for alternative dimensions in human-readable form |
 | `urpx:dimensionDisplayName` | Datatype | 1..1 | `xsd:string` | Human-readable name for UI display |
-| `urpx:dimensionProperty` | Datatype | 0..1 | `xsd:anyURI` | URI of the ontology property this dimension represents when modeled in URPX vocabulary |
+| `urpx:dimensionProperty` | Datatype | 0..1 | `xsd:anyURI` | URI of the ontology property this dimension represents |
 | `urpx:hasPossibleValues` | Datatype | 1..* | — | List of possible values |
 | `urpx:referencesMetricInput` | Object | 0..* | [`MetricInput`](#urpxmetricinput) | Links to metric inputs for measurement and profile metric input definitions |
 
@@ -1488,6 +1514,22 @@ while preserving original designations.
 | `urpx:parentServiceClass` | Object | 0..1 | [`ServiceClass`](#urpxserviceclass) | Parent service class for this rate group |
 | `urpx:rateGroupIdentifier` | Datatype | 1..1 | `xsd:string` | Unique identifier for the rate group |
 | `urpx:rateGroupName` | Datatype | 1..1 | `xsd:string` | Human-readable name for the rate group |
+
+---
+
+### Scenario
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/Scenario`  
+**Parent:** `owl:Thing`
+
+**Description:** Input container grouping customer and service point profiles for broad rate plan eligibility evaluation.
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:hasCustomerProfile` | Object | 0..1 | [`CustomerProfile`](#urpxcustomerprofile) | Links scenario to customer profile for business/social characteristics |
+| `urpx:hasServicePointProfile` | Object | 0..1 | [`ServicePointProfile`](#urpxservicepointprofile) | Links scenario to service point profile for physical service delivery characteristics |
 
 ---
 
@@ -1558,25 +1600,32 @@ while preserving original designations.
 
 ---
 
-### Scenario
+## Regulatory Entities
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/Scenario`  
+<DiagramViewer src="../diagrams/dictionary/regulatory-entities.svg" alt="Regulatory Entities diagram" />
+
+### RateCase
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/RateCase`  
 **Parent:** `owl:Thing`
 
-**Description:** Input container grouping customer and service point profiles for broad rate plan eligibility evaluation.
+**Description:** Public service commission proceeding concerning rate plan or price changes for cost-of-service regulated utilities
 
 **Properties:**
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
-| `urpx:hasCustomerProfile` | Object | 0..1 | [`CustomerProfile`](#urpxcustomerprofile) | Links scenario to customer profile for business/social characteristics |
-| `urpx:hasServicePointProfile` | Object | 0..1 | [`ServicePointProfile`](#urpxservicepointprofile) | Links scenario to service point profile for physical service delivery characteristics |
+| `urpx:caseNumber` | Datatype | 1..1 | `xsd:string` | Jurisdiction-specific identifier assigned to a rate case proceeding |
+| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
+| `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
+| `urpx:priority` | Datatype | 0..1 | `xsd:integer` | Priority for overlapping entities |
+| `urpx:url` | Datatype | 1..1 | `xsd:anyURI` | URL of the item |
 
 ---
 
 ## Organization Entities
 
-![Organization Entities diagram](../diagrams/dictionary/organization-entities.svg)
+<DiagramViewer src="../diagrams/dictionary/organization-entities.svg" alt="Organization Entities diagram" />
 
 ### Organization
 
@@ -1775,7 +1824,7 @@ energy service providers.
 
 ## Geographic Entities
 
-![Geographic Entities diagram](../diagrams/dictionary/geographic-entities.svg)
+<DiagramViewer src="../diagrams/dictionary/geographic-entities.svg" alt="Geographic Entities diagram" />
 
 ### AdministrativeBoundary
 
@@ -1832,7 +1881,7 @@ potentially spanning multiple administrative boundaries.
 
 ## Document Type Entities
 
-![Document Type Entities diagram](../diagrams/dictionary/document-type-entities.svg)
+<DiagramViewer src="../diagrams/dictionary/document-type-entities.svg" alt="Document Type Entities diagram" />
 
 ### TariffPublication
 
@@ -2181,29 +2230,6 @@ multiple document types (tariff books, statements, supplements).
 
 ---
 
-## Regulatory Entities
-
-![Regulatory Entities diagram](../diagrams/dictionary/regulatory-entities.svg)
-
-### RateCase
-
-**URI:** `https://urpx-org.github.io/urpx/ontology/RateCase`  
-**Parent:** `owl:Thing`
-
-**Description:** Public service commission proceeding concerning rate plan or price changes for cost-of-service regulated utilities
-
-**Properties:**
-
-| Property | Type | Cardinality | Range | Description |
-|----------|------|-------------|-------|-------------|
-| `urpx:caseNumber` | Datatype | 1..1 | `xsd:string` | Jurisdiction-specific identifier assigned to a rate case proceeding |
-| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
-| `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
-| `urpx:priority` | Datatype | 0..1 | `xsd:integer` | Priority for overlapping entities |
-| `urpx:url` | Datatype | 1..1 | `xsd:anyURI` | URL of the item |
-
----
-
 ## Enumerations
 
 ### AccumulationValue
@@ -2352,6 +2378,8 @@ multiple document types (tariff books, statements, supplements).
 | `urpx:transmission` | — |
 | `urpx:usageCharge` | — |
 | `urpx:volumetricCharge` | — |
+
+<DiagramViewer src="../diagrams/dictionary/hierarchy-ChargeTypeValue.svg" alt="ChargeTypeValue hierarchy" />
 
 ### CommodityValue
 
@@ -2904,6 +2932,7 @@ multiple document types (tariff books, statements, supplements).
 | `urpx:energyEfficiencyProgram` | — |
 | `urpx:greenEnergyProgram` | — |
 | `urpx:lowIncomeProgram` | — |
+| `urpx:moderateIncomeProgram` | — |
 | `urpx:timeOfUseProgram` | — |
 
 ### PublicationTypeValue
@@ -3080,4 +3109,4 @@ multiple document types (tariff books, statements, supplements).
 
 ---
 
-*Generated by `generate-data-dictionary.py` from URPX ontology v0.2.0 on 2026-05-04.*
+*Generated by `generate-data-dictionary.py` from URPX ontology v0.2.0 on 2026-05-13.*

@@ -1,0 +1,377 @@
+digraph "hierarchy_ChargeTypeValue" {
+    rankdir=TB;
+    bgcolor="white";
+    pad=0.4;
+    nodesep=0.3;
+    ranksep=0.5;
+    fontname="Inter, Helvetica, Arial, sans-serif";
+    label="ChargeTypeValue Hierarchy (URPX v0.2.0)";
+    labelloc="t";
+    fontsize=14;
+    fontcolor="#1a365d";
+    node [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=10, style=filled,
+          fontcolor="#1a365d", shape=box];
+    edge [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=8, fontcolor="#1a365d",
+          color="#1a5276"];
+
+    ChargeTypeValue [
+        label="ChargeTypeValue"
+        fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+
+    // Category nodes (second level)
+    cat_adjustment [
+        label="Adjustment"
+        fillcolor="#aaccff", color="#1a5276", penwidth=1.5
+    ];
+    cat_auxiliaryCharge [
+        label="Auxiliary Charge"
+        fillcolor="#aaccff", color="#1a5276", penwidth=1.5
+    ];
+    cat_discount [
+        label="Discount"
+        fillcolor="#aaccff", color="#1a5276", penwidth=1.5
+    ];
+    cat_environmental [
+        label="Environmental"
+        fillcolor="#aaccff", color="#1a5276", penwidth=1.5
+    ];
+    cat_infrastructure [
+        label="Infrastructure"
+        fillcolor="#aaccff", color="#1a5276", penwidth=1.5
+    ];
+    cat_regulatory [
+        label="Regulatory"
+        fillcolor="#aaccff", color="#1a5276", penwidth=1.5
+    ];
+    cat_serviceCharge [
+        label="Service Charge"
+        fillcolor="#aaccff", color="#1a5276", penwidth=1.5
+    ];
+    cat_taxes [
+        label="Taxes"
+        fillcolor="#aaccff", color="#1a5276", penwidth=1.5
+    ];
+
+    // Root to category edges
+    ChargeTypeValue -> cat_adjustment [penwidth=1.5];
+    ChargeTypeValue -> cat_auxiliaryCharge [penwidth=1.5];
+    ChargeTypeValue -> cat_discount [penwidth=1.5];
+    ChargeTypeValue -> cat_environmental [penwidth=1.5];
+    ChargeTypeValue -> cat_infrastructure [penwidth=1.5];
+    ChargeTypeValue -> cat_regulatory [penwidth=1.5];
+    ChargeTypeValue -> cat_serviceCharge [penwidth=1.5];
+    ChargeTypeValue -> cat_taxes [penwidth=1.5];
+
+    // Leaf instance nodes
+    inst_adjustmentPowerCost [
+        label="Adjustment \nPower Cost"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_adjustment -> inst_adjustmentPowerCost [penwidth=1];
+    inst_adjustmentRenewable [
+        label="Adjustment \nRenewable"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_adjustment -> inst_adjustmentRenewable [penwidth=1];
+    inst_adjustmentTariff [
+        label="Adjustment Tariff"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_adjustment -> inst_adjustmentTariff [penwidth=1];
+    inst_recoverySurcharge [
+        label="Recovery Surcharge"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_adjustment -> inst_recoverySurcharge [penwidth=1];
+    inst_tariffRider [
+        label="Tariff Rider"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_adjustment -> inst_tariffRider [penwidth=1];
+    inst_ancillaryServices [
+        label="Ancillary Services"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_auxiliaryCharge -> inst_ancillaryServices [penwidth=1];
+    inst_capacity [
+        label="Capacity"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_auxiliaryCharge -> inst_capacity [penwidth=1];
+    inst_capacityCharge [
+        label="Capacity Charge"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_auxiliaryCharge -> inst_capacityCharge [penwidth=1];
+    inst_congestionCharge [
+        label="Congestion Charge"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_auxiliaryCharge -> inst_congestionCharge [penwidth=1];
+    inst_distributedGeneration [
+        label="Distributed \nGeneration"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_auxiliaryCharge -> inst_distributedGeneration [penwidth=1];
+    inst_donation [
+        label="Donation"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_auxiliaryCharge -> inst_donation [penwidth=1];
+    inst_energyStorage [
+        label="Energy Storage"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_auxiliaryCharge -> inst_energyStorage [penwidth=1];
+    inst_generation [
+        label="Generation"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_auxiliaryCharge -> inst_generation [penwidth=1];
+    inst_powerFactor [
+        label="Power Factor"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_auxiliaryCharge -> inst_powerFactor [penwidth=1];
+    inst_usageCharge [
+        label="Usage Charge"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_auxiliaryCharge -> inst_usageCharge [penwidth=1];
+    inst_volumetricCharge [
+        label="Volumetric Charge"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_auxiliaryCharge -> inst_volumetricCharge [penwidth=1];
+    inst_capitalCredit [
+        label="Capital Credit"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_discount -> inst_capitalCredit [penwidth=1];
+    inst_creditAdministrative [
+        label="Credit Administrative"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_discount -> inst_creditAdministrative [penwidth=1];
+    inst_creditEnergy [
+        label="Credit Energy"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_discount -> inst_creditEnergy [penwidth=1];
+    inst_creditGeneration [
+        label="Credit Generation"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_discount -> inst_creditGeneration [penwidth=1];
+    inst_creditInfrastructure [
+        label="Credit Infrastructure"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_discount -> inst_creditInfrastructure [penwidth=1];
+    inst_creditMisc [
+        label="Credit Misc"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_discount -> inst_creditMisc [penwidth=1];
+    inst_creditPriceProtection [
+        label="Credit Price \nProtection"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_discount -> inst_creditPriceProtection [penwidth=1];
+    inst_creditRenewable [
+        label="Credit Renewable"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_discount -> inst_creditRenewable [penwidth=1];
+    inst_creditTariffRider [
+        label="Credit Tariff \nRider"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_discount -> inst_creditTariffRider [penwidth=1];
+    inst_depositCredit [
+        label="Deposit Credit"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_discount -> inst_depositCredit [penwidth=1];
+    inst_depositInterest [
+        label="Deposit Interest"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_discount -> inst_depositInterest [penwidth=1];
+    inst_heapDiscount [
+        label="Heap Discount"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_discount -> inst_heapDiscount [penwidth=1];
+    inst_conservationCharge [
+        label="Conservation \nCharge"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_environmental -> inst_conservationCharge [penwidth=1];
+    inst_efficiencyFunding [
+        label="Efficiency Funding"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_environmental -> inst_efficiencyFunding [penwidth=1];
+    inst_environmentalFunding [
+        label="Environmental \nFunding"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_environmental -> inst_environmentalFunding [penwidth=1];
+    inst_renewableFunding [
+        label="Renewable Funding"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_environmental -> inst_renewableFunding [penwidth=1];
+    inst_deliveryCharge [
+        label="Delivery Charge"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_infrastructure -> inst_deliveryCharge [penwidth=1];
+    inst_demandDirect [
+        label="Demand Direct"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_infrastructure -> inst_demandDirect [penwidth=1];
+    inst_demandIndirect [
+        label="Demand Indirect"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_infrastructure -> inst_demandIndirect [penwidth=1];
+    inst_distributionCharge [
+        label="Distribution \nCharge"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_infrastructure -> inst_distributionCharge [penwidth=1];
+    inst_reliabilityCharge [
+        label="Reliability Charge"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_infrastructure -> inst_reliabilityCharge [penwidth=1];
+    inst_strandedCosts [
+        label="Stranded Costs"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_infrastructure -> inst_strandedCosts [penwidth=1];
+    inst_transmission [
+        label="Transmission"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_infrastructure -> inst_transmission [penwidth=1];
+    inst_complianceCharge [
+        label="Compliance Charge"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_regulatory -> inst_complianceCharge [penwidth=1];
+    inst_demandSideManagement [
+        label="Demand Side \nManagement"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_regulatory -> inst_demandSideManagement [penwidth=1];
+    inst_nonBypassableCharge [
+        label="Non-Bypassable \nCharge"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_regulatory -> inst_nonBypassableCharge [penwidth=1];
+    inst_publicBenefits [
+        label="Public Benefits"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_regulatory -> inst_publicBenefits [penwidth=1];
+    inst_systemBenefitCharge [
+        label="System Benefit \nCharge"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_regulatory -> inst_systemBenefitCharge [penwidth=1];
+    inst_transitionCharge [
+        label="Transition Charge"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_regulatory -> inst_transitionCharge [penwidth=1];
+    inst_contractMisc [
+        label="Contract Misc"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_serviceCharge -> inst_contractMisc [penwidth=1];
+    inst_depositRequest [
+        label="Deposit Request"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_serviceCharge -> inst_depositRequest [penwidth=1];
+    inst_facilities [
+        label="Facilities"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_serviceCharge -> inst_facilities [penwidth=1];
+    inst_handling [
+        label="Handling"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_serviceCharge -> inst_handling [penwidth=1];
+    inst_initiationCharge [
+        label="Initiation Charge"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_serviceCharge -> inst_initiationCharge [penwidth=1];
+    inst_minimumBill [
+        label="Minimum Bill"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_serviceCharge -> inst_minimumBill [penwidth=1];
+    inst_minimumCharge [
+        label="Minimum Charge"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_serviceCharge -> inst_minimumCharge [penwidth=1];
+    inst_rentalFee [
+        label="Rental Fee"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_serviceCharge -> inst_rentalFee [penwidth=1];
+    inst_serviceMetered [
+        label="Service Metered"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_serviceCharge -> inst_serviceMetered [penwidth=1];
+    inst_serviceNonMetered [
+        label="Service Non \nMetered"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_serviceCharge -> inst_serviceNonMetered [penwidth=1];
+    inst_taxAdjustment [
+        label="Tax Adjustment"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_taxes -> inst_taxAdjustment [penwidth=1];
+    inst_taxCredit [
+        label="Tax Credit"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_taxes -> inst_taxCredit [penwidth=1];
+    inst_taxMisc [
+        label="Tax Misc"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_taxes -> inst_taxMisc [penwidth=1];
+    inst_taxMunicipal [
+        label="Tax Municipal"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_taxes -> inst_taxMunicipal [penwidth=1];
+    inst_taxSales [
+        label="Tax Sales"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_taxes -> inst_taxSales [penwidth=1];
+    inst_taxState [
+        label="Tax State"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_taxes -> inst_taxState [penwidth=1];
+    inst_taxUtility [
+        label="Tax Utility"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_taxes -> inst_taxUtility [penwidth=1];
+}

@@ -1,11 +1,11 @@
-digraph "urpx-rate-plan_pge_e-elec_2026-01-01" {
+digraph "urpx-rate-plan_pge_e-elec" {
     rankdir=TB;
     bgcolor="white";
     pad=0.5;
     nodesep=0.5;
     ranksep=0.7;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="urpx-rate-plan_pge_e-elec_2026-01-01";
+    label="urpx-rate-plan_pge_e-elec";
     labelloc="t";
     fontsize=16;
     fontcolor="#1a365d";

@@ -2,8 +2,8 @@ digraph "Document Type Entities" {
     rankdir=TB;
     bgcolor="white";
     pad=0.4;
-    nodesep=0.5;
-    ranksep=0.8;
+    nodesep=0.9;
+    ranksep=1.1;
     fontname="Inter, Helvetica, Arial, sans-serif";
     label="Document Type Entities (URPX v0.2.0)";
     labelloc="t";
@@ -76,32 +76,6 @@ digraph "Document Type Entities" {
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
     ];
 
-    // Per-class datatype nodes
-    TariffPublication_dt_date [
-        label="xsd:date"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    DataSourceReference_dt_anyURI [
-        label="xsd:anyURI"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    TariffBookReference_dt_anyURI [
-        label="xsd:anyURI"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    TariffBookReference_dt_date [
-        label="xsd:date"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    TariffStatementReference_dt_anyURI [
-        label="xsd:anyURI"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    TariffStatementReference_dt_date [
-        label="xsd:date"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-
     // Object property edges
     TariffPublication -> DataSourceReference [
         label="hasDataSourceReference\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
@@ -170,51 +144,6 @@ digraph "Document Type Entities" {
         label="hasTariffStatementReference\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
 
-    // Datatype property edges
-    TariffPublication -> TariffPublication_dt_date [
-        label="dateApproved\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    TariffPublication -> TariffPublication_dt_date [
-        label="dateCreated\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    DataSourceReference -> DataSourceReference_dt_anyURI [
-        label="accessURL\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    DataSourceReference -> DataSourceReference_dt_anyURI [
-        label="anchorLink\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    TariffBookReference -> TariffBookReference_dt_anyURI [
-        label="anchorLink\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    TariffBookReference -> TariffBookReference_dt_date [
-        label="dateApproved\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    TariffStatementReference -> TariffStatementReference_dt_anyURI [
-        label="anchorLink\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    TariffStatementReference -> TariffStatementReference_dt_date [
-        label="dateApproved\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-
-    // Layout-specified rank groups
-    { rank=same; TariffPublication; }
-    { rank=same; TariffBookDocument; TariffStatementDocument; }
-    TariffBookDocument -> TariffStatementDocument [style=invis];
-    { rank=same; TariffSupplementDocument; TariffAddendumDocument; }
-    TariffSupplementDocument -> TariffAddendumDocument [style=invis];
-    { rank=same; SupplyChargesDocument; HighlyDynamicPricesDocument; DERExportsDocument; }
-    SupplyChargesDocument -> HighlyDynamicPricesDocument [style=invis];
-    HighlyDynamicPricesDocument -> DERExportsDocument [style=invis];
-    { rank=same; DataSourceReference; }
-
     subgraph cluster_legend {
         label="Legend";
         fontname="Inter, Helvetica, Arial, sans-serif";
@@ -227,13 +156,10 @@ digraph "Document Type Entities" {
 
         leg_class [label="OWL Class\n(this section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
         leg_xref [label="OWL Class\n(other section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"];
-        leg_dt [label="XSD Datatype", shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"];
         leg_src [label=" ", shape=point, width=0.01];
         leg_tgt1 [label=" ", shape=point, width=0.01];
-        leg_tgt2 [label=" ", shape=point, width=0.01];
         leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+        leg_tgt2 [label=" ", shape=point, width=0.01];
         leg_src -> leg_tgt2 [label="cross-section ref", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
-        leg_tgt3 [label=" ", shape=point, width=0.01];
-        leg_src -> leg_tgt3 [label="datatype property", style=dashed, color="#22c55e", fontcolor="#166534", penwidth=1.5];
     }
 }

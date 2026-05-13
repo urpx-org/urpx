@@ -37,139 +37,32 @@ digraph "Plan Elements & Billing Entities" {
         label="ServiceTiers"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
-
-    // Cross-section references
-    HolidayCalendar [
-        label="HolidayCalendar"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
-    ];
-    MetricInput [
-        label="MetricInput"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
-    ];
-    PriceDefinition [
-        label="PriceDefinition"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
-    ];
-    ProfileAlternative [
-        label="ProfileAlternative"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
-    ];
-    ProfileAlternatives [
-        label="ProfileAlternatives"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
-    ];
-    Season [
-        label="Season"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
-    ];
-    TOUSchedule [
-        label="TOUSchedule"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
-    ];
-
-    // Per-class datatype nodes
-    BillingModel_dt_string [
-        label="xsd:string"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    BillingCycle_dt_integer [
-        label="xsd:integer"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    BillingCycle_dt_date [
-        label="xsd:date"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    Ledger_dt_duration [
-        label="xsd:duration"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    ServiceTier_dt_decimal [
-        label="xsd:decimal"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    ServiceTier_dt_integer [
-        label="xsd:integer"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
+    ServiceBracket [
+        label="ServiceBracket"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
 
     // Object property edges
     PlanElements -> BillingModel [
         label="hasBillingModel\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=10
     ];
-    PlanElements -> HolidayCalendar [
-        label="hasHolidayCalendar\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-    PlanElements -> MetricInput [
-        label="hasMetricInput\n1..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-    PlanElements -> ProfileAlternatives [
-        label="hasProfileAlternatives\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-    PlanElements -> Season [
-        label="hasSeasons\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-    BillingModel -> Ledger [
-        label="hasLedger\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-    BillingModel -> PriceDefinition [
-        label="hasPriceDefinition\n1..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
     BillingModel -> ServiceTiers [
         label="hasServiceTiers\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=8
-    ];
-    BillingModel -> TOUSchedule [
-        label="hasTOUSchedule\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     Ledger -> BillingCycle [
         label="hasBillingCycle\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
-    Ledger -> MetricInput [
-        label="referencesMetricInput\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ServiceTier -> ServiceBracket [
+        label="hasServiceBracket\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     ServiceTiers -> ServiceTier [
         label="hasServiceTier\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=8
-    ];
-    ServiceTiers -> MetricInput [
-        label="referencesMetricInput\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-    ServiceTiers -> ProfileAlternative [
-        label="referencesProfileAlternative\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-
-    // Datatype property edges
-    BillingModel -> BillingModel_dt_string [
-        label="prorationMethod\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    BillingCycle -> BillingCycle_dt_integer [
-        label="cycleStartDay\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    BillingCycle -> BillingCycle_dt_date [
-        label="endDate\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    Ledger -> Ledger_dt_duration [
-        label="settlementInterval\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    ServiceTier -> ServiceTier_dt_decimal [
-        label="lowerBound\n1..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    ServiceTier -> ServiceTier_dt_integer [
-        label="serviceTierNumber\n1..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
     ];
 
     // Layout-specified rank groups
     { rank=same; PlanElements; }
     { rank=same; BillingModel; Ledger; }
-    BillingModel -> Ledger [style=invis];
     { rank=same; BillingCycle; ServiceTiers; }
-    BillingCycle -> ServiceTiers [style=invis];
     { rank=same; ServiceTier; }
 
     subgraph cluster_legend {
@@ -183,14 +76,8 @@ digraph "Plan Elements & Billing Entities" {
         margin=12;
 
         leg_class [label="OWL Class\n(this section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
-        leg_xref [label="OWL Class\n(other section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"];
-        leg_dt [label="XSD Datatype", shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"];
         leg_src [label=" ", shape=point, width=0.01];
         leg_tgt1 [label=" ", shape=point, width=0.01];
-        leg_tgt2 [label=" ", shape=point, width=0.01];
         leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
-        leg_src -> leg_tgt2 [label="cross-section ref", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
-        leg_tgt3 [label=" ", shape=point, width=0.01];
-        leg_src -> leg_tgt3 [label="datatype property", style=dashed, color="#22c55e", fontcolor="#166534", penwidth=1.5];
     }
 }
