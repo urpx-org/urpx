@@ -4,6 +4,7 @@ digraph "Temporal & Scheduling Entities" {
     pad=0.4;
     nodesep=0.8;
     ranksep=1.0;
+    start=42;
     fontname="Inter, Helvetica, Arial, sans-serif";
     label="Temporal & Scheduling Entities (URPX v0.2.0)";
     labelloc="t";

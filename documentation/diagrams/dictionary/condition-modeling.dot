@@ -4,6 +4,7 @@ digraph "Condition Modeling" {
     pad=0.4;
     nodesep=0.9;
     ranksep=1.1;
+    start=42;
     fontname="Inter, Helvetica, Arial, sans-serif";
     label="Condition Modeling (URPX v0.2.0)";
     labelloc="t";
