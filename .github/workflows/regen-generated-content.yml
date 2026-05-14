@@ -65,7 +65,46 @@ jobs:
           echo "writable=$writable" >> "$GITHUB_OUTPUT"
           echo "Target: $repo@$ref (writable=$writable commit_changes=$commit_changes)"
 
+      - name: Detect generated-only PR head commit
+        id: head-change
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ secrets.URPX_AUTOMATION_TOKEN || github.token }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          files="$(gh api "repos/$GITHUB_REPOSITORY/commits/$HEAD_SHA" --jq '.files[].filename')"
+          generated_only="true"
+
+          if [ -z "$files" ]; then
+            generated_only="false"
+          fi
+
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            case "$file" in
+              documentation/pages/urpx-data-dictionary.md|\
+              documentation/diagrams/dictionary/*|\
+              test-cases/manifest-all.json|\
+              test-cases/manifest-all-schema.json|\
+              test-cases/index.md|\
+              test-cases/*/assets/diagram.svg|\
+              test-cases/*/assets/diagram.dot)
+                ;;
+              *)
+                generated_only="false"
+                ;;
+            esac
+          done <<EOF
+          $files
+          EOF
+
+          echo "generated_only=$generated_only" >> "$GITHUB_OUTPUT"
+          if [ "$generated_only" = "true" ]; then
+            echo "PR head commit only touches generated artifacts; skipping recursive regeneration."
+          fi
+
       - name: Require automation token
+        if: steps.head-change.outputs.generated_only != 'true'
         env:
           URPX_AUTOMATION_TOKEN: ${{ secrets.URPX_AUTOMATION_TOKEN }}
         run: |
@@ -75,6 +114,7 @@ jobs:
           fi
 
       - name: Checkout URPX target branch
+        if: steps.head-change.outputs.generated_only != 'true'
         uses: actions/checkout@v4
         with:
           repository: ${{ steps.target.outputs.repo }}
@@ -84,6 +124,7 @@ jobs:
           fetch-depth: 0
 
       - name: Checkout staging codegen
+        if: steps.head-change.outputs.generated_only != 'true'
         uses: actions/checkout@v4
         with:
           repository: urpx-org/urpx-website-staging
@@ -92,11 +133,13 @@ jobs:
           token: ${{ secrets.URPX_AUTOMATION_TOKEN }}
 
       - name: Setup Python
+        if: steps.head-change.outputs.generated_only != 'true'
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install codegen dependencies
+        if: steps.head-change.outputs.generated_only != 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y graphviz
@@ -104,6 +147,7 @@ jobs:
           python -m pip install -r urpx-website-staging/scripts/codegen/requirements.txt
 
       - name: Run staging-owned standard-content codegen
+        if: steps.head-change.outputs.generated_only != 'true'
         env:
           URPX_REPO: ${{ github.workspace }}/urpx
         run: |
@@ -120,6 +164,7 @@ jobs:
 
       - name: Capture generated diff
         id: diff
+        if: steps.head-change.outputs.generated_only != 'true'
         working-directory: urpx
         run: |
           git status --short
