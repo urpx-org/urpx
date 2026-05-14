@@ -18,212 +18,212 @@
 <!-- Organization -->
 <g id="node1" class="node">
 <title>Organization</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="338.77" cy="-160.18" rx="41.59" ry="18"/>
-<text text-anchor="middle" x="338.77" y="-157.68" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Organization</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="339.57" cy="-160.16" rx="41.59" ry="18"/>
+<text text-anchor="middle" x="339.57" y="-157.66" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Organization</text>
 </g>
 <!-- SystemOperator -->
 <g id="node3" class="node">
 <title>SystemOperator</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="227.2" cy="-112.92" rx="51.61" ry="18"/>
-<text text-anchor="middle" x="227.2" y="-110.42" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">SystemOperator</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="228.03" cy="-112.39" rx="51.61" ry="18"/>
+<text text-anchor="middle" x="228.03" y="-109.89" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">SystemOperator</text>
 </g>
 <!-- Organization&#45;&gt;SystemOperator -->
 <g id="edge3" class="edge">
 <title>Organization&#45;&gt;SystemOperator</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M308.87,-147.51C296.82,-142.41 282.7,-136.43 269.62,-130.89"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="270.9,-127.63 260.33,-126.95 268.17,-134.07 270.9,-127.63"/>
-<text text-anchor="middle" x="269.75" y="-150.8" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">operatesIn</text>
-<text text-anchor="middle" x="269.75" y="-141.8" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M309.68,-147.36C297.53,-142.15 283.27,-136.05 270.1,-130.41"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="271.32,-127.12 260.75,-126.4 268.56,-133.55 271.32,-127.12"/>
+<text text-anchor="middle" x="270.39" y="-150.48" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">operatesIn</text>
+<text text-anchor="middle" x="270.39" y="-141.48" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- OrganizationIdentity -->
 <g id="node5" class="node">
 <title>OrganizationIdentity</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="204.89" cy="-161.17" rx="50.41" ry="21.43"/>
-<text text-anchor="middle" x="204.89" y="-164.17" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Organization</text>
-<text text-anchor="middle" x="204.89" y="-153.17" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Identity</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="205.58" cy="-159.76" rx="50.41" ry="21.43"/>
+<text text-anchor="middle" x="205.58" y="-162.76" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Organization</text>
+<text text-anchor="middle" x="205.58" y="-151.76" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Identity</text>
 </g>
 <!-- Organization&#45;&gt;OrganizationIdentity -->
 <g id="edge1" class="edge">
 <title>Organization&#45;&gt;OrganizationIdentity</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M296.78,-160.49C286.78,-160.56 275.92,-160.64 265.28,-160.72"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="265.16,-157.22 255.18,-160.79 265.21,-164.22 265.16,-157.22"/>
-<text text-anchor="middle" x="261.53" y="-172.2" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasIdentity</text>
-<text text-anchor="middle" x="261.53" y="-163.2" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M297.54,-160.03C287.54,-160 276.67,-159.97 266.02,-159.94"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="265.92,-156.44 255.91,-159.91 265.9,-163.44 265.92,-156.44"/>
+<text text-anchor="middle" x="262.28" y="-171.59" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasIdentity</text>
+<text text-anchor="middle" x="262.28" y="-162.59" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- LocationDataSet -->
 <g id="node8" class="node">
 <title>LocationDataSet</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-dasharray="5,2" cx="371.61" cy="-65.64" rx="52.28" ry="18"/>
-<text text-anchor="middle" x="371.61" y="-63.14" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">LocationDataSet</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-dasharray="5,2" cx="371.95" cy="-65.55" rx="52.28" ry="18"/>
+<text text-anchor="middle" x="371.95" y="-63.05" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">LocationDataSet</text>
 </g>
 <!-- Organization&#45;&gt;LocationDataSet -->
 <g id="edge2" class="edge">
 <title>Organization&#45;&gt;LocationDataSet</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M345.11,-141.95C349.88,-128.22 356.5,-109.15 361.94,-93.51"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="365.33,-94.41 365.3,-83.81 358.71,-92.11 365.33,-94.41"/>
-<text text-anchor="middle" x="317.02" y="-129.33" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasLocationDataSet</text>
-<text text-anchor="middle" x="317.02" y="-120.33" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M345.81,-141.92C350.51,-128.17 357.05,-109.09 362.4,-93.43"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="365.8,-94.33 365.72,-83.73 359.17,-92.06 365.8,-94.33"/>
+<text text-anchor="middle" x="317.61" y="-129.27" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasLocationDataSet</text>
+<text text-anchor="middle" x="317.61" y="-120.27" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- RatePlan -->
 <g id="node9" class="node">
 <title>RatePlan</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-dasharray="5,2" cx="252.36" cy="-68.75" rx="33.61" ry="18"/>
-<text text-anchor="middle" x="252.36" y="-66.25" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">RatePlan</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-dasharray="5,2" cx="253.64" cy="-68.33" rx="33.61" ry="18"/>
+<text text-anchor="middle" x="253.64" y="-65.83" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">RatePlan</text>
 </g>
 <!-- Organization&#45;&gt;RatePlan -->
 <g id="edge4" class="edge">
 <title>Organization&#45;&gt;RatePlan</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M322.92,-143.41C309.44,-129.14 289.92,-108.49 274.82,-92.52"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="277.23,-89.97 267.82,-85.1 272.14,-94.78 277.23,-89.97"/>
-<text text-anchor="middle" x="290.37" y="-111.56" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">publishes</text>
-<text text-anchor="middle" x="290.37" y="-102.56" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M323.81,-143.31C310.32,-128.9 290.75,-107.98 275.7,-91.91"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="278.12,-89.36 268.73,-84.45 273,-94.14 278.12,-89.36"/>
+<text text-anchor="middle" x="291.26" y="-111.21" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">publishes</text>
+<text text-anchor="middle" x="291.26" y="-102.21" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- RegulatoryAuthority -->
 <g id="node2" class="node">
 <title>RegulatoryAuthority</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="353.43" cy="-112.86" rx="45.01" ry="21.43"/>
-<text text-anchor="middle" x="353.43" y="-115.86" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Regulatory</text>
-<text text-anchor="middle" x="353.43" y="-104.86" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Authority</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="354.62" cy="-112.93" rx="45.01" ry="21.43"/>
+<text text-anchor="middle" x="354.62" y="-115.93" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Regulatory</text>
+<text text-anchor="middle" x="354.62" y="-104.93" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Authority</text>
 </g>
 <!-- RegulatoryAuthority&#45;&gt;Organization -->
 <g id="edge7" class="edge">
 <title>RegulatoryAuthority&#45;&gt;Organization</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M346.88,-134.03C346.85,-134.11 346.82,-134.2 346.8,-134.29"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="343.94,-131.69 344.32,-142.28 350.62,-133.76 343.94,-131.69"/>
-<text text-anchor="middle" x="381.84" y="-145.76" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasJurisdictionOver</text>
-<text text-anchor="middle" x="381.84" y="-136.76" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M347.89,-134.06C347.86,-134.14 347.83,-134.23 347.8,-134.32"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="344.96,-131.7 345.26,-142.3 351.63,-133.83 344.96,-131.7"/>
+<text text-anchor="middle" x="382.85" y="-145.79" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasJurisdictionOver</text>
+<text text-anchor="middle" x="382.85" y="-136.79" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- RegulatoryAuthority&#45;&gt;SystemOperator -->
 <g id="edge9" class="edge">
 <title>RegulatoryAuthority&#45;&gt;SystemOperator</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M307.86,-112.88C301.89,-112.88 295.69,-112.88 289.5,-112.89"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="289.13,-109.39 279.14,-112.89 289.14,-116.39 289.13,-109.39"/>
-<text text-anchor="middle" x="298.68" y="-106.48" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">operatesIn</text>
-<text text-anchor="middle" x="298.68" y="-97.48" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M309.27,-112.74C303.04,-112.71 296.54,-112.68 290.07,-112.65"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="289.96,-109.15 279.95,-112.61 289.93,-116.15 289.96,-109.15"/>
+<text text-anchor="middle" x="299.67" y="-106.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">operatesIn</text>
+<text text-anchor="middle" x="299.67" y="-97.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- RegulatoryAuthority&#45;&gt;OrganizationIdentity -->
 <g id="edge6" class="edge">
 <title>RegulatoryAuthority&#45;&gt;OrganizationIdentity</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M315.95,-125.05C297.26,-131.12 274.42,-138.55 254.32,-145.09"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="253.13,-141.8 244.7,-148.22 255.29,-148.45 253.13,-141.8"/>
-<text text-anchor="middle" x="304.63" y="-146.67" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasIdentity</text>
-<text text-anchor="middle" x="304.63" y="-137.67" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M317.01,-124.75C298.41,-130.6 275.7,-137.73 255.65,-144.03"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="254.54,-140.71 246.05,-147.05 256.64,-147.39 254.54,-140.71"/>
+<text text-anchor="middle" x="305.83" y="-145.99" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasIdentity</text>
+<text text-anchor="middle" x="305.83" y="-136.99" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- RegulatoryAuthority&#45;&gt;LocationDataSet -->
 <g id="edge8" class="edge">
 <title>RegulatoryAuthority&#45;&gt;LocationDataSet</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M361.57,-91.73C361.6,-91.65 361.63,-91.56 361.67,-91.48"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="364.41,-94.09 364.74,-83.5 357.88,-91.57 364.41,-94.09"/>
-<text text-anchor="middle" x="325.12" y="-85.21" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasLocationDataSet</text>
-<text text-anchor="middle" x="325.12" y="-76.21" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M362.27,-92.01C362.3,-91.92 362.33,-91.84 362.36,-91.75"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="365.17,-94.28 365.32,-83.68 358.59,-91.87 365.17,-94.28"/>
+<text text-anchor="middle" x="325.82" y="-85.48" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasLocationDataSet</text>
+<text text-anchor="middle" x="325.82" y="-76.48" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- RegulatoryAuthority&#45;&gt;RatePlan -->
 <g id="edge5" class="edge">
 <title>RegulatoryAuthority&#45;&gt;RatePlan</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M344.91,-91.71C333.14,-80.41 312.26,-69.65 293.2,-64.22"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="294,-60.81 283.46,-61.88 292.37,-67.62 294,-60.81"/>
-<text text-anchor="middle" x="302.05" y="-71.57" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">approves</text>
-<text text-anchor="middle" x="302.05" y="-62.57" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M346.17,-91.75C334.44,-80.38 313.59,-69.52 294.54,-63.99"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="295.34,-60.59 284.8,-61.61 293.68,-67.39 295.34,-60.59"/>
+<text text-anchor="middle" x="303.36" y="-71.47" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">approves</text>
+<text text-anchor="middle" x="303.36" y="-62.47" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- RegulatoryAuthority&#45;&gt;RatePlan -->
 <g id="edge10" class="edge">
 <title>RegulatoryAuthority&#45;&gt;RatePlan</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M308.55,-116.17C292.92,-111.17 276.6,-102.89 265.43,-93.87"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="267.67,-91.18 257.98,-86.88 262.88,-96.28 267.67,-91.18"/>
-<text text-anchor="middle" x="278.49" y="-98.62" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">publishes</text>
-<text text-anchor="middle" x="278.49" y="-89.62" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M309.69,-116.03C294.07,-110.95 277.77,-102.59 266.62,-93.52"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="268.87,-90.83 259.2,-86.49 264.05,-95.91 268.87,-90.83"/>
+<text text-anchor="middle" x="279.65" y="-98.37" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">publishes</text>
+<text text-anchor="middle" x="279.65" y="-89.37" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- SystemOperator&#45;&gt;OrganizationIdentity -->
 <g id="edge11" class="edge">
 <title>SystemOperator&#45;&gt;OrganizationIdentity</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M218.89,-130.88C218.85,-130.98 218.8,-131.07 218.76,-131.16"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="215.65,-129.54 214.63,-140.09 222.01,-132.48 215.65,-129.54"/>
-<text text-anchor="middle" x="199.33" y="-142.62" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasIdentity</text>
-<text text-anchor="middle" x="199.33" y="-133.62" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M219.54,-130.3C219.5,-130.38 219.46,-130.47 219.42,-130.55"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="216.71,-128.11 215.59,-138.64 223.03,-131.11 216.71,-128.11"/>
+<text text-anchor="middle" x="199.98" y="-142.03" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasIdentity</text>
+<text text-anchor="middle" x="199.98" y="-133.03" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- SystemOperator&#45;&gt;LocationDataSet -->
 <g id="edge12" class="edge">
 <title>SystemOperator&#45;&gt;LocationDataSet</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M265.14,-100.5C283.15,-94.6 304.85,-87.5 323.95,-81.24"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="325.26,-84.5 333.67,-78.06 323.08,-77.85 325.26,-84.5"/>
-<text text-anchor="middle" x="258.05" y="-84.47" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasLocationDataSet</text>
-<text text-anchor="middle" x="258.05" y="-75.47" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M265.84,-100.08C283.71,-94.26 305.24,-87.26 324.22,-81.08"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="325.46,-84.36 333.89,-77.93 323.29,-77.7 325.46,-84.36"/>
+<text text-anchor="middle" x="258.53" y="-84.18" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasLocationDataSet</text>
+<text text-anchor="middle" x="258.53" y="-75.18" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- SystemOperator&#45;&gt;RatePlan -->
 <g id="edge13" class="edge">
 <title>SystemOperator&#45;&gt;RatePlan</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M237.29,-95.21C237.34,-95.11 237.39,-95.02 237.45,-94.93"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="240.52,-96.6 242.43,-86.18 234.44,-93.13 240.52,-96.6"/>
-<text text-anchor="middle" x="220.37" y="-106.67" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">publishes</text>
-<text text-anchor="middle" x="220.37" y="-97.67" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M238.3,-94.72C238.35,-94.63 238.41,-94.54 238.46,-94.44"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="241.54,-96.12 243.54,-85.71 235.48,-92.6 241.54,-96.12"/>
+<text text-anchor="middle" x="221.38" y="-88.18" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">publishes</text>
+<text text-anchor="middle" x="221.38" y="-79.18" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- EnergyServiceProvider -->
 <g id="node4" class="node">
 <title>EnergyServiceProvider</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="228.92" cy="-21.49" rx="56.64" ry="21.43"/>
-<text text-anchor="middle" x="228.92" y="-24.49" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">EnergyService</text>
-<text text-anchor="middle" x="228.92" y="-13.49" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Provider</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="230.14" cy="-21.03" rx="56.64" ry="21.43"/>
+<text text-anchor="middle" x="230.14" y="-24.03" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">EnergyService</text>
+<text text-anchor="middle" x="230.14" y="-13.03" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Provider</text>
 </g>
 <!-- EnergyServiceProvider&#45;&gt;SystemOperator -->
 <g id="edge16" class="edge">
 <title>EnergyServiceProvider&#45;&gt;SystemOperator</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M228.51,-43.16C228.28,-55.58 227.98,-71.3 227.73,-84.68"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="224.23,-84.73 227.54,-94.79 231.23,-84.86 224.23,-84.73"/>
-<text text-anchor="middle" x="208.62" y="-57.52" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">operatesIn</text>
-<text text-anchor="middle" x="208.62" y="-48.52" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M229.64,-42.68C229.35,-55.09 228.99,-70.8 228.68,-84.17"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="225.18,-84.2 228.45,-94.28 232.18,-84.36 225.18,-84.2"/>
+<text text-anchor="middle" x="209.66" y="-57.02" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">operatesIn</text>
+<text text-anchor="middle" x="209.66" y="-48.02" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- EnergyServiceProvider&#45;&gt;OrganizationIdentity -->
 <g id="edge14" class="edge">
 <title>EnergyServiceProvider&#45;&gt;OrganizationIdentity</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M225.27,-42.71C221.28,-65.88 214.85,-103.24 210.28,-129.8"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="206.82,-129.3 208.57,-139.75 213.72,-130.49 206.82,-129.3"/>
-<text text-anchor="middle" x="198.27" y="-79.86" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasIdentity</text>
-<text text-anchor="middle" x="198.27" y="-70.86" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M226.36,-42.41C222.29,-65.39 215.78,-102.15 211.13,-128.41"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="207.62,-128.14 209.33,-138.6 214.52,-129.36 207.62,-128.14"/>
+<text text-anchor="middle" x="199.24" y="-79.01" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasIdentity</text>
+<text text-anchor="middle" x="199.24" y="-70.01" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- EnergyServiceProvider&#45;&gt;LocationDataSet -->
 <g id="edge15" class="edge">
 <title>EnergyServiceProvider&#45;&gt;LocationDataSet</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M272.9,-35.1C288.63,-39.97 306.45,-45.48 322.59,-50.47"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="321.79,-53.89 332.38,-53.5 323.86,-47.2 321.79,-53.89"/>
-<text text-anchor="middle" x="334.24" y="-36.39" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasLocationDataSet</text>
-<text text-anchor="middle" x="334.24" y="-27.39" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M273.84,-34.75C289.48,-39.66 307.19,-45.22 323.23,-50.25"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="322.37,-53.65 332.96,-53.31 324.46,-46.97 322.37,-53.65"/>
+<text text-anchor="middle" x="335.03" y="-36.1" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasLocationDataSet</text>
+<text text-anchor="middle" x="335.03" y="-27.1" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- EnergyServiceProvider&#45;&gt;RatePlan -->
 <g id="edge17" class="edge">
 <title>EnergyServiceProvider&#45;&gt;RatePlan</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M239.27,-42.36C239.31,-42.45 239.36,-42.54 239.4,-42.64"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="236.1,-43.84 243.67,-51.24 242.37,-40.73 236.1,-43.84"/>
-<text text-anchor="middle" x="256.34" y="-54.1" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">publishes</text>
-<text text-anchor="middle" x="256.34" y="-45.1" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M240.52,-41.92C240.56,-42.01 240.61,-42.1 240.66,-42.19"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="237.35,-43.41 244.94,-50.81 243.62,-40.3 237.35,-43.41"/>
+<text text-anchor="middle" x="257.59" y="-53.65" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">publishes</text>
+<text text-anchor="middle" x="257.59" y="-44.65" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- OrganizationIdentifier -->
 <g id="node6" class="node">
 <title>OrganizationIdentifier</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="175.23" cy="-211.75" rx="50.41" ry="21.43"/>
-<text text-anchor="middle" x="175.23" y="-214.75" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Organization</text>
-<text text-anchor="middle" x="175.23" y="-203.75" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Identifier</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="175.57" cy="-210.23" rx="50.41" ry="21.43"/>
+<text text-anchor="middle" x="175.57" y="-213.23" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Organization</text>
+<text text-anchor="middle" x="175.57" y="-202.23" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Identifier</text>
 </g>
 <!-- OrganizationIdentity&#45;&gt;OrganizationIdentifier -->
 <g id="edge18" class="edge">
 <title>OrganizationIdentity&#45;&gt;OrganizationIdentifier</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M192.65,-182.03C192.6,-182.12 192.55,-182.21 192.49,-182.31"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="189.47,-180.53 187.44,-190.93 195.51,-184.07 189.47,-180.53"/>
-<text text-anchor="middle" x="214.57" y="-193.77" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasIdentifier</text>
-<text text-anchor="middle" x="214.57" y="-184.77" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M193.2,-180.58C193.15,-180.68 193.09,-180.77 193.04,-180.86"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="190.02,-179.08 187.92,-189.46 196.04,-182.66 190.02,-179.08"/>
+<text text-anchor="middle" x="215.12" y="-192.32" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasIdentifier</text>
+<text text-anchor="middle" x="215.12" y="-183.32" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- OrganizationName -->
 <g id="node7" class="node">
 <title>OrganizationName</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="57.92" cy="-241.97" rx="57.88" ry="18"/>
-<text text-anchor="middle" x="57.92" y="-239.47" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">OrganizationName</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="57.71" cy="-238.53" rx="57.88" ry="18"/>
+<text text-anchor="middle" x="57.71" y="-236.03" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">OrganizationName</text>
 </g>
 <!-- OrganizationIdentity&#45;&gt;OrganizationName -->
 <g id="edge19" class="edge">
 <title>OrganizationIdentity&#45;&gt;OrganizationName</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M174.08,-178.1C151.24,-190.66 119.99,-207.85 95.65,-221.23"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="93.77,-218.27 86.69,-226.15 97.14,-224.4 93.77,-218.27"/>
-<text text-anchor="middle" x="117.36" y="-193.27" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasName</text>
-<text text-anchor="middle" x="117.36" y="-184.27" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">1..1</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M174.22,-176.47C151.37,-188.64 120.28,-205.2 95.97,-218.15"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="94.2,-215.13 87.02,-222.92 97.49,-221.31 94.2,-215.13"/>
+<text text-anchor="middle" x="117.6" y="-190.91" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasName</text>
+<text text-anchor="middle" x="117.6" y="-181.91" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">1..1</text>
 </g>
 <!-- leg_class -->
 <g id="node10" class="node">
