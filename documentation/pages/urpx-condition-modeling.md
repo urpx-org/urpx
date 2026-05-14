@@ -5,7 +5,7 @@
 **Status:** Adopted for URPX 0.2.0  
 **Scope:** Structured condition-expression modeling in eligibility, applicability, and related contexts  
 **Ontology Source:** [`urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)  
-**SHACL Source:** [`urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+**SHACL Source:** [`urpx-shacl.ttl`](/ontology/urpx-shacl.ttl)
 
 ---
 

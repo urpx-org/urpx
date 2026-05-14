@@ -15,7 +15,7 @@
 
 **Comprehensive guide to URPX interoperability, multi-standard integration, and semantic mapping.**
 
-[← Back to Index](../index.md)
+[← Back to Index](/docs/getting-started/overview)
 
 ---
 
@@ -330,4 +330,4 @@ gb:KindCategory_Energy a skos:Concept ;
 
 ---
 
-[← Back to Index](../index.md) | [Semantic Web Guide](urpx-semantic-web-guide.md)
+[← Back to Index](/docs/getting-started/overview) | [Semantic Web Guide](urpx-semantic-web-guide.md)

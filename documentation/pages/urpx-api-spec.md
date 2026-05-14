@@ -9,7 +9,7 @@
 **Status:** Requirements Phase  
 **Last Updated:** 2026-04-29
 
-[← Back to Index](../index.md) | [Overview](urpx-overview.md) | [URPX Interoperability & Standards Integration](urpx-interoperability.md)
+[← Back to Index](/docs/getting-started/overview) | [Overview](urpx-overview.md) | [URPX Interoperability & Standards Integration](urpx-interoperability.md)
 
 ---
 
@@ -27,9 +27,7 @@ This document provides initial pre-draft requirements, use cases, and example AP
 
 1. [Requirements Overview](#requirements-overview)
 2. [Use Cases](#use-cases)
-3. [Example API Calls](#example-api-calls)
-4. [Sequence Diagrams](#sequence-diagrams)
-5. [Next Steps](#next-steps)
+3. [Next Steps](#next-steps)
 
 ---
 
@@ -458,4 +456,4 @@ WHERE {
 
 *API specification under development for URPX v0.2.0. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
 
-[← Back to Index](../index.md)
+[← Back to Index](/docs/getting-started/overview)

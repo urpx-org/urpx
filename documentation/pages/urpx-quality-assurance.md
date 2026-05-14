@@ -11,7 +11,7 @@
 
 **Validation and quality standards for URPX v0.2.0 rate plan data**
 
-[← Back to Index](../index.md)
+[← Back to Index](/docs/getting-started/overview)
 
 ---
 
@@ -62,7 +62,7 @@ URPX v0.2.0 uses a core ontology file:
 
 ### SHACL Validation Files
 
-- [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl) - Unified SHACL validation shapes for the current draft ontology
+- [`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl) - Unified SHACL validation shapes for the current draft ontology
 
 ### Critical SHACL Constraints
 
@@ -332,4 +332,4 @@ URPX v0.2.0 uses a core ontology file:
 
 *Quality assurance guidelines for URPX v0.2.0. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
 
-[← Back to Index](../index.md)
+[← Back to Index](/docs/getting-started/overview)
