@@ -11,7 +11,7 @@
 
 ## Understanding the Utility Rate Plan Exchange Standard
 
-[← Back to Index](../index.md)
+[← Back to Index](/docs/getting-started/overview)
 
 ### Introduction
 
@@ -249,7 +249,7 @@ ex:DemandResponseProgram a urpx:ProgramEnrollment ;
 
 ### Data Quality & Validation
 
-URPX includes SHACL (Shapes Constraint Language) validation shapes in a unified file ([`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl), pre-draft v0.1.1):
+URPX includes SHACL (Shapes Constraint Language) validation shapes in a unified file ([`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl), pre-draft v0.2.0):
 
 **Core Validation** — Rate plan structure integrity, price consistency rules, temporal constraint validation
 
@@ -319,4 +319,4 @@ The modular design, industry alignment, and robust validation framework make URP
 
 ---
 
-[← Back to Index](../index.md) | [Next: Tutorial →](urpx-tutorial.md)
+[← Back to Index](/docs/getting-started/overview) | [Next: Tutorial →](urpx-tutorial.md)

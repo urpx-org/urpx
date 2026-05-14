@@ -10,7 +10,7 @@
 
 **A beginner-friendly introduction to semantic web technologies for the URPX working group**
 
-[← Back to Index](../index.md)
+[← Back to Index](/docs/getting-started/overview)
 
 ---
 
@@ -498,4 +498,4 @@ WHERE {
 ---
 
 
-[← Back to Index](../index.md) | [URPX Interoperability Guide →](urpx-interoperability.md)
+[← Back to Index](/docs/getting-started/overview) | [URPX Interoperability Guide →](urpx-interoperability.md)

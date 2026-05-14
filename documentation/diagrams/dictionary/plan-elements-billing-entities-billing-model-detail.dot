@@ -1,0 +1,121 @@
+digraph "BillingModel — Pricing References" {
+    rankdir=TB;
+    bgcolor="white";
+    pad=0.4;
+    nodesep=0.5;
+    ranksep=0.9;
+    fontname="Inter, Helvetica, Arial, sans-serif";
+    label="BillingModel — Pricing References (URPX v0.2.0)";
+    labelloc="t";
+    fontsize=14;
+    fontcolor="#1a365d";
+    node [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=10, style=filled, fontcolor="#1a365d"];
+    edge [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=8, fontcolor="#1a365d"];
+
+    // Section classes
+    BillingModel [
+        label="BillingModel"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    BillingCycle [
+        label="BillingCycle"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    Ledger [
+        label="Ledger"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    ServiceTier [
+        label="ServiceTier"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    ServiceTiers [
+        label="ServiceTiers"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+
+    // Cross-section references
+    MetricInput [
+        label="MetricInput"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    PriceDefinition [
+        label="PriceDefinition"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    ProfileAlternative [
+        label="ProfileAlternative"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    Season [
+        label="Season"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    ServiceBracket [
+        label="ServiceBracket"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    TOUSchedule [
+        label="TOUSchedule"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+
+    // Object property edges
+    BillingModel -> Ledger [
+        label="hasLedger\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    BillingModel -> PriceDefinition [
+        label="hasPriceDefinition\n1..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    BillingModel -> ServiceTiers [
+        label="hasServiceTiers\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    BillingModel -> TOUSchedule [
+        label="hasTOUSchedule\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Ledger -> BillingCycle [
+        label="hasBillingCycle\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Ledger -> MetricInput [
+        label="referencesMetricInput\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ServiceTier -> ServiceBracket [
+        label="hasServiceBracket\n1..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ServiceTiers -> Season [
+        label="appliesInSeason\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ServiceTiers -> ServiceTier [
+        label="hasServiceTier\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ServiceTiers -> MetricInput [
+        label="referencesMetricInput\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ServiceTiers -> ProfileAlternative [
+        label="referencesProfileAlternative\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+
+    // Layout-specified rank groups
+    { rank=same; BillingModel; }
+    { rank=same; Ledger; ServiceTiers; }
+    { rank=same; BillingCycle; ServiceTier; }
+
+    subgraph cluster_legend {
+        label="Legend";
+        fontname="Inter, Helvetica, Arial, sans-serif";
+        fontsize=11;
+        fontcolor="#1a365d";
+        style=rounded;
+        color="#cccccc";
+        bgcolor="#f8f8f8";
+        margin=12;
+
+        leg_class [label="OWL Class\n(this section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
+        leg_xref [label="OWL Class\n(other section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"];
+        leg_src [label=" ", shape=point, width=0.01];
+        leg_tgt1 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+        leg_tgt2 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt2 [label="cross-section ref", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+    }
+}

@@ -2,8 +2,9 @@ digraph "Condition Modeling" {
     rankdir=TB;
     bgcolor="white";
     pad=0.4;
-    nodesep=0.5;
-    ranksep=0.8;
+    nodesep=0.9;
+    ranksep=1.1;
+    start=42;
     fontname="Inter, Helvetica, Arial, sans-serif";
     label="Condition Modeling (URPX v0.2.0)";
     labelloc="t";
@@ -17,14 +18,6 @@ digraph "Condition Modeling" {
         label="EligibilityRule"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
-    GeneralRule [
-        label="GeneralRule"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
-    ];
-    ConditionExpression [
-        label="Condition\nExpression"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
-    ];
     ApplicabilityRule [
         label="ApplicabilityRule"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
@@ -33,93 +26,19 @@ digraph "Condition Modeling" {
         label="ApplicabilityGroup"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
-    BooleanOperationNode [
-        label="BooleanOperation\nNode"
+    ConditionExpression [
+        label="Condition\nExpression"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
-    ComparisonNode [
-        label="ComparisonNode"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
-    ];
-    OperationNode [
-        label="OperationNode"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
-    ];
-    ConditionNode [
-        label="ConditionNode"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
-    ];
-    CustomOperandNode [
-        label="CustomOperandNode"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
-    ];
-    DatatypeOperandNode [
-        label="DatatypeOperand\nNode"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
-    ];
-    ObjectOperandNode [
-        label="ObjectOperandNode"
+    GeneralRule [
+        label="GeneralRule"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
 
     // Cross-section references
-    County [
-        label="County"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
-    ];
     DataSourceReference [
         label="DataSource\nReference"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
-    ];
-    Municipality [
-        label="Municipality"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
-    ];
-    ServiceTerritory [
-        label="ServiceTerritory"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
-    ];
-    State [
-        label="State"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
-    ];
-
-    // Per-class datatype nodes
-    GeneralRule_dt_string [
-        label="xsd:string"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    ApplicabilityRule_dt_gMonth [
-        label="xsd:gMonth"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    ApplicabilityGroup_dt_string [
-        label="xsd:string"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    BooleanOperationNode_dt_string [
-        label="xsd:string"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    ComparisonNode_dt_string [
-        label="xsd:string"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    CustomOperandNode_dt_boolean [
-        label="xsd:boolean"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    CustomOperandNode_dt_string [
-        label="xsd:string"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    DatatypeOperandNode_dt_boolean [
-        label="xsd:boolean"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    DatatypeOperandNode_dt_dateTime [
-        label="xsd:dateTime"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
     ];
 
     // Object property edges
@@ -129,86 +48,18 @@ digraph "Condition Modeling" {
     EligibilityRule -> DataSourceReference [
         label="hasDataSourceReference\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
+    ApplicabilityRule -> ConditionExpression [
+        label="hasConditionExpression\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ApplicabilityGroup -> ConditionExpression [
+        label="hasConditionExpression\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
     GeneralRule -> ApplicabilityRule [
         label="hasApplicabilityRule\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     GeneralRule -> DataSourceReference [
         label="hasDataSourceReference\n1..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
-    ApplicabilityRule -> ConditionExpression [
-        label="hasConditionExpression\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-    ApplicabilityGroup -> County [
-        label="appliesInCounty\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-    ApplicabilityGroup -> Municipality [
-        label="appliesInMunicipality\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-    ApplicabilityGroup -> ServiceTerritory [
-        label="appliesInServiceTerritory\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-    ApplicabilityGroup -> State [
-        label="appliesInState\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-    ApplicabilityGroup -> ConditionExpression [
-        label="hasConditionExpression\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-
-    // Datatype property edges
-    GeneralRule -> GeneralRule_dt_string [
-        label="generalRuleID\n1..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    ApplicabilityRule -> ApplicabilityRule_dt_gMonth [
-        label="month\n0..*", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    ApplicabilityGroup -> ApplicabilityGroup_dt_string [
-        label="applicabilityLogic\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    ApplicabilityGroup -> ApplicabilityGroup_dt_string [
-        label="serviceClassPattern\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    BooleanOperationNode -> BooleanOperationNode_dt_string [
-        label="logicExpression\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    ComparisonNode -> ComparisonNode_dt_string [
-        label="logicExpression\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    CustomOperandNode -> CustomOperandNode_dt_boolean [
-        label="booleanValue\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    CustomOperandNode -> CustomOperandNode_dt_string [
-        label="customConditionProperty\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    DatatypeOperandNode -> DatatypeOperandNode_dt_boolean [
-        label="booleanValue\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    DatatypeOperandNode -> DatatypeOperandNode_dt_dateTime [
-        label="dateTimeValue\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-
-    // Layout-specified rank groups
-    { rank=same; EligibilityRule; GeneralRule; ApplicabilityRule; }
-    EligibilityRule -> GeneralRule [style=invis];
-    GeneralRule -> ApplicabilityRule [style=invis];
-    { rank=same; ConditionExpression; }
-    { rank=same; BooleanOperationNode; ComparisonNode; OperationNode; }
-    BooleanOperationNode -> ComparisonNode [style=invis];
-    ComparisonNode -> OperationNode [style=invis];
-    { rank=same; ConditionNode; }
-    { rank=same; CustomOperandNode; DatatypeOperandNode; ObjectOperandNode; }
-    CustomOperandNode -> DatatypeOperandNode [style=invis];
-    DatatypeOperandNode -> ObjectOperandNode [style=invis];
-    { rank=same; ApplicabilityGroup; }
 
     subgraph cluster_legend {
         label="Legend";
@@ -222,13 +73,10 @@ digraph "Condition Modeling" {
 
         leg_class [label="OWL Class\n(this section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
         leg_xref [label="OWL Class\n(other section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"];
-        leg_dt [label="XSD Datatype", shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"];
         leg_src [label=" ", shape=point, width=0.01];
         leg_tgt1 [label=" ", shape=point, width=0.01];
-        leg_tgt2 [label=" ", shape=point, width=0.01];
         leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+        leg_tgt2 [label=" ", shape=point, width=0.01];
         leg_src -> leg_tgt2 [label="cross-section ref", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
-        leg_tgt3 [label=" ", shape=point, width=0.01];
-        leg_src -> leg_tgt3 [label="datatype property", style=dashed, color="#22c55e", fontcolor="#166534", penwidth=1.5];
     }
 }

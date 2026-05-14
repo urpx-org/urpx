@@ -2,8 +2,9 @@ digraph "Temporal & Scheduling Entities" {
     rankdir=TB;
     bgcolor="white";
     pad=0.4;
-    nodesep=0.5;
-    ranksep=0.9;
+    nodesep=0.8;
+    ranksep=1.0;
+    start=42;
     fontname="Inter, Helvetica, Arial, sans-serif";
     label="Temporal & Scheduling Entities (URPX v0.2.0)";
     labelloc="t";
@@ -64,62 +65,12 @@ digraph "Temporal & Scheduling Entities" {
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
     ];
 
-    // Per-class datatype nodes
-    Season_dt_date [
-        label="xsd:date"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    Season_dt_dateTime [
-        label="xsd:dateTime"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    TOUTier_dt_string [
-        label="xsd:string"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    TOUTier_dt_integer [
-        label="xsd:integer"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    TOUPeriod_dt_date [
-        label="xsd:date"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    TOUPeriod_dt_dateTime [
-        label="xsd:dateTime"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    TimeBracket_dt_time [
-        label="xsd:time"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    TimeBracket_dt_boolean [
-        label="xsd:boolean"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    Holiday_dt_date [
-        label="xsd:date"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    Holiday_dt_string [
-        label="xsd:string"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    LocationDataSet_dt_string [
-        label="xsd:string"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    DynamicPricing_dt_decimal [
-        label="xsd:decimal"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-
     // Object property edges
     TOUSchedule -> HolidayCalendar [
         label="hasCalendar\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     TOUSchedule -> TOUTier [
-        label="hasTOUTier\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=10
+        label="hasTOUTier\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     TOUSchedule -> MetricInput [
         label="referencesMetricInput\n1..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
@@ -128,10 +79,10 @@ digraph "Temporal & Scheduling Entities" {
         label="referencesProfileAlternative\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     TOUTier -> TOUPeriod [
-        label="hasTOUPeriod\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=10
+        label="hasTOUPeriod\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     TOUPeriod -> TimeBracket [
-        label="hasTimeBracket\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=8
+        label="hasTimeBracket\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     TimeBracket -> Season [
         label="appliesInSeason\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
@@ -146,71 +97,6 @@ digraph "Temporal & Scheduling Entities" {
         label="hasPriceUpdateRule\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
 
-    // Datatype property edges
-    Season -> Season_dt_date [
-        label="endDate\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    Season -> Season_dt_dateTime [
-        label="endDateTime\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    TOUTier -> TOUTier_dt_string [
-        label="tierSourceName\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    TOUTier -> TOUTier_dt_integer [
-        label="touTierNumber\n1..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    TOUPeriod -> TOUPeriod_dt_date [
-        label="endDate\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    TOUPeriod -> TOUPeriod_dt_dateTime [
-        label="endDateTime\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    TimeBracket -> TimeBracket_dt_time [
-        label="endTime\n1..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    TimeBracket -> TimeBracket_dt_boolean [
-        label="includeHolidays\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    Holiday -> Holiday_dt_date [
-        label="holidayDate\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    Holiday -> Holiday_dt_string [
-        label="holidayName\n1..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    LocationDataSet -> LocationDataSet_dt_string [
-        label="daylightSavingRules\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    DynamicPricing -> DynamicPricing_dt_decimal [
-        label="priceCeiling\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    DynamicPricing -> DynamicPricing_dt_decimal [
-        label="priceFloor\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-
-    // Layout-specified rank groups
-    { rank=same; TOUSchedule; }
-    { rank=same; Season; TOUTier; DynamicPricing; }
-    Season -> TOUTier [style=invis];
-    TOUTier -> DynamicPricing [style=invis];
-    { rank=same; TOUPeriod; HolidayCalendar; }
-    TOUPeriod -> HolidayCalendar [style=invis];
-    { rank=same; TimeBracket; Holiday; }
-    TimeBracket -> Holiday [style=invis];
-    { rank=same; LocationDataSet; }
-
     subgraph cluster_legend {
         label="Legend";
         fontname="Inter, Helvetica, Arial, sans-serif";
@@ -223,13 +109,10 @@ digraph "Temporal & Scheduling Entities" {
 
         leg_class [label="OWL Class\n(this section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
         leg_xref [label="OWL Class\n(other section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"];
-        leg_dt [label="XSD Datatype", shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"];
         leg_src [label=" ", shape=point, width=0.01];
         leg_tgt1 [label=" ", shape=point, width=0.01];
-        leg_tgt2 [label=" ", shape=point, width=0.01];
         leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+        leg_tgt2 [label=" ", shape=point, width=0.01];
         leg_src -> leg_tgt2 [label="cross-section ref", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
-        leg_tgt3 [label=" ", shape=point, width=0.01];
-        leg_src -> leg_tgt3 [label="datatype property", style=dashed, color="#22c55e", fontcolor="#166534", penwidth=1.5];
     }
 }

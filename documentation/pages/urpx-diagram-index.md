@@ -8,7 +8,7 @@
 **Version:** 0.2.0 (Pre-draft)
 **Last Updated:** 2026-04-29
 
-[← Back to Index](../index.md)
+[← Back to Index](/docs/getting-started/overview)
 
 ---
 
@@ -78,4 +78,4 @@ This index lists the diagram assets currently present in the repository and the 
 
 ---
 
-[← Back to Index](../index.md)
+[← Back to Index](/docs/getting-started/overview)
