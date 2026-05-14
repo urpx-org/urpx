@@ -80,8 +80,8 @@
 <title>TOUSchedule&#45;&gt;ProfileAlternative</title>
 <path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M195.8,-118.6C212.71,-104.75 237.18,-84.71 256.11,-69.2"/>
 <polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="258.33,-71.9 263.85,-62.86 253.89,-66.49 258.33,-71.9"/>
-<text text-anchor="middle" x="275.46" y="-87.5" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">referencesProfileAlternative</text>
-<text text-anchor="middle" x="275.46" y="-78.5" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..1</text>
+<text text-anchor="middle" x="275.46" y="-105.5" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">referencesProfileAlternative</text>
+<text text-anchor="middle" x="275.46" y="-96.5" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..1</text>
 </g>
 <!-- TOUPeriod -->
 <g id="node4" class="node">
@@ -150,22 +150,22 @@
 <!-- DynamicPricing -->
 <g id="node9" class="node">
 <title>DynamicPricing</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="310.69" cy="-112.88" rx="50.75" ry="18"/>
-<text text-anchor="middle" x="310.69" y="-110.38" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">DynamicPricing</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="310.69" cy="-138.88" rx="50.75" ry="18"/>
+<text text-anchor="middle" x="310.69" y="-136.38" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">DynamicPricing</text>
 </g>
 <!-- PriceUpdateRule -->
 <g id="node11" class="node">
 <title>PriceUpdateRule</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-dasharray="5,2" cx="423.58" cy="-96.01" rx="53.64" ry="18"/>
-<text text-anchor="middle" x="423.58" y="-93.51" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">PriceUpdateRule</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-dasharray="5,2" cx="423.58" cy="-122.01" rx="53.64" ry="18"/>
+<text text-anchor="middle" x="423.58" y="-119.51" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">PriceUpdateRule</text>
 </g>
 <!-- DynamicPricing&#45;&gt;PriceUpdateRule -->
 <g id="edge10" class="edge">
 <title>DynamicPricing&#45;&gt;PriceUpdateRule</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M357.58,-105.87C359.85,-105.53 362.13,-105.19 364.42,-104.85"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="365.09,-108.29 374.46,-103.35 364.05,-101.37 365.09,-108.29"/>
-<text text-anchor="middle" x="398" y="-116.96" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasPriceUpdateRule</text>
-<text text-anchor="middle" x="398" y="-107.96" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M357.58,-131.87C359.85,-131.53 362.13,-131.19 364.42,-130.85"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="365.09,-134.29 374.46,-129.35 364.05,-127.37 365.09,-134.29"/>
+<text text-anchor="middle" x="398" y="-142.96" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasPriceUpdateRule</text>
+<text text-anchor="middle" x="398" y="-133.96" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- leg_class -->
 <g id="node13" class="node">
