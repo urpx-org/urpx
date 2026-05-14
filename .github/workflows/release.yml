@@ -3,7 +3,7 @@ name: GitHub Release
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
   workflow_dispatch:
     inputs:
       tag:
@@ -55,12 +55,12 @@ jobs:
           echo "Using checkout ref: $checkout_ref"
 
       - name: Checkout urpx (this repo)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ steps.release.outputs.checkout_ref }}
 
       - name: Checkout urpx-website-staging (for release helper)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: urpx-org/urpx-website-staging
           path: .urpx-website
@@ -90,7 +90,7 @@ jobs:
             > release-body.md
 
       - name: Create GitHub release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ steps.release.outputs.tag }}
           target_commitish: ${{ steps.release.outputs.checkout_ref }}

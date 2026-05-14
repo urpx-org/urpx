@@ -115,7 +115,7 @@ jobs:
 
       - name: Checkout URPX target branch
         if: steps.head-change.outputs.generated_only != 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: ${{ steps.target.outputs.repo }}
           ref: ${{ steps.target.outputs.ref }}
@@ -125,7 +125,7 @@ jobs:
 
       - name: Checkout staging codegen
         if: steps.head-change.outputs.generated_only != 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: urpx-org/urpx-website-staging
           ref: main
@@ -134,9 +134,9 @@ jobs:
 
       - name: Setup Python
         if: steps.head-change.outputs.generated_only != 'true'
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install codegen dependencies
         if: steps.head-change.outputs.generated_only != 'true'
@@ -156,7 +156,7 @@ jobs:
 
       - name: Upload pending dictionary classifications
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dictionary-config-pending
           path: urpx-website-staging/scripts/codegen/config/dictionary-config-pending.yaml
@@ -177,7 +177,7 @@ jobs:
 
       - name: Upload generated diff
         if: steps.diff.outputs.changed == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: generated-content-diff
           path: generated-content.diff
