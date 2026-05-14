@@ -303,9 +303,9 @@ Reviewers should verify:
 ## 8. References
 
 ### Related Documents
-- [URPX Syntax Guidelines](./urpx-syntax-guidelines.md) - Turtle syntax and formatting
-- [URPX Overview](./urpx-overview.md) - Project overview and architecture
-- [URPX Quality Assurance](./urpx-quality-assurance.md) - Testing and validation
+- [URPX Syntax Guidelines](/docs/technical-reference/syntax-guidelines) - Turtle syntax and formatting
+- [URPX Overview](/docs/getting-started/overview) - Project overview and architecture
+- [URPX Quality Assurance](/docs/technical-reference/quality-assurance) - Testing and validation
 
 ### External Standards
 - [OWL 2 Web Ontology Language](https://www.w3.org/TR/owl2-overview/)

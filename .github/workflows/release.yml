@@ -4,6 +4,14 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to publish, for example v0.2.0
+        required: true
+      checkout_ref:
+        description: Ref to checkout for release notes. Defaults to the tag.
+        required: false
 
 permissions:
   contents: write
@@ -12,20 +20,58 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      - name: Resolve release inputs
+        id: release
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_TAG: ${{ inputs.tag }}
+          INPUT_CHECKOUT_REF: ${{ inputs.checkout_ref }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            tag="$INPUT_TAG"
+            checkout_ref="${INPUT_CHECKOUT_REF:-$tag}"
+          else
+            tag="$REF_NAME"
+            checkout_ref="$REF_NAME"
+          fi
+
+          if [ -z "$tag" ]; then
+            echo "::error::Release tag is required."
+            exit 1
+          fi
+
+          case "$tag" in
+            v*) ;;
+            *)
+              echo "::error::Release tag must start with v, for example v0.2.0."
+              exit 1
+              ;;
+          esac
+
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "checkout_ref=$checkout_ref" >> "$GITHUB_OUTPUT"
+          echo "Using release tag: $tag"
+          echo "Using checkout ref: $checkout_ref"
+
       - name: Checkout urpx (this repo)
         uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.release.outputs.checkout_ref }}
 
-      - name: Checkout urpx-website (for codegen scripts)
+      - name: Checkout urpx-website-staging (for release helper)
         uses: actions/checkout@v4
         with:
-          repository: urpx-org/urpx-website
+          repository: urpx-org/urpx-website-staging
           path: .urpx-website
           ref: main
+          token: ${{ secrets.URPX_AUTOMATION_TOKEN || github.token }}
 
       - name: Resolve release notes path
         id: notes
         run: |
-          version="${GITHUB_REF_NAME#v}"
+          version="${{ steps.release.outputs.tag }}"
+          version="${version#v}"
           notes="documentation/pages/urpx-release-notes-v${version}.md"
           if [ ! -f "$notes" ]; then
             echo "::error::Release notes file not found: $notes"
@@ -39,13 +85,15 @@ jobs:
           python3 .urpx-website/scripts/codegen/strip-release-notes-chrome.py \
             "${{ steps.notes.outputs.path }}" \
             --repo-url "https://github.com/${{ github.repository }}" \
-            --ref "${{ github.ref_name }}" \
+            --ref "${{ steps.release.outputs.tag }}" \
             --base-path documentation/pages \
             > release-body.md
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
-          name: ${{ github.ref_name }}
+          tag_name: ${{ steps.release.outputs.tag }}
+          target_commitish: ${{ steps.release.outputs.checkout_ref }}
+          name: ${{ steps.release.outputs.tag }}
           body_path: release-body.md
-          prerelease: ${{ contains(github.ref_name, '-') }}
+          prerelease: ${{ contains(steps.release.outputs.tag, '-') }}

@@ -21,48 +21,15 @@ digraph "Metric & Measurement Entities" {
         label="MetricSpecification"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
-    CalculationMethod [
-        label="CalculationMethod"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
-    ];
-
-    // Per-class datatype nodes
-    MetricSpecification_dt_duration [
-        label="xsd:duration"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    CalculationMethod_dt_string [
-        label="xsd:string"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
-    CalculationMethod_dt_duration [
-        label="xsd:duration"
-        shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"
-    ];
 
     // Object property edges
     MetricInput -> MetricSpecification [
         label="hasMetricSpecification\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
 
-    // Datatype property edges
-    MetricSpecification -> MetricSpecification_dt_duration [
-        label="intervalDuration\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    CalculationMethod -> CalculationMethod_dt_string [
-        label="calculationFormula\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-    CalculationMethod -> CalculationMethod_dt_duration [
-        label="intervalDuration\n0..1", color="#22c55e", fontcolor="#166534",
-        style=dashed, penwidth=1.5
-    ];
-
     // Layout-specified rank groups
     { rank=same; MetricInput; }
-    { rank=same; MetricSpecification; CalculationMethod; }
-    MetricSpecification -> CalculationMethod [style=invis];
+    { rank=same; MetricSpecification; }
 
     subgraph cluster_legend {
         label="Legend";
@@ -75,14 +42,8 @@ digraph "Metric & Measurement Entities" {
         margin=12;
 
         leg_class [label="OWL Class\n(this section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
-        leg_xref [label="OWL Class\n(other section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"];
-        leg_dt [label="XSD Datatype", shape=rectangle, fillcolor="#ccffcc", color="#22c55e", penwidth=2, fontname="monospace"];
         leg_src [label=" ", shape=point, width=0.01];
         leg_tgt1 [label=" ", shape=point, width=0.01];
-        leg_tgt2 [label=" ", shape=point, width=0.01];
         leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
-        leg_src -> leg_tgt2 [label="cross-section ref", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
-        leg_tgt3 [label=" ", shape=point, width=0.01];
-        leg_src -> leg_tgt3 [label="datatype property", style=dashed, color="#22c55e", fontcolor="#166534", penwidth=1.5];
     }
 }

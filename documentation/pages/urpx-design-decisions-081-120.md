@@ -49,37 +49,37 @@ This document logs design decisions #081-#120 made during URPX ontology developm
 
 Quick links to all design decisions:
 
-- ✅ [Decision #081: DataSourceTypeValue Provenance Refactor](#decision-081)
-- ✅ [Decision #082: Enrollment Status Made Optional on ProgramEnrollment and PriorRatePlan](#decision-082)
-- ✅ [Decision #083: Human-Readable Metadata Coverage Expansion and Core Name Requirements](#decision-083)
-- ✅ [Decision #084: RatePlanVersion Modifier Options Relationship](#decision-084)
-- ✅ [Decision #085: Closed SHACL Node Shape Hardening](#decision-085)
-- ✅ [Decision #086: Organization, Authority, and System Operator Validation Expansion](#decision-086)
-- ✅ [Decision #087: ServiceTiers Container Architecture](#decision-087)
-- ✅ [Decision #088: DataSourceReference Provenance Metadata Expansion](#decision-088)
-- ✅ [Decision #089: TariffBookReference and TariffStatementReference Nested Citation Classes](#decision-089)
-- ✅ [Decision #090: Add Version-Level Modifier Reference Properties](#decision-090)
-- ✅ [Decision #091: Date Property Normalization and Provenance Domain Expansion](#decision-091)
-- ✅ [Decision #092: TariffStatementTypeValue Enum Instance Materialization](#decision-092)
-- ✅ [Decision #093: BillingModel-Owned PriceDefinition with referencesLedger](#decision-093)
-- 📚 [Decision #094: Condition Logic Modeling](#decision-094)
-- ✅ [Decision #095: RateCase Traceability for Regulated Proceeding Links](#decision-095)
-- ✅ [Decision #096: Parallel dateTime Provenance Properties for Core date Fields](#decision-096)
-- ✅ [Decision #097: ConditionExpression Wrapper and Rooted Rule Graph](#decision-097)
-- ✅ [Decision #098: Operand Node Specialization and Typed Value Properties for Condition Expressions](#decision-098)
-- ✅ [Decision #099: GeneralRule Tariff-Book Shared Rule Architecture](#decision-099)
-- ✅ [Decision #100: RatePlanVersion Enrollment Choice and Default Selection Semantics](#decision-100)
-- ✅ [Decision #101: Compatibility Relationship Domain Expansion for Rate Plans and Versions](#decision-101)
-- ✅ [Decision #102: Profile Count Terminology Normalization and Threshold Cleanup](#decision-102)
-- ✅ [Decision #103: Unique Identifier Normalization and Required Document Target Version Metadata](#decision-103)
-- ✅ [Decision #104: Structured ConditionExpression Consolidation and Scenario-Owned Eligibility Inputs](#decision-104)
-- ✅ [Decision #105: SHACL Enforcement of Structured Eligibility and Minimum Scenario Inputs](#decision-105)
-- ✅ [Decision #106: PriorRatePlan ServiceRole Coverage](#decision-106)
-- ✅ [Decision #107: AlternativeDimension Fallback Custom Property Identifier](#decision-107)
-- ✅ [Decision #108: Moderate Income Program Type Enumeration Expansion](#decision-108)
-- ✅ [Decision #109: Applicability Selectors Consolidated onto Profile Properties](#decision-109)
-- ✅ [Decision #110: Seasonal ServiceTiers and Flexible Open-Ended Tier Bounds](#decision-110)
-- ✅ [Decision #111: ServiceBracket Boundary Model for Contextual Tier Variants](#decision-111)
+- ✅ Decision #081: DataSourceTypeValue Provenance Refactor
+- ✅ Decision #082: Enrollment Status Made Optional on ProgramEnrollment and PriorRatePlan
+- ✅ Decision #083: Human-Readable Metadata Coverage Expansion and Core Name Requirements
+- ✅ Decision #084: RatePlanVersion Modifier Options Relationship
+- ✅ Decision #085: Closed SHACL Node Shape Hardening
+- ✅ Decision #086: Organization, Authority, and System Operator Validation Expansion
+- ✅ Decision #087: ServiceTiers Container Architecture
+- ✅ Decision #088: DataSourceReference Provenance Metadata Expansion
+- ✅ Decision #089: TariffBookReference and TariffStatementReference Nested Citation Classes
+- ✅ Decision #090: Add Version-Level Modifier Reference Properties
+- ✅ Decision #091: Date Property Normalization and Provenance Domain Expansion
+- ✅ Decision #092: TariffStatementTypeValue Enum Instance Materialization
+- ✅ Decision #093: BillingModel-Owned PriceDefinition with referencesLedger
+- 📚 Decision #094: Condition Logic Modeling
+- ✅ Decision #095: RateCase Traceability for Regulated Proceeding Links
+- ✅ Decision #096: Parallel dateTime Provenance Properties for Core date Fields
+- ✅ Decision #097: ConditionExpression Wrapper and Rooted Rule Graph
+- ✅ Decision #098: Operand Node Specialization and Typed Value Properties for Condition Expressions
+- ✅ Decision #099: GeneralRule Tariff-Book Shared Rule Architecture
+- ✅ Decision #100: RatePlanVersion Enrollment Choice and Default Selection Semantics
+- ✅ Decision #101: Compatibility Relationship Domain Expansion for Rate Plans and Versions
+- ✅ Decision #102: Profile Count Terminology Normalization and Threshold Cleanup
+- ✅ Decision #103: Unique Identifier Normalization and Required Document Target Version Metadata
+- ✅ Decision #104: Structured ConditionExpression Consolidation and Scenario-Owned Eligibility Inputs
+- ✅ Decision #105: SHACL Enforcement of Structured Eligibility and Minimum Scenario Inputs
+- ✅ Decision #106: PriorRatePlan ServiceRole Coverage
+- ✅ Decision #107: AlternativeDimension Fallback Custom Property Identifier
+- ✅ Decision #108: Moderate Income Program Type Enumeration Expansion
+- ✅ Decision #109: Applicability Selectors Consolidated onto Profile Properties
+- ✅ Decision #110: Seasonal ServiceTiers and Flexible Open-Ended Tier Bounds
+- ✅ Decision #111: ServiceBracket Boundary Model for Contextual Tier Variants
 
 ---
 
@@ -226,7 +226,7 @@ Refactor `DataSourceTypeValue` to capture source origin rather than file format.
 - Removed `urpx:csvSource`, `urpx:jsonSource`, `urpx:pdfSource`, `urpx:spreadsheetSource`, and `urpx:xmlSource` from `urpx:DataSourceTypeValue`
 - Added `urpx:utilityWebsiteSource` and `urpx:regulatoryWebsiteSource`
 - Updated the `owl:oneOf` definition for `urpx:DataSourceTypeValue` in [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
-- Updated `urpx-shacl:DataSourceTypeValueShape` in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl) to enforce the revised enumeration
+- Updated `urpx-shacl:DataSourceTypeValueShape` in `shacl/urpx-shacl.ttl` to enforce the revised enumeration
 
 **Impact Assessment:**
 - **Positive**: Cleaner provenance semantics, less duplication with media type, clearer querying and validation
@@ -427,7 +427,7 @@ Add `sh:closed true` and `sh:ignoredProperties ( rdf:type )` broadly across the 
 **Implementation Details:**
 - Added `sh:closed true` and `sh:ignoredProperties ( rdf:type )` broadly across existing node shapes
 - Applied the pattern across account, applicability, billing, customer/profile, pricing, rule, and temporal shapes
-- Updated each closed shape to enumerate all allowed properties explicitly in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- Updated each closed shape to enumerate all allowed properties explicitly in `shacl/urpx-shacl.ttl`
 
 **Impact Assessment:**
 - **Positive**: Stronger data quality enforcement and clearer validation contracts
@@ -529,7 +529,7 @@ Introduce `urpx:ServiceTiers` as a container class between `BillingModel` and in
 - Added `urpx:ServiceTiers` and `urpx:hasServiceTiers` to [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
 - Changed the domain of `urpx:hasServiceTier` from `BillingModel` to `ServiceTiers`
 - Moved the domains of `urpx:referencesMetricInput` and `urpx:referencesProfileAlternative` from `ServiceTier` to `ServiceTiers`
-- Added `urpx-shacl:ServiceTiersShape` and updated `BillingModelShape`, `ServiceTierShape`, and related pricing shapes in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- Added `urpx-shacl:ServiceTiersShape` and updated `BillingModelShape`, `ServiceTierShape`, and related pricing shapes in `shacl/urpx-shacl.ttl`
 
 **Impact Assessment:**
 - **Positive**: Supports complex tiered pricing patterns and cleaner grouping semantics
@@ -580,7 +580,7 @@ Expand `DataSourceReference` so it can carry retrieval provenance, publication/e
 - Added `urpx:accessURL`, `urpx:dateRetrieved`, `urpx:dateModified`, `urpx:pageStart`, and `urpx:pageEnd` to [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
 - Extended `approvalDate`, `datePublished`, `effectiveDate`, `effectiveDateTime`, `expirationDate`, and `expirationDateTime` to include `DataSourceReference` in their domains
 - Extended the domain of `urpx:hasDataSourceReference` to include `PriceSetAlternative`
-- Expanded `urpx-shacl:DataSourceReferenceShape` in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl) to validate the new provenance and pagination fields
+- Expanded `urpx-shacl:DataSourceReferenceShape` in `shacl/urpx-shacl.ttl` to validate the new provenance and pagination fields
 
 **Impact Assessment:**
 - **Positive**: Richer provenance, better audit trails, and more precise document citations
@@ -705,8 +705,8 @@ These properties mirror the structure and cardinality of their document-level co
 **Implementation Details:**
 - Added `urpx:hasModifierVersionOptions` with domain `RatePlanVersion` and range `RatePlanModifierVersion` in [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
 - Added `urpx:applicableToRatePlanVersion` with domain `RatePlanModifierVersion` and range `RatePlanVersion` in [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
-- Extended `urpx-shacl:RatePlanVersionShape` with an optional `hasModifierVersionOptions` property block in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
-- Extended `urpx-shacl:RatePlanModifierVersionShape` with an optional `applicableToRatePlanVersion` property block in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- Extended `urpx-shacl:RatePlanVersionShape` with an optional `hasModifierVersionOptions` property block in `shacl/urpx-shacl.ttl`
+- Extended `urpx-shacl:RatePlanModifierVersionShape` with an optional `applicableToRatePlanVersion` property block in `shacl/urpx-shacl.ttl`
 - Kept the SHACL cardinality pattern aligned with the document-level counterparts by using optional repeatable compatibility links
 
 **Impact Assessment:**
@@ -716,7 +716,7 @@ These properties mirror the structure and cardinality of their document-level co
 
 **References:**
 - File: [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
-- File: [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- File: `shacl/urpx-shacl.ttl`
 - Related Decision: #084 (RatePlanVersion Modifier Options Relationship)
 
 ---
@@ -781,7 +781,7 @@ Two common date concepts — creation date and receipt date — had no dedicated
 
 **References:**
 - File: [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
-- File: [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- File: `shacl/urpx-shacl.ttl`
 - Related Decision: #088 (DataSourceReference Provenance Metadata Expansion)
 - Related Decision: #089 (TariffBookReference and TariffStatementReference Nested Citation Classes)
 
@@ -1425,7 +1425,7 @@ Normalize the profile count property names and complete the threshold cleanup:
 **Implementation Details:**
 - Added `urpx:meterCount` and removed `urpx:numberOfMeters`
 - Added `urpx:occupancyCount` and removed `urpx:numberOfOccupants`
-- Removed `urpx:demandThreshold` from [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl) and [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- Removed `urpx:demandThreshold` from [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl) and `shacl/urpx-shacl.ttl`
 - Updated `CustomerProfileShape` and `ServicePointProfileShape` to validate the normalized property names
 - Updated notes on `householdCount`, `profileMetricProperty`, and `profileMetricInput` examples to use `meterCount` and `occupancyCount`
 
@@ -1487,7 +1487,7 @@ Normalize the identifier vocabulary around stable uniqueness and require documen
 - Renamed `urpx:ratePlanIdentifier` to `urpx:ratePlanUniqueIdentifier`
 - Renamed `urpx:modifierIdentifier` to `urpx:modifierUniqueIdentifier`
 - Moved `modifierUniqueIdentifier` from `RatePlanModifierVersion` to `RatePlanModifier`
-- Added required `urpx:targetURPXVersion` to [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl) and `URPXDocumentShape` in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- Added required `urpx:targetURPXVersion` to [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl) and `URPXDocumentShape` in `shacl/urpx-shacl.ttl`
 - Updated `RatePlanShape`, `RatePlanModifierShape`, and `RatePlanModifierVersionShape` to validate the renamed ownership model
 
 **Impact Assessment:**
@@ -1651,7 +1651,7 @@ Extend the existing `serviceRole` property rather than inventing a prior-plan-sp
 
 **Implementation Details:**
 - Expanded the `serviceRole` domain union in [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl) to include `PriorRatePlan`
-- Added optional `serviceRole` validation to `PriorRatePlanShape` in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- Added optional `serviceRole` validation to `PriorRatePlanShape` in `shacl/urpx-shacl.ttl`
 
 **Impact Assessment:**
 - **Positive**: More expressive prior-plan context with no new vocabulary family
@@ -1701,7 +1701,7 @@ Add a fallback string identifier while preserving the URI-based pattern when it 
 
 **Implementation Details:**
 - Added `urpx:customDimensionProperty` to [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
-- Updated `AlternativeDimensionShape` in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl) so exactly one of `dimensionProperty` or `customDimensionProperty` must be present
+- Updated `AlternativeDimensionShape` in `shacl/urpx-shacl.ttl` so exactly one of `dimensionProperty` or `customDimensionProperty` must be present
 
 **Impact Assessment:**
 - **Positive**: Alternative dimensions can now be modeled even when the ontology does not yet have a canonical property
@@ -1748,7 +1748,7 @@ Add `urpx:moderateIncomeProgram` as a first-class `ProgramTypeValue` and allow i
 
 **Implementation Details:**
 - Added `urpx:moderateIncomeProgram` to the `ProgramTypeValue` enumeration in [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
-- Added `urpx:moderateIncomeProgram` to `ProgramTypeValueShape` in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- Added `urpx:moderateIncomeProgram` to `ProgramTypeValueShape` in `shacl/urpx-shacl.ttl`
 
 **Impact Assessment:**
 - **Positive**: Better fidelity for assistance-program categorization
@@ -1800,7 +1800,7 @@ Use profile properties as the canonical selector surface and retire the direct a
 **Implementation Details:**
 - Removed direct applicability selector properties such as `appliesInCounty`, `appliesInMunicipality`, `appliesInServiceTerritory`, `appliesInState`, and `appliesInGeographicZone`
 - Added `hasCounty`, `hasMunicipality`, `hasServiceTerritory`, and `hasState` on `ServicePointProfile`
-- Moved `geographicScope`, `geographicZone`, `endUse`, `serviceClassPattern`, and `voltageLevel` onto the profile-based surface and updated `ApplicabilityGroupShape` / `ServicePointProfileShape` in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- Moved `geographicScope`, `geographicZone`, `endUse`, `serviceClassPattern`, and `voltageLevel` onto the profile-based surface and updated `ApplicabilityGroupShape` / `ServicePointProfileShape` in `shacl/urpx-shacl.ttl`
 
 **Impact Assessment:**
 - **Positive**: Cleaner applicability modeling, fewer duplicate selectors, and better alignment with the condition-expression architecture
@@ -1904,7 +1904,7 @@ Separate logical tier identity from contextual bracket definitions:
 **Implementation Details:**
 - Added `urpx:ServiceBracket`, `urpx:hasServiceBracket`, and `urpx:referencesServiceBracket` in [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
 - Moved bound properties onto `ServiceBracket` and expanded `referencesProfileAlternative`, `referencesServiceTier`, `serviceTierNumber`, and `appliesInSeason` for the new tier model where needed
-- Added `ServiceBracketShape`, updated `ServiceTierShape` to require brackets, added optional `referencesServiceBracket` validation to pricing shapes, and allowed optional `name` / `description` on `ServiceTiersShape` in [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- Added `ServiceBracketShape`, updated `ServiceTierShape` to require brackets, added optional `referencesServiceBracket` validation to pricing shapes, and allowed optional `name` / `description` on `ServiceTiersShape` in `shacl/urpx-shacl.ttl`
 
 **Impact Assessment:**
 - **Positive**: Stable tier identities, cleaner contextual bracket modeling, and optional exact bracket references from pricing resources

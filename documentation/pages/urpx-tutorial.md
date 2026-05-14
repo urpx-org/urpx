@@ -36,7 +36,7 @@ Before starting this tutorial, ensure you have:
 ### Required Files
 - `../../ontology/urpx-ontology.ttl` - URPX ontology file.
 
-> **Note:** Draft SHACL validation shapes are available at [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl). A reference validation script is under development for inclusion in the repository.
+> **Note:** Draft SHACL validation shapes are available at [`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl). A reference validation script is under development for inclusion in the repository.
 
 ---
 
@@ -936,7 +936,7 @@ Extracted from the full list of possible values in `urpx-ontology.ttl`:
 1. **Validate JSON-LD syntax** - Ensure well-formed JSON
 2. **Check property existence** - All properties must exist in ontology
 3. **Validate enum values** - All enum instances must exist in ontology
-4. **SHACL validation** - Validate against draft SHACL shapes at [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl). A reference validation script is under development.
+4. **SHACL validation** - Validate against draft SHACL shapes at [`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl). A reference validation script is under development.
 5. **Verify business logic** - Price combinations make sense
 
 ---
@@ -967,7 +967,7 @@ For complete current examples with tariff-linked test data:
 
 - **Issues**: [Report on GitHub](https://github.com/urpx-org/urpx/issues)
 - **Questions**: [GitHub Discussions](https://github.com/urpx-org/urpx/discussions)
-- **Documentation**: [Full Documentation](../index.md)
+- **Documentation**: [Full Documentation](/docs/getting-started/overview)
 
 ---
 

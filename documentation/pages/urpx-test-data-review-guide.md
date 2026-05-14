@@ -11,7 +11,7 @@
 
 **How to review a URPX JSON-LD test case against its source tariff book**
 
-[← Back to Index](../index.md)
+[← Back to Index](/docs/getting-started/overview)
 
 ---
 
@@ -35,7 +35,7 @@ Before review, gather:
 - the source tariff book PDF
 - the URPX JSON-LD file
 - the current ontology: [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
-- the current SHACL shapes: [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- the current SHACL shapes: [`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl)
 - any extraction notes, audit logs, or transformation notes if available
 
 Example review pair in this repository:
@@ -70,7 +70,7 @@ Clone the repository before starting review so you can inspect the current ontol
 From this document, the current ontology and SHACL files are at:
 
 - [`../../ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
-- [`../../shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- [`/ontology/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl)
 
 ---
 
@@ -411,5 +411,5 @@ Keep findings specific and tied to the file path, tariff book section, and URPX 
 - [`urpx-quality-assurance.md`](urpx-quality-assurance.md)
 - [`urpx-condition-modeling.md`](urpx-condition-modeling.md)
 - [`urpx-data-dictionary.md`](urpx-data-dictionary.md)
-- [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- [`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl)
 - [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)

@@ -8,9 +8,9 @@
 **Released:** 2026-05-01  
 **Updated:** 2026-05-07  
 **Type:** Pre-draft release  
-**Previous release:** `v0.1.2`
+**Previous public release:** None
 
-[← Back to Index](../index.md)
+[← Back to Release Notes](/release-notes)
 
 ---
 
@@ -18,7 +18,7 @@
 
 URPX v0.2.0 is a substantial pre-draft update focused on clearer price modeling, a fully reworked structured condition architecture, stronger SHACL validation, and better documentation for implementers and reviewers.
 
-Compared with `v0.1.2`, this release is not backward-compatible. Existing URPX datasets should be reviewed and migrated before being treated as v0.2.0-conformant.
+Compared with earlier pre-release drafts, this release is not backward-compatible. Existing URPX datasets should be reviewed and migrated before being treated as v0.2.0-conformant.
 
 ---
 
@@ -72,7 +72,7 @@ If you maintain datasets or downstream tooling, pay particular attention to thes
 
 ## Migration Guidance
 
-To migrate a `v0.1.2` dataset to `v0.2.0`:
+To migrate an older pre-release dataset to `v0.2.0`:
 
 - move `PriceDefinition` instances under `BillingModel`
 - add `urpx:referencesLedger` to every `PriceDefinition`
@@ -85,9 +85,9 @@ To migrate a `v0.1.2` dataset to `v0.2.0`:
 - remove `demandThreshold` and express threshold logic through rules / metric patterns
 - add `urpx:targetURPXVersion` to `URPXDocument` using:
   `https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl`
-- rerun SHACL validation against [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
+- rerun SHACL validation against [`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl)
 
-The updated PG&E E-ELEC example under [`test-cases/`](../../test-cases/) can be used as a current-model reference.
+The updated PG&E E-ELEC example under [`test-cases/`](https://github.com/urpx-org/urpx/tree/main/test-cases) can be used as a current-model reference.
 
 ---
 
@@ -117,7 +117,7 @@ These changes do not alter the URPX data model, but they do affect repository hy
 
 ## References
 
-- [`urpx-changelog.md`](../../urpx-changelog.md)
+- [`urpx-changelog.md`](https://github.com/urpx-org/urpx/blob/main/urpx-changelog.md)
 - [`urpx-design-decisions-081-120.md`](urpx-design-decisions-081-120.md)
 - [`urpx-condition-modeling.md`](urpx-condition-modeling.md)
 - [`urpx-quality-assurance.md`](urpx-quality-assurance.md)

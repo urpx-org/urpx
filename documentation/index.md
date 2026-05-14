@@ -16,7 +16,7 @@ Welcome to the URPX documentation. URPX is an open standard for exchanging utili
 ### Getting Started
 - **[Overview](pages/urpx-overview.md)** - Understanding URPX and rate plan data exchange
 - **[Tutorial](pages/urpx-tutorial.md)** - Step-by-step guide to creating rate plan data
-- **[Release Notes v0.2.0](pages/urpx-release-notes-v0.2.0.md)** - Summary of changes and migration impact since v0.1.2
+- **[Release Notes v0.2.0](pages/urpx-release-notes-v0.2.0.md)** - Summary of v0.2.0 changes and migration impact
 - **[FAQ](pages/urpx-faq.md)** - Frequently asked questions
 
 ### Technical Reference

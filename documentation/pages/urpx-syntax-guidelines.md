@@ -8,7 +8,7 @@
 **Version:** 0.2.0 (Pre-draft)
 **Last Updated:** December 2, 2025
 
-[← Back to Index](../index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+[← Back to Index](/docs/getting-started/overview) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
 
 ---
 
@@ -89,7 +89,7 @@ All textual properties must include the `@en` language tag for:
 - **RDF compliance**: Follows semantic web best practices (RFC 5646)
 - **Tool compatibility**: Ensures proper parsing by RDF libraries
 
-**Note**: While `@en` is the current standard for URPX v0.1.1, the [URPX Internationalization Guide](urpx-i18n-guide.md) provides comprehensive specifications for implementing multilingual support across all URPX properties.
+**Note**: While `@en` is the current standard for URPX, the [URPX Internationalization Guide](urpx-i18n-guide.md) provides comprehensive specifications for implementing multilingual support across all URPX properties.
 
 ## Enumeration Naming Conventions
 
@@ -151,4 +151,4 @@ When generating or validating URPX data:
 
 *For technical details, see [Data Dictionary](urpx-data-dictionary.md).*
 
-[← Back to Index](../index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+[← Back to Index](/docs/getting-started/overview) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
