@@ -22,6 +22,20 @@ Compared with earlier pre-release drafts, this release is not backward-compatibl
 
 ---
 
+## Release Artifacts
+
+Source files:
+
+- `ontology/urpx-ontology.ttl`
+- `shacl/urpx-shacl.ttl`
+
+Published payloads:
+
+- `https://urpx-org.github.io/urpx/ontology/releases/v0.2.0/ttl/urpx-ontology.ttl`
+- `https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.2.0/ttl/urpx-shacl.ttl`
+
+---
+
 ## Highlights
 
 - Reworked the billing model so `PriceDefinition` is owned by `BillingModel` and linked to its ledger with `urpx:referencesLedger`.

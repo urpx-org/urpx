@@ -29,13 +29,14 @@
     dcterms:modified "2026-04-29"^^xsd:date ;
     dcterms:title "URPX SHACL Shapes" ;
     dcterms:hasVersion <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.2.0> ;
+    owl:versionInfo "0.2.0" ;
     owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.2.0/shacl/urpx-shacl.ttl> .
 
 <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.2.0>
     a owl:Ontology, sh:ShapesGraph ;
     dcterms:isVersionOf <https://urpx-org.github.io/urpx/ontology/shacl> ;
     dcterms:issued "2026-04-29"^^xsd:date ;
-    dcat:version "0.2.0" ;
+    owl:versionInfo "0.2.0" ;
     dcat:distribution <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.2.0/ttl> .
 
 <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.2.0/ttl>
