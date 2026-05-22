@@ -9,10 +9,10 @@ on:
       source_ref:
         description: Source ref to publish. Defaults to v<release_version>.
         required: false
-      weave_version:
-        description: npm @semantic-flow/weave version
+      weave_ref:
+        description: semantic-flow/weave git ref
         required: false
-        default: "0.1.2"
+        default: "v0.1.2"
 
 permissions:
   contents: write
@@ -80,13 +80,18 @@ jobs:
         with:
           deno-version: 2.x
 
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - name: Checkout Weave
+        uses: actions/checkout@v6
         with:
-          node-version: "24"
+          repository: semantic-flow/weave
+          ref: ${{ inputs.weave_ref }}
+          path: weave
 
-      - name: Install Weave
-        run: npm install --global "@semantic-flow/weave@${{ inputs.weave_version }}"
+      - name: Configure Weave CLI
+        run: |
+          echo "WEAVE_CLI=${{ github.workspace }}/weave/src/main.ts" >> "$GITHUB_ENV"
+          echo "WEAVE_LOG_DIR=/tmp/weave-logs" >> "$GITHUB_ENV"
+          mkdir -p /tmp/weave-logs
 
       - name: Validate source release metadata
         working-directory: urpx
@@ -99,7 +104,7 @@ jobs:
         env:
           URPX_PUB: ${{ github.workspace }}/urpx-gh-pages
         run: |
-          weave mesh create \
+          deno run -A "$WEAVE_CLI" mesh create \
             --workspace "$URPX_PUB" \
             --mesh-base 'https://urpx-org.github.io/urpx/' \
             --publication-profile github-pages
@@ -116,21 +121,21 @@ jobs:
             dcterms:description "The Utility Rate Plan Exchange ontology provides RDF, OWL, SHACL, and related resources for exchanging utility rate plan information." .
           TTL
 
-          weave integrate "$URPX_PUB/welcome.ttl" / --mesh-root "$URPX_PUB"
-          weave --mesh-root "$URPX_PUB" --target 'designatorPath=/,historySegment=main'
+          deno run -A "$WEAVE_CLI" integrate "$URPX_PUB/welcome.ttl" / --mesh-root "$URPX_PUB"
+          deno run -A "$WEAVE_CLI" --mesh-root "$URPX_PUB" --target 'designatorPath=/,historySegment=main'
 
       - name: Integrate release payloads
         env:
           URPX_PUB: ${{ github.workspace }}/urpx-gh-pages
           URPX_REPO: ${{ github.workspace }}/urpx
         run: |
-          weave integrate "$URPX_REPO/ontology/urpx-ontology.ttl" ontology \
+          deno run -A "$WEAVE_CLI" integrate "$URPX_REPO/ontology/urpx-ontology.ttl" ontology \
             --mesh-root "$URPX_PUB" \
             --grant-source-directory "$URPX_REPO" \
             --source-repository-current \
             --source-repository-url 'https://github.com/urpx-org/urpx.git'
 
-          weave integrate "$URPX_REPO/shacl/urpx-shacl.ttl" ontology/shacl \
+          deno run -A "$WEAVE_CLI" integrate "$URPX_REPO/shacl/urpx-shacl.ttl" ontology/shacl \
             --mesh-root "$URPX_PUB" \
             --grant-source-directory "$URPX_REPO" \
             --source-repository-current \
@@ -141,13 +146,13 @@ jobs:
           URPX_PUB: ${{ github.workspace }}/urpx-gh-pages
           URPX_RELEASE_STATE: ${{ steps.inputs.outputs.release_state }}
         run: |
-          weave set history ontology releases --mesh-root "$URPX_PUB"
-          weave set next-state ontology "$URPX_RELEASE_STATE" --mesh-root "$URPX_PUB"
+          deno run -A "$WEAVE_CLI" set history ontology releases --mesh-root "$URPX_PUB"
+          deno run -A "$WEAVE_CLI" set next-state ontology "$URPX_RELEASE_STATE" --mesh-root "$URPX_PUB"
 
-          weave set history ontology/shacl releases --mesh-root "$URPX_PUB"
-          weave set next-state ontology/shacl "$URPX_RELEASE_STATE" --mesh-root "$URPX_PUB"
+          deno run -A "$WEAVE_CLI" set history ontology/shacl releases --mesh-root "$URPX_PUB"
+          deno run -A "$WEAVE_CLI" set next-state ontology/shacl "$URPX_RELEASE_STATE" --mesh-root "$URPX_PUB"
 
-          weave \
+          deno run -A "$WEAVE_CLI" \
             --mesh-root "$URPX_PUB" \
             --payload-manifestation-segment ttl \
             --target 'designatorPath=ontology' \
@@ -157,24 +162,24 @@ jobs:
         env:
           URPX_PUB: ${{ github.workspace }}/urpx-gh-pages
         run: |
-          weave extract --all-terms \
+          deno run -A "$WEAVE_CLI" extract --all-terms \
             --mesh-root "$URPX_PUB" \
             --source ontology \
             --add-source-references \
             --reference-role canonical \
             --accept-preview
 
-          weave extract --all-terms \
+          deno run -A "$WEAVE_CLI" extract --all-terms \
             --mesh-root "$URPX_PUB" \
             --source ontology/shacl \
             --add-source-references \
             --reference-role canonical \
             --accept-preview
 
-          weave --mesh-root "$URPX_PUB"
-          weave generate --mesh-root "$URPX_PUB"
-          weave validate mesh --mesh-root "$URPX_PUB"
-          weave validate publication --mesh-root "$URPX_PUB"
+          deno run -A "$WEAVE_CLI" --mesh-root "$URPX_PUB"
+          deno run -A "$WEAVE_CLI" generate --mesh-root "$URPX_PUB"
+          deno run -A "$WEAVE_CLI" validate mesh --mesh-root "$URPX_PUB"
+          deno run -A "$WEAVE_CLI" validate publication --mesh-root "$URPX_PUB"
 
       - name: Capture publication diff
         id: diff

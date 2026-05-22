@@ -64,13 +64,14 @@ The `GitHub Release` workflow normally builds its release body from `documentati
 
 ## Pages Publication
 
-The manual GitHub Actions workflow for this path is `Weave URPX Semantic Flow Site`. It uses Node 24 action versions, initializes `gh-pages` when needed, and publishes the woven site to `gh-pages`.
+The manual GitHub Actions workflow for this path is `Weave URPX Semantic Flow Site`. It checks out a tagged `semantic-flow/weave` source ref, initializes `gh-pages` when needed, and publishes the woven site to `gh-pages`.
 
-Use the npm-published Weave CLI. Pin the package version used for the release:
+For local runs, use a Weave source checkout until the npm package includes the `defaults/` Turtle files needed by the compiled binary. Pin the Weave ref used for the release:
 
 ```sh
-npm view @semantic-flow/weave version bin
-weave() { npx -y @semantic-flow/weave@0.1.2 "$@"; }
+export WEAVE_ROOT=/home/djradon/hub/semantic-flow/weave
+export WEAVE_CLI="$WEAVE_ROOT/src/main.ts"
+git -C "$WEAVE_ROOT" status --short --branch
 ```
 
 Set local paths:
@@ -101,7 +102,7 @@ find "$URPX_PUB" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
 Create the mesh:
 
 ```sh
-weave mesh create \
+deno run -A "$WEAVE_CLI" mesh create \
   --workspace "$URPX_PUB" \
   --mesh-base 'https://urpx-org.github.io/urpx/' \
   --publication-profile github-pages
@@ -118,20 +119,20 @@ cat > "$URPX_PUB/welcome.ttl" <<'TTL'
   dcterms:description "The Utility Rate Plan Exchange ontology provides RDF, OWL, SHACL, and related resources for exchanging utility rate plan information." .
 TTL
 
-weave integrate "$URPX_PUB/welcome.ttl" / --mesh-root "$URPX_PUB"
-weave --mesh-root "$URPX_PUB" --target 'designatorPath=/,historySegment=main'
+deno run -A "$WEAVE_CLI" integrate "$URPX_PUB/welcome.ttl" / --mesh-root "$URPX_PUB"
+deno run -A "$WEAVE_CLI" --mesh-root "$URPX_PUB" --target 'designatorPath=/,historySegment=main'
 ```
 
 Integrate source payloads with floating repository bindings:
 
 ```sh
-weave integrate "$URPX_REPO/ontology/urpx-ontology.ttl" ontology \
+deno run -A "$WEAVE_CLI" integrate "$URPX_REPO/ontology/urpx-ontology.ttl" ontology \
   --mesh-root "$URPX_PUB" \
   --grant-source-directory "$URPX_REPO" \
   --source-repository-current \
   --source-repository-url 'https://github.com/urpx-org/urpx.git'
 
-weave integrate "$URPX_REPO/shacl/urpx-shacl.ttl" ontology/shacl \
+deno run -A "$WEAVE_CLI" integrate "$URPX_REPO/shacl/urpx-shacl.ttl" ontology/shacl \
   --mesh-root "$URPX_PUB" \
   --grant-source-directory "$URPX_REPO" \
   --source-repository-current \
@@ -141,13 +142,13 @@ weave integrate "$URPX_REPO/shacl/urpx-shacl.ttl" ontology/shacl \
 Set release history and weave release payloads:
 
 ```sh
-weave set history ontology releases --mesh-root "$URPX_PUB"
-weave set next-state ontology "$URPX_RELEASE_STATE" --mesh-root "$URPX_PUB"
+deno run -A "$WEAVE_CLI" set history ontology releases --mesh-root "$URPX_PUB"
+deno run -A "$WEAVE_CLI" set next-state ontology "$URPX_RELEASE_STATE" --mesh-root "$URPX_PUB"
 
-weave set history ontology/shacl releases --mesh-root "$URPX_PUB"
-weave set next-state ontology/shacl "$URPX_RELEASE_STATE" --mesh-root "$URPX_PUB"
+deno run -A "$WEAVE_CLI" set history ontology/shacl releases --mesh-root "$URPX_PUB"
+deno run -A "$WEAVE_CLI" set next-state ontology/shacl "$URPX_RELEASE_STATE" --mesh-root "$URPX_PUB"
 
-weave \
+deno run -A "$WEAVE_CLI" \
   --mesh-root "$URPX_PUB" \
   --payload-manifestation-segment ttl \
   --target 'designatorPath=ontology' \
@@ -157,24 +158,24 @@ weave \
 Extract terms, generate pages, and validate:
 
 ```sh
-weave extract --all-terms \
+deno run -A "$WEAVE_CLI" extract --all-terms \
   --mesh-root "$URPX_PUB" \
   --source ontology \
   --add-source-references \
   --reference-role canonical \
   --accept-preview
 
-weave extract --all-terms \
+deno run -A "$WEAVE_CLI" extract --all-terms \
   --mesh-root "$URPX_PUB" \
   --source ontology/shacl \
   --add-source-references \
   --reference-role canonical \
   --accept-preview
 
-weave --mesh-root "$URPX_PUB"
-weave generate --mesh-root "$URPX_PUB"
-weave validate mesh --mesh-root "$URPX_PUB"
-weave validate publication --mesh-root "$URPX_PUB"
+deno run -A "$WEAVE_CLI" --mesh-root "$URPX_PUB"
+deno run -A "$WEAVE_CLI" generate --mesh-root "$URPX_PUB"
+deno run -A "$WEAVE_CLI" validate mesh --mesh-root "$URPX_PUB"
+deno run -A "$WEAVE_CLI" validate publication --mesh-root "$URPX_PUB"
 ```
 
 Inspect expected payloads before committing `gh-pages`:
