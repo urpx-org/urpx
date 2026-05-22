@@ -207,7 +207,7 @@
 <g id="edge18" class="edge">
 <title>OrganizationIdentity&#45;&gt;OrganizationIdentifier</title>
 <path fill="none" stroke="#1a5276" stroke-width="1.5" d="M198.34,-192.87C171.37,-195.5 137.73,-198.77 109.29,-201.54"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="108.69,-198.08 99.07,-202.53 109.37,-205.05 108.69,-198.08"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="108.69,-198.08 99.07,-202.54 109.37,-205.05 108.69,-198.08"/>
 <text text-anchor="middle" x="131.82" y="-208.81" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasIdentifier</text>
 <text text-anchor="middle" x="131.82" y="-199.81" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
