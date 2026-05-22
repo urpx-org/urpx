@@ -3,7 +3,7 @@
 
 ## URPX Launch Actions Steps and Timeline:
 1. Confirm voting capability with test vote #2 
-2. Accept invitation to urpx-committers Github team
+2. Accept invitation to urpx-committers Github team, start review
 3. Tue 2026-05-26   URPX Working Group Meeting
 4. Wed-Fri 2026-05-27, 28, and 29:  URPX Review office hours 12-1pm US ET
     zoom: https://us02web.zoom.us/j/87891641890?pwd=gRyHcOJCYzRS7NliCcWxpcagy1tpg5.1&jst=2
@@ -20,21 +20,13 @@ Materials to made public upon acceptance of the V1.0.0 draft URPX standard
   https://github.com/urpx-org/urpx
     
 - It's private now but after working group acceptance this repository will be made public. 
-- Where to comment: https://github.com/urpx-org/urpx/pull/39 v0.2.0 review branch open for committee feedback/proposed updates prior to converting this to W3C/CDLA  URPX v1.0.0. 
-- How to comment: inline or with general review notes
+- Where to comment: 
+https://github.com/urpx-org/urpx/tree/v0.2.1-wg-review is the branch open for committee feedback/proposed updates prior to converting this to W3C/CDLA  URPX v1.0.0. Updates committed in this branch will be added to the PR open for committee review: https://github.com/urpx-org/urpx/pull/44 
+- How to comment: update documents directly and commit with comments, add review inline, or with general PR review comments.
+
 ### urpx.org website
 Hosted via gh pages: https://legendary-adventure-2qlokyv.pages.github.io this site has a copy of the documentation materials available for each version and the "Next" version on main. 
 
-
-## Review as desired: URPX.org build repositories
-- https://github.com/urpx-org/urpx-website: production urpx.org content, currently only available when signed into github with the user associated with your urpx access. Once we go public with the urpx repo we will make these github pages public and will request LF energy to have urpx.org point to these GH pages.
-
-- https://github.com/urpx-org/urpx-website-staging LF Energy internal "working group dev repo" with automated documentation maintenance workflows and docusaurus site published on GH pages. 
-    - Let us know if you'd like write access to help work on automated documentation and diagramming workflows
-    - We set up github actions for update automation workflows including drift detection to run
-    - This repositpry will remain internal to LF Energy with limited working group web admin access, with select working group members interested in contributing to urpx.org updates/maintenance having approval/write access.
-
-Sign up by entering your first name in an open slot. Up to 4 reviewers per item.
 
 ---
 
@@ -147,3 +139,16 @@ Organized by data dictionary section. Each group covers the same slice of the mo
 | **Repository Meta** | | | | |
 | README | | | | |
 | CHANGELOG | | | | |
+
+
+
+## New: URPX.org Docusaurus build repositories
+No need to review this in particular, but to explain what each of these repositories does:
+- https://github.com/urpx-org/urpx-website: production urpx.org content, currently only available when signed into github with the user associated with your urpx access. Once we go public with the urpx repo we will make these github pages public and will request LF energy to have urpx.org point to these GH pages.
+
+- https://github.com/urpx-org/urpx-website-staging LF Energy internal "working group dev repo" with automated documentation maintenance workflows and docusaurus site published on GH pages. 
+    - Let us know if you'd like write access to help work on automated documentation and diagramming workflows
+    - We set up github actions for update automation workflows including drift detection to run
+    - This repositpry will remain internal to LF Energy with limited working group web admin access, with select working group members interested in contributing to urpx.org updates/maintenance having approval/write access.
+
+Sign up by entering your first name in an open slot. Up to 4 reviewers per item.
