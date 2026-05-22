@@ -59,13 +59,23 @@ jobs:
         with:
           ref: ${{ steps.release.outputs.checkout_ref }}
 
+      - name: Require automation token for private release helper
+        env:
+          URPX_AUTOMATION_TOKEN: ${{ secrets.URPX_AUTOMATION_TOKEN }}
+        run: |
+          if [ -z "$URPX_AUTOMATION_TOKEN" ]; then
+            echo "::error::URPX_AUTOMATION_TOKEN is required to checkout the private urpx-website-staging release helper repository."
+            echo "Create an organization or repository secret with read access to urpx-org/urpx-website-staging."
+            exit 1
+          fi
+
       - name: Checkout urpx-website-staging (for release helper)
         uses: actions/checkout@v6
         with:
           repository: urpx-org/urpx-website-staging
           path: .urpx-website
           ref: main
-          token: ${{ secrets.URPX_AUTOMATION_TOKEN || github.token }}
+          token: ${{ secrets.URPX_AUTOMATION_TOKEN }}
 
       - name: Resolve release notes path
         id: notes

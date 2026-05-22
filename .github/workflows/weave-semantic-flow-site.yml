@@ -1,0 +1,207 @@
+name: Weave URPX Semantic Flow Site
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: Release version without the v prefix, for example 0.2.1
+        required: true
+      source_ref:
+        description: Source ref to publish. Defaults to v<release_version>.
+        required: false
+      weave_version:
+        description: npm @semantic-flow/weave version
+        required: false
+        default: "0.1.2"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: weave-semantic-flow-site-${{ inputs.release_version }}
+  cancel-in-progress: false
+
+jobs:
+  weave:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve inputs
+        id: inputs
+        env:
+          RELEASE_VERSION: ${{ inputs.release_version }}
+          SOURCE_REF: ${{ inputs.source_ref }}
+        run: |
+          if [ -z "$RELEASE_VERSION" ]; then
+            echo "::error::release_version is required."
+            exit 1
+          fi
+
+          case "$RELEASE_VERSION" in
+            v*)
+              echo "::error::release_version must omit the v prefix."
+              exit 1
+              ;;
+          esac
+
+          source_ref="${SOURCE_REF:-v$RELEASE_VERSION}"
+          echo "release_version=$RELEASE_VERSION" >> "$GITHUB_OUTPUT"
+          echo "release_state=v$RELEASE_VERSION" >> "$GITHUB_OUTPUT"
+          echo "source_ref=$source_ref" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout URPX source
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ steps.inputs.outputs.source_ref }}
+          path: urpx
+          fetch-depth: 0
+
+      - name: Checkout publication workspace
+        uses: actions/checkout@v6
+        with:
+          path: urpx-gh-pages
+          fetch-depth: 0
+
+      - name: Prepare gh-pages branch
+        working-directory: urpx-gh-pages
+        run: |
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            git fetch origin gh-pages
+            git checkout gh-pages
+          else
+            git checkout --orphan gh-pages
+            git rm -rf . >/dev/null 2>&1 || true
+            git config user.name "urpx-semantic-flow-bot"
+            git config user.email "urpx-semantic-flow-bot@users.noreply.github.com"
+            git commit --allow-empty -m "Initialize gh-pages"
+          fi
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: 2.x
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - name: Install Weave
+        run: npm install --global "@semantic-flow/weave@${{ inputs.weave_version }}"
+
+      - name: Validate source release metadata
+        working-directory: urpx
+        run: deno task release:validate -- --version "${{ steps.inputs.outputs.release_version }}"
+
+      - name: Reset publication worktree
+        run: find urpx-gh-pages -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+
+      - name: Create publication mesh
+        env:
+          URPX_PUB: ${{ github.workspace }}/urpx-gh-pages
+        run: |
+          weave mesh create \
+            --workspace "$URPX_PUB" \
+            --mesh-base 'https://urpx-org.github.io/urpx/' \
+            --publication-profile github-pages
+
+      - name: Integrate root page
+        env:
+          URPX_PUB: ${{ github.workspace }}/urpx-gh-pages
+        run: |
+          cat > "$URPX_PUB/welcome.ttl" <<'TTL'
+          @base <https://urpx-org.github.io/urpx/> .
+          @prefix dcterms: <http://purl.org/dc/terms/> .
+
+          <https://urpx-org.github.io/urpx> dcterms:title "URPX" ;
+            dcterms:description "The Utility Rate Plan Exchange ontology provides RDF, OWL, SHACL, and related resources for exchanging utility rate plan information." .
+          TTL
+
+          weave integrate "$URPX_PUB/welcome.ttl" / --mesh-root "$URPX_PUB"
+          weave --mesh-root "$URPX_PUB" --target 'designatorPath=/,historySegment=main'
+
+      - name: Integrate release payloads
+        env:
+          URPX_PUB: ${{ github.workspace }}/urpx-gh-pages
+          URPX_REPO: ${{ github.workspace }}/urpx
+        run: |
+          weave integrate "$URPX_REPO/ontology/urpx-ontology.ttl" ontology \
+            --mesh-root "$URPX_PUB" \
+            --grant-source-directory "$URPX_REPO" \
+            --source-repository-current \
+            --source-repository-url 'https://github.com/urpx-org/urpx.git'
+
+          weave integrate "$URPX_REPO/shacl/urpx-shacl.ttl" ontology/shacl \
+            --mesh-root "$URPX_PUB" \
+            --grant-source-directory "$URPX_REPO" \
+            --source-repository-current \
+            --source-repository-url 'https://github.com/urpx-org/urpx.git'
+
+      - name: Weave release payloads
+        env:
+          URPX_PUB: ${{ github.workspace }}/urpx-gh-pages
+          URPX_RELEASE_STATE: ${{ steps.inputs.outputs.release_state }}
+        run: |
+          weave set history ontology releases --mesh-root "$URPX_PUB"
+          weave set next-state ontology "$URPX_RELEASE_STATE" --mesh-root "$URPX_PUB"
+
+          weave set history ontology/shacl releases --mesh-root "$URPX_PUB"
+          weave set next-state ontology/shacl "$URPX_RELEASE_STATE" --mesh-root "$URPX_PUB"
+
+          weave \
+            --mesh-root "$URPX_PUB" \
+            --payload-manifestation-segment ttl \
+            --target 'designatorPath=ontology' \
+            --target 'designatorPath=ontology/shacl'
+
+      - name: Extract terms and validate site
+        env:
+          URPX_PUB: ${{ github.workspace }}/urpx-gh-pages
+        run: |
+          weave extract --all-terms \
+            --mesh-root "$URPX_PUB" \
+            --source ontology \
+            --add-source-references \
+            --reference-role canonical \
+            --accept-preview
+
+          weave extract --all-terms \
+            --mesh-root "$URPX_PUB" \
+            --source ontology/shacl \
+            --add-source-references \
+            --reference-role canonical \
+            --accept-preview
+
+          weave --mesh-root "$URPX_PUB"
+          weave generate --mesh-root "$URPX_PUB"
+          weave validate mesh --mesh-root "$URPX_PUB"
+          weave validate publication --mesh-root "$URPX_PUB"
+
+      - name: Capture publication diff
+        id: diff
+        working-directory: urpx-gh-pages
+        run: |
+          git status --short
+          git add --intent-to-add .
+          git diff --binary > ../semantic-flow-site.diff
+          if [ -s ../semantic-flow-site.diff ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload publication diff
+        if: steps.diff.outputs.changed == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: semantic-flow-site-diff
+          path: semantic-flow-site.diff
+
+      - name: Publish gh-pages changes
+        if: steps.diff.outputs.changed == 'true'
+        working-directory: urpx-gh-pages
+        run: |
+          git config user.name "urpx-semantic-flow-bot"
+          git config user.email "urpx-semantic-flow-bot@users.noreply.github.com"
+          git add .
+          git commit -s -m "chore: weave URPX Semantic Flow site"
+          git push origin HEAD:gh-pages
