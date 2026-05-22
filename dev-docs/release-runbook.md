@@ -60,7 +60,7 @@ git push origin v0.2.1
 deno task release:validate -- --version 0.2.1 --require-tag
 ```
 
-The `GitHub Release` workflow checks out private release-helper code from `urpx-org/urpx-website-staging`. Until that repository is public, configure `URPX_AUTOMATION_TOKEN` as an organization or repository secret with access to the helper repository. A fine-grained PAT can work; a GitHub App installation token is preferred for longer-term automation.
+The `GitHub Release` workflow normally builds its release body from `documentation/pages/urpx-release-notes-vX.Y.Z.md` using private release-helper code from `urpx-org/urpx-website-staging`. Until that repository is public, configure `URPX_AUTOMATION_TOKEN` as an organization or repository secret with access to the helper repository. A manual workflow run can instead provide `release_body` text in the Actions UI, which skips the helper checkout.
 
 ## Pages Publication
 
