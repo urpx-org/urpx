@@ -41,6 +41,18 @@ urpx/
 
 ---
 
+## Versioning Scheme
+
+URPX uses Semantic Versioning: `MAJOR.MINOR.PATCH`.
+
+| Level | What it means for the URPX ontology |
+|-------|--------------------------------------|
+| **MAJOR** | Breaking changes: class removals, property renames, namespace changes. Removes backward compatibility. |
+| **MINOR** | Additive changes: new classes, new properties, new enumeration values. Backward compatible. |
+| **PATCH** | Non-breaking corrections: annotation fixes, label typos, SHACL constraint corrections. No structural change. |
+
+---
+
 ## License
 
 This **pre-Draft** version is licensed under [Apache 2.0](LICENSE). Intended for working group review purposes only.
