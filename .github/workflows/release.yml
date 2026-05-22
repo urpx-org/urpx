@@ -119,6 +119,14 @@ jobs:
             --base-path documentation/pages \
             > release-body.md
 
+      - name: Prepare release assets
+        run: |
+          tag="${{ steps.release.outputs.tag }}"
+          mkdir -p release-assets
+          cp ontology/urpx-ontology.ttl "release-assets/urpx-ontology-${tag}.ttl"
+          cp shacl/urpx-shacl.ttl "release-assets/urpx-shacl-${tag}.ttl"
+          sha256sum release-assets/*.ttl > release-assets/SHA256SUMS.txt
+
       - name: Create GitHub release
         uses: softprops/action-gh-release@v3
         with:
@@ -126,4 +134,7 @@ jobs:
           target_commitish: ${{ steps.release.outputs.checkout_ref }}
           name: ${{ steps.release.outputs.tag }}
           body_path: release-body.md
+          files: |
+            release-assets/*.ttl
+            release-assets/SHA256SUMS.txt
           prerelease: ${{ contains(steps.release.outputs.tag, '-') }}
