@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/geothermalDER/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/geothermalDER" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/geothermalDER/_knop/_inventory/inventory.ttl> .

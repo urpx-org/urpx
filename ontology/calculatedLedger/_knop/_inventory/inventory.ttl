@@ -1,30 +1,96 @@
 @base <https://urpx-org.github.io/urpx/> .
 @prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <ontology/calculatedLedger/_knop> a sflo:Knop ;
   sflo:hasKnopMetadata <ontology/calculatedLedger/_knop/_meta> ;
   sflo:hasKnopInventory <ontology/calculatedLedger/_knop/_inventory> ;
-  sflo:hasReferenceCatalog <ontology/calculatedLedger/_knop/_references> ;
   sflo:hasKnopSourceRegistry <ontology/calculatedLedger/_knop/_sources> ;
   sflo:hasExtractionSource <ontology/calculatedLedger/_knop/_sources#extraction-source> ;
-  sflo:hasWorkingKnopInventoryFile <ontology/calculatedLedger/_knop/_inventory/inventory.ttl> .
+  sflo:hasReferenceCatalog <ontology/calculatedLedger/_knop/_references> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/calculatedLedger/_knop/_inventory/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/calculatedLedger/_knop/index.html> .
 
 <ontology/calculatedLedger/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
-  sflo:hasWorkingLocatedFile <ontology/calculatedLedger/_knop/_meta/meta.ttl> .
+  sflo:hasArtifactHistory <ontology/calculatedLedger/_knop/_meta/_history001> ;
+  sflo:currentArtifactHistory <ontology/calculatedLedger/_knop/_meta/_history001> ;
+  sflo:nextHistoryOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasWorkingLocatedFile <ontology/calculatedLedger/_knop/_meta/meta.ttl> ;
+  sflo:hasResourcePage <ontology/calculatedLedger/_knop/_meta/index.html> .
+
+<ontology/calculatedLedger/_knop/_meta/_history001> a sflo:ArtifactHistory ;
+  sflo:historyOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasHistoricalState <ontology/calculatedLedger/_knop/_meta/_history001/_s0001> ;
+  sflo:latestHistoricalState <ontology/calculatedLedger/_knop/_meta/_history001/_s0001> ;
+  sflo:nextStateOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasResourcePage <ontology/calculatedLedger/_knop/_meta/_history001/index.html> .
+
+<ontology/calculatedLedger/_knop/_meta/_history001/_s0001> a sflo:HistoricalState ;
+  sflo:stateOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasManifestation <ontology/calculatedLedger/_knop/_meta/_history001/_s0001/ttl> ;
+  sflo:locatedFileForState <ontology/calculatedLedger/_knop/_meta/_history001/_s0001/ttl/meta.ttl> ;
+  sflo:hasResourcePage <ontology/calculatedLedger/_knop/_meta/_history001/_s0001/index.html> .
+
+<ontology/calculatedLedger/_knop/_meta/_history001/_s0001/ttl> a sflo:ArtifactManifestation, sflo:RdfDocument ;
+  sflo:locatedFileForManifestation <ontology/calculatedLedger/_knop/_meta/_history001/_s0001/ttl/meta.ttl> ;
+  sflo:hasResourcePage <ontology/calculatedLedger/_knop/_meta/_history001/_s0001/ttl/index.html> .
 
 <ontology/calculatedLedger/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
-  sflo:hasWorkingLocatedFile <ontology/calculatedLedger/_knop/_inventory/inventory.ttl> .
+  sflo:hasArtifactHistory <ontology/calculatedLedger/_knop/_inventory/_history001> ;
+  sflo:currentArtifactHistory <ontology/calculatedLedger/_knop/_inventory/_history001> ;
+  sflo:nextHistoryOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasWorkingLocatedFile <ontology/calculatedLedger/_knop/_inventory/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/calculatedLedger/_knop/_inventory/index.html> .
 
 <ontology/calculatedLedger/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
   sflo:hasWorkingLocatedFile <ontology/calculatedLedger/_knop/_sources/sources.ttl> .
+
+<ontology/calculatedLedger/_knop/_inventory/_history001> a sflo:ArtifactHistory ;
+  sflo:historyOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasHistoricalState <ontology/calculatedLedger/_knop/_inventory/_history001/_s0001> ;
+  sflo:latestHistoricalState <ontology/calculatedLedger/_knop/_inventory/_history001/_s0001> ;
+  sflo:nextStateOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasResourcePage <ontology/calculatedLedger/_knop/_inventory/_history001/index.html> .
+
+<ontology/calculatedLedger/_knop/_inventory/_history001/_s0001> a sflo:HistoricalState ;
+  sflo:stateOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasManifestation <ontology/calculatedLedger/_knop/_inventory/_history001/_s0001/ttl> ;
+  sflo:locatedFileForState <ontology/calculatedLedger/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/calculatedLedger/_knop/_inventory/_history001/_s0001/index.html> .
+
+<ontology/calculatedLedger/_knop/_inventory/_history001/_s0001/ttl> a sflo:ArtifactManifestation, sflo:RdfDocument ;
+  sflo:locatedFileForManifestation <ontology/calculatedLedger/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/calculatedLedger/_knop/_inventory/_history001/_s0001/ttl/index.html> .
+
+<ontology/calculatedLedger/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/calculatedLedger/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
 
 <ontology/calculatedLedger/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
 
 <ontology/calculatedLedger/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
   sflo:hasWorkingLocatedFile <ontology/calculatedLedger/_knop/_references/references.ttl> .
 
-<ontology/calculatedLedger/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
-
-<ontology/calculatedLedger/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
-
 <ontology/calculatedLedger/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/calculatedLedger/_knop/_meta/_history001/_s0001/ttl/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/calculatedLedger/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/calculatedLedger/_knop/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/calculatedLedger/_knop/_meta/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/calculatedLedger/_knop/_meta/_history001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/calculatedLedger/_knop/_meta/_history001/_s0001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/calculatedLedger/_knop/_meta/_history001/_s0001/ttl/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/calculatedLedger/_knop/_inventory/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/calculatedLedger/_knop/_inventory/_history001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/calculatedLedger/_knop/_inventory/_history001/_s0001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/calculatedLedger/_knop/_inventory/_history001/_s0001/ttl/index.html> a sflo:ResourcePage, sflo:LocatedFile .

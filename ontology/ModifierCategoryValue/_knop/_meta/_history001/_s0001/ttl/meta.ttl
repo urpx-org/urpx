@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/ModifierCategoryValue/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/ModifierCategoryValue" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/ModifierCategoryValue/_knop/_inventory/inventory.ttl> .

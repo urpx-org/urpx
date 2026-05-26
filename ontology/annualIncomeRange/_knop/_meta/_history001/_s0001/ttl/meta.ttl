@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/annualIncomeRange/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/annualIncomeRange" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/annualIncomeRange/_knop/_inventory/inventory.ttl> .

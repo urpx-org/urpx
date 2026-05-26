@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/reverse/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/reverse" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/reverse/_knop/_inventory/inventory.ttl> .

@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/shacl/HighlyDynamicPricesDocumentShape/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/shacl/HighlyDynamicPricesDocumentShape" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/shacl/HighlyDynamicPricesDocumentShape/_knop/_inventory/inventory.ttl> .

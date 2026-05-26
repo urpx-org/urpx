@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/AggregationMethodValue/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/AggregationMethodValue" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/AggregationMethodValue/_knop/_inventory/inventory.ttl> .

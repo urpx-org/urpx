@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/measuredLedger/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/measuredLedger" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/measuredLedger/_knop/_inventory/inventory.ttl> .

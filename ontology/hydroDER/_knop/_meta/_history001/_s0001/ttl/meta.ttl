@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/hydroDER/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/hydroDER" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/hydroDER/_knop/_inventory/inventory.ttl> .

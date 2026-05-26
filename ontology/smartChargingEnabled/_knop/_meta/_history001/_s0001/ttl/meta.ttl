@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/smartChargingEnabled/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/smartChargingEnabled" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/smartChargingEnabled/_knop/_inventory/inventory.ttl> .

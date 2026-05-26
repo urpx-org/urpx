@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/hasHolidayCalendar/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/hasHolidayCalendar" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/hasHolidayCalendar/_knop/_inventory/inventory.ttl> .

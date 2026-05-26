@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/shacl/LedgerTypeValueShape/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/shacl/LedgerTypeValueShape" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/shacl/LedgerTypeValueShape/_knop/_inventory/inventory.ttl> .

@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/winterPeakPattern/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/winterPeakPattern" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/winterPeakPattern/_knop/_inventory/inventory.ttl> .

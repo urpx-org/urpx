@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>urpx _inventory</title>
+  <link rel="canonical" href="https://urpx-org.github.io/urpx/ontology/demandConfiguration/_knop/_inventory">
+  <style>
+    :root { min-height: 100%; color-scheme: light; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f6f7f4; color: #20231f; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; background: linear-gradient(180deg, #f6f7f4 0%, #ebece7 100%); }
+    a { color: #1f5f85; text-decoration-thickness: 0.08em; text-underline-offset: 0.18em; }
+    main { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0 42px; flex: 1 0 auto; }
+    .wf-shell { display: grid; gap: 18px; min-width: 0; }
+    .wf-shell > * { min-width: 0; }
+    .wf-masthead { min-width: 0; }
+    .wf-page-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 4px; min-width: 0; }
+    .wf-eyebrow { margin: 0; color: #5e675d; font-size: 0.82rem; line-height: 1.2; letter-spacing: 0; font-weight: 700; }
+    .wf-breadcrumbs { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; }
+    .wf-breadcrumbs a { color: inherit; text-decoration-color: rgba(94, 103, 93, 0.45); }
+    .wf-mesh-favicon { flex: 0 0 auto; width: 32px; height: 32px; object-fit: contain; }
+    .wf-hero { border-top: 5px solid #435247; padding: 26px 0 12px; }
+    h1 { margin: 0; overflow-wrap: anywhere; font-size: clamp(1.7rem, 4vw, 2.7rem); line-height: 1.04; letter-spacing: 0; }
+    .wf-classes { margin: 8px 0 0; color: #687167; font-style: italic; }
+    .wf-classes a { color: inherit; text-decoration: underline; text-decoration-color: rgba(104, 113, 103, 0.34); text-decoration-thickness: 0.06em; text-underline-offset: 0.18em; }
+    .wf-summary { max-width: 820px; margin: 14px 0 0; color: #3f463f; font-size: 1.05rem; line-height: 1.6; }
+    .wf-metadata { width: 100%; margin-top: 24px; border-collapse: collapse; table-layout: fixed; border-top: 1px solid #cdd2ca; border-bottom: 1px solid #cdd2ca; }
+    .wf-metadata th, .wf-metadata td { padding: 10px 12px; border-top: 1px solid #e0e4dd; text-align: left; vertical-align: top; }
+    .wf-metadata tr:first-child th, .wf-metadata tr:first-child td { border-top: 0; }
+    .wf-metadata th { width: 180px; color: #4f594f; font-size: 0.78rem; line-height: 1.35; text-transform: uppercase; letter-spacing: 0; overflow-wrap: anywhere; word-break: break-word; }
+    .wf-metadata td { min-width: 0; overflow-wrap: anywhere; }
+    .wf-hero-metadata col.wf-metadata-key { width: 180px; }
+    .wf-child-identifiers { display: flex; flex-wrap: wrap; gap: 5px; align-items: baseline; min-width: 0; max-width: 100%; }
+    .wf-child-identifier { display: inline-block; padding: 0.08rem 0.36rem; border: 1px solid #cdd8cf; border-radius: 2px; background: #eef3ef; text-decoration: none; white-space: nowrap; }
+    .wf-child-identifier:hover, .wf-child-identifier:focus { background: #e0ebe4; border-color: #b8c8bc; }
+    .wf-child-identifiers-more { display: inline-block; max-width: 100%; min-width: 0; border: 0; border-radius: 0; background: transparent; }
+    .wf-child-identifiers-more[open] { flex: 1 1 100%; width: 100%; }
+    .wf-child-identifiers-more > summary { flex: 0 0 auto; display: inline-block; padding: 0.08rem 0.36rem; border: 1px solid #cdd8cf; border-radius: 2px; background: #eef3ef; color: #1f5f85; cursor: pointer; line-height: inherit; }
+    .wf-child-identifiers-more[open] > summary { margin-bottom: 5px; }
+    .wf-child-identifiers-overflow { display: flex; flex-wrap: wrap; gap: 5px; align-items: baseline; min-width: 0; max-width: 100%; }
+    .wf-child-identifiers-more > summary::-webkit-details-marker { display: none; }
+    .wf-child-identifiers-more > summary::marker { content: ""; }
+    .wf-source-summary { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline; min-width: 0; }
+    .wf-source-chain { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.28rem; max-width: 100%; padding: 0.16rem 0.22rem 0.16rem 0.5rem; border: 1px solid #c3d1c7; border-radius: 5px; background: #eef3ef; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.48); }
+    .wf-source-chain a { display: inline-flex; align-items: center; max-width: 100%; min-width: 0; text-decoration: none; white-space: nowrap; border-radius: 3px; }
+    .wf-source-root { font-weight: 750; }
+    .wf-source-version-chain { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.22rem; max-width: 100%; min-width: 0; padding: 0.12rem 0.14rem 0.12rem 0.38rem; border: 1px solid #bfd0c4; border-radius: 4px; background: #dfe9e3; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.36); }
+    .wf-source-version-history { font-weight: 650; }
+    .wf-source-version { padding: 0.06rem 0.34rem; border: 1px solid #bdcec3; background: #f8fbf8; font-weight: 650; }
+    .wf-source-chain a:hover, .wf-source-chain a:focus { background: #d2e0d7; outline: 0; }
+    .wf-source-version:hover, .wf-source-version:focus { background: #edf5ef; }
+    .wf-term { cursor: help; border-bottom: 1px dotted currentColor; }
+    .wf-term-link { color: inherit; border-bottom: 0; text-decoration: underline; text-decoration-color: rgba(79, 89, 79, 0.35); text-decoration-thickness: 0.06em; text-underline-offset: 0.18em; }
+    .wf-term-link:hover, .wf-term-link:focus { text-decoration-color: currentColor; }
+    .wf-date-tip { position: relative; display: inline-block; }
+    .wf-date-tip::after { content: attr(data-tooltip); position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%); opacity: 0; pointer-events: none; background: rgba(27, 32, 27, 0.94); color: #fff; border-radius: 5px; padding: 5px 7px; font-size: 0.78rem; white-space: nowrap; transition: opacity 120ms ease; }
+    .wf-date-tip:hover::after, .wf-date-tip:focus::after { opacity: 1; }
+    .wf-section, .wf-source { margin-top: 24px; min-width: 0; }
+    h2 { margin: 0 0 12px; font-size: 1rem; line-height: 1.25; letter-spacing: 0; color: #2f382f; }
+    ul { margin: 0; padding-left: 1.2rem; }
+    li { margin: 0.45rem 0; line-height: 1.45; }
+    code, pre { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+    code { background: #e9ece6; border-radius: 4px; padding: 0.12rem 0.25rem; }
+    details { border: 1px solid #c9cec7; border-radius: 8px; background: #fff; min-width: 0; }
+    details + details { margin-top: 12px; }
+    summary { cursor: pointer; padding: 12px 14px; font-weight: 750; }
+    .wf-children { padding-bottom: 12px; }
+    .wf-children .wf-metadata { margin-top: 0; border-bottom: 0; }
+    .wf-properties { padding-bottom: 12px; }
+    .wf-properties .wf-metadata { margin-top: 0; border-bottom: 0; }
+    .wf-properties .wf-metadata th, .wf-blank-nodes .wf-metadata th { text-transform: none; }
+    .wf-blank-nodes { padding-bottom: 12px; }
+    .wf-blank-nodes .wf-metadata { margin-top: 0; border-bottom: 0; }
+    .wf-blank-node-code { max-height: 24rem; padding: 12px; border: 1px solid #d7dcd4; border-radius: 6px; font-size: 0.82rem; }
+    .wf-references { padding-bottom: 12px; }
+    .wf-reference-groups { display: grid; gap: 8px; padding: 0 14px 4px; }
+    .wf-reference-group { background: #f8faf7; border-color: #d5dbd3; }
+    .wf-reference-group ul { padding: 0 14px 12px 1.6rem; }
+    .wf-history { padding-bottom: 12px; }
+    .wf-history-tree { display: grid; gap: 10px; padding: 0 14px 4px; }
+    .wf-history-node { border: 1px solid #d5dbd3; border-radius: 8px; padding: 10px; }
+    .wf-history-node + .wf-history-node, .wf-history-node .wf-history-node { margin-top: 8px; }
+    .wf-history-node--history { background: #f8faf7; }
+    .wf-history-node--state { background: #eef3ef; }
+    .wf-history-node--manifestation { background: #e7eee9; }
+    .wf-history-node--file { background: #dfe8e2; }
+    .wf-history-node-header { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+    .wf-history-node > summary.wf-history-node-header { display: list-item; padding: 0; }
+    .wf-history-class { color: #687167; font-style: italic; font-size: 0.85rem; }
+    .wf-history-file-iri { font-size: 0.82rem; overflow-wrap: anywhere; }
+    .wf-history-gap { display: flex; align-items: center; justify-content: center; min-height: 28px; color: #687167; font-size: 1.15rem; line-height: 1; }
+    .wf-source-meta { display: flex; flex-wrap: wrap; gap: 10px; padding: 0 14px 12px; color: #596259; font-size: 0.88rem; }
+    .wf-source-omitted { margin: 0; padding: 0 14px 14px; color: #596259; line-height: 1.45; }
+    .wf-source-image-preview { display: block; max-width: min(320px, calc(100% - 28px)); max-height: 220px; margin: 0 14px 14px; padding: 12px; border: 1px solid #d7dcd4; border-radius: 6px; background: #f8faf7; object-fit: contain; }
+    pre { margin: 0; width: 100%; max-width: 100%; max-height: 64vh; overflow: auto; border-top: 1px solid #d7dcd4; background: #0d1117; color: #e6edf3; padding: 16px; font-size: 0.86rem; line-height: 1.55; tab-size: 2; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; }
+    pre code { display: block; min-width: 0; background: transparent; color: inherit; border-radius: 0; padding: 0; white-space: inherit; overflow-wrap: inherit; word-break: inherit; }
+    pre code span { overflow-wrap: inherit; word-break: inherit; }
+    .wf-generated { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 8px 0 32px; text-align: center; color: rgba(49, 57, 49, 0.42); font-size: 0.78rem; flex: 0 0 auto; }
+    .wf-generated a { color: inherit; font-weight: 700; }
+  </style>
+
+  <script>
+    const canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (canonicalLink && location.pathname.endsWith("/") && !location.search && !location.hash) {
+      const canonicalUrl = new URL(canonicalLink.href);
+      if (canonicalUrl.origin === location.origin && canonicalUrl.pathname === location.pathname.slice(0, -1)) {
+        history.replaceState(null, "", canonicalUrl.pathname);
+      }
+    }
+  </script>
+</head>
+<body>
+  <main>
+    <article class="wf-shell">
+      <header class="wf-masthead">
+        <div class="wf-page-header">
+          <nav class="wf-eyebrow wf-breadcrumbs" aria-label="Breadcrumb">
+<a href="/urpx">urpx</a> <span aria-hidden="true">/</span> <a href="/urpx/ontology">ontology</a> <span aria-hidden="true">/</span> <a href="/urpx/ontology/demandConfiguration">demandConfiguration</a> <span aria-hidden="true">/</span> <a href="/urpx/ontology/demandConfiguration/_knop">_knop</a> <span aria-hidden="true">/</span> <span aria-current="page">_inventory</span>
+          </nav>
+
+        </div>
+        <div class="wf-hero">
+        <h1>_inventory</h1>
+        <p class="wf-classes">a <a href="https://semantic-flow.github.io/sflo/ontology/DigitalArtifact">sflo:DigitalArtifact</a>, <a href="https://semantic-flow.github.io/sflo/ontology/KnopInventory">sflo:KnopInventory</a>, <a href="https://semantic-flow.github.io/sflo/ontology/RdfDocument">sflo:RdfDocument</a></p>
+        <p class="wf-summary">Inventory for ontology/demandConfiguration/_knop</p>
+        <table class="wf-metadata wf-hero-metadata">
+          <colgroup>
+            <col class="wf-metadata-key">
+            <col>
+            <col class="wf-metadata-key">
+            <col>
+          </colgroup>
+          <tbody>
+          <tr><th scope="row">Canonical IRI</th><td colspan="3"><span>https://urpx-org.github.io/urpx/ontology/demandConfiguration/_knop/_inventory</span></td></tr>
+          </tbody>
+        </table>
+
+        </div>
+      </header>
+    <section class="wf-section">
+      <details class="wf-properties" open>
+        <summary>Properties</summary>
+        <table class="wf-metadata">
+          <tbody>
+          <tr><th scope="row"><a class="wf-term wf-term-link" href="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" title="http://www.w3.org/1999/02/22-rdf-syntax-ns#type">rdf:type</a></th><td><a href="https://semantic-flow.github.io/sflo/ontology/DigitalArtifact">sflo:DigitalArtifact</a></td></tr>
+          <tr><th scope="row"><a class="wf-term wf-term-link" href="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" title="http://www.w3.org/1999/02/22-rdf-syntax-ns#type">rdf:type</a></th><td><a href="https://semantic-flow.github.io/sflo/ontology/KnopInventory">sflo:KnopInventory</a></td></tr>
+          <tr><th scope="row"><a class="wf-term wf-term-link" href="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" title="http://www.w3.org/1999/02/22-rdf-syntax-ns#type">rdf:type</a></th><td><a href="https://semantic-flow.github.io/sflo/ontology/RdfDocument">sflo:RdfDocument</a></td></tr>
+          <tr><th scope="row"><a class="wf-term wf-term-link" href="https://semantic-flow.github.io/sflo/ontology/currentArtifactHistory" title="https://semantic-flow.github.io/sflo/ontology/currentArtifactHistory">sflo:currentArtifactHistory</a></th><td><a href="https://urpx-org.github.io/urpx/ontology/demandConfiguration/_knop/_inventory/_history001">https://urpx-org.github.io/urpx/ontology/demandConfiguration/_knop/_inventory/_history001</a></td></tr>
+          <tr><th scope="row"><a class="wf-term wf-term-link" href="https://semantic-flow.github.io/sflo/ontology/hasArtifactHistory" title="https://semantic-flow.github.io/sflo/ontology/hasArtifactHistory">sflo:hasArtifactHistory</a></th><td><a href="https://urpx-org.github.io/urpx/ontology/demandConfiguration/_knop/_inventory/_history001">https://urpx-org.github.io/urpx/ontology/demandConfiguration/_knop/_inventory/_history001</a></td></tr>
+          <tr><th scope="row"><a class="wf-term wf-term-link" href="https://semantic-flow.github.io/sflo/ontology/hasResourcePage" title="https://semantic-flow.github.io/sflo/ontology/hasResourcePage">sflo:hasResourcePage</a></th><td><a href="https://urpx-org.github.io/urpx/ontology/demandConfiguration/_knop/_inventory/index.html">https://urpx-org.github.io/urpx/ontology/demandConfiguration/_knop/_inventory/index.html</a></td></tr>
+          <tr><th scope="row"><a class="wf-term wf-term-link" href="https://semantic-flow.github.io/sflo/ontology/hasWorkingLocatedFile" title="https://semantic-flow.github.io/sflo/ontology/hasWorkingLocatedFile">sflo:hasWorkingLocatedFile</a></th><td><a href="https://urpx-org.github.io/urpx/ontology/demandConfiguration/_knop/_inventory/inventory.ttl">https://urpx-org.github.io/urpx/ontology/demandConfiguration/_knop/_inventory/inventory.ttl</a></td></tr>
+          <tr><th scope="row"><a class="wf-term wf-term-link" href="https://semantic-flow.github.io/sflo/ontology/nextHistoryOrdinal" title="https://semantic-flow.github.io/sflo/ontology/nextHistoryOrdinal">sflo:nextHistoryOrdinal</a></th><td><span>2</span></td></tr>
+          </tbody>
+        </table>
+      </details>
+    </section>
+
+    <section class="wf-source">
+      <details open>
+        <summary>Latest historical manifestation file</summary>
+        <div class="wf-source-meta">
+          <span>ontology/demandConfiguration/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl</span>
+          <a href="/urpx/ontology/demandConfiguration/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl">Raw file</a>
+        </div>
+<pre class="shiki github-dark-default" style="background-color:#0d1117;color:#e6edf3" tabindex="0"><code><span class="line"><span style="color:#FF7B72">@base </span><span style="color:#FFA657">&#x3C;https://urpx-org.github.io/urpx/></span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"><span style="color:#FF7B72">@prefix sflo:</span><span style="color:#FFA657"> &#x3C;https://semantic-flow.github.io/sflo/ontology/></span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"><span style="color:#FF7B72">@prefix xsd:</span><span style="color:#FFA657"> &#x3C;http://www.w3.org/2001/XMLSchema#></span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">Knop</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasKnopMetadata</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_meta></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasKnopInventory</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_inventory></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasKnopSourceRegistry</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_sources></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasExtractionSource</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_sources#extraction-source></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasReferenceCatalog</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_references></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasWorkingKnopInventoryFile</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_inventory/inventory.ttl></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasResourcePage</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/index.html></span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_meta></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">KnopMetadata</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">DigitalArtifact</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">RdfDocument</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasArtifactHistory</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_meta/_history001></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">currentArtifactHistory</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_meta/_history001></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">nextHistoryOrdinal</span><span style="color:#A5D6FF"> "2"</span><span style="color:#E6EDF3">^^</span><span style="color:#FF7B72">xsd:</span><span style="color:#79C0FF">nonNegativeInteger</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasWorkingLocatedFile</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_meta/meta.ttl></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasResourcePage</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_meta/index.html></span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_meta/_history001></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">ArtifactHistory</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">historyOrdinal</span><span style="color:#A5D6FF"> "1"</span><span style="color:#E6EDF3">^^</span><span style="color:#FF7B72">xsd:</span><span style="color:#79C0FF">nonNegativeInteger</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasHistoricalState</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_meta/_history001/_s0001></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">latestHistoricalState</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_meta/_history001/_s0001></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">nextStateOrdinal</span><span style="color:#A5D6FF"> "2"</span><span style="color:#E6EDF3">^^</span><span style="color:#FF7B72">xsd:</span><span style="color:#79C0FF">nonNegativeInteger</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasResourcePage</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_meta/_history001/index.html></span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_meta/_history001/_s0001></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">HistoricalState</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">stateOrdinal</span><span style="color:#A5D6FF"> "1"</span><span style="color:#E6EDF3">^^</span><span style="color:#FF7B72">xsd:</span><span style="color:#79C0FF">nonNegativeInteger</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasManifestation</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_meta/_history001/_s0001/ttl></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">locatedFileForState</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_meta/_history001/_s0001/ttl/meta.ttl></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasResourcePage</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_meta/_history001/_s0001/index.html></span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_meta/_history001/_s0001/ttl></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">ArtifactManifestation</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">RdfDocument</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">locatedFileForManifestation</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_meta/_history001/_s0001/ttl/meta.ttl></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasResourcePage</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_meta/_history001/_s0001/ttl/index.html></span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_inventory></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">KnopInventory</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">DigitalArtifact</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">RdfDocument</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasArtifactHistory</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_inventory/_history001></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">currentArtifactHistory</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_inventory/_history001></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">nextHistoryOrdinal</span><span style="color:#A5D6FF"> "2"</span><span style="color:#E6EDF3">^^</span><span style="color:#FF7B72">xsd:</span><span style="color:#79C0FF">nonNegativeInteger</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasWorkingLocatedFile</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_inventory/inventory.ttl></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasResourcePage</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_inventory/index.html></span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_sources></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">KnopSourceRegistry</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">DigitalArtifact</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">RdfDocument</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasWorkingLocatedFile</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_sources/sources.ttl></span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_inventory/_history001></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">ArtifactHistory</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">historyOrdinal</span><span style="color:#A5D6FF"> "1"</span><span style="color:#E6EDF3">^^</span><span style="color:#FF7B72">xsd:</span><span style="color:#79C0FF">nonNegativeInteger</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasHistoricalState</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_inventory/_history001/_s0001></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">latestHistoricalState</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_inventory/_history001/_s0001></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">nextStateOrdinal</span><span style="color:#A5D6FF"> "2"</span><span style="color:#E6EDF3">^^</span><span style="color:#FF7B72">xsd:</span><span style="color:#79C0FF">nonNegativeInteger</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasResourcePage</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_inventory/_history001/index.html></span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_inventory/_history001/_s0001></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">HistoricalState</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">stateOrdinal</span><span style="color:#A5D6FF"> "1"</span><span style="color:#E6EDF3">^^</span><span style="color:#FF7B72">xsd:</span><span style="color:#79C0FF">nonNegativeInteger</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasManifestation</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_inventory/_history001/_s0001/ttl></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">locatedFileForState</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasResourcePage</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_inventory/_history001/_s0001/index.html></span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_inventory/_history001/_s0001/ttl></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">ArtifactManifestation</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">RdfDocument</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">locatedFileForManifestation</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl></span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasResourcePage</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_inventory/_history001/_s0001/ttl/index.html></span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_meta/meta.ttl></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">LocatedFile</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">RdfDocument</span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_inventory/inventory.ttl></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">LocatedFile</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">RdfDocument</span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_sources/sources.ttl></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">LocatedFile</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">RdfDocument</span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_references></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">ReferenceCatalog</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">DigitalArtifact</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">RdfDocument</span><span style="color:#E6EDF3"> ;</span></span>
+<span class="line"><span style="color:#FF7B72">  sflo:</span><span style="color:#79C0FF">hasWorkingLocatedFile</span><span style="color:#FFA657"> &#x3C;ontology/demandConfiguration/_knop/_references/references.ttl></span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_references/references.ttl></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">LocatedFile</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">RdfDocument</span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_meta/_history001/_s0001/ttl/meta.ttl></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">LocatedFile</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">RdfDocument</span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">LocatedFile</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">RdfDocument</span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/index.html></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">ResourcePage</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">LocatedFile</span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_meta/index.html></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">ResourcePage</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">LocatedFile</span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_meta/_history001/index.html></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">ResourcePage</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">LocatedFile</span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_meta/_history001/_s0001/index.html></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">ResourcePage</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">LocatedFile</span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_meta/_history001/_s0001/ttl/index.html></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">ResourcePage</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">LocatedFile</span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_inventory/index.html></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">ResourcePage</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">LocatedFile</span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_inventory/_history001/index.html></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">ResourcePage</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">LocatedFile</span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_inventory/_history001/_s0001/index.html></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">ResourcePage</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">LocatedFile</span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFA657">&#x3C;ontology/demandConfiguration/_knop/_inventory/_history001/_s0001/ttl/index.html></span><span style="color:#FF7B72"> a</span><span style="color:#FF7B72"> sflo:</span><span style="color:#79C0FF">ResourcePage</span><span style="color:#E6EDF3">, </span><span style="color:#FF7B72">sflo:</span><span style="color:#79C0FF">LocatedFile</span><span style="color:#E6EDF3"> .</span></span>
+<span class="line"></span></code></pre>
+      </details>
+    </section>    <section class="wf-section">
+      <details class="wf-history">
+        <summary>History</summary>
+        <div class="wf-history-tree">
+          <details class="wf-history-node wf-history-node--history" open>
+            <summary class="wf-history-node-header"><a href="/urpx/ontology/demandConfiguration/_knop/_inventory/_history001">ontology/demandConfiguration/_knop/_inventory/_history001</a> <span class="wf-history-class">sflo:ArtifactHistory</span></summary>
+            <details class="wf-history-node wf-history-node--state" open>
+              <summary class="wf-history-node-header"><a href="/urpx/ontology/demandConfiguration/_knop/_inventory/_history001/_s0001">_s0001</a> <span class="wf-history-class">sflo:HistoricalState</span></summary>
+              <details class="wf-history-node wf-history-node--manifestation" open>
+                <summary class="wf-history-node-header"><a href="/urpx/ontology/demandConfiguration/_knop/_inventory/_history001/_s0001/ttl">ttl</a> <span class="wf-history-class">sflo:ArtifactManifestation</span></summary>
+                <div class="wf-history-node wf-history-node--file">
+                  <div class="wf-history-node-header"><a href="/urpx/ontology/demandConfiguration/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl" class="wf-history-file-iri">https://urpx-org.github.io/urpx/ontology/demandConfiguration/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl</a> <span class="wf-history-class">sflo:LocatedFile</span></div>
+                </div>
+              </details>
+            </details>
+          </details>
+        </div>
+      </details>
+    </section>
+
+    </article>
+  </main>
+  <footer class="wf-generated">
+    Generated on <span class="wf-term wf-date-tip" tabindex="0" title="2026-05-26T15:28:55.328Z" data-tooltip="2026-05-26T15:28:55.328Z">May 26, 2026</span> by <a href="https://github.com/semantic-flow/weave/">Weave</a>
+  </footer>
+</body>
+</html>

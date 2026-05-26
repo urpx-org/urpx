@@ -1,30 +1,96 @@
 @base <https://urpx-org.github.io/urpx/> .
 @prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <ontology/districtHeatingConnection/_knop> a sflo:Knop ;
   sflo:hasKnopMetadata <ontology/districtHeatingConnection/_knop/_meta> ;
   sflo:hasKnopInventory <ontology/districtHeatingConnection/_knop/_inventory> ;
-  sflo:hasReferenceCatalog <ontology/districtHeatingConnection/_knop/_references> ;
   sflo:hasKnopSourceRegistry <ontology/districtHeatingConnection/_knop/_sources> ;
   sflo:hasExtractionSource <ontology/districtHeatingConnection/_knop/_sources#extraction-source> ;
-  sflo:hasWorkingKnopInventoryFile <ontology/districtHeatingConnection/_knop/_inventory/inventory.ttl> .
+  sflo:hasReferenceCatalog <ontology/districtHeatingConnection/_knop/_references> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/districtHeatingConnection/_knop/_inventory/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/districtHeatingConnection/_knop/index.html> .
 
 <ontology/districtHeatingConnection/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
-  sflo:hasWorkingLocatedFile <ontology/districtHeatingConnection/_knop/_meta/meta.ttl> .
+  sflo:hasArtifactHistory <ontology/districtHeatingConnection/_knop/_meta/_history001> ;
+  sflo:currentArtifactHistory <ontology/districtHeatingConnection/_knop/_meta/_history001> ;
+  sflo:nextHistoryOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasWorkingLocatedFile <ontology/districtHeatingConnection/_knop/_meta/meta.ttl> ;
+  sflo:hasResourcePage <ontology/districtHeatingConnection/_knop/_meta/index.html> .
+
+<ontology/districtHeatingConnection/_knop/_meta/_history001> a sflo:ArtifactHistory ;
+  sflo:historyOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasHistoricalState <ontology/districtHeatingConnection/_knop/_meta/_history001/_s0001> ;
+  sflo:latestHistoricalState <ontology/districtHeatingConnection/_knop/_meta/_history001/_s0001> ;
+  sflo:nextStateOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasResourcePage <ontology/districtHeatingConnection/_knop/_meta/_history001/index.html> .
+
+<ontology/districtHeatingConnection/_knop/_meta/_history001/_s0001> a sflo:HistoricalState ;
+  sflo:stateOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasManifestation <ontology/districtHeatingConnection/_knop/_meta/_history001/_s0001/ttl> ;
+  sflo:locatedFileForState <ontology/districtHeatingConnection/_knop/_meta/_history001/_s0001/ttl/meta.ttl> ;
+  sflo:hasResourcePage <ontology/districtHeatingConnection/_knop/_meta/_history001/_s0001/index.html> .
+
+<ontology/districtHeatingConnection/_knop/_meta/_history001/_s0001/ttl> a sflo:ArtifactManifestation, sflo:RdfDocument ;
+  sflo:locatedFileForManifestation <ontology/districtHeatingConnection/_knop/_meta/_history001/_s0001/ttl/meta.ttl> ;
+  sflo:hasResourcePage <ontology/districtHeatingConnection/_knop/_meta/_history001/_s0001/ttl/index.html> .
 
 <ontology/districtHeatingConnection/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
-  sflo:hasWorkingLocatedFile <ontology/districtHeatingConnection/_knop/_inventory/inventory.ttl> .
+  sflo:hasArtifactHistory <ontology/districtHeatingConnection/_knop/_inventory/_history001> ;
+  sflo:currentArtifactHistory <ontology/districtHeatingConnection/_knop/_inventory/_history001> ;
+  sflo:nextHistoryOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasWorkingLocatedFile <ontology/districtHeatingConnection/_knop/_inventory/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/districtHeatingConnection/_knop/_inventory/index.html> .
 
 <ontology/districtHeatingConnection/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
   sflo:hasWorkingLocatedFile <ontology/districtHeatingConnection/_knop/_sources/sources.ttl> .
+
+<ontology/districtHeatingConnection/_knop/_inventory/_history001> a sflo:ArtifactHistory ;
+  sflo:historyOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasHistoricalState <ontology/districtHeatingConnection/_knop/_inventory/_history001/_s0001> ;
+  sflo:latestHistoricalState <ontology/districtHeatingConnection/_knop/_inventory/_history001/_s0001> ;
+  sflo:nextStateOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasResourcePage <ontology/districtHeatingConnection/_knop/_inventory/_history001/index.html> .
+
+<ontology/districtHeatingConnection/_knop/_inventory/_history001/_s0001> a sflo:HistoricalState ;
+  sflo:stateOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasManifestation <ontology/districtHeatingConnection/_knop/_inventory/_history001/_s0001/ttl> ;
+  sflo:locatedFileForState <ontology/districtHeatingConnection/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/districtHeatingConnection/_knop/_inventory/_history001/_s0001/index.html> .
+
+<ontology/districtHeatingConnection/_knop/_inventory/_history001/_s0001/ttl> a sflo:ArtifactManifestation, sflo:RdfDocument ;
+  sflo:locatedFileForManifestation <ontology/districtHeatingConnection/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/districtHeatingConnection/_knop/_inventory/_history001/_s0001/ttl/index.html> .
+
+<ontology/districtHeatingConnection/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/districtHeatingConnection/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
 
 <ontology/districtHeatingConnection/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
 
 <ontology/districtHeatingConnection/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
   sflo:hasWorkingLocatedFile <ontology/districtHeatingConnection/_knop/_references/references.ttl> .
 
-<ontology/districtHeatingConnection/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
-
-<ontology/districtHeatingConnection/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
-
 <ontology/districtHeatingConnection/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/districtHeatingConnection/_knop/_meta/_history001/_s0001/ttl/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/districtHeatingConnection/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/districtHeatingConnection/_knop/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/districtHeatingConnection/_knop/_meta/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/districtHeatingConnection/_knop/_meta/_history001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/districtHeatingConnection/_knop/_meta/_history001/_s0001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/districtHeatingConnection/_knop/_meta/_history001/_s0001/ttl/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/districtHeatingConnection/_knop/_inventory/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/districtHeatingConnection/_knop/_inventory/_history001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/districtHeatingConnection/_knop/_inventory/_history001/_s0001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/districtHeatingConnection/_knop/_inventory/_history001/_s0001/ttl/index.html> a sflo:ResourcePage, sflo:LocatedFile .

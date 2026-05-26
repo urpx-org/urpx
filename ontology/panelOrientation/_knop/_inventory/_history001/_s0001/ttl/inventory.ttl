@@ -1,0 +1,96 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<ontology/panelOrientation/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/panelOrientation/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/panelOrientation/_knop/_inventory> ;
+  sflo:hasKnopSourceRegistry <ontology/panelOrientation/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/panelOrientation/_knop/_sources#extraction-source> ;
+  sflo:hasReferenceCatalog <ontology/panelOrientation/_knop/_references> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/panelOrientation/_knop/_inventory/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/panelOrientation/_knop/index.html> .
+
+<ontology/panelOrientation/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasArtifactHistory <ontology/panelOrientation/_knop/_meta/_history001> ;
+  sflo:currentArtifactHistory <ontology/panelOrientation/_knop/_meta/_history001> ;
+  sflo:nextHistoryOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasWorkingLocatedFile <ontology/panelOrientation/_knop/_meta/meta.ttl> ;
+  sflo:hasResourcePage <ontology/panelOrientation/_knop/_meta/index.html> .
+
+<ontology/panelOrientation/_knop/_meta/_history001> a sflo:ArtifactHistory ;
+  sflo:historyOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasHistoricalState <ontology/panelOrientation/_knop/_meta/_history001/_s0001> ;
+  sflo:latestHistoricalState <ontology/panelOrientation/_knop/_meta/_history001/_s0001> ;
+  sflo:nextStateOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasResourcePage <ontology/panelOrientation/_knop/_meta/_history001/index.html> .
+
+<ontology/panelOrientation/_knop/_meta/_history001/_s0001> a sflo:HistoricalState ;
+  sflo:stateOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasManifestation <ontology/panelOrientation/_knop/_meta/_history001/_s0001/ttl> ;
+  sflo:locatedFileForState <ontology/panelOrientation/_knop/_meta/_history001/_s0001/ttl/meta.ttl> ;
+  sflo:hasResourcePage <ontology/panelOrientation/_knop/_meta/_history001/_s0001/index.html> .
+
+<ontology/panelOrientation/_knop/_meta/_history001/_s0001/ttl> a sflo:ArtifactManifestation, sflo:RdfDocument ;
+  sflo:locatedFileForManifestation <ontology/panelOrientation/_knop/_meta/_history001/_s0001/ttl/meta.ttl> ;
+  sflo:hasResourcePage <ontology/panelOrientation/_knop/_meta/_history001/_s0001/ttl/index.html> .
+
+<ontology/panelOrientation/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasArtifactHistory <ontology/panelOrientation/_knop/_inventory/_history001> ;
+  sflo:currentArtifactHistory <ontology/panelOrientation/_knop/_inventory/_history001> ;
+  sflo:nextHistoryOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasWorkingLocatedFile <ontology/panelOrientation/_knop/_inventory/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/panelOrientation/_knop/_inventory/index.html> .
+
+<ontology/panelOrientation/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/panelOrientation/_knop/_sources/sources.ttl> .
+
+<ontology/panelOrientation/_knop/_inventory/_history001> a sflo:ArtifactHistory ;
+  sflo:historyOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasHistoricalState <ontology/panelOrientation/_knop/_inventory/_history001/_s0001> ;
+  sflo:latestHistoricalState <ontology/panelOrientation/_knop/_inventory/_history001/_s0001> ;
+  sflo:nextStateOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasResourcePage <ontology/panelOrientation/_knop/_inventory/_history001/index.html> .
+
+<ontology/panelOrientation/_knop/_inventory/_history001/_s0001> a sflo:HistoricalState ;
+  sflo:stateOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasManifestation <ontology/panelOrientation/_knop/_inventory/_history001/_s0001/ttl> ;
+  sflo:locatedFileForState <ontology/panelOrientation/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/panelOrientation/_knop/_inventory/_history001/_s0001/index.html> .
+
+<ontology/panelOrientation/_knop/_inventory/_history001/_s0001/ttl> a sflo:ArtifactManifestation, sflo:RdfDocument ;
+  sflo:locatedFileForManifestation <ontology/panelOrientation/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/panelOrientation/_knop/_inventory/_history001/_s0001/ttl/index.html> .
+
+<ontology/panelOrientation/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/panelOrientation/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/panelOrientation/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/panelOrientation/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/panelOrientation/_knop/_references/references.ttl> .
+
+<ontology/panelOrientation/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/panelOrientation/_knop/_meta/_history001/_s0001/ttl/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/panelOrientation/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/panelOrientation/_knop/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/panelOrientation/_knop/_meta/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/panelOrientation/_knop/_meta/_history001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/panelOrientation/_knop/_meta/_history001/_s0001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/panelOrientation/_knop/_meta/_history001/_s0001/ttl/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/panelOrientation/_knop/_inventory/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/panelOrientation/_knop/_inventory/_history001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/panelOrientation/_knop/_inventory/_history001/_s0001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/panelOrientation/_knop/_inventory/_history001/_s0001/ttl/index.html> a sflo:ResourcePage, sflo:LocatedFile .

@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/IntervalTypeValue/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/IntervalTypeValue" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/IntervalTypeValue/_knop/_inventory/inventory.ttl> .

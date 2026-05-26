@@ -1,30 +1,96 @@
 @base <https://urpx-org.github.io/urpx/> .
 @prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <ontology/potableWater/_knop> a sflo:Knop ;
   sflo:hasKnopMetadata <ontology/potableWater/_knop/_meta> ;
   sflo:hasKnopInventory <ontology/potableWater/_knop/_inventory> ;
-  sflo:hasReferenceCatalog <ontology/potableWater/_knop/_references> ;
   sflo:hasKnopSourceRegistry <ontology/potableWater/_knop/_sources> ;
   sflo:hasExtractionSource <ontology/potableWater/_knop/_sources#extraction-source> ;
-  sflo:hasWorkingKnopInventoryFile <ontology/potableWater/_knop/_inventory/inventory.ttl> .
+  sflo:hasReferenceCatalog <ontology/potableWater/_knop/_references> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/potableWater/_knop/_inventory/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/potableWater/_knop/index.html> .
 
 <ontology/potableWater/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
-  sflo:hasWorkingLocatedFile <ontology/potableWater/_knop/_meta/meta.ttl> .
+  sflo:hasArtifactHistory <ontology/potableWater/_knop/_meta/_history001> ;
+  sflo:currentArtifactHistory <ontology/potableWater/_knop/_meta/_history001> ;
+  sflo:nextHistoryOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasWorkingLocatedFile <ontology/potableWater/_knop/_meta/meta.ttl> ;
+  sflo:hasResourcePage <ontology/potableWater/_knop/_meta/index.html> .
+
+<ontology/potableWater/_knop/_meta/_history001> a sflo:ArtifactHistory ;
+  sflo:historyOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasHistoricalState <ontology/potableWater/_knop/_meta/_history001/_s0001> ;
+  sflo:latestHistoricalState <ontology/potableWater/_knop/_meta/_history001/_s0001> ;
+  sflo:nextStateOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasResourcePage <ontology/potableWater/_knop/_meta/_history001/index.html> .
+
+<ontology/potableWater/_knop/_meta/_history001/_s0001> a sflo:HistoricalState ;
+  sflo:stateOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasManifestation <ontology/potableWater/_knop/_meta/_history001/_s0001/ttl> ;
+  sflo:locatedFileForState <ontology/potableWater/_knop/_meta/_history001/_s0001/ttl/meta.ttl> ;
+  sflo:hasResourcePage <ontology/potableWater/_knop/_meta/_history001/_s0001/index.html> .
+
+<ontology/potableWater/_knop/_meta/_history001/_s0001/ttl> a sflo:ArtifactManifestation, sflo:RdfDocument ;
+  sflo:locatedFileForManifestation <ontology/potableWater/_knop/_meta/_history001/_s0001/ttl/meta.ttl> ;
+  sflo:hasResourcePage <ontology/potableWater/_knop/_meta/_history001/_s0001/ttl/index.html> .
 
 <ontology/potableWater/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
-  sflo:hasWorkingLocatedFile <ontology/potableWater/_knop/_inventory/inventory.ttl> .
+  sflo:hasArtifactHistory <ontology/potableWater/_knop/_inventory/_history001> ;
+  sflo:currentArtifactHistory <ontology/potableWater/_knop/_inventory/_history001> ;
+  sflo:nextHistoryOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasWorkingLocatedFile <ontology/potableWater/_knop/_inventory/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/potableWater/_knop/_inventory/index.html> .
 
 <ontology/potableWater/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
   sflo:hasWorkingLocatedFile <ontology/potableWater/_knop/_sources/sources.ttl> .
+
+<ontology/potableWater/_knop/_inventory/_history001> a sflo:ArtifactHistory ;
+  sflo:historyOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasHistoricalState <ontology/potableWater/_knop/_inventory/_history001/_s0001> ;
+  sflo:latestHistoricalState <ontology/potableWater/_knop/_inventory/_history001/_s0001> ;
+  sflo:nextStateOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasResourcePage <ontology/potableWater/_knop/_inventory/_history001/index.html> .
+
+<ontology/potableWater/_knop/_inventory/_history001/_s0001> a sflo:HistoricalState ;
+  sflo:stateOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasManifestation <ontology/potableWater/_knop/_inventory/_history001/_s0001/ttl> ;
+  sflo:locatedFileForState <ontology/potableWater/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/potableWater/_knop/_inventory/_history001/_s0001/index.html> .
+
+<ontology/potableWater/_knop/_inventory/_history001/_s0001/ttl> a sflo:ArtifactManifestation, sflo:RdfDocument ;
+  sflo:locatedFileForManifestation <ontology/potableWater/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/potableWater/_knop/_inventory/_history001/_s0001/ttl/index.html> .
+
+<ontology/potableWater/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/potableWater/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
 
 <ontology/potableWater/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
 
 <ontology/potableWater/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
   sflo:hasWorkingLocatedFile <ontology/potableWater/_knop/_references/references.ttl> .
 
-<ontology/potableWater/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
-
-<ontology/potableWater/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
-
 <ontology/potableWater/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/potableWater/_knop/_meta/_history001/_s0001/ttl/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/potableWater/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/potableWater/_knop/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/potableWater/_knop/_meta/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/potableWater/_knop/_meta/_history001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/potableWater/_knop/_meta/_history001/_s0001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/potableWater/_knop/_meta/_history001/_s0001/ttl/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/potableWater/_knop/_inventory/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/potableWater/_knop/_inventory/_history001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/potableWater/_knop/_inventory/_history001/_s0001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/potableWater/_knop/_inventory/_history001/_s0001/ttl/index.html> a sflo:ResourcePage, sflo:LocatedFile .

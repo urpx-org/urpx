@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/lessThanOrEqualOperator/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/lessThanOrEqualOperator" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/lessThanOrEqualOperator/_knop/_inventory/inventory.ttl> .

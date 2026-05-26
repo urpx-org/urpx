@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/communitySolarServiceRole/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/communitySolarServiceRole" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/communitySolarServiceRole/_knop/_inventory/inventory.ttl> .

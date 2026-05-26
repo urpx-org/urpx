@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/PhaseCodeKindValue/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/PhaseCodeKindValue" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/PhaseCodeKindValue/_knop/_inventory/inventory.ttl> .
