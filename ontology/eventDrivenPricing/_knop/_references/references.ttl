@@ -1,0 +1,13 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/eventDrivenPricing> sflo:hasReferenceLink <ontology/eventDrivenPricing/_knop/_references#reference001> .
+
+<ontology/eventDrivenPricing/_knop/_references#reference001> a sflo:ReferenceLink ;
+  sflo:referenceLinkFor <ontology/eventDrivenPricing> ;
+  sflo:hasReferenceRole <https://semantic-flow.github.io/sflo/ontology/referenceRole_canonical> ;
+  sflo:hasReferenceSource <ontology/eventDrivenPricing/_knop/_references#reference001-source> .
+
+<ontology/eventDrivenPricing/_knop/_references#reference001-source> a sflo:ReferenceSource ;
+  sflo:targetArtifact <ontology> ;
+  sflo:targetHistoricalState <ontology/releases/v0.2.0> .

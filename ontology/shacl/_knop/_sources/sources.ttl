@@ -1,0 +1,17 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/shacl/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/shacl/_knop/_sources/sources.ttl> ;
+  sflo:hasSourceBinding <ontology/shacl/_knop/_sources#payload-source> .
+
+<ontology/shacl/_knop/_sources#payload-source> a sflo:IntegrationSource ;
+  sflo:targetArtifact <https://urpx-org.github.io/urpx/ontology/shacl> ;
+  sflo:hasArtifactResolutionMode <https://semantic-flow.github.io/sflo/ontology/artifactResolutionMode_working> ;
+  sflo:hasRepositorySourceFloatingLocator [
+    a sflo:RepositorySourceFloatingLocator ;
+    sflo:sourceRepositoryUrl "git@github.com-fluxtailor:urpx-org/urpx.git" ;
+    sflo:sourceRepositoryPathFromRoot "shacl/urpx-shacl.ttl"
+  ] .
+
+<ontology/shacl/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .

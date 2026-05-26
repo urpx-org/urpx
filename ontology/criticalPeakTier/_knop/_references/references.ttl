@@ -1,0 +1,13 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/criticalPeakTier> sflo:hasReferenceLink <ontology/criticalPeakTier/_knop/_references#reference001> .
+
+<ontology/criticalPeakTier/_knop/_references#reference001> a sflo:ReferenceLink ;
+  sflo:referenceLinkFor <ontology/criticalPeakTier> ;
+  sflo:hasReferenceRole <https://semantic-flow.github.io/sflo/ontology/referenceRole_canonical> ;
+  sflo:hasReferenceSource <ontology/criticalPeakTier/_knop/_references#reference001-source> .
+
+<ontology/criticalPeakTier/_knop/_references#reference001-source> a sflo:ReferenceSource ;
+  sflo:targetArtifact <ontology> ;
+  sflo:targetHistoricalState <ontology/releases/v0.2.0> .

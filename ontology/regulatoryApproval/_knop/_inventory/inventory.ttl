@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/regulatoryApproval/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/regulatoryApproval/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/regulatoryApproval/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/regulatoryApproval/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/regulatoryApproval/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/regulatoryApproval/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/regulatoryApproval/_knop/_inventory/inventory.ttl> .
+
+<ontology/regulatoryApproval/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/regulatoryApproval/_knop/_meta/meta.ttl> .
+
+<ontology/regulatoryApproval/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/regulatoryApproval/_knop/_inventory/inventory.ttl> .
+
+<ontology/regulatoryApproval/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/regulatoryApproval/_knop/_sources/sources.ttl> .
+
+<ontology/regulatoryApproval/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/regulatoryApproval/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/regulatoryApproval/_knop/_references/references.ttl> .
+
+<ontology/regulatoryApproval/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/regulatoryApproval/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/regulatoryApproval/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

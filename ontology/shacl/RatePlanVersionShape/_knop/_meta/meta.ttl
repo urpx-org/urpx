@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/shacl/RatePlanVersionShape/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/shacl/RatePlanVersionShape" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/shacl/RatePlanVersionShape/_knop/_inventory/inventory.ttl> .

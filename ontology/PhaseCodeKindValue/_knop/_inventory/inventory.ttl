@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/PhaseCodeKindValue/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/PhaseCodeKindValue/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/PhaseCodeKindValue/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/PhaseCodeKindValue/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/PhaseCodeKindValue/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/PhaseCodeKindValue/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/PhaseCodeKindValue/_knop/_inventory/inventory.ttl> .
+
+<ontology/PhaseCodeKindValue/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/PhaseCodeKindValue/_knop/_meta/meta.ttl> .
+
+<ontology/PhaseCodeKindValue/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/PhaseCodeKindValue/_knop/_inventory/inventory.ttl> .
+
+<ontology/PhaseCodeKindValue/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/PhaseCodeKindValue/_knop/_sources/sources.ttl> .
+
+<ontology/PhaseCodeKindValue/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/PhaseCodeKindValue/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/PhaseCodeKindValue/_knop/_references/references.ttl> .
+
+<ontology/PhaseCodeKindValue/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/PhaseCodeKindValue/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/PhaseCodeKindValue/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

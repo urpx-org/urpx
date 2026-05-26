@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/LocationDataSet/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/LocationDataSet/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/LocationDataSet/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/LocationDataSet/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/LocationDataSet/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/LocationDataSet/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/LocationDataSet/_knop/_inventory/inventory.ttl> .
+
+<ontology/LocationDataSet/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/LocationDataSet/_knop/_meta/meta.ttl> .
+
+<ontology/LocationDataSet/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/LocationDataSet/_knop/_inventory/inventory.ttl> .
+
+<ontology/LocationDataSet/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/LocationDataSet/_knop/_sources/sources.ttl> .
+
+<ontology/LocationDataSet/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/LocationDataSet/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/LocationDataSet/_knop/_references/references.ttl> .
+
+<ontology/LocationDataSet/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/LocationDataSet/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/LocationDataSet/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

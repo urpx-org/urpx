@@ -1,0 +1,13 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/lessThanOrEqualOperator> sflo:hasReferenceLink <ontology/lessThanOrEqualOperator/_knop/_references#reference001> .
+
+<ontology/lessThanOrEqualOperator/_knop/_references#reference001> a sflo:ReferenceLink ;
+  sflo:referenceLinkFor <ontology/lessThanOrEqualOperator> ;
+  sflo:hasReferenceRole <https://semantic-flow.github.io/sflo/ontology/referenceRole_canonical> ;
+  sflo:hasReferenceSource <ontology/lessThanOrEqualOperator/_knop/_references#reference001-source> .
+
+<ontology/lessThanOrEqualOperator/_knop/_references#reference001-source> a sflo:ReferenceSource ;
+  sflo:targetArtifact <ontology> ;
+  sflo:targetHistoricalState <ontology/releases/v0.2.0> .

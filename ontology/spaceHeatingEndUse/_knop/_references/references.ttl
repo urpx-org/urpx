@@ -1,0 +1,13 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/spaceHeatingEndUse> sflo:hasReferenceLink <ontology/spaceHeatingEndUse/_knop/_references#reference001> .
+
+<ontology/spaceHeatingEndUse/_knop/_references#reference001> a sflo:ReferenceLink ;
+  sflo:referenceLinkFor <ontology/spaceHeatingEndUse> ;
+  sflo:hasReferenceRole <https://semantic-flow.github.io/sflo/ontology/referenceRole_canonical> ;
+  sflo:hasReferenceSource <ontology/spaceHeatingEndUse/_knop/_references#reference001-source> .
+
+<ontology/spaceHeatingEndUse/_knop/_references#reference001-source> a sflo:ReferenceSource ;
+  sflo:targetArtifact <ontology> ;
+  sflo:targetHistoricalState <ontology/releases/v0.2.0> .

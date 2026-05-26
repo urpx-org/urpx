@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/EligibilityRule/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/EligibilityRule" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/EligibilityRule/_knop/_inventory/inventory.ttl> .

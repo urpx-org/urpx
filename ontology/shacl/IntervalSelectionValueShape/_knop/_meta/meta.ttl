@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/shacl/IntervalSelectionValueShape/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/shacl/IntervalSelectionValueShape" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/shacl/IntervalSelectionValueShape/_knop/_inventory/inventory.ttl> .

@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/currentPrice/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/currentPrice/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/currentPrice/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/currentPrice/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/currentPrice/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/currentPrice/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/currentPrice/_knop/_inventory/inventory.ttl> .
+
+<ontology/currentPrice/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/currentPrice/_knop/_meta/meta.ttl> .
+
+<ontology/currentPrice/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/currentPrice/_knop/_inventory/inventory.ttl> .
+
+<ontology/currentPrice/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/currentPrice/_knop/_sources/sources.ttl> .
+
+<ontology/currentPrice/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/currentPrice/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/currentPrice/_knop/_references/references.ttl> .
+
+<ontology/currentPrice/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/currentPrice/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/currentPrice/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/ratedPowerCapacity/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/ratedPowerCapacity/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/ratedPowerCapacity/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/ratedPowerCapacity/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/ratedPowerCapacity/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/ratedPowerCapacity/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/ratedPowerCapacity/_knop/_inventory/inventory.ttl> .
+
+<ontology/ratedPowerCapacity/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/ratedPowerCapacity/_knop/_meta/meta.ttl> .
+
+<ontology/ratedPowerCapacity/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/ratedPowerCapacity/_knop/_inventory/inventory.ttl> .
+
+<ontology/ratedPowerCapacity/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/ratedPowerCapacity/_knop/_sources/sources.ttl> .
+
+<ontology/ratedPowerCapacity/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/ratedPowerCapacity/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/ratedPowerCapacity/_knop/_references/references.ttl> .
+
+<ontology/ratedPowerCapacity/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/ratedPowerCapacity/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/ratedPowerCapacity/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

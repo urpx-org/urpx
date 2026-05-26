@@ -1,0 +1,13 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/AssistanceEligibilityLevelValue> sflo:hasReferenceLink <ontology/AssistanceEligibilityLevelValue/_knop/_references#reference001> .
+
+<ontology/AssistanceEligibilityLevelValue/_knop/_references#reference001> a sflo:ReferenceLink ;
+  sflo:referenceLinkFor <ontology/AssistanceEligibilityLevelValue> ;
+  sflo:hasReferenceRole <https://semantic-flow.github.io/sflo/ontology/referenceRole_canonical> ;
+  sflo:hasReferenceSource <ontology/AssistanceEligibilityLevelValue/_knop/_references#reference001-source> .
+
+<ontology/AssistanceEligibilityLevelValue/_knop/_references#reference001-source> a sflo:ReferenceSource ;
+  sflo:targetArtifact <ontology> ;
+  sflo:targetHistoricalState <ontology/releases/v0.2.0> .

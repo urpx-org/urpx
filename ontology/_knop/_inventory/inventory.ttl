@@ -1,0 +1,130 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<ontology/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/_knop/_inventory> ;
+  sflo:hasKnopSourceRegistry <ontology/_knop/_sources> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/_knop/_inventory/inventory.ttl> ;
+  sflo:hasPayloadArtifact <ontology> ;
+  sflo:hasResourcePage <ontology/_knop/index.html> .
+
+<ontology> a sflo:PayloadArtifact, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasArtifactHistory <ontology/releases> ;
+  sflo:currentArtifactHistory <ontology/releases> ;
+  sflo:nextHistoryOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasRepositorySourceFloatingLocator [
+    a sflo:RepositorySourceFloatingLocator ;
+    sflo:sourceRepositoryUrl "git@github.com-fluxtailor:urpx-org/urpx.git" ;
+    sflo:sourceRepositoryPathFromRoot "ontology/urpx-ontology.ttl"
+  ] ;
+  sflo:hasResourcePage <ontology/index.html> .
+
+<ontology/releases> a sflo:ArtifactHistory ;
+  sflo:historyOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasHistoricalState <ontology/releases/v0.2.0> ;
+  sflo:latestHistoricalState <ontology/releases/v0.2.0> ;
+  sflo:nextStateOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasResourcePage <ontology/releases/index.html> .
+
+<ontology/releases/v0.2.0> a sflo:HistoricalState ;
+  sflo:stateOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasManifestation <ontology/releases/v0.2.0/ttl> ;
+  sflo:locatedFileForState <ontology/releases/v0.2.0/ttl/urpx-ontology.ttl> ;
+  sflo:hasResourcePage <ontology/releases/v0.2.0/index.html> .
+
+<ontology/releases/v0.2.0/ttl> a sflo:ArtifactManifestation, sflo:RdfDocument ;
+  sflo:locatedFileForManifestation <ontology/releases/v0.2.0/ttl/urpx-ontology.ttl> ;
+  sflo:hasResourcePage <ontology/releases/v0.2.0/ttl/index.html> .
+
+<ontology/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasArtifactHistory <ontology/_knop/_meta/_history001> ;
+  sflo:currentArtifactHistory <ontology/_knop/_meta/_history001> ;
+  sflo:nextHistoryOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasWorkingLocatedFile <ontology/_knop/_meta/meta.ttl> ;
+  sflo:hasResourcePage <ontology/_knop/_meta/index.html> .
+
+<ontology/_knop/_meta/_history001> a sflo:ArtifactHistory ;
+  sflo:historyOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasHistoricalState <ontology/_knop/_meta/_history001/_s0001> ;
+  sflo:latestHistoricalState <ontology/_knop/_meta/_history001/_s0001> ;
+  sflo:nextStateOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasResourcePage <ontology/_knop/_meta/_history001/index.html> .
+
+<ontology/_knop/_meta/_history001/_s0001> a sflo:HistoricalState ;
+  sflo:stateOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasManifestation <ontology/_knop/_meta/_history001/_s0001/ttl> ;
+  sflo:locatedFileForState <ontology/_knop/_meta/_history001/_s0001/ttl/meta.ttl> ;
+  sflo:hasResourcePage <ontology/_knop/_meta/_history001/_s0001/index.html> .
+
+<ontology/_knop/_meta/_history001/_s0001/ttl> a sflo:ArtifactManifestation, sflo:RdfDocument ;
+  sflo:locatedFileForManifestation <ontology/_knop/_meta/_history001/_s0001/ttl/meta.ttl> ;
+  sflo:hasResourcePage <ontology/_knop/_meta/_history001/_s0001/ttl/index.html> .
+
+<ontology/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasArtifactHistory <ontology/_knop/_inventory/_history001> ;
+  sflo:currentArtifactHistory <ontology/_knop/_inventory/_history001> ;
+  sflo:nextHistoryOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasWorkingLocatedFile <ontology/_knop/_inventory/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/_knop/_inventory/index.html> .
+
+<ontology/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/_knop/_sources/sources.ttl> .
+
+<ontology/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/_knop/_inventory/_history001> a sflo:ArtifactHistory ;
+  sflo:historyOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasHistoricalState <ontology/_knop/_inventory/_history001/_s0001> ;
+  sflo:latestHistoricalState <ontology/_knop/_inventory/_history001/_s0001> ;
+  sflo:nextStateOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasResourcePage <ontology/_knop/_inventory/_history001/index.html> .
+
+<ontology/_knop/_inventory/_history001/_s0001> a sflo:HistoricalState ;
+  sflo:stateOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasManifestation <ontology/_knop/_inventory/_history001/_s0001/ttl> ;
+  sflo:locatedFileForState <ontology/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/_knop/_inventory/_history001/_s0001/index.html> .
+
+<ontology/_knop/_inventory/_history001/_s0001/ttl> a sflo:ArtifactManifestation, sflo:RdfDocument ;
+  sflo:locatedFileForManifestation <ontology/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/_knop/_inventory/_history001/_s0001/ttl/index.html> .
+
+<ontology/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+
+
+<ontology/releases/v0.2.0/ttl/urpx-ontology.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/_knop/_meta/_history001/_s0001/ttl/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/_knop/_inventory/_history001/_s0001/ttl/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/releases/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/releases/v0.2.0/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/releases/v0.2.0/ttl/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/_knop/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/_knop/_meta/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/_knop/_meta/_history001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/_knop/_meta/_history001/_s0001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/_knop/_meta/_history001/_s0001/ttl/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/_knop/_inventory/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/_knop/_inventory/_history001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/_knop/_inventory/_history001/_s0001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/_knop/_inventory/_history001/_s0001/ttl/index.html> a sflo:ResourcePage, sflo:LocatedFile .

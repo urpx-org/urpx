@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/aggregatorOrganization/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/aggregatorOrganization/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/aggregatorOrganization/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/aggregatorOrganization/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/aggregatorOrganization/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/aggregatorOrganization/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/aggregatorOrganization/_knop/_inventory/inventory.ttl> .
+
+<ontology/aggregatorOrganization/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/aggregatorOrganization/_knop/_meta/meta.ttl> .
+
+<ontology/aggregatorOrganization/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/aggregatorOrganization/_knop/_inventory/inventory.ttl> .
+
+<ontology/aggregatorOrganization/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/aggregatorOrganization/_knop/_sources/sources.ttl> .
+
+<ontology/aggregatorOrganization/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/aggregatorOrganization/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/aggregatorOrganization/_knop/_references/references.ttl> .
+
+<ontology/aggregatorOrganization/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/aggregatorOrganization/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/aggregatorOrganization/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

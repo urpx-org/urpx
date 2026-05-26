@@ -1,0 +1,13 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/shacl/DynamicPricingTypeValueShape> sflo:hasReferenceLink <ontology/shacl/DynamicPricingTypeValueShape/_knop/_references#reference001> .
+
+<ontology/shacl/DynamicPricingTypeValueShape/_knop/_references#reference001> a sflo:ReferenceLink ;
+  sflo:referenceLinkFor <ontology/shacl/DynamicPricingTypeValueShape> ;
+  sflo:hasReferenceRole <https://semantic-flow.github.io/sflo/ontology/referenceRole_canonical> ;
+  sflo:hasReferenceSource <ontology/shacl/DynamicPricingTypeValueShape/_knop/_references#reference001-source> .
+
+<ontology/shacl/DynamicPricingTypeValueShape/_knop/_references#reference001-source> a sflo:ReferenceSource ;
+  sflo:targetArtifact <ontology/shacl> ;
+  sflo:targetHistoricalState <ontology/shacl/releases/v0.2.0> .

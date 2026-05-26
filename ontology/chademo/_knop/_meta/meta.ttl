@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/chademo/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/chademo" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/chademo/_knop/_inventory/inventory.ttl> .

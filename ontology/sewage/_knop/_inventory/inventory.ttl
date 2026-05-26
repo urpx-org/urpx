@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/sewage/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/sewage/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/sewage/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/sewage/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/sewage/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/sewage/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/sewage/_knop/_inventory/inventory.ttl> .
+
+<ontology/sewage/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/sewage/_knop/_meta/meta.ttl> .
+
+<ontology/sewage/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/sewage/_knop/_inventory/inventory.ttl> .
+
+<ontology/sewage/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/sewage/_knop/_sources/sources.ttl> .
+
+<ontology/sewage/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/sewage/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/sewage/_knop/_references/references.ttl> .
+
+<ontology/sewage/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/sewage/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/sewage/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

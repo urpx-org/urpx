@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/shacl/DistributedEnergyResourceShape/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/shacl/DistributedEnergyResourceShape" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/shacl/DistributedEnergyResourceShape/_knop/_inventory/inventory.ttl> .

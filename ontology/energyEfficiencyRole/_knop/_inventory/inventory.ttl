@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/energyEfficiencyRole/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/energyEfficiencyRole/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/energyEfficiencyRole/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/energyEfficiencyRole/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/energyEfficiencyRole/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/energyEfficiencyRole/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/energyEfficiencyRole/_knop/_inventory/inventory.ttl> .
+
+<ontology/energyEfficiencyRole/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/energyEfficiencyRole/_knop/_meta/meta.ttl> .
+
+<ontology/energyEfficiencyRole/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/energyEfficiencyRole/_knop/_inventory/inventory.ttl> .
+
+<ontology/energyEfficiencyRole/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/energyEfficiencyRole/_knop/_sources/sources.ttl> .
+
+<ontology/energyEfficiencyRole/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/energyEfficiencyRole/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/energyEfficiencyRole/_knop/_references/references.ttl> .
+
+<ontology/energyEfficiencyRole/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/energyEfficiencyRole/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/energyEfficiencyRole/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/teslaSupercharger/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/teslaSupercharger/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/teslaSupercharger/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/teslaSupercharger/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/teslaSupercharger/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/teslaSupercharger/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/teslaSupercharger/_knop/_inventory/inventory.ttl> .
+
+<ontology/teslaSupercharger/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/teslaSupercharger/_knop/_meta/meta.ttl> .
+
+<ontology/teslaSupercharger/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/teslaSupercharger/_knop/_inventory/inventory.ttl> .
+
+<ontology/teslaSupercharger/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/teslaSupercharger/_knop/_sources/sources.ttl> .
+
+<ontology/teslaSupercharger/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/teslaSupercharger/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/teslaSupercharger/_knop/_references/references.ttl> .
+
+<ontology/teslaSupercharger/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/teslaSupercharger/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/teslaSupercharger/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

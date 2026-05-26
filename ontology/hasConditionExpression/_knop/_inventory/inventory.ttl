@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/hasConditionExpression/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/hasConditionExpression/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/hasConditionExpression/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/hasConditionExpression/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/hasConditionExpression/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/hasConditionExpression/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/hasConditionExpression/_knop/_inventory/inventory.ttl> .
+
+<ontology/hasConditionExpression/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/hasConditionExpression/_knop/_meta/meta.ttl> .
+
+<ontology/hasConditionExpression/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/hasConditionExpression/_knop/_inventory/inventory.ttl> .
+
+<ontology/hasConditionExpression/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/hasConditionExpression/_knop/_sources/sources.ttl> .
+
+<ontology/hasConditionExpression/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/hasConditionExpression/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/hasConditionExpression/_knop/_references/references.ttl> .
+
+<ontology/hasConditionExpression/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/hasConditionExpression/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/hasConditionExpression/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

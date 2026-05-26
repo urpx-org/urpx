@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/ratePlanUniqueIdentifier/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/ratePlanUniqueIdentifier" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/ratePlanUniqueIdentifier/_knop/_inventory/inventory.ttl> .

@@ -1,0 +1,13 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/IntervalAlignmentValue> sflo:hasReferenceLink <ontology/IntervalAlignmentValue/_knop/_references#reference001> .
+
+<ontology/IntervalAlignmentValue/_knop/_references#reference001> a sflo:ReferenceLink ;
+  sflo:referenceLinkFor <ontology/IntervalAlignmentValue> ;
+  sflo:hasReferenceRole <https://semantic-flow.github.io/sflo/ontology/referenceRole_canonical> ;
+  sflo:hasReferenceSource <ontology/IntervalAlignmentValue/_knop/_references#reference001-source> .
+
+<ontology/IntervalAlignmentValue/_knop/_references#reference001-source> a sflo:ReferenceSource ;
+  sflo:targetArtifact <ontology> ;
+  sflo:targetHistoricalState <ontology/releases/v0.2.0> .

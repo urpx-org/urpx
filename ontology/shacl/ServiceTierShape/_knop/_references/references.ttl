@@ -1,0 +1,13 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/shacl/ServiceTierShape> sflo:hasReferenceLink <ontology/shacl/ServiceTierShape/_knop/_references#reference001> .
+
+<ontology/shacl/ServiceTierShape/_knop/_references#reference001> a sflo:ReferenceLink ;
+  sflo:referenceLinkFor <ontology/shacl/ServiceTierShape> ;
+  sflo:hasReferenceRole <https://semantic-flow.github.io/sflo/ontology/referenceRole_canonical> ;
+  sflo:hasReferenceSource <ontology/shacl/ServiceTierShape/_knop/_references#reference001-source> .
+
+<ontology/shacl/ServiceTierShape/_knop/_references#reference001-source> a sflo:ReferenceSource ;
+  sflo:targetArtifact <ontology/shacl> ;
+  sflo:targetHistoricalState <ontology/shacl/releases/v0.2.0> .

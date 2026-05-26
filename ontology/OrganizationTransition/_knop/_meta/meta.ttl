@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/OrganizationTransition/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/OrganizationTransition" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/OrganizationTransition/_knop/_inventory/inventory.ttl> .

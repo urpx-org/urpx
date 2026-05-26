@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/AlternativeDimension/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/AlternativeDimension/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/AlternativeDimension/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/AlternativeDimension/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/AlternativeDimension/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/AlternativeDimension/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/AlternativeDimension/_knop/_inventory/inventory.ttl> .
+
+<ontology/AlternativeDimension/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/AlternativeDimension/_knop/_meta/meta.ttl> .
+
+<ontology/AlternativeDimension/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/AlternativeDimension/_knop/_inventory/inventory.ttl> .
+
+<ontology/AlternativeDimension/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/AlternativeDimension/_knop/_sources/sources.ttl> .
+
+<ontology/AlternativeDimension/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/AlternativeDimension/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/AlternativeDimension/_knop/_references/references.ttl> .
+
+<ontology/AlternativeDimension/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/AlternativeDimension/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/AlternativeDimension/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/MeteringConfigurationValue/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/MeteringConfigurationValue" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/MeteringConfigurationValue/_knop/_inventory/inventory.ttl> .

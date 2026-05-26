@@ -1,0 +1,17 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<_mesh> a sflo:SemanticMesh ;
+  sflo:meshBase "https://urpx-org.github.io/urpx/"^^xsd:anyURI ;
+  sflo:hasMeshInventory <_mesh/_inventory> .
+
+<_mesh/_meta> a sflo:MeshMetadata, sflo:DigitalArtifact, sflo:RdfDocument .
+
+<_mesh/_inventory> a sflo:MeshInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:currentArtifactHistory <_mesh/_inventory/_history001> ;
+  sflo:nextHistoryOrdinal "2"^^xsd:nonNegativeInteger .
+
+<_mesh/_inventory/_history001> a sflo:ArtifactHistory ;
+  sflo:latestHistoricalState <_mesh/_inventory/_history001/_s0004> ;
+  sflo:nextStateOrdinal "5"^^xsd:nonNegativeInteger .

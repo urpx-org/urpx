@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/shacl/AssistanceEligibilityLevelValueShape/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/shacl/AssistanceEligibilityLevelValueShape" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/shacl/AssistanceEligibilityLevelValueShape/_knop/_inventory/inventory.ttl> .

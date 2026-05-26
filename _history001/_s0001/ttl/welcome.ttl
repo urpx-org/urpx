@@ -1,0 +1,5 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://urpx-org.github.io/urpx> dcterms:title "URPX" ;
+  dcterms:description "The Utility Rate Plan Exchange ontology provides RDF, OWL, SHACL, and related resources for exchanging utility rate plan information." .

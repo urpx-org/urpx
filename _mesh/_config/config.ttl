@@ -1,0 +1,4 @@
+@prefix sfcfg: <https://semantic-flow.github.io/sflo/config/> .
+
+<> a sfcfg:MeshConfig ;
+  sfcfg:hasPublicationProfile sfcfg:publicationProfile_githubPages .

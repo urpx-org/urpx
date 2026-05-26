@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/adjustmentRenewable/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/adjustmentRenewable/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/adjustmentRenewable/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/adjustmentRenewable/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/adjustmentRenewable/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/adjustmentRenewable/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/adjustmentRenewable/_knop/_inventory/inventory.ttl> .
+
+<ontology/adjustmentRenewable/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/adjustmentRenewable/_knop/_meta/meta.ttl> .
+
+<ontology/adjustmentRenewable/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/adjustmentRenewable/_knop/_inventory/inventory.ttl> .
+
+<ontology/adjustmentRenewable/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/adjustmentRenewable/_knop/_sources/sources.ttl> .
+
+<ontology/adjustmentRenewable/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/adjustmentRenewable/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/adjustmentRenewable/_knop/_references/references.ttl> .
+
+<ontology/adjustmentRenewable/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/adjustmentRenewable/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/adjustmentRenewable/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/airSourceHeatPump/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/airSourceHeatPump/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/airSourceHeatPump/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/airSourceHeatPump/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/airSourceHeatPump/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/airSourceHeatPump/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/airSourceHeatPump/_knop/_inventory/inventory.ttl> .
+
+<ontology/airSourceHeatPump/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/airSourceHeatPump/_knop/_meta/meta.ttl> .
+
+<ontology/airSourceHeatPump/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/airSourceHeatPump/_knop/_inventory/inventory.ttl> .
+
+<ontology/airSourceHeatPump/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/airSourceHeatPump/_knop/_sources/sources.ttl> .
+
+<ontology/airSourceHeatPump/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/airSourceHeatPump/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/airSourceHeatPump/_knop/_references/references.ttl> .
+
+<ontology/airSourceHeatPump/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/airSourceHeatPump/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/airSourceHeatPump/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/lessThanOperator/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/lessThanOperator/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/lessThanOperator/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/lessThanOperator/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/lessThanOperator/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/lessThanOperator/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/lessThanOperator/_knop/_inventory/inventory.ttl> .
+
+<ontology/lessThanOperator/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/lessThanOperator/_knop/_meta/meta.ttl> .
+
+<ontology/lessThanOperator/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/lessThanOperator/_knop/_inventory/inventory.ttl> .
+
+<ontology/lessThanOperator/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/lessThanOperator/_knop/_sources/sources.ttl> .
+
+<ontology/lessThanOperator/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/lessThanOperator/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/lessThanOperator/_knop/_references/references.ttl> .
+
+<ontology/lessThanOperator/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/lessThanOperator/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/lessThanOperator/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

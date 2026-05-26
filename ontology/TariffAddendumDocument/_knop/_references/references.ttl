@@ -1,0 +1,13 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/TariffAddendumDocument> sflo:hasReferenceLink <ontology/TariffAddendumDocument/_knop/_references#reference001> .
+
+<ontology/TariffAddendumDocument/_knop/_references#reference001> a sflo:ReferenceLink ;
+  sflo:referenceLinkFor <ontology/TariffAddendumDocument> ;
+  sflo:hasReferenceRole <https://semantic-flow.github.io/sflo/ontology/referenceRole_canonical> ;
+  sflo:hasReferenceSource <ontology/TariffAddendumDocument/_knop/_references#reference001-source> .
+
+<ontology/TariffAddendumDocument/_knop/_references#reference001-source> a sflo:ReferenceSource ;
+  sflo:targetArtifact <ontology> ;
+  sflo:targetHistoricalState <ontology/releases/v0.2.0> .

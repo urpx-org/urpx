@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/expirationDate/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/expirationDate" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/expirationDate/_knop/_inventory/inventory.ttl> .

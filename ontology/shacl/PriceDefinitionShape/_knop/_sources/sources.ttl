@@ -1,0 +1,22 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/shacl/PriceDefinitionShape/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/shacl/PriceDefinitionShape/_knop/_sources/sources.ttl> ;
+  sflo:hasSourceBinding <ontology/shacl/PriceDefinitionShape/_knop/_sources#extraction-source> .
+
+<ontology/shacl/PriceDefinitionShape/_knop/_sources#extraction-source> a sflo:ExtractionSource ;
+  sflo:targetArtifact <ontology/shacl> ;
+  sflo:targetHistoricalState <ontology/shacl/releases/v0.2.0> ;
+  sflo:hasResolutionObservation <ontology/shacl/PriceDefinitionShape/_knop/_sources#extraction-source-observation-001> .
+
+<ontology/shacl/PriceDefinitionShape/_knop/_sources#extraction-source-observation-001> a sflo:ArtifactResolutionObservation ;
+  sflo:observedArtifactResolutionSpec [
+    a sflo:ArtifactResolutionSpec ;
+    sflo:targetHistoricalState <ontology/shacl/releases/v0.2.0> ;
+    sflo:targetManifestation <ontology/shacl/releases/v0.2.0/ttl> ;
+    sflo:targetLocatedFile <ontology/shacl/releases/v0.2.0/ttl/urpx-shacl.ttl>
+  ] ;
+  sflo:observedContentDigest "sha256:4682052b6a478292149c034361abb45123ca2355a7f7f4cd518ce4aedeeb6deb" .
+
+<ontology/shacl/PriceDefinitionShape/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .

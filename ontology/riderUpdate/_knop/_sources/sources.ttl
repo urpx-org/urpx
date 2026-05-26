@@ -1,0 +1,22 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/riderUpdate/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/riderUpdate/_knop/_sources/sources.ttl> ;
+  sflo:hasSourceBinding <ontology/riderUpdate/_knop/_sources#extraction-source> .
+
+<ontology/riderUpdate/_knop/_sources#extraction-source> a sflo:ExtractionSource ;
+  sflo:targetArtifact <ontology> ;
+  sflo:targetHistoricalState <ontology/releases/v0.2.0> ;
+  sflo:hasResolutionObservation <ontology/riderUpdate/_knop/_sources#extraction-source-observation-001> .
+
+<ontology/riderUpdate/_knop/_sources#extraction-source-observation-001> a sflo:ArtifactResolutionObservation ;
+  sflo:observedArtifactResolutionSpec [
+    a sflo:ArtifactResolutionSpec ;
+    sflo:targetHistoricalState <ontology/releases/v0.2.0> ;
+    sflo:targetManifestation <ontology/releases/v0.2.0/ttl> ;
+    sflo:targetLocatedFile <ontology/releases/v0.2.0/ttl/urpx-ontology.ttl>
+  ] ;
+  sflo:observedContentDigest "sha256:fbd5cc46b312aa1724188fa25ca8978eb54c5512397f472955f1680e1a2677a9" .
+
+<ontology/riderUpdate/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .

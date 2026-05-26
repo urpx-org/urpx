@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/singleFamily/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/singleFamily" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/singleFamily/_knop/_inventory/inventory.ttl> .

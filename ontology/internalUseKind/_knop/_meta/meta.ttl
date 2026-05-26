@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/internalUseKind/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/internalUseKind" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/internalUseKind/_knop/_inventory/inventory.ttl> .

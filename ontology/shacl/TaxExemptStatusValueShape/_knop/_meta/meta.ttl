@@ -1,0 +1,6 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/shacl/TaxExemptStatusValueShape/_knop> a sflo:Knop ;
+  sflo:designatorPath "ontology/shacl/TaxExemptStatusValueShape" ;
+  sflo:hasWorkingKnopInventoryFile <ontology/shacl/TaxExemptStatusValueShape/_knop/_inventory/inventory.ttl> .

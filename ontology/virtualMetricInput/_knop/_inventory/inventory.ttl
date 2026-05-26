@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/virtualMetricInput/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/virtualMetricInput/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/virtualMetricInput/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/virtualMetricInput/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/virtualMetricInput/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/virtualMetricInput/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/virtualMetricInput/_knop/_inventory/inventory.ttl> .
+
+<ontology/virtualMetricInput/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/virtualMetricInput/_knop/_meta/meta.ttl> .
+
+<ontology/virtualMetricInput/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/virtualMetricInput/_knop/_inventory/inventory.ttl> .
+
+<ontology/virtualMetricInput/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/virtualMetricInput/_knop/_sources/sources.ttl> .
+
+<ontology/virtualMetricInput/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/virtualMetricInput/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/virtualMetricInput/_knop/_references/references.ttl> .
+
+<ontology/virtualMetricInput/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/virtualMetricInput/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/virtualMetricInput/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

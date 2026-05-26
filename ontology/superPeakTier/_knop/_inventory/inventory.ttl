@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/superPeakTier/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/superPeakTier/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/superPeakTier/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/superPeakTier/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/superPeakTier/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/superPeakTier/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/superPeakTier/_knop/_inventory/inventory.ttl> .
+
+<ontology/superPeakTier/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/superPeakTier/_knop/_meta/meta.ttl> .
+
+<ontology/superPeakTier/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/superPeakTier/_knop/_inventory/inventory.ttl> .
+
+<ontology/superPeakTier/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/superPeakTier/_knop/_sources/sources.ttl> .
+
+<ontology/superPeakTier/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/superPeakTier/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/superPeakTier/_knop/_references/references.ttl> .
+
+<ontology/superPeakTier/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/superPeakTier/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/superPeakTier/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

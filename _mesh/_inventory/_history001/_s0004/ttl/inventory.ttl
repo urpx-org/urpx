@@ -1,0 +1,231 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+@prefix sfcfg: <https://semantic-flow.github.io/sflo/config/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<_mesh> a sflo:SemanticMesh ;
+  sflo:meshBase "https://urpx-org.github.io/urpx/"^^xsd:anyURI ;
+  sflo:hasMeshMetadata <_mesh/_meta> ;
+  sflo:hasMeshInventory <_mesh/_inventory> ;
+  sflo:hasKnop <_knop> ;
+  sflo:hasKnop <ontology/_knop> ;
+  sflo:hasKnop <ontology/shacl/_knop> ;
+  sflo:hasResourcePage <_mesh/index.html> .
+
+<_mesh/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/shacl/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/_knop/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<ontology/shacl/_knop/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_knop/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_meta> a sflo:MeshMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <_mesh/_meta/meta.ttl> ;
+  sflo:hasResourcePage <_mesh/_meta/index.html> ;
+  sflo:hasArtifactHistory <_mesh/_meta/_history001> ;
+  sflo:currentArtifactHistory <_mesh/_meta/_history001> ;
+  sflo:nextHistoryOrdinal "2"^^xsd:nonNegativeInteger .
+
+<_mesh/_meta/_history001> a sflo:ArtifactHistory ;
+  sflo:historyOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasHistoricalState <_mesh/_meta/_history001/_s0001> ;
+  sflo:latestHistoricalState <_mesh/_meta/_history001/_s0001> ;
+  sflo:nextStateOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasResourcePage <_mesh/_meta/_history001/index.html> .
+
+<_mesh/_meta/_history001/_s0001> a sflo:HistoricalState ;
+  sflo:stateOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasManifestation <_mesh/_meta/_history001/_s0001/ttl> ;
+  sflo:locatedFileForState <_mesh/_meta/_history001/_s0001/ttl/meta.ttl> ;
+  sflo:hasResourcePage <_mesh/_meta/_history001/_s0001/index.html> .
+
+<_mesh/_meta/_history001/_s0001/ttl> a sflo:ArtifactManifestation, sflo:RdfDocument ;
+  sflo:locatedFileForManifestation <_mesh/_meta/_history001/_s0001/ttl/meta.ttl> ;
+  sflo:hasResourcePage <_mesh/_meta/_history001/_s0001/ttl/index.html> .
+
+<_mesh/_meta/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_meta/_history001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_meta/_history001/_s0001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_meta/_history001/_s0001/ttl/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_inventory> a sflo:MeshInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasArtifactHistory <_mesh/_inventory/_history001> ;
+  sflo:hasWorkingLocatedFile <_mesh/_inventory/inventory.ttl> ;
+  sflo:hasResourcePage <_mesh/_inventory/index.html> .
+
+<_mesh/_inventory/_history001> a sflo:ArtifactHistory ;
+  sflo:historyOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasHistoricalState <_mesh/_inventory/_history001/_s0001> ;
+  sflo:hasHistoricalState <_mesh/_inventory/_history001/_s0002> ;
+  sflo:hasHistoricalState <_mesh/_inventory/_history001/_s0003> ;
+  sflo:hasHistoricalState <_mesh/_inventory/_history001/_s0004> ;
+  sflo:hasResourcePage <_mesh/_inventory/_history001/index.html> .
+
+<_mesh/_inventory/_history001/_s0001> a sflo:HistoricalState ;
+  sflo:stateOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasManifestation <_mesh/_inventory/_history001/_s0001/ttl> ;
+  sflo:locatedFileForState <_mesh/_inventory/_history001/_s0001/ttl/inventory.ttl> ;
+  sflo:hasResourcePage <_mesh/_inventory/_history001/_s0001/index.html> .
+
+<_mesh/_inventory/_history001/_s0001/ttl> a sflo:ArtifactManifestation, sflo:RdfDocument ;
+  sflo:locatedFileForManifestation <_mesh/_inventory/_history001/_s0001/ttl/inventory.ttl> ;
+  sflo:hasResourcePage <_mesh/_inventory/_history001/_s0001/ttl/index.html> .
+
+<_mesh/_inventory/_history001/_s0002> a sflo:HistoricalState ;
+  sflo:stateOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:previousHistoricalState <_mesh/_inventory/_history001/_s0001> ;
+  sflo:hasManifestation <_mesh/_inventory/_history001/_s0002/ttl> ;
+  sflo:locatedFileForState <_mesh/_inventory/_history001/_s0002/ttl/inventory.ttl> ;
+  sflo:hasResourcePage <_mesh/_inventory/_history001/_s0002/index.html> .
+
+<_mesh/_inventory/_history001/_s0002/ttl> a sflo:ArtifactManifestation, sflo:RdfDocument ;
+  sflo:locatedFileForManifestation <_mesh/_inventory/_history001/_s0002/ttl/inventory.ttl> ;
+  sflo:hasResourcePage <_mesh/_inventory/_history001/_s0002/ttl/index.html> .
+
+<_mesh/_inventory/_history001/_s0003> a sflo:HistoricalState ;
+  sflo:stateOrdinal "3"^^xsd:nonNegativeInteger ;
+  sflo:previousHistoricalState <_mesh/_inventory/_history001/_s0002> ;
+  sflo:hasManifestation <_mesh/_inventory/_history001/_s0003/ttl> ;
+  sflo:locatedFileForState <_mesh/_inventory/_history001/_s0003/ttl/inventory.ttl> ;
+  sflo:hasResourcePage <_mesh/_inventory/_history001/_s0003/index.html> .
+
+<_mesh/_inventory/_history001/_s0003/ttl> a sflo:ArtifactManifestation, sflo:RdfDocument ;
+  sflo:locatedFileForManifestation <_mesh/_inventory/_history001/_s0003/ttl/inventory.ttl> ;
+  sflo:hasResourcePage <_mesh/_inventory/_history001/_s0003/ttl/index.html> .
+
+<_mesh/_inventory/_history001/_s0004> a sflo:HistoricalState ;
+  sflo:stateOrdinal "4"^^xsd:nonNegativeInteger ;
+  sflo:previousHistoricalState <_mesh/_inventory/_history001/_s0003> ;
+  sflo:hasManifestation <_mesh/_inventory/_history001/_s0004/ttl> ;
+  sflo:locatedFileForState <_mesh/_inventory/_history001/_s0004/ttl/inventory.ttl> ;
+  sflo:hasResourcePage <_mesh/_inventory/_history001/_s0004/index.html> .
+
+<_mesh/_inventory/_history001/_s0004/ttl> a sflo:ArtifactManifestation, sflo:RdfDocument ;
+  sflo:locatedFileForManifestation <_mesh/_inventory/_history001/_s0004/ttl/inventory.ttl> ;
+  sflo:hasResourcePage <_mesh/_inventory/_history001/_s0004/ttl/index.html> .
+
+<_mesh/_inventory/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_inventory/_history001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_inventory/_history001/_s0001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_inventory/_history001/_s0001/ttl/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_inventory/_history001/_s0002/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_inventory/_history001/_s0002/ttl/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_inventory/_history001/_s0003/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_inventory/_history001/_s0003/ttl/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_inventory/_history001/_s0004/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_inventory/_history001/_s0004/ttl/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_config> a sfcfg:MeshConfig, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <_mesh/_config/config.ttl> ;
+  sflo:hasResourcePage <_mesh/_config/index.html> ;
+  sflo:hasArtifactHistory <_mesh/_config/_history001> ;
+  sflo:currentArtifactHistory <_mesh/_config/_history001> ;
+  sflo:nextHistoryOrdinal "2"^^xsd:nonNegativeInteger .
+
+<_mesh/_config/_history001> a sflo:ArtifactHistory ;
+  sflo:historyOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasHistoricalState <_mesh/_config/_history001/_s0001> ;
+  sflo:latestHistoricalState <_mesh/_config/_history001/_s0001> ;
+  sflo:nextStateOrdinal "2"^^xsd:nonNegativeInteger ;
+  sflo:hasResourcePage <_mesh/_config/_history001/index.html> .
+
+<_mesh/_config/_history001/_s0001> a sflo:HistoricalState ;
+  sflo:stateOrdinal "1"^^xsd:nonNegativeInteger ;
+  sflo:hasManifestation <_mesh/_config/_history001/_s0001/ttl> ;
+  sflo:locatedFileForState <_mesh/_config/_history001/_s0001/ttl/config.ttl> ;
+  sflo:hasResourcePage <_mesh/_config/_history001/_s0001/index.html> .
+
+<_mesh/_config/_history001/_s0001/ttl> a sflo:ArtifactManifestation, sflo:RdfDocument ;
+  sflo:locatedFileForManifestation <_mesh/_config/_history001/_s0001/ttl/config.ttl> ;
+  sflo:hasResourcePage <_mesh/_config/_history001/_s0001/ttl/index.html> .
+
+<_mesh/_config/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_config/_history001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_config/_history001/_s0001/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_config/_history001/_s0001/ttl/index.html> a sflo:ResourcePage, sflo:LocatedFile .
+
+<_mesh/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<_mesh/_meta/_history001/_s0001/ttl/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<_mesh/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<_mesh/_inventory/_history001/_s0001/ttl/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<_mesh/_inventory/_history001/_s0002/ttl/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<_mesh/_inventory/_history001/_s0003/ttl/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<_mesh/_inventory/_history001/_s0004/ttl/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<_mesh/_config/config.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<_mesh/_config/_history001/_s0001/ttl/config.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<_mesh> sflo:hasKnop <_knop> .
+
+<> a sflo:PayloadArtifact, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <welcome.ttl> ;
+  sflo:hasResourcePage <index.html> .
+
+<_knop> a sflo:Knop ;
+  sflo:hasWorkingKnopInventoryFile <_knop/_inventory/inventory.ttl> ;
+  sflo:hasResourcePage <_knop/index.html> .
+
+<_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<welcome.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<_mesh> sflo:hasKnop <ontology/_knop> .
+
+<ontology> a sflo:PayloadArtifact, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasRepositorySourceFloatingLocator [
+    a sflo:RepositorySourceFloatingLocator ;
+    sflo:sourceRepositoryUrl "git@github.com-fluxtailor:urpx-org/urpx.git" ;
+    sflo:sourceRepositoryPathFromRoot "ontology/urpx-ontology.ttl"
+  ] ;
+  sflo:hasResourcePage <ontology/index.html> .
+
+<ontology/_knop> a sflo:Knop ;
+  sflo:hasWorkingKnopInventoryFile <ontology/_knop/_inventory/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/_knop/index.html> .
+
+<ontology/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<_mesh> sflo:hasKnop <ontology/shacl/_knop> .
+
+<ontology/shacl> a sflo:PayloadArtifact, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasRepositorySourceFloatingLocator [
+    a sflo:RepositorySourceFloatingLocator ;
+    sflo:sourceRepositoryUrl "git@github.com-fluxtailor:urpx-org/urpx.git" ;
+    sflo:sourceRepositoryPathFromRoot "shacl/urpx-shacl.ttl"
+  ] ;
+  sflo:hasResourcePage <ontology/shacl/index.html> .
+
+<ontology/shacl/_knop> a sflo:Knop ;
+  sflo:hasWorkingKnopInventoryFile <ontology/shacl/_knop/_inventory/inventory.ttl> ;
+  sflo:hasResourcePage <ontology/shacl/_knop/index.html> .
+
+<ontology/shacl/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .

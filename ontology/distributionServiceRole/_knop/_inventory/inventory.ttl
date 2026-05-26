@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/distributionServiceRole/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/distributionServiceRole/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/distributionServiceRole/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/distributionServiceRole/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/distributionServiceRole/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/distributionServiceRole/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/distributionServiceRole/_knop/_inventory/inventory.ttl> .
+
+<ontology/distributionServiceRole/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/distributionServiceRole/_knop/_meta/meta.ttl> .
+
+<ontology/distributionServiceRole/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/distributionServiceRole/_knop/_inventory/inventory.ttl> .
+
+<ontology/distributionServiceRole/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/distributionServiceRole/_knop/_sources/sources.ttl> .
+
+<ontology/distributionServiceRole/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/distributionServiceRole/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/distributionServiceRole/_knop/_references/references.ttl> .
+
+<ontology/distributionServiceRole/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/distributionServiceRole/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/distributionServiceRole/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

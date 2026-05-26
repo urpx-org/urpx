@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/communityChoiceAggregation/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/communityChoiceAggregation/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/communityChoiceAggregation/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/communityChoiceAggregation/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/communityChoiceAggregation/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/communityChoiceAggregation/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/communityChoiceAggregation/_knop/_inventory/inventory.ttl> .
+
+<ontology/communityChoiceAggregation/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/communityChoiceAggregation/_knop/_meta/meta.ttl> .
+
+<ontology/communityChoiceAggregation/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/communityChoiceAggregation/_knop/_inventory/inventory.ttl> .
+
+<ontology/communityChoiceAggregation/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/communityChoiceAggregation/_knop/_sources/sources.ttl> .
+
+<ontology/communityChoiceAggregation/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/communityChoiceAggregation/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/communityChoiceAggregation/_knop/_references/references.ttl> .
+
+<ontology/communityChoiceAggregation/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/communityChoiceAggregation/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/communityChoiceAggregation/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/includeNonHolidays/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/includeNonHolidays/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/includeNonHolidays/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/includeNonHolidays/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/includeNonHolidays/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/includeNonHolidays/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/includeNonHolidays/_knop/_inventory/inventory.ttl> .
+
+<ontology/includeNonHolidays/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/includeNonHolidays/_knop/_meta/meta.ttl> .
+
+<ontology/includeNonHolidays/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/includeNonHolidays/_knop/_inventory/inventory.ttl> .
+
+<ontology/includeNonHolidays/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/includeNonHolidays/_knop/_sources/sources.ttl> .
+
+<ontology/includeNonHolidays/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/includeNonHolidays/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/includeNonHolidays/_knop/_references/references.ttl> .
+
+<ontology/includeNonHolidays/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/includeNonHolidays/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/includeNonHolidays/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

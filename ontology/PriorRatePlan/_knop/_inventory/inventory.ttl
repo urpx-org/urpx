@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/PriorRatePlan/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/PriorRatePlan/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/PriorRatePlan/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/PriorRatePlan/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/PriorRatePlan/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/PriorRatePlan/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/PriorRatePlan/_knop/_inventory/inventory.ttl> .
+
+<ontology/PriorRatePlan/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/PriorRatePlan/_knop/_meta/meta.ttl> .
+
+<ontology/PriorRatePlan/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/PriorRatePlan/_knop/_inventory/inventory.ttl> .
+
+<ontology/PriorRatePlan/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/PriorRatePlan/_knop/_sources/sources.ttl> .
+
+<ontology/PriorRatePlan/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/PriorRatePlan/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/PriorRatePlan/_knop/_references/references.ttl> .
+
+<ontology/PriorRatePlan/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/PriorRatePlan/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/PriorRatePlan/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .

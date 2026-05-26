@@ -1,0 +1,13 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/ModifierCategoryValue> sflo:hasReferenceLink <ontology/ModifierCategoryValue/_knop/_references#reference001> .
+
+<ontology/ModifierCategoryValue/_knop/_references#reference001> a sflo:ReferenceLink ;
+  sflo:referenceLinkFor <ontology/ModifierCategoryValue> ;
+  sflo:hasReferenceRole <https://semantic-flow.github.io/sflo/ontology/referenceRole_canonical> ;
+  sflo:hasReferenceSource <ontology/ModifierCategoryValue/_knop/_references#reference001-source> .
+
+<ontology/ModifierCategoryValue/_knop/_references#reference001-source> a sflo:ReferenceSource ;
+  sflo:targetArtifact <ontology> ;
+  sflo:targetHistoricalState <ontology/releases/v0.2.0> .

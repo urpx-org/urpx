@@ -1,0 +1,30 @@
+@base <https://urpx-org.github.io/urpx/> .
+@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
+
+<ontology/TariffBookReference/_knop> a sflo:Knop ;
+  sflo:hasKnopMetadata <ontology/TariffBookReference/_knop/_meta> ;
+  sflo:hasKnopInventory <ontology/TariffBookReference/_knop/_inventory> ;
+  sflo:hasReferenceCatalog <ontology/TariffBookReference/_knop/_references> ;
+  sflo:hasKnopSourceRegistry <ontology/TariffBookReference/_knop/_sources> ;
+  sflo:hasExtractionSource <ontology/TariffBookReference/_knop/_sources#extraction-source> ;
+  sflo:hasWorkingKnopInventoryFile <ontology/TariffBookReference/_knop/_inventory/inventory.ttl> .
+
+<ontology/TariffBookReference/_knop/_meta> a sflo:KnopMetadata, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/TariffBookReference/_knop/_meta/meta.ttl> .
+
+<ontology/TariffBookReference/_knop/_inventory> a sflo:KnopInventory, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/TariffBookReference/_knop/_inventory/inventory.ttl> .
+
+<ontology/TariffBookReference/_knop/_sources> a sflo:KnopSourceRegistry, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/TariffBookReference/_knop/_sources/sources.ttl> .
+
+<ontology/TariffBookReference/_knop/_sources/sources.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/TariffBookReference/_knop/_references> a sflo:ReferenceCatalog, sflo:DigitalArtifact, sflo:RdfDocument ;
+  sflo:hasWorkingLocatedFile <ontology/TariffBookReference/_knop/_references/references.ttl> .
+
+<ontology/TariffBookReference/_knop/_meta/meta.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/TariffBookReference/_knop/_inventory/inventory.ttl> a sflo:LocatedFile, sflo:RdfDocument .
+
+<ontology/TariffBookReference/_knop/_references/references.ttl> a sflo:LocatedFile, sflo:RdfDocument .
