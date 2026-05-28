@@ -5,7 +5,7 @@
 # Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md.
 
 # URPX SHACL Shapes - Unified File
-# Version: 0.2.0 Pre-Draft
+# Version: 0.2.1 Pre-Draft
 # Generated: 2026-02-06
 # Description: SHACL shapes for validating URPX data against the URPX Ontology.
 
@@ -26,23 +26,23 @@
     dcterms:creator "Una Smithsimon, Klaar De Schepper, Flux Tailor LLC" ;
     dcterms:description "SHACL shapes for validating URPX data against the URPX Ontology." ;
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
-    dcterms:modified "2026-04-29"^^xsd:date ;
+    dcterms:modified "2026-05-28"^^xsd:date ;
     dcterms:title "URPX SHACL Shapes" ;
-    dcterms:hasVersion <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.2.0> ;
-    owl:versionInfo "0.2.0" ;
-    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.2.0/shacl/urpx-shacl.ttl> .
+    dcterms:hasVersion <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.2.1> ;
+    owl:versionInfo "0.2.1" ;
+    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.2.1/shacl/urpx-shacl.ttl> .
 
-<https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.2.0>
+<https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.2.1>
     a owl:Ontology, sh:ShapesGraph ;
     dcterms:isVersionOf <https://urpx-org.github.io/urpx/ontology/shacl> ;
-    dcterms:issued "2026-04-29"^^xsd:date ;
-    owl:versionInfo "0.2.0" ;
-    dcat:distribution <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.2.0/ttl> .
+    dcterms:issued "2026-05-28"^^xsd:date ;
+    owl:versionInfo "0.2.1" ;
+    dcat:distribution <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.2.1/ttl> .
 
-<https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.2.0/ttl>
+<https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.2.1/ttl>
     a dcat:Distribution ;
-    dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.2.0/shacl/urpx-shacl.ttl> ;
-    dcat:downloadURL <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.2.0/ttl/urpx-shacl.ttl> ;
+    dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.2.1/shacl/urpx-shacl.ttl> ;
+    dcat:downloadURL <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.2.1/ttl/urpx-shacl.ttl> ;
     dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> .
 
 # ============================================================================

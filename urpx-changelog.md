@@ -3,8 +3,8 @@
 
 # 📋 URPX Changelog
 
-**Version:** 0.2.0 (Pre-draft)
-**Last Updated:** 2026-05-07
+**Version:** 0.2.1 (Pre-draft)
+**Last Updated:** 2026-05-28
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
 
