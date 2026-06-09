@@ -25,7 +25,12 @@ https://github.com/urpx-org/urpx/tree/v0.2.1-wg-review is the branch open for co
 - How to comment: update documents directly and commit with comments, add review inline, or with general PR review comments.
 
 ### urpx.org website
-Hosted via gh pages: https://legendary-adventure-2qlokyv.pages.github.io this site has a copy of the documentation materials available for each version and the "Next" version on main. 
+This site has a copy of the documentation materials available for each version and the "Next" version on main. 
+Hosted via gh pages: 
+https://fictional-chainsaw-y74j7yq.pages.github.io/ - staging
+https://legendary-adventure-2qlokyv.pages.github.io/ - prod
+
+
 
 
 ---

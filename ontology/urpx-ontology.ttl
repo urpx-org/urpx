@@ -2995,12 +2995,12 @@ urpx:summaryAmount a owl:DatatypeProperty ;
 
 urpx:supersedes a owl:ObjectProperty ;
     rdfs:label "Supersedes"@en ;
-    rdfs:comment "References the previous version this one replaces" ;
+    rdfs:comment "Links a version to the prior version it supersedes. The prior version's validity is end-dated at this version's effective date, and this version becomes the source of truth (eligibility, rate components, applicability) from that date forward. Supersession is a forward-in-time change of effective period — it is NOT a same-period correction (which replaces a prior version) nor a cancellation/withdrawal (which voids a version)." ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
     rdfs:range [ a owl:Class ;
             owl:unionOf ( urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
-    skos:note "Creates version chain for audit trail. Superseded version should end when this begins. Rate plan versions can supersede other rate plan versions, and modifier versions can supersede other modifier versions." .
+    skos:note "Creates a version chain for audit trail: the superseded version ends when this one begins. Rate plan versions supersede other rate plan versions, and modifier versions supersede other modifier versions. Distinct from (a) same-effective-period correction, which replaces a prior version, and (b) cancellation/withdrawal, which voids a version with no successor — both are separate relations, not supersession." .
 
 urpx:targetURPXVersion a owl:DatatypeProperty ;
     rdfs:label "Target URPX Version"@en ;
