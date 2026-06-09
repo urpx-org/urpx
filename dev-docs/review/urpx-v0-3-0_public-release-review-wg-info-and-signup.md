@@ -1,5 +1,5 @@
 
-# URPX v0.2.0 pre-draft(AKA v1.0.0 draft) Release: Working Group Review
+# URPX v0.3.0 pre-draft(AKA v1.0.0 draft) Release: Working Group Review
 
 ## URPX Launch Actions Steps and Timeline:
 1. Confirm voting capability with test vote #2 
