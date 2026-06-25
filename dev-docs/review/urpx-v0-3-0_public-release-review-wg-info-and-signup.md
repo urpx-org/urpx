@@ -1,8 +1,8 @@
 
-# URPX v0.3.0 pre-draft(AKA v1.0.0 draft) Release: Working Group Review
+# URPX v0.3.0 pre-draft Release: Working Group Review
 
 ## URPX Launch Materials for Review
-Candidate URPX v0.2.0 materials are ready for working group review:
+Candidate URPX v0.2.1 materials are ready for working group review:
 
 Materials to made public upon acceptance of the V1.0.0 draft URPX standard
 ### Main URPX standard repository
