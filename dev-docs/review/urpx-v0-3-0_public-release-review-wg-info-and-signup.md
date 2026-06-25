@@ -1,17 +1,6 @@
 
 # URPX v0.3.0 pre-draft(AKA v1.0.0 draft) Release: Working Group Review
 
-## URPX Launch Actions Steps and Timeline:
-1. Confirm voting capability with test vote #2 
-2. Accept invitation to urpx-committers Github team, start review
-3. Tue 2026-05-26   URPX Working Group Meeting
-4. Wed-Fri 2026-05-27, 28, and 29:  URPX Review office hours 12-1pm US ET
-    zoom: https://us02web.zoom.us/j/87891641890?pwd=gRyHcOJCYzRS7NliCcWxpcagy1tpg5.1&jst=2
-5. 2026-06-02 First formal vote to accept v0.2.x
-6. Chair transforms materials to W3C license
-7. Chair updates urpx.materials
-8. Second formal vote after transform to accept v1.0.0 and go public with standard and urpx.org website
-
 ## URPX Launch Materials for Review
 Candidate URPX v0.2.0 materials are ready for working group review:
 
