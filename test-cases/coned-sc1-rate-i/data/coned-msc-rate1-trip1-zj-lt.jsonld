@@ -1,0 +1,196 @@
+{
+  "@context": {
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "coned": "https://urpx-org.github.io/urpx/fixtures/coned/",
+    "urpx:startDate": { "@type": "xsd:date" },
+    "urpx:endDate": { "@type": "xsd:date" },
+    "urpx:amount": { "@type": "xsd:decimal" },
+    "urpx:dateRetrieved": { "@type": "xsd:date" },
+    "urpx:accessURL": { "@type": "xsd:anyURI" }
+  },
+  "@graph": [
+    {
+      "@id": "coned:pm-msc-rate1-trip1-zj-lt",
+      "@type": "urpx:PricingModel",
+      "urpx:confidence": { "@id": "urpx:verified" },
+      "urpx:pursuantTo": {
+        "@id": "coned:gr-25-msc",
+        "@type": "urpx:GeneralRule",
+        "urpx:generalRuleID": "GR25",
+        "urpx:name": "General Rule 25 — Market Supply Charge",
+        "urpx:hasDataSourceReference": {
+          "@id": "coned:sr-msc-calculator",
+          "@type": "urpx:SourceReference",
+          "urpx:name": "ConEd Market Supply Charge Rate Calculator",
+          "urpx:accessURL": "https://www.coned.com/en/accounts-billing/your-bill/rate-calculators/market-supply-charge"
+        }
+      },
+      "urpx:documentedBy": {
+        "@id": "coned:sr-lds-appnd-csv",
+        "@type": "urpx:SourceReference",
+        "urpx:name": "ConEd LDS_APPND Market Supply Charges CSV",
+        "urpx:sourcePublication": {
+          "@id": "coned:sp-msc-lds-appnd",
+          "@type": "urpx:SourcePublication",
+          "urpx:publicationType": { "@id": "urpx:marketPriceFeed" },
+          "urpx:name": "ConEd LDS_APPND (4).csv"
+        },
+        "urpx:fileName": "LDS_APPND (4).csv",
+        "urpx:mediaType": { "@id": "urpx:textCsv" },
+        "urpx:accessURL": "https://www.coned.com/en/accounts-billing/your-bill/rate-calculators/market-supply-charge",
+        "urpx:dateRetrieved": "2025-10-16"
+      },
+      "urpx:hasPlanElements": {
+        "@id": "coned:pe-msc-rate1",
+        "@type": "urpx:PlanElements",
+        "urpx:hasMetricInput": {
+          "@id": "coned:mi-energy-kwh",
+          "@type": "urpx:MetricInput",
+          "urpx:name": "Electricity consumption (kWh)",
+          "urpx:metricInputType": { "@id": "urpx:measuredMetricInput" },
+          "urpx:hasMetricSpecification": {
+            "@id": "coned:ms-energy-kwh",
+            "@type": "urpx:MetricSpecification",
+            "urpx:measurementKind": { "@id": "urpx:energy" },
+            "urpx:unitOfMeasure": { "@id": "urpx:kWh" },
+            "urpx:flowDirection": { "@id": "urpx:forward" },
+            "urpx:commodity": { "@id": "urpx:electricity" }
+          }
+        },
+        "urpx:hasBillingModel": {
+          "@id": "coned:bm-msc-rate1",
+          "@type": "urpx:BillingModel",
+          "urpx:hasLedger": {
+            "@id": "coned:ledger-supply",
+            "@type": "urpx:Ledger",
+            "urpx:name": "Supply",
+            "urpx:ledgerType": { "@id": "urpx:supplyLedger" }
+          },
+          "urpx:hasPriceDefinition": {
+            "@id": "coned:pd-msc-energy",
+            "@type": "urpx:PriceDefinition",
+            "urpx:name": "MSC Energy Charge — All Hours",
+            "urpx:chargeType": { "@id": "urpx:usageCharge" },
+            "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
+            "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+            "urpx:pursuantTo": { "@id": "coned:gr-25-msc" },
+            "urpx:referencesLedger": { "@id": "coned:ledger-supply" },
+            "urpx:referencesMetricInput": { "@id": "coned:mi-energy-kwh" },
+            "urpx:hasApplicabilityGroup": {
+              "@id": "coned:ag-msc-rate1-zj-lt",
+              "@type": "urpx:ApplicabilityGroup",
+              "urpx:name": "Full Service customers, Rate I, Zone J, low tension"
+            }
+          }
+        }
+      },
+      "urpx:hasPrices": {
+        "@id": "coned:prices-msc-rate1-trip1-zj-lt",
+        "@type": "urpx:Prices",
+        "urpx:hasPriceSet": {
+          "@id": "coned:ps-msc-energy",
+          "@type": "urpx:PriceSet",
+          "urpx:name": "MSC Energy Charge — All Hours",
+          "urpx:priceCurrency": "USD",
+          "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+          "urpx:chargeType": { "@id": "urpx:usageCharge" },
+          "urpx:referencesPriceDefinition": { "@id": "coned:pd-msc-energy" },
+          "urpx:hasPrice": [
+            {
+              "@id": "coned:p-msc-20250131",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.127497",
+              "urpx:startDate": "2025-01-31",
+              "urpx:endDate": "2025-03-04"
+            },
+            {
+              "@id": "coned:p-msc-20250304",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.116601",
+              "urpx:startDate": "2025-03-04",
+              "urpx:endDate": "2025-04-02"
+            },
+            {
+              "@id": "coned:p-msc-20250402",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.112779",
+              "urpx:startDate": "2025-04-02",
+              "urpx:endDate": "2025-05-01"
+            },
+            {
+              "@id": "coned:p-msc-20250501",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.109828",
+              "urpx:startDate": "2025-05-01",
+              "urpx:endDate": "2025-06-02"
+            },
+            {
+              "@id": "coned:p-msc-20250602",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.112753",
+              "urpx:startDate": "2025-06-02",
+              "urpx:endDate": "2025-07-01"
+            },
+            {
+              "@id": "coned:p-msc-20250701",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.115111",
+              "urpx:startDate": "2025-07-01",
+              "urpx:endDate": "2025-07-31"
+            },
+            {
+              "@id": "coned:p-msc-20250731",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.117668",
+              "urpx:startDate": "2025-07-31",
+              "urpx:endDate": "2025-08-29"
+            },
+            {
+              "@id": "coned:p-msc-20250829",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.106634",
+              "urpx:startDate": "2025-08-29",
+              "urpx:endDate": "2025-09-30"
+            },
+            {
+              "@id": "coned:p-msc-20250930",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.108590",
+              "urpx:startDate": "2025-09-30",
+              "urpx:endDate": "2025-10-30"
+            },
+            {
+              "@id": "coned:p-msc-20251030",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.104196",
+              "urpx:startDate": "2025-10-30",
+              "urpx:endDate": "2025-12-02"
+            },
+            {
+              "@id": "coned:p-msc-20251202",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.123861",
+              "urpx:startDate": "2025-12-02",
+              "urpx:endDate": "2025-12-31"
+            },
+            {
+              "@id": "coned:p-msc-20251231",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.129362",
+              "urpx:startDate": "2025-12-31",
+              "urpx:endDate": "2026-02-02"
+            },
+            {
+              "@id": "coned:p-msc-20260501",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.130838",
+              "urpx:startDate": "2026-05-01",
+              "urpx:endDate": "2026-06-02"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

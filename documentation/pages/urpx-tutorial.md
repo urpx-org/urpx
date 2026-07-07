@@ -44,15 +44,19 @@ Before starting this tutorial, ensure you have:
 
 ### Terminology
 
-**Rate Plan vs Rate vs Tariff**
+**Rate Plan vs Tariff vs Price**
 
 Understanding these distinctions is critical for working with URPX. For a more detailed explanation, please see the [URPX FAQ](urpx-faq.md).
 
-- **Tariff**: A regulatory document (tariff book) containing one or more rate plans. Published by utilities and approved by regulatory authorities.
-- **Rate Plan**: A complete package with all parameters needed to calculate customer cost - prices, TOU schedules, service tiers, seasonal variations, eligibility rules, and applicability conditions.
-- **Rate**: A single price value (e.g., $0.12/kWh) - incomplete without the full rate plan context.
+- **Rate Plan**: A complete package with all parameters needed to calculate customer cost — prices, TOU schedules, service tiers, seasonal variations, eligibility rules, and applicability conditions. The rate plan is the first-class thing URPX models.
+- **Tariff**: A regulatory document (tariff book) containing material from one or more rate plans. Published by utilities and approved by regulatory authorities. In URPX, tariffs are publication vehicles — places where parts of a rate plan appear — not the plan itself.
+- **Price**: A single value applied to something measured or counted (e.g., $0.12/kWh, an $18.75 monthly charge) — incomplete without the full rate plan context.
 
-**In URPX**: We model rate plans (complete pricing structures), not individual rates. Tariff documents are containers that may include multiple rate plans plus regulatory metadata.
+**Why URPX says "price", not "rate".** In everyday utility usage, "rate" can mean at least three different things: a single per-unit value ("the summer rate is $0.12/kWh"), a named grouping inside a service classification ("Rate I", "Rate II"), or the whole plan ("switch to the EV rate"). Because one word carries three meanings, URPX does not use "rate" on its own anywhere in the vocabulary. A single value is a **price** (`Price`, `PriceSet`). The complete package is a **rate plan** (`RatePlan`). And the named grouping has its own term:
+
+- **Rate Group** (`RateGroup`): The named grouping within a service class that utilities themselves often call a "rate" — for example, *Rate I* within *Service Classification No. 1*. A rate group is a subdivision of a service class, not a kind of service class: Rate I is not a type of SC 1, it is a grouping inside it (`parentServiceClass` points from the rate group to its service class). A rate plan links to its grouping via `hasRateGroup`, so when a utility's published material says "SC 1 Rate I", the plan maps directly to that published grouping — without importing the ambiguous word "rate" into any other part of the model.
+
+**In URPX**: We model rate plans (complete packages), their prices, and the rate groups that connect them to the utility's own published groupings. Tariff documents are containers where parts of rate plans appear, plus regulatory metadata.
 
 ### Core Concepts
 

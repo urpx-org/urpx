@@ -3,10 +3,83 @@
 
 # 📋 URPX Changelog
 
-**Version:** 0.2.1 (Pre-draft)
-**Last Updated:** 2026-05-28
+**Version:** 0.3.0 (Pre-draft)
+**Last Updated:** 2026-07-07
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-07-07 — v0.3.0
+---
+
+Release 0.3.0 reframes how published pricing material relates to the rate plan: pricing content is now carried by `PricingModel` nodes inside publication-level containers (`TariffFiling`, `SourcePublication`), rate plans and modifiers are sharpened to pure identity records, and versions become consolidation artifacts that declare their own coverage.
+
+### ⚠️ Breaking Changes
+
+#### Retired: tariff document class family in favor of `publicationType`
+- Removed `TariffPublication`, `TariffBookDocument`, `TariffStatementDocument`, `TariffSupplementDocument`, `TariffAddendumDocument`, `SupplyChargesDocument`, `DERExportsDocument`, and `HighlyDynamicPricesDocument`. Publication kinds are now expressed with the `publicationType` enumeration (`SourcePublicationType`) on `SourcePublication`.
+
+#### Renamed: `DataSourceReference` → `SourceReference`, `URPXDocument` → `URPXPackage`
+- Class renames with all property domains/ranges and shapes updated accordingly.
+
+#### Removed: `hasRatePlanVersion` / `hasRatePlanModifierVersion`
+- The version→plan link is now `forRatePlan` / `forRatePlanModifier` on the version node; there is no inverse property on the plan.
+
+#### Renamed: `ReferenceInclusionValue` members
+- `included` → `includedHere`; `shopFor` → `retrievedElsewhere`.
+
+#### Removed: `RateGroup` subclassing of `ServiceClass`
+- A rate group is a named grouping inside a service class, not a kind of service class; containment is expressed via `parentServiceClass`.
+
+### Ontology Changes
+
+#### Added: pricing model and publication classes
+- `PricingModel` (pricing content as documented by a publication), `TariffFiling` (a filed publication carrying pricing models), `SourcePublication`, `ModelCollection`, `PriceDefinitionReference`, `TemporalPeriod`, `TemporalScope`.
+
+#### Added: identity, coverage, and evaluation classes
+- `RatePlanIdentifier` (with new `scheme` property and `hasIdentifier` linking from `RatePlan` / `RatePlanModifier`), `CoverageClaim`, `Evaluation`, `ScenarioCostModel`, `ScenarioCostResult`.
+
+#### Modified: identity and version semantics
+- `RatePlan` and `RatePlanModifier` are pure identity records; pricing content lives in pricing models and resolved versions.
+- `RatePlanVersion` and `RatePlanModifierVersion` are consolidation artifacts: each requires a `CoverageClaim` (`hasCoverageClaim`) stating completeness (`completenessResult`), self-containment (`selfContained`), and an explaining `Evaluation` (`explainedBy`).
+
+#### Added: properties
+- Publication and provenance: `containsPricingModel`, `withinPublication`, `documentedBy`, `sourcePublication`, `pursuantTo`, `referencesRatePlan`, `referencesRatePlanModifier`.
+- Version and coverage: `forRatePlan`, `forRatePlanModifier`, `hasCoverageClaim`, `selfContained`, `completenessResult`, `explainedBy`, `resolvedFrom`, `hasPriceDefinitionReference`, `referenceInclusion`, `referencesPriceDefinition`.
+- Collections and scenarios: `collectsPricingModel`, `collectionRole`, `forScenario`, `consumesVersion`, `producesResult`, `evaluationKind`.
+- Temporal scoping: `hasTemporalScope`, `scopeKind`, `hasSelector`.
+- Confidence: `confidence` on `PricingModel`.
+
+#### Added: enumerations and members
+- New: `ConfidenceValue` (`verified`, `estimated`, `projected`), `ScopeKindValue`, `EvaluationKindValue`, `CollectionRoleValue`.
+- Extended: `CompletenessResultValue` gains `pending`; `SourcePublicationType` gains `marketPriceFeed`.
+
+#### Domain expansions
+- `publishedBy`, `serviceRole`, and `commodity` now also apply to `RatePlan` and `RatePlanModifier`.
+- `hasIdentifier` carries the combined domain `OrganizationIdentity | RatePlan | RatePlanModifier` and range `OrganizationIdentifier | RatePlanIdentifier`.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Added: node shapes for the new classes
+- `PricingModelShape`, `TariffFilingShape`, `RatePlanIdentifierShape`, `CoverageClaimShape`, `EvaluationShape`, `ModelCollectionShape`, `PriceDefinitionReferenceShape`, `SourcePublicationShape`, `SourceReferenceShape`, `TemporalPeriodShape`, `TemporalScopeShape`, `ScenarioCostModelShape`, `ScenarioCostResultShape`, `URPXPackageShape`, plus value shapes for the new enumerations.
+
+#### Updated: identity and version shapes
+- `RatePlanShape` gains `hasIdentifier`, `commodity`, `publishedBy`, and `serviceRole` property blocks.
+- `RatePlanVersionShape` requires `forRatePlan` and `hasCoverageClaim`.
+
+#### Structural clean-up
+- Shape targets follow the class renames (`SourceReference`, `URPXPackage`); the retired tariff document shapes are removed; the orphaned `DimensionValuePairShape` (no backing class) is removed.
+- Operational shapes are closed (`sh:closed true`). `OrganizationShape` deliberately remains open; the design rationale is documented on the shape.
+
+### Test Data Updates
+
+#### Added: Consolidated Edison SC1 Rate I test case (`test-cases/coned-sc1-rate-i/`)
+- Nine JSON-LD fixtures: rate plan identity, delivery-charges tariff filing, five monthly GR26 MAC Energy Charge statement filings (Statements Nos. 168–172), a Market Supply Charge pricing model from ConEd's published market price feed, and a fully self-contained resolved `RatePlanVersion` snapshot (effective 2026-02-01) carrying a `CoverageClaim` with `Evaluation` and per-price source references to the statements it consolidates.
+- Source documents (tariff leaf PDF, General Rule 26 PDF, five monthly MAC statement PDFs, market supply charge CSV) are packaged under `assets/`; the test case is registered in `test-cases-index.csv` and `index.md`.
+
+### Documentation Updates
+
+#### Updated: tutorial Terminology section
+- The section is now "Rate Plan vs Tariff vs Price": the rate plan leads as the first-class concept, the old **Rate** entry is replaced by **Price**, a new paragraph explains why URPX avoids the bare word "rate", and a **Rate Group** entry documents the named grouping utilities colloquially call a "rate".
 
 2026-05-07
 ---

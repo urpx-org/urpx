@@ -35,6 +35,27 @@ path = "test-cases/pge-e-tou-c-2026-03-01/assets/PGE_E-TOU-C_2026-03-01.pdf"
 precedence = "override"
 SPDX-FileCopyrightText = "Pacific Gas and Electric Company"
 SPDX-License-Identifier = "LicenseRef-PublicRecord"
+
+# -----------------------------------------------------------------------------
+# Consolidated Edison tariff documents and market supply charge feed — US
+# public records (PSC filings and utility-published rate data), included as
+# test-case assets. Not subject to Flux Tailor copyright; see
+# LICENSES/LicenseRef-PublicRecord.txt.
+# -----------------------------------------------------------------------------
+[[annotations]]
+path = [
+    "test-cases/coned-sc1-rate-i/assets/coned_sc1_rate1_2026-02-01.pdf",
+    "test-cases/coned-sc1-rate-i/assets/conedtariffbook2025_general_rule_26.pdf",
+    "test-cases/coned-sc1-rate-i/assets/mac-202601.pdf",
+    "test-cases/coned-sc1-rate-i/assets/mac-202602.pdf",
+    "test-cases/coned-sc1-rate-i/assets/mac-202603.pdf",
+    "test-cases/coned-sc1-rate-i/assets/mac-202604.pdf",
+    "test-cases/coned-sc1-rate-i/assets/mac-202605.pdf",
+    "test-cases/coned-sc1-rate-i/assets/LDS_APPND (4).csv",
+]
+precedence = "override"
+SPDX-FileCopyrightText = "Consolidated Edison Company of New York, Inc."
+SPDX-License-Identifier = "LicenseRef-PublicRecord"
 # -----------------------------------------------------------------------------
 # Test-case datasets and indexes — current pre-Draft project datasets remain
 # Apache-2.0 and transition to CDLA-Permissive-2.0 at Working Group Draft.
