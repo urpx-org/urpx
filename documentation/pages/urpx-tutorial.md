@@ -5,11 +5,11 @@
 
 # URPX Tutorial: Building Your First Rate Plan
 
-**Version**: 0.2.0 (Pre-draft)
-**Last Updated**: 2026-04-29
+**Version**: 0.3.0 (Pre-draft)
+**Last Updated**: 2026-07-07
 **Status**: Active
 
-**Learn the basics of creating and validating utility rate plan data using the URPX v0.2.0 ontology**
+**Learn the basics of creating and validating utility rate plan data using the URPX v0.3.0 ontology**
 
 ---
 
@@ -60,17 +60,19 @@ Understanding these distinctions is critical for working with URPX. For a more d
 
 ### Core Concepts
 
-**Rate Plan**: A complete pricing structure offered by a utility
-- Contains temporal versions with specific effective dates
-- Valid for specific time periods
+**Rate Plan**: The stable identity of a plan offered by a utility
+- A durable record: name, unique identifier, publisher, service class and rate group links
+- Carries no pricing content itself — pricing lives in versions (this tutorial) and in the pricing models publications carry (see the [Overview](urpx-overview.md))
 
-**Rate Plan Version**: Time-bound instance of a rate plan
+**Rate Plan Version**: The complete, resolved snapshot of a rate plan for a temporal window
+- A top-level node that points back to its plan identity via `forRatePlan`
 - Contains actual prices and pricing structures
 - Has specific effectiveDateTime and optional expirationDateTime
 - Has eligibility criteria for customer qualification
 - Applies to specific customer classes and service types
 - Links to centralized PlanElements for seasons, holidays, and pricing rules including time-of-use schedules
 - Contains Prices container with PriceSet instances
+- Declares its own coverage: a required `CoverageClaim` states whether the snapshot is complete and self-contained
 
 **Price**: An individual component of a bill
 - May have a **chargeType** (specific implementation like `minimumCharge`, `usageCharge`)
@@ -109,14 +111,16 @@ This tutorial builds a rate plan from the outside in. Here's the structure:
 %%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
 
 graph TB
-    Doc["<b>URPXDocument</b><br/>Root container<br/><i>Step 1</i>"]
+    Doc["<b>URPXPackage</b><br/>Exchange container<br/><i>Step 1</i>"]
     RP["<b>RatePlan</b><br/>Permanent plan identity<br/><i>Step 2</i>"]
-    RPV["<b>RatePlanVersion</b><br/>Time-bound instance<br/><i>Step 2</i>"]
+    RPV["<b>RatePlanVersion</b><br/>Resolved snapshot<br/><i>Step 2</i>"]
+    CC["<b>CoverageClaim</b><br/>Completeness declaration<br/><i>Step 2</i>"]
     PE["<b>PlanElements</b><br/>Seasons, metrics, billing<br/><i>Step 2</i>"]
     Prices["<b>Prices</b><br/>All pricing data<br/><i>Steps 3–6</i>"]
 
     Doc -->|"hasRatePlan"| RP
-    RP -->|"hasRatePlanVersion"| RPV
+    RPV -->|"forRatePlan"| RP
+    RPV -->|"hasCoverageClaim"| CC
     RPV -->|"hasPlanElements"| PE
     RPV -->|"hasPrices"| Prices
 
@@ -126,10 +130,10 @@ graph TB
 
     class Doc docClass
     class RP,RPV planClass
-    class PE,Prices priceClass
+    class CC,PE,Prices priceClass
 ```
 
-We'll build each piece in the steps below, starting with the URPXDocument wrapper.
+Note the direction of the version link: the version points back to its plan with `forRatePlan`. The plan identity carries no list of versions. We'll build each piece in the steps below, starting with the URPXPackage wrapper.
 
 ---
 
@@ -137,22 +141,20 @@ We'll build each piece in the steps below, starting with the URPXDocument wrappe
 
 Let's build a basic residential rate plan step by step using JSON-LD.
 
-### Step 1: Document and Context
+### Step 1: Package and Context
 
 ```json
 {
   "@context": {
-    "@vocab": "https://schema.urpx.org/",
-    "urpx": "https://schema.urpx.org/",
-    "urpx-org": "https://schema.urpx.org/organization/",
-    "schema": "https://schema.org/",
+    "@vocab": "https://urpx-org.github.io/urpx/ontology/",
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
     "ex": "https://example.org/tutorial/",
     "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
   "@id": "ex:doc-tutorial-basic",
-  "@type": "URPXDocument",
-  "version": "0.2.0",
-  "targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl",
+  "@type": "URPXPackage",
+  "version": "0.3.0",
+  "targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.3.0/ontology/urpx-ontology.ttl",
   "name": "Tutorial Basic Residential Rate Plan",
   "description": "Simple residential rate plan with minimum price and energy price",
   "effectiveDateTime": {
@@ -163,7 +165,11 @@ Let's build a basic residential rate plan step by step using JSON-LD.
 }
 ```
 
-### Step 2: Rate Plan and Version
+The `URPXPackage` is URPX's exchange container — the unit a system hands to another system. `targetURPXVersion` is required and names the exact ontology version the data was authored and validated against.
+
+### Step 2: Rate Plan Identity and Version
+
+The package carries the plan identity. The identity is deliberately small — a durable record with no pricing content:
 
 ```json
 {
@@ -176,39 +182,57 @@ Let's build a basic residential rate plan step by step using JSON-LD.
     "initialEffectiveDate": {
       "@type": "xsd:date",
       "@value": "2025-01-01"
-    },
-    "hasRatePlanVersion": {
-      "@id": "ex:version-basic-res-v1",
-      "@type": "RatePlanVersion",
-      "version": "1.0",
-      "priceCurrency": "USD",
-      "effectiveDateTime": {
-        "@type": "xsd:dateTime",
-        "@value": "2025-01-01T00:00:00-05:00"
-      },
-      "changeReason": {"@id": "urpx:initial"},
-      "publishedBy": {
-        "@id": "ex:tutorial-utility",
-        "@type": "urpx-org:Organization",
-        "name": "Tutorial Electric Company"
-      },
-      "serviceRole": {"@id": "urpx:bundledServiceRole"},
-      "hasPlanElements": {
-        "@id": "ex:plan-elements-basic",
-        "@type": "PlanElements",
-        "hasMetricInput": {
-          "@id": "ex:metric-input-energy",
-          "@type": "MetricInput",
-          "name": "Standard Energy Measurement",
-          "metricInputType": { "@id": "urpx:measuredMetricInput" },
-          "hasMetricSpecification": {
-            "@id": "ex:metric-spec-energy-supply",
-            "@type": "MetricSpecification",
-            "commodity": {"@id": "urpx:electricity"},
-            "measurementKind": {"@id": "urpx:energy"},
-            "unitOfMeasure": {"@id": "urpx:kWh"}
-          }
-        }
+    }
+  }
+}
+```
+
+The version is its own top-level node in the graph. It points back to the plan identity with `forRatePlan`, and it must declare a `CoverageClaim` — an explicit statement of whether the snapshot is complete and self-contained:
+
+```json
+{
+  "@id": "ex:version-basic-res-v1",
+  "@type": "RatePlanVersion",
+  "forRatePlan": {"@id": "ex:rateplan-basic-res"},
+  "version": "1.0",
+  "priceCurrency": "USD",
+  "effectiveDateTime": {
+    "@type": "xsd:dateTime",
+    "@value": "2025-01-01T00:00:00-05:00"
+  },
+  "changeReason": {"@id": "urpx:initial"},
+  "publishedBy": {
+    "@id": "ex:tutorial-utility",
+    "@type": "UtilityOperator",
+    "legalName": "Tutorial Electric Company",
+    "organizationType": {"@id": "urpx:utilityOrganization"}
+  },
+  "serviceRole": {"@id": "urpx:bundledServiceRole"},
+  "hasCoverageClaim": {
+    "@id": "ex:coverage-basic-res-v1",
+    "@type": "CoverageClaim",
+    "completenessResult": {"@id": "urpx:complete"},
+    "selfContained": true,
+    "explainedBy": {
+      "@id": "ex:evaluation-basic-res-v1",
+      "@type": "Evaluation",
+      "description": "All prices and plan elements are carried inline in this snapshot; no component is priced externally."
+    }
+  },
+  "hasPlanElements": {
+    "@id": "ex:plan-elements-basic",
+    "@type": "PlanElements",
+    "hasMetricInput": {
+      "@id": "ex:metric-input-energy",
+      "@type": "MetricInput",
+      "name": "Standard Energy Measurement",
+      "metricInputType": { "@id": "urpx:measuredMetricInput" },
+      "hasMetricSpecification": {
+        "@id": "ex:metric-spec-energy-supply",
+        "@type": "MetricSpecification",
+        "commodity": {"@id": "urpx:electricity"},
+        "measurementKind": {"@id": "urpx:energy"},
+        "unitOfMeasure": {"@id": "urpx:kWh"}
       }
     }
   }
@@ -409,7 +433,7 @@ Before adding complex prices, define the MetricInputs they will reference. These
 
 ### Demand Price
 
-Commercial and industrial rates often include demand prices based on peak power consumption. The price references the MetricInput defined above.
+Commercial and industrial rate plans often include demand prices based on peak power consumption. The price references the MetricInput defined above.
 
 ```json
 {
@@ -553,7 +577,7 @@ Prices connect to TOU periods via `touPeriodNumber` — a simple integer referen
 
 ## Time-of-Use Pricing
 
-Time-of-use rates vary pricing based on time of day, day of week, and season.
+Time-of-use rate plans vary pricing based on time of day, day of week, and season.
 
 ### Complete TOU Structure
 
@@ -561,6 +585,7 @@ Time-of-use rates vary pricing based on time of day, day of week, and season.
 {
   "@id": "ex:version-tou",
   "@type": "RatePlanVersion",
+  "forRatePlan": {"@id": "ex:rateplan-basic-res"},
   "version": "1.0",
   "effectiveDateTime": {
     "@type": "xsd:dateTime",
@@ -736,9 +761,10 @@ Here's the complete structure of the rate plan you've assembled across this tuto
 %%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
 
 graph TB
-    Doc["<b>URPXDocument</b>"]
+    Doc["<b>URPXPackage</b>"]
     RP["<b>RatePlan</b><br/>TUTORIAL-BASIC-RES-001"]
     RPV["<b>RatePlanVersion</b><br/>Effective: 2025-01-01"]
+    CC["<b>CoverageClaim</b><br/>complete · self-contained"]
 
     subgraph Elements["PlanElements"]
         direction LR
@@ -770,7 +796,8 @@ graph TB
     end
 
     Doc -->|hasRatePlan| RP
-    RP -->|hasRatePlanVersion| RPV
+    RPV -->|forRatePlan| RP
+    RPV -->|hasCoverageClaim| CC
     RPV --> Elements
     RPV --> Pricing
     BM --> TOU
@@ -783,7 +810,7 @@ graph TB
     classDef elemClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#333
 
     class Doc docClass
-    class RP,RPV planClass
+    class RP,RPV,CC planClass
     class Season,HC,BM,MI1,MI2 elemClass
     class Sched,Peak,OffPeak touClass
     class PS,P1,P2,P3,P4,P5,P6,P7,P8 priceClass
@@ -796,6 +823,12 @@ Each price references the measurement definitions in PlanElements, and TOU price
 ## Validation and Best Practices
 
 ### Required Properties
+
+Every RatePlanVersion must have:
+
+1. **forRatePlan** - The link back to the plan identity the snapshot was built for
+2. **hasCoverageClaim** - A `CoverageClaim` with a `completenessResult`, a `selfContained` flag, and an explaining `Evaluation`
+3. **changeReason**, **publishedBy**, **serviceRole**, **hasPlanElements**, and **hasPrices**
 
 Every Price must have:
 
@@ -959,6 +992,7 @@ Extracted from the full list of possible values in `urpx-ontology.ttl`:
 2. **Customer Profiles** - Complex eligibility rules
 3. **Rate Plan Modifiers** - Optional add-ons and riders
 4. **Dynamic Pricing** - Real-time and event-based pricing
+5. **Pricing Models and Publications** - How tariff filings, statements, and market feeds carry authored (possibly partial) pricing content that resolves into version snapshots; see the [Overview](urpx-overview.md) and the `test-cases/` directory
 
 ### Production Examples
 
@@ -975,4 +1009,4 @@ For complete current examples with tariff-linked test data:
 
 ---
 
-*Tutorial based on URPX v0.2.0 ontology. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
+*Tutorial based on URPX v0.3.0 ontology. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*

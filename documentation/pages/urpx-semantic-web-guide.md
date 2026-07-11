@@ -5,8 +5,8 @@
 
 # Semantic Web Guide for URPX
 
-**Version:** 0.2.0 (Pre-draft) 
-**Last Updated:** 2026-04-29
+**Version:** 0.3.0 (Pre-draft) 
+**Last Updated:** 2026-07-07
 
 **A beginner-friendly introduction to semantic web technologies for the URPX working group**
 
@@ -44,7 +44,7 @@ Traditional flat file formats (CSV, basic JSON) lack the expressiveness needed f
 
 Semantically-rich, interconnected data dramatically improves AI/ML applications:
 
-**Intelligent Rate Comparison**
+**Intelligent Rate Plan Comparison**
 - LLMs can understand rate plan structure relationships
 - Contextual recommendations based on usage patterns
 - Automated tariff analysis across utilities
@@ -86,7 +86,7 @@ The semantic web represents data as **interconnected graphs** of meaning, not ju
 ```json
 {
   "@context": {
-    "urpx": "https://schema.urpx.org/",
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
     "ex": "https://example.com/"
   },
   "@id": "ex:PRC-001",
@@ -127,8 +127,8 @@ Every statement has three parts:
 
 **Example 2: Relationship**
 ```
-:PRC-001 → urpx:partOfRatePlan → :RES-TOU-2025
-(This charge) (is part of rate plan) (RES-TOU-2025)
+:VERSION-2025 → urpx:forRatePlan → :RES-TOU-2025
+(This version snapshot) (is for rate plan) (RES-TOU-2025)
 ```
 
 **Example 3: Type Declaration**
@@ -180,10 +180,10 @@ This graph structure enables:
 An ontology is a **formal specification** of a domain's concepts and relationships. Think of it as a "data dictionary with superpowers."
 
 **URPX Ontology Structure:**
-- **Classes**: RatePlan, Price, TOUSchedule, Season, Organization
-- **Properties**: hasPrice, chargeType, unitPrice, effectiveDate
-- **Relationships**: Prices belong to PriceSets, and PriceSets belong to RatePlanVersions through the Prices container
-- **Constraints**: Every RatePlan must have at least one RatePlanVersion
+- **Classes**: RatePlan, RatePlanVersion, PricingModel, Price, TOUSchedule, Season, Organization
+- **Properties**: hasPrice, chargeType, unitPrice, effectiveDate, forRatePlan
+- **Relationships**: Prices belong to PriceSets, and PriceSets belong to RatePlanVersions through the Prices container; versions link back to their plan identity via forRatePlan
+- **Constraints**: Every RatePlanVersion must name its plan (forRatePlan) and declare a CoverageClaim
 
 **Why We Use OWL:**
 - **W3C Standard**: Globally recognized and widely supported
@@ -216,7 +216,7 @@ JSON-LD is **JSON with a semantic layer**. Developers work with familiar JSON sy
 ```json
 {
   "@context": {
-    "urpx": "https://schema.urpx.org/",
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
     "ex": "https://example.com/"
   },
   "@id": "ex:PRC-001",
@@ -236,12 +236,12 @@ JSON-LD is **JSON with a semantic layer**. Developers work with familiar JSON sy
 
 **Price Set Alternatives with Profile-Alternative References:**
 
-This example demonstrates the current URPX v0.2.0 pattern in which a `PriceSetAlternative` links to a reusable `ProfileAlternative` by IRI:
+This example demonstrates the current URPX pattern in which a `PriceSetAlternative` links to a reusable `ProfileAlternative` by IRI:
 
 ```json
 {
   "@context": {
-    "urpx": "https://schema.urpx.org/",
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
     "ex": "https://example.com/"
   },
   "@graph": [
@@ -267,7 +267,7 @@ This example demonstrates the current URPX v0.2.0 pattern in which a `PriceSetAl
 }
 ```
 
-The `referencesProfileAlternative` property uses an **IRI reference** (`ex:zone-h-secondary`) to link the price set alternative to its profile alternative. The `ProfileAlternative` points to its defining `ConditionExpression` by IRI instead of embedding the full expression graph inline. In v0.2.0, this replaces the older `hasDimensionValue` / `valueIRI` authoring pattern. This enables:
+The `referencesProfileAlternative` property uses an **IRI reference** (`ex:zone-h-secondary`) to link the price set alternative to its profile alternative. The `ProfileAlternative` points to its defining `ConditionExpression` by IRI instead of embedding the full expression graph inline. This enables:
 - Dereferenceable links for metadata lookup
 - Clean separation between alternative metadata and charges
 - Reusable alternative resources across multiple rate plans
@@ -328,16 +328,19 @@ SPARQL is the "SQL for RDF" - a query language for semantic data.
 
 **Example 1: Find All Prices in a Rate Plan**
 ```sparql
-PREFIX urpx: <https://schema.urpx.org/>
+PREFIX urpx: <https://urpx-org.github.io/urpx/ontology/>
 
 SELECT ?price ?name ?unitPrice
 WHERE {
-  ?ratePlan urpx:ratePlanUniqueIdentifier "RES-TOU-2025" ;
-            urpx:hasRatePlanVersion/urpx:hasPrices/urpx:hasPriceSet/urpx:hasPrice ?price .
+  ?ratePlan urpx:ratePlanUniqueIdentifier "RES-TOU-2025" .
+  ?version  urpx:forRatePlan ?ratePlan ;
+            urpx:hasPrices/urpx:hasPriceSet/urpx:hasPrice ?price .
   ?price    urpx:name ?name ;
             urpx:unitPrice ?unitPrice .
 }
 ```
+
+Note the query starts from the version snapshot: versions point at their plan via `forRatePlan`, so the plan is found by identifier and the versions are found by their link back to it.
 
 **SPARQL Use Cases:**
 - **Rate Comparison**: Find best rate plans for specific usage patterns

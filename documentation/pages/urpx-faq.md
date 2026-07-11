@@ -23,13 +23,13 @@ URPX builds on [OpenEI's](https://openei.org) pioneering work in utility rate pl
 
 Both projects share the goal of making rate plan data more accessible. URPX can consume summary OpenEI charges data and align it with detailed URPX charges and rich semantic metadata.
 
-**Q: What's the difference between a tariff, rate plan, and rate?**
+**Q: What's the difference between a rate plan, a tariff, and a price?**
 
-- **Tariff**: A regulatory document (tariff book) that may contain multiple rate plans
-- **Rate Plan**: A complete package with all parameters needed to calculate customer cost (charges, schedules, eligibility rules)
-- **Rate**: A single price value (e.g., $0.12/kWh) - incomplete without the full rate plan context
+- **Rate Plan**: A complete package with all parameters needed to calculate customer cost (prices, schedules, eligibility rules). The rate plan is the first-class thing URPX models.
+- **Tariff**: A regulatory document (tariff book) containing material from one or more rate plans. In URPX, tariffs are publication vehicles — places where parts of a rate plan appear — not the plan itself.
+- **Price**: A single value applied to something measured or counted (e.g., $0.12/kWh) — incomplete without the full rate plan context.
 
-Rate plan data comes from multiple sources: tariff books (primary), tariff statements, supplements, and addenda. URPX captures all these document types with specific classes (TariffBookDocument, TariffStatementDocument, etc.).
+Rate plan data comes from many kinds of published sources: tariff books (primary), tariff statements, supplements, addenda, supply price sheets, and market price feeds. URPX models each of these as a `SourcePublication` whose kind is given by the `publicationType` enumeration (`tariffBook`, `tariffStatement`, `tariffSupplement`, `tariffAddendum`, `supplyCharges`, `derExports`, `highlyDynamicPrices`, `marketPriceFeed`). See the [Terminology](#terminology) section below for why URPX never uses the bare word "rate".
 
 **Q: Can URPX work with my existing systems?**
 
@@ -44,7 +44,7 @@ Yes. URPX will provide mapping templates for major standards (Green Button, Open
 
 **Q: What is the current status of URPX?**
 
-URPX v0.2.0 is currently in pre-draft review stage. The working group is actively refining the ontology and validation rules. You can follow progress and contribute at the [urpx-org GitHub organization](https://github.com/urpx-org), where all repositories are publicly available:
+URPX v0.3.0 is currently in pre-draft review stage. The working group is actively refining the ontology and validation rules. You can follow progress and contribute at the [urpx-org GitHub organization](https://github.com/urpx-org), where all repositories are publicly available:
 - **urpx** - Core ontology and specifications
 - **urpx-wg-admin** - Working group administration
 - **urpx-tools** - Validation and transformation utilities
@@ -59,9 +59,9 @@ Join the working group via [urpx-org on GitHub](https://github.com/urpx-org). Yo
 
 ### Terminology
 
-#### Rate Plan vs. Rate vs. Tariff
+#### "Rate Plan" and "Price" vs. "Tariffs & Rates"
 
-Throughout URPX documentation and the ontology, the term **"rate plan"** is used as the standardized terminology rather than just "rate". This distinction is deliberate and important:
+Throughout URPX documentation and the ontology, the term **"rate plan"** is used as the standardized terminology, and the bare word "rate" is never used on its own. This distinction is deliberate and important. While URPX supports the current "dispersed" methods of rate plan publication, it is built for automation and designed to prioritize future-proofing. The lack of standardization in what "tariffs" and "rates" mean and the dispersed non-standard nature of their publication make them incompatible with URPX goals: to make it possible to accurately model cost for a scenario, and to analyze rate plans across utility territories.
 
 **Rate Plan** (URPX Standardized Term):
 - A complete package containing **all parameters** needed to calculate customer cost
@@ -69,24 +69,42 @@ Throughout URPX documentation and the ontology, the term **"rate plan"** is used
 - Ensures **completeness** - no guessing about what data inputs are required for cost calculation
 - Everything contained in one semantic unit for reliable billing and analysis
 
-**Rate** (Ambiguous - Avoided):
-- Could refer to a single rate value for a single price (e.g., $0.15/kWh)
-- Could refer to a pricing tier within a time-of-use schedule
-- Could refer to unit price without complete context
-- Lacks completeness assurance for full cost calculation
+**Price** (URPX Standardized Term):
+- A single value applied to something measured or counted (e.g., $0.15/kWh, an $18.75 monthly charge)
+- Modeled by the `Price` class and grouped in `PriceSet`s
+- Incomplete without the full rate plan context
+
+**Why URPX avoids the bare word "rate".** In everyday utility usage, "rate" can mean at least three different things:
+
+1. A **single per-unit value** — "the summer rate is $0.15/kWh"
+2. A **named grouping inside a service classification** — "Rate I", "Rate II"
+3. The **whole plan** — "switch to the EV rate"
+
+One word carrying three meanings is exactly the kind of ambiguity a data exchange standard exists to remove. So URPX gives each meaning its own unambiguous term: a single value is a **price** (`Price`, `PriceSet`); the complete package is a **rate plan** (`RatePlan`); and the named grouping is a **rate group**:
+
+**Rate Group** (`RateGroup`):
+- The named grouping within a service class that utilities themselves often call a "rate" — for example, *Rate I* within *Service Classification No. 1*
+- A subdivision of a service class, not a kind of service class: Rate I is not a type of SC 1, it is a grouping inside it (`parentServiceClass` points from the rate group to its service class)
+- A rate plan links to its grouping via `hasRateGroup`, so when a utility's published material says "SC 1 Rate I", the plan maps directly to that published grouping — without importing the ambiguous word "rate" into any other part of the model
+
+Compound terms of art keep their established names: "rate case" (a regulatory proceeding, `RateCase`), "rate-setting", and utilities' own published names such as "Rate I" are used as-is.
 
 **Examples:**
 
-✅ **Correct Usage:** "The residential rate plan includes energy prices, demand prices, and time-of-use periods"
+**Correct Usage:** "The residential rate plan includes energy prices, demand prices, and time-of-use periods"
 
-❌ **Ambiguous Usage:** "The residential rate is $0.15/kWh" (incomplete - missing TOU periods, tiers, and other prices)
+**Correct Usage:** "SC 1 Rate I" (the utility's published rate group name)
+
+**Ambiguous Usage:** "The residential rate is $0.15/kWh" (incomplete - missing TOU periods, tiers, and other prices; say "the residential energy price")
 
 **Relationship to "Tariff":**
-URPX uses "tariff" for formal regulatory documents (tariff books, tariff statements, supplements, addenda), while "rate plan" refers to the semantic structure containing complete pricing information. A tariff book may contain multiple rate plans, and URPX captures all document types with specific classes (TariffBookDocument, TariffStatementDocument, etc.).
+URPX uses "tariff" for formal regulatory documents (tariff books, tariff statements, supplements, addenda), while "rate plan" refers to the semantic structure containing complete pricing information. A tariff document may contain material from multiple rate plans. In URPX these published sources are `SourcePublication`s, with the kind of publication given by the `publicationType` enumeration.
 
 **Ontology Alignment:**
-- `RatePlan` class = master template across time
-- `RatePlanVersion` class = temporal instance with specific charges and schedules
+- `RatePlan` class = the stable identity of the plan, independent of time
+- `PricingModel` class = an authored, citable statement of pricing carried by a publication (possibly partial)
+- `RatePlanVersion` class = the derived, complete snapshot of resolved plan facts for a temporal window, linked to its plan via `forRatePlan`
+- `RateGroup` class = the utility's own published grouping, linked via `hasRateGroup`
 - Clear terminology ensures semantic precision for standards review
 
 This standardized terminology provides clarity for implementers, ensures data exchange completeness, and aligns with semantic web precision requirements for W3C standards compliance.

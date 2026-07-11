@@ -5,8 +5,8 @@
 
 # URPX Overview
 
-**Version**: 0.2.0 (Pre-draft)
-**Last Updated**: 2026-04-13  
+**Version**: 0.3.0 (Pre-draft)
+**Last Updated**: 2026-07-07  
 **Status**: Active
 
 ## Understanding the Utility Rate Plan Exchange Standard
@@ -15,7 +15,7 @@
 
 ### Introduction
 
-The Utility Rate Plan Exchange (URPX) standard addresses a fundamental challenge in the energy industry: the lack of a common structure and exchange method for sharing utility rate plan information. With thousands of utilities each publishing rates in their own formats, comparing prices, analyzing trends, and building energy applications has been unnecessarily complex.
+The Utility Rate Plan Exchange (URPX) standard addresses a fundamental challenge in the energy industry: the lack of a common structure and exchange method for sharing utility rate plan information. With thousands of utilities each publishing rate plans in their own formats, comparing prices, analyzing trends, and building energy applications has been unnecessarily complex.
 
 URPX provides a solution through a comprehensive, standards-based approach to rate plan representation.
 
@@ -37,7 +37,7 @@ Without a standard format, each system must custom-build parsers for every utili
 URPX provides a complete framework for rate plan representation using semantic web technologies:
 
 #### 1. Ontology-Based Design
-Built on RDF and OWL standards, URPX defines a rich vocabulary for describing every aspect of utility rates. This semantic approach ensures data is both machine-readable and human-understandable.
+Built on RDF and OWL standards, URPX defines a rich vocabulary for describing every aspect of utility rate plans. This semantic approach ensures data is both machine-readable and human-understandable.
 
 #### 2. Modular Architecture
 
@@ -46,7 +46,8 @@ Built on RDF and OWL standards, URPX defines a rich vocabulary for describing ev
 URPX is built on a core ontology ([`urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)) that includes:
 
 **Core Rate Plan Structure:**
-- Rate plans and versions
+- Rate plan identities and derived version snapshots
+- Pricing models carried by publications
 - Prices and price sets
 - TOU schedules and pricing rules
 
@@ -84,26 +85,38 @@ URPX is built on a core ontology ([`urpx-ontology.ttl`](../../ontology/urpx-onto
 - JSON-LD for developer-friendly format
 - Standards-based interoperability
 
-**Document Types**
-- Rate Plan - Complete rate plan modeling including eligibility, prices, and calculation methodology
-- Rate Plan Modifier - Rate plan modifier including eligibility, prices, and calculation methodology that can be added on to a rate plan
-- Tariff Book Documents - Complete rate plan collections
-- Tariff Statement Documents - PSC periodic filings
-- Supply Prices Documents - Competitive market pricing
-- Real-Time Prices Documents - Dynamic pricing structures
-- DER Exports Document - Prices for DER Exports
+**Source Publications**
+
+URPX cites the published sources that pricing content comes from. Every external published artifact is a `SourcePublication`, and its kind is given by the `publicationType` enumeration:
+
+- `tariffBook` - Complete tariff books
+- `tariffStatement` - PSC periodic filings (statements)
+- `tariffSupplement` / `tariffAddendum` - Supplements and addenda
+- `supplyCharges` - Competitive market supply pricing
+- `highlyDynamicPrices` - Dynamic pricing structures
+- `derExports` - Prices for DER exports
+- `marketPriceFeed` - Published market price feeds
+
+The URPX exchange package itself (`URPXPackage`) is a separate concept: it is URPX's own container for exchanging content between systems, while a `SourcePublication` is a third-party artifact that URPX references but does not own.
 
 #### 4. Validation Framework
 SHACL (Shapes Constraint Language) rules ensure data quality and consistency:
 
 ```turtle
-# Example: Every rate plan must have at least one version
-urpx-shacl:RatePlanShape a sh:NodeShape ;
-    sh:targetClass urpx:RatePlan ;
+# Example: every rate plan version must name its plan and declare its coverage
+urpx-shacl:RatePlanVersionShape a sh:NodeShape ;
+    sh:targetClass urpx:RatePlanVersion ;
     sh:property [
-        sh:path urpx:hasRatePlanVersion ;
+        sh:path urpx:forRatePlan ;
+        sh:class urpx:RatePlan ;
         sh:minCount 1 ;
-        sh:message "Rate plan must have at least one version"
+        sh:message "Rate plan version must link back to its rate plan identity"
+    ] ;
+    sh:property [
+        sh:path urpx:hasCoverageClaim ;
+        sh:class urpx:CoverageClaim ;
+        sh:minCount 1 ;
+        sh:message "Rate plan version must declare a coverage claim"
     ] .
 ```
 
@@ -111,11 +124,24 @@ urpx-shacl:RatePlanShape a sh:NodeShape ;
 
 #### Rate Plans
 
-A rate plan contains complete pricing information including prices, schedules, eligibility rules, and applicability conditions. Rate plans have temporal versions, each effective during specific time periods.
+A `RatePlan` is the stable identity of a utility rate plan, independent of time — a durable record carrying the plan's name, identifiers (`hasIdentifier` / `RatePlanIdentifier`), service class and rate group links, and publisher. The identity itself carries no pricing content: pricing is stated by pricing models and read from derived version snapshots.
 
 #### Rate Plan Modifiers
 
-Rate plan modifiers also contain complete pricing information including prices, schedules, eligibility rules, and applicability conditions. Rate plan modifiers  have temporal versions, each effective during specific time periods. A rate plan modifier can be added on to an existing rate plan and a customer will not be billed on a rate plan modifier without an existing rate plan.
+A `RatePlanModifier` is the parallel identity record for an optional add-on (a rider): something a customer takes in addition to a rate plan, never on its own. Modifiers follow the same pattern as plans — a stable identity, pricing models that state pricing content, and derived `RatePlanModifierVersion` snapshots linked back via `forRatePlanModifier`.
+
+#### Pricing Models and Publications
+
+Utilities rarely publish a complete rate plan in one place. A tariff book states delivery charges, a monthly statement adjusts one charge, a market feed publishes supply prices. URPX models each published statement of pricing as a `PricingModel` — an authored, citable, possibly-partial unit of pricing content carried by a publication:
+
+- A `SourcePublication` is the external published artifact (its kind given by `publicationType`)
+- A `TariffFiling` is the regulatory publication unit within a source publication, holding pricing models via `containsPricingModel`
+- A `SourceReference` records exactly where a URPX fact was interpreted from — file name or URL, media type, and an optional selector into a page or region
+- Each `PricingModel` carries a `confidence` value (`verified`, `estimated`, or `projected`) stating how its content relates to the published source
+
+#### Rate Plan Versions and Coverage
+
+A `RatePlanVersion` is the derived, complete snapshot of the resolved plan facts for a temporal window — the artifact a billing engine or comparison tool actually reads. It is consolidated from the applicable pricing models and linked back to the plan identity via `forRatePlan`. Completeness is honest by construction: every version must declare a `CoverageClaim` stating its completeness result and whether it is self-contained (`selfContained`), with an explaining `Evaluation`.
 
 #### Prices
 
@@ -140,25 +166,29 @@ Eligibility and applicability determined by:
 
 #### Rate Plan Structure
 
-A rate plan in URPX follows a hierarchical structure:
+A rate plan in URPX separates the identity from the resolved snapshot. The exchange package carries the identity; each version is a top-level node that points back to its plan:
 
 ```
-URPXDocument
-  └── RatePlan
-      └── RatePlanVersion (temporal instance)
-        └── EligibilityRule (customer requirements)
-        │   ├── CustomerProfile
-        │   └── ServicePointProfile
-        └── Plan Elements 
-        │   └──Billing Model   
-        │        ├── TOUSchedule (time-of-use rules)
-        │           └── TOUTier (price level)
-        │               └── TOUPeriod (time window)
-        │        ├── ServiceTiers (service tier group container)
-        │            └── ServiceTier (service tier constraints)      
-        └── Prices (container for all prices)
-            ├── PriceSet (logical grouping)
-                └── Price (individual price component)
+URPXPackage (exchange container)
+  └── RatePlan (stable identity)
+      ├── RatePlanIdentifier (hasIdentifier)
+      └── ServiceClass / RateGroup links
+
+RatePlanVersion (derived snapshot — forRatePlan → RatePlan)
+  ├── CoverageClaim (hasCoverageClaim)
+  │   └── Evaluation (explainedBy)
+  ├── EligibilityRule (customer requirements)
+  │   └── ConditionExpression
+  ├── PlanElements
+  │   └── BillingModel
+  │        ├── TOUSchedule (time-of-use rules)
+  │        │   └── TOUTier (price level)
+  │        │       └── TOUPeriod (time window)
+  │        └── ServiceTiers (service tier group container)
+  │            └── ServiceTier (service tier constraints)
+  └── Prices (container for all prices)
+      └── PriceSet (logical grouping)
+          └── Price (individual price component)
 ```
 
 #### Temporal Versioning
@@ -167,8 +197,8 @@ Rate plans evolve over time. URPX captures this through versioning:
 
 ![Temporal Versioning](../diagrams/urpx-temporal-versioning-summary.svg)
 
-- **RatePlan** - The permanent structure for a rate plan
-- **RatePlanVersion** - A specific version effective during a time period
+- **RatePlan** - The permanent identity of a rate plan
+- **RatePlanVersion** - The resolved snapshot effective during a time period, linked back to its plan via `forRatePlan`
 - **Version Transitions** - Tracked with `changeReason` plus optional linked `RateCase` records
 
 When a rate plan version, rate plan modifier version, price definition, price set, price set alternative, or price is established or revised through a formal proceeding, URPX links the affected artifact to one or more `RateCase` resources via `hasRateCase`. Each `RateCase` carries the proceeding `caseNumber`, a source `url`, optional `name` and `description`, and optional `priority` when multiple proceedings overlap.
@@ -199,24 +229,53 @@ URPX supports the full spectrum of utility charges:
 
 ### Statement Prices Integration
 
-A major enhancement in URPX is support for regulatory statement prices:
+Regulatory statements typically adjust a single charge rather than restate a whole plan. URPX models this directly: the statement is a `SourcePublication`, the filed excerpt is a `TariffFiling`, and the pricing content it carries is a `PricingModel` — deliberately partial, citable back to its source:
 
 ```turtle
-# Statement document from PSC filing
-ex:PSC-Filing-2025-001 a urpx:TariffStatementDocument ;
-    urpx:tariffStatementType urpx:transmissionStatement ;
+# The published statement, cited as an external source
+ex:psc-statement-2025-001 a urpx:SourcePublication ;
+    urpx:name "PSC Statement 2025-EL-0123" ;
+    urpx:publicationType urpx:tariffStatement ;
+    urpx:effectiveDate "2025-01-15"^^xsd:date .
+
+# The filed excerpt carrying the pricing content
+ex:filing-2025-001 a urpx:TariffFiling ;
     urpx:filingNumber "2025-EL-0123" ;
     urpx:effectiveDate "2025-01-15"^^xsd:date ;
-    urpx:contains ex:TransmissionCharge-001 .
+    urpx:documentedBy [ a urpx:SourceReference ;
+        urpx:sourcePublication ex:psc-statement-2025-001 ;
+        urpx:fileName "psc-statement-2025-001.pdf" ] ;
+    urpx:containsPricingModel ex:pm-transmission-2025 .
 
-# Individual statement price with flexible pricing
-ex:TransmissionCharge-001 a urpx:Price ;
-    urpx:name "Transmission Service Price" ;
-    urpx:chargeType "transmission" ;
-    urpx:unitPrice 0.0234 ;  # $/kWh
-    urpx:commodity "electricity" ;
-    urpx:hasApplicability ex:StateWideApplicability .
+# The authored pricing content — the same structure a rate plan version
+# carries: PlanElements define what is measured and how the charge is
+# defined; Prices carry the dated values.
+ex:pm-transmission-2025 a urpx:PricingModel ;
+    urpx:confidence urpx:verified ;
+    urpx:hasPlanElements [ a urpx:PlanElements ;
+        urpx:hasMetricInput ex:mi-energy-kwh ;
+        urpx:hasBillingModel [ a urpx:BillingModel ;
+            urpx:hasLedger ex:ledger-delivery ;
+            urpx:hasPriceDefinition ex:pd-transmission ] ] ;
+    urpx:hasPrices [ a urpx:Prices ;
+        urpx:hasPriceSet [ a urpx:PriceSet ;
+            urpx:hasPrice [ a urpx:Price ;
+                urpx:name "Transmission Service Price" ;
+                urpx:referencesPriceDefinition ex:pd-transmission ;
+                urpx:unitPrice 0.0234 ;  # $/kWh
+                urpx:startDate "2025-01-15"^^xsd:date ] ] ] .
+
+# The stable charge definition the dated price instantiates
+ex:pd-transmission a urpx:PriceDefinition ;
+    urpx:name "Transmission Service Charge" ;
+    urpx:chargeType urpx:transmission ;
+    urpx:chargeCategory urpx:infrastructure ;
+    urpx:billPortion urpx:deliveryPortion ;
+    urpx:referencesLedger ex:ledger-delivery ;
+    urpx:referencesMetricInput ex:mi-energy-kwh .
 ```
+
+Reading the chain top-down: the **statement** (`SourcePublication`) is the external document; the **filing** (`TariffFiling`) is the URPX content unit within it, citing its exact source through a `SourceReference`; the **pricing model** is the authored pricing the filing carries. Inside the pricing model the structure is the same as inside a rate plan version: `PlanElements` hold the measurement definition (`MetricInput`) and the `BillingModel` with its ledger and stable `PriceDefinition`s, while `Prices` hold the dated values that reference those definitions. When a version snapshot is later consolidated, this pricing model contributes its price to the resolved `RatePlanVersion` for the window in which the statement is effective.
 
 ### Geographic Applicability
 
@@ -249,7 +308,7 @@ ex:DemandResponseProgram a urpx:ProgramEnrollment ;
 
 ### Data Quality & Validation
 
-URPX includes SHACL (Shapes Constraint Language) validation shapes in a unified file ([`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl), pre-draft v0.2.0):
+URPX includes SHACL (Shapes Constraint Language) validation shapes in a unified file ([`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl), pre-draft v0.3.0):
 
 **Core Validation** — Rate plan structure integrity, price consistency rules, temporal constraint validation
 

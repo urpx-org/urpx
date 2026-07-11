@@ -5,8 +5,8 @@
 
 # URPX Test Data Review Guide
 
-**Version**: 0.2.0 (Pre-draft)
-**Last Updated**: 2026-05-01
+**Version**: 0.3.0 (Pre-draft)
+**Last Updated**: 2026-07-07
 **Status**: Active
 
 **How to review a URPX JSON-LD test case against its source tariff book**
@@ -94,12 +94,14 @@ Common mistakes:
 
 At this stage, also check:
 
-- `urpx:targetURPXVersion`
+- `urpx:targetURPXVersion` (on the `URPXPackage`)
 - `urpx:ratePlanUniqueIdentifier`
 - `urpx:initialEffectiveDate`
 - `urpx:effectiveDate` or `urpx:effectiveDateTime`
 - `urpx:changeReason`
 - `urpx:priceCurrency`
+- `urpx:forRatePlan` on every `RatePlanVersion` — the version must point at the right plan identity
+- `urpx:hasCoverageClaim` on every version — and whether the claimed `completenessResult` and `selfContained` value are actually true of the file: a version claiming `complete` while a component is only referenced externally is a review finding
 - `urpx:hasRateCase`, if the tariff book references a rate case or docket
 
 ---
@@ -148,7 +150,7 @@ This is the part most likely to pass a superficial review while still being wron
 
 ### Eligibility
 
-If the tariff book says who may take service under the rate, review `urpx:hasEligibilityRule` first.
+If the tariff book says who may take service under the rate plan, review `urpx:hasEligibilityRule` first.
 
 Check:
 
@@ -342,13 +344,14 @@ Check:
 
 Every review should end with a provenance pass.
 
-Check `urpx:hasDataSourceReference` and related tariff book references for:
+Check every `SourceReference` (attached via `urpx:hasDataSourceReference` or `urpx:documentedBy`) and related tariff book references for:
 
 - correct local file or source URL
 - `urpx:accessURL` when applicable
 - `urpx:mediaType`
 - `urpx:dataSourceType`
 - `urpx:dateRetrieved`
+- `urpx:sourcePublication` — the `SourcePublication` node with the correct `urpx:publicationType` (tariff book vs. statement vs. supplement vs. market price feed) and its own effective date
 - `urpx:hasTariffBookReference`
 
 For `TariffBookReference`, verify:

@@ -5,9 +5,9 @@
 
 # URPX API Specification
 
-**Version:** 0.2.0 (Pre-draft)
+**Version:** 0.3.0 (Pre-draft)
 **Status:** Requirements Phase  
-**Last Updated:** 2026-04-29
+**Last Updated:** 2026-07-07
 
 [← Back to Index](/docs/getting-started/overview) | [Overview](urpx-overview.md) | [URPX Interoperability & Standards Integration](urpx-interoperability.md)
 
@@ -15,7 +15,7 @@
 
 ## Status Notice
 
-The URPX API specification is currently in requirements gathering phase. A working group lead for API design will be identified to develop comprehensive REST and GraphQL specifications for consuming published rate plan data.
+API draft specification under development by the URPX chair: comprehensive REST and GraphQL specifications for consuming published rate plan data.
 
 This document provides initial pre-draft requirements, use cases, and example API patterns to guide development.
 
@@ -252,7 +252,7 @@ Content-Type: application/ld+json
 Authorization: Bearer {token}
 
 {
-  "@context": "https://schema.urpx.org/context.jsonld",
+  "@context": "https://urpx-org.github.io/urpx/ontology/context.jsonld",
   "@type": "RatePlan",
   "ratePlanUniqueIdentifier": "NEW-RES-PLAN-001",
   "name": "New Residential Rate Plan",
@@ -266,7 +266,7 @@ HTTP/1.1 201 Created
 Location: /api/v1/rate-plans/NEW-RES-PLAN-001
 
 {
-  "@context": "https://schema.urpx.org/context.jsonld",
+  "@context": "https://urpx-org.github.io/urpx/ontology/context.jsonld",
   "@id": "ex:rateplan-new-001",
   "@type": "RatePlan",
   "ratePlanUniqueIdentifier": "NEW-RES-PLAN-001",
@@ -286,13 +286,23 @@ Content-Type: application/ld+json
 Authorization: Bearer {token}
 
 {
-  "@context": "https://schema.urpx.org/context.jsonld",
+  "@context": "https://urpx-org.github.io/urpx/ontology/context.jsonld",
   "@type": "RatePlanVersion",
   "version": "2.0",
+  "forRatePlan": {"@id": "ex:rateplan-res-tou-001"},
   "effectiveDateTime": "2025-07-01T00:00:00-04:00",
   "changeReason": {"@id": "urpx:rateCase"},
   "publishedBy": {"@id": "ex:utility-example"},
   "serviceRole": {"@id": "urpx:bundledServiceRole"},
+  "hasCoverageClaim": {
+    "@type": "CoverageClaim",
+    "completenessResult": {"@id": "urpx:complete"},
+    "selfContained": true,
+    "explainedBy": {
+      "@type": "Evaluation",
+      "description": "All prices and plan elements are carried inline."
+    }
+  },
   "hasPlanElements": {
     "@type": "PlanElements"
   },
@@ -331,7 +341,7 @@ Accept: application/ld+json
 **Response**:
 ```json
 {
-  "@context": "https://schema.urpx.org/context.jsonld",
+  "@context": "https://urpx-org.github.io/urpx/ontology/context.jsonld",
   "@id": "ex:rateplan-res-tou-001",
   "@type": "RatePlan",
   "ratePlanUniqueIdentifier": "RES-TOU-001",
@@ -352,7 +362,7 @@ Accept: application/ld+json
 **Response**:
 ```json
 {
-  "@context": "https://schema.urpx.org/context.jsonld",
+  "@context": "https://urpx-org.github.io/urpx/ontology/context.jsonld",
   "@id": "ex:version-current",
   "@type": "RatePlanVersion",
   "version": "1.0",
@@ -380,12 +390,12 @@ Accept: application/ld+json
 **Example: Find All Peak Period Prices**
 
 ```sparql
-PREFIX urpx: <https://schema.urpx.org/>
+PREFIX urpx: <https://urpx-org.github.io/urpx/ontology/>
 
 SELECT ?price ?name ?unitPrice ?periodName
 WHERE {
-  ?ratePlan urpx:ratePlanUniqueIdentifier "RES-TOU-001" ;
-           urpx:hasRatePlanVersion ?version .
+  ?ratePlan urpx:ratePlanUniqueIdentifier "RES-TOU-001" .
+  ?version urpx:forRatePlan ?ratePlan .
   
   ?version urpx:hasPrices/urpx:hasPriceSet/urpx:hasPrice ?price .
   
@@ -435,10 +445,10 @@ WHERE {
 
 ### Working Group
 
-**Seeking**: API Working Group Lead
+**Lead**: URPX chair (draft specification in progress)
 
 **Responsibilities**:
-- Define comprehensive API specification aligned with the v0.2.0 ontology and SHACL model
+- Define comprehensive API specification aligned with the v0.3.0 ontology and SHACL model
 - Coordinate with semantic web and integration teams
 - Develop reference implementation
 - Lead community adoption
@@ -454,6 +464,6 @@ WHERE {
 
 ---
 
-*API specification under development for URPX v0.2.0. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
+*API specification under development for URPX v0.3.0. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
 
 [← Back to Index](/docs/getting-started/overview)

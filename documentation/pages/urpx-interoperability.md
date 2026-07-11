@@ -257,7 +257,7 @@ urpx:currentPrice skos:relatedMatch oadr:oadrPayload ;
 **Purpose**: Device interoperability and home automation.
 
 #### Matter Integration
-Bridges utility rate structures to residential Energy Management Clusters in the Matter 1.4+ standard.
+Bridges utility rate plan structures to residential Energy Management Clusters in the Matter 1.4+ standard.
 
 ```turtle
 @prefix matter: <http://csa-iot.org/matter#> .
