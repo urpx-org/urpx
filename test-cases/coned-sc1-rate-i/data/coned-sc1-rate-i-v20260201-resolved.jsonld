@@ -67,11 +67,12 @@
         "@id": "coned:cc-sc1-rate-i-v20260201",
         "@type": "urpx:CoverageClaim",
         "urpx:completenessResult": { "@id": "urpx:complete" },
+        "urpx:confidence": { "@id": "urpx:verified" },
         "urpx:selfContained": true,
         "urpx:explainedBy": {
           "@id": "coned:eval-sc1-rate-i-v20260201",
           "@type": "urpx:Evaluation",
-          "urpx:description": "All contributing pricing models carry confidence urpx:verified, so the derived confidence of this snapshot is verified (min of contributing packages). Delivery charges are effective-dated 2026-02-01 with no announced end. The MAC energy charge is re-estimated monthly, each Statement of Monthly Adjustment Clause superseding the previous one: the statements from the version effective date through the most recent published one (Nos. 169–172, effective 2026-02-01 through 2026-05-01) are materialised, each price ending when its successor takes effect and the latest left open; later statements re-reconcile into successor versions. MSC is a rolling monthly market feed: the cycle price covering the effective date (2025-12-31 to 2026-02-02) and the most recent published future cycle (2026-05-01 to 2026-06-02) are materialised; later cycles publish monthly and re-reconcile into successor versions. No component is priced externally (no retrievedElsewhere references), hence selfContained true."
+          "urpx:description": "All contributing pricing models carry confidence urpx:verified. Delivery charges are effective-dated 2026-02-01 with no announced end. The MAC energy charge is re-estimated monthly, each Statement of Monthly Adjustment Clause superseding the previous one: the statements from the version effective date through the most recent published one (Nos. 169–172, effective 2026-02-01 through 2026-05-01) are materialised, each price ending when its successor takes effect and the latest left open; later statements re-reconcile into successor versions. MSC is a rolling monthly market feed: the cycle price covering the effective date (2025-12-31 to 2026-02-02) and the most recent published future cycle (2026-05-01 to 2026-06-02) are materialised; later cycles publish monthly and re-reconcile into successor versions. No component is priced externally (no retrievedElsewhere references), hence selfContained true."
         }
       },
       "urpx:hasPlanElements": {

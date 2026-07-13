@@ -30,7 +30,7 @@
     dcterms:creator "Klaar De Schepper, Una Smithsimon, Flux Tailor LLC" ;
     dcterms:description "URPX ontology for utility rate plan exchange" ;
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
-    dcterms:modified "2026-07-07"^^xsd:date ;
+    dcterms:modified "2026-07-12"^^xsd:date ;
     dcterms:title "URPX Ontology" ;
     dcterms:hasVersion <https://urpx-org.github.io/urpx/ontology/releases/v0.3.0> ;
     owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.3.0/ontology/urpx-ontology.ttl> .
@@ -368,14 +368,19 @@ urpx:RatePlan a owl:Class ;
 
 urpx:RatePlanIdentifier a owl:Class ;
     rdfs:label "Rate Plan Identifier"@en ;
-    rdfs:comment "A typed, URI-addressable identifier for a RatePlan or RatePlanModifier (e.g., CA MIDAS RIN, utility tariff code)." ;
-    skos:note "Aligned to adms:Identifier by reference (no owl:imports). scheme is a free URI — documented conventions: urpx:ca-midas-rin, urpx:utility-tariff-code. Value via skos:notation." .
+    rdfs:comment "A typed, URI-addressable identifier for a RatePlan (e.g., CA MIDAS RIN, utility tariff code)." ;
+    skos:note "Aligned to adms:Identifier by reference (no owl:imports). scheme is a free URI — documented conventions: urpx:ca-midas-rin, urpx:utility-tariff-code. Value via skos:notation. Modifier identities use the parallel RatePlanModifierIdentifier." .
 
 urpx:RatePlanModifier a owl:Class ;
     rdfs:label "Rate Plan Modifier"@en ;
     rdfs:comment "Stable identity of a rate plan modifier, independent of time." ;
     owl:disjointWith urpx:RatePlanModifierVersion ;
     skos:note "The stable identifier, parallel to RatePlan. No pricing content. Authored modifier pricing is carried by PricingModels; the complete read artifact for a window is the derived RatePlanModifierVersion snapshot. Examples include low income discounts, green energy options, demand response, DER export crediting for on site generation." .
+
+urpx:RatePlanModifierIdentifier a owl:Class ;
+    rdfs:label "Rate Plan Modifier Identifier"@en ;
+    rdfs:comment "A typed, URI-addressable identifier for a RatePlanModifier (e.g., CA MIDAS RIN, utility tariff code)." ;
+    skos:note "Parallel to RatePlanIdentifier. Aligned to adms:Identifier by reference (no owl:imports). scheme is a free URI — documented conventions: urpx:ca-midas-rin, urpx:utility-tariff-code. Value via skos:notation." .
 
 urpx:RatePlanModifierVersion a owl:Class ;
     rdfs:label "Rate Plan Modifier Version"@en ;
@@ -435,7 +440,7 @@ urpx:ServiceTiers a owl:Class ;
 urpx:SourcePublication a owl:Class ;
     rdfs:label "Source Publication"@en ;
     rdfs:comment "An external, third-party published artifact (regulatory filing, PSC statement, supplier price sheet, notice, contract) cited as source evidence by URPX facts." ;
-    skos:note "External source publication; the single class for any external published source. Neither a super- nor subclass of URPXPackage (URPX's own exchange package); they are siblings, both referenceable. URPX references a SourcePublication; it does not own or define it. Its kind is given by urpx:publicationType — the former publication classes (TariffPublication + the *Document family) retire into that enum. Has its own lifecycle (issued, effective, canceled, withdrawn, superseded), distinct from the authored PricingModel lifecycle." .
+    skos:note "External source publication; the single class for any external published source. Neither a super- nor subclass of URPXPackage (URPX's own exchange package); they are siblings, both referenceable. URPX references a SourcePublication; it does not own or define it. Its kind is given by urpx:publicationType. Has its own lifecycle (issued, effective, canceled, withdrawn, superseded), distinct from the authored PricingModel lifecycle." .
 
 urpx:SourceReference a owl:Class ;
     rdfs:label "Source Reference"@en ;
@@ -458,7 +463,7 @@ urpx:SystemOperator a owl:Class ;
 urpx:TariffBookReference a owl:Class ;
     rdfs:label "Tariff Book Reference"@en ;
     rdfs:comment "Structured reference to a specific location within a tariff book PDF" ;
-    skos:note "Nested within DataSourceReference via hasTariffBookReference. Captures leaf and page position within the PDF." .
+    skos:note "Nested within a SourceReference via hasTariffBookReference. Captures leaf and page position within the PDF." .
 
 urpx:TariffFiling a owl:Class ;
     rdfs:label "Tariff Filing"@en ;
@@ -468,7 +473,7 @@ urpx:TariffFiling a owl:Class ;
 urpx:TariffStatementReference a owl:Class ;
     rdfs:label "Tariff Statement Reference"@en ;
     rdfs:comment "Structured reference to a PSC statement filing PDF with provenance and statement type" ;
-    skos:note "Nested within DataSourceReference via hasTariffStatementReference." .
+    skos:note "Nested within a SourceReference via hasTariffStatementReference." .
 
 urpx:TemporalPeriod a owl:Class ;
     rdfs:label "Temporal Period"@en ;
@@ -569,7 +574,7 @@ urpx:ChargeCategoryValue a owl:Class ;
 urpx:ChargeTypeValue a owl:Class ;
     rdfs:label "Charge Type Value"@en ;
     rdfs:comment "Enumeration of specific charge type implementations"@en ;
-    owl:equivalentClass [ owl:oneOf ( urpx:adjustmentPowerCost urpx:adjustmentRenewable urpx:adjustmentTariff urpx:ancillaryServices urpx:capacity urpx:capacityCharge urpx:capitalCredit urpx:complianceCharge urpx:congestionCharge urpx:conservationCharge urpx:contractMisc urpx:creditAdministrative urpx:creditEnergy urpx:creditGeneration urpx:creditInfrastructure urpx:creditMisc urpx:creditPriceProtection urpx:creditRenewable urpx:creditTariffRider urpx:deliveryCharge urpx:demandDirect urpx:demandIndirect urpx:demandSideManagement urpx:depositCredit urpx:depositInterest urpx:depositRequest urpx:distributedGeneration urpx:distributionCharge urpx:donation urpx:efficiencyFunding urpx:energyStorage urpx:environmentalFunding urpx:facilities urpx:generation urpx:handling urpx:heapDiscount urpx:initiationCharge urpx:minimumBill urpx:minimumCharge urpx:nonBypassableCharge urpx:powerFactor urpx:publicBenefits urpx:recoverySurcharge urpx:reliabilityCharge urpx:renewableFunding urpx:rentalFee urpx:serviceMetered urpx:serviceNonMetered urpx:strandedCosts urpx:systemBenefitCharge urpx:tariffRider urpx:taxAdjustment urpx:taxCredit urpx:taxMisc urpx:taxMunicipal urpx:taxSales urpx:taxState urpx:taxUtility urpx:transitionCharge urpx:transmission urpx:usageCharge urpx:volumetricCharge ) ] .
+    owl:equivalentClass [ owl:oneOf ( urpx:adjustmentPowerCost urpx:adjustmentRenewable urpx:adjustmentTariff urpx:ancillaryServices urpx:capacity urpx:capacityCharge urpx:capitalCredit urpx:complianceCharge urpx:congestionCharge urpx:conservationCharge urpx:contractMisc urpx:creditAdministrative urpx:creditEnergy urpx:creditGeneration urpx:creditInfrastructure urpx:creditMisc urpx:creditPriceProtection urpx:creditRenewable urpx:creditTariffRider urpx:customerCharge urpx:deliveryCharge urpx:demandDirect urpx:demandIndirect urpx:demandSideManagement urpx:depositCredit urpx:depositInterest urpx:depositRequest urpx:distributedGeneration urpx:distributionCharge urpx:donation urpx:efficiencyFunding urpx:energyStorage urpx:environmentalFunding urpx:exportCredit urpx:facilities urpx:fuelCharge urpx:generation urpx:handling urpx:heapDiscount urpx:initiationCharge urpx:lateFee urpx:minimumBill urpx:minimumCharge urpx:nonBypassableCharge urpx:powerFactor urpx:publicBenefits urpx:reactiveDemand urpx:recoverySurcharge urpx:reliabilityCharge urpx:renewableFunding urpx:rentalFee urpx:serviceMetered urpx:serviceNonMetered urpx:standbyCharge urpx:strandedCosts urpx:systemBenefitCharge urpx:tariffRider urpx:taxAdjustment urpx:taxCredit urpx:taxMisc urpx:taxMunicipal urpx:taxSales urpx:taxState urpx:taxUtility urpx:transitionCharge urpx:transmission urpx:usageCharge urpx:volumetricCharge ) ] .
 
 urpx:CollectionRoleValue a owl:Class ;
     rdfs:label "Collection Role Value"@en ;
@@ -747,7 +752,7 @@ urpx:LoadProfileValue a owl:Class ;
 urpx:MeasurementTypeValue a owl:Class ;
     rdfs:label "Measurement Type Value"@en ;
     rdfs:comment "Measurement type enumeration values" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:current urpx:demand urpx:energy urpx:frequency urpx:power urpx:powerFactor urpx:pressure urpx:temperature urpx:voltage urpx:volume urpx:volumetricFlow ) ] ;
+    owl:equivalentClass [ owl:oneOf ( urpx:apparentPower urpx:current urpx:demand urpx:energy urpx:frequency urpx:power urpx:powerFactor urpx:pressure urpx:reactiveEnergy urpx:reactivePower urpx:temperature urpx:voltage urpx:volume urpx:volumetricFlow ) ] ;
     skos:note "Enumeration class for measurement types covering comprehensive utility measurement categories including energy, demand, power quality, flow, and environmental measurements." .
 
 urpx:MediaTypeValue a owl:Class ;
@@ -1153,6 +1158,27 @@ urpx:calculationRule a owl:ObjectProperty ;
     rdfs:domain urpx:MetricInput ;
     skos:note "Defines how calculated MetricInputs derive their values from input MetricInputs. Used for net export, aggregation, and time-shifted metrics." .
 
+urpx:cancelledBy a owl:ObjectProperty ;
+    rdfs:label "Cancelled By"@en ;
+    rdfs:comment "Marks a tariff filing as no longer valid (voided) and links it to what cancelled it: the successor filing for a same-period correction (see urpx:replacedBy), or the publication that withdrew it when there is no successor. A cancelled filing is retained for audit but excluded from active reads." ;
+    rdfs:domain urpx:TariffFiling ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( urpx:TariffFiling urpx:SourcePublication ) ] ;
+    skos:note "Presence of urpx:cancelledBy is the void marker — the filing is voided without deletion. For a replacement, point it at the urpx:replacedBy successor; for a withdrawal, point it at the cancelling publication. A superseded filing is NOT cancelled (it stays valid history); cancellation applies only to replacement and withdrawal." .
+
+urpx:cancelledOn a owl:DatatypeProperty ;
+    rdfs:label "Cancelled On"@en ;
+    rdfs:comment "Date on which a tariff filing was cancelled or voided — when its content left the active set." ;
+    rdfs:domain urpx:TariffFiling ;
+    rdfs:range xsd:date .
+
+urpx:cancelsPriceDefinition a owl:ObjectProperty ;
+    rdfs:label "Cancels Price Definition"@en ;
+    rdfs:comment "Asserts that this tariff filing cancels the referenced price definition." ;
+    rdfs:domain urpx:TariffFiling ;
+    rdfs:range urpx:PriceDefinition ;
+    skos:note "Price definitions are immutable; cancellation is expressed as a new assertion by the enacting filing rather than a mutation of the definition. A cancelled definition remains citable by earlier filings." .
+
 urpx:caseNumber a owl:DatatypeProperty ;
     rdfs:label "Case Number"@en ;
     rdfs:comment "Jurisdiction-specific identifier assigned to a rate case proceeding" ;
@@ -1228,9 +1254,11 @@ urpx:conditionProperty a owl:ObjectProperty ;
 
 urpx:confidence a owl:ObjectProperty ;
     rdfs:label "Confidence"@en ;
-    rdfs:comment "The epistemic confidence of this PricingModel's content." ;
-    rdfs:domain urpx:PricingModel ;
-    rdfs:range urpx:ConfidenceValue .
+    rdfs:comment "The epistemic confidence of the subject's pricing content." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:PricingModel urpx:CoverageClaim ) ] ;
+    rdfs:range urpx:ConfidenceValue ;
+    skos:note "On a pricing model: the confidence of its authored content. On a coverage claim: the derived confidence of the consolidated snapshot — the minimum of the contributing models' confidence values; the claim's evaluation records the mix." .
 
 urpx:connectionKind a owl:ObjectProperty ;
     rdfs:label "Connection Kind"@en ;
@@ -1516,7 +1544,7 @@ urpx:effectiveDate a owl:DatatypeProperty ;
     rdfs:label "Effective Date"@en ;
     rdfs:comment "Date when entity becomes active" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:SourceReference urpx:RatePlan urpx:RatePlanModifier urpx:PricingModel urpx:SourcePublication urpx:URPXPackage ) ] ;
+            owl:unionOf ( urpx:SourceReference urpx:RatePlan urpx:RatePlanModifier urpx:PricingModel urpx:SourcePublication urpx:URPXPackage urpx:TariffFiling urpx:PriceDefinition urpx:TOUSchedule urpx:Season urpx:HolidayCalendar urpx:ServiceTiers ) ] ;
     rdfs:range xsd:date ;
     skos:note "ISO 8601 date format. For date-only specifications." .
 
@@ -1524,7 +1552,7 @@ urpx:effectiveDateTime a owl:DatatypeProperty ;
     rdfs:label "Effective Date Time"@en ;
     rdfs:comment "Date/time when entity becomes active" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:SourceReference urpx:RatePlan urpx:RatePlanModifier urpx:PricingModel urpx:SourcePublication urpx:URPXPackage ) ] ;
+            owl:unionOf ( urpx:SourceReference urpx:RatePlan urpx:RatePlanModifier urpx:PricingModel urpx:SourcePublication urpx:URPXPackage urpx:TariffFiling urpx:PriceDefinition urpx:TOUSchedule urpx:Season urpx:HolidayCalendar urpx:ServiceTiers ) ] ;
     rdfs:range xsd:dateTime ;
     skos:note "ISO 8601 format with timezone. Critical for version management." .
 
@@ -1622,7 +1650,7 @@ urpx:expirationDate a owl:DatatypeProperty ;
     rdfs:label "Expiration Date"@en ;
     rdfs:comment "Date when entity becomes inactive" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:SourceReference urpx:RatePlan urpx:RatePlanModifier urpx:PricingModel urpx:SourcePublication urpx:URPXPackage ) ] ;
+            owl:unionOf ( urpx:SourceReference urpx:RatePlan urpx:RatePlanModifier urpx:PricingModel urpx:SourcePublication urpx:URPXPackage urpx:TariffFiling urpx:PriceDefinition urpx:TOUSchedule urpx:Season urpx:HolidayCalendar urpx:ServiceTiers ) ] ;
     rdfs:range xsd:date ;
     skos:note "ISO 8601 date format. For date-only specifications." .
 
@@ -1630,7 +1658,7 @@ urpx:expirationDateTime a owl:DatatypeProperty ;
     rdfs:label "Expiration Date Time"@en ;
     rdfs:comment "Date/time when entity becomes inactive" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:SourceReference urpx:RatePlan urpx:RatePlanModifier urpx:PricingModel urpx:SourcePublication urpx:URPXPackage ) ] ;
+            owl:unionOf ( urpx:SourceReference urpx:RatePlan urpx:RatePlanModifier urpx:PricingModel urpx:SourcePublication urpx:URPXPackage urpx:TariffFiling urpx:PriceDefinition urpx:TOUSchedule urpx:Season urpx:HolidayCalendar urpx:ServiceTiers ) ] ;
     rdfs:range xsd:dateTime ;
     skos:note "Optional but recommended for clarity. Null implies indefinite duration." .
 
@@ -1897,8 +1925,8 @@ urpx:hasIdentifier a owl:ObjectProperty ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:OrganizationIdentity urpx:RatePlan urpx:RatePlanModifier ) ] ;
     rdfs:range [ a owl:Class ;
-            owl:unionOf ( urpx:OrganizationIdentifier urpx:RatePlanIdentifier ) ] ;
-    skos:note "For organization identity: links to OrganizationIdentifier (EIA ID, DUNS, LEI). For rate plan / rate plan modifier: links to RatePlanIdentifier (typed, URI-addressable; skos:notation value; aligned to adms:Identifier by reference)." .
+            owl:unionOf ( urpx:OrganizationIdentifier urpx:RatePlanIdentifier urpx:RatePlanModifierIdentifier ) ] ;
+    skos:note "For organization identity: links to OrganizationIdentifier (EIA ID, DUNS, LEI). For rate plan: links to RatePlanIdentifier; for rate plan modifier: links to RatePlanModifierIdentifier (each typed, URI-addressable; skos:notation value; aligned to adms:Identifier by reference)." .
 
 urpx:hasIdentity a owl:ObjectProperty ;
     rdfs:label "Has Identity"@en ;
@@ -2184,10 +2212,10 @@ urpx:hasState a owl:ObjectProperty ;
 
 urpx:hasTariffBookReference a owl:ObjectProperty ;
     rdfs:label "Has Tariff Book Reference"@en ;
-    rdfs:comment "Links a DataSourceReference to tariff book sections" ;
+    rdfs:comment "Links a SourceReference to tariff book sections" ;
     rdfs:domain urpx:SourceReference ;
     rdfs:range urpx:TariffBookReference ;
-    skos:note "Links DataSourceReference to tariff book leaf identifiers." .
+    skos:note "Links a SourceReference to tariff book leaf identifiers." .
 
 urpx:hasTariffPublication a owl:ObjectProperty ;
     rdfs:label "Has Tariff Publication"@en ;
@@ -2198,7 +2226,7 @@ urpx:hasTariffPublication a owl:ObjectProperty ;
 
 urpx:hasTariffStatementReference a owl:ObjectProperty ;
     rdfs:label "Has Tariff Statement Reference"@en ;
-    rdfs:comment "Links a DataSourceReference to a structured tariff statement filing reference" ;
+    rdfs:comment "Links a SourceReference to a structured tariff statement filing reference" ;
     rdfs:domain urpx:SourceReference ;
     rdfs:range urpx:TariffStatementReference ;
     skos:note "Allows structured provenance and statement type metadata on regulatory filing citations." .
@@ -2418,6 +2446,14 @@ urpx:isPreferred a owl:DatatypeProperty ;
     rdfs:range xsd:boolean ;
     skos:note "Preferred display name indicator." .
 
+urpx:isReferencedByPricingModel a owl:ObjectProperty ;
+    rdfs:label "Is Referenced By Pricing Model"@en ;
+    rdfs:comment "Links a rate plan to a pricing model that declares plan-specific content for it." ;
+    owl:inverseOf urpx:referencesRatePlan ;
+    rdfs:domain urpx:RatePlan ;
+    rdfs:range urpx:PricingModel ;
+    skos:note "OWL-entailed from referencesRatePlan; not asserted in instance data. Enables plan-centric traversal without a stored reciprocal triple." .
+
 urpx:issuingAuthority a owl:DatatypeProperty ;
     rdfs:label "Issuing Authority"@en ;
     rdfs:comment "Organization that issued or approved the publication" ;
@@ -2439,7 +2475,7 @@ urpx:leafStart a owl:DatatypeProperty ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:TariffBookReference urpx:TariffStatementReference ) ] ;
     rdfs:range xsd:string ;
-    skos:note "Leaf numbers may be alphanumeric (e.g. '2a', 'L-1'). Distinct from PDF page numbers captured in pageStart on DataSourceReference." .
+    skos:note "Leaf numbers may be alphanumeric (e.g. '2a', 'L-1'). Distinct from PDF page numbers captured in pageStart on SourceReference." .
 
 urpx:ledgerType a owl:ObjectProperty ;
     rdfs:label "Ledger Type"@en ;
@@ -2738,7 +2774,7 @@ urpx:priceCurrency a owl:DatatypeProperty ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:RatePlan urpx:RatePlanVersion urpx:URPXPackage urpx:RatePlanModifier urpx:RatePlanModifierVersion ) ] ;
     rdfs:range xsd:string ;
-    skos:note "URPX Usage: Three-letter ISO 4217 code (e.g., USD, EUR, GBP). Dual-level currency architecture: Document level (RatePlan, RatePlanVersion, URPXDocument)  all prices inherit. Price/PriceSet level for international analysis - explicit currency for cross-currency comparison. Override pattern: Price-level currency takes precedence when both present." .
+    skos:note "URPX Usage: Three-letter ISO 4217 code (e.g., USD, EUR, GBP). Dual-level currency architecture: container level (RatePlan, RatePlanVersion, URPXPackage) all prices inherit. Price/PriceSet level for international analysis - explicit currency for cross-currency comparison. Override pattern: Price-level currency takes precedence when both present." .
 
 urpx:priceFloor a owl:DatatypeProperty ;
     rdfs:label "Price Floor"@en ;
@@ -2824,7 +2860,7 @@ urpx:publishedBy a owl:ObjectProperty ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:RatePlan urpx:RatePlanModifier urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
     rdfs:range urpx:Organization ;
-    skos:note "Links rate plan version and rate plan modifier version to publishing organization. Enables organization-level properties (utilityId, officialName, displayName) to be referenced rather than duplicated. Organizations published as separate URPXDocument instances for modularity." .
+    skos:note "Links rate plan version and rate plan modifier version to publishing organization. Enables organization-level properties (utilityId, officialName, displayName) to be referenced rather than duplicated. Organizations may be published as separate URPXPackage instances for modularity." .
 
 urpx:publishes a owl:ObjectProperty ;
     rdfs:label "Publishes"@en ;
@@ -2981,6 +3017,21 @@ urpx:regulatoryScope a owl:ObjectProperty ;
     rdfs:range urpx:RegulatoryScopeValue ;
     skos:note "Regulatory functions enumeration. Standardized regulatory authority categorization for energy systems." .
 
+urpx:replacedBy a owl:ObjectProperty ;
+    rdfs:label "Replaced By"@en ;
+    rdfs:comment "Inverse of urpx:replaces: the successor filing that corrects and voids this one for the same effective period." ;
+    rdfs:domain urpx:TariffFiling ;
+    rdfs:range urpx:TariffFiling ;
+    owl:inverseOf urpx:replaces .
+
+urpx:replaces a owl:ObjectProperty ;
+    rdfs:label "Replaces"@en ;
+    rdfs:comment "Links a corrected tariff filing to the prior filing it replaces for the SAME effective period. The replaced filing is voided; the replacing filing occupies the same effective window with corrected content. Use urpx:supersedes for a forward-in-time change of effective period; use urpx:replaces for an in-place correction of an existing period." ;
+    rdfs:domain urpx:TariffFiling ;
+    rdfs:range urpx:TariffFiling ;
+    owl:inverseOf urpx:replacedBy ;
+    skos:note "The replacing filing carries the corrected content plus the unchanged content, so it stands alone for its effective window. A replaced filing should also be marked voided via urpx:cancelledBy. Distinct from supersession (forward-in-time end-dating; the prior stays valid history) and from withdrawal (cancellation with no successor)." .
+
 urpx:resolvedFrom a owl:ObjectProperty ;
     rdfs:label "Resolved From"@en ;
     rdfs:comment "The ModelCollection thread a reference resolves against." ;
@@ -3018,9 +3069,10 @@ urpx:roundTripEfficiency a owl:DatatypeProperty ;
 
 urpx:scheme a owl:ObjectProperty ;
     rdfs:label "Scheme"@en ;
-    rdfs:comment "URI identifying the identifier scheme or naming authority for a RatePlanIdentifier." ;
-    rdfs:domain urpx:RatePlanIdentifier ;
-    skos:note "Free URI — documented conventions: urpx:ca-midas-rin (CA MIDAS RIN), urpx:utility-tariff-code (utility-assigned tariff code). No closed enum. Value via skos:notation on the RatePlanIdentifier." .
+    rdfs:comment "URI identifying the identifier scheme or naming authority for a RatePlanIdentifier or RatePlanModifierIdentifier." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:RatePlanIdentifier urpx:RatePlanModifierIdentifier ) ] ;
+    skos:note "Free URI — documented conventions: urpx:ca-midas-rin (CA MIDAS RIN), urpx:utility-tariff-code (utility-assigned tariff code). No closed enum. Value via skos:notation on the identifier." .
 
 urpx:scopeKind a owl:ObjectProperty ;
     rdfs:label "Scope Kind"@en ;
@@ -3171,19 +3223,29 @@ urpx:summaryAmount a owl:DatatypeProperty ;
     rdfs:range xsd:decimal ;
     skos:note "Total amount calculated by summing all prices referenced via includesPrice. For aggregation summaries, this equals sum of included price amounts. For calculation-based summaries using basedOnPrice, this equals formula result. Currency inherited from parent PriceSet or document level." .
 
+urpx:sunsetOn a owl:DatatypeProperty ;
+    rdfs:label "Sunset On"@en ;
+    rdfs:comment "Date on which a plan sub-resource (price, price definition, price set, ledger, eligibility or applicability rule) is intentionally discontinued with NO expected successor. Distinguishes terminal retirement from an end date that anticipates a continuing or updated successor." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:PriceDefinition urpx:Price urpx:PriceSet urpx:Ledger urpx:EligibilityRule urpx:ApplicabilityRule ) ] ;
+    rdfs:range xsd:date ;
+    skos:note "After urpx:sunsetOn, the resource's absence is expected and is not missing data. Without this marker, an ended resource with no successor is ambiguous and should be read as a gap. Use urpx:sunsetOn when a component is retired while its plan remains otherwise in force." .
+
 urpx:supersedes a owl:ObjectProperty ;
     rdfs:label "Supersedes"@en ;
-    rdfs:comment "Links an authored PricingModel to the prior PricingModel it supersedes in the same thread." ;
-    rdfs:domain urpx:PricingModel ;
-    rdfs:range urpx:PricingModel ;
-    skos:note "Supersession threads authored PricingModels within a ModelCollection. The superseded model's effective span ends when the superseding one begins." .
+    rdfs:comment "Links a publication unit to the prior one it supersedes: a tariff filing to the prior filing, or an authored pricing model to the prior model in the same thread. The superseded subject's effective span ends when the superseding one begins; it remains valid history. Supersession is a forward-in-time change of effective period — it is NOT a same-period correction (urpx:replaces) nor a cancellation/withdrawal (urpx:cancelledBy)." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:PricingModel urpx:TariffFiling ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( urpx:PricingModel urpx:TariffFiling ) ] ;
+    skos:note "Supersession threads authored PricingModels within a ModelCollection, and TariffFilings within a filing chain — for example, each monthly statement filing supersedes the previous one. A superseded filing or model is not cancelled; it stays valid history. Version classes carry no lifecycle of their own: a version's place in the timeline derives from the filing chain." .
 
 urpx:targetURPXVersion a owl:DatatypeProperty ;
     rdfs:label "Target URPX Version"@en ;
     rdfs:domain urpx:URPXPackage ;
     rdfs:range xsd:anyURI ;
     rdfs:comment "The URPX ontology version this document was authored against." ;
-    skos:note "Required on all URPXDocument instances. Enables version-aware parsing and validation. Value should be the ontology version IRI, e.g. 'https://github.com/urpx-org/urpx/raw/v0.3.0/ontology/urpx-ontology.ttl'." .
+    skos:note "Required on all URPXPackage instances. Enables version-aware parsing and validation. Value should be the ontology version IRI, e.g. 'https://github.com/urpx-org/urpx/raw/v0.3.0/ontology/urpx-ontology.ttl'." .
 
 urpx:tariffStatementType a owl:ObjectProperty ;
     rdfs:label "Tariff Statement Type"@en ;
@@ -3661,6 +3723,13 @@ urpx:creditTariffRider rdf:type urpx:ChargeTypeValue ;
     urpx:chargeCategory urpx:discount ;
     urpx:billPortion urpx:bundledPortion .
 
+urpx:customerCharge rdf:type urpx:ChargeTypeValue ;
+    rdfs:label "Customer Charge"@en ;
+    skos:definition "Fixed recurring (typically monthly) charge for being a connected customer, independent of usage"@en ;
+    skos:note "The standard residential/commercial fixed charge. Distinct from urpx:minimumCharge (a bill floor) and urpx:serviceNonMetered (unmetered services such as streetlights)."@en ;
+    urpx:chargeCategory urpx:serviceCharge ;
+    urpx:billPortion urpx:deliveryPortion .
+
 urpx:deliveryCharge rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Delivery Charge"@en ;
     skos:definition "Combined charge for energy delivery"@en ;
@@ -3740,11 +3809,25 @@ urpx:environmentalFunding rdf:type urpx:ChargeTypeValue ;
     urpx:chargeCategory urpx:environmental ;
     urpx:billPortion urpx:bundledPortion .
 
+urpx:exportCredit rdf:type urpx:ChargeTypeValue ;
+    rdfs:label "Export Credit"@en ;
+    skos:definition "Credit for energy exported to the grid under net metering or net billing"@en ;
+    skos:note "Distinct from the generic urpx:creditGeneration: this is the rule-driven export-compensation line item."@en ;
+    urpx:chargeCategory urpx:discount ;
+    urpx:billPortion urpx:supplyPortion .
+
 urpx:facilities rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Facilities"@en ;
     skos:definition "Charge for specific facilities or equipment"@en ;
     urpx:chargeCategory urpx:serviceCharge ;
     urpx:billPortion urpx:deliveryPortion .
+
+urpx:fuelCharge rdf:type urpx:ChargeTypeValue ;
+    rdfs:label "Fuel Charge"@en ;
+    skos:definition "Fuel-cost recovery / fuel adjustment, including gas purchased-gas-adjustment style cost pass-through"@en ;
+    skos:note "Distinct from urpx:adjustmentPowerCost (purchased-power cost). Common in vertically integrated electric service and in gas."@en ;
+    urpx:chargeCategory urpx:adjustment ;
+    urpx:billPortion urpx:supplyPortion .
 
 urpx:generation rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Generation"@en ;
@@ -3767,6 +3850,12 @@ urpx:heapDiscount rdf:type urpx:ChargeTypeValue ;
 urpx:initiationCharge rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Initiation Charge"@en ;
     skos:definition "One-time charge for service initiation or reconnection"@en ;
+    urpx:chargeCategory urpx:serviceCharge ;
+    urpx:billPortion urpx:bundledPortion .
+
+urpx:lateFee rdf:type urpx:ChargeTypeValue ;
+    rdfs:label "Late Fee"@en ;
+    skos:definition "Penalty charge for late payment of a bill"@en ;
     urpx:chargeCategory urpx:serviceCharge ;
     urpx:billPortion urpx:bundledPortion .
 
@@ -3801,6 +3890,13 @@ urpx:publicBenefits rdf:type urpx:ChargeTypeValue ;
     skos:definition "Public purpose program charge"@en ;
     urpx:chargeCategory urpx:regulatory ;
     urpx:billPortion urpx:bundledPortion .
+
+urpx:reactiveDemand rdf:type urpx:ChargeTypeValue ;
+    rdfs:label "Reactive Demand"@en ;
+    skos:definition "Charge based on peak reactive power demand (kVAr); the reactive analogue of demandDirect"@en ;
+    skos:note "Pair with measurementKind urpx:reactivePower and a reactive unit (kVAr). Distinct from urpx:powerFactor, which is the power-factor penalty or ratio."@en ;
+    urpx:chargeCategory urpx:infrastructure ;
+    urpx:billPortion urpx:deliveryPortion .
 
 urpx:recoverySurcharge rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Recovery Surcharge"@en ;
@@ -3837,6 +3933,13 @@ urpx:serviceNonMetered rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Service Non Metered"@en ;
     skos:definition "Fixed service charge for unmetered services"@en ;
     urpx:chargeCategory urpx:serviceCharge ;
+    urpx:billPortion urpx:deliveryPortion .
+
+urpx:standbyCharge rdf:type urpx:ChargeTypeValue ;
+    rdfs:label "Standby Charge"@en ;
+    skos:definition "Charge for standby or backup service to customers with on-site generation"@en ;
+    skos:note "Distinct from urpx:capacityCharge (reserved supply capacity)."@en ;
+    urpx:chargeCategory urpx:auxiliaryCharge ;
     urpx:billPortion urpx:deliveryPortion .
 
 urpx:strandedCosts rdf:type urpx:ChargeTypeValue ;
@@ -4955,6 +5058,11 @@ urpx:variable rdf:type urpx:LoadProfileValue ;
 
 # --- Measurement Kind Property (MeasurementTypeValue) ---
 
+urpx:apparentPower rdf:type urpx:MeasurementTypeValue ;
+    rdfs:label "Apparent Power"@en ;
+    skos:definition "Apparent power / apparent demand measurement (kVA, VA, MVA)" ;
+    skos:prefLabel "Apparent Power" .
+
 urpx:current rdf:type urpx:MeasurementTypeValue ;
     rdfs:label "Current"@en ;
     skos:definition "Electric current measurement (A, mA, etc.)" ;
@@ -4989,6 +5097,16 @@ urpx:pressure rdf:type urpx:MeasurementTypeValue ;
     rdfs:label "Pressure"@en ;
     skos:definition "Pressure measurement (psi, bar, etc.)" ;
     skos:prefLabel "Pressure" .
+
+urpx:reactiveEnergy rdf:type urpx:MeasurementTypeValue ;
+    rdfs:label "Reactive Energy"@en ;
+    skos:definition "Reactive energy measurement (kVArh, VArh)" ;
+    skos:prefLabel "Reactive Energy" .
+
+urpx:reactivePower rdf:type urpx:MeasurementTypeValue ;
+    rdfs:label "Reactive Power"@en ;
+    skos:definition "Reactive power / reactive demand measurement (kVAr, VAr)" ;
+    skos:prefLabel "Reactive Power" .
 
 urpx:temperature rdf:type urpx:MeasurementTypeValue ;
     rdfs:label "Temperature"@en ;

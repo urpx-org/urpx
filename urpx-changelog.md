@@ -4,7 +4,7 @@
 # URPX Changelog
 
 **Version:** 0.3.0 (Pre-draft)
-**Last Updated:** 2026-07-07
+**Last Updated:** 2026-07-12
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
 
@@ -36,7 +36,7 @@ Release 0.3.0 reframes how published pricing material relates to the rate plan: 
 - `PricingModel` (pricing content as documented by a publication), `TariffFiling` (a filed publication carrying pricing models), `SourcePublication`, `ModelCollection`, `PriceDefinitionReference`, `TemporalPeriod`, `TemporalScope`.
 
 #### Added: identity, coverage, and evaluation classes
-- `RatePlanIdentifier` (with new `scheme` property and `hasIdentifier` linking from `RatePlan` / `RatePlanModifier`), `CoverageClaim`, `Evaluation`, `ScenarioCostModel`, `ScenarioCostResult`.
+- `RatePlanIdentifier` and `RatePlanModifierIdentifier` (parallel plan / modifier identifier classes, with the new `scheme` property and `hasIdentifier` linking from `RatePlan` / `RatePlanModifier`), `CoverageClaim`, `Evaluation`, `ScenarioCostModel`, `ScenarioCostResult`.
 
 #### Modified: identity and version semantics
 - `RatePlan` and `RatePlanModifier` are pure identity records; pricing content lives in pricing models and resolved versions.
@@ -47,15 +47,22 @@ Release 0.3.0 reframes how published pricing material relates to the rate plan: 
 - Version and coverage: `forRatePlan`, `forRatePlanModifier`, `hasCoverageClaim`, `selfContained`, `completenessResult`, `explainedBy`, `resolvedFrom`, `hasPriceDefinitionReference`, `referenceInclusion`, `referencesPriceDefinition`.
 - Collections and scenarios: `collectsPricingModel`, `collectionRole`, `forScenario`, `consumesVersion`, `producesResult`, `evaluationKind`.
 - Temporal scoping: `hasTemporalScope`, `scopeKind`, `hasSelector`.
-- Confidence: `confidence` on `PricingModel`.
+- Confidence: `confidence` on `PricingModel` and (derived) on `CoverageClaim` — on a claim it is the minimum of the contributing models' confidence values.
+- Filing lifecycle: `cancelsPriceDefinition`, `replaces` / `replacedBy`, `cancelledBy`, `cancelledOn` on `TariffFiling`; `supersedes` extended to thread tariff filings as well as pricing models (version classes carry no lifecycle of their own — a version's timeline position derives from the filing chain).
+- Sub-resource retirement: `sunsetOn` on `PriceDefinition | Price | PriceSet | Ledger | EligibilityRule | ApplicabilityRule` — distinguishes an intentional terminal discontinuation from a data gap.
+- Validity-date domains: `effectiveDate` / `effectiveDateTime` / `expirationDate` / `expirationDateTime` extended to `TariffFiling`, `PriceDefinition`, and the plan components `TOUSchedule | Season | HolidayCalendar | ServiceTiers`.
+- Named inverse: `isReferencedByPricingModel` (`owl:inverseOf` `referencesRatePlan`; entailed, not asserted in instance data).
 
 #### Added: enumerations and members
 - New: `ConfidenceValue` (`verified`, `estimated`, `projected`), `ScopeKindValue`, `EvaluationKindValue`, `CollectionRoleValue`.
-- Extended: `CompletenessResultValue` gains `pending`; `SourcePublicationType` gains `marketPriceFeed`.
+- Extended: `CompletenessResultValue` gains `pending`; `SourcePublicationType` gains `marketPriceFeed`; `MeasurementTypeValue` gains `reactivePower`, `apparentPower`, `reactiveEnergy` (pairing the existing reactive/apparent units); `ChargeTypeValue` gains `reactiveDemand`, `customerCharge`, `fuelCharge`, `exportCredit`, `standbyCharge`, `lateFee`.
 
 #### Domain expansions
 - `publishedBy`, `serviceRole`, and `commodity` now also apply to `RatePlan` and `RatePlanModifier`.
-- `hasIdentifier` carries the combined domain `OrganizationIdentity | RatePlan | RatePlanModifier` and range `OrganizationIdentifier | RatePlanIdentifier`.
+- `hasIdentifier` carries the combined domain `OrganizationIdentity | RatePlan | RatePlanModifier` and range `OrganizationIdentifier | RatePlanIdentifier | RatePlanModifierIdentifier`; `scheme` applies to both identifier classes.
+
+#### Annotation clean-up
+- Eight annotation strings still describing retired v0.2.x terms (`DataSourceReference`, `URPXDocument`, `TariffPublication`) rewritten to the v0.3.0 vocabulary (`SourceReference`, `URPXPackage`, `publicationType`); wording only, no semantic change.
 
 ### SHACL Updates (`shacl/urpx-shacl.ttl`)
 
@@ -65,6 +72,26 @@ Release 0.3.0 reframes how published pricing material relates to the rate plan: 
 #### Updated: identity and version shapes
 - `RatePlanShape` gains `hasIdentifier`, `commodity`, `publishedBy`, and `serviceRole` property blocks.
 - `RatePlanVersionShape` requires `forRatePlan` and `hasCoverageClaim`.
+- The version shapes no longer allow `supersedes` — lifecycle lives on the filing, and a version's timeline position derives from the filing chain.
+
+#### Updated: filing, coverage, and component shapes
+- `TariffFilingShape` gains the filing-lifecycle property blocks: `supersedes`, `replaces`, `replacedBy`, `cancelledBy` (filing or publication), `cancelledOn`, and `cancelsPriceDefinition`.
+- `CoverageClaimShape` gains `confidence` (a `ConfidenceValue`).
+- `PriceDefinitionShape` and the `TOUSchedule` / `Season` / `HolidayCalendar` / `ServiceTiers` shapes gain the four validity-date property blocks; `sunsetOn` is allowed on `PriceDefinitionShape`, `PriceShape`, `PriceSetShape`, `PriceSetAlternativeShape`, `LedgerShape`, `EligibilityRuleShape`, and `ApplicabilityRuleShape`.
+
+#### Shape-alignment batch: closed shapes carry their full declared surface
+- Constraint completeness across the closed shapes — every ontology-declared property is now either listed or covered by a design-rationale exclusion comment on the shape:
+  - `RatePlanModifierVersionShape` mirrors its `RatePlanVersionShape` twin: `forRatePlanModifier` (required, exactly one), `hasCoverageClaim` (required, exactly one), `hasPriceDefinitionReference`, and `selfContained`.
+  - `hasCoverageClaim` on both version shapes is exactly one: a snapshot is immutable, so a re-evaluation mints a new snapshot rather than a second claim.
+  - `RatePlanVersionShape` also gains `hasPriceDefinitionReference` and the materialization timestamps `dateCreated` / `dateTimeCreated`, annotated as generation timestamps rather than authored lifecycle dates.
+  - `RatePlanModifierShape` reaches identity parity with `RatePlanShape`: `commodity`, `hasIdentifier` (a `RatePlanModifierIdentifier`), `publishedBy`, `serviceRole`; the new closed `RatePlanModifierIdentifierShape` validates the identifier (`skos:notation` + `scheme`, each exactly one).
+  - `SourcePublicationShape` gains its nineteen declared publication-provenance and filing-metadata properties (approval / creation / modification / publication / receipt dates in date and dateTime precision, `description`, `effectiveDateTime`, expiration dates, `filingNumber`, `issuingAuthority`, `pageReference`, `url`, `version`); `hasDataSourceReference` is a documented exclusion — references cite publications via `sourcePublication`, not the reverse.
+  - `PricingModelShape` gains `hasGeneralRule`, the four validity dates (annotated: they carry the validity window of a pricing model not published within a tariff filing), and the forecast `expectedEndDate` / `expectedEndDateTime` pair (distinct from validity expiration).
+  - `TariffFilingShape` gains `hasGeneralRule`; `PriceDefinitionReferenceShape` gains `resolvedFrom` (the `retrievedElsewhere` traceability path); `SourceReferenceShape` gains `hasSelector` (Web Annotation `oa:Selector`, external vocabulary used by reference).
+  - `SystemOperatorShape` documents the deliberate exclusion of `operatesIn` (an organization operates in an ISO/RTO market; a system operator operating in a system operator would be circular).
+  - `ScenarioCostModelShape`'s optional `hasCoverageClaim` is annotated as deliberate (a scenario cost model may pre-date coverage evaluation).
+  - `description` (and on `ConditionExpressionShape` also `name`) allowed on the condition-tree shapes: `ConditionExpressionShape`, `ApplicabilityRuleShape`, `BooleanOperationNodeShape`, `OperationNodeShape`.
+  - `commodity` is multi-valued on the rate plan, rate plan version, rate plan modifier, and rate plan modifier version shapes (a plan or modifier may span commodities — e.g. a combined water/sewer modifier) and single-valued on the price-level and metric shapes (`MetricSpecificationShape`, `PriceDefinitionShape`, `PriceSetShape`, `PriceSetAlternativeShape`, `PriceShape`).
 
 #### Structural clean-up
 - Shape targets follow the class renames (`SourceReference`, `URPXPackage`); the retired tariff document shapes are removed; the orphaned `DimensionValuePairShape` (no backing class) is removed.
@@ -76,11 +103,13 @@ Release 0.3.0 reframes how published pricing material relates to the rate plan: 
 - Both `pge-e-elec` and `pge-e-tou-c-2026-03-01` now use `URPXPackage` (with a v0.3.0 `targetURPXVersion`) and `SourceReference`; rate plan and modifier versions are top-level graph nodes linked back through `forRatePlan` / `forRatePlanModifier`, and each version carries a `CoverageClaim` with an explaining `Evaluation`.
 - `pge-e-elec` also corrects its `urpx` context IRI to the ontology namespace (`https://urpx-org.github.io/urpx/ontology/`), so its content is now genuinely validated by the shapes.
 - `pge-e-tou-c-2026-03-01` remodels its advice-letter wrapper as a `SourcePublication` (`publicationType` `tariffSupplement`) referenced from the package; its income-tier and PCIA-vintage `PriceSetAlternatives` structure is unchanged.
+- Both modifier versions in `pge-e-tou-c-2026-03-01` carry the consolidation surface: `forRatePlanModifier` back to their modifier identity and a `CoverageClaim` with explaining `Evaluation` (the PCIA version `complete`; the baseline-tier version `partial`, as medical baseline codes are not modeled). `applicableToRatePlan` is retained.
 - Both validate `Conforms: True` against the v0.3.0 shapes.
 
 #### Added: Consolidated Edison SC1 Rate I test case (`test-cases/coned-sc1-rate-i/`)
 - Nine JSON-LD fixtures: rate plan identity, delivery-charges tariff filing, five monthly GR26 MAC Energy Charge statement filings (Statements Nos. 168–172), a Market Supply Charge pricing model from ConEd's published market price feed, and a fully self-contained resolved `RatePlanVersion` snapshot (effective 2026-02-01) carrying a `CoverageClaim` with `Evaluation` and per-price source references to the statements it consolidates.
 - Source documents (tariff leaf PDF, General Rule 26 PDF, five monthly MAC statement PDFs, market supply charge CSV) are packaged under `assets/`; the test case is registered in `test-cases-index.csv` and `index.md`.
+- The five MAC statement filings assert their supersession chain (`urpx:supersedes`, each statement to its predecessor), and the resolved snapshot's `CoverageClaim` carries a first-class `confidence` of `urpx:verified` (previously stated only in the `Evaluation` prose).
 
 ### Documentation Updates
 

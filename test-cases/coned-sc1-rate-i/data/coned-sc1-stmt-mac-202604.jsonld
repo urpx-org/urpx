@@ -19,6 +19,7 @@
       "@type": "urpx:TariffFiling",
       "urpx:name": "ConEd GR26 — MAC Energy Charge statement No. 171, effective 2026-04-01",
       "urpx:effectiveDate": "2026-04-01",
+      "urpx:supersedes": { "@id": "coned:tf-gr26-mac-2026-03-01" },
       "urpx:description": "TariffFiling for the Consolidated Edison PSC No. 10 Statement of Monthly Adjustment Clause No. 171, effective 2026-04-01: a single delivery-side charge of 0.01104 USD/kWh, applicable to billing under every Service Classification except SC 11, pursuant to General Rule 26.1. The MAC is estimated monthly and each statement supersedes the previous one, so the price carries a start date only. The 'except SC 11' applicability is expressed as a ConditionExpression whose root BooleanOperationNode applies the NOT operator to a ComparisonNode testing hasServiceClass equals SC 11. The nodes gr26, ledger-delivery, mi-energy-kwh, and ms-energy-kwh are defined in the companion delivery filing (coned-sc1-delivery-tariffbook-filing.jsonld) and referenced here by identifier. Source document: mac-202604.pdf in this test case's assets folder.",
       "urpx:documentedBy": {
         "@id": "coned:sr-gr26-mac-202604",
