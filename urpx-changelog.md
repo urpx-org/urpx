@@ -4,7 +4,7 @@
 # URPX Changelog
 
 **Version:** 0.3.0 (Pre-draft)
-**Last Updated:** 2026-07-12
+**Last Updated:** 2026-07-13
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
 
@@ -63,6 +63,7 @@ Release 0.3.0 reframes how published pricing material relates to the rate plan: 
 
 #### Annotation clean-up
 - Eight annotation strings still describing retired v0.2.x terms (`DataSourceReference`, `URPXDocument`, `TariffPublication`) rewritten to the v0.3.0 vocabulary (`SourceReference`, `URPXPackage`, `publicationType`); wording only, no semantic change.
+- Annotation literals using bare "rate" reworded to "rate plan," "pricing," "price," or "cost" as appropriate to the sentence, so that the term now consistently names the rate plan itself rather than a generic pricing concept; wording only, no semantic change.
 
 ### SHACL Updates (`shacl/urpx-shacl.ttl`)
 

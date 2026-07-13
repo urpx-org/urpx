@@ -5,7 +5,7 @@ digraph "hierarchy_ChargeTypeValue" {
     nodesep=0.3;
     ranksep=0.5;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="ChargeTypeValue Hierarchy (URPX v0.2.0)";
+    label="ChargeTypeValue Hierarchy (URPX v0.3.0)";
     labelloc="t";
     fontsize=14;
     fontcolor="#1a365d";
@@ -79,6 +79,11 @@ digraph "hierarchy_ChargeTypeValue" {
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
     ];
     cat_adjustment -> inst_adjustmentTariff [penwidth=1];
+    inst_fuelCharge [
+        label="Fuel Charge"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_adjustment -> inst_fuelCharge [penwidth=1];
     inst_recoverySurcharge [
         label="Recovery Surcharge"
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
@@ -134,6 +139,11 @@ digraph "hierarchy_ChargeTypeValue" {
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
     ];
     cat_auxiliaryCharge -> inst_powerFactor [penwidth=1];
+    inst_standbyCharge [
+        label="Standby Charge"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_auxiliaryCharge -> inst_standbyCharge [penwidth=1];
     inst_usageCharge [
         label="Usage Charge"
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
@@ -199,6 +209,11 @@ digraph "hierarchy_ChargeTypeValue" {
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
     ];
     cat_discount -> inst_depositInterest [penwidth=1];
+    inst_exportCredit [
+        label="Export Credit"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_discount -> inst_exportCredit [penwidth=1];
     inst_heapDiscount [
         label="Heap Discount"
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
@@ -244,6 +259,11 @@ digraph "hierarchy_ChargeTypeValue" {
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
     ];
     cat_infrastructure -> inst_distributionCharge [penwidth=1];
+    inst_reactiveDemand [
+        label="Reactive Demand"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_infrastructure -> inst_reactiveDemand [penwidth=1];
     inst_reliabilityCharge [
         label="Reliability Charge"
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
@@ -294,6 +314,11 @@ digraph "hierarchy_ChargeTypeValue" {
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
     ];
     cat_serviceCharge -> inst_contractMisc [penwidth=1];
+    inst_customerCharge [
+        label="Customer Charge"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_serviceCharge -> inst_customerCharge [penwidth=1];
     inst_depositRequest [
         label="Deposit Request"
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
@@ -314,6 +339,11 @@ digraph "hierarchy_ChargeTypeValue" {
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
     ];
     cat_serviceCharge -> inst_initiationCharge [penwidth=1];
+    inst_lateFee [
+        label="Late Fee"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_serviceCharge -> inst_lateFee [penwidth=1];
     inst_minimumBill [
         label="Minimum Bill"
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1

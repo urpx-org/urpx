@@ -1,0 +1,93 @@
+digraph "Source & Publication Entities" {
+    rankdir=TB;
+    bgcolor="white";
+    pad=0.4;
+    nodesep=0.8;
+    ranksep=1.0;
+    start=42;
+    fontname="Inter, Helvetica, Arial, sans-serif";
+    label="Source & Publication Entities (URPX v0.3.0)";
+    labelloc="t";
+    fontsize=14;
+    fontcolor="#1a365d";
+    node [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=10, style=filled, fontcolor="#1a365d"];
+    edge [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=8, fontcolor="#1a365d"];
+
+    // Section classes
+    SourcePublication [
+        label="SourcePublication"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    TariffFiling [
+        label="TariffFiling"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    SourceReference [
+        label="SourceReference"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    TariffBookReference [
+        label="TariffBook\nReference"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    TariffStatementReference [
+        label="TariffStatement\nReference"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+
+    // Cross-section references
+    GeneralRule [
+        label="GeneralRule"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    PriceDefinition [
+        label="PriceDefinition"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    PricingModel [
+        label="PricingModel"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+
+    // Object property edges
+    TariffFiling -> PriceDefinition [
+        label="cancelsPriceDefinition\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TariffFiling -> PricingModel [
+        label="containsPricingModel\n1..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TariffFiling -> SourceReference [
+        label="documentedBy\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TariffFiling -> GeneralRule [
+        label="hasGeneralRule\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    SourceReference -> TariffBookReference [
+        label="hasTariffBookReference\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    SourceReference -> TariffStatementReference [
+        label="hasTariffStatementReference\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    SourceReference -> SourcePublication [
+        label="sourcePublication\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+
+    subgraph cluster_legend {
+        label="Legend";
+        fontname="Inter, Helvetica, Arial, sans-serif";
+        fontsize=11;
+        fontcolor="#1a365d";
+        style=rounded;
+        color="#cccccc";
+        bgcolor="#f8f8f8";
+        margin=12;
+
+        leg_class [label="OWL Class\n(this section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
+        leg_xref [label="OWL Class\n(other section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"];
+        leg_src [label=" ", shape=point, width=0.01];
+        leg_tgt1 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+        leg_tgt2 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt2 [label="cross-section ref", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+    }
+}

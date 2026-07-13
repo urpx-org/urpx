@@ -10,11 +10,12 @@ version = 1
 # See TRANSITION.md for the full transition plan and manifest.
 
 # -----------------------------------------------------------------------------
-# Binary raster images (PNG, JPG) and SVG diagrams — all Flux Tailor-authored,
-# Apache-2.0 alongside the rest of the pre-Draft project.
+# Binary raster images (PNG, JPG), SVG diagrams, and their Graphviz DOT sources
+# — all Flux Tailor-authored, Apache-2.0 alongside the rest of the pre-Draft
+# project.
 # -----------------------------------------------------------------------------
 [[annotations]]
-path = ["**/*.png", "**/*.jpg", "**/*.jpeg", "**/*.svg"]
+path = ["**/*.png", "**/*.jpg", "**/*.jpeg", "**/*.svg", "**/*.dot"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Flux Tailor LLC"
 SPDX-License-Identifier = "Apache-2.0"

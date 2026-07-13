@@ -15,7 +15,7 @@ import DiagramViewer from '@site/src/components/DiagramViewer';
 <!-- AUTO-GENERATED on 2026-05-13 from urpx-ontology.ttl and urpx-shacl.ttl -->
 <!-- Do not edit directly. Regenerate with: generate-dictionary.sh -->
 
-**Version:** 0.2.0  
+**Version:** 0.3.0  
 **Last Updated:** 2026-05-13  
 **Ontology Source:** [`urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
 
@@ -23,7 +23,7 @@ import DiagramViewer from '@site/src/components/DiagramViewer';
 
 ## Introduction
 
-The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive documentation of all classes, properties, and enumerations within the URPX v0.2.0 ontology. This reference guide serves as the authoritative source for understanding the semantic structure and constraints that govern URPX.
+The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive documentation of all classes, properties, and enumerations within the URPX v0.3.0 ontology. This reference guide serves as the authoritative source for understanding the semantic structure and constraints that govern URPX.
 
 **Important:** This is a pre-draft version for working group review. All definitions are based on `urpx-ontology.ttl`.
 
@@ -44,15 +44,17 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 ### Classes (Entities)
 - [Core Rate Plan Entities](#core-rate-plan-entities)
 - [Pricing & Alternatives Entities](#pricing--alternatives-entities)
+- [Coverage & Evaluation Entities](#coverage--evaluation-entities)
+- [Source & Publication Entities](#source--publication-entities)
 - [Metric & Measurement Entities](#metric--measurement-entities)
 - [Plan Elements & Billing Entities](#plan-elements--billing-entities)
 - [Temporal & Scheduling Entities](#temporal--scheduling-entities)
 - [Condition Modeling](#condition-modeling)
 - [Customer & Service Profile Entities](#customer--service-profile-entities)
+- [Scenario & Cost Entities](#scenario--cost-entities)
 - [Regulatory Entities](#regulatory-entities)
 - [Organization Entities](#organization-entities)
 - [Geographic Entities](#geographic-entities)
-- [Document Type Entities](#document-type-entities)
 
 ### Enumerations (Controlled Vocabularies)
 - [AccumulationValue](#accumulationvalue)
@@ -123,17 +125,12 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 
 <DiagramViewer src="../diagrams/dictionary/core-rate-plan-entities.svg" alt="Core Rate Plan Entities diagram" />
 
-### URPXDocument
+### URPXPackage
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/URPXDocument`  
+**URI:** `https://urpx-org.github.io/urpx/ontology/URPXPackage`  
 **Parent:** `owl:Thing`
 
-**Description:** Base container for all URPX content types with subclass-specific capabilities
-
-**Semantic Context:**  
-An URPXDocument represents a complete, self-contained specification
-of utility pricing at a point in time. It serves as the exchange unit
-between utilities, regulators, and third-party systems.
+**Description:** URPX's exchange package: a package of URPX content for exchange between systems.
 
 **Properties:**
 
@@ -152,7 +149,7 @@ between utilities, regulators, and third-party systems.
 | `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
 | `urpx:hasRatePlan` | Object | 0..* | [`RatePlan`](#rateplan) | Links document to rate plans |
 | `urpx:hasRatePlanModifier` | Object | 0..* | [`RatePlanModifier`](#rateplanmodifier) | Rate plan modifiers available in this document |
-| `urpx:hasTariffPublication` | Object | 0..* | [`TariffPublication`](#tariffpublication) | References to formal tariff publications |
+| `urpx:hasTariffPublication` | Object | 0..* | [`SourcePublication`](#sourcepublication) | References to formal tariff publications |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
 | `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
 | `urpx:targetURPXVersion` | Datatype | 1..1 | `xsd:anyURI` | The URPX ontology version this document was authored against. |
@@ -167,7 +164,7 @@ between utilities, regulators, and third-party systems.
 **URI:** `https://urpx-org.github.io/urpx/ontology/RatePlan`  
 **Parent:** `owl:Thing`
 
-**Description:** Master template for a utility rate plan that contains temporal versions
+**Description:** Stable identity of a utility rate plan, independent of time.
 
 **Semantic Context:**  
 A RatePlan represents the regulatory-approved pricing structure that
@@ -180,6 +177,7 @@ due to regulatory orders, fuel adjustments, or seasonal variations.
 |----------|------|-------------|-------|-------------|
 | `urpx:applicableToRateGroup` | Object | 0..* | [`RateGroup`](#rategroup) | Rate groups this modifier or rate plan can apply to |
 | `urpx:applicableToRatePlan` | Object | 0..* | [`RatePlan`](#rateplan) | Rate plans this modifier or supply plan can be applied to |
+| `urpx:commodity` | Datatype | 0..* | — | Industry-standard commodity type specification |
 | `urpx:dateApproved` | Datatype | 0..1 | `xsd:date` | Regulatory approval date |
 | `urpx:dateCreated` | Datatype | 0..1 | `xsd:date` | Date the source document or data was created |
 | `urpx:datePublished` | Datatype | 0..1 | `xsd:date` | Date of first broadcast/publication |
@@ -191,17 +189,35 @@ due to regulatory orders, fuel adjustments, or seasonal variations.
 | `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
 | `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
 | `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
+| `urpx:hasIdentifier` | Object | 0..* | [`RatePlanIdentifier`](#rateplanidentifier) | Links an organization identity, rate plan, or rate plan modifier to a typed external identifier. |
 | `urpx:hasLocationDataSet` | Object | 0..* | [`LocationDataSet`](#locationdataset) | Links organization to versioned location auxiliary data |
 | `urpx:hasRateGroup` | Object | 0..* | [`RateGroup`](#rategroup) | Links rate plan to specific rate group |
-| `urpx:hasRatePlanVersion` | Object | 1..* | [`RatePlanVersion`](#rateplanversion) | Links rate plan to its temporal versions |
 | `urpx:hasServiceClass` | Object | 0..* | [`ServiceClass`](#serviceclass) | Service classes applicable to this rate plan |
 | `urpx:initialEffectiveDate` | Datatype | 1..1 | `xsd:date` | Date when this rate plan was first introduced |
 | `urpx:name` | Datatype | 1..1 | `xsd:string` | The name of the item |
 | `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
+| `urpx:publishedBy` | Object | 0..1 | [`Organization`](#organization) | Organization that publishes this rate plan, rate plan modifier, rate plan version, or rate plan modifier version |
 | `urpx:ratePlanUniqueIdentifier` | Datatype | 1..1 | `xsd:string` | Unique rate plan identifier using alphanumeric and hyphen only |
+| `urpx:serviceRole` | Datatype | 0..1 | — | Service role for rate plan (distribution/retail/bundled) |
 | `urpx:timezoneIdentifier` | Datatype | 0..1 | `xsd:string` | IANA timezone identifier for this location dataset |
 | `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
 | `urpx:version` | Datatype | 0..1 | `xsd:string` | The version of the CreativeWork embodied by a specified resource |
+
+---
+
+### RatePlanIdentifier
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/RatePlanIdentifier`  
+**Parent:** `owl:Thing`
+
+**Description:** A typed, URI-addressable identifier for a RatePlan (e.g., CA MIDAS RIN, utility tariff code).
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:notation` | Datatype | 1..1 | `xsd:string` | — |
+| `urpx:scheme` | Datatype | 1..1 | — | URI identifying the identifier scheme or naming authority for a RatePlanIdentifier or RatePlanModifierIdentifier. |
 
 ---
 
@@ -210,7 +226,7 @@ due to regulatory orders, fuel adjustments, or seasonal variations.
 **URI:** `https://urpx-org.github.io/urpx/ontology/RatePlanVersion`  
 **Parent:** `owl:Thing`
 
-**Description:** Temporal instance of a rate plan with specific effective dates and prices
+**Description:** Derived, materialized complete snapshot of the resolved rate-plan facts for a temporal window — the read artifact.
 
 **Semantic Context:**  
 Each RatePlanVersion represents the actual rates customers pay during
@@ -228,8 +244,10 @@ continuous pricing coverage.
 | `urpx:commodity` | Datatype | 0..* | — | Industry-standard commodity type specification |
 | `urpx:customerChoice` | Datatype | 0..1 | — | Indicates whether enrollment in this rate plan version is voluntary or mandatory |
 | `urpx:dateApproved` | Datatype | 0..1 | `xsd:date` | Regulatory approval date |
+| `urpx:dateCreated` | Datatype | 0..1 | `xsd:date` | Materialization timestamp: when this derived snapshot was generated. Not an authored lifecycle date. |
 | `urpx:datePublished` | Datatype | 0..1 | `xsd:date` | Date of first broadcast/publication |
 | `urpx:dateTimeApproved` | Datatype | 0..1 | `xsd:dateTime` | Regulatory approval date and time |
+| `urpx:dateTimeCreated` | Datatype | 0..1 | `xsd:dateTime` | Materialization timestamp with dateTime precision: when this derived snapshot was generated. Not an authored lifecycle date. |
 | `urpx:dateTimePublished` | Datatype | 0..1 | `xsd:dateTime` | Date and time of first broadcast/publication |
 | `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
 | `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
@@ -238,22 +256,25 @@ continuous pricing coverage.
 | `urpx:expectedEndDateTime` | Datatype | 0..1 | `xsd:dateTime` | Provisional end date/time subject to change |
 | `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
 | `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
-| `urpx:hasDataSourceReference` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an entity to a structured data source reference. |
+| `urpx:forRatePlan` | Object | 1..1 | [`RatePlan`](#rateplan) | Links a derived RatePlanVersion snapshot back to the RatePlan identity it was built for. |
+| `urpx:hasCoverageClaim` | Object | 1..1 | [`CoverageClaim`](#coverageclaim) | Attaches a CoverageClaim to a derived snapshot or a scenario cost model. |
+| `urpx:hasDataSourceReference` | Object | 0..* | [`SourceReference`](#sourcereference) | Links an entity to a structured data source reference. |
 | `urpx:hasEligibilityRule` | Object | 0..* | [`EligibilityRule`](#eligibilityrule) | Customer qualification rules |
 | `urpx:hasModifierOptions` | Object | 0..* | [`RatePlanModifier`](#rateplanmodifier) | Links rate plan version to its available modifier options |
 | `urpx:hasModifierVersionOptions` | Object | 0..* | [`RatePlanModifierVersion`](#rateplanmodifierversion) | Modifier versions available as options for this rate plan version |
 | `urpx:hasPlanElements` | Object | 1..1 | [`PlanElements`](#planelements) | Centralized temporal and pricing elements for rate plan or modifier versions |
-| `urpx:hasPrices` | Object | 1..1 | [`Prices`](#prices) | Links rate plan version to actual price instances with rate values |
+| `urpx:hasPriceDefinitionReference` | Object | 0..* | [`PriceDefinitionReference`](#pricedefinitionreference) | Attaches a PriceDefinitionReference relator to an authored model or a derived snapshot. |
+| `urpx:hasPrices` | Object | 1..1 | [`Prices`](#prices) | Links a rate plan version or authored pricing model to actual price instances with amounts or unit prices |
 | `urpx:hasRateCase` | Object | 0..* | [`RateCase`](#ratecase) | Links a rate plan version or pricing artifact to one or more associated rate case proceedings |
 | `urpx:isDefault` | Datatype | 0..1 | `xsd:boolean` | Indicates this rate plan version is the default selection |
 | `urpx:minimumTenure` | Datatype | 0..1 | `xsd:duration` | The minimum duration a customer must remain enrolled in a rate plan, program, or service offering. |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
 | `urpx:observesHoliday` | Object | 0..* | [`Holiday`](#holiday) | Specific holidays observed by this rate plan version |
 | `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
-| `urpx:publishedBy` | Object | 1..1 | [`Organization`](#organization) | Organization that publishes this rate plan version or rate plan modifier version |
+| `urpx:publishedBy` | Object | 1..1 | [`Organization`](#organization) | Organization that publishes this rate plan, rate plan modifier, rate plan version, or rate plan modifier version |
 | `urpx:referencesGeneralRule` | Object | 0..* | [`GeneralRule`](#generalrule) | References a general rule applicable to this rate plan version or modifier version |
+| `urpx:selfContained` | Datatype | 0..1 | `xsd:boolean` | Derived: false iff any PriceDefinitionReference is referenceInclusion retrievedElsewhere. |
 | `urpx:serviceRole` | Datatype | 1..1 | — | Service role for rate plan (distribution/retail/bundled) |
-| `urpx:supersedes` | Object | 0..1 | [`RatePlanVersion`](#rateplanversion) | References the previous version this one replaces |
 | `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
 | `urpx:version` | Datatype | 0..1 | `xsd:string` | The version of the CreativeWork embodied by a specified resource |
 
@@ -264,7 +285,7 @@ continuous pricing coverage.
 **URI:** `https://urpx-org.github.io/urpx/ontology/RatePlanModifier`  
 **Parent:** `owl:Thing`
 
-**Description:** Master template for a rate plan modifier that contains temporal versions
+**Description:** Stable identity of a rate plan modifier, independent of time.
 
 **Semantic Context:**  
 A RatePlanModifier represents an optional add-on or rider that can
@@ -276,6 +297,7 @@ demand response programs, and renewable energy riders.
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
 | `urpx:applicableToRateGroup` | Object | 0..* | [`RateGroup`](#rategroup) | Rate groups this modifier or rate plan can apply to |
+| `urpx:commodity` | Datatype | 0..* | — | Industry-standard commodity type specification |
 | `urpx:dateApproved` | Datatype | 0..1 | `xsd:date` | Regulatory approval date |
 | `urpx:dateCreated` | Datatype | 0..1 | `xsd:date` | Date the source document or data was created |
 | `urpx:datePublished` | Datatype | 0..1 | `xsd:date` | Date of first broadcast/publication |
@@ -287,16 +309,34 @@ demand response programs, and renewable energy riders.
 | `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
 | `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
 | `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
+| `urpx:hasIdentifier` | Object | 0..* | [`RatePlanModifierIdentifier`](#rateplanmodifieridentifier) | Links an organization identity, rate plan, or rate plan modifier to a typed external identifier. |
 | `urpx:hasLocationDataSet` | Object | 0..* | [`LocationDataSet`](#locationdataset) | Links organization to versioned location auxiliary data |
-| `urpx:hasRatePlanModifierVersion` | Object | 1..* | [`RatePlanModifierVersion`](#rateplanmodifierversion) | Links modifier to its temporal versions |
 | `urpx:hasServiceClass` | Object | 0..* | [`ServiceClass`](#serviceclass) | Service classes applicable to this rate plan |
 | `urpx:initialEffectiveDate` | Datatype | 1..1 | `xsd:date` | Date when this rate plan was first introduced |
 | `urpx:modifierUniqueIdentifier` | Datatype | 1..1 | `xsd:string` | Unique modifier identifier using alphanumeric and hyphen only |
 | `urpx:name` | Datatype | 1..1 | `xsd:string` | The name of the item |
 | `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
+| `urpx:publishedBy` | Object | 0..1 | [`Organization`](#organization) | Organization that publishes this rate plan, rate plan modifier, rate plan version, or rate plan modifier version |
+| `urpx:serviceRole` | Datatype | 0..1 | — | Service role for rate plan (distribution/retail/bundled) |
 | `urpx:timezoneIdentifier` | Datatype | 0..1 | `xsd:string` | IANA timezone identifier for this location dataset |
 | `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
 | `urpx:version` | Datatype | 0..1 | `xsd:string` | The version of the CreativeWork embodied by a specified resource |
+
+---
+
+### RatePlanModifierIdentifier
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/RatePlanModifierIdentifier`  
+**Parent:** `owl:Thing`
+
+**Description:** A typed, URI-addressable identifier for a RatePlanModifier (e.g., CA MIDAS RIN, utility tariff code).
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:notation` | Datatype | 1..1 | `xsd:string` | — |
+| `urpx:scheme` | Datatype | 1..1 | — | URI identifying the identifier scheme or naming authority for a RatePlanIdentifier or RatePlanModifierIdentifier. |
 
 ---
 
@@ -305,7 +345,7 @@ demand response programs, and renewable energy riders.
 **URI:** `https://urpx-org.github.io/urpx/ontology/RatePlanModifierVersion`  
 **Parent:** `owl:Thing`
 
-**Description:** Temporal instance of a rate plan modifier with specific effective dates and prices
+**Description:** Derived, materialized snapshot of the resolved rate-plan-modifier facts for a temporal window.
 
 **Semantic Context:**  
 A time-bound instance of a modifier, analogous to RatePlanVersion.
@@ -333,21 +373,24 @@ Modifier versions track changes to rider rates and conditions over time.
 | `urpx:expectedEndDateTime` | Datatype | 0..1 | `xsd:dateTime` | Provisional end date/time subject to change |
 | `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
 | `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
-| `urpx:hasDataSourceReference` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an entity to a structured data source reference. |
+| `urpx:forRatePlanModifier` | Object | 1..1 | [`RatePlanModifier`](#rateplanmodifier) | Links a derived RatePlanModifierVersion snapshot back to the RatePlanModifier identity it was built for. |
+| `urpx:hasCoverageClaim` | Object | 1..1 | [`CoverageClaim`](#coverageclaim) | Attaches a CoverageClaim to a derived snapshot or a scenario cost model. |
+| `urpx:hasDataSourceReference` | Object | 0..* | [`SourceReference`](#sourcereference) | Links an entity to a structured data source reference. |
 | `urpx:hasEligibilityRule` | Object | 0..* | [`EligibilityRule`](#eligibilityrule) | Customer qualification rules |
 | `urpx:hasPlanElements` | Object | 1..1 | [`PlanElements`](#planelements) | Centralized temporal and pricing elements for rate plan or modifier versions |
-| `urpx:hasPrices` | Object | 1..1 | [`Prices`](#prices) | Links rate plan version to actual price instances with rate values |
+| `urpx:hasPriceDefinitionReference` | Object | 0..* | [`PriceDefinitionReference`](#pricedefinitionreference) | Attaches a PriceDefinitionReference relator to an authored model or a derived snapshot. |
+| `urpx:hasPrices` | Object | 1..1 | [`Prices`](#prices) | Links a rate plan version or authored pricing model to actual price instances with amounts or unit prices |
 | `urpx:hasRateCase` | Object | 0..* | [`RateCase`](#ratecase) | Links a rate plan version or pricing artifact to one or more associated rate case proceedings |
 | `urpx:minimumTenure` | Datatype | 0..1 | `xsd:duration` | The minimum duration a customer must remain enrolled in a rate plan, program, or service offering. |
 | `urpx:modifierCategory` | Datatype | 0..1 | — | Category of modifier for organization (Business categorization) |
-| `urpx:modifierType` | Datatype | 0..1 | — | Type of rate plan modifier (Utility rate modifiers) |
+| `urpx:modifierType` | Datatype | 0..1 | — | Type of rate plan modifier (utility rate plan modifiers) |
 | `urpx:modifierVersionNumber` | Datatype | 1..1 | `xsd:string` | Modifier version number |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
 | `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
-| `urpx:publishedBy` | Object | 1..1 | [`Organization`](#organization) | Organization that publishes this rate plan version or rate plan modifier version |
+| `urpx:publishedBy` | Object | 1..1 | [`Organization`](#organization) | Organization that publishes this rate plan, rate plan modifier, rate plan version, or rate plan modifier version |
 | `urpx:referencesGeneralRule` | Object | 0..* | [`GeneralRule`](#generalrule) | References a general rule applicable to this rate plan version or modifier version |
+| `urpx:selfContained` | Datatype | 0..1 | `xsd:boolean` | Derived: false iff any PriceDefinitionReference is referenceInclusion retrievedElsewhere. |
 | `urpx:serviceRole` | Datatype | 1..1 | — | Service role for rate plan (distribution/retail/bundled) |
-| `urpx:supersedes` | Object | 0..1 | [`RatePlanModifierVersion`](#rateplanmodifierversion) | References the previous version this one replaces |
 | `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
 | `urpx:version` | Datatype | 0..1 | `xsd:string` | The version of the CreativeWork embodied by a specified resource |
 
@@ -372,6 +415,53 @@ Modifier versions track changes to rider rates and conditions over time.
 ## Pricing & Alternatives Entities
 
 <DiagramViewer src="../diagrams/dictionary/pricing-alternatives-entities.svg" alt="Pricing & Alternatives Entities diagram" />
+
+### PricingModel
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/PricingModel`  
+**Parent:** `owl:Thing`
+
+**Description:** Authored, citable, possibly-partial statement of pricing for a rate plan — the unit a publication actually carries.
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:confidence` | Datatype | 1..1 | — | The epistemic confidence of the subject's pricing content. |
+| `urpx:documentedBy` | Object | 0..* | [`SourceReference`](#sourcereference) | Links an authored PricingModel (or a resolved reference) to a SourceReference identifying the source evidence it models, interprets, or was derived from. |
+| `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Validity-window start for a pricing model that is not published within a tariff filing — for example competitive-supply, contract, or scenario pricing. When a pricing model is published within a tariff filing, its validity dates derive from that filing; where a filing and this date are both present, they describe the same window. |
+| `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Validity-window start, with dateTime precision, for a pricing model that is not published within a tariff filing — for example competitive-supply, contract, or scenario pricing. When a pricing model is published within a tariff filing, its validity dates derive from that filing; where a filing and this date are both present, they describe the same window. |
+| `urpx:expectedEndDate` | Datatype | 0..1 | `xsd:date` | Forecast end: provisional end date subject to change, as with pricing effective until further notice. Distinct from the validity-window end carried by expirationDate. |
+| `urpx:expectedEndDateTime` | Datatype | 0..1 | `xsd:dateTime` | Forecast end with dateTime precision: provisional end subject to change, as with pricing effective until further notice. Distinct from the validity-window end carried by expirationDateTime. |
+| `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Validity-window end for a pricing model that is not published within a tariff filing — for example competitive-supply, contract, or scenario pricing. When a pricing model is published within a tariff filing, its validity dates derive from that filing; where a filing and this date are both present, they describe the same window. |
+| `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Validity-window end, with dateTime precision, for a pricing model that is not published within a tariff filing — for example competitive-supply, contract, or scenario pricing. When a pricing model is published within a tariff filing, its validity dates derive from that filing; where a filing and this date are both present, they describe the same window. |
+| `urpx:hasGeneralRule` | Object | 0..* | [`GeneralRule`](#generalrule) | Links a TariffFiling or PricingModel to general rules that apply across rate plans. |
+| `urpx:hasPlanElements` | Object | 0..1 | [`PlanElements`](#planelements) | Centralized temporal and pricing elements for rate plan or modifier versions |
+| `urpx:hasPrices` | Object | 0..1 | [`Prices`](#prices) | Links a rate plan version or authored pricing model to actual price instances with amounts or unit prices |
+| `urpx:pursuantTo` | Object | 0..* | [`GeneralRule`](#generalrule) | The general rule that legally grounds this PricingModel or PriceDefinition. |
+| `urpx:referencesRatePlan` | Object | 0..* | [`RatePlan`](#rateplan) | Plan-specific content link (PricingModel → RatePlan); or links a PriorRatePlan record to the actual rate plan. |
+| `urpx:referencesRatePlanModifier` | Object | 0..* | [`RatePlanModifier`](#rateplanmodifier) | Plan-specific content link: this PricingModel applies to this RatePlanModifier. |
+| `urpx:supersedes` | Object | 0..* | [`PricingModel`](#pricingmodel) | Links a publication unit to the prior one it supersedes: a tariff filing to the prior filing, or an authored pricing model to the prior model in the same thread. The superseded subject's effective span ends when the superseding one begins; it remains valid history. Supersession is a forward-in-time change of effective period — it is NOT a same-period correction (urpx:replaces) nor a cancellation/withdrawal (urpx:cancelledBy). |
+| `urpx:withinPublication` | Object | 0..1 | [`TariffFiling`](#tarifffiling) | Inverse of containsPricingModel: the TariffFiling this PricingModel was published within. |
+
+---
+
+### ModelCollection
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/ModelCollection`  
+**Parent:** `owl:Thing`
+
+**Description:** Authored grouping of PricingModels under a persisting, citable URI, with machine-readable role/kind.
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:collectionRole` | Datatype | 0..1 | — | The role/kind of a ModelCollection. |
+| `urpx:collectsPricingModel` | Object | 0..* | [`PricingModel`](#pricingmodel) | Reference-set membership: a ModelCollection collects PricingModels (members appended over time). |
+| `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
+
+---
 
 ### Prices
 
@@ -423,7 +513,7 @@ presentation.
 | `urpx:hasApplicabilityGroup` | Object | 0..* | [`ApplicabilityGroup`](#applicabilitygroup) | Links price set to applicability rules |
 | `urpx:hasApplicabilityRule` | Object | 0..* | [`ApplicabilityRule`](#applicabilityrule) | Conditions for price application |
 | `urpx:hasCalculationMethod` | Object | 0..1 | [`CalculationMethod`](#calculationmethod) | Links price to its calculation method |
-| `urpx:hasDataSourceReference` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an entity to a structured data source reference. |
+| `urpx:hasDataSourceReference` | Object | 0..* | [`SourceReference`](#sourcereference) | Links an entity to a structured data source reference. |
 | `urpx:hasMetricSpecification` | Object | 0..1 | [`MetricSpecification`](#metricspecification) | Defines measurement specifications for prices or pricing model components |
 | `urpx:hasPrice` | Object | 1..* | [`Price`](#price) | Links price set to individual prices |
 | `urpx:hasPriceSummary` | Object | 0..* | [`PriceSummary`](#pricesummary) | Links price set to summary totals |
@@ -441,6 +531,7 @@ presentation.
 | `urpx:serviceTierNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to the logical service tier |
 | `urpx:startDate` | Datatype | 0..1 | `xsd:date` | The start date and time of the item (in ISO 8601 date format) |
 | `urpx:startDateTime` | Datatype | 0..1 | `xsd:dateTime` | The start date and time of the item (in ISO 8601 date format) |
+| `urpx:sunsetOn` | Datatype | 0..1 | `xsd:date` | Date on which a plan sub-resource (price, price definition, price set, ledger, eligibility or applicability rule) is intentionally discontinued with NO expected successor. Distinguishes terminal retirement from an end date that anticipates a continuing or updated successor. |
 | `urpx:touPeriodNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to TOU period ID for price application |
 
 ---
@@ -474,7 +565,7 @@ presentation.
 | `urpx:hasApplicabilityGroup` | Object | 0..* | [`ApplicabilityGroup`](#applicabilitygroup) | Links price set to applicability rules |
 | `urpx:hasApplicabilityRule` | Object | 0..* | [`ApplicabilityRule`](#applicabilityrule) | Conditions for price application |
 | `urpx:hasCalculationMethod` | Object | 0..1 | [`CalculationMethod`](#calculationmethod) | Links price to its calculation method |
-| `urpx:hasDataSourceReference` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an entity to a structured data source reference. |
+| `urpx:hasDataSourceReference` | Object | 0..* | [`SourceReference`](#sourcereference) | Links an entity to a structured data source reference. |
 | `urpx:hasMetricSpecification` | Object | 0..1 | [`MetricSpecification`](#metricspecification) | Defines measurement specifications for prices or pricing model components |
 | `urpx:hasPrice` | Object | 1..* | [`Price`](#price) | Links price set to individual prices |
 | `urpx:hasPriceSummary` | Object | 0..* | [`PriceSummary`](#pricesummary) | Links price set to summary totals |
@@ -493,6 +584,7 @@ presentation.
 | `urpx:serviceTierNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to the logical service tier |
 | `urpx:startDate` | Datatype | 0..1 | `xsd:date` | The start date and time of the item (in ISO 8601 date format) |
 | `urpx:startDateTime` | Datatype | 0..1 | `xsd:dateTime` | The start date and time of the item (in ISO 8601 date format) |
+| `urpx:sunsetOn` | Datatype | 0..1 | `xsd:date` | Date on which a plan sub-resource (price, price definition, price set, ledger, eligibility or applicability rule) is intentionally discontinued with NO expected successor. Distinguishes terminal retirement from an end date that anticipates a continuing or updated successor. |
 | `urpx:touPeriodNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to TOU period ID for price application |
 
 ---
@@ -520,7 +612,7 @@ presentation.
 **URI:** `https://urpx-org.github.io/urpx/ontology/Price`  
 **Parent:** `owl:Thing`
 
-**Description:** Individual pricing component with rate and applicability rules
+**Description:** Individual pricing component with an amount and applicability rules
 
 **Semantic Context:**  
 Prices are the atomic units of utility pricing. Each price represents
@@ -551,7 +643,7 @@ rules, and pricing parameters.
 | `urpx:hasApplicabilityGroup` | Object | 0..* | [`ApplicabilityGroup`](#applicabilitygroup) | Links price set to applicability rules |
 | `urpx:hasApplicabilityRule` | Object | 0..* | [`ApplicabilityRule`](#applicabilityrule) | Conditions for price application |
 | `urpx:hasCalculationMethod` | Object | 0..1 | [`CalculationMethod`](#calculationmethod) | Links price to its calculation method |
-| `urpx:hasDataSourceReference` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an entity to a structured data source reference. |
+| `urpx:hasDataSourceReference` | Object | 0..* | [`SourceReference`](#sourcereference) | Links an entity to a structured data source reference. |
 | `urpx:hasDynamicPricing` | Object | 0..1 | [`DynamicPricing`](#dynamicpricing) | Links price to dynamic pricing configuration |
 | `urpx:hasMetricSpecification` | Object | 0..1 | [`MetricSpecification`](#metricspecification) | Defines measurement specifications for prices or pricing model components |
 | `urpx:hasRateCase` | Object | 0..* | [`RateCase`](#ratecase) | Links a rate plan version or pricing artifact to one or more associated rate case proceedings |
@@ -568,6 +660,7 @@ rules, and pricing parameters.
 | `urpx:serviceTierNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to the logical service tier |
 | `urpx:startDate` | Datatype | 0..1 | `xsd:date` | The start date and time of the item (in ISO 8601 date format) |
 | `urpx:startDateTime` | Datatype | 0..1 | `xsd:dateTime` | The start date and time of the item (in ISO 8601 date format) |
+| `urpx:sunsetOn` | Datatype | 0..1 | `xsd:date` | Date on which a plan sub-resource (price, price definition, price set, ledger, eligibility or applicability rule) is intentionally discontinued with NO expected successor. Distinguishes terminal retirement from an end date that anticipates a continuing or updated successor. |
 | `urpx:touPeriodNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to TOU period ID for price application |
 | `urpx:unitPrice` | Datatype | 0..1 | `xsd:decimal` | Price per unit of consumption |
 
@@ -598,16 +691,21 @@ specifications.
 | `urpx:chargeType` | Datatype | 0..* | — | Specific implementation type of a charge |
 | `urpx:commodity` | Datatype | 0..1 | — | Industry-standard commodity type specification |
 | `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
+| `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
+| `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
+| `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
+| `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
 | `urpx:hasApplicabilityGroup` | Object | 0..* | [`ApplicabilityGroup`](#applicabilitygroup) | Links price set to applicability rules |
 | `urpx:hasApplicabilityRule` | Object | 0..* | [`ApplicabilityRule`](#applicabilityrule) | Conditions for price application |
 | `urpx:hasCalculationMethod` | Object | 0..1 | [`CalculationMethod`](#calculationmethod) | Links price to its calculation method |
-| `urpx:hasDataSourceReference` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an entity to a structured data source reference. |
+| `urpx:hasDataSourceReference` | Object | 0..* | [`SourceReference`](#sourcereference) | Links an entity to a structured data source reference. |
 | `urpx:hasMetricSpecification` | Object | 0..1 | [`MetricSpecification`](#metricspecification) | Defines measurement specifications for prices or pricing model components |
 | `urpx:hasRateCase` | Object | 0..* | [`RateCase`](#ratecase) | Links a rate plan version or pricing artifact to one or more associated rate case proceedings |
 | `urpx:name` | Datatype | 1..1 | `xsd:string` | The name of the item |
 | `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
 | `urpx:priceMatchingKey` | Datatype | 0..1 | `xsd:string` | Key for identifying equivalent prices across alternatives |
 | `urpx:primaryChargeType` | Datatype | 0..1 | — | The primary charge type when multiple types apply |
+| `urpx:pursuantTo` | Object | 0..* | [`GeneralRule`](#generalrule) | The general rule that legally grounds this PricingModel or PriceDefinition. |
 | `urpx:referencesLedger` | Object | 1..1 | [`Ledger`](#ledger) | Links a PriceDefinition to its associated Ledger. |
 | `urpx:referencesMetricInput` | Object | 0..* | [`MetricInput`](#metricinput) | Links to metric inputs for measurement and profile metric input definitions |
 | `urpx:referencesProfileAlternative` | Object | 0..* | [`ProfileAlternative`](#profilealternative) | IRI reference linking pricing, schedule, or tier resources to their applicable ProfileAlternative. |
@@ -616,7 +714,26 @@ specifications.
 | `urpx:referencesServiceTier` | Object | 0..1 | [`ServiceTier`](#servicetier) | IRI reference to a logical service tier for price application |
 | `urpx:referencesTouPeriod` | Object | 0..1 | [`TOUPeriod`](#touperiod) | IRI reference to TOU period for price application |
 | `urpx:serviceTierNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to the logical service tier |
+| `urpx:sunsetOn` | Datatype | 0..1 | `xsd:date` | Date on which a plan sub-resource (price, price definition, price set, ledger, eligibility or applicability rule) is intentionally discontinued with NO expected successor. Distinguishes terminal retirement from an end date that anticipates a continuing or updated successor. |
 | `urpx:touPeriodNumber` | Datatype | 0..1 | `xsd:integer` | Integer reference to TOU period ID for price application |
+
+---
+
+### PriceDefinitionReference
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/PriceDefinitionReference`  
+**Parent:** `owl:Thing`
+
+**Description:** Addressable relationship between a model or snapshot and a PriceDefinition: the place inclusion, resolution mode, source evidence, temporal scope, and resolution provenance live.
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:documentedBy` | Object | 0..* | [`SourceReference`](#sourcereference) | Links an authored PricingModel (or a resolved reference) to a SourceReference identifying the source evidence it models, interprets, or was derived from. |
+| `urpx:referenceInclusion` | Datatype | 1..1 | — | Whether a referenced price definition is included in the plan or retrieved from elsewhere. |
+| `urpx:referencesPriceDefinition` | Object | 0..1 | [`PriceDefinition`](#pricedefinition) | IRI reference linking a Price, PriceSet, or PriceSetAlternative instance to its PriceDefinition |
+| `urpx:resolvedFrom` | Object | 0..* | [`ModelCollection`](#modelcollection) | Traceability path for retrievedElsewhere references: the ModelCollection thread the reference resolves against. |
 
 ---
 
@@ -651,6 +768,222 @@ specifications.
 | `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
 | `urpx:priority` | Datatype | 0..1 | `xsd:integer` | Priority for overlapping entities |
+
+---
+
+## Coverage & Evaluation Entities
+
+<DiagramViewer src="../diagrams/dictionary/coverage-evaluation-entities.svg" alt="Coverage & Evaluation Entities diagram" />
+
+### CoverageClaim
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/CoverageClaim`  
+**Parent:** `owl:Thing`
+
+**Description:** A scoped, computed verdict on what can be answered from a snapshot or cost model under stated conditions.
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:completenessResult` | Datatype | 1..1 | — | The completeness verdict of a CoverageClaim. |
+| `urpx:confidence` | Datatype | 0..1 | — | The epistemic confidence of the subject's pricing content. |
+| `urpx:explainedBy` | Object | 0..* | [`Evaluation`](#evaluation) | Links a CoverageClaim (verdict) to the Evaluation (rationale) behind it. |
+| `urpx:selfContained` | Datatype | 0..1 | `xsd:boolean` | Derived: false iff any PriceDefinitionReference is referenceInclusion retrievedElsewhere. |
+
+---
+
+### Evaluation
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/Evaluation`  
+**Parent:** `owl:Thing`
+
+**Description:** Portable rationale behind a snapshot or coverage verdict: which inputs were selected, excluded, or missing, and why.
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
+| `urpx:evaluationKind` | Datatype | 0..1 | — | The kind of an Evaluation. |
+
+---
+
+## Source & Publication Entities
+
+<DiagramViewer src="../diagrams/dictionary/source-publication-entities.svg" alt="Source & Publication Entities diagram" />
+
+### SourcePublication
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/SourcePublication`  
+**Parent:** `owl:Thing`
+
+**Description:** An external, third-party published artifact (regulatory filing, PSC statement, supplier price sheet, notice, contract) cited as source evidence by URPX facts.
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:dateApproved` | Datatype | 0..1 | `xsd:date` | Regulatory approval date |
+| `urpx:dateCreated` | Datatype | 0..1 | `xsd:date` | Date the source document or data was created |
+| `urpx:dateModified` | Datatype | 0..1 | `xsd:date` | Date the source document or data was last updated |
+| `urpx:datePublished` | Datatype | 0..1 | `xsd:date` | Date of first broadcast/publication |
+| `urpx:dateReceived` | Datatype | 0..1 | `xsd:date` | Date the document was received |
+| `urpx:dateTimeApproved` | Datatype | 0..1 | `xsd:dateTime` | Regulatory approval date and time |
+| `urpx:dateTimeCreated` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was created |
+| `urpx:dateTimeModified` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was last updated |
+| `urpx:dateTimePublished` | Datatype | 0..1 | `xsd:dateTime` | Date and time of first broadcast/publication |
+| `urpx:dateTimeReceived` | Datatype | 0..1 | `xsd:dateTime` | Date and time the document was received |
+| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
+| `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
+| `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
+| `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
+| `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
+| `urpx:filingNumber` | Datatype | 0..1 | `xsd:string` | Official regulatory filing or docket number |
+| `urpx:issuingAuthority` | Datatype | 0..1 | `xsd:string` | Organization that issued or approved the publication |
+| `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
+| `urpx:pageReference` | Datatype | 0..1 | `xsd:string` | Page numbers or sections where rate plan information appears |
+| `urpx:publicationType` | Datatype | 0..1 | — | The kind of external source publication. |
+| `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
+| `urpx:version` | Datatype | 0..1 | `xsd:string` | The version of the CreativeWork embodied by a specified resource |
+
+---
+
+### SourcePublicationType
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/SourcePublicationType`  
+**Parent:** `owl:Thing`
+
+---
+
+### TariffFiling
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/TariffFiling`  
+**Parent:** `owl:Thing`
+
+**Description:** An excerpt of a SourcePublication that contains one or more PricingModels — the regulatory publication unit.
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:cancelledBy` | Datatype | 0..1 | — | Marks a tariff filing as no longer valid (voided) and links it to what cancelled it: the successor filing for a same-period correction (see urpx:replacedBy), or the publication that withdrew it when there is no successor. A cancelled filing is retained for audit but excluded from active reads. |
+| `urpx:cancelledOn` | Datatype | 0..1 | `xsd:date` | Date on which a tariff filing was cancelled or voided — when its content left the active set. |
+| `urpx:cancelsPriceDefinition` | Object | 0..* | [`PriceDefinition`](#pricedefinition) | Asserts that this tariff filing cancels the referenced price definition. |
+| `urpx:containsPricingModel` | Object | 1..* | [`PricingModel`](#pricingmodel) | Links a TariffFiling to the PricingModels it contains. |
+| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
+| `urpx:documentedBy` | Object | 0..* | [`SourceReference`](#sourcereference) | Links an authored PricingModel (or a resolved reference) to a SourceReference identifying the source evidence it models, interprets, or was derived from. |
+| `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
+| `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
+| `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
+| `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
+| `urpx:hasGeneralRule` | Object | 0..* | [`GeneralRule`](#generalrule) | Links a TariffFiling or PricingModel to general rules that apply across rate plans. |
+| `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
+| `urpx:replacedBy` | Object | 0..1 | [`TariffFiling`](#tarifffiling) | Inverse of urpx:replaces: the successor filing that corrects and voids this one for the same effective period. |
+| `urpx:replaces` | Object | 0..1 | [`TariffFiling`](#tarifffiling) | Links a corrected tariff filing to the prior filing it replaces for the SAME effective period. The replaced filing is voided; the replacing filing occupies the same effective window with corrected content. Use urpx:supersedes for a forward-in-time change of effective period; use urpx:replaces for an in-place correction of an existing period. |
+| `urpx:supersedes` | Object | 0..1 | [`TariffFiling`](#tarifffiling) | Links a publication unit to the prior one it supersedes: a tariff filing to the prior filing, or an authored pricing model to the prior model in the same thread. The superseded subject's effective span ends when the superseding one begins; it remains valid history. Supersession is a forward-in-time change of effective period — it is NOT a same-period correction (urpx:replaces) nor a cancellation/withdrawal (urpx:cancelledBy). |
+
+---
+
+### SourceReference
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/SourceReference`  
+**Parent:** `owl:Thing`
+
+**Description:** Structured reference from a URPX fact to the external source it was interpreted from (publication, API, database, manual entry) — filename/URL, media type, and an optional sub-document selector.
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:accessURL` | Datatype | 0..1 | `xsd:anyURI` | URL from which the data was directly accessed or downloaded |
+| `urpx:anchorLink` | Datatype | 0..1 | `xsd:anyURI` | URL or fragment identifier pointing to a specific location within a tariff book PDF |
+| `urpx:dataSourceType` | Datatype | 0..1 | — | Type of source of the data |
+| `urpx:dateApproved` | Datatype | 0..1 | `xsd:date` | Regulatory approval date |
+| `urpx:dateCreated` | Datatype | 0..1 | `xsd:date` | Date the source document or data was created |
+| `urpx:dateModified` | Datatype | 0..1 | `xsd:date` | Date the source document or data was last updated |
+| `urpx:datePublished` | Datatype | 0..1 | `xsd:date` | Date of first broadcast/publication |
+| `urpx:dateRetrieved` | Datatype | 0..1 | `xsd:date` | Date on which data was retrieved |
+| `urpx:dateTimeApproved` | Datatype | 0..1 | `xsd:dateTime` | Regulatory approval date and time |
+| `urpx:dateTimeCreated` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was created |
+| `urpx:dateTimeModified` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was last updated |
+| `urpx:dateTimePublished` | Datatype | 0..1 | `xsd:dateTime` | Date and time of first broadcast/publication |
+| `urpx:dateTimeRetrieved` | Datatype | 0..1 | `xsd:dateTime` | Date and time on which data was retrieved |
+| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
+| `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
+| `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
+| `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
+| `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
+| `urpx:fileName` | Datatype | 0..1 | `xsd:string` | Name of document or file including filename extension if present. |
+| `urpx:hasSelector` | Object | 0..* | [`Selector`](#selector) | Points into a region of the source using a Web Annotation selector (external vocabulary, used by reference). |
+| `urpx:hasTariffBookReference` | Object | 0..* | [`TariffBookReference`](#tariffbookreference) | Links a SourceReference to tariff book sections |
+| `urpx:hasTariffStatementReference` | Object | 0..* | [`TariffStatementReference`](#tariffstatementreference) | Links a SourceReference to a structured tariff statement filing reference |
+| `urpx:mediaType` | Datatype | 0..1 | — | Document media type as published by IANA. |
+| `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
+| `urpx:pageEnd` | Datatype | 0..1 | `xsd:integer` | Ending page number in the source document |
+| `urpx:pageStart` | Datatype | 0..1 | `xsd:integer` | Starting page number in the source document |
+| `urpx:sourcePublication` | Object | 0..1 | [`SourcePublication`](#sourcepublication) | The SourcePublication a SourceReference points at, when the source is a publication. |
+| `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
+
+---
+
+### TariffBookReference
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/TariffBookReference`  
+**Parent:** `owl:Thing`
+
+**Description:** Structured reference to a specific location within a tariff book PDF
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:anchorLink` | Datatype | 0..1 | `xsd:anyURI` | URL or fragment identifier pointing to a specific location within a tariff book PDF |
+| `urpx:dateApproved` | Datatype | 0..1 | `xsd:date` | Regulatory approval date |
+| `urpx:dateCreated` | Datatype | 0..1 | `xsd:date` | Date the source document or data was created |
+| `urpx:dateModified` | Datatype | 0..1 | `xsd:date` | Date the source document or data was last updated |
+| `urpx:datePublished` | Datatype | 0..1 | `xsd:date` | Date of first broadcast/publication |
+| `urpx:dateReceived` | Datatype | 0..1 | `xsd:date` | Date the document was received |
+| `urpx:dateTimeApproved` | Datatype | 0..1 | `xsd:dateTime` | Regulatory approval date and time |
+| `urpx:dateTimeCreated` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was created |
+| `urpx:dateTimeModified` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was last updated |
+| `urpx:dateTimePublished` | Datatype | 0..1 | `xsd:dateTime` | Date and time of first broadcast/publication |
+| `urpx:dateTimeReceived` | Datatype | 0..1 | `xsd:dateTime` | Date and time the document was received |
+| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
+| `urpx:leafEnd` | Datatype | 0..1 | `xsd:string` | Last leaf number in the tariff book for the referenced content |
+| `urpx:leafStart` | Datatype | 0..1 | `xsd:string` | First leaf number in the tariff book for the referenced content |
+| `urpx:pageEnd` | Datatype | 0..1 | `xsd:integer` | Ending page number in the source document |
+| `urpx:pageStart` | Datatype | 0..1 | `xsd:integer` | Starting page number in the source document |
+
+---
+
+### TariffStatementReference
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/TariffStatementReference`  
+**Parent:** `owl:Thing`
+
+**Description:** Structured reference to a PSC statement filing PDF with provenance and statement type
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:anchorLink` | Datatype | 0..1 | `xsd:anyURI` | URL or fragment identifier pointing to a specific location within a tariff book PDF |
+| `urpx:dateApproved` | Datatype | 0..1 | `xsd:date` | Regulatory approval date |
+| `urpx:dateCreated` | Datatype | 0..1 | `xsd:date` | Date the source document or data was created |
+| `urpx:dateModified` | Datatype | 0..1 | `xsd:date` | Date the source document or data was last updated |
+| `urpx:datePublished` | Datatype | 0..1 | `xsd:date` | Date of first broadcast/publication |
+| `urpx:dateReceived` | Datatype | 0..1 | `xsd:date` | Date the document was received |
+| `urpx:dateTimeApproved` | Datatype | 0..1 | `xsd:dateTime` | Regulatory approval date and time |
+| `urpx:dateTimeCreated` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was created |
+| `urpx:dateTimeModified` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was last updated |
+| `urpx:dateTimePublished` | Datatype | 0..1 | `xsd:dateTime` | Date and time of first broadcast/publication |
+| `urpx:dateTimeReceived` | Datatype | 0..1 | `xsd:dateTime` | Date and time the document was received |
+| `urpx:leafEnd` | Datatype | 0..1 | `xsd:string` | Last leaf number in the tariff book for the referenced content |
+| `urpx:leafStart` | Datatype | 0..1 | `xsd:string` | First leaf number in the tariff book for the referenced content |
+| `urpx:pageEnd` | Datatype | 0..1 | `xsd:integer` | Ending page number in the source document |
+| `urpx:pageStart` | Datatype | 0..1 | `xsd:integer` | Starting page number in the source document |
+| `urpx:tariffStatementType` | Datatype | 0..1 | — | Type of regulatory statement filing (PSC statement types) |
 
 ---
 
@@ -837,6 +1170,7 @@ apply to that measurement.
 | `urpx:name` | Datatype | 1..1 | `xsd:string` | The name of the item |
 | `urpx:referencesMetricInput` | Object | 0..* | [`MetricInput`](#metricinput) | Links to metric inputs for measurement and profile metric input definitions |
 | `urpx:settlementInterval` | Datatype | 0..1 | `xsd:duration` | Period over which ledger balances are settled |
+| `urpx:sunsetOn` | Datatype | 0..1 | `xsd:date` | Date on which a plan sub-resource (price, price definition, price set, ledger, eligibility or applicability rule) is intentionally discontinued with NO expected successor. Distinguishes terminal retirement from an end date that anticipates a continuing or updated successor. |
 
 ---
 
@@ -870,6 +1204,10 @@ apply to that measurement.
 |----------|------|-------------|-------|-------------|
 | `urpx:appliesInSeason` | Object | 0..* | [`Season`](#season) | Season(s) this resource applies to |
 | `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
+| `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
+| `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
+| `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
+| `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
 | `urpx:hasServiceTier` | Object | 1..* | [`ServiceTier`](#servicetier) | Logical service tier definitions for tiered pricing structures |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
 | `urpx:referencesMetricInput` | Object | 0..* | [`MetricInput`](#metricinput) | Links to metric inputs for measurement and profile metric input definitions |
@@ -910,15 +1248,19 @@ apply to that measurement.
 
 **Semantic Context:**  
 Seasons define temporal periods that affect pricing. Utilities typically
-define summer/winter seasons with different rate structures for each.
+define summer/winter seasons with different rate plan structures for each.
 Seasons recur yearly and are referenced by TimeBrackets.
 
 **Properties:**
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
+| `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
+| `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
 | `urpx:endDate` | Datatype | 0..1 | `xsd:date` | End date for validity period (date only, no time component). Omit for indefinite validity. |
 | `urpx:endDateTime` | Datatype | 0..1 | `xsd:dateTime` | End date and time for validity period (with time component). Omit for indefinite validity. |
+| `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
+| `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
 | `urpx:month` | Datatype | 0..* | `xsd:gMonth` | Month when this season applies (ISO 8601 gMonth format) |
 | `urpx:seasonName` | Datatype | 1..1 | `xsd:string` | Name for this season |
 | `urpx:startDate` | Datatype | 0..1 | `xsd:date` | The start date and time of the item (in ISO 8601 date format) |
@@ -943,6 +1285,10 @@ periods with specific time brackets.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
+| `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
+| `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
+| `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
+| `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
 | `urpx:hasCalendar` | Object | 0..1 | [`HolidayCalendar`](#holidaycalendar) | References holiday calendar for this TOU schedule |
 | `urpx:hasTOUTier` | Object | 1..* | [`TOUTier`](#toutier) | Links TOU schedule to pricing tiers (peak, mid-peak, off-peak) |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
@@ -1024,6 +1370,10 @@ periods with specific time brackets.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
+| `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
+| `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
+| `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
+| `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
 | `urpx:hasHoliday` | Object | 1..* | [`Holiday`](#holiday) | Individual holidays in the calendar |
 
 ---
@@ -1085,6 +1435,40 @@ periods with specific time brackets.
 
 ---
 
+### TemporalScope
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/TemporalScope`  
+**Parent:** `owl:Thing`
+
+**Description:** A role-tagged time span: which clock a date range refers to.
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:endDate` | Datatype | 0..1 | `xsd:date` | End date for validity period (date only, no time component). Omit for indefinite validity. |
+| `urpx:scopeKind` | Datatype | 1..1 | — | The role of a TemporalScope. |
+| `urpx:startDate` | Datatype | 0..1 | `xsd:date` | The start date and time of the item (in ISO 8601 date format) |
+
+---
+
+### TemporalPeriod
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/TemporalPeriod`  
+**Parent:** `owl:Thing`
+
+**Description:** A reusable named time interval (e.g. 'Q1 2026').
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:endDate` | Datatype | 0..1 | `xsd:date` | End date for validity period (date only, no time component). Omit for indefinite validity. |
+| `urpx:label` | Datatype | 0..1 | `xsd:string` | — |
+| `urpx:startDate` | Datatype | 0..1 | `xsd:date` | The start date and time of the item (in ISO 8601 date format) |
+
+---
+
 ## Condition Modeling
 
 <DiagramViewer src="../diagrams/dictionary/condition-modeling.svg" alt="Condition Modeling diagram" />
@@ -1107,8 +1491,9 @@ and proper rate application.
 |----------|------|-------------|-------|-------------|
 | `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
 | `urpx:hasConditionExpression` | Object | 1..1 | [`ConditionExpression`](#conditionexpression) | Links a rule to its structured condition expression |
-| `urpx:hasDataSourceReference` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an entity to a structured data source reference. |
+| `urpx:hasDataSourceReference` | Object | 0..* | [`SourceReference`](#sourcereference) | Links an entity to a structured data source reference. |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
+| `urpx:sunsetOn` | Datatype | 0..1 | `xsd:date` | Date on which a plan sub-resource (price, price definition, price set, ledger, eligibility or applicability rule) is intentionally discontinued with NO expected successor. Distinguishes terminal retirement from an end date that anticipates a continuing or updated successor. |
 
 ---
 
@@ -1123,9 +1508,11 @@ and proper rate application.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
+| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
 | `urpx:hasConditionExpression` | Object | 0..1 | [`ConditionExpression`](#conditionexpression) | Links a rule to its structured condition expression |
 | `urpx:month` | Datatype | 0..* | `xsd:gMonth` | Month when this season applies (ISO 8601 gMonth format) |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
+| `urpx:sunsetOn` | Datatype | 0..1 | `xsd:date` | Date on which a plan sub-resource (price, price definition, price set, ledger, eligibility or applicability rule) is intentionally discontinued with NO expected successor. Distinguishes terminal retirement from an end date that anticipates a continuing or updated successor. |
 
 ---
 
@@ -1162,6 +1549,8 @@ location, customer type, or usage patterns.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
+| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
+| `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
 | `urpx:rootNode` | Datatype | 1..1 | — | Points from a ConditionExpression to its single root ConditionNode |
 
 ---
@@ -1186,6 +1575,7 @@ location, customer type, or usage patterns.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
+| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
 | `urpx:logicExpression` | Datatype | 0..1 | `xsd:string` | Optional textual expression attached to a comparison or boolean operation node |
 | `urpx:operandNodes` | Datatype | 1..* | — | Child condition nodes used by a BooleanOperationNode |
 | `urpx:operator` | Datatype | 1..1 | — | References the operator used by a comparison boolean-operation or nested operation node |
@@ -1223,6 +1613,7 @@ location, customer type, or usage patterns.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
+| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
 | `urpx:leftOperand` | Datatype | 1..1 | — | Left operand for ordered comparison or nested operation evaluation |
 | `urpx:operator` | Datatype | 1..1 | — | References the operator used by a comparison boolean-operation or nested operation node |
 | `urpx:rightOperand` | Datatype | 1..1 | — | Right operand for ordered comparison or nested operation evaluation |
@@ -1312,7 +1703,7 @@ location, customer type, or usage patterns.
 | `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
 | `urpx:generalRuleID` | Datatype | 1..1 | `xsd:string` | Unique identifier for a general rule |
 | `urpx:hasApplicabilityRule` | Object | 0..* | [`ApplicabilityRule`](#applicabilityrule) | Conditions for price application |
-| `urpx:hasDataSourceReference` | Object | 1..* | [`DataSourceReference`](#datasourcereference) | Links an entity to a structured data source reference. |
+| `urpx:hasDataSourceReference` | Object | 1..* | [`SourceReference`](#sourcereference) | Links an entity to a structured data source reference. |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
 
 ---
@@ -1335,7 +1726,7 @@ location, customer type, or usage patterns.
 **URI:** `https://urpx-org.github.io/urpx/ontology/CustomerProfile`  
 **Parent:** `Profile`
 
-**Description:** Customer business and social characteristics for rate eligibility and program participation evaluation
+**Description:** Customer business and social characteristics for rate plan eligibility and program participation evaluation
 
 **Semantic Context:**  
 Customer profiles enable sophisticated rate targeting based on usage
@@ -1482,7 +1873,7 @@ installations, and connection type.
 **URI:** `https://urpx-org.github.io/urpx/ontology/ServiceClass`  
 **Parent:** `owl:Thing`
 
-**Description:** Region-specific rate classification with raw and cleaned identifiers
+**Description:** Region-specific rate plan classification with raw and cleaned identifiers
 
 **Semantic Context:**  
 Service classes bridge the gap between utility-specific terminology
@@ -1503,7 +1894,7 @@ while preserving original designations.
 ### RateGroup
 
 **URI:** `https://urpx-org.github.io/urpx/ontology/RateGroup`  
-**Parent:** `ServiceClass`
+**Parent:** `owl:Thing`
 
 **Description:** Specific rate grouping within a service class (e.g., Rate I, Rate II)
 
@@ -1514,22 +1905,6 @@ while preserving original designations.
 | `urpx:parentServiceClass` | Object | 0..1 | [`ServiceClass`](#serviceclass) | Parent service class for this rate group |
 | `urpx:rateGroupIdentifier` | Datatype | 1..1 | `xsd:string` | Unique identifier for the rate group |
 | `urpx:rateGroupName` | Datatype | 1..1 | `xsd:string` | Human-readable name for the rate group |
-
----
-
-### Scenario
-
-**URI:** `https://urpx-org.github.io/urpx/ontology/Scenario`  
-**Parent:** `owl:Thing`
-
-**Description:** Input container grouping customer and service point profiles for broad rate plan eligibility evaluation.
-
-**Properties:**
-
-| Property | Type | Cardinality | Range | Description |
-|----------|------|-------------|-------|-------------|
-| `urpx:hasCustomerProfile` | Object | 0..1 | [`CustomerProfile`](#customerprofile) | Links scenario to customer profile for business/social characteristics |
-| `urpx:hasServicePointProfile` | Object | 0..1 | [`ServicePointProfile`](#servicepointprofile) | Links scenario to service point profile for physical service delivery characteristics |
 
 ---
 
@@ -1569,7 +1944,7 @@ while preserving original designations.
 | `urpx:enrollmentStartDate` | Datatype | 0..1 | `xsd:date` | Start date of enrollment |
 | `urpx:enrollmentStatus` | Datatype | 0..1 | — | Current enrollment status (lifecycle states) |
 | `urpx:minimumTenure` | Datatype | 0..1 | `xsd:duration` | The minimum duration a customer must remain enrolled in a rate plan, program, or service offering. |
-| `urpx:referencesRatePlan` | Object | 0..1 | [`RatePlan`](#rateplan) | Links prior rate plan to the actual rate plan |
+| `urpx:referencesRatePlan` | Object | 0..1 | [`RatePlan`](#rateplan) | Plan-specific content link (PricingModel → RatePlan); or links a PriorRatePlan record to the actual rate plan. |
 | `urpx:serviceRole` | Datatype | 0..1 | — | Service role for rate plan (distribution/retail/bundled) |
 
 ---
@@ -1597,6 +1972,60 @@ while preserving original designations.
 | `urpx:solarCapacity` | Datatype | 0..1 | `xsd:decimal` | Solar generation capacity in kW |
 | `urpx:storageCapacity` | Datatype | 0..1 | `xsd:decimal` | Energy storage capacity in kWh |
 | `urpx:windCapacity` | Datatype | 0..1 | `xsd:decimal` | Wind generation capacity in kW |
+
+---
+
+## Scenario & Cost Entities
+
+<DiagramViewer src="../diagrams/dictionary/scenario-cost-entities.svg" alt="Scenario & Cost Entities diagram" />
+
+### Scenario
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/Scenario`  
+**Parent:** `owl:Thing`
+
+**Description:** Input container grouping customer and service point profiles for broad rate plan eligibility evaluation.
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:hasCustomerProfile` | Object | 0..1 | [`CustomerProfile`](#customerprofile) | Links scenario to customer profile for business/social characteristics |
+| `urpx:hasServicePointProfile` | Object | 0..1 | [`ServicePointProfile`](#servicepointprofile) | Links scenario to service point profile for physical service delivery characteristics |
+
+---
+
+### ScenarioCostModel
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/ScenarioCostModel`  
+**Parent:** `owl:Thing`
+
+**Description:** The cost-computation contract for a scenario: the bound inputs (which agreements, plans, modifiers, usage, profile) and the output schema needed to compute and explain a cost.
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:consumesVersion` | Object | 0..* | [`RatePlanVersion`](#rateplanversion) | The RatePlanVersion a ScenarioCostModel consumes for a prospect quote (future-window cost computation). |
+| `urpx:forScenario` | Object | 0..1 | [`Scenario`](#scenario) | The Scenario a ScenarioCostModel computes for. |
+| `urpx:hasCoverageClaim` | Object | 0..* | [`CoverageClaim`](#coverageclaim) | Optional by design: a scenario cost model may pre-date any coverage evaluation. Distinct from the derived snapshots, where a coverage claim is required. |
+| `urpx:producesResult` | Object | 0..1 | [`ScenarioCostResult`](#scenariocostresult) | Links a ScenarioCostModel to the ScenarioCostResult it produces. |
+
+---
+
+### ScenarioCostResult
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/ScenarioCostResult`  
+**Parent:** `owl:Thing`
+
+**Description:** The computed output of a ScenarioCostModel for a scenario: the cost result, with line items and a CoverageClaim.
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:hasCoverageClaim` | Object | 0..1 | [`CoverageClaim`](#coverageclaim) | Attaches a CoverageClaim to a derived snapshot or a scenario cost model. |
+| `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
 
 ---
 
@@ -1711,7 +2140,15 @@ energy service providers.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
+| `urpx:alternateName` | Datatype | 0..1 | `xsd:string` | An alias for the item |
+| `urpx:commodity` | Datatype | 0..* | — | Industry-standard commodity type specification |
+| `urpx:hasIdentity` | Object | 0..* | [`OrganizationIdentity`](#organizationidentity) | Links organization to temporal identity records |
+| `urpx:hasLocationDataSet` | Object | 0..* | [`LocationDataSet`](#locationdataset) | Links organization to versioned location auxiliary data |
+| `urpx:legalName` | Datatype | 0..1 | `xsd:string` | Official legal name of the organization |
+| `urpx:operatesIn` | Object | 0..* | [`SystemOperator`](#systemoperator) | Links organization to ISO/RTO markets |
+| `urpx:organizationType` | Datatype | 1..1 | — | Classification of organization type (organization types) |
 | `urpx:ownershipType` | Datatype | 0..1 | — | Ownership structure of utility (EIA ownership categories) |
+| `urpx:publishes` | Object | 0..* | [`RatePlan`](#rateplan) | Links organization to rate plans it publishes |
 
 ---
 
@@ -1764,7 +2201,7 @@ energy service providers.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
-| `urpx:hasIdentifier` | Object | 0..* | [`OrganizationIdentifier`](#organizationidentifier) | Links identity to external identifiers |
+| `urpx:hasIdentifier` | Object | 0..* | [`OrganizationIdentifier`](#organizationidentifier) | Links an organization identity, rate plan, or rate plan modifier to a typed external identifier. |
 | `urpx:hasName` | Object | 1..1 | [`OrganizationName`](#organizationname) | Links identity to organization names |
 | `urpx:identityValidFrom` | Datatype | 0..1 | `xsd:dateTime` | Start date for this identity record |
 | `urpx:identityValidTo` | Datatype | 0..1 | `xsd:dateTime` | End date for this identity record |
@@ -1879,357 +2316,6 @@ potentially spanning multiple administrative boundaries.
 
 ---
 
-## Document Type Entities
-
-<DiagramViewer src="../diagrams/dictionary/document-type-entities.svg" alt="Document Type Entities diagram" />
-
-### TariffPublication
-
-**URI:** `https://urpx-org.github.io/urpx/ontology/TariffPublication`  
-**Parent:** `owl:Thing`
-
-**Description:** Formal regulatory filing
-
-**Semantic Context:**  
-A TariffPublication represents a regulatory filing that may contain
-multiple document types (tariff books, statements, supplements).
-
-**Properties:**
-
-| Property | Type | Cardinality | Range | Description |
-|----------|------|-------------|-------|-------------|
-| `urpx:dateApproved` | Datatype | 0..1 | `xsd:date` | Regulatory approval date |
-| `urpx:dateCreated` | Datatype | 0..1 | `xsd:date` | Date the source document or data was created |
-| `urpx:dateModified` | Datatype | 0..1 | `xsd:date` | Date the source document or data was last updated |
-| `urpx:datePublished` | Datatype | 0..1 | `xsd:date` | Date of first broadcast/publication |
-| `urpx:dateReceived` | Datatype | 0..1 | `xsd:date` | Date the document was received |
-| `urpx:dateTimeApproved` | Datatype | 0..1 | `xsd:dateTime` | Regulatory approval date and time |
-| `urpx:dateTimeCreated` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was created |
-| `urpx:dateTimeModified` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was last updated |
-| `urpx:dateTimePublished` | Datatype | 0..1 | `xsd:dateTime` | Date and time of first broadcast/publication |
-| `urpx:dateTimeReceived` | Datatype | 0..1 | `xsd:dateTime` | Date and time the document was received |
-| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
-| `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
-| `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
-| `urpx:expectedEndDate` | Datatype | 0..1 | `xsd:date` | Provisional end date subject to change |
-| `urpx:expectedEndDateTime` | Datatype | 0..1 | `xsd:dateTime` | Provisional end date/time subject to change |
-| `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
-| `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
-| `urpx:filingNumber` | Datatype | 0..1 | `xsd:string` | Official regulatory filing or docket number |
-| `urpx:hasDataSourceReference` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an entity to a structured data source reference. |
-| `urpx:hasRatePlan` | Object | 0..* | [`RatePlan`](#rateplan) | Links document to rate plans |
-| `urpx:hasRatePlanModifier` | Object | 0..* | [`RatePlanModifier`](#rateplanmodifier) | Rate plan modifiers available in this document |
-| `urpx:issuingAuthority` | Datatype | 0..1 | `xsd:string` | Organization that issued or approved the publication |
-| `urpx:name` | Datatype | 1..1 | `xsd:string` | The name of the item |
-| `urpx:pageReference` | Datatype | 0..* | `xsd:string` | Page numbers or sections where rate plan information appears |
-| `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
-| `urpx:publicationType` | Datatype | 0..1 | — | Type of tariff publication document (Regulatory document types) |
-| `urpx:timezoneIdentifier` | Datatype | 0..1 | `xsd:string` | IANA timezone identifier for this location dataset |
-| `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
-| `urpx:version` | Datatype | 0..1 | `xsd:string` | The version of the CreativeWork embodied by a specified resource |
-
----
-
-### TariffBookDocument
-
-**URI:** `https://urpx-org.github.io/urpx/ontology/TariffBookDocument`  
-**Parent:** `URPXDocument`
-
-**Description:** Tariff book document containing rate plans, modifiers, prices, and general rules
-
-**Properties:**
-
-| Property | Type | Cardinality | Range | Description |
-|----------|------|-------------|-------|-------------|
-| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
-| `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
-| `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
-| `urpx:expectedEndDate` | Datatype | 0..1 | `xsd:date` | Provisional end date subject to change |
-| `urpx:expectedEndDateTime` | Datatype | 0..1 | `xsd:dateTime` | Provisional end date/time subject to change |
-| `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
-| `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
-| `urpx:hasDataSourceReference` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an entity to a structured data source reference. |
-| `urpx:hasGeneralRule` | Object | 0..* | [`GeneralRule`](#generalrule) | Links a TariffBookDocument to its general rules |
-| `urpx:hasRatePlan` | Object | 0..* | [`RatePlan`](#rateplan) | Links document to rate plans |
-| `urpx:hasRatePlanModifier` | Object | 0..* | [`RatePlanModifier`](#rateplanmodifier) | Rate plan modifiers available in this document |
-| `urpx:name` | Datatype | 1..1 | `xsd:string` | The name of the item |
-| `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
-| `urpx:timezoneIdentifier` | Datatype | 0..1 | `xsd:string` | IANA timezone identifier for this location dataset |
-| `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
-| `urpx:version` | Datatype | 0..1 | `xsd:string` | The version of the CreativeWork embodied by a specified resource |
-
----
-
-### TariffStatementDocument
-
-**URI:** `https://urpx-org.github.io/urpx/ontology/TariffStatementDocument`  
-**Parent:** `URPXDocument`
-
-**Description:** PSC statement filing with prices and modifiers but no rate plans
-
-**Properties:**
-
-| Property | Type | Cardinality | Range | Description |
-|----------|------|-------------|-------|-------------|
-| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
-| `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
-| `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
-| `urpx:expectedEndDate` | Datatype | 0..1 | `xsd:date` | Provisional end date subject to change |
-| `urpx:expectedEndDateTime` | Datatype | 0..1 | `xsd:dateTime` | Provisional end date/time subject to change |
-| `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
-| `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
-| `urpx:hasDataSourceReference` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an entity to a structured data source reference. |
-| `urpx:hasPrices` | Object | 1..1 | [`Prices`](#prices) | Links rate plan version to actual price instances with rate values |
-| `urpx:hasRatePlanModifier` | Object | 0..* | [`RatePlanModifier`](#rateplanmodifier) | Rate plan modifiers available in this document |
-| `urpx:name` | Datatype | 1..1 | `xsd:string` | The name of the item |
-| `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
-| `urpx:tariffStatementType` | Datatype | 0..1 | — | Type of regulatory statement filing (PSC statement types) |
-| `urpx:timezoneIdentifier` | Datatype | 0..1 | `xsd:string` | IANA timezone identifier for this location dataset |
-| `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
-| `urpx:version` | Datatype | 0..1 | `xsd:string` | The version of the CreativeWork embodied by a specified resource |
-
----
-
-### TariffSupplementDocument
-
-**URI:** `https://urpx-org.github.io/urpx/ontology/TariffSupplementDocument`  
-**Parent:** `URPXDocument`
-
-**Description:** Supplemental filing containing only rate plan modifiers
-
-**Properties:**
-
-| Property | Type | Cardinality | Range | Description |
-|----------|------|-------------|-------|-------------|
-| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
-| `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
-| `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
-| `urpx:expectedEndDate` | Datatype | 0..1 | `xsd:date` | Provisional end date subject to change |
-| `urpx:expectedEndDateTime` | Datatype | 0..1 | `xsd:dateTime` | Provisional end date/time subject to change |
-| `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
-| `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
-| `urpx:hasPrices` | Object | 1..1 | [`Prices`](#prices) | Links rate plan version to actual price instances with rate values |
-| `urpx:name` | Datatype | 1..1 | `xsd:string` | The name of the item |
-| `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
-| `urpx:timezoneIdentifier` | Datatype | 0..1 | `xsd:string` | IANA timezone identifier for this location dataset |
-| `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
-| `urpx:version` | Datatype | 0..1 | `xsd:string` | The version of the CreativeWork embodied by a specified resource |
-
----
-
-### TariffAddendumDocument
-
-**URI:** `https://urpx-org.github.io/urpx/ontology/TariffAddendumDocument`  
-**Parent:** `URPXDocument`
-
-**Description:** Addendum filing for corrections or clarifications
-
-**Properties:**
-
-| Property | Type | Cardinality | Range | Description |
-|----------|------|-------------|-------|-------------|
-| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
-| `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
-| `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
-| `urpx:expectedEndDate` | Datatype | 0..1 | `xsd:date` | Provisional end date subject to change |
-| `urpx:expectedEndDateTime` | Datatype | 0..1 | `xsd:dateTime` | Provisional end date/time subject to change |
-| `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
-| `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
-| `urpx:hasPrices` | Object | 1..1 | [`Prices`](#prices) | Links rate plan version to actual price instances with rate values |
-| `urpx:hasRatePlanModifier` | Object | 0..* | [`RatePlanModifier`](#rateplanmodifier) | Rate plan modifiers available in this document |
-| `urpx:name` | Datatype | 1..1 | `xsd:string` | The name of the item |
-| `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
-| `urpx:timezoneIdentifier` | Datatype | 0..1 | `xsd:string` | IANA timezone identifier for this location dataset |
-| `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
-| `urpx:version` | Datatype | 0..1 | `xsd:string` | The version of the CreativeWork embodied by a specified resource |
-
----
-
-### SupplyChargesDocument
-
-**URI:** `https://urpx-org.github.io/urpx/ontology/SupplyChargesDocument`  
-**Parent:** `URPXDocument`
-
-**Description:** Supply prices document for competitive retail energy pricing
-
-**Properties:**
-
-| Property | Type | Cardinality | Range | Description |
-|----------|------|-------------|-------|-------------|
-| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
-| `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
-| `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
-| `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
-| `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
-| `urpx:hasPrices` | Object | 1..1 | [`Prices`](#prices) | Links rate plan version to actual price instances with rate values |
-| `urpx:name` | Datatype | 1..1 | `xsd:string` | The name of the item |
-| `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
-| `urpx:timezoneIdentifier` | Datatype | 0..1 | `xsd:string` | IANA timezone identifier for this location dataset |
-| `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
-| `urpx:version` | Datatype | 0..1 | `xsd:string` | The version of the CreativeWork embodied by a specified resource |
-
----
-
-### HighlyDynamicPricesDocument
-
-**URI:** `https://urpx-org.github.io/urpx/ontology/HighlyDynamicPricesDocument`  
-**Parent:** `URPXDocument`
-
-**Description:** Real-time pricing data requiring smart home and EMS integration
-
-**Properties:**
-
-| Property | Type | Cardinality | Range | Description |
-|----------|------|-------------|-------|-------------|
-| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
-| `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
-| `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
-| `urpx:expectedEndDate` | Datatype | 0..1 | `xsd:date` | Provisional end date subject to change |
-| `urpx:expectedEndDateTime` | Datatype | 0..1 | `xsd:dateTime` | Provisional end date/time subject to change |
-| `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
-| `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
-| `urpx:hasRatePlan` | Object | 0..* | [`RatePlan`](#rateplan) | Links document to rate plans |
-| `urpx:hasRatePlanModifier` | Object | 0..* | [`RatePlanModifier`](#rateplanmodifier) | Rate plan modifiers available in this document |
-| `urpx:hasTariffPublication` | Object | 0..* | [`TariffPublication`](#tariffpublication) | References to formal tariff publications |
-| `urpx:name` | Datatype | 1..1 | `xsd:string` | The name of the item |
-| `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
-| `urpx:timezoneIdentifier` | Datatype | 0..1 | `xsd:string` | IANA timezone identifier for this location dataset |
-| `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
-| `urpx:version` | Datatype | 0..1 | `xsd:string` | The version of the CreativeWork embodied by a specified resource |
-
----
-
-### DERExportsDocument
-
-**URI:** `https://urpx-org.github.io/urpx/ontology/DERExportsDocument`  
-**Parent:** `URPXDocument`
-
-**Description:** DER export pricing structures for distributed energy resources
-
-**Properties:**
-
-| Property | Type | Cardinality | Range | Description |
-|----------|------|-------------|-------|-------------|
-| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
-| `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
-| `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
-| `urpx:expectedEndDate` | Datatype | 0..1 | `xsd:date` | Provisional end date subject to change |
-| `urpx:expectedEndDateTime` | Datatype | 0..1 | `xsd:dateTime` | Provisional end date/time subject to change |
-| `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
-| `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
-| `urpx:hasRatePlan` | Object | 0..* | [`RatePlan`](#rateplan) | Links document to rate plans |
-| `urpx:hasRatePlanModifier` | Object | 0..* | [`RatePlanModifier`](#rateplanmodifier) | Rate plan modifiers available in this document |
-| `urpx:hasTariffPublication` | Object | 0..* | [`TariffPublication`](#tariffpublication) | References to formal tariff publications |
-| `urpx:name` | Datatype | 1..1 | `xsd:string` | The name of the item |
-| `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
-| `urpx:timezoneIdentifier` | Datatype | 0..1 | `xsd:string` | IANA timezone identifier for this location dataset |
-| `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
-| `urpx:version` | Datatype | 0..1 | `xsd:string` | The version of the CreativeWork embodied by a specified resource |
-
----
-
-### DataSourceReference
-
-**URI:** `https://urpx-org.github.io/urpx/ontology/DataSourceReference`  
-**Parent:** `owl:Thing`
-
-**Description:** Structured reference to a data source including filename, URL, and media type.
-
-**Properties:**
-
-| Property | Type | Cardinality | Range | Description |
-|----------|------|-------------|-------|-------------|
-| `urpx:accessURL` | Datatype | 0..1 | `xsd:anyURI` | URL from which the data was directly accessed or downloaded |
-| `urpx:anchorLink` | Datatype | 0..1 | `xsd:anyURI` | URL or fragment identifier pointing to a specific location within a tariff book PDF |
-| `urpx:dataSourceType` | Datatype | 0..1 | — | Type of source of the data |
-| `urpx:dateApproved` | Datatype | 0..1 | `xsd:date` | Regulatory approval date |
-| `urpx:dateCreated` | Datatype | 0..1 | `xsd:date` | Date the source document or data was created |
-| `urpx:dateModified` | Datatype | 0..1 | `xsd:date` | Date the source document or data was last updated |
-| `urpx:datePublished` | Datatype | 0..1 | `xsd:date` | Date of first broadcast/publication |
-| `urpx:dateReceived` | Datatype | 0..1 | `xsd:date` | Date the document was received |
-| `urpx:dateRetrieved` | Datatype | 0..1 | `xsd:date` | Date on which data was retrieved |
-| `urpx:dateTimeApproved` | Datatype | 0..1 | `xsd:dateTime` | Regulatory approval date and time |
-| `urpx:dateTimeCreated` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was created |
-| `urpx:dateTimeModified` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was last updated |
-| `urpx:dateTimePublished` | Datatype | 0..1 | `xsd:dateTime` | Date and time of first broadcast/publication |
-| `urpx:dateTimeReceived` | Datatype | 0..1 | `xsd:dateTime` | Date and time the document was received |
-| `urpx:dateTimeRetrieved` | Datatype | 0..1 | `xsd:dateTime` | Date and time on which data was retrieved |
-| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
-| `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
-| `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
-| `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
-| `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
-| `urpx:fileName` | Datatype | 0..1 | `xsd:string` | Name of document or file including filename extension if present. |
-| `urpx:hasTariffBookReference` | Object | 0..* | [`TariffBookReference`](#tariffbookreference) | Links a DataSourceReference to tariff book sections |
-| `urpx:hasTariffStatementReference` | Object | 0..* | [`TariffStatementReference`](#tariffstatementreference) | Links a DataSourceReference to a structured tariff statement filing reference |
-| `urpx:mediaType` | Datatype | 0..1 | — | Document media type as published by IANA. |
-| `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
-| `urpx:pageEnd` | Datatype | 0..1 | `xsd:integer` | Ending page number in the source document |
-| `urpx:pageStart` | Datatype | 0..1 | `xsd:integer` | Starting page number in the source document |
-| `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
-
----
-
-### TariffBookReference
-
-**URI:** `https://urpx-org.github.io/urpx/ontology/TariffBookReference`  
-**Parent:** `owl:Thing`
-
-**Description:** Structured reference to a specific location within a tariff book PDF
-
-**Properties:**
-
-| Property | Type | Cardinality | Range | Description |
-|----------|------|-------------|-------|-------------|
-| `urpx:anchorLink` | Datatype | 0..1 | `xsd:anyURI` | URL or fragment identifier pointing to a specific location within a tariff book PDF |
-| `urpx:dateApproved` | Datatype | 0..1 | `xsd:date` | Regulatory approval date |
-| `urpx:dateCreated` | Datatype | 0..1 | `xsd:date` | Date the source document or data was created |
-| `urpx:dateModified` | Datatype | 0..1 | `xsd:date` | Date the source document or data was last updated |
-| `urpx:datePublished` | Datatype | 0..1 | `xsd:date` | Date of first broadcast/publication |
-| `urpx:dateReceived` | Datatype | 0..1 | `xsd:date` | Date the document was received |
-| `urpx:dateTimeApproved` | Datatype | 0..1 | `xsd:dateTime` | Regulatory approval date and time |
-| `urpx:dateTimeCreated` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was created |
-| `urpx:dateTimeModified` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was last updated |
-| `urpx:dateTimePublished` | Datatype | 0..1 | `xsd:dateTime` | Date and time of first broadcast/publication |
-| `urpx:dateTimeReceived` | Datatype | 0..1 | `xsd:dateTime` | Date and time the document was received |
-| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
-| `urpx:leafEnd` | Datatype | 0..1 | `xsd:string` | Last leaf number in the tariff book for the referenced content |
-| `urpx:leafStart` | Datatype | 0..1 | `xsd:string` | First leaf number in the tariff book for the referenced content |
-| `urpx:pageEnd` | Datatype | 0..1 | `xsd:integer` | Ending page number in the source document |
-| `urpx:pageStart` | Datatype | 0..1 | `xsd:integer` | Starting page number in the source document |
-
----
-
-### TariffStatementReference
-
-**URI:** `https://urpx-org.github.io/urpx/ontology/TariffStatementReference`  
-**Parent:** `owl:Thing`
-
-**Description:** Structured reference to a PSC statement filing PDF with provenance and statement type
-
-**Properties:**
-
-| Property | Type | Cardinality | Range | Description |
-|----------|------|-------------|-------|-------------|
-| `urpx:anchorLink` | Datatype | 0..1 | `xsd:anyURI` | URL or fragment identifier pointing to a specific location within a tariff book PDF |
-| `urpx:dateApproved` | Datatype | 0..1 | `xsd:date` | Regulatory approval date |
-| `urpx:dateCreated` | Datatype | 0..1 | `xsd:date` | Date the source document or data was created |
-| `urpx:dateModified` | Datatype | 0..1 | `xsd:date` | Date the source document or data was last updated |
-| `urpx:datePublished` | Datatype | 0..1 | `xsd:date` | Date of first broadcast/publication |
-| `urpx:dateReceived` | Datatype | 0..1 | `xsd:date` | Date the document was received |
-| `urpx:dateTimeApproved` | Datatype | 0..1 | `xsd:dateTime` | Regulatory approval date and time |
-| `urpx:dateTimeCreated` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was created |
-| `urpx:dateTimeModified` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was last updated |
-| `urpx:dateTimePublished` | Datatype | 0..1 | `xsd:dateTime` | Date and time of first broadcast/publication |
-| `urpx:dateTimeReceived` | Datatype | 0..1 | `xsd:dateTime` | Date and time the document was received |
-| `urpx:leafEnd` | Datatype | 0..1 | `xsd:string` | Last leaf number in the tariff book for the referenced content |
-| `urpx:leafStart` | Datatype | 0..1 | `xsd:string` | First leaf number in the tariff book for the referenced content |
-| `urpx:pageEnd` | Datatype | 0..1 | `xsd:integer` | Ending page number in the source document |
-| `urpx:pageStart` | Datatype | 0..1 | `xsd:integer` | Starting page number in the source document |
-| `urpx:tariffStatementType` | Datatype | 0..1 | — | Type of regulatory statement filing (PSC statement types) |
-
----
-
 ## Enumerations
 
 ### AccumulationValue
@@ -2335,6 +2421,7 @@ multiple document types (tariff books, statements, supplements).
 | `urpx:creditPriceProtection` | — |
 | `urpx:creditRenewable` | — |
 | `urpx:creditTariffRider` | — |
+| `urpx:customerCharge` | — |
 | `urpx:deliveryCharge` | — |
 | `urpx:demandDirect` | — |
 | `urpx:demandIndirect` | — |
@@ -2348,22 +2435,27 @@ multiple document types (tariff books, statements, supplements).
 | `urpx:efficiencyFunding` | — |
 | `urpx:energyStorage` | — |
 | `urpx:environmentalFunding` | — |
+| `urpx:exportCredit` | — |
 | `urpx:facilities` | — |
+| `urpx:fuelCharge` | — |
 | `urpx:generation` | — |
 | `urpx:handling` | — |
 | `urpx:heapDiscount` | — |
 | `urpx:initiationCharge` | — |
+| `urpx:lateFee` | — |
 | `urpx:minimumBill` | — |
 | `urpx:minimumCharge` | — |
 | `urpx:nonBypassableCharge` | — |
 | `urpx:powerFactor` | — |
 | `urpx:publicBenefits` | — |
+| `urpx:reactiveDemand` | — |
 | `urpx:recoverySurcharge` | — |
 | `urpx:reliabilityCharge` | — |
 | `urpx:renewableFunding` | — |
 | `urpx:rentalFee` | — |
 | `urpx:serviceMetered` | — |
 | `urpx:serviceNonMetered` | — |
+| `urpx:standbyCharge` | — |
 | `urpx:strandedCosts` | — |
 | `urpx:systemBenefitCharge` | — |
 | `urpx:tariffRider` | — |
@@ -2702,6 +2794,7 @@ multiple document types (tariff books, statements, supplements).
 
 | Value | Description |
 |-------|-------------|
+| `urpx:apparentPower` | — |
 | `urpx:current` | — |
 | `urpx:demand` | — |
 | `urpx:energy` | — |
@@ -2709,6 +2802,8 @@ multiple document types (tariff books, statements, supplements).
 | `urpx:power` | — |
 | `urpx:powerFactor` | — |
 | `urpx:pressure` | — |
+| `urpx:reactiveEnergy` | — |
+| `urpx:reactivePower` | — |
 | `urpx:temperature` | — |
 | `urpx:voltage` | — |
 | `urpx:volume` | — |
@@ -3109,4 +3204,4 @@ multiple document types (tariff books, statements, supplements).
 
 ---
 
-*Generated by `generate-data-dictionary.py` from URPX ontology v0.2.0 on 2026-05-13.*
+*Generated by `generate-data-dictionary.py` from URPX ontology v0.3.0 on 2026-05-13.*

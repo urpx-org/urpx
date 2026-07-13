@@ -48,7 +48,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         penwidth=2
     ];
     n_pge_al_7846_e [
-        label="{TariffPublication|name: PG&E Advice Letter 7846-E\lfilingNumber: 7846-E\lissuingAuthority: California Public Utilities Commission\leffectiveDate: 2026-03-01\ldateReceived: 2026-02-27\l}"
+        label="{SourcePublication|name: PG&E Advice Letter 7846-E\leffectiveDate: 2026-03-01\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_pge_doc_e_tou_c_2026_03_01 [
+        label="{URPXPackage|targetURPXVersion: https://github.com/urpx-org/urpx/raw/...\ldateReceived: 2026-02-27\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
@@ -75,14 +82,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#333333"
         penwidth=2
     ];
-    n__anon_9 [
-        label="{DataSourceReference|fileName: ELEC_SCHEDS_E-TOU-C.pdf\laccessURL: https://www.pge.com/tariffs/assets/pd...\ldateRetrieved: 2026-04-26\l}"
-        fillcolor="#A8D8CF"
-        color="#86b6ad"
-        fontcolor="#333333"
+    n__anon_10 [
+        label="{SourceReference|fileName: ELEC_SCHEDS_E-TOU-C.pdf\laccessURL: https://www.pge.com/tariffs/assets/pd...\ldateRetrieved: 2026-04-26\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_10 [
+    n__anon_11 [
         label="{TariffBookReference|pageStart: 1\lpageEnd: 10\lleafStart: 61124-E\lleafEnd: 61133-E\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -110,13 +117,6 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_14 [
-        label="ObjectOperandNode"
-        fillcolor="#aaccff"
-        color="#1a5276"
-        fontcolor="#1a365d"
-        penwidth=2
-    ];
     n__anon_15 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
@@ -125,6 +125,27 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         penwidth=2
     ];
     n__anon_16 [
+        label="ObjectOperandNode"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_pge_cc_e_tou_c_2026_03_01 [
+        label="{CoverageClaim|selfContained: True\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_pge_eval_e_tou_c_2026_03_01 [
+        label="{Evaluation|description: All plan elements and prices of Sched...\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n__anon_19 [
         label="PlanElements"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -173,7 +194,7 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_23 [
+    n__anon_26 [
         label="BillingModel"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -453,7 +474,7 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_63 [
+    n__anon_66 [
         label="{CalculationMethod|intervalDuration: P1D\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -467,7 +488,7 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_65 [
+    n__anon_68 [
         label="ApplicabilityRule"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -481,14 +502,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_67 [
+    n__anon_70 [
         label="AlternativeDimensions"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_68 [
+    n__anon_71 [
         label="{AlternativeDimension|dimensionDisplayName: Program Enrollment\ldimensionProperty: https://urpx-org.github.io/urpx/ontol...\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -516,14 +537,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_72 [
+    n__anon_75 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_73 [
+    n__anon_76 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -551,14 +572,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_77 [
+    n__anon_80 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_78 [
+    n__anon_81 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -593,27 +614,6 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_83 [
-        label="ObjectOperandNode"
-        fillcolor="#aaccff"
-        color="#1a5276"
-        fontcolor="#1a365d"
-        penwidth=2
-    ];
-    n__anon_84 [
-        label="ObjectOperandNode"
-        fillcolor="#aaccff"
-        color="#1a5276"
-        fontcolor="#1a365d"
-        penwidth=2
-    ];
-    n_pge_cn_pa_not_fera [
-        label="ComparisonNode"
-        fillcolor="#aaccff"
-        color="#1a5276"
-        fontcolor="#1a365d"
-        penwidth=2
-    ];
     n__anon_86 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
@@ -628,7 +628,28 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_88 [
+    n_pge_cn_pa_not_fera [
+        label="ComparisonNode"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n__anon_89 [
+        label="ObjectOperandNode"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n__anon_90 [
+        label="ObjectOperandNode"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n__anon_91 [
         label="Prices"
         fillcolor="#00bd7e"
         color="#009966"
@@ -866,14 +887,28 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_122 [
-        label="{DataSourceReference|fileName: ELEC_SCHEDS_E-TOU-C.pdf\laccessURL: https://www.pge.com/tariffs/assets/pd...\ldateRetrieved: 2026-04-26\l}"
-        fillcolor="#A8D8CF"
-        color="#86b6ad"
-        fontcolor="#333333"
+    n_pge_cc_e_tou_c_vintage_pcia_2026_03_01 [
+        label="{CoverageClaim|selfContained: True\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_123 [
+    n_pge_eval_e_tou_c_vintage_pcia_2026_03_01 [
+        label="{Evaluation|description: The vintaged PCIA prices effective 20...\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n__anon_127 [
+        label="{SourceReference|fileName: ELEC_SCHEDS_E-TOU-C.pdf\laccessURL: https://www.pge.com/tariffs/assets/pd...\ldateRetrieved: 2026-04-26\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n__anon_128 [
         label="{TariffBookReference|pageStart: 8\lpageEnd: 8\lleafStart: 61131-E\lleafEnd: 61131-E\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -901,14 +936,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_127 [
+    n__anon_132 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_128 [
+    n__anon_133 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -943,14 +978,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_133 [
+    n__anon_138 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_134 [
+    n__anon_139 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -964,14 +999,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_136 [
+    n__anon_141 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_137 [
+    n__anon_142 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -985,21 +1020,21 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_139 [
+    n__anon_144 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_140 [
+    n__anon_145 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_141 [
+    n__anon_146 [
         label="PlanElements"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1020,7 +1055,7 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_144 [
+    n__anon_149 [
         label="BillingModel"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1048,140 +1083,140 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_148 [
+    n__anon_153 [
         label="AlternativeDimensions"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_149 [
+    n__anon_154 [
         label="{AlternativeDimension|dimensionDisplayName: Departure Vintage Year\lcustomDimensionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_150 [
+    n__anon_155 [
         label="{xsd:gYear|@value: 2009\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_151 [
+    n__anon_156 [
         label="{xsd:gYear|@value: 2010\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_152 [
+    n__anon_157 [
         label="{xsd:gYear|@value: 2011\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_153 [
+    n__anon_158 [
         label="{xsd:gYear|@value: 2012\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_154 [
+    n__anon_159 [
         label="{xsd:gYear|@value: 2013\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_155 [
+    n__anon_160 [
         label="{xsd:gYear|@value: 2014\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_156 [
+    n__anon_161 [
         label="{xsd:gYear|@value: 2015\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_157 [
+    n__anon_162 [
         label="{xsd:gYear|@value: 2016\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_158 [
+    n__anon_163 [
         label="{xsd:gYear|@value: 2017\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_159 [
+    n__anon_164 [
         label="{xsd:gYear|@value: 2018\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_160 [
+    n__anon_165 [
         label="{xsd:gYear|@value: 2019\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_161 [
+    n__anon_166 [
         label="{xsd:gYear|@value: 2020\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_162 [
+    n__anon_167 [
         label="{xsd:gYear|@value: 2021\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_163 [
+    n__anon_168 [
         label="{xsd:gYear|@value: 2022\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_164 [
+    n__anon_169 [
         label="{xsd:gYear|@value: 2023\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_165 [
+    n__anon_170 [
         label="{xsd:gYear|@value: 2024\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_166 [
+    n__anon_171 [
         label="{xsd:gYear|@value: 2025\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_167 [
+    n__anon_172 [
         label="{xsd:gYear|@value: 2026\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1209,14 +1244,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_171 [
+    n__anon_176 [
         label="{CustomOperandNode|customConditionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_172 [
+    n__anon_177 [
         label="{CustomOperandNode|gYearValue: 2009\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1244,14 +1279,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_176 [
+    n__anon_181 [
         label="{CustomOperandNode|customConditionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_177 [
+    n__anon_182 [
         label="{CustomOperandNode|gYearValue: 2010\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1279,14 +1314,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_181 [
+    n__anon_186 [
         label="{CustomOperandNode|customConditionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_182 [
+    n__anon_187 [
         label="{CustomOperandNode|gYearValue: 2011\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1314,14 +1349,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_186 [
+    n__anon_191 [
         label="{CustomOperandNode|customConditionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_187 [
+    n__anon_192 [
         label="{CustomOperandNode|gYearValue: 2012\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1349,14 +1384,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_191 [
+    n__anon_196 [
         label="{CustomOperandNode|customConditionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_192 [
+    n__anon_197 [
         label="{CustomOperandNode|gYearValue: 2013\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1384,14 +1419,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_196 [
+    n__anon_201 [
         label="{CustomOperandNode|customConditionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_197 [
+    n__anon_202 [
         label="{CustomOperandNode|gYearValue: 2014\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1419,14 +1454,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_201 [
+    n__anon_206 [
         label="{CustomOperandNode|customConditionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_202 [
+    n__anon_207 [
         label="{CustomOperandNode|gYearValue: 2015\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1454,14 +1489,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_206 [
+    n__anon_211 [
         label="{CustomOperandNode|customConditionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_207 [
+    n__anon_212 [
         label="{CustomOperandNode|gYearValue: 2016\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1489,14 +1524,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_211 [
+    n__anon_216 [
         label="{CustomOperandNode|customConditionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_212 [
+    n__anon_217 [
         label="{CustomOperandNode|gYearValue: 2017\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1524,14 +1559,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_216 [
+    n__anon_221 [
         label="{CustomOperandNode|customConditionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_217 [
+    n__anon_222 [
         label="{CustomOperandNode|gYearValue: 2018\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1559,14 +1594,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_221 [
+    n__anon_226 [
         label="{CustomOperandNode|customConditionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_222 [
+    n__anon_227 [
         label="{CustomOperandNode|gYearValue: 2019\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1594,14 +1629,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_226 [
+    n__anon_231 [
         label="{CustomOperandNode|customConditionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_227 [
+    n__anon_232 [
         label="{CustomOperandNode|gYearValue: 2020\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1629,14 +1664,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_231 [
+    n__anon_236 [
         label="{CustomOperandNode|customConditionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_232 [
+    n__anon_237 [
         label="{CustomOperandNode|gYearValue: 2021\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1664,14 +1699,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_236 [
+    n__anon_241 [
         label="{CustomOperandNode|customConditionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_237 [
+    n__anon_242 [
         label="{CustomOperandNode|gYearValue: 2022\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1699,14 +1734,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_241 [
+    n__anon_246 [
         label="{CustomOperandNode|customConditionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_242 [
+    n__anon_247 [
         label="{CustomOperandNode|gYearValue: 2023\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1734,14 +1769,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_246 [
+    n__anon_251 [
         label="{CustomOperandNode|customConditionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_247 [
+    n__anon_252 [
         label="{CustomOperandNode|gYearValue: 2024\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1769,14 +1804,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_251 [
+    n__anon_256 [
         label="{CustomOperandNode|customConditionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_252 [
+    n__anon_257 [
         label="{CustomOperandNode|gYearValue: 2025\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -1804,21 +1839,21 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_256 [
+    n__anon_261 [
         label="{CustomOperandNode|customConditionProperty: departureVintage\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_257 [
+    n__anon_262 [
         label="{CustomOperandNode|gYearValue: 2026\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_258 [
+    n__anon_263 [
         label="Prices"
         fillcolor="#00bd7e"
         color="#009966"
@@ -2085,10 +2120,10 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         penwidth=2
     ];
     n_pge_doc_e_tou_c_baseline_tier_2026_03_01 [
-        label="{URPXDocument|targetURPXVersion: https://github.com/urpx-org/urpx/raw/...\l}"
-        fillcolor="#4488AA"
-        color="#336688"
-        fontcolor="#ffffff"
+        label="{URPXPackage|targetURPXVersion: https://github.com/urpx-org/urpx/raw/...\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
         penwidth=2
     ];
     n_pge_e_tou_c_baseline_tier [
@@ -2105,14 +2140,28 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_299 [
-        label="{DataSourceReference|fileName: ELEC_SCHEDS_E-TOU-C.pdf\laccessURL: https://www.pge.com/tariffs/assets/pd...\ldateRetrieved: 2026-04-28\l}"
-        fillcolor="#A8D8CF"
-        color="#86b6ad"
-        fontcolor="#333333"
+    n_pge_cc_e_tou_c_baseline_tier_2026_03_01 [
+        label="{CoverageClaim|selfContained: True\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_300 [
+    n_pge_eval_e_tou_c_baseline_tier_2026_03_01 [
+        label="{Evaluation|description: The Baseline Credit and Conservation ...\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n__anon_306 [
+        label="{SourceReference|fileName: ELEC_SCHEDS_E-TOU-C.pdf\laccessURL: https://www.pge.com/tariffs/assets/pd...\ldateRetrieved: 2026-04-28\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n__anon_307 [
         label="PlanElements"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -2133,7 +2182,7 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_303 [
+    n__anon_310 [
         label="BillingModel"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3043,105 +3092,105 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_433 [
+    n__anon_440 [
         label="AlternativeDimensions"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_434 [
+    n__anon_441 [
         label="{AlternativeDimension|dimensionDisplayName: Baseline Territory\lcustomDimensionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_435 [
+    n__anon_442 [
         label="{xsd:string|@value: P\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_436 [
+    n__anon_443 [
         label="{xsd:string|@value: Q\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_437 [
+    n__anon_444 [
         label="{xsd:string|@value: R\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_438 [
+    n__anon_445 [
         label="{xsd:string|@value: S\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_439 [
+    n__anon_446 [
         label="{xsd:string|@value: T\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_440 [
+    n__anon_447 [
         label="{xsd:string|@value: V\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_441 [
+    n__anon_448 [
         label="{xsd:string|@value: W\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_442 [
+    n__anon_449 [
         label="{xsd:string|@value: X\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_443 [
+    n__anon_450 [
         label="{xsd:string|@value: Y\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_444 [
+    n__anon_451 [
         label="{xsd:string|@value: Z\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_445 [
+    n__anon_452 [
         label="{AlternativeDimension|dimensionDisplayName: Baseline Code\lcustomDimensionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_446 [
+    n__anon_453 [
         label="{xsd:string|@value: B\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_447 [
+    n__anon_454 [
         label="{xsd:string|@value: H\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3176,14 +3225,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_452 [
+    n__anon_459 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_453 [
+    n__anon_460 [
         label="{CustomOperandNode|stringValue: P\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3197,14 +3246,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_455 [
+    n__anon_462 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_456 [
+    n__anon_463 [
         label="{CustomOperandNode|stringValue: B\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3239,14 +3288,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_461 [
+    n__anon_468 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_462 [
+    n__anon_469 [
         label="{CustomOperandNode|stringValue: P\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3260,14 +3309,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_464 [
+    n__anon_471 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_465 [
+    n__anon_472 [
         label="{CustomOperandNode|stringValue: H\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3302,14 +3351,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_470 [
+    n__anon_477 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_471 [
+    n__anon_478 [
         label="{CustomOperandNode|stringValue: Q\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3323,14 +3372,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_473 [
+    n__anon_480 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_474 [
+    n__anon_481 [
         label="{CustomOperandNode|stringValue: B\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3365,14 +3414,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_479 [
+    n__anon_486 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_480 [
+    n__anon_487 [
         label="{CustomOperandNode|stringValue: Q\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3386,14 +3435,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_482 [
+    n__anon_489 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_483 [
+    n__anon_490 [
         label="{CustomOperandNode|stringValue: H\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3428,14 +3477,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_488 [
+    n__anon_495 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_489 [
+    n__anon_496 [
         label="{CustomOperandNode|stringValue: R\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3449,14 +3498,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_491 [
+    n__anon_498 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_492 [
+    n__anon_499 [
         label="{CustomOperandNode|stringValue: B\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3491,14 +3540,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_497 [
+    n__anon_504 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_498 [
+    n__anon_505 [
         label="{CustomOperandNode|stringValue: R\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3512,14 +3561,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_500 [
+    n__anon_507 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_501 [
+    n__anon_508 [
         label="{CustomOperandNode|stringValue: H\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3554,14 +3603,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_506 [
+    n__anon_513 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_507 [
+    n__anon_514 [
         label="{CustomOperandNode|stringValue: S\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3575,14 +3624,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_509 [
+    n__anon_516 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_510 [
+    n__anon_517 [
         label="{CustomOperandNode|stringValue: B\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3617,14 +3666,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_515 [
+    n__anon_522 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_516 [
+    n__anon_523 [
         label="{CustomOperandNode|stringValue: S\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3638,14 +3687,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_518 [
+    n__anon_525 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_519 [
+    n__anon_526 [
         label="{CustomOperandNode|stringValue: H\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3680,14 +3729,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_524 [
+    n__anon_531 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_525 [
+    n__anon_532 [
         label="{CustomOperandNode|stringValue: T\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3701,14 +3750,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_527 [
+    n__anon_534 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_528 [
+    n__anon_535 [
         label="{CustomOperandNode|stringValue: B\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3743,14 +3792,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_533 [
+    n__anon_540 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_534 [
+    n__anon_541 [
         label="{CustomOperandNode|stringValue: T\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3764,14 +3813,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_536 [
+    n__anon_543 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_537 [
+    n__anon_544 [
         label="{CustomOperandNode|stringValue: H\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3806,14 +3855,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_542 [
+    n__anon_549 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_543 [
+    n__anon_550 [
         label="{CustomOperandNode|stringValue: V\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3827,14 +3876,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_545 [
+    n__anon_552 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_546 [
+    n__anon_553 [
         label="{CustomOperandNode|stringValue: B\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3869,14 +3918,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_551 [
+    n__anon_558 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_552 [
+    n__anon_559 [
         label="{CustomOperandNode|stringValue: V\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3890,14 +3939,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_554 [
+    n__anon_561 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_555 [
+    n__anon_562 [
         label="{CustomOperandNode|stringValue: H\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3932,14 +3981,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_560 [
+    n__anon_567 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_561 [
+    n__anon_568 [
         label="{CustomOperandNode|stringValue: W\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3953,14 +4002,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_563 [
+    n__anon_570 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_564 [
+    n__anon_571 [
         label="{CustomOperandNode|stringValue: B\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -3995,14 +4044,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_569 [
+    n__anon_576 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_570 [
+    n__anon_577 [
         label="{CustomOperandNode|stringValue: W\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -4016,14 +4065,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_572 [
+    n__anon_579 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_573 [
+    n__anon_580 [
         label="{CustomOperandNode|stringValue: H\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -4058,14 +4107,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_578 [
+    n__anon_585 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_579 [
+    n__anon_586 [
         label="{CustomOperandNode|stringValue: X\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -4079,14 +4128,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_581 [
+    n__anon_588 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_582 [
+    n__anon_589 [
         label="{CustomOperandNode|stringValue: B\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -4121,14 +4170,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_587 [
+    n__anon_594 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_588 [
+    n__anon_595 [
         label="{CustomOperandNode|stringValue: X\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -4142,14 +4191,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_590 [
+    n__anon_597 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_591 [
+    n__anon_598 [
         label="{CustomOperandNode|stringValue: H\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -4184,14 +4233,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_596 [
+    n__anon_603 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_597 [
+    n__anon_604 [
         label="{CustomOperandNode|stringValue: Y\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -4205,14 +4254,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_599 [
+    n__anon_606 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_600 [
+    n__anon_607 [
         label="{CustomOperandNode|stringValue: B\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -4247,14 +4296,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_605 [
+    n__anon_612 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_606 [
+    n__anon_613 [
         label="{CustomOperandNode|stringValue: Y\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -4268,14 +4317,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_608 [
+    n__anon_615 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_609 [
+    n__anon_616 [
         label="{CustomOperandNode|stringValue: H\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -4310,14 +4359,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_614 [
+    n__anon_621 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_615 [
+    n__anon_622 [
         label="{CustomOperandNode|stringValue: Z\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -4331,14 +4380,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_617 [
+    n__anon_624 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_618 [
+    n__anon_625 [
         label="{CustomOperandNode|stringValue: B\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -4373,14 +4422,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_623 [
+    n__anon_630 [
         label="{CustomOperandNode|customConditionProperty: baselineTerritory\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_624 [
+    n__anon_631 [
         label="{CustomOperandNode|stringValue: Z\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -4394,14 +4443,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_626 [
+    n__anon_633 [
         label="{CustomOperandNode|customConditionProperty: baselineCode\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_627 [
+    n__anon_634 [
         label="{CustomOperandNode|stringValue: H\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -4444,25 +4493,19 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         penwidth=2
     ];
 
-    n_pge_e_tou_c -> n_pge_e_tou_c_2026_03_01 [
-        label="hasRatePlanVersion"
-        color="#1a5276"
-        fontcolor="#1a5276"
-        penwidth=1.5
-    ];
     n_pge_e_tou_c_2026_03_01 -> n_org_utility_pge [
         label="publishedBy"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_e_tou_c_2026_03_01 -> n__anon_9 [
+    n_pge_e_tou_c_2026_03_01 -> n__anon_10 [
         label="hasDataSourceReference"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_9 -> n__anon_10 [
+    n__anon_10 -> n__anon_11 [
         label="hasTariffBookReference"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -4486,37 +4529,49 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_residential -> n__anon_14 [
+    n_pge_cn_residential -> n__anon_15 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_residential -> n__anon_15 [
+    n_pge_cn_residential -> n__anon_16 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_e_tou_c_2026_03_01 -> n__anon_16 [
+    n_pge_e_tou_c_2026_03_01 -> n_pge_cc_e_tou_c_2026_03_01 [
+        label="hasCoverageClaim"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_cc_e_tou_c_2026_03_01 -> n_pge_eval_e_tou_c_2026_03_01 [
+        label="explainedBy"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_e_tou_c_2026_03_01 -> n__anon_19 [
         label="hasPlanElements"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_16 -> n_pge_season_summer [
+    n__anon_19 -> n_pge_season_summer [
         label="hasSeasons"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_16 -> n_pge_season_winter [
+    n__anon_19 -> n_pge_season_winter [
         label="hasSeasons"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_16 -> n_pge_mi_energy [
+    n__anon_19 -> n_pge_mi_energy [
         label="hasMetricInput"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -4528,25 +4583,25 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_16 -> n_pge_mi_meter_count [
+    n__anon_19 -> n_pge_mi_meter_count [
         label="hasMetricInput"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_16 -> n_pge_mi_household_count [
+    n__anon_19 -> n_pge_mi_household_count [
         label="hasMetricInput"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_16 -> n__anon_23 [
+    n__anon_19 -> n__anon_26 [
         label="hasBillingModel"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_tou_e_tou_c [
+    n__anon_26 -> n_pge_tou_e_tou_c [
         label="hasTOUSchedule"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -4624,193 +4679,193 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_ledger_energy_supply [
+    n__anon_26 -> n_pge_ledger_energy_supply [
         label="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_ledger_energy_delivery [
+    n__anon_26 -> n_pge_ledger_energy_delivery [
         label="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_ledger_adjustments [
+    n__anon_26 -> n_pge_ledger_adjustments [
         label="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_ledger_base_charge [
+    n__anon_26 -> n_pge_ledger_base_charge [
         label="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_ledger_climate_credit [
+    n__anon_26 -> n_pge_ledger_climate_credit [
         label="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_gen_summer_peak [
+    n__anon_26 -> n_pge_pd_gen_summer_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_gen_summer_off_peak [
+    n__anon_26 -> n_pge_pd_gen_summer_off_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_gen_winter_peak [
+    n__anon_26 -> n_pge_pd_gen_winter_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_gen_winter_off_peak [
+    n__anon_26 -> n_pge_pd_gen_winter_off_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_bundled_pcia [
+    n__anon_26 -> n_pge_pd_bundled_pcia [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_dist_summer_peak [
+    n__anon_26 -> n_pge_pd_dist_summer_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_dist_summer_off_peak [
+    n__anon_26 -> n_pge_pd_dist_summer_off_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_dist_winter_peak [
+    n__anon_26 -> n_pge_pd_dist_winter_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_dist_winter_off_peak [
+    n__anon_26 -> n_pge_pd_dist_winter_off_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_transmission [
+    n__anon_26 -> n_pge_pd_transmission [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_transmission_adj [
+    n__anon_26 -> n_pge_pd_transmission_adj [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_reliability [
+    n__anon_26 -> n_pge_pd_reliability [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_public_purpose [
+    n__anon_26 -> n_pge_pd_public_purpose [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_nuclear [
+    n__anon_26 -> n_pge_pd_nuclear [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_ctc [
+    n__anon_26 -> n_pge_pd_ctc [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_energy_cost_recovery [
+    n__anon_26 -> n_pge_pd_energy_cost_recovery [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_wildfire_fund [
+    n__anon_26 -> n_pge_pd_wildfire_fund [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_wildfire_hardening [
+    n__anon_26 -> n_pge_pd_wildfire_hardening [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_recovery_bond [
+    n__anon_26 -> n_pge_pd_recovery_bond [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_recovery_bond_credit [
+    n__anon_26 -> n_pge_pd_recovery_bond_credit [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_base_charge [
+    n__anon_26 -> n_pge_pd_base_charge [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_pd_base_charge -> n__anon_63 [
+    n_pge_pd_base_charge -> n__anon_66 [
         label="hasCalculationMethod"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_23 -> n_pge_pd_climate_credit [
+    n__anon_26 -> n_pge_pd_climate_credit [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_pd_climate_credit -> n__anon_65 [
+    n_pge_pd_climate_credit -> n__anon_68 [
         label="hasApplicabilityRule"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_16 -> n_pge_pa_income_tier [
+    n__anon_19 -> n_pge_pa_income_tier [
         label="hasProfileAlternatives"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_pa_income_tier -> n__anon_67 [
+    n_pge_pa_income_tier -> n__anon_70 [
         label="hasAlternativeDimensions"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_67 -> n__anon_68 [
+    n__anon_70 -> n__anon_71 [
         label="hasAlternativeDimension"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -4834,13 +4889,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_care -> n__anon_72 [
+    n_pge_cn_pa_care -> n__anon_75 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_care -> n__anon_73 [
+    n_pge_cn_pa_care -> n__anon_76 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -4864,13 +4919,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_fera -> n__anon_77 [
+    n_pge_cn_pa_fera -> n__anon_80 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_fera -> n__anon_78 [
+    n_pge_cn_pa_fera -> n__anon_81 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -4900,13 +4955,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_not_care -> n__anon_83 [
+    n_pge_cn_pa_not_care -> n__anon_86 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_not_care -> n__anon_84 [
+    n_pge_cn_pa_not_care -> n__anon_87 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -4918,31 +4973,31 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_not_fera -> n__anon_86 [
+    n_pge_cn_pa_not_fera -> n__anon_89 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_not_fera -> n__anon_87 [
+    n_pge_cn_pa_not_fera -> n__anon_90 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_e_tou_c_2026_03_01 -> n__anon_88 [
+    n_pge_e_tou_c_2026_03_01 -> n__anon_91 [
         label="hasPrices"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_88 -> n_pge_price_climate_credit [
+    n__anon_91 -> n_pge_price_climate_credit [
         label="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_88 -> n_pge_ps_generation_charges [
+    n__anon_91 -> n_pge_ps_generation_charges [
         label="hasPriceSet"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -4978,7 +5033,7 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_88 -> n_pge_ps_distribution_charges [
+    n__anon_91 -> n_pge_ps_distribution_charges [
         label="hasPriceSet"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5026,7 +5081,7 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_88 -> n_pge_ps_adjustment_charges [
+    n__anon_91 -> n_pge_ps_adjustment_charges [
         label="hasPriceSet"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5080,7 +5135,7 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_88 -> n_pge_psa_bsc_by_income_tier [
+    n__anon_91 -> n_pge_psa_bsc_by_income_tier [
         label="hasPriceSetAlternatives"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5122,8 +5177,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_e_tou_c_vintage_pcia -> n_pge_e_tou_c_vintage_pcia_2026_03_01 [
-        label="hasRatePlanModifierVersion"
+    n_pge_e_tou_c_vintage_pcia_2026_03_01 -> n_pge_cc_e_tou_c_vintage_pcia_2026_03_01 [
+        label="hasCoverageClaim"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_cc_e_tou_c_vintage_pcia_2026_03_01 -> n_pge_eval_e_tou_c_vintage_pcia_2026_03_01 [
+        label="explainedBy"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
@@ -5134,13 +5195,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_e_tou_c_vintage_pcia_2026_03_01 -> n__anon_122 [
+    n_pge_e_tou_c_vintage_pcia_2026_03_01 -> n__anon_127 [
         label="hasDataSourceReference"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_122 -> n__anon_123 [
+    n__anon_127 -> n__anon_128 [
         label="hasTariffBookReference"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5164,13 +5225,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_vpcia_residential -> n__anon_127 [
+    n_pge_cn_vpcia_residential -> n__anon_132 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_vpcia_residential -> n__anon_128 [
+    n_pge_cn_vpcia_residential -> n__anon_133 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5200,13 +5261,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_program_cca -> n__anon_133 [
+    n_pge_cn_program_cca -> n__anon_138 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_program_cca -> n__anon_134 [
+    n_pge_cn_program_cca -> n__anon_139 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5218,13 +5279,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_program_da -> n__anon_136 [
+    n_pge_cn_program_da -> n__anon_141 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_program_da -> n__anon_137 [
+    n_pge_cn_program_da -> n__anon_142 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5236,25 +5297,25 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_program_tbs -> n__anon_139 [
+    n_pge_cn_program_tbs -> n__anon_144 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_program_tbs -> n__anon_140 [
+    n_pge_cn_program_tbs -> n__anon_145 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_e_tou_c_vintage_pcia_2026_03_01 -> n__anon_141 [
+    n_pge_e_tou_c_vintage_pcia_2026_03_01 -> n__anon_146 [
         label="hasPlanElements"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_141 -> n_pge_mi_energy_vpcia [
+    n__anon_146 -> n_pge_mi_energy_vpcia [
         label="hasMetricInput"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5266,145 +5327,145 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_141 -> n__anon_144 [
+    n__anon_146 -> n__anon_149 [
         label="hasBillingModel"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_144 -> n_pge_ledger_vintage_pcia [
+    n__anon_149 -> n_pge_ledger_vintage_pcia [
         label="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_144 -> n_pge_pd_vintage_pcia [
+    n__anon_149 -> n_pge_pd_vintage_pcia [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_141 -> n_pge_pa_departure_vintage [
+    n__anon_146 -> n_pge_pa_departure_vintage [
         label="hasProfileAlternatives"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_pa_departure_vintage -> n__anon_148 [
+    n_pge_pa_departure_vintage -> n__anon_153 [
         label="hasAlternativeDimensions"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_148 -> n__anon_149 [
+    n__anon_153 -> n__anon_154 [
         label="hasAlternativeDimension"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_149 -> n__anon_150 [
+    n__anon_154 -> n__anon_155 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_149 -> n__anon_151 [
+    n__anon_154 -> n__anon_156 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_149 -> n__anon_152 [
+    n__anon_154 -> n__anon_157 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_149 -> n__anon_153 [
+    n__anon_154 -> n__anon_158 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_149 -> n__anon_154 [
+    n__anon_154 -> n__anon_159 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_149 -> n__anon_155 [
+    n__anon_154 -> n__anon_160 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_149 -> n__anon_156 [
+    n__anon_154 -> n__anon_161 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_149 -> n__anon_157 [
+    n__anon_154 -> n__anon_162 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_149 -> n__anon_158 [
+    n__anon_154 -> n__anon_163 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_149 -> n__anon_159 [
+    n__anon_154 -> n__anon_164 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_149 -> n__anon_160 [
+    n__anon_154 -> n__anon_165 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_149 -> n__anon_161 [
+    n__anon_154 -> n__anon_166 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_149 -> n__anon_162 [
+    n__anon_154 -> n__anon_167 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_149 -> n__anon_163 [
+    n__anon_154 -> n__anon_168 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_149 -> n__anon_164 [
+    n__anon_154 -> n__anon_169 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_149 -> n__anon_165 [
+    n__anon_154 -> n__anon_170 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_149 -> n__anon_166 [
+    n__anon_154 -> n__anon_171 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_149 -> n__anon_167 [
+    n__anon_154 -> n__anon_172 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5428,13 +5489,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2009 -> n__anon_171 [
+    n_pge_cn_pa_vintage_2009 -> n__anon_176 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2009 -> n__anon_172 [
+    n_pge_cn_pa_vintage_2009 -> n__anon_177 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5458,13 +5519,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2010 -> n__anon_176 [
+    n_pge_cn_pa_vintage_2010 -> n__anon_181 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2010 -> n__anon_177 [
+    n_pge_cn_pa_vintage_2010 -> n__anon_182 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5488,13 +5549,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2011 -> n__anon_181 [
+    n_pge_cn_pa_vintage_2011 -> n__anon_186 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2011 -> n__anon_182 [
+    n_pge_cn_pa_vintage_2011 -> n__anon_187 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5518,13 +5579,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2012 -> n__anon_186 [
+    n_pge_cn_pa_vintage_2012 -> n__anon_191 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2012 -> n__anon_187 [
+    n_pge_cn_pa_vintage_2012 -> n__anon_192 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5548,13 +5609,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2013 -> n__anon_191 [
+    n_pge_cn_pa_vintage_2013 -> n__anon_196 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2013 -> n__anon_192 [
+    n_pge_cn_pa_vintage_2013 -> n__anon_197 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5578,13 +5639,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2014 -> n__anon_196 [
+    n_pge_cn_pa_vintage_2014 -> n__anon_201 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2014 -> n__anon_197 [
+    n_pge_cn_pa_vintage_2014 -> n__anon_202 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5608,13 +5669,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2015 -> n__anon_201 [
+    n_pge_cn_pa_vintage_2015 -> n__anon_206 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2015 -> n__anon_202 [
+    n_pge_cn_pa_vintage_2015 -> n__anon_207 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5638,13 +5699,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2016 -> n__anon_206 [
+    n_pge_cn_pa_vintage_2016 -> n__anon_211 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2016 -> n__anon_207 [
+    n_pge_cn_pa_vintage_2016 -> n__anon_212 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5668,13 +5729,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2017 -> n__anon_211 [
+    n_pge_cn_pa_vintage_2017 -> n__anon_216 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2017 -> n__anon_212 [
+    n_pge_cn_pa_vintage_2017 -> n__anon_217 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5698,13 +5759,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2018 -> n__anon_216 [
+    n_pge_cn_pa_vintage_2018 -> n__anon_221 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2018 -> n__anon_217 [
+    n_pge_cn_pa_vintage_2018 -> n__anon_222 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5728,13 +5789,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2019 -> n__anon_221 [
+    n_pge_cn_pa_vintage_2019 -> n__anon_226 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2019 -> n__anon_222 [
+    n_pge_cn_pa_vintage_2019 -> n__anon_227 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5758,13 +5819,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2020 -> n__anon_226 [
+    n_pge_cn_pa_vintage_2020 -> n__anon_231 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2020 -> n__anon_227 [
+    n_pge_cn_pa_vintage_2020 -> n__anon_232 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5788,13 +5849,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2021 -> n__anon_231 [
+    n_pge_cn_pa_vintage_2021 -> n__anon_236 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2021 -> n__anon_232 [
+    n_pge_cn_pa_vintage_2021 -> n__anon_237 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5818,13 +5879,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2022 -> n__anon_236 [
+    n_pge_cn_pa_vintage_2022 -> n__anon_241 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2022 -> n__anon_237 [
+    n_pge_cn_pa_vintage_2022 -> n__anon_242 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5848,13 +5909,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2023 -> n__anon_241 [
+    n_pge_cn_pa_vintage_2023 -> n__anon_246 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2023 -> n__anon_242 [
+    n_pge_cn_pa_vintage_2023 -> n__anon_247 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5878,13 +5939,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2024 -> n__anon_246 [
+    n_pge_cn_pa_vintage_2024 -> n__anon_251 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2024 -> n__anon_247 [
+    n_pge_cn_pa_vintage_2024 -> n__anon_252 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5908,13 +5969,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2025 -> n__anon_251 [
+    n_pge_cn_pa_vintage_2025 -> n__anon_256 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2025 -> n__anon_252 [
+    n_pge_cn_pa_vintage_2025 -> n__anon_257 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -5938,25 +5999,25 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2026 -> n__anon_256 [
+    n_pge_cn_pa_vintage_2026 -> n__anon_261 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_vintage_2026 -> n__anon_257 [
+    n_pge_cn_pa_vintage_2026 -> n__anon_262 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_e_tou_c_vintage_pcia_2026_03_01 -> n__anon_258 [
+    n_pge_e_tou_c_vintage_pcia_2026_03_01 -> n__anon_263 [
         label="hasPrices"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_258 -> n_pge_psa_vpcia_by_vintage [
+    n__anon_263 -> n_pge_psa_vpcia_by_vintage [
         label="hasPriceSetAlternatives"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -6184,8 +6245,14 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_e_tou_c_baseline_tier -> n_pge_e_tou_c_baseline_tier_2026_03_01 [
-        label="hasRatePlanModifierVersion"
+    n_pge_e_tou_c_baseline_tier_2026_03_01 -> n_pge_cc_e_tou_c_baseline_tier_2026_03_01 [
+        label="hasCoverageClaim"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_cc_e_tou_c_baseline_tier_2026_03_01 -> n_pge_eval_e_tou_c_baseline_tier_2026_03_01 [
+        label="explainedBy"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
@@ -6196,19 +6263,19 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_e_tou_c_baseline_tier_2026_03_01 -> n__anon_299 [
+    n_pge_e_tou_c_baseline_tier_2026_03_01 -> n__anon_306 [
         label="hasDataSourceReference"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_e_tou_c_baseline_tier_2026_03_01 -> n__anon_300 [
+    n_pge_e_tou_c_baseline_tier_2026_03_01 -> n__anon_307 [
         label="hasPlanElements"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_300 -> n_pge_mi_energy_baseline [
+    n__anon_307 -> n_pge_mi_energy_baseline [
         label="hasMetricInput"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -6220,37 +6287,37 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_300 -> n__anon_303 [
+    n__anon_307 -> n__anon_310 [
         label="hasBillingModel"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_303 -> n_pge_ledger_baseline_credit [
+    n__anon_310 -> n_pge_ledger_baseline_credit [
         label="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_303 -> n_pge_ledger_cia [
+    n__anon_310 -> n_pge_ledger_cia [
         label="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_303 -> n_pge_pd_baseline_credit [
+    n__anon_310 -> n_pge_pd_baseline_credit [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_303 -> n_pge_pd_cia [
+    n__anon_310 -> n_pge_pd_cia [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_303 -> n_pge_tiers_baseline [
+    n__anon_310 -> n_pge_tiers_baseline [
         label="hasServiceTiers"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -6994,97 +7061,97 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_300 -> n_pge_pa_baseline_territory_code [
+    n__anon_307 -> n_pge_pa_baseline_territory_code [
         label="hasProfileAlternatives"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_pa_baseline_territory_code -> n__anon_433 [
+    n_pge_pa_baseline_territory_code -> n__anon_440 [
         label="hasAlternativeDimensions"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_433 -> n__anon_434 [
+    n__anon_440 -> n__anon_441 [
         label="hasAlternativeDimension"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_434 -> n__anon_435 [
+    n__anon_441 -> n__anon_442 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_434 -> n__anon_436 [
+    n__anon_441 -> n__anon_443 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_434 -> n__anon_437 [
+    n__anon_441 -> n__anon_444 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_434 -> n__anon_438 [
+    n__anon_441 -> n__anon_445 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_434 -> n__anon_439 [
+    n__anon_441 -> n__anon_446 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_434 -> n__anon_440 [
+    n__anon_441 -> n__anon_447 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_434 -> n__anon_441 [
+    n__anon_441 -> n__anon_448 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_434 -> n__anon_442 [
+    n__anon_441 -> n__anon_449 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_434 -> n__anon_443 [
+    n__anon_441 -> n__anon_450 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_434 -> n__anon_444 [
+    n__anon_441 -> n__anon_451 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_433 -> n__anon_445 [
+    n__anon_440 -> n__anon_452 [
         label="hasAlternativeDimension"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_445 -> n__anon_446 [
+    n__anon_452 -> n__anon_453 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_445 -> n__anon_447 [
+    n__anon_452 -> n__anon_454 [
         label="@list"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7114,13 +7181,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_p_b_territory -> n__anon_452 [
+    n_pge_cn_pa_baseline_p_b_territory -> n__anon_459 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_p_b_territory -> n__anon_453 [
+    n_pge_cn_pa_baseline_p_b_territory -> n__anon_460 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7132,13 +7199,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_p_b_code -> n__anon_455 [
+    n_pge_cn_pa_baseline_p_b_code -> n__anon_462 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_p_b_code -> n__anon_456 [
+    n_pge_cn_pa_baseline_p_b_code -> n__anon_463 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7168,13 +7235,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_p_h_territory -> n__anon_461 [
+    n_pge_cn_pa_baseline_p_h_territory -> n__anon_468 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_p_h_territory -> n__anon_462 [
+    n_pge_cn_pa_baseline_p_h_territory -> n__anon_469 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7186,13 +7253,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_p_h_code -> n__anon_464 [
+    n_pge_cn_pa_baseline_p_h_code -> n__anon_471 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_p_h_code -> n__anon_465 [
+    n_pge_cn_pa_baseline_p_h_code -> n__anon_472 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7222,13 +7289,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_q_b_territory -> n__anon_470 [
+    n_pge_cn_pa_baseline_q_b_territory -> n__anon_477 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_q_b_territory -> n__anon_471 [
+    n_pge_cn_pa_baseline_q_b_territory -> n__anon_478 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7240,13 +7307,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_q_b_code -> n__anon_473 [
+    n_pge_cn_pa_baseline_q_b_code -> n__anon_480 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_q_b_code -> n__anon_474 [
+    n_pge_cn_pa_baseline_q_b_code -> n__anon_481 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7276,13 +7343,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_q_h_territory -> n__anon_479 [
+    n_pge_cn_pa_baseline_q_h_territory -> n__anon_486 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_q_h_territory -> n__anon_480 [
+    n_pge_cn_pa_baseline_q_h_territory -> n__anon_487 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7294,13 +7361,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_q_h_code -> n__anon_482 [
+    n_pge_cn_pa_baseline_q_h_code -> n__anon_489 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_q_h_code -> n__anon_483 [
+    n_pge_cn_pa_baseline_q_h_code -> n__anon_490 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7330,13 +7397,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_r_b_territory -> n__anon_488 [
+    n_pge_cn_pa_baseline_r_b_territory -> n__anon_495 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_r_b_territory -> n__anon_489 [
+    n_pge_cn_pa_baseline_r_b_territory -> n__anon_496 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7348,13 +7415,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_r_b_code -> n__anon_491 [
+    n_pge_cn_pa_baseline_r_b_code -> n__anon_498 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_r_b_code -> n__anon_492 [
+    n_pge_cn_pa_baseline_r_b_code -> n__anon_499 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7384,13 +7451,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_r_h_territory -> n__anon_497 [
+    n_pge_cn_pa_baseline_r_h_territory -> n__anon_504 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_r_h_territory -> n__anon_498 [
+    n_pge_cn_pa_baseline_r_h_territory -> n__anon_505 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7402,13 +7469,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_r_h_code -> n__anon_500 [
+    n_pge_cn_pa_baseline_r_h_code -> n__anon_507 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_r_h_code -> n__anon_501 [
+    n_pge_cn_pa_baseline_r_h_code -> n__anon_508 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7438,13 +7505,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_s_b_territory -> n__anon_506 [
+    n_pge_cn_pa_baseline_s_b_territory -> n__anon_513 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_s_b_territory -> n__anon_507 [
+    n_pge_cn_pa_baseline_s_b_territory -> n__anon_514 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7456,13 +7523,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_s_b_code -> n__anon_509 [
+    n_pge_cn_pa_baseline_s_b_code -> n__anon_516 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_s_b_code -> n__anon_510 [
+    n_pge_cn_pa_baseline_s_b_code -> n__anon_517 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7492,13 +7559,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_s_h_territory -> n__anon_515 [
+    n_pge_cn_pa_baseline_s_h_territory -> n__anon_522 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_s_h_territory -> n__anon_516 [
+    n_pge_cn_pa_baseline_s_h_territory -> n__anon_523 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7510,13 +7577,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_s_h_code -> n__anon_518 [
+    n_pge_cn_pa_baseline_s_h_code -> n__anon_525 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_s_h_code -> n__anon_519 [
+    n_pge_cn_pa_baseline_s_h_code -> n__anon_526 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7546,13 +7613,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_t_b_territory -> n__anon_524 [
+    n_pge_cn_pa_baseline_t_b_territory -> n__anon_531 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_t_b_territory -> n__anon_525 [
+    n_pge_cn_pa_baseline_t_b_territory -> n__anon_532 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7564,13 +7631,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_t_b_code -> n__anon_527 [
+    n_pge_cn_pa_baseline_t_b_code -> n__anon_534 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_t_b_code -> n__anon_528 [
+    n_pge_cn_pa_baseline_t_b_code -> n__anon_535 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7600,13 +7667,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_t_h_territory -> n__anon_533 [
+    n_pge_cn_pa_baseline_t_h_territory -> n__anon_540 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_t_h_territory -> n__anon_534 [
+    n_pge_cn_pa_baseline_t_h_territory -> n__anon_541 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7618,13 +7685,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_t_h_code -> n__anon_536 [
+    n_pge_cn_pa_baseline_t_h_code -> n__anon_543 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_t_h_code -> n__anon_537 [
+    n_pge_cn_pa_baseline_t_h_code -> n__anon_544 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7654,13 +7721,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_v_b_territory -> n__anon_542 [
+    n_pge_cn_pa_baseline_v_b_territory -> n__anon_549 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_v_b_territory -> n__anon_543 [
+    n_pge_cn_pa_baseline_v_b_territory -> n__anon_550 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7672,13 +7739,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_v_b_code -> n__anon_545 [
+    n_pge_cn_pa_baseline_v_b_code -> n__anon_552 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_v_b_code -> n__anon_546 [
+    n_pge_cn_pa_baseline_v_b_code -> n__anon_553 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7708,13 +7775,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_v_h_territory -> n__anon_551 [
+    n_pge_cn_pa_baseline_v_h_territory -> n__anon_558 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_v_h_territory -> n__anon_552 [
+    n_pge_cn_pa_baseline_v_h_territory -> n__anon_559 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7726,13 +7793,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_v_h_code -> n__anon_554 [
+    n_pge_cn_pa_baseline_v_h_code -> n__anon_561 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_v_h_code -> n__anon_555 [
+    n_pge_cn_pa_baseline_v_h_code -> n__anon_562 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7762,13 +7829,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_w_b_territory -> n__anon_560 [
+    n_pge_cn_pa_baseline_w_b_territory -> n__anon_567 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_w_b_territory -> n__anon_561 [
+    n_pge_cn_pa_baseline_w_b_territory -> n__anon_568 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7780,13 +7847,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_w_b_code -> n__anon_563 [
+    n_pge_cn_pa_baseline_w_b_code -> n__anon_570 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_w_b_code -> n__anon_564 [
+    n_pge_cn_pa_baseline_w_b_code -> n__anon_571 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7816,13 +7883,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_w_h_territory -> n__anon_569 [
+    n_pge_cn_pa_baseline_w_h_territory -> n__anon_576 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_w_h_territory -> n__anon_570 [
+    n_pge_cn_pa_baseline_w_h_territory -> n__anon_577 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7834,13 +7901,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_w_h_code -> n__anon_572 [
+    n_pge_cn_pa_baseline_w_h_code -> n__anon_579 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_w_h_code -> n__anon_573 [
+    n_pge_cn_pa_baseline_w_h_code -> n__anon_580 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7870,13 +7937,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_x_b_territory -> n__anon_578 [
+    n_pge_cn_pa_baseline_x_b_territory -> n__anon_585 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_x_b_territory -> n__anon_579 [
+    n_pge_cn_pa_baseline_x_b_territory -> n__anon_586 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7888,13 +7955,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_x_b_code -> n__anon_581 [
+    n_pge_cn_pa_baseline_x_b_code -> n__anon_588 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_x_b_code -> n__anon_582 [
+    n_pge_cn_pa_baseline_x_b_code -> n__anon_589 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7924,13 +7991,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_x_h_territory -> n__anon_587 [
+    n_pge_cn_pa_baseline_x_h_territory -> n__anon_594 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_x_h_territory -> n__anon_588 [
+    n_pge_cn_pa_baseline_x_h_territory -> n__anon_595 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7942,13 +8009,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_x_h_code -> n__anon_590 [
+    n_pge_cn_pa_baseline_x_h_code -> n__anon_597 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_x_h_code -> n__anon_591 [
+    n_pge_cn_pa_baseline_x_h_code -> n__anon_598 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7978,13 +8045,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_y_b_territory -> n__anon_596 [
+    n_pge_cn_pa_baseline_y_b_territory -> n__anon_603 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_y_b_territory -> n__anon_597 [
+    n_pge_cn_pa_baseline_y_b_territory -> n__anon_604 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -7996,13 +8063,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_y_b_code -> n__anon_599 [
+    n_pge_cn_pa_baseline_y_b_code -> n__anon_606 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_y_b_code -> n__anon_600 [
+    n_pge_cn_pa_baseline_y_b_code -> n__anon_607 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -8032,13 +8099,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_y_h_territory -> n__anon_605 [
+    n_pge_cn_pa_baseline_y_h_territory -> n__anon_612 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_y_h_territory -> n__anon_606 [
+    n_pge_cn_pa_baseline_y_h_territory -> n__anon_613 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -8050,13 +8117,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_y_h_code -> n__anon_608 [
+    n_pge_cn_pa_baseline_y_h_code -> n__anon_615 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_y_h_code -> n__anon_609 [
+    n_pge_cn_pa_baseline_y_h_code -> n__anon_616 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -8086,13 +8153,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_z_b_territory -> n__anon_614 [
+    n_pge_cn_pa_baseline_z_b_territory -> n__anon_621 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_z_b_territory -> n__anon_615 [
+    n_pge_cn_pa_baseline_z_b_territory -> n__anon_622 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -8104,13 +8171,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_z_b_code -> n__anon_617 [
+    n_pge_cn_pa_baseline_z_b_code -> n__anon_624 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_z_b_code -> n__anon_618 [
+    n_pge_cn_pa_baseline_z_b_code -> n__anon_625 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -8140,13 +8207,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_z_h_territory -> n__anon_623 [
+    n_pge_cn_pa_baseline_z_h_territory -> n__anon_630 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_z_h_territory -> n__anon_624 [
+    n_pge_cn_pa_baseline_z_h_territory -> n__anon_631 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -8158,13 +8225,13 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_z_h_code -> n__anon_626 [
+    n_pge_cn_pa_baseline_z_h_code -> n__anon_633 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_cn_pa_baseline_z_h_code -> n__anon_627 [
+    n_pge_cn_pa_baseline_z_h_code -> n__anon_634 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -8211,48 +8278,50 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         bgcolor="#f8f8f8";
         margin=12;
         leg_0 [label="ProgramEnrollment", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_1 [label="TariffPublication", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_2 [label="RatePlan", shape=box, fillcolor="#00386e", color="#002244", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_3 [label="RatePlanVersion", shape=box, fillcolor="#1c5a8f", color="#0e3a5f", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_4 [label="Organization", shape=box, fillcolor="#BBCC33", color="#99aa11", fontcolor="#333333", fontsize=9, penwidth=1.5];
-        leg_5 [label="DataSourceReference", shape=box, fillcolor="#A8D8CF", color="#86b6ad", fontcolor="#333333", fontsize=9, penwidth=1.5];
-        leg_6 [label="TariffBookReference", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_7 [label="EligibilityRule", shape=box, fillcolor="#AA3377", color="#882255", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_8 [label="ConditionExpression", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_9 [label="ComparisonNode", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_10 [label="ObjectOperandNode", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_11 [label="PlanElements", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_12 [label="Season", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_13 [label="MetricInput", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_14 [label="MetricSpecification", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_15 [label="BillingModel", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_16 [label="TOUSchedule", shape=box, fillcolor="#77AADD", color="#5588bb", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_17 [label="TOUTier", shape=box, fillcolor="#6699CC", color="#4477aa", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_18 [label="TOUPeriod", shape=box, fillcolor="#EEDD88", color="#ccbb66", fontcolor="#333333", fontsize=9, penwidth=1.5];
-        leg_19 [label="TimeBracket", shape=box, fillcolor="#EE8866", color="#cc6644", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_20 [label="Ledger", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_21 [label="PriceDefinition", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_22 [label="CalculationMethod", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_23 [label="ApplicabilityRule", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_24 [label="ProfileAlternatives", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_25 [label="AlternativeDimensions", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_26 [label="AlternativeDimension", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_27 [label="ProfileAlternative", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_28 [label="BooleanOperationNode", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_29 [label="Prices", shape=box, fillcolor="#00bd7e", color="#009966", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_30 [label="Price", shape=box, fillcolor="#44BB99", color="#339977", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_31 [label="PriceSet", shape=box, fillcolor="#00ADEF", color="#0088cc", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_32 [label="PriceSetAlternatives", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_33 [label="PriceSetAlternative", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_34 [label="RatePlanModifier", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_35 [label="RatePlanModifierVersion", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_36 [label="xsd:gYear", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_37 [label="CustomOperandNode", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_38 [label="URPXDocument", shape=box, fillcolor="#4488AA", color="#336688", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_39 [label="ServiceTiers", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_40 [label="ServiceTier", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_41 [label="ServiceBracket", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_42 [label="xsd:string", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_0 -> leg_1 -> leg_2 -> leg_3 -> leg_4 -> leg_5 -> leg_6 -> leg_7 -> leg_8 -> leg_9 -> leg_10 -> leg_11 -> leg_12 -> leg_13 -> leg_14 -> leg_15 -> leg_16 -> leg_17 -> leg_18 -> leg_19 -> leg_20 -> leg_21 -> leg_22 -> leg_23 -> leg_24 -> leg_25 -> leg_26 -> leg_27 -> leg_28 -> leg_29 -> leg_30 -> leg_31 -> leg_32 -> leg_33 -> leg_34 -> leg_35 -> leg_36 -> leg_37 -> leg_38 -> leg_39 -> leg_40 -> leg_41 -> leg_42 [style=invis];
+        leg_1 [label="SourcePublication", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_2 [label="URPXPackage", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_3 [label="RatePlan", shape=box, fillcolor="#00386e", color="#002244", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_4 [label="RatePlanVersion", shape=box, fillcolor="#1c5a8f", color="#0e3a5f", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_5 [label="Organization", shape=box, fillcolor="#BBCC33", color="#99aa11", fontcolor="#333333", fontsize=9, penwidth=1.5];
+        leg_6 [label="SourceReference", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_7 [label="TariffBookReference", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_8 [label="EligibilityRule", shape=box, fillcolor="#AA3377", color="#882255", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_9 [label="ConditionExpression", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_10 [label="ComparisonNode", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_11 [label="ObjectOperandNode", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_12 [label="CoverageClaim", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_13 [label="Evaluation", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_14 [label="PlanElements", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_15 [label="Season", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_16 [label="MetricInput", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_17 [label="MetricSpecification", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_18 [label="BillingModel", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_19 [label="TOUSchedule", shape=box, fillcolor="#77AADD", color="#5588bb", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_20 [label="TOUTier", shape=box, fillcolor="#6699CC", color="#4477aa", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_21 [label="TOUPeriod", shape=box, fillcolor="#EEDD88", color="#ccbb66", fontcolor="#333333", fontsize=9, penwidth=1.5];
+        leg_22 [label="TimeBracket", shape=box, fillcolor="#EE8866", color="#cc6644", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_23 [label="Ledger", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_24 [label="PriceDefinition", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_25 [label="CalculationMethod", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_26 [label="ApplicabilityRule", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_27 [label="ProfileAlternatives", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_28 [label="AlternativeDimensions", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_29 [label="AlternativeDimension", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_30 [label="ProfileAlternative", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_31 [label="BooleanOperationNode", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_32 [label="Prices", shape=box, fillcolor="#00bd7e", color="#009966", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_33 [label="Price", shape=box, fillcolor="#44BB99", color="#339977", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_34 [label="PriceSet", shape=box, fillcolor="#00ADEF", color="#0088cc", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_35 [label="PriceSetAlternatives", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_36 [label="PriceSetAlternative", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_37 [label="RatePlanModifier", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_38 [label="RatePlanModifierVersion", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_39 [label="xsd:gYear", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_40 [label="CustomOperandNode", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_41 [label="ServiceTiers", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_42 [label="ServiceTier", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_43 [label="ServiceBracket", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_44 [label="xsd:string", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_0 -> leg_1 -> leg_2 -> leg_3 -> leg_4 -> leg_5 -> leg_6 -> leg_7 -> leg_8 -> leg_9 -> leg_10 -> leg_11 -> leg_12 -> leg_13 -> leg_14 -> leg_15 -> leg_16 -> leg_17 -> leg_18 -> leg_19 -> leg_20 -> leg_21 -> leg_22 -> leg_23 -> leg_24 -> leg_25 -> leg_26 -> leg_27 -> leg_28 -> leg_29 -> leg_30 -> leg_31 -> leg_32 -> leg_33 -> leg_34 -> leg_35 -> leg_36 -> leg_37 -> leg_38 -> leg_39 -> leg_40 -> leg_41 -> leg_42 -> leg_43 -> leg_44 [style=invis];
     }
 }

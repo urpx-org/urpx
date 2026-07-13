@@ -30,7 +30,7 @@
     dcterms:creator "Klaar De Schepper, Una Smithsimon, Flux Tailor LLC" ;
     dcterms:description "URPX ontology for utility rate plan exchange" ;
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
-    dcterms:modified "2026-07-12"^^xsd:date ;
+    dcterms:modified "2026-07-13"^^xsd:date ;
     dcterms:title "URPX Ontology" ;
     dcterms:hasVersion <https://urpx-org.github.io/urpx/ontology/releases/v0.3.0> ;
     owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.3.0/ontology/urpx-ontology.ttl> .
@@ -138,7 +138,7 @@ urpx:CoverageClaim a owl:Class ;
 
 urpx:CustomerProfile a owl:Class ;
     rdfs:label "Customer Profile"@en ;
-    rdfs:comment "Customer business and social characteristics for rate eligibility and program participation evaluation" ;
+    rdfs:comment "Customer business and social characteristics for rate plan eligibility and program participation evaluation" ;
     rdfs:subClassOf urpx:Profile ;
     skos:note "Represents customer business, social, and program participation characteristics. Includes assistance program support." .
 
@@ -185,7 +185,7 @@ urpx:Holiday a owl:Class ;
 urpx:HolidayCalendar a owl:Class ;
     rdfs:label "Holiday Calendar"@en ;
     rdfs:comment "Collection of holidays affecting TOU period application with versioning support" ;
-    skos:note "Defines holidays for rate calculations. Aligned with utility industry CalendarTimeInterval patterns. Part of versioned LocationDataSet enabling holiday date changes year to year. Can be referenced independently by rate plans or through LocationDataSet." .
+    skos:note "Defines holidays for cost calculations. Aligned with utility industry CalendarTimeInterval patterns. Part of versioned LocationDataSet enabling holiday date changes year to year. Can be referenced independently by rate plans or through LocationDataSet." .
 
 urpx:Ledger a owl:Class ;
     rdfs:label "Ledger"@en ;
@@ -272,7 +272,7 @@ urpx:PlanElements a owl:Class ;
 
 urpx:Price a owl:Class ;
     rdfs:label "Price"@en ;
-    rdfs:comment "Individual pricing component with rate and applicability rules" ;
+    rdfs:comment "Individual pricing component with an amount and applicability rules" ;
     skos:note "Represents a single billable component. Aligned with utility industry Price class concepts. Must have at least one pricing field. Can have start/end dates and expected end date." .
 
 urpx:PriceDefinition a owl:Class ;
@@ -402,7 +402,7 @@ urpx:RegulatoryAuthority a owl:Class ;
 urpx:Season a owl:Class ;
     rdfs:label "Season"@en ;
     rdfs:comment "Seasonal period definition with flexible date or month-based specifications" ;
-    skos:note """Defines seasonal rate periods with a choice of 1) date-based: urpx:startDate + urpx:endDate for year-specific seasons and 2. Month-based: month (xsd:gMonth) for recurring annual patterns""" .
+    skos:note """Defines seasonal pricing periods with a choice of 1) date-based: urpx:startDate + urpx:endDate for year-specific seasons and 2. Month-based: month (xsd:gMonth) for recurring annual patterns""" .
 
 urpx:ServiceBracket a owl:Class ;
     rdfs:label "Service Bracket"@en ;
@@ -411,7 +411,7 @@ urpx:ServiceBracket a owl:Class ;
 
 urpx:ServiceClass a owl:Class ;
     rdfs:label "Service Class"@en ;
-    rdfs:comment "Region-specific rate classification with raw and cleaned identifiers" ;
+    rdfs:comment "Region-specific rate plan classification with raw and cleaned identifiers" ;
     skos:note """Service class identifiers as used in tariff books. Maintains both raw format
                  (as published) and cleaned format (for system use). Links prices to rate plans
                  across different contexts. Can contain multiple RateGroups for detailed organization.""" .
@@ -765,7 +765,7 @@ urpx:MeteringConfigurationValue a owl:Class ;
     rdfs:label "Metering Configuration Value"@en ;
     rdfs:comment "Metering configuration type enumeration values" ;
     owl:equivalentClass [ owl:oneOf ( urpx:interval urpx:demandConfiguration urpx:prepaid urpx:ami urpx:manual urpx:netMetering ) ] ;
-    skos:note "Enumeration class for metering configuration types. standardized metering definitions for billing and rate application." .
+    skos:note "Enumeration class for metering configuration types. standardized metering definitions for billing and price application." .
 
 urpx:MetricInputTypeValue a owl:Class ;
     rdfs:label "MetricInput Type Value"@en ;
@@ -781,7 +781,7 @@ urpx:ModifierCategoryValue a owl:Class ;
 
 urpx:ModifierTypeValue a owl:Class ;
     rdfs:label "Modifier Type Value"@en ;
-    rdfs:comment "Utility rate modifiers enumeration values" ;
+    rdfs:comment "Utility rate plan modifiers enumeration values" ;
     owl:equivalentClass [ owl:oneOf ( urpx:addOn urpx:adjustment urpx:credit urpx:demandResponse urpx:evCharging urpx:greenEnergy urpx:modifierTypeOther urpx:optIn urpx:optOut urpx:rider ) ] ;
     skos:note "Enumeration class for rate plan modifier categorization. standardized modifier type definitions." .
 
@@ -900,7 +900,7 @@ urpx:SpecialNeedsStatusValue a owl:Class ;
     rdfs:label "Special Needs Status Value"@en ;
     rdfs:comment "Special needs classification enumeration values" ;
     owl:equivalentClass [ owl:oneOf ( urpx:medicalEquipment urpx:disabilityAccommodation urpx:lifeSupport urpx:vulnerableCustomer urpx:noSpecialNeeds ) ] ;
-    skos:note "Enumeration class for special needs classification affecting rate eligibility and service priority." .
+    skos:note "Enumeration class for special needs classification affecting rate plan eligibility and service priority." .
 
 urpx:TariffStatementTypeValue a owl:Class ;
     rdfs:label "Statement Type Value"@en ;
@@ -912,7 +912,7 @@ urpx:TaxExemptStatusValue a owl:Class ;
     rdfs:label "Tax Exempt Status Value"@en ;
     rdfs:comment "Tax exemption status enumeration values" ;
     owl:equivalentClass [ owl:oneOf ( urpx:exempt urpx:nonExempt urpx:partialExempt urpx:pendingVerification ) ] ;
-    skos:note "Enumeration class for tax exemption classifications for tax-based rate eligibility." .
+    skos:note "Enumeration class for tax exemption classifications for tax-based rate plan eligibility." .
 
 urpx:TOUTierStandardNameValue a owl:Class ;
     rdfs:label "TOU Tier Standard Name Value"@en ;
@@ -1105,7 +1105,7 @@ urpx:billedDemand a owl:DatatypeProperty ;
     rdfs:comment "Utility-estimated demand for billing in kW" ;
     rdfs:domain urpx:ServicePointProfile ;
     rdfs:range xsd:decimal ;
-    skos:note "Utility estimate of service demand used for billing. Profile characteristic (utility-assigned, not meter measurement). Distinct from measured demand (measuredMetricInput) or calculated demand (calculatedMetricInput). Used for demand-based rate tiers when actual measurement unavailable. Can be updated by utility." .
+    skos:note "Utility estimate of service demand used for billing. Profile characteristic (utility-assigned, not meter measurement). Distinct from measured demand (measuredMetricInput) or calculated demand (calculatedMetricInput). Used for demand-based pricing tiers when actual measurement unavailable. Can be updated by utility." .
 
 urpx:billingCycleCode a owl:DatatypeProperty ;
     rdfs:label "Billing Cycle Code"@en ;
@@ -1584,7 +1584,7 @@ urpx:endUse a owl:ObjectProperty ;
     rdfs:comment "End use classification for electric service (heating vs non-heating)" ;
     rdfs:domain urpx:ServicePointProfile ;
     rdfs:range urpx:EndUseValue ;
-    skos:note "End use classification enumeration for electric service categorization. Distinguishes heating from non-heating electric service for rate application. Used in ProfileAlternative for end-use-based rate variations and ServicePointProfile for site characterization." .
+    skos:note "End use classification enumeration for electric service categorization. Distinguishes heating from non-heating electric service for price application. Used in ProfileAlternative for end-use-based price variations and ServicePointProfile for site characterization." .
 
 urpx:enrollmentEndDate a owl:DatatypeProperty ;
     rdfs:label "Enrollment End Date"@en ;
@@ -1628,7 +1628,7 @@ urpx:evChargingCapacity a owl:DatatypeProperty ;
     rdfs:comment "EV charging capacity in kW" ;
     rdfs:domain urpx:DistributedEnergyResource ;
     rdfs:range xsd:decimal ;
-    skos:note "Electric vehicle charging capability. Used for EV-specific rates and managed charging programs." .
+    skos:note "Electric vehicle charging capability. Used for EV-specific rate plans and managed charging programs." .
 
 urpx:expectedEndDate a owl:DatatypeProperty ;
     rdfs:label "Expected End Date"@en ;
@@ -1636,7 +1636,7 @@ urpx:expectedEndDate a owl:DatatypeProperty ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:Price urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:URPXPackage urpx:PricingModel urpx:LocationDataSet ) ] ;
     rdfs:range xsd:date ;
-    skos:note "Used when definitive end date is unknown but provisional date exists. Common for rates marked 'effective until further notice' or 'subject to review'. Does not create binding commitment - actual end may differ." .
+    skos:note "Used when definitive end date is unknown but provisional date exists. Common for pricing marked 'effective until further notice' or 'subject to review'. Does not create binding commitment - actual end may differ." .
 
 urpx:expectedEndDateTime a owl:DatatypeProperty ;
     rdfs:label "Expected End Date Time"@en ;
@@ -1644,7 +1644,7 @@ urpx:expectedEndDateTime a owl:DatatypeProperty ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:Price urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:URPXPackage urpx:PricingModel urpx:LocationDataSet ) ] ;
     rdfs:range xsd:dateTime ;
-    skos:note "Provisional end date/time with timezone precision. Supports utility 'until further notice' rate patterns. ISO 8601 format with timezone." .
+    skos:note "Provisional end date/time with timezone precision. Supports pricing marked 'effective until further notice'. ISO 8601 format with timezone." .
 
 urpx:expirationDate a owl:DatatypeProperty ;
     rdfs:label "Expiration Date"@en ;
@@ -1962,7 +1962,7 @@ urpx:hasMeteringConfiguration a owl:ObjectProperty ;
     rdfs:comment "Metering configuration type" ;
     rdfs:domain urpx:ServicePointProfile ;
     rdfs:range urpx:MeteringConfigurationValue ;
-    skos:note "Metering types: net, interval, demandConfiguration, prepaid, ami, manual. Affects billing and rate application." .
+    skos:note "Metering types: net, interval, demandConfiguration, prepaid, ami, manual. Affects billing and eligibility." .
 
 urpx:hasMetricInput a owl:ObjectProperty ;
     rdfs:label "Has Metric Input"@en ;
@@ -2045,7 +2045,7 @@ urpx:hasPriceDefinitionReference a owl:ObjectProperty ;
 
 urpx:hasPrices a owl:ObjectProperty ;
     rdfs:label "Has Prices"@en ;
-    rdfs:comment "Links a rate plan version or authored pricing model to actual price instances with rate values" ;
+    rdfs:comment "Links a rate plan version or authored pricing model to actual price instances with amounts or unit prices" ;
     rdfs:domain [ a owl:Class ;
         owl:unionOf ( urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:PricingModel ) ] ;
     rdfs:range urpx:Prices ;
@@ -2291,7 +2291,7 @@ urpx:householdCount a owl:DatatypeProperty ;
     rdfs:comment "Number of households served by this customer account" ;
     rdfs:domain urpx:CustomerProfile ;
     rdfs:range xsd:integer ;
-    skos:note "Used for per-household rate calculations and credits like California Climate Credit. Typically 1 for single-family residential, but can be >1 for multi-unit buildings with master-metered service or community solar arrangements. Distinct from householdSize (number of people in household) and occupancyCount (people at premises)." .
+    skos:note "Used for per-household cost calculations and credits like California Climate Credit. Typically 1 for single-family residential, but can be >1 for multi-unit buildings with master-metered service or community solar arrangements. Distinct from householdSize (number of people in household) and occupancyCount (people at premises)." .
 
 urpx:householdSize a owl:DatatypeProperty ;
     rdfs:label "Household Size"@en ;
@@ -2370,7 +2370,7 @@ urpx:interconnectionStatus a owl:ObjectProperty ;
     rdfs:comment "Grid interconnection status" ;
     rdfs:domain urpx:DistributedEnergyResource ;
     rdfs:range urpx:InterconnectionStatusValue ;
-    skos:note "DER interconnection status enumeration. with standardized interconnection status definitions for consistent DER rate eligibility across utilities." .
+    skos:note "DER interconnection status enumeration. with standardized interconnection status definitions for consistent DER rate plan eligibility across utilities." .
 
 urpx:intervalAlignment a owl:ObjectProperty ;
     rdfs:label "Interval Alignment"@en ;
@@ -2575,10 +2575,10 @@ urpx:modifierCategory a owl:ObjectProperty ;
 
 urpx:modifierType a owl:ObjectProperty ;
     rdfs:label "Modifier Type"@en ;
-    rdfs:comment "Type of rate plan modifier (Utility rate modifiers)" ;
+    rdfs:comment "Type of rate plan modifier (utility rate plan modifiers)" ;
     rdfs:domain urpx:RatePlanModifierVersion ;
     rdfs:range urpx:ModifierTypeValue ;
-    skos:note "Utility rate modifiers enumeration for rate plan modifier categorization. with standardized modifier type definitions for consistent rate plan enhancement across utilities." .
+    skos:note "Utility rate plan modifiers enumeration for rate plan modifier categorization. with standardized modifier type definitions for consistent rate plan enhancement across utilities." .
 
 urpx:modifierUniqueIdentifier a owl:DatatypeProperty ;
     rdfs:label "Modifier Unique Identifier"@en ;
@@ -2630,7 +2630,7 @@ urpx:nominalVoltage a owl:DatatypeProperty ;
     rdfs:comment "Nominal service voltage in volts" ;
     rdfs:domain urpx:ServicePointProfile ;
     rdfs:range xsd:decimal ;
-    skos:note "Service voltage level in volts. E.g., 120, 240, 480, 13800, 69000. Used for voltage-based rate classification." .
+    skos:note "Service voltage level in volts. E.g., 120, 240, 480, 13800, 69000. Used for voltage-based rate plan classification." .
 
 urpx:observanceRule a owl:ObjectProperty ;
     rdfs:label "Observance Rule"@en ;
@@ -2651,7 +2651,7 @@ urpx:occupancyCount a owl:DatatypeProperty ;
     rdfs:comment "Number of occupants at premises" ;
     rdfs:domain urpx:CustomerProfile ;
     rdfs:range xsd:integer ;
-    skos:note "Count of people residing or working at premises. Profile characteristic (not meter measurement). Used for per-capita rate calculations and assistance program eligibility. Can change as occupancy changes. Privacy-preserving alternative to detailed household composition." .
+    skos:note "Count of people residing or working at premises. Profile characteristic (not meter measurement). Used for per-capita cost calculations and assistance program eligibility. Can change as occupancy changes. Privacy-preserving alternative to detailed household composition." .
 
 urpx:operandNodes a owl:ObjectProperty ;
     rdfs:label "Operand Nodes"@en ;
@@ -2881,7 +2881,7 @@ urpx:ratedPowerCapacity a owl:DatatypeProperty ;
     rdfs:comment "Rated power capacity in kW" ;
     rdfs:domain urpx:ServicePointProfile ;
     rdfs:range xsd:decimal ;
-    skos:note "Maximum rated power capacity of the service connection. Used for capacity-based rate eligibility." .
+    skos:note "Maximum rated power capacity of the service connection. Used for capacity-based rate plan eligibility." .
 
 urpx:rateGroupIdentifier a owl:DatatypeProperty ;
     rdfs:label "Rate Group Identifier"@en ;
@@ -3065,7 +3065,7 @@ urpx:roundTripEfficiency a owl:DatatypeProperty ;
     rdfs:comment "Round trip efficiency as percentage" ;
     rdfs:domain urpx:DistributedEnergyResource ;
     rdfs:range xsd:decimal ;
-    skos:note "Battery round trip efficiency (0-100%). Affects economic calculations for storage rates." .
+    skos:note "Battery round trip efficiency (0-100%). Affects economic calculations for storage rate plans." .
 
 urpx:scheme a owl:ObjectProperty ;
     rdfs:label "Scheme"@en ;
@@ -3156,14 +3156,14 @@ urpx:smartChargingEnabled a owl:DatatypeProperty ;
     rdfs:comment "Smart charging capability enabled" ;
     rdfs:domain urpx:DistributedEnergyResource ;
     rdfs:range xsd:boolean ;
-    skos:note "Whether managed charging, vehicle-to-grid, or time-of-use charging is supported. Enables smart charging rates." .
+    skos:note "Whether managed charging, vehicle-to-grid, or time-of-use charging is supported. Enables smart charging rate plans." .
 
 urpx:solarCapacity a owl:DatatypeProperty ;
     rdfs:label "Solar Capacity"@en ;
     rdfs:comment "Solar generation capacity in kW" ;
     rdfs:domain urpx:DistributedEnergyResource ;
     rdfs:range xsd:decimal ;
-    skos:note "Installed solar photovoltaic capacity. Used for net metering and solar-specific rates." .
+    skos:note "Installed solar photovoltaic capacity. Used for net metering and solar-specific rate plans." .
 
 urpx:sourcePublication a owl:ObjectProperty ;
     rdfs:label "Source Publication"@en ;
@@ -3176,7 +3176,7 @@ urpx:specialNeedsStatus a owl:ObjectProperty ;
     rdfs:comment "Special needs classification" ;
     rdfs:domain urpx:CustomerProfile ;
     rdfs:range urpx:SpecialNeedsStatusValue ;
-    skos:note "Special needs: medical equipment, disability accommodation, life support, vulnerable customer, none. Affects rate eligibility and service priority." .
+    skos:note "Special needs: medical equipment, disability accommodation, life support, vulnerable customer, none. Affects rate plan eligibility and service priority." .
 
 urpx:startDate a owl:DatatypeProperty ;
     rdfs:label "Start Date"@en ;
@@ -3206,7 +3206,7 @@ urpx:storageCapacity a owl:DatatypeProperty ;
     rdfs:comment "Energy storage capacity in kWh" ;
     rdfs:domain urpx:DistributedEnergyResource ;
     rdfs:range xsd:decimal ;
-    skos:note "Battery storage capacity. Used for storage-specific rates and grid services." .
+    skos:note "Battery storage capacity. Used for storage-specific rate plans and grid services." .
 
 urpx:stringValue a owl:DatatypeProperty ;
     rdfs:label "String Value"@en ;
@@ -3260,7 +3260,7 @@ urpx:taxExemptStatus a owl:ObjectProperty ;
     rdfs:comment "Tax exemption status" ;
     rdfs:domain urpx:CustomerProfile ;
     rdfs:range urpx:TaxExemptStatusValue ;
-    skos:note "Tax exemption classifications: exempt, non-exempt, partial exempt, pending verification. Used for tax-based rate eligibility." .
+    skos:note "Tax exemption classifications: exempt, non-exempt, partial exempt, pending verification. Used for tax-based rate plan eligibility." .
 
 urpx:tierSourceName a owl:DatatypeProperty ;
     rdfs:label "Tier Source Name"@en ;
@@ -3355,7 +3355,7 @@ urpx:usageThreshold a owl:DatatypeProperty ;
     rdfs:comment "Annual usage threshold in kWh" ;
     rdfs:domain urpx:CustomerProfile ;
     rdfs:range xsd:decimal ;
-    skos:note "Used for usage-based rate eligibility." .
+    skos:note "Used for usage-based rate plan eligibility." .
 
 urpx:usageVariability a owl:DatatypeProperty ;
     rdfs:label "Usage Variability"@en ;
@@ -3386,14 +3386,14 @@ urpx:voltageLevel a owl:ObjectProperty ;
     rdfs:comment "Service voltage level classification for service point profiles" ;
     rdfs:domain urpx:ServicePointProfile ;
     rdfs:range urpx:VoltageLevelValue ;
-    skos:note "Voltage level enumeration used for service point voltage specification (ServicePointProfile) and price applicability rules (through ConditionExpression on ApplicabilityRule or ApplicabilityGroup). Standardized voltage class definitions enable consistent voltage-based rate application across utilities." .
+    skos:note "Voltage level enumeration used for service point voltage specification (ServicePointProfile) and price applicability rules (through ConditionExpression on ApplicabilityRule or ApplicabilityGroup). Standardized voltage class definitions enable consistent voltage-based price application across utilities." .
 
 urpx:windCapacity a owl:DatatypeProperty ;
     rdfs:label "Wind Capacity"@en ;
     rdfs:comment "Wind generation capacity in kW" ;
     rdfs:domain urpx:DistributedEnergyResource ;
     rdfs:range xsd:decimal ;
-    skos:note "Small wind turbine capacity. Used for wind-specific rates and interconnection requirements." .
+    skos:note "Small wind turbine capacity. Used for wind-specific rate plans and interconnection requirements." .
 
 urpx:withinPublication a owl:ObjectProperty ;
     rdfs:label "Within Publication"@en ;

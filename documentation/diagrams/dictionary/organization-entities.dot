@@ -6,7 +6,7 @@ digraph "Organization Entities" {
     ranksep=1.0;
     start=42;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="Organization Entities (URPX v0.2.0)";
+    label="Organization Entities (URPX v0.3.0)";
     labelloc="t";
     fontsize=14;
     fontcolor="#1a365d";
@@ -24,6 +24,10 @@ digraph "Organization Entities" {
     ];
     SystemOperator [
         label="SystemOperator"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    UtilityOperator [
+        label="UtilityOperator"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     EnergyServiceProvider [
@@ -91,6 +95,18 @@ digraph "Organization Entities" {
         label="hasLocationDataSet\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     SystemOperator -> RatePlan [
+        label="publishes\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    UtilityOperator -> OrganizationIdentity [
+        label="hasIdentity\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    UtilityOperator -> LocationDataSet [
+        label="hasLocationDataSet\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    UtilityOperator -> SystemOperator [
+        label="operatesIn\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    UtilityOperator -> RatePlan [
         label="publishes\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     EnergyServiceProvider -> OrganizationIdentity [

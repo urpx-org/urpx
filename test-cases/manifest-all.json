@@ -1,8 +1,14 @@
 {
   "schemaVersion": "1.0.0",
   "generator": "urpx-website-staging/scripts/codegen/generate-all.py",
-  "generatedAt": "2026-05-13T23:59:08Z",
+  "generatedAt": "2026-07-13T06:59:08Z",
   "examples": [
+    {
+      "id": "coned-sc1-rate-i",
+      "instanceJsonld": "coned-sc1-rate-i/data/coned-sc1-rate-i-v20260201-resolved.jsonld",
+      "diagramSvg": "coned-sc1-rate-i/assets/diagram.svg",
+      "tariffBookPdf": null
+    },
     {
       "id": "pge-e-elec",
       "instanceJsonld": "pge-e-elec/data/urpx-rate-plan_pge_e-elec.jsonld",

@@ -6,7 +6,7 @@ digraph "Condition Modeling" {
     ranksep=1.1;
     start=42;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="Condition Modeling (URPX v0.2.0)";
+    label="Condition Modeling (URPX v0.3.0)";
     labelloc="t";
     fontsize=14;
     fontcolor="#1a365d";
@@ -36,8 +36,8 @@ digraph "Condition Modeling" {
     ];
 
     // Cross-section references
-    DataSourceReference [
-        label="DataSource\nReference"
+    SourceReference [
+        label="SourceReference"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
     ];
 
@@ -45,7 +45,7 @@ digraph "Condition Modeling" {
     EligibilityRule -> ConditionExpression [
         label="hasConditionExpression\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
-    EligibilityRule -> DataSourceReference [
+    EligibilityRule -> SourceReference [
         label="hasDataSourceReference\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     ApplicabilityRule -> ConditionExpression [
@@ -57,7 +57,7 @@ digraph "Condition Modeling" {
     GeneralRule -> ApplicabilityRule [
         label="hasApplicabilityRule\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
-    GeneralRule -> DataSourceReference [
+    GeneralRule -> SourceReference [
         label="hasDataSourceReference\n1..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
 

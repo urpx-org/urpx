@@ -21,12 +21,20 @@ digraph "Core Rate Plan Entities" {
         label="RatePlan"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
+    RatePlanIdentifier [
+        label="RatePlanIdentifier"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
     RatePlanVersion [
         label="RatePlanVersion"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     RatePlanModifier [
         label="RatePlanModifier"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    RatePlanModifierIdentifier [
+        label="RatePlanModifier\nIdentifier"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     RatePlanModifierVersion [
@@ -39,10 +47,31 @@ digraph "Core Rate Plan Entities" {
         label="hasRatePlan\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=10
     ];
     URPXPackage -> RatePlanModifier [
-        label="hasRatePlanModifier\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+        label="hasRatePlanModifier\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=10
+    ];
+    RatePlan -> RatePlanIdentifier [
+        label="hasIdentifier\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=8
+    ];
+    RatePlanVersion -> RatePlan [
+        label="applicableToRatePlan\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=10
     ];
     RatePlanVersion -> RatePlan [
         label="forRatePlan\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=10
+    ];
+    RatePlanVersion -> RatePlanModifier [
+        label="hasModifierOptions\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanVersion -> RatePlanModifierVersion [
+        label="hasModifierVersionOptions\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifier -> RatePlanModifierIdentifier [
+        label="hasIdentifier\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifierVersion -> RatePlan [
+        label="applicableToRatePlan\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifierVersion -> RatePlanVersion [
+        label="applicableToRatePlanVersion\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     RatePlanModifierVersion -> RatePlanModifier [
         label="forRatePlanModifier\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=10
@@ -51,7 +80,7 @@ digraph "Core Rate Plan Entities" {
     // Layout-specified rank groups
     { rank=same; URPXPackage; }
     { rank=same; RatePlan; RatePlanModifier; }
-    { rank=same; RatePlanVersion; RatePlanModifierVersion; }
+    { rank=same; RatePlanIdentifier; RatePlanVersion; RatePlanModifierVersion; }
 
     subgraph cluster_legend {
         label="Legend";
