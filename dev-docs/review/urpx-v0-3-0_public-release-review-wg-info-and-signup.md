@@ -10,7 +10,7 @@ Materials to made public upon acceptance of the V1.0.0 draft URPX standard
     
 - It's private now but after working group acceptance this repository will be made public. 
 - Where to comment: 
-https://github.com/urpx-org/urpx/tree/v0.2.1-wg-review is the branch open for committee feedback/proposed updates prior to converting this to W3C/CDLA  URPX v1.0.0. Updates committed in this branch will be added to the PR open for committee review: https://github.com/urpx-org/urpx/pull/44 
+https://github.com/urpx-org/urpx/tree/v0.3.0-wg-review is the branch open for committee feedback/proposed updates prior to converting this to W3C/CDLA  URPX v1.0.0. Updates committed in this branch will be added to the PR open for committee review: https://github.com/urpx-org/urpx/pull/44 
 - How to comment: update documents directly and commit with comments, add review inline, or with general PR review comments.
 
 ### urpx.org website
