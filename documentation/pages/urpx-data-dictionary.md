@@ -226,7 +226,7 @@ due to regulatory orders, fuel adjustments, or seasonal variations.
 **URI:** `https://urpx-org.github.io/urpx/ontology/RatePlanVersion`  
 **Parent:** `owl:Thing`
 
-**Description:** Derived, materialized complete snapshot of the resolved rate-plan facts for a temporal window — the read artifact.
+**Description:** Derived, materialized complete snapshot of the resolved rate plan facts for a temporal window — the read artifact.
 
 **Semantic Context:**  
 Each RatePlanVersion represents the actual rates customers pay during
@@ -345,7 +345,7 @@ demand response programs, and renewable energy riders.
 **URI:** `https://urpx-org.github.io/urpx/ontology/RatePlanModifierVersion`  
 **Parent:** `owl:Thing`
 
-**Description:** Derived, materialized snapshot of the resolved rate-plan-modifier facts for a temporal window.
+**Description:** Derived, materialized snapshot of the resolved rate plan modifier facts for a temporal window.
 
 **Semantic Context:**  
 A time-bound instance of a modifier, analogous to RatePlanVersion.
@@ -1753,7 +1753,6 @@ exposing individual customer data.
 | `urpx:occupancyCount` | Datatype | 0..1 | `xsd:integer` | Number of occupants at premises |
 | `urpx:specialNeedsStatus` | Datatype | 0..* | — | Special needs classification |
 | `urpx:taxExemptStatus` | Datatype | 0..* | — | Tax exemption status |
-| `urpx:usageThreshold` | Datatype | 0..* | `xsd:decimal` | Annual usage threshold in kWh |
 
 ---
 
@@ -1773,7 +1772,6 @@ installations, and connection type.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
-| `urpx:averageMonthlyUsage` | Datatype | 0..1 | `xsd:decimal` | Average monthly usage in kWh |
 | `urpx:billedDemand` | Datatype | 0..1 | `xsd:decimal` | Utility-estimated demand for billing in kW |
 | `urpx:buildingSquareFootage` | Datatype | 0..1 | `xsd:decimal` | Building size in square feet |
 | `urpx:connectionKind` | Datatype | 0..1 | — | Type of connection at service point |
@@ -1795,7 +1793,6 @@ installations, and connection type.
 | `urpx:ratedPowerCapacity` | Datatype | 0..1 | `xsd:decimal` | Rated power capacity in kW |
 | `urpx:seasonalPattern` | Datatype | 0..1 | — | Seasonal usage pattern classification |
 | `urpx:serviceClassPattern` | Datatype | 0..1 | `xsd:string` | Service class pattern for applicability and eligibility matching |
-| `urpx:usageVariability` | Datatype | 0..1 | `xsd:decimal` | Usage variability coefficient |
 | `urpx:voltageLevel` | Datatype | 0..1 | — | Service voltage level classification for service point profiles |
 
 ---
@@ -1805,7 +1802,7 @@ installations, and connection type.
 **URI:** `https://urpx-org.github.io/urpx/ontology/ProfileAlternative`  
 **Parent:** `owl:Thing`
 
-**Description:** Specific combination of dimension values representing one alternative choice. Defines the dimensions along which price set alternatives differ, enabling mutually exclusive options for user selection. Each dimension set specifies dimension-value pairs that characterize a particular alternative configuration.
+**Description:** One alternative configuration among mutually exclusive options, selected by evaluating its condition expression against customer or service point characteristics.
 
 **Properties:**
 
@@ -2446,7 +2443,7 @@ potentially spanning multiple administrative boundaries.
 | `urpx:minimumBill` | — |
 | `urpx:minimumCharge` | — |
 | `urpx:nonBypassableCharge` | — |
-| `urpx:powerFactor` | — |
+| `urpx:powerFactorCharge` | — |
 | `urpx:publicBenefits` | — |
 | `urpx:reactiveDemand` | — |
 | `urpx:recoverySurcharge` | — |

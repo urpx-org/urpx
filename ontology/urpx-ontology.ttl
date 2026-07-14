@@ -337,8 +337,8 @@ urpx:Profile a owl:Class ;
 
 urpx:ProfileAlternative a owl:Class ;
     rdfs:label "Profile Alternative"@en ;
-    rdfs:comment "Specific combination of dimension values representing one alternative choice. Defines the dimensions along which price set alternatives differ, enabling mutually exclusive options for user selection. Each dimension set specifies dimension-value pairs that characterize a particular alternative configuration." ;
-    skos:note "Dimension definition layer independent of price sets. Used to define alternatives based on customer profile characteristics, geographic locations, or service configurations." .
+    rdfs:comment "One alternative configuration among mutually exclusive options, selected by evaluating its condition expression against customer or service point characteristics." ;
+    skos:note "Alternative definition layer independent of price sets. Each alternative carries a condition expression over customer profile characteristics, geographic locations, or service configurations; price sets, price definitions, schedules, tiers, and brackets reference the alternative that applies." .
 
 urpx:ProfileAlternatives a owl:Class ;
     rdfs:label "Profile Alternatives"@en ;
@@ -384,12 +384,12 @@ urpx:RatePlanModifierIdentifier a owl:Class ;
 
 urpx:RatePlanModifierVersion a owl:Class ;
     rdfs:label "Rate Plan Modifier Version"@en ;
-    rdfs:comment "Derived, materialized snapshot of the resolved rate-plan-modifier facts for a temporal window." ;
+    rdfs:comment "Derived, materialized snapshot of the resolved rate plan modifier facts for a temporal window." ;
     skos:note "A derived consolidation result containing the resolved modifier facts applicable for a temporal window, derived from applicable modifier PricingModels. Every snapshot has a required CoverageClaim. No authored lifecycle dates. Linked to the modifier identity via forRatePlanModifier (no inverse)." .
 
 urpx:RatePlanVersion a owl:Class ;
     rdfs:label "Rate Plan Version"@en ;
-    rdfs:comment "Derived, materialized complete snapshot of the resolved rate-plan facts for a temporal window — the read artifact." ;
+    rdfs:comment "Derived, materialized complete snapshot of the resolved rate plan facts for a temporal window — the read artifact." ;
     skos:note "A derived consolidation result containing the resolved plan facts applicable for a temporal window, derived from applicable PricingModels. Completeness is honest-by-construction: every snapshot has a required CoverageClaim, and self-containment is derived from whether any component is retrievedElsewhere. No authored lifecycle dates. Linked to the plan identity via forRatePlan (no inverse)." .
 
 urpx:RegulatoryAuthority a owl:Class ;
@@ -574,7 +574,7 @@ urpx:ChargeCategoryValue a owl:Class ;
 urpx:ChargeTypeValue a owl:Class ;
     rdfs:label "Charge Type Value"@en ;
     rdfs:comment "Enumeration of specific charge type implementations"@en ;
-    owl:equivalentClass [ owl:oneOf ( urpx:adjustmentPowerCost urpx:adjustmentRenewable urpx:adjustmentTariff urpx:ancillaryServices urpx:capacity urpx:capacityCharge urpx:capitalCredit urpx:complianceCharge urpx:congestionCharge urpx:conservationCharge urpx:contractMisc urpx:creditAdministrative urpx:creditEnergy urpx:creditGeneration urpx:creditInfrastructure urpx:creditMisc urpx:creditPriceProtection urpx:creditRenewable urpx:creditTariffRider urpx:customerCharge urpx:deliveryCharge urpx:demandDirect urpx:demandIndirect urpx:demandSideManagement urpx:depositCredit urpx:depositInterest urpx:depositRequest urpx:distributedGeneration urpx:distributionCharge urpx:donation urpx:efficiencyFunding urpx:energyStorage urpx:environmentalFunding urpx:exportCredit urpx:facilities urpx:fuelCharge urpx:generation urpx:handling urpx:heapDiscount urpx:initiationCharge urpx:lateFee urpx:minimumBill urpx:minimumCharge urpx:nonBypassableCharge urpx:powerFactor urpx:publicBenefits urpx:reactiveDemand urpx:recoverySurcharge urpx:reliabilityCharge urpx:renewableFunding urpx:rentalFee urpx:serviceMetered urpx:serviceNonMetered urpx:standbyCharge urpx:strandedCosts urpx:systemBenefitCharge urpx:tariffRider urpx:taxAdjustment urpx:taxCredit urpx:taxMisc urpx:taxMunicipal urpx:taxSales urpx:taxState urpx:taxUtility urpx:transitionCharge urpx:transmission urpx:usageCharge urpx:volumetricCharge ) ] .
+    owl:equivalentClass [ owl:oneOf ( urpx:adjustmentPowerCost urpx:adjustmentRenewable urpx:adjustmentTariff urpx:ancillaryServices urpx:capacity urpx:capacityCharge urpx:capitalCredit urpx:complianceCharge urpx:congestionCharge urpx:conservationCharge urpx:contractMisc urpx:creditAdministrative urpx:creditEnergy urpx:creditGeneration urpx:creditInfrastructure urpx:creditMisc urpx:creditPriceProtection urpx:creditRenewable urpx:creditTariffRider urpx:customerCharge urpx:deliveryCharge urpx:demandDirect urpx:demandIndirect urpx:demandSideManagement urpx:depositCredit urpx:depositInterest urpx:depositRequest urpx:distributedGeneration urpx:distributionCharge urpx:donation urpx:efficiencyFunding urpx:energyStorage urpx:environmentalFunding urpx:exportCredit urpx:facilities urpx:fuelCharge urpx:generation urpx:handling urpx:heapDiscount urpx:initiationCharge urpx:lateFee urpx:minimumBill urpx:minimumCharge urpx:nonBypassableCharge urpx:powerFactorCharge urpx:publicBenefits urpx:reactiveDemand urpx:recoverySurcharge urpx:reliabilityCharge urpx:renewableFunding urpx:rentalFee urpx:serviceMetered urpx:serviceNonMetered urpx:standbyCharge urpx:strandedCosts urpx:systemBenefitCharge urpx:tariffRider urpx:taxAdjustment urpx:taxCredit urpx:taxMisc urpx:taxMunicipal urpx:taxSales urpx:taxState urpx:taxUtility urpx:transitionCharge urpx:transmission urpx:usageCharge urpx:volumetricCharge ) ] .
 
 urpx:CollectionRoleValue a owl:Class ;
     rdfs:label "Collection Role Value"@en ;
@@ -1067,13 +1067,6 @@ urpx:assistanceEligibilityLevel a owl:ObjectProperty ;
     rdfs:domain urpx:CustomerProfile ;
     rdfs:range urpx:AssistanceEligibilityLevelValue ;
     skos:note "Social program eligibility levels enumeration. with standardized assistance level definitions for consistent social program qualification across utilities." .
-
-urpx:averageMonthlyUsage a owl:DatatypeProperty ;
-    rdfs:label "Average Monthly Usage"@en ;
-    rdfs:comment "Average monthly usage in kWh" ;
-    rdfs:domain urpx:ServicePointProfile ;
-    rdfs:range xsd:decimal ;
-    skos:note "Average monthly usage for service point profile. Used for rate plan eligibility and service tier determination." .
 
 urpx:basedOnPrice a owl:ObjectProperty ;
     rdfs:label "Based On Price"@en ;
@@ -1863,7 +1856,7 @@ urpx:hasDataSourceReference a owl:ObjectProperty ;
     rdfs:label "Has Data Source Reference"@en ;
     rdfs:comment "Links an entity to a structured data source reference." ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:GeneralRule urpx:PriceSet urpx:Price urpx:PriceDefinition urpx:PriceSetAlternative urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:SourcePublication urpx:EligibilityRule ) ] ;
+            owl:unionOf ( urpx:GeneralRule urpx:PriceSet urpx:Price urpx:PriceDefinition urpx:PriceSetAlternative urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:EligibilityRule ) ] ;
     rdfs:range urpx:SourceReference ;
     skos:note "Enables traceability for data points back to their original source files or APIs with structured metadata." .
 
@@ -2668,7 +2661,8 @@ urpx:operandNodes a owl:ObjectProperty ;
 urpx:operatesIn a owl:ObjectProperty ;
     rdfs:label "Operates In"@en ;
     rdfs:comment "Links organization to ISO/RTO markets" ;
-    rdfs:domain urpx:Organization ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:UtilityOperator urpx:EnergyServiceProvider ) ] ;
     rdfs:range urpx:SystemOperator ;
     skos:note "ISO/RTO wholesale markets where organization operates." .
 
@@ -3350,20 +3344,6 @@ urpx:url a owl:DatatypeProperty ;
     rdfs:range xsd:anyURI ;
     skos:note "Direct link to PDF, HTML, or other document format." .
 
-urpx:usageThreshold a owl:DatatypeProperty ;
-    rdfs:label "Usage Threshold"@en ;
-    rdfs:comment "Annual usage threshold in kWh" ;
-    rdfs:domain urpx:CustomerProfile ;
-    rdfs:range xsd:decimal ;
-    skos:note "Used for usage-based rate plan eligibility." .
-
-urpx:usageVariability a owl:DatatypeProperty ;
-    rdfs:label "Usage Variability"@en ;
-    rdfs:comment "Usage variability coefficient" ;
-    rdfs:domain urpx:ServicePointProfile ;
-    rdfs:range xsd:decimal ;
-    skos:note "Statistical measure of usage pattern consistency for service point profile." .
-
 urpx:utilityId a owl:DatatypeProperty ;
     rdfs:label "Utility ID"@en ;
     rdfs:comment "Utility identifier as defined by the implementing jurisdiction" ;
@@ -3418,92 +3398,92 @@ urpx:yearlyRecurrence a owl:DatatypeProperty ;
 
 urpx:bulk rdf:type urpx:AccumulationValue ;
     rdfs:label "Bulk"@en ;
-    skos:definition "Bulk accumulation - cumulative total quantity" ;
-    skos:prefLabel "Bulk" .
+    skos:definition "Bulk accumulation - cumulative total quantity"@en ;
+    skos:prefLabel "Bulk"@en .
 
 urpx:delta rdf:type urpx:AccumulationValue ;
     rdfs:label "Delta"@en ;
-    skos:definition "Delta accumulation - difference since last reading" ;
-    skos:prefLabel "Delta" .
+    skos:definition "Delta accumulation - difference since last reading"@en ;
+    skos:prefLabel "Delta"@en .
 
 urpx:instantaneous rdf:type urpx:AccumulationValue ;
     rdfs:label "Instantaneous"@en ;
-    skos:definition "Instantaneous value - snapshot at specific moment" ;
-    skos:prefLabel "Instantaneous" .
+    skos:definition "Instantaneous value - snapshot at specific moment"@en ;
+    skos:prefLabel "Instantaneous"@en .
 
 urpx:summation rdf:type urpx:AccumulationValue ;
     rdfs:label "Summation"@en ;
-    skos:definition "Summation accumulation - sum over period" ;
-    skos:prefLabel "Summation" .
+    skos:definition "Summation accumulation - sum over period"@en ;
+    skos:prefLabel "Summation"@en .
 
 # --- Aggregation Method Property (AggregationMethodValue) ---
 
 urpx:average rdf:type urpx:AggregationMethodValue ;
     rdfs:label "Average"@en ;
-    skos:definition "Average (mean) value over measurement interval" ;
-    skos:prefLabel "Average" .
+    skos:definition "Average (mean) value over measurement interval"@en ;
+    skos:prefLabel "Average"@en .
 
 urpx:maximum rdf:type urpx:AggregationMethodValue ;
     rdfs:label "Maximum"@en ;
-    skos:definition "Maximum (peak) value over measurement interval" ;
-    skos:prefLabel "Maximum" .
+    skos:definition "Maximum (peak) value over measurement interval"@en ;
+    skos:prefLabel "Maximum"@en .
 
 urpx:median rdf:type urpx:AggregationMethodValue ;
     rdfs:label "Median"@en ;
-    skos:definition "Median (middle) value over measurement interval" ;
-    skos:prefLabel "Median" .
+    skos:definition "Median (middle) value over measurement interval"@en ;
+    skos:prefLabel "Median"@en .
 
 urpx:minimum rdf:type urpx:AggregationMethodValue ;
     rdfs:label "Minimum"@en ;
-    skos:definition "Minimum (lowest) value over measurement interval" ;
-    skos:prefLabel "Minimum" .
+    skos:definition "Minimum (lowest) value over measurement interval"@en ;
+    skos:prefLabel "Minimum"@en .
 
 urpx:sum rdf:type urpx:AggregationMethodValue ;
     rdfs:label "Sum"@en ;
-    skos:definition "Sum (total) value over measurement interval" ;
-    skos:prefLabel "Sum" .
+    skos:definition "Sum (total) value over measurement interval"@en ;
+    skos:prefLabel "Sum"@en .
 
 # --- Annual Income Range Property (AnnualIncomeRangeValue) ---
 
 urpx:highIncome rdf:type urpx:AnnualIncomeRangeValue ;
     rdfs:label "High Income"@en ;
-    skos:definition "High income range - typically above 200% of area median income" ;
-    skos:prefLabel "High Income" .
+    skos:definition "High income range - typically above 200% of area median income"@en ;
+    skos:prefLabel "High Income"@en .
 urpx:lowIncome rdf:type urpx:AnnualIncomeRangeValue ;
     rdfs:label "Low Income"@en ;
-    skos:definition "Low income range - typically 50-80% of area median income" ;
-    skos:prefLabel "Low Income" .
+    skos:definition "Low income range - typically 50-80% of area median income"@en ;
+    skos:prefLabel "Low Income"@en .
 urpx:middleIncome rdf:type urpx:AnnualIncomeRangeValue ;
     rdfs:label "Middle Income"@en ;
-    skos:definition "Middle income range - typically 120-200% of area median income" ;
-    skos:prefLabel "Middle Income" .
+    skos:definition "Middle income range - typically 120-200% of area median income"@en ;
+    skos:prefLabel "Middle Income"@en .
 urpx:moderateIncome rdf:type urpx:AnnualIncomeRangeValue ;
     rdfs:label "Moderate Income"@en ;
-    skos:definition "Moderate income range - typically 80-120% of area median income" ;
-    skos:prefLabel "Moderate Income" .
+    skos:definition "Moderate income range - typically 80-120% of area median income"@en ;
+    skos:prefLabel "Moderate Income"@en .
 urpx:veryLowIncome rdf:type urpx:AnnualIncomeRangeValue ;
     rdfs:label "Very Low Income"@en ;
-    skos:definition "Very low income range - typically below 50% of area median income" ;
-    skos:prefLabel "Very Low Income" .
+    skos:definition "Very low income range - typically below 50% of area median income"@en ;
+    skos:prefLabel "Very Low Income"@en .
 
 # --- Assistance Eligibility Level Property (AssistanceEligibilityLevelValue) ---
 
 urpx:notQualifiedAssistance rdf:type urpx:AssistanceEligibilityLevelValue ;
     rdfs:label "Not Qualified Assistance"@en ;
-    skos:definition "Customer does not qualify for assistance program benefits" ;
-    skos:prefLabel "Not Qualified" .
+    skos:definition "Customer does not qualify for assistance program benefits"@en ;
+    skos:prefLabel "Not Qualified"@en .
 urpx:provisionallyQualifiedAssistance rdf:type urpx:AssistanceEligibilityLevelValue ;
     rdfs:label "Provisionally Qualified Assistance"@en ;
-    skos:definition "Customer provisionally qualifies pending verification" ;
-    skos:prefLabel "Provisionally Qualified" .
+    skos:definition "Customer provisionally qualifies pending verification"@en ;
+    skos:prefLabel "Provisionally Qualified"@en .
 urpx:qualifiedAssistance rdf:type urpx:AssistanceEligibilityLevelValue ;
     rdfs:label "Qualified Assistance"@en ;
-    skos:definition "Customer qualifies for assistance program benefits" ;
-    skos:prefLabel "Qualified" .
+    skos:definition "Customer qualifies for assistance program benefits"@en ;
+    skos:prefLabel "Qualified"@en .
 urpx:underReviewAssistance rdf:type urpx:AssistanceEligibilityLevelValue ;
     rdfs:label "Under Review Assistance"@en ;
-    skos:definition "Customer assistance eligibility application under review" ;
-    skos:prefLabel "Under Review" .
+    skos:definition "Customer assistance eligibility application under review"@en ;
+    skos:prefLabel "Under Review"@en .
 
 # --- Bill Portion Property (BillPortionValue) ---
 
@@ -3526,49 +3506,49 @@ urpx:supplyPortion rdf:type urpx:BillPortionValue ;
 
 urpx:changeReasonOther rdf:type urpx:ChangeReasonValue ;
     rdfs:label "Other Change Reason"@en ;
-    skos:definition "Other change reason not specifically categorized" ;
-    skos:prefLabel "Other" .
+    skos:definition "Other change reason not specifically categorized"@en ;
+    skos:prefLabel "Other"@en .
 
 urpx:correction rdf:type urpx:ChangeReasonValue ;
     rdfs:label "Correction"@en ;
-    skos:definition "Correction of error in previous filing" ;
-    skos:prefLabel "Correction" .
+    skos:definition "Correction of error in previous filing"@en ;
+    skos:prefLabel "Correction"@en .
 
 urpx:fuelAdjustment rdf:type urpx:ChangeReasonValue ;
     rdfs:label "Fuel Adjustment"@en ;
-    skos:definition "Change due to fuel cost adjustment mechanism" ;
-    skos:prefLabel "Fuel Adjustment" .
+    skos:definition "Change due to fuel cost adjustment mechanism"@en ;
+    skos:prefLabel "Fuel Adjustment"@en .
 
 urpx:initial rdf:type urpx:ChangeReasonValue ;
     rdfs:label "Initial"@en ;
-    skos:definition "Initial rate plan filing - first version of a new rate" ;
-    skos:prefLabel "Initial" .
+    skos:definition "Initial rate plan filing - first version of a new rate"@en ;
+    skos:prefLabel "Initial"@en .
 
 urpx:rateCase rdf:type urpx:ChangeReasonValue ;
     rdfs:label "Rate Case"@en ;
-    skos:definition "Change resulting from formal rate case proceeding" ;
-    skos:prefLabel "Rate Case" .
+    skos:definition "Change resulting from formal rate case proceeding"@en ;
+    skos:prefLabel "Rate Case"@en .
 
 urpx:regulatoryOrder rdf:type urpx:ChangeReasonValue ;
     rdfs:label "Regulatory Order"@en ;
-    skos:definition "Change mandated by regulatory authority order or directive" ;
-    skos:prefLabel "Regulatory Order" .
+    skos:definition "Change mandated by regulatory authority order or directive"@en ;
+    skos:prefLabel "Regulatory Order"@en .
 
 urpx:riderUpdate rdf:type urpx:ChangeReasonValue ;
     rdfs:label "Rider Update"@en ;
-    skos:definition "Change to rate rider or surcharge component" ;
-    skos:prefLabel "Rider Update" .
+    skos:definition "Change to rate rider or surcharge component"@en ;
+    skos:prefLabel "Rider Update"@en .
 
 urpx:seasonalChange rdf:type urpx:ChangeReasonValue ;
     rdfs:label "Seasonal Change"@en ;
-    skos:definition "Scheduled seasonal rate adjustment" ;
-    skos:prefLabel "Seasonal Change" .
+    skos:definition "Scheduled seasonal price adjustment"@en ;
+    skos:prefLabel "Seasonal Change"@en .
 
 # --- Charge Category Property (ChargeCategoryValue) ---
 
 urpx:adjustment rdf:type urpx:ChargeCategoryValue ;
     rdfs:label "Adjustment"@en ;
-    skos:definition "Rate adjustments, true-ups, and reconciliation charges"@en ;
+    skos:definition "Price adjustments, true-ups, and reconciliation charges"@en ;
     skos:example "Power cost adjustment, tariff rider, recovery surcharge"@en .
 
 urpx:auxiliaryCharge rdf:type urpx:ChargeCategoryValue ;
@@ -3622,7 +3602,7 @@ urpx:adjustmentRenewable rdf:type urpx:ChargeTypeValue ;
 
 urpx:adjustmentTariff rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Adjustment Tariff"@en ;
-    skos:definition "General tariff rate adjustment"@en ;
+    skos:definition "General tariff price adjustment"@en ;
     urpx:chargeCategory urpx:adjustment ;
     urpx:billPortion urpx:bundledPortion .
 
@@ -3879,8 +3859,8 @@ urpx:nonBypassableCharge rdf:type urpx:ChargeTypeValue ;
     urpx:chargeCategory urpx:regulatory ;
     urpx:billPortion urpx:bundledPortion .
 
-urpx:powerFactor rdf:type urpx:ChargeTypeValue ;
-    rdfs:label "Power Factor"@en ;
+urpx:powerFactorCharge rdf:type urpx:ChargeTypeValue ;
+    rdfs:label "Power Factor Charge"@en ;
     skos:definition "Power factor correction charge or penalty"@en ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
     urpx:billPortion urpx:deliveryPortion .
@@ -3894,7 +3874,7 @@ urpx:publicBenefits rdf:type urpx:ChargeTypeValue ;
 urpx:reactiveDemand rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Reactive Demand"@en ;
     skos:definition "Charge based on peak reactive power demand (kVAr); the reactive analogue of demandDirect"@en ;
-    skos:note "Pair with measurementKind urpx:reactivePower and a reactive unit (kVAr). Distinct from urpx:powerFactor, which is the power-factor penalty or ratio."@en ;
+    skos:note "Pair with measurementKind urpx:reactivePower and a reactive unit (kVAr). Distinct from urpx:powerFactorCharge, the power-factor penalty charge."@en ;
     urpx:chargeCategory urpx:infrastructure ;
     urpx:billPortion urpx:deliveryPortion .
 
@@ -4032,1381 +4012,1381 @@ urpx:volumetricCharge rdf:type urpx:ChargeTypeValue ;
 
 urpx:biomass rdf:type urpx:CommodityValue ;
     rdfs:label "Biomass"@en ;
-    skos:definition "Biomass renewable energy source" ;
-    skos:prefLabel "Biomass" .
+    skos:definition "Biomass renewable energy source"@en ;
+    skos:prefLabel "Biomass"@en .
 
 urpx:cableTv rdf:type urpx:CommodityValue ;
     rdfs:label "Cable TV"@en ;
-    skos:definition "Cable television service" ;
-    skos:prefLabel "Cable TV" .
+    skos:definition "Cable television service"@en ;
+    skos:prefLabel "Cable TV"@en .
 
 urpx:chilledWater rdf:type urpx:CommodityValue ;
     rdfs:label "Chilled Water"@en ;
-    skos:definition "Chilled water cooling service" ;
-    skos:prefLabel "Chilled Water" .
+    skos:definition "Chilled water cooling service"@en ;
+    skos:prefLabel "Chilled Water"@en .
 
 urpx:coal rdf:type urpx:CommodityValue ;
     rdfs:label "Coal"@en ;
-    skos:definition "Coal fuel commodity" ;
-    skos:prefLabel "Coal" .
+    skos:definition "Coal fuel commodity"@en ;
+    skos:prefLabel "Coal"@en .
 
 urpx:commodityOther rdf:type urpx:CommodityValue ;
     rdfs:label "Other Commodity"@en ;
-    skos:definition "Other commodity not specifically categorized" ;
-    skos:prefLabel "Other" .
+    skos:definition "Other commodity not specifically categorized"@en ;
+    skos:prefLabel "Other"@en .
 
 urpx:compressedAir rdf:type urpx:CommodityValue ;
     rdfs:label "Compressed Air"@en ;
-    skos:definition "Compressed air utility service" ;
-    skos:prefLabel "Compressed Air" .
+    skos:definition "Compressed air utility service"@en ;
+    skos:prefLabel "Compressed Air"@en .
 
 urpx:diesel rdf:type urpx:CommodityValue ;
     rdfs:label "Diesel"@en ;
-    skos:definition "Diesel fuel commodity" ;
-    skos:prefLabel "Diesel" .
+    skos:definition "Diesel fuel commodity"@en ;
+    skos:prefLabel "Diesel"@en .
 
 urpx:districtCooling rdf:type urpx:CommodityValue ;
     rdfs:label "District Cooling"@en ;
-    skos:definition "District cooling utility service" ;
-    skos:prefLabel "District Cooling" .
+    skos:definition "District cooling utility service"@en ;
+    skos:prefLabel "District Cooling"@en .
 
 urpx:districtHeating rdf:type urpx:CommodityValue ;
     rdfs:label "District Heating"@en ;
-    skos:definition "District heating utility service" ;
-    skos:prefLabel "District Heating" .
+    skos:definition "District heating utility service"@en ;
+    skos:prefLabel "District Heating"@en .
 
 urpx:electricity rdf:type urpx:CommodityValue ;
     rdfs:label "Electricity"@en ;
-    skos:definition "Electric energy commodity" ;
-    skos:prefLabel "Electricity" .
+    skos:definition "Electric energy commodity"@en ;
+    skos:prefLabel "Electricity"@en .
 
 urpx:fuelOil rdf:type urpx:CommodityValue ;
     rdfs:label "Fuel Oil"@en ;
-    skos:definition "Fuel oil heating commodity" ;
-    skos:prefLabel "Fuel Oil" .
+    skos:definition "Fuel oil heating commodity"@en ;
+    skos:prefLabel "Fuel Oil"@en .
 
 urpx:gasoline rdf:type urpx:CommodityValue ;
     rdfs:label "Gasoline"@en ;
-    skos:definition "Gasoline fuel commodity" ;
-    skos:prefLabel "Gasoline" .
+    skos:definition "Gasoline fuel commodity"@en ;
+    skos:prefLabel "Gasoline"@en .
 
 urpx:geothermal rdf:type urpx:CommodityValue ;
     rdfs:label "Geothermal"@en ;
-    skos:definition "Geothermal energy source" ;
-    skos:prefLabel "Geothermal" .
+    skos:definition "Geothermal energy source"@en ;
+    skos:prefLabel "Geothermal"@en .
 
 urpx:hotWater rdf:type urpx:CommodityValue ;
     rdfs:label "Hot Water"@en ;
-    skos:definition "Hot water heating service" ;
-    skos:prefLabel "Hot Water" .
+    skos:definition "Hot water heating service"@en ;
+    skos:prefLabel "Hot Water"@en .
 
 urpx:hydroelectric rdf:type urpx:CommodityValue ;
     rdfs:label "Hydroelectric"@en ;
-    skos:definition "Hydroelectric energy generation" ;
-    skos:prefLabel "Hydroelectric" .
+    skos:definition "Hydroelectric energy generation"@en ;
+    skos:prefLabel "Hydroelectric"@en .
 
 urpx:internet rdf:type urpx:CommodityValue ;
     rdfs:label "Internet"@en ;
-    skos:definition "Internet connectivity service" ;
-    skos:prefLabel "Internet" .
+    skos:definition "Internet connectivity service"@en ;
+    skos:prefLabel "Internet"@en .
 
 urpx:irrigation rdf:type urpx:CommodityValue ;
     rdfs:label "Irrigation"@en ;
-    skos:definition "Irrigation water service" ;
-    skos:prefLabel "Irrigation" .
+    skos:definition "Irrigation water service"@en ;
+    skos:prefLabel "Irrigation"@en .
 
 urpx:naturalGas rdf:type urpx:CommodityValue ;
     rdfs:label "Natural Gas"@en ;
-    skos:definition "Natural gas commodity" ;
-    skos:prefLabel "Natural Gas" .
+    skos:definition "Natural gas commodity"@en ;
+    skos:prefLabel "Natural Gas"@en .
 
 urpx:nonPotableWater rdf:type urpx:CommodityValue ;
     rdfs:label "Non-Potable Water"@en ;
-    skos:definition "Non-drinking water service" ;
-    skos:prefLabel "Non-Potable Water" .
+    skos:definition "Non-drinking water service"@en ;
+    skos:prefLabel "Non-Potable Water"@en .
 
 urpx:nuclear rdf:type urpx:CommodityValue ;
     rdfs:label "Nuclear"@en ;
-    skos:definition "Nuclear energy generation" ;
-    skos:prefLabel "Nuclear" .
+    skos:definition "Nuclear energy generation"@en ;
+    skos:prefLabel "Nuclear"@en .
 
 urpx:potableWater rdf:type urpx:CommodityValue ;
     rdfs:label "Potable Water"@en ;
-    skos:definition "Drinking water service" ;
-    skos:prefLabel "Potable Water" .
+    skos:definition "Drinking water service"@en ;
+    skos:prefLabel "Potable Water"@en .
 
 urpx:propane rdf:type urpx:CommodityValue ;
     rdfs:label "Propane"@en ;
-    skos:definition "Propane gas fuel" ;
-    skos:prefLabel "Propane" .
+    skos:definition "Propane gas fuel"@en ;
+    skos:prefLabel "Propane"@en .
 
 urpx:recycling rdf:type urpx:CommodityValue ;
     rdfs:label "Recycling"@en ;
-    skos:definition "Recycling utility service" ;
-    skos:prefLabel "Recycling" .
+    skos:definition "Recycling utility service"@en ;
+    skos:prefLabel "Recycling"@en .
 
 urpx:security rdf:type urpx:CommodityValue ;
     rdfs:label "Security"@en ;
-    skos:definition "Security monitoring service" ;
-    skos:prefLabel "Security" .
+    skos:definition "Security monitoring service"@en ;
+    skos:prefLabel "Security"@en .
 
 urpx:sewage rdf:type urpx:CommodityValue ;
     rdfs:label "Sewage"@en ;
-    skos:definition "Sewage treatment service" ;
-    skos:prefLabel "Sewage" .
+    skos:definition "Sewage treatment service"@en ;
+    skos:prefLabel "Sewage"@en .
 
 urpx:solar rdf:type urpx:CommodityValue ;
     rdfs:label "Solar"@en ;
-    skos:definition "Solar energy generation" ;
-    skos:prefLabel "Solar" .
+    skos:definition "Solar energy generation"@en ;
+    skos:prefLabel "Solar"@en .
 
 urpx:steam rdf:type urpx:CommodityValue ;
     rdfs:label "Steam"@en ;
-    skos:definition "Steam heating service" ;
-    skos:prefLabel "Steam" .
+    skos:definition "Steam heating service"@en ;
+    skos:prefLabel "Steam"@en .
 
 urpx:stormwater rdf:type urpx:CommodityValue ;
     rdfs:label "Stormwater"@en ;
-    skos:definition "Stormwater management service" ;
-    skos:prefLabel "Stormwater" .
+    skos:definition "Stormwater management service"@en ;
+    skos:prefLabel "Stormwater"@en .
 
 urpx:telecommunications rdf:type urpx:CommodityValue ;
     rdfs:label "Telecommunications"@en ;
-    skos:definition "Telecommunications service" ;
-    skos:prefLabel "Telecommunications" .
+    skos:definition "Telecommunications service"@en ;
+    skos:prefLabel "Telecommunications"@en .
 
 urpx:wasteHeat rdf:type urpx:CommodityValue ;
     rdfs:label "Waste Heat"@en ;
-    skos:definition "Waste heat recovery energy" ;
-    skos:prefLabel "Waste Heat" .
+    skos:definition "Waste heat recovery energy"@en ;
+    skos:prefLabel "Waste Heat"@en .
 
 urpx:wasteManagement rdf:type urpx:CommodityValue ;
     rdfs:label "Waste Management"@en ;
-    skos:definition "Waste management utility service" ;
-    skos:prefLabel "Waste Management" .
+    skos:definition "Waste management utility service"@en ;
+    skos:prefLabel "Waste Management"@en .
 
 urpx:water rdf:type urpx:CommodityValue ;
     rdfs:label "Water"@en ;
-    skos:definition "Water utility service" ;
-    skos:prefLabel "Water" .
+    skos:definition "Water utility service"@en ;
+    skos:prefLabel "Water"@en .
 
 urpx:wind rdf:type urpx:CommodityValue ;
     rdfs:label "Wind"@en ;
-    skos:definition "Wind energy generation" ;
-    skos:prefLabel "Wind" .
+    skos:definition "Wind energy generation"@en ;
+    skos:prefLabel "Wind"@en .
 
 # --- Connection Kind Property (ConnectionKindValue) ---
 
 urpx:directConnection rdf:type urpx:ConnectionKindValue ;
     rdfs:label "Direct Connection"@en ;
-    skos:definition "Direct service connection without transformation" ;
-    skos:prefLabel "Direct" .
+    skos:definition "Direct service connection without transformation"@en ;
+    skos:prefLabel "Direct"@en .
 
 urpx:overheadConnection rdf:type urpx:ConnectionKindValue ;
     rdfs:label "Overhead Connection"@en ;
-    skos:definition "Overhead power line service connection" ;
-    skos:prefLabel "Overhead" .
+    skos:definition "Overhead power line service connection"@en ;
+    skos:prefLabel "Overhead"@en .
 
 urpx:padMountedConnection rdf:type urpx:ConnectionKindValue ;
     rdfs:label "Pad Mounted Connection"@en ;
-    skos:definition "Pad-mounted transformer service connection" ;
-    skos:prefLabel "Pad Mounted" .
+    skos:definition "Pad-mounted transformer service connection"@en ;
+    skos:prefLabel "Pad Mounted"@en .
 
 urpx:permanentConnection rdf:type urpx:ConnectionKindValue ;
     rdfs:label "Permanent Connection"@en ;
-    skos:definition "Permanent service connection to the electrical grid" ;
-    skos:prefLabel "Permanent" .
+    skos:definition "Permanent service connection to the electrical grid"@en ;
+    skos:prefLabel "Permanent"@en .
 
 urpx:temporaryConnection rdf:type urpx:ConnectionKindValue ;
     rdfs:label "Temporary Connection"@en ;
-    skos:definition "Temporary service connection for construction or events" ;
-    skos:prefLabel "Temporary" .
+    skos:definition "Temporary service connection for construction or events"@en ;
+    skos:prefLabel "Temporary"@en .
 
 urpx:undergroundConnection rdf:type urpx:ConnectionKindValue ;
     rdfs:label "Underground Connection"@en ;
-    skos:definition "Underground cable service connection" ;
-    skos:prefLabel "Underground" .
+    skos:definition "Underground cable service connection"@en ;
+    skos:prefLabel "Underground"@en .
 
 # --- Connector Type Property (ConnectorTypeValue) ---
 
 urpx:ccs rdf:type urpx:ConnectorTypeValue ;
     rdfs:label "CCS"@en ;
-    skos:definition "CCS (Combined Charging System) connector - European/North American DC fast charging standard" ;
-    skos:prefLabel "CCS" .
+    skos:definition "CCS (Combined Charging System) connector - European/North American DC fast charging standard"@en ;
+    skos:prefLabel "CCS"@en .
 
 urpx:chademo rdf:type urpx:ConnectorTypeValue ;
     rdfs:label "CHAdeMO"@en ;
-    skos:definition "CHAdeMO connector - Japanese DC fast charging standard" ;
-    skos:prefLabel "CHAdeMO" .
+    skos:definition "CHAdeMO connector - Japanese DC fast charging standard"@en ;
+    skos:prefLabel "CHAdeMO"@en .
 
 urpx:dcFast rdf:type urpx:ConnectorTypeValue ;
     rdfs:label "DC Fast"@en ;
-    skos:definition "DC Fast charging connector - high-power direct current charging" ;
-    skos:prefLabel "DC Fast" .
+    skos:definition "DC Fast charging connector - high-power direct current charging"@en ;
+    skos:prefLabel "DC Fast"@en .
 
 urpx:level1 rdf:type urpx:ConnectorTypeValue ;
     rdfs:label "Level 1"@en ;
-    skos:definition "Level 1 EV charging connector - standard 120V household outlet" ;
-    skos:prefLabel "Level 1" .
+    skos:definition "Level 1 EV charging connector - standard 120V household outlet"@en ;
+    skos:prefLabel "Level 1"@en .
 
 urpx:level2 rdf:type urpx:ConnectorTypeValue ;
     rdfs:label "Level 2"@en ;
-    skos:definition "Level 2 EV charging connector - 240V dedicated charging station" ;
-    skos:prefLabel "Level 2" .
+    skos:definition "Level 2 EV charging connector - 240V dedicated charging station"@en ;
+    skos:prefLabel "Level 2"@en .
 
 urpx:teslaSupercharger rdf:type urpx:ConnectorTypeValue ;
     rdfs:label "Tesla Supercharger"@en ;
-    skos:definition "Tesla Supercharger connector - proprietary Tesla fast charging" ;
-    skos:prefLabel "Tesla Supercharger" .
+    skos:definition "Tesla Supercharger connector - proprietary Tesla fast charging"@en ;
+    skos:prefLabel "Tesla Supercharger"@en .
 
 # --- Customer Choice Property (CustomerChoiceValue) ---
 
 urpx:voluntaryChoice rdf:type urpx:CustomerChoiceValue ;
     rdfs:label "Voluntary"@en ;
-    skos:definition "Customer may opt in or out of this rate plan version" ;
-    skos:prefLabel "Voluntary" .
+    skos:definition "Customer may opt in or out of this rate plan version"@en ;
+    skos:prefLabel "Voluntary"@en .
 
 urpx:mandatoryChoice rdf:type urpx:CustomerChoiceValue ;
     rdfs:label "Mandatory"@en ;
-    skos:definition "Enrollment in this rate plan version is mandatory for qualifying customers" ;
-    skos:prefLabel "Mandatory" .
+    skos:definition "Enrollment in this rate plan version is mandatory for qualifying customers"@en ;
+    skos:prefLabel "Mandatory"@en .
 
 # --- CustomerKindValue (used by: Applies For Customer Kind, Has Customer Kind) ---
 
 urpx:commercialKind rdf:type urpx:CustomerKindValue ;
     rdfs:label "Commercial"@en ;
-    skos:definition "Commercial customer - business and office service" ;
-    skos:prefLabel "Commercial" .
+    skos:definition "Commercial customer - business and office service"@en ;
+    skos:prefLabel "Commercial"@en .
 urpx:enterpriseKind rdf:type urpx:CustomerKindValue ;
     rdfs:label "Enterprise"@en ;
-    skos:definition "Enterprise customer - large-scale corporate operations including subsidiaries and regional operators" ;
-    skos:prefLabel "Enterprise" .
+    skos:definition "Enterprise customer - large-scale corporate operations including subsidiaries and regional operators"@en ;
+    skos:prefLabel "Enterprise"@en .
 urpx:industrialKind rdf:type urpx:CustomerKindValue ;
     rdfs:label "Industrial"@en ;
-    skos:definition "Industrial customer - manufacturing and heavy industry service" ;
-    skos:prefLabel "Industrial" .
+    skos:definition "Industrial customer - manufacturing and heavy industry service"@en ;
+    skos:prefLabel "Industrial"@en .
 urpx:internalUseKind rdf:type urpx:CustomerKindValue ;
     rdfs:label "Internal Use"@en ;
-    skos:definition "Internal use customer - utility's own facilities and operations" ;
-    skos:prefLabel "Internal Use" .
+    skos:definition "Internal use customer - utility's own facilities and operations"@en ;
+    skos:prefLabel "Internal Use"@en .
 urpx:nonResidentialKind rdf:type urpx:CustomerKindValue ;
     rdfs:label "Non Residential"@en ;
-    skos:definition "Non residential customer - does not qualify as other CustomerKind" ;
-    skos:prefLabel "Non Residential" .
+    skos:definition "Non residential customer - does not qualify as other CustomerKind"@en ;
+    skos:prefLabel "Non Residential"@en .
 urpx:residentialKind rdf:type urpx:CustomerKindValue ;
     rdfs:label "Residential"@en ;
-    skos:definition "Residential customer - domestic household service" ;
-    skos:prefLabel "Residential" .
+    skos:definition "Residential customer - domestic household service"@en ;
+    skos:prefLabel "Residential"@en .
 urpx:serviceProviderKind rdf:type urpx:CustomerKindValue ;
     rdfs:label "Service Provider"@en ;
-    skos:definition "Service provider customer - energy suppliers, schedulers, and wholesale market participants" ;
-    skos:prefLabel "Service Provider" .
+    skos:definition "Service provider customer - energy suppliers, schedulers, and wholesale market participants"@en ;
+    skos:prefLabel "Service Provider"@en .
 
 # --- CustomerSubKindValue (used by: Applies For Customer Sub Kind, Has Customer Sub Kind) ---
 
 urpx:commercialPumping rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Commercial Pumping"@en ;
-    skos:definition "Commercial pumping service - water pumping and irrigation operations" ;
-    skos:prefLabel "Commercial Pumping" ;
+    skos:definition "Commercial pumping service - water pumping and irrigation operations"@en ;
+    skos:prefLabel "Commercial Pumping"@en ;
     skos:broader urpx:commercialKind .
 
 urpx:commercialStandard rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Commercial Standard"@en ;
-    skos:definition "Standard commercial service - general business, retail, and office operations" ;
-    skos:prefLabel "Commercial Standard" ;
+    skos:definition "Standard commercial service - general business, retail, and office operations"@en ;
+    skos:prefLabel "Commercial Standard"@en ;
     skos:broader urpx:commercialKind .
 
 urpx:commercialStreetlight rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Commercial Streetlight"@en ;
-    skos:definition "Commercial streetlight service - municipal and private street lighting" ;
-    skos:prefLabel "Commercial Streetlight" ;
+    skos:definition "Commercial streetlight service - municipal and private street lighting"@en ;
+    skos:prefLabel "Commercial Streetlight"@en ;
     skos:broader urpx:commercialKind .
 
 urpx:energyScheduler rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Energy Scheduler"@en ;
-    skos:definition "Energy scheduler service - wholesale market schedulers and aggregators" ;
-    skos:prefLabel "Energy Scheduler" ;
+    skos:definition "Energy scheduler service - wholesale market schedulers and aggregators"@en ;
+    skos:prefLabel "Energy Scheduler"@en ;
     skos:broader urpx:serviceProviderKind .
 
 urpx:energySupplier rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Energy Supplier"@en ;
-    skos:definition "Energy supplier service - retail energy providers and competitive suppliers" ;
-    skos:prefLabel "Energy Supplier" ;
+    skos:definition "Energy supplier service - retail energy providers and competitive suppliers"@en ;
+    skos:prefLabel "Energy Supplier"@en ;
     skos:broader urpx:serviceProviderKind .
 
 urpx:industrialLargeLoad rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Industrial Large Load"@en ;
-    skos:definition "Industrial large load service - high-demand manufacturing and processing facilities" ;
-    skos:prefLabel "Industrial Large Load" ;
+    skos:definition "Industrial large load service - high-demand manufacturing and processing facilities"@en ;
+    skos:prefLabel "Industrial Large Load"@en ;
     skos:broader urpx:industrialKind .
 
 urpx:industrialStandard rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Industrial Standard"@en ;
-    skos:definition "Standard industrial service - manufacturing and production facilities" ;
-    skos:prefLabel "Industrial Standard" ;
+    skos:definition "Standard industrial service - manufacturing and production facilities"@en ;
+    skos:prefLabel "Industrial Standard"@en ;
     skos:broader urpx:industrialKind .
 
 urpx:regionalOperator rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Regional Operator"@en ;
-    skos:definition "Regional operator service - large-scale regional facility operations" ;
-    skos:prefLabel "Regional Operator" ;
+    skos:definition "Regional operator service - large-scale regional facility operations"@en ;
+    skos:prefLabel "Regional Operator"@en ;
     skos:broader urpx:enterpriseKind .
 
 urpx:religiousInstitution rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Religious Institution"@en ;
-    skos:definition "Service for religious institutions" ;
-    skos:prefLabel "Religious Institutions" ;
+    skos:definition "Service for religious institutions"@en ;
+    skos:prefLabel "Religious Institutions"@en ;
     skos:broader urpx:nonResidentialKind .
 
 urpx:residentialFarm rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Residential Farm"@en ;
-    skos:definition "Residential farm service - agricultural operations with residential characteristics" ;
-    skos:prefLabel "Residential Farm" ;
+    skos:definition "Residential farm service - agricultural operations with residential characteristics"@en ;
+    skos:prefLabel "Residential Farm"@en ;
     skos:broader urpx:residentialKind .
 
 urpx:residentialMultiUnit rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Residential Multi-Unit"@en ;
-    skos:definition "Residential multi-unit service - apartments, condominiums, and multi-family dwellings" ;
-    skos:prefLabel "Residential Multi-Unit" ;
+    skos:definition "Residential multi-unit service - apartments, condominiums, and multi-family dwellings"@en ;
+    skos:prefLabel "Residential Multi-Unit"@en ;
     skos:broader urpx:residentialKind .
 
 urpx:residentialStandard rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Residential Standard"@en ;
-    skos:definition "Standard residential service - single-family homes and standard household service" ;
-    skos:prefLabel "Residential Standard" ;
+    skos:definition "Standard residential service - single-family homes and standard household service"@en ;
+    skos:prefLabel "Residential Standard"@en ;
     skos:broader urpx:residentialKind .
 
 urpx:subsidiary rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Subsidiary"@en ;
-    skos:definition "Subsidiary service - corporate subsidiary operations" ;
-    skos:prefLabel "Subsidiary" ;
+    skos:definition "Subsidiary service - corporate subsidiary operations"@en ;
+    skos:prefLabel "Subsidiary"@en ;
     skos:broader urpx:enterpriseKind .
 
 urpx:windMachine rdf:type urpx:CustomerSubKindValue ;
     rdfs:label "Wind Machine"@en ;
-    skos:definition "Wind machine service - renewable energy generation facilities" ;
-    skos:prefLabel "Wind Machine" ;
+    skos:definition "Wind machine service - renewable energy generation facilities"@en ;
+    skos:prefLabel "Wind Machine"@en ;
     skos:broader urpx:serviceProviderKind .
 
 # --- Data Source Type Property (DataSourceTypeValue) ---
 
 urpx:apiSource rdf:type urpx:DataSourceTypeValue ;
     rdfs:label "API Source"@en ;
-    skos:definition "Data sourced from a web API or REST/GraphQL endpoint" ;
-    skos:prefLabel "API" .
+    skos:definition "Data sourced from a web API or REST/GraphQL endpoint"@en ;
+    skos:prefLabel "API"@en .
 
 urpx:databaseSource rdf:type urpx:DataSourceTypeValue ;
     rdfs:label "Database Source"@en ;
-    skos:definition "Data sourced directly from a relational or non-relational database" ;
-    skos:prefLabel "Database" .
+    skos:definition "Data sourced directly from a relational or non-relational database"@en ;
+    skos:prefLabel "Database"@en .
 
 urpx:manualSource rdf:type urpx:DataSourceTypeValue ;
     rdfs:label "Manual Source"@en ;
-    skos:definition "Data entered manually by a human operator" ;
-    skos:prefLabel "Manual" .
+    skos:definition "Data entered manually by a human operator"@en ;
+    skos:prefLabel "Manual"@en .
 
 urpx:utilityWebsiteSource rdf:type urpx:DataSourceTypeValue ;
     rdfs:label "Utility Website Source"@en ;
-    skos:definition "Data sourced from a utility's official website or customer portal" ;
-    skos:prefLabel "Utility Website" .
+    skos:definition "Data sourced from a utility's official website or customer portal"@en ;
+    skos:prefLabel "Utility Website"@en .
 
 urpx:regulatoryWebsiteSource rdf:type urpx:DataSourceTypeValue ;
     rdfs:label "Regulatory Website Source"@en ;
-    skos:definition "Data sourced from a regulatory agency's official website or database" ;
-    skos:prefLabel "Regulatory Website" .    
+    skos:definition "Data sourced from a regulatory agency's official website or database"@en ;
+    skos:prefLabel "Regulatory Website"@en .    
 
 # --- Day Type Property (DayTypeValue) ---
 
 urpx:allDays rdf:type urpx:DayTypeValue ;
     rdfs:label "All Days"@en ;
-    skos:definition "All days of the week" ;
-    skos:prefLabel "All" .
+    skos:definition "All days of the week"@en ;
+    skos:prefLabel "All"@en .
 
 urpx:customDays rdf:type urpx:DayTypeValue ;
     rdfs:label "Custom Days"@en ;
-    skos:definition "Custom day selection pattern" ;
-    skos:prefLabel "Custom" .
+    skos:definition "Custom day selection pattern"@en ;
+    skos:prefLabel "Custom"@en .
 
 urpx:weekdayDays rdf:type urpx:DayTypeValue ;
     rdfs:label "Weekday Days"@en ;
-    skos:definition "Monday through Friday (ISO 8601 weekdays)" ;
-    skos:prefLabel "Weekday" .
+    skos:definition "Monday through Friday (ISO 8601 weekdays)"@en ;
+    skos:prefLabel "Weekday"@en .
 
 urpx:weekendDays rdf:type urpx:DayTypeValue ;
     rdfs:label "Weekend Days"@en ;
-    skos:definition "Saturday and Sunday (ISO 8601 weekend)" ;
-    skos:prefLabel "Weekend" .
+    skos:definition "Saturday and Sunday (ISO 8601 weekend)"@en ;
+    skos:prefLabel "Weekend"@en .
 
 # --- DER Type Property (DERTypeValue) ---
 
 urpx:evChargingDER rdf:type urpx:DERTypeValue ;
     rdfs:label "EV Charging DER"@en ;
-    skos:definition "Electric vehicle charging station" ;
-    skos:prefLabel "EV Charging" .
+    skos:definition "Electric vehicle charging station"@en ;
+    skos:prefLabel "EV Charging"@en .
 
 urpx:generatorDER rdf:type urpx:DERTypeValue ;
     rdfs:label "Generator DER"@en ;
-    skos:definition "Backup generator or combined heat and power system" ;
-    skos:prefLabel "Generator" .
+    skos:definition "Backup generator or combined heat and power system"@en ;
+    skos:prefLabel "Generator"@en .
 
 urpx:geothermalDER rdf:type urpx:DERTypeValue ;
     rdfs:label "Geothermal DER"@en ;
-    skos:definition "Geothermal heat pump or generation system" ;
-    skos:prefLabel "Geothermal" .
+    skos:definition "Geothermal heat pump or generation system"@en ;
+    skos:prefLabel "Geothermal"@en .
 
 urpx:hydroDER rdf:type urpx:DERTypeValue ;
     rdfs:label "Hydro DER"@en ;
-    skos:definition "Hydroelectric power generation system" ;
-    skos:prefLabel "Water Generation" .
+    skos:definition "Hydroelectric power generation system"@en ;
+    skos:prefLabel "Water Generation"@en .
 
 urpx:nuclearDER rdf:type urpx:DERTypeValue ;
     rdfs:label "Nuclear DER"@en ;
-    skos:definition "Nuclear power generation system" ;
-    skos:prefLabel "Nuclear Generation" .
+    skos:definition "Nuclear power generation system"@en ;
+    skos:prefLabel "Nuclear Generation"@en .
 
 urpx:solarDER rdf:type urpx:DERTypeValue ;
     rdfs:label "Solar DER"@en ;
-    skos:definition "Solar photovoltaic generation system" ;
-    skos:prefLabel "Solar" .
+    skos:definition "Solar photovoltaic generation system"@en ;
+    skos:prefLabel "Solar"@en .
 
 urpx:storageDER rdf:type urpx:DERTypeValue ;
     rdfs:label "Storage DER"@en ;
-    skos:definition "Battery energy storage system" ;
-    skos:prefLabel "Storage" .
+    skos:definition "Battery energy storage system"@en ;
+    skos:prefLabel "Storage"@en .
 
 urpx:wasteDigestionDER rdf:type urpx:DERTypeValue ;
     rdfs:label "Waste Digestion DER"@en ;
-    skos:definition "Waste digestion or biogas generation system" ;
-    skos:prefLabel "Waste Digestion" .
+    skos:definition "Waste digestion or biogas generation system"@en ;
+    skos:prefLabel "Waste Digestion"@en .
 
 urpx:windDER rdf:type urpx:DERTypeValue ;
     rdfs:label "Wind DER"@en ;
-    skos:definition "Small-scale wind turbine generation" ;
-    skos:prefLabel "Wind" .
+    skos:definition "Small-scale wind turbine generation"@en ;
+    skos:prefLabel "Wind"@en .
 
 # --- Dynamic Pricing Type Property (DynamicPricingTypeValue) ---
 
 urpx:criticalPeakPricing rdf:type urpx:DynamicPricingTypeValue ;
     rdfs:label "Critical Peak Pricing"@en ;
-    skos:definition "Special pricing during critical peak demand periods" ;
-    skos:prefLabel "Critical Peak" .
+    skos:definition "Special pricing during critical peak demand periods"@en ;
+    skos:prefLabel "Critical Peak"@en .
 
 urpx:demandResponsePricing rdf:type urpx:DynamicPricingTypeValue ;
     rdfs:label "Demand Response Pricing"@en ;
-    skos:definition "Pricing for demand response programs and events" ;
-    skos:prefLabel "Demand Response" .
+    skos:definition "Pricing for demand response programs and events"@en ;
+    skos:prefLabel "Demand Response"@en .
 
 urpx:eventDrivenPricing rdf:type urpx:DynamicPricingTypeValue ;
     rdfs:label "Event-Driven Pricing"@en ;
-    skos:definition "Pricing triggered by specific events or conditions" ;
-    skos:prefLabel "Event-Driven" .
+    skos:definition "Pricing triggered by specific events or conditions"@en ;
+    skos:prefLabel "Event-Driven"@en .
 
 urpx:indexBasedPricing rdf:type urpx:DynamicPricingTypeValue ;
     rdfs:label "Index-Based Pricing"@en ;
-    skos:definition "Pricing based on external market indices" ;
-    skos:prefLabel "Index-Based" .
+    skos:definition "Pricing based on external market indices"@en ;
+    skos:prefLabel "Index-Based"@en .
 
 urpx:realTimePricing rdf:type urpx:DynamicPricingTypeValue ;
     rdfs:label "Real-Time Pricing"@en ;
-    skos:definition "Real-time pricing based on current market conditions" ;
-    skos:prefLabel "Real-Time" .
+    skos:definition "Real-time pricing based on current market conditions"@en ;
+    skos:prefLabel "Real-Time"@en .
 
 urpx:timeVaryingPricing rdf:type urpx:DynamicPricingTypeValue ;
     rdfs:label "Time-Varying Pricing"@en ;
-    skos:definition "Pricing that varies over time based on predetermined schedules" ;
-    skos:prefLabel "Time-Varying" .
+    skos:definition "Pricing that varies over time based on predetermined schedules"@en ;
+    skos:prefLabel "Time-Varying"@en .
 
 # --- End Use Property (EndUseValue) ---
 
 urpx:heatingEndUse rdf:type urpx:EndUseValue ;
     rdfs:label "Heating End Use"@en ;
     skos:notation "HEAT" ;
-    skos:definition "Electric heating service - space heating, water heating, and other thermal applications" ;
-    skos:prefLabel "Heating" .
+    skos:definition "Electric heating service - space heating, water heating, and other thermal applications"@en ;
+    skos:prefLabel "Heating"@en .
 
 urpx:nonheatingEndUse rdf:type urpx:EndUseValue ;
     rdfs:label "Non-Heating End Use"@en ;
     skos:notation "NONHEAT" ;
-    skos:definition "General electric service excluding heating - lighting, appliances, motors, and other non-thermal applications" ;
-    skos:prefLabel "Non-Heating" .
+    skos:definition "General electric service excluding heating - lighting, appliances, motors, and other non-thermal applications"@en ;
+    skos:prefLabel "Non-Heating"@en .
 
 urpx:dataCenterEndUse rdf:type urpx:EndUseValue ;
     rdfs:label "Data Center End Use"@en ;
     skos:notation "DATACENTER" ;
-    skos:definition "Data center electric service - high-density computing and server operations" ;
-    skos:prefLabel "Data Center" .
+    skos:definition "Data center electric service - high-density computing and server operations"@en ;
+    skos:prefLabel "Data Center"@en .
 
 urpx:spaceHeatingEndUse rdf:type urpx:EndUseValue ;
     rdfs:label "Space Heating End Use"@en ;
     skos:notation "SPACEHEAT" ;
-    skos:definition "Space heating electric service - building interior heating" ;
-    skos:prefLabel "Space Heating" .
+    skos:definition "Space heating electric service - building interior heating"@en ;
+    skos:prefLabel "Space Heating"@en .
 
 urpx:spaceCoolingEndUse rdf:type urpx:EndUseValue ;
     rdfs:label "Space Cooling End Use"@en ;
     skos:notation "SPACECOOL" ;
-    skos:definition "Space cooling electric service - air conditioning and building cooling" ;
-    skos:prefLabel "Space Cooling" .
+    skos:definition "Space cooling electric service - air conditioning and building cooling"@en ;
+    skos:prefLabel "Space Cooling"@en .
 
 urpx:waterHeatingEndUse rdf:type urpx:EndUseValue ;
     rdfs:label "Water Heating End Use"@en ;
     skos:notation "WATERHEAT" ;
-    skos:definition "Water heating electric service - domestic hot water" ;
-    skos:prefLabel "Water Heating" .
+    skos:definition "Water heating electric service - domestic hot water"@en ;
+    skos:prefLabel "Water Heating"@en .
 
 urpx:cookingEndUse rdf:type urpx:EndUseValue ;
     rdfs:label "Cooking End Use"@en ;
     skos:notation "COOKING" ;
-    skos:definition "Cooking electric service - ranges, ovens, and cooking appliances" ;
-    skos:prefLabel "Cooking" .
+    skos:definition "Cooking electric service - ranges, ovens, and cooking appliances"@en ;
+    skos:prefLabel "Cooking"@en .
 
 urpx:dryingEndUse rdf:type urpx:EndUseValue ;
     rdfs:label "Drying End Use"@en ;
     skos:notation "DRYING" ;
-    skos:definition "Drying electric service - clothes dryers" ;
-    skos:prefLabel "Drying" .
+    skos:definition "Drying electric service - clothes dryers"@en ;
+    skos:prefLabel "Drying"@en .
 
 urpx:lightingEndUse rdf:type urpx:EndUseValue ;
     rdfs:label "Lighting End Use"@en ;
     skos:notation "LIGHTING" ;
-    skos:definition "Lighting electric service - interior and exterior lighting" ;
-    skos:prefLabel "Lighting" .
+    skos:definition "Lighting electric service - interior and exterior lighting"@en ;
+    skos:prefLabel "Lighting"@en .
 
 urpx:refrigerationEndUse rdf:type urpx:EndUseValue ;
     rdfs:label "Refrigeration End Use"@en ;
     skos:notation "REFRIG" ;
-    skos:definition "Refrigeration electric service - refrigerators, freezers, and cold storage" ;
-    skos:prefLabel "Refrigeration" .
+    skos:definition "Refrigeration electric service - refrigerators, freezers, and cold storage"@en ;
+    skos:prefLabel "Refrigeration"@en .
 
 urpx:agriculturalEndUse rdf:type urpx:EndUseValue ;
     rdfs:label "Agricultural End Use"@en ;
-    skos:definition "Agricultural service for farming operations" ;
-    skos:prefLabel "Agricultural" .
+    skos:definition "Agricultural service for farming operations"@en ;
+    skos:prefLabel "Agricultural"@en .
 
 urpx:streetLightingEndUse rdf:type urpx:EndUseValue ;
     rdfs:label "Street Lighting End Use"@en ;
-    skos:definition "Street lighting service for public lighting" ;
-    skos:prefLabel "Street Lighting" .
+    skos:definition "Street lighting service for public lighting"@en ;
+    skos:prefLabel "Street Lighting"@en .
 
 urpx:municipalEndUse rdf:type urpx:EndUseValue ;
     rdfs:label "Municipal End Use"@en ;
-    skos:definition "Municipal service for government facilities" ;
-    skos:prefLabel "Municipal" .
+    skos:definition "Municipal service for government facilities"@en ;
+    skos:prefLabel "Municipal"@en .
 
 urpx:otherEndUse rdf:type urpx:EndUseValue ;
     rdfs:label "Other End Use"@en ;
-    skos:definition "Other end use not specifically categorized" ;
-    skos:prefLabel "Other" .
+    skos:definition "Other end use not specifically categorized"@en ;
+    skos:prefLabel "Other"@en .
 
 # --- Enrollment Status Property (EnrollmentStatusValue) ---
 
 urpx:activeStatus rdf:type urpx:EnrollmentStatusValue ;
     rdfs:label "Active Status"@en ;
-    skos:definition "Active enrollment status - currently participating in rate plan or program" ;
-    skos:prefLabel "Active" .
+    skos:definition "Active enrollment status - currently participating in rate plan or program"@en ;
+    skos:prefLabel "Active"@en .
 
 urpx:expiredStatus rdf:type urpx:EnrollmentStatusValue ;
     rdfs:label "Expired Status"@en ;
-    skos:definition "Expired enrollment status - enrollment period has ended" ;
-    skos:prefLabel "Expired" .
+    skos:definition "Expired enrollment status - enrollment period has ended"@en ;
+    skos:prefLabel "Expired"@en .
 
 urpx:inactiveStatus rdf:type urpx:EnrollmentStatusValue ;
     rdfs:label "Inactive Status"@en ;
-    skos:definition "Inactive enrollment status - not currently participating" ;
-    skos:prefLabel "Inactive" .
+    skos:definition "Inactive enrollment status - not currently participating"@en ;
+    skos:prefLabel "Inactive"@en .
 
 urpx:pendingStatus rdf:type urpx:EnrollmentStatusValue ;
     rdfs:label "Pending Status"@en ;
-    skos:definition "Pending enrollment status - enrollment request awaiting approval or processing" ;
-    skos:prefLabel "Pending" .
+    skos:definition "Pending enrollment status - enrollment request awaiting approval or processing"@en ;
+    skos:prefLabel "Pending"@en .
 
 urpx:suspendedStatus rdf:type urpx:EnrollmentStatusValue ;
     rdfs:label "Suspended Status"@en ;
-    skos:definition "Suspended enrollment status - temporarily paused participation" ;
-    skos:prefLabel "Suspended" .
+    skos:definition "Suspended enrollment status - temporarily paused participation"@en ;
+    skos:prefLabel "Suspended"@en .
 
 urpx:terminatedStatus rdf:type urpx:EnrollmentStatusValue ;
     rdfs:label "Terminated Status"@en ;
-    skos:definition "Terminated enrollment status - participation ended before normal completion" ;
-    skos:prefLabel "Terminated" .
+    skos:definition "Terminated enrollment status - participation ended before normal completion"@en ;
+    skos:prefLabel "Terminated"@en .
 
 # --- Entity Type Property (EntityTypeValue) ---
 
 urpx:corporationEntity rdf:type urpx:EntityTypeValue ;
     rdfs:label "Corporation Entity"@en ;
-    skos:definition "Corporate legal entity (C-Corp, S-Corp)" ;
-    skos:prefLabel "Corporation" .
+    skos:definition "Corporate legal entity (C-Corp, S-Corp)"@en ;
+    skos:prefLabel "Corporation"@en .
 
 urpx:entityOther rdf:type urpx:EntityTypeValue ;
     rdfs:label "Other Entity Type"@en ;
-    skos:definition "Other legal entity type not specifically categorized" ;
-    skos:prefLabel "Other" .
+    skos:definition "Other legal entity type not specifically categorized"@en ;
+    skos:prefLabel "Other"@en .
 
 urpx:governmentEntity rdf:type urpx:EntityTypeValue ;
     rdfs:label "Government Entity"@en ;
-    skos:definition "Government agency or department legal entity" ;
-    skos:prefLabel "Government" .
+    skos:definition "Government agency or department legal entity"@en ;
+    skos:prefLabel "Government"@en .
 
 urpx:individualEntity rdf:type urpx:EntityTypeValue ;
     rdfs:label "Individual Entity"@en ;
-    skos:definition "Individual person legal entity" ;
-    skos:prefLabel "Individual" .
+    skos:definition "Individual person legal entity"@en ;
+    skos:prefLabel "Individual"@en .
 
 urpx:llcEntity rdf:type urpx:EntityTypeValue ;
     rdfs:label "LLC Entity"@en ;
-    skos:definition "Limited Liability Company legal entity" ;
-    skos:prefLabel "LLC" .
+    skos:definition "Limited Liability Company legal entity"@en ;
+    skos:prefLabel "LLC"@en .
 
 urpx:nonprofitEntity rdf:type urpx:EntityTypeValue ;
     rdfs:label "Nonprofit Entity"@en ;
-    skos:definition "Nonprofit organization legal entity" ;
-    skos:prefLabel "Nonprofit" .
+    skos:definition "Nonprofit organization legal entity"@en ;
+    skos:prefLabel "Nonprofit"@en .
 
 urpx:partnershipEntity rdf:type urpx:EntityTypeValue ;
     rdfs:label "Partnership Entity"@en ;
-    skos:definition "Partnership legal entity (general or limited partnership)" ;
-    skos:prefLabel "Partnership" .
+    skos:definition "Partnership legal entity (general or limited partnership)"@en ;
+    skos:prefLabel "Partnership"@en .
 
 urpx:trustEntity rdf:type urpx:EntityTypeValue ;
     rdfs:label "Trust Entity"@en ;
-    skos:definition "Trust legal entity" ;
-    skos:prefLabel "Trust" .
+    skos:definition "Trust legal entity"@en ;
+    skos:prefLabel "Trust"@en .
 
 # --- Flow Direction Property (FlowDirectionValue) ---
 
 urpx:bidirectional rdf:type urpx:FlowDirectionValue ;
     rdfs:label "Bidirectional"@en ;
-    skos:definition "Bidirectional energy flow - both import and export" ;
-    skos:prefLabel "Bidirectional" .
+    skos:definition "Bidirectional energy flow - both import and export"@en ;
+    skos:prefLabel "Bidirectional"@en .
 
 urpx:forward rdf:type urpx:FlowDirectionValue ;
     rdfs:label "Forward"@en ;
-    skos:definition "Forward energy flow - consumption/import from grid" ;
-    skos:prefLabel "Forward" .
+    skos:definition "Forward energy flow - consumption/import from grid"@en ;
+    skos:prefLabel "Forward"@en .
 
 urpx:net rdf:type urpx:FlowDirectionValue ;
     rdfs:label "Net"@en ;
-    skos:definition "Net energy flow - net of consumption and generation" ;
-    skos:prefLabel "Net" .
+    skos:definition "Net energy flow - net of consumption and generation"@en ;
+    skos:prefLabel "Net"@en .
 
 urpx:reverse rdf:type urpx:FlowDirectionValue ;
     rdfs:label "Reverse"@en ;
-    skos:definition "Reverse energy flow - generation/export to grid" ;
-    skos:prefLabel "Reverse" .
+    skos:definition "Reverse energy flow - generation/export to grid"@en ;
+    skos:prefLabel "Reverse"@en .
 
 # --- Geographic Scope Property (GeographicScopeValue) ---
 
 urpx:countyScope rdf:type urpx:GeographicScopeValue ;
     rdfs:label "County Scope"@en ;
-    skos:definition "County-level geographic scope for applicability rules" ;
-    skos:prefLabel "County" .
+    skos:definition "County-level geographic scope for applicability rules"@en ;
+    skos:prefLabel "County"@en .
 
 urpx:customScope rdf:type urpx:GeographicScopeValue ;
     rdfs:label "Custom Scope"@en ;
-    skos:definition "Custom geographic scope with non-standard boundaries" ;
-    skos:prefLabel "Custom" .
+    skos:definition "Custom geographic scope with non-standard boundaries"@en ;
+    skos:prefLabel "Custom"@en .
 
 urpx:municipalityScope rdf:type urpx:GeographicScopeValue ;
     rdfs:label "Municipality Scope"@en ;
-    skos:definition "Municipality-level geographic scope for local applicability rules" ;
-    skos:prefLabel "Municipality" .
+    skos:definition "Municipality-level geographic scope for local applicability rules"@en ;
+    skos:prefLabel "Municipality"@en .
 
 urpx:serviceTerritoryScope rdf:type urpx:GeographicScopeValue ;
     rdfs:label "Service Territory Scope"@en ;
-    skos:definition "Service territory geographic scope for utility-specific applicability" ;
-    skos:prefLabel "Service Territory" .
+    skos:definition "Service territory geographic scope for utility-specific applicability"@en ;
+    skos:prefLabel "Service Territory"@en .
 
 urpx:statewideScope rdf:type urpx:GeographicScopeValue ;
     rdfs:label "Statewide Scope"@en ;
-    skos:definition "State-level geographic scope for broad applicability rules" ;
-    skos:prefLabel "Statewide" .
+    skos:definition "State-level geographic scope for broad applicability rules"@en ;
+    skos:prefLabel "Statewide"@en .
 
 # --- Geographic Zone Property (GeographicZoneValue) ---
 
 urpx:coastalZone rdf:type urpx:GeographicZoneValue ;
     rdfs:label "Coastal Zone"@en ;
-    skos:definition "Coastal geographic zone - areas near oceans, lakes, or major waterways" ;
-    skos:prefLabel "Coastal" .
+    skos:definition "Coastal geographic zone - areas near oceans, lakes, or major waterways"@en ;
+    skos:prefLabel "Coastal"@en .
 
 urpx:desertZone rdf:type urpx:GeographicZoneValue ;
     rdfs:label "Desert Zone"@en ;
-    skos:definition "Desert geographic zone - arid and semi-arid regions" ;
-    skos:prefLabel "Desert" .
+    skos:definition "Desert geographic zone - arid and semi-arid regions"@en ;
+    skos:prefLabel "Desert"@en .
 
 urpx:geographicZoneOther rdf:type urpx:GeographicZoneValue ;
     rdfs:label "Other Geographic Zone"@en ;
-    skos:definition "Other geographic zone not specifically categorized" ;
-    skos:prefLabel "Other" .
+    skos:definition "Other geographic zone not specifically categorized"@en ;
+    skos:prefLabel "Other"@en .
 
 urpx:industrialZone rdf:type urpx:GeographicZoneValue ;
     rdfs:label "Industrial Zone"@en ;
-    skos:definition "Industrial geographic zone - manufacturing and heavy industry areas" ;
-    skos:prefLabel "Industrial" .
+    skos:definition "Industrial geographic zone - manufacturing and heavy industry areas"@en ;
+    skos:prefLabel "Industrial"@en .
 
 urpx:mountainZone rdf:type urpx:GeographicZoneValue ;
     rdfs:label "Mountain Zone"@en ;
-    skos:definition "Mountain geographic zone - elevated terrain and mountainous regions" ;
-    skos:prefLabel "Mountain" .
+    skos:definition "Mountain geographic zone - elevated terrain and mountainous regions"@en ;
+    skos:prefLabel "Mountain"@en .
 
 urpx:ruralZone rdf:type urpx:GeographicZoneValue ;
     rdfs:label "Rural Zone"@en ;
-    skos:definition "Rural geographic zone - countryside and agricultural areas" ;
-    skos:prefLabel "Rural" .
+    skos:definition "Rural geographic zone - countryside and agricultural areas"@en ;
+    skos:prefLabel "Rural"@en .
 
 urpx:suburbanZone rdf:type urpx:GeographicZoneValue ;
     rdfs:label "Suburban Zone"@en ;
-    skos:definition "Suburban geographic zone - residential areas outside city centers" ;
-    skos:prefLabel "Suburban" .
+    skos:definition "Suburban geographic zone - residential areas outside city centers"@en ;
+    skos:prefLabel "Suburban"@en .
 
 urpx:urbanZone rdf:type urpx:GeographicZoneValue ;
     rdfs:label "Urban Zone"@en ;
-    skos:definition "Urban geographic zone - densely populated city areas" ;
-    skos:prefLabel "Urban" .
+    skos:definition "Urban geographic zone - densely populated city areas"@en ;
+    skos:prefLabel "Urban"@en .
 
 # --- HVAC Kind Property (HVACKindValue) ---
 
 urpx:airConditioner rdf:type urpx:HVACKindValue ;
     rdfs:label "Air Conditioner"@en ;
-    skos:definition "Standard air conditioning system" ;
-    skos:prefLabel "Air Conditioner" .
+    skos:definition "Standard air conditioning system"@en ;
+    skos:prefLabel "Air Conditioner"@en .
 
 urpx:airSourceHeatPump rdf:type urpx:HVACKindValue ;
     rdfs:label "Air Source Heat Pump"@en ;
-    skos:definition "Air source heat pump system for heating and cooling" ;
-    skos:prefLabel "Air Source Heat Pump" .
+    skos:definition "Air source heat pump system for heating and cooling"@en ;
+    skos:prefLabel "Air Source Heat Pump"@en .
 
 urpx:districtHeatingConnection rdf:type urpx:HVACKindValue ;
     rdfs:label "District Heating Connection"@en ;
-    skos:definition "Connection to a district heating network" ;
-    skos:prefLabel "District Heating" .
+    skos:definition "Connection to a district heating network"@en ;
+    skos:prefLabel "District Heating"@en .
 
 urpx:groundSourceHeatPump rdf:type urpx:HVACKindValue ;
     rdfs:label "Ground Source Heat Pump"@en ;
-    skos:definition "Ground source (geothermal) heat pump system" ;
-    skos:prefLabel "Ground Source Heat Pump" .
+    skos:definition "Ground source (geothermal) heat pump system"@en ;
+    skos:prefLabel "Ground Source Heat Pump"@en .
 
 urpx:spaceHeater rdf:type urpx:HVACKindValue ;
     rdfs:label "Space Heater"@en ;
-    skos:definition "Individual space heating unit" ;
-    skos:prefLabel "Space Heater" .
+    skos:definition "Individual space heating unit"@en ;
+    skos:prefLabel "Space Heater"@en .
 
 # --- Identifier Scheme Property (IdentifierSchemeValue) ---
 
 urpx:companyNumberScheme rdf:type urpx:IdentifierSchemeValue ;
     rdfs:label "Company Number Scheme"@en ;
-    skos:definition "Company number identifier scheme - government-issued company registration number" ;
-    skos:prefLabel "Company Number" .
+    skos:definition "Company number identifier scheme - government-issued company registration number"@en ;
+    skos:prefLabel "Company Number"@en .
 
 urpx:dunsScheme rdf:type urpx:IdentifierSchemeValue ;
     rdfs:label "DUNS Scheme"@en ;
-    skos:definition "DUNS identifier scheme - Dun & Bradstreet Universal Numbering System" ;
-    skos:prefLabel "DUNS" .
+    skos:definition "DUNS identifier scheme - Dun & Bradstreet Universal Numbering System"@en ;
+    skos:prefLabel "DUNS"@en .
 
 urpx:eiaScheme rdf:type urpx:IdentifierSchemeValue ;
     rdfs:label "EIA Scheme"@en ;
-    skos:definition "EIA identifier scheme - US Energy Information Administration utility identifier" ;
-    skos:prefLabel "EIA" .
+    skos:definition "EIA identifier scheme - US Energy Information Administration utility identifier"@en ;
+    skos:prefLabel "EIA"@en .
 
 urpx:gleifScheme rdf:type urpx:IdentifierSchemeValue ;
     rdfs:label "GLEIF Scheme"@en ;
-    skos:definition "GLEIF identifier scheme - Global Legal Entity Identifier Foundation system" ;
-    skos:prefLabel "GLEIF" .
+    skos:definition "GLEIF identifier scheme - Global Legal Entity Identifier Foundation system"@en ;
+    skos:prefLabel "GLEIF"@en .
 
 urpx:gridScheme rdf:type urpx:IdentifierSchemeValue ;
     rdfs:label "GRID Scheme"@en ;
-    skos:definition "GRID identifier scheme - Global Research Identifier Database for organizations" ;
-    skos:prefLabel "GRID" .
+    skos:definition "GRID identifier scheme - Global Research Identifier Database for organizations"@en ;
+    skos:prefLabel "GRID"@en .
 
 urpx:isinScheme rdf:type urpx:IdentifierSchemeValue ;
     rdfs:label "ISIN Scheme"@en ;
-    skos:definition "ISIN identifier scheme - International Securities Identification Number" ;
-    skos:prefLabel "ISIN" .
+    skos:definition "ISIN identifier scheme - International Securities Identification Number"@en ;
+    skos:prefLabel "ISIN"@en .
 
 urpx:leiScheme rdf:type urpx:IdentifierSchemeValue ;
     rdfs:label "LEI Scheme"@en ;
-    skos:definition "LEI identifier scheme - Legal Entity Identifier for financial market participants" ;
-    skos:prefLabel "LEI" .
+    skos:definition "LEI identifier scheme - Legal Entity Identifier for financial market participants"@en ;
+    skos:prefLabel "LEI"@en .
 
 urpx:localRegulatorScheme rdf:type urpx:IdentifierSchemeValue ;
     rdfs:label "Local Regulator Scheme"@en ;
-    skos:definition "Local regulator identifier scheme - jurisdiction-specific regulatory identifier" ;
-    skos:prefLabel "Local Regulator" .
+    skos:definition "Local regulator identifier scheme - jurisdiction-specific regulatory identifier"@en ;
+    skos:prefLabel "Local Regulator"@en .
 
 urpx:vatScheme rdf:type urpx:IdentifierSchemeValue ;
     rdfs:label "VAT Scheme"@en ;
-    skos:definition "VAT identifier scheme - Value Added Tax registration number" ;
-    skos:prefLabel "VAT" .
+    skos:definition "VAT identifier scheme - Value Added Tax registration number"@en ;
+    skos:prefLabel "VAT"@en .
 
 # --- Interconnection Status Property (InterconnectionStatusValue) ---
 
 urpx:disconnectedStatus rdf:type urpx:InterconnectionStatusValue ;
     rdfs:label "Disconnected Status"@en ;
-    skos:definition "DER is physically installed but not connected to grid" ;
-    skos:prefLabel "Disconnected" .
+    skos:definition "DER is physically installed but not connected to grid"@en ;
+    skos:prefLabel "Disconnected"@en .
 
 urpx:interconnectedStatus rdf:type urpx:InterconnectionStatusValue ;
     rdfs:label "Interconnected Status"@en ;
-    skos:definition "DER is connected and operational on the grid" ;
-    skos:prefLabel "Interconnected" .
+    skos:definition "DER is connected and operational on the grid"@en ;
+    skos:prefLabel "Interconnected"@en .
 
 urpx:notApplicableInterconnection rdf:type urpx:InterconnectionStatusValue ;
     rdfs:label "Not Applicable Interconnection"@en ;
-    skos:definition "Interconnection status not applicable to this resource type" ;
-    skos:prefLabel "Not Applicable" .
+    skos:definition "Interconnection status not applicable to this resource type"@en ;
+    skos:prefLabel "Not Applicable"@en .
 
 urpx:pendingInterconnection rdf:type urpx:InterconnectionStatusValue ;
     rdfs:label "Pending Interconnection"@en ;
-    skos:definition "DER interconnection application is pending utility approval" ;
-    skos:prefLabel "Pending" .
+    skos:definition "DER interconnection application is pending utility approval"@en ;
+    skos:prefLabel "Pending"@en .
 
 # --- Interval Alignment Property (IntervalAlignmentValue) ---
 
 urpx:calendarAligned rdf:type urpx:IntervalAlignmentValue ;
     rdfs:label "Calendar Aligned"@en ;
-    skos:definition "Interval is aligned to calendar boundaries (e.g., calendar month, calendar year)." ;
-    skos:prefLabel "Calendar Aligned" .
+    skos:definition "Interval is aligned to calendar boundaries (e.g., calendar month, calendar year)."@en ;
+    skos:prefLabel "Calendar Aligned"@en .
 
 urpx:billingPeriodAligned rdf:type urpx:IntervalAlignmentValue ;
     rdfs:label "Billing Period Aligned"@en ;
-    skos:definition "Interval is aligned to the utility's billing cycle period (e.g., Bill Cycle 1, Trip 2)." ;
-    skos:prefLabel "Billing Period Aligned" .
+    skos:definition "Interval is aligned to the utility's billing cycle period (e.g., Bill Cycle 1, Trip 2)."@en ;
+    skos:prefLabel "Billing Period Aligned"@en .
 
 urpx:rollingAligned rdf:type urpx:IntervalAlignmentValue ;
     rdfs:label "Rolling Aligned"@en ;
-    skos:definition "Interval is aligned to the current evaluation date (e.g., past 365 days from today)." ;
-    skos:prefLabel "Rolling Aligned" .
+    skos:definition "Interval is aligned to the current evaluation date (e.g., past 365 days from today)."@en ;
+    skos:prefLabel "Rolling Aligned"@en .
 
 urpx:fixedAligned rdf:type urpx:IntervalAlignmentValue ;
     rdfs:label "Fixed Aligned"@en ;
-    skos:definition "Interval is defined by fixed start/end dates independent of billing cycle or current date." ;
-    skos:prefLabel "Fixed Aligned" .
+    skos:definition "Interval is defined by fixed start/end dates independent of billing cycle or current date."@en ;
+    skos:prefLabel "Fixed Aligned"@en .
 
 # --- Interval Selection Property (IntervalSelectionValue) ---
 
 urpx:rollingWindowSelection rdf:type urpx:IntervalSelectionValue ;
     rdfs:label "Rolling Window Selection"@en ;
-    skos:definition "Selection using a continuous time window of fixed duration that moves forward in time relative to a defined alignment (e.g., rolling 12 months)." ;
-    skos:prefLabel "Rolling Window" .
+    skos:definition "Selection using a continuous time window of fixed duration that moves forward in time relative to a defined alignment (e.g., rolling 12 months)."@en ;
+    skos:prefLabel "Rolling Window"@en .
 
 urpx:consecutivePeriodsSelection rdf:type urpx:IntervalSelectionValue ;
     rdfs:label "Consecutive Periods Selection"@en ;
-    skos:definition "Selection based on a contiguous sequence of discrete periods meeting a criteria (e.g., 3 consecutive months of peak demand > X)." ;
-    skos:prefLabel "Consecutive Periods" .
+    skos:definition "Selection based on a contiguous sequence of discrete periods meeting a criteria (e.g., 3 consecutive months of peak demand > X)."@en ;
+    skos:prefLabel "Consecutive Periods"@en .
 
 urpx:fixedWindowSelection rdf:type urpx:IntervalSelectionValue ;
     rdfs:label "Fixed Window Selection"@en ;
-    skos:definition "Selection based on a fixed time window defined by specific start/end dates (e.g., calendar year 2024)." ;
-    skos:prefLabel "Fixed Window" .
+    skos:definition "Selection based on a fixed time window defined by specific start/end dates (e.g., calendar year 2024)."@en ;
+    skos:prefLabel "Fixed Window"@en .
 
 # --- Interval Type Property (IntervalTypeValue) ---
 
 urpx:annualInterval rdf:type urpx:IntervalTypeValue ;
     rdfs:label "Annual Interval"@en ;
-    skos:definition "Annual time interval (P1Y or P12M equivalent)" ;
-    skos:prefLabel "Annual" .
+    skos:definition "Annual time interval (P1Y or P12M equivalent)"@en ;
+    skos:prefLabel "Annual"@en .
 
 urpx:quarterlyInterval rdf:type urpx:IntervalTypeValue ;
     rdfs:label "Quarterly Interval"@en ;
-    skos:definition "Quarterly time interval (P3M equivalent)" ;
-    skos:prefLabel "Quarterly" .
+    skos:definition "Quarterly time interval (P3M equivalent)"@en ;
+    skos:prefLabel "Quarterly"@en .
 
 urpx:monthlyInterval rdf:type urpx:IntervalTypeValue ;
     rdfs:label "Monthly Interval"@en ;
-    skos:definition "Monthly time interval (P1M equivalent)" ;
-    skos:prefLabel "Monthly" .
+    skos:definition "Monthly time interval (P1M equivalent)"@en ;
+    skos:prefLabel "Monthly"@en .
 
 urpx:weeklyInterval rdf:type urpx:IntervalTypeValue ;
     rdfs:label "Weekly Interval"@en ;
-    skos:definition "Weekly time interval (P7D equivalent)" ;
-    skos:prefLabel "Weekly" .
+    skos:definition "Weekly time interval (P7D equivalent)"@en ;
+    skos:prefLabel "Weekly"@en .
 
 urpx:dailyInterval rdf:type urpx:IntervalTypeValue ;
     rdfs:label "Daily Interval"@en ;
-    skos:definition "Daily time interval (P1D equivalent)" ;
-    skos:prefLabel "Daily" .
+    skos:definition "Daily time interval (P1D equivalent)"@en ;
+    skos:prefLabel "Daily"@en .
 
 urpx:hourlyInterval rdf:type urpx:IntervalTypeValue ;
     rdfs:label "Hourly Interval"@en ;
-    skos:definition "Hourly time interval (PT1H equivalent)" ;
-    skos:prefLabel "Hourly" .
+    skos:definition "Hourly time interval (PT1H equivalent)"@en ;
+    skos:prefLabel "Hourly"@en .
 
 urpx:thirtyMinuteInterval rdf:type urpx:IntervalTypeValue ;
     rdfs:label "Thirty Minute Interval"@en ;
-    skos:definition "Thirty-minute time interval (PT30M equivalent)" ;
-    skos:prefLabel "30-Minute" .
+    skos:definition "Thirty-minute time interval (PT30M equivalent)"@en ;
+    skos:prefLabel "30-Minute"@en .
 
 urpx:fifteenMinuteInterval rdf:type urpx:IntervalTypeValue ;
     rdfs:label "Fifteen Minute Interval"@en ;
-    skos:definition "Fifteen-minute time interval (PT15M equivalent)" ;
-    skos:prefLabel "15-Minute" .
+    skos:definition "Fifteen-minute time interval (PT15M equivalent)"@en ;
+    skos:prefLabel "15-Minute"@en .
 
 urpx:fiveMinuteInterval rdf:type urpx:IntervalTypeValue ;
     rdfs:label "Five Minute Interval"@en ;
-    skos:definition "Five-minute time interval (PT5M equivalent)" ;
-    skos:prefLabel "5-Minute" .
+    skos:definition "Five-minute time interval (PT5M equivalent)"@en ;
+    skos:prefLabel "5-Minute"@en .
 
 urpx:realTimeInterval rdf:type urpx:IntervalTypeValue ;
     rdfs:label "Real Time Interval"@en ;
-    skos:definition "Real-time or continuous interval" ;
-    skos:prefLabel "Real-Time" .
+    skos:definition "Real-time or continuous interval"@en ;
+    skos:prefLabel "Real-Time"@en .
 
 urpx:customInterval rdf:type urpx:IntervalTypeValue ;
     rdfs:label "Custom Interval"@en ;
-    skos:definition "Custom or non-standard time interval, must use intervalDuration property" ;
-    skos:prefLabel "Custom" .
+    skos:definition "Custom or non-standard time interval, must use intervalDuration property"@en ;
+    skos:prefLabel "Custom"@en .
 
 # --- Inverter Type Property (InverterTypeValue) ---
 
 urpx:centralInverter rdf:type urpx:InverterTypeValue ;
     rdfs:label "Central Inverter"@en ;
-    skos:definition "Central inverter - large-scale inverter for commercial installations" ;
-    skos:prefLabel "Central" .
+    skos:definition "Central inverter - large-scale inverter for commercial installations"@en ;
+    skos:prefLabel "Central"@en .
 
 urpx:hybridInverter rdf:type urpx:InverterTypeValue ;
     rdfs:label "Hybrid Inverter"@en ;
-    skos:definition "Hybrid inverter - combined solar and battery storage inverter" ;
-    skos:prefLabel "Hybrid" .
+    skos:definition "Hybrid inverter - combined solar and battery storage inverter"@en ;
+    skos:prefLabel "Hybrid"@en .
 
 urpx:microInverter rdf:type urpx:InverterTypeValue ;
     rdfs:label "Micro Inverter"@en ;
-    skos:definition "Micro inverter - individual inverter for each solar panel" ;
-    skos:prefLabel "Micro" .
+    skos:definition "Micro inverter - individual inverter for each solar panel"@en ;
+    skos:prefLabel "Micro"@en .
 
 urpx:powerOptimizer rdf:type urpx:InverterTypeValue ;
     rdfs:label "Power Optimizer"@en ;
-    skos:definition "Power optimizer - panel-level optimization with centralized inverter" ;
-    skos:prefLabel "Power Optimizer" .
+    skos:definition "Power optimizer - panel-level optimization with centralized inverter"@en ;
+    skos:prefLabel "Power Optimizer"@en .
 
 urpx:stringInverter rdf:type urpx:InverterTypeValue ;
     rdfs:label "String Inverter"@en ;
-    skos:definition "String inverter - centralized inverter for multiple solar panels" ;
-    skos:prefLabel "String" .
+    skos:definition "String inverter - centralized inverter for multiple solar panels"@en ;
+    skos:prefLabel "String"@en .
 
 # --- Ledger Type Property (LedgerTypeValue) ---
 
 urpx:bundledLedger rdf:type urpx:LedgerTypeValue ;
     rdfs:label "Bundled Ledger"@en ;
-    skos:definition "Ledger for bundled supply and delivery charges" ;
-    skos:prefLabel "Bundled" .
+    skos:definition "Ledger for bundled supply and delivery charges"@en ;
+    skos:prefLabel "Bundled"@en .
 
 urpx:deliveryLedger rdf:type urpx:LedgerTypeValue ;
     rdfs:label "Delivery Ledger"@en ;
-    skos:definition "Ledger for transmission and distribution charges" ;
-    skos:prefLabel "Delivery" .
+    skos:definition "Ledger for transmission and distribution charges"@en ;
+    skos:prefLabel "Delivery"@en .
 
 urpx:calculatedLedger rdf:type urpx:LedgerTypeValue ;
     rdfs:label "Calculated Ledger"@en ;
-    skos:definition "Ledger for charges calculated based on charges in other ledgers under this BillingModel" ;
-    skos:prefLabel "Calculated" .
+    skos:definition "Ledger for charges calculated based on charges in other ledgers under this BillingModel"@en ;
+    skos:prefLabel "Calculated"@en .
 
 urpx:distributionLedger rdf:type urpx:LedgerTypeValue ;
     rdfs:label "Distribution Ledger"@en ;
-    skos:definition "Ledger specifically for distribution charges" ;
-    skos:prefLabel "Distribution" .
+    skos:definition "Ledger specifically for distribution charges"@en ;
+    skos:prefLabel "Distribution"@en .
 
 urpx:measuredLedger rdf:type urpx:LedgerTypeValue ;
     rdfs:label "Measured Ledger"@en ;
-    skos:definition "Ledger containing charges dependent on measured usage data" ;
-    skos:prefLabel "Measured" .
+    skos:definition "Ledger containing charges dependent on measured usage data"@en ;
+    skos:prefLabel "Measured"@en .
 
 urpx:profileMetricLedger rdf:type urpx:LedgerTypeValue ;
     rdfs:label "Profile Ledger"@en ;
-    skos:definition "Ledger containing charges dependent on static profile characteristics" ;
-    skos:prefLabel "Profile" .
+    skos:definition "Ledger containing charges dependent on static profile characteristics"@en ;
+    skos:prefLabel "Profile"@en .
 
 urpx:supplyLedger rdf:type urpx:LedgerTypeValue ;
     rdfs:label "Supply Ledger"@en ;
-    skos:definition "Ledger for energy supply and generation charges" ;
-    skos:prefLabel "Supply" .
+    skos:definition "Ledger for energy supply and generation charges"@en ;
+    skos:prefLabel "Supply"@en .
 
 urpx:transmissionLedger rdf:type urpx:LedgerTypeValue ;
     rdfs:label "Transmission Ledger"@en ;
-    skos:definition "Ledger specifically for transmission charges" ;
-    skos:prefLabel "Transmission" .
+    skos:definition "Ledger specifically for transmission charges"@en ;
+    skos:prefLabel "Transmission"@en .
 
 # --- Load Profile Property (LoadProfileValue) ---
 
 urpx:baseload rdf:type urpx:LoadProfileValue ;
     rdfs:label "Baseload"@en ;
-    skos:definition "Baseload profile - consistent usage with minimal variation" ;
-    skos:prefLabel "Baseload" .
+    skos:definition "Baseload profile - consistent usage with minimal variation"@en ;
+    skos:prefLabel "Baseload"@en .
 
 urpx:intermittent rdf:type urpx:LoadProfileValue ;
     rdfs:label "Intermittent"@en ;
-    skos:definition "Intermittent profile - sporadic or occasional usage" ;
-    skos:prefLabel "Intermittent" .
+    skos:definition "Intermittent profile - sporadic or occasional usage"@en ;
+    skos:prefLabel "Intermittent"@en .
 
 urpx:loadProfileOther rdf:type urpx:LoadProfileValue ;
     rdfs:label "Other Load Profile"@en ;
-    skos:definition "Other load profile not specifically categorized" ;
-    skos:prefLabel "Other" .
+    skos:definition "Other load profile not specifically categorized"@en ;
+    skos:prefLabel "Other"@en .
 
 urpx:peaking rdf:type urpx:LoadProfileValue ;
     rdfs:label "Peaking"@en ;
-    skos:definition "Peaking profile - high demand during specific periods" ;
-    skos:prefLabel "Peaking" .
+    skos:definition "Peaking profile - high demand during specific periods"@en ;
+    skos:prefLabel "Peaking"@en .
 
 urpx:seasonal rdf:type urpx:LoadProfileValue ;
     rdfs:label "Seasonal"@en ;
-    skos:definition "Seasonal profile - usage varies by season" ;
-    skos:prefLabel "Seasonal" .
+    skos:definition "Seasonal profile - usage varies by season"@en ;
+    skos:prefLabel "Seasonal"@en .
 
 urpx:variable rdf:type urpx:LoadProfileValue ;
     rdfs:label "Variable"@en ;
-    skos:definition "Variable profile - irregular usage patterns" ;
-    skos:prefLabel "Variable" .
+    skos:definition "Variable profile - irregular usage patterns"@en ;
+    skos:prefLabel "Variable"@en .
 
 # --- Measurement Kind Property (MeasurementTypeValue) ---
 
 urpx:apparentPower rdf:type urpx:MeasurementTypeValue ;
     rdfs:label "Apparent Power"@en ;
-    skos:definition "Apparent power / apparent demand measurement (kVA, VA, MVA)" ;
-    skos:prefLabel "Apparent Power" .
+    skos:definition "Apparent power / apparent demand measurement (kVA, VA, MVA)"@en ;
+    skos:prefLabel "Apparent Power"@en .
 
 urpx:current rdf:type urpx:MeasurementTypeValue ;
     rdfs:label "Current"@en ;
-    skos:definition "Electric current measurement (A, mA, etc.)" ;
-    skos:prefLabel "Current" .
+    skos:definition "Electric current measurement (A, mA, etc.)"@en ;
+    skos:prefLabel "Current"@en .
 
 urpx:demand rdf:type urpx:MeasurementTypeValue ;
     rdfs:label "Demand"@en ;
-    skos:definition "Power demand measurement (kW, MW, etc.)" ;
-    skos:prefLabel "Demand" .
+    skos:definition "Power demand measurement (kW, MW, etc.)"@en ;
+    skos:prefLabel "Demand"@en .
 
 urpx:energy rdf:type urpx:MeasurementTypeValue ;
     rdfs:label "Energy"@en ;
-    skos:definition "Energy consumption measurement (kWh, MWh, etc.)" ;
-    skos:prefLabel "Energy" .
+    skos:definition "Energy consumption measurement (kWh, MWh, etc.)"@en ;
+    skos:prefLabel "Energy"@en .
 
 urpx:frequency rdf:type urpx:MeasurementTypeValue ;
     rdfs:label "Frequency"@en ;
-    skos:definition "Frequency measurement (Hz)" ;
-    skos:prefLabel "Frequency" .
+    skos:definition "Frequency measurement (Hz)"@en ;
+    skos:prefLabel "Frequency"@en .
 
 urpx:power rdf:type urpx:MeasurementTypeValue ;
     rdfs:label "Power"@en ;
-    skos:definition "Instantaneous power measurement (kW, MW, etc.)" ;
-    skos:prefLabel "Power" .
+    skos:definition "Instantaneous power measurement (kW, MW, etc.)"@en ;
+    skos:prefLabel "Power"@en .
 
 urpx:powerFactor rdf:type urpx:MeasurementTypeValue ;
     rdfs:label "Power Factor"@en ;
-    skos:definition "Power factor measurement (ratio, percentage)" ;
-    skos:prefLabel "Power Factor" .
+    skos:definition "Power factor measurement (ratio, percentage)"@en ;
+    skos:prefLabel "Power Factor"@en .
 
 urpx:pressure rdf:type urpx:MeasurementTypeValue ;
     rdfs:label "Pressure"@en ;
-    skos:definition "Pressure measurement (psi, bar, etc.)" ;
-    skos:prefLabel "Pressure" .
+    skos:definition "Pressure measurement (psi, bar, etc.)"@en ;
+    skos:prefLabel "Pressure"@en .
 
 urpx:reactiveEnergy rdf:type urpx:MeasurementTypeValue ;
     rdfs:label "Reactive Energy"@en ;
-    skos:definition "Reactive energy measurement (kVArh, VArh)" ;
-    skos:prefLabel "Reactive Energy" .
+    skos:definition "Reactive energy measurement (kVArh, VArh)"@en ;
+    skos:prefLabel "Reactive Energy"@en .
 
 urpx:reactivePower rdf:type urpx:MeasurementTypeValue ;
     rdfs:label "Reactive Power"@en ;
-    skos:definition "Reactive power / reactive demand measurement (kVAr, VAr)" ;
-    skos:prefLabel "Reactive Power" .
+    skos:definition "Reactive power / reactive demand measurement (kVAr, VAr)"@en ;
+    skos:prefLabel "Reactive Power"@en .
 
 urpx:temperature rdf:type urpx:MeasurementTypeValue ;
     rdfs:label "Temperature"@en ;
-    skos:definition "Temperature measurement (°F, °C, K)" ;
-    skos:prefLabel "Temperature" .
+    skos:definition "Temperature measurement (°F, °C, K)"@en ;
+    skos:prefLabel "Temperature"@en .
 
 urpx:voltage rdf:type urpx:MeasurementTypeValue ;
     rdfs:label "Voltage"@en ;
-    skos:definition "Voltage level measurement (V, kV, etc.)" ;
-    skos:prefLabel "Voltage" .
+    skos:definition "Voltage level measurement (V, kV, etc.)"@en ;
+    skos:prefLabel "Voltage"@en .
 
 urpx:volume rdf:type urpx:MeasurementTypeValue ;
     rdfs:label "Volume"@en ;
-    skos:definition "Volume measurement (gallons, cubic feet, liters, etc.)" ;
-    skos:prefLabel "Volume" .
+    skos:definition "Volume measurement (gallons, cubic feet, liters, etc.)"@en ;
+    skos:prefLabel "Volume"@en .
 
 urpx:volumetricFlow rdf:type urpx:MeasurementTypeValue ;
     rdfs:label "Volumetric Flow"@en ;
-    skos:definition "Volumetric flow rate measurement (gallons/min, cubic feet/hour, etc.)" ;
-    skos:prefLabel "Volumetric Flow" .
+    skos:definition "Volumetric flow rate measurement (gallons/min, cubic feet/hour, etc.)"@en ;
+    skos:prefLabel "Volumetric Flow"@en .
 
 # --- Media Type Property (MediaTypeValue) ---
 
 urpx:applicationJson rdf:type urpx:MediaTypeValue ;
     rdfs:label "json"@en ;
-    skos:definition "application/json media type" ;
-    skos:prefLabel "json" .
+    skos:definition "application/json media type"@en ;
+    skos:prefLabel "json"@en .
 
 urpx:applicationPdf rdf:type urpx:MediaTypeValue ;
     rdfs:label "pdf"@en ;
-    skos:definition "application/pdf media type" ;
-    skos:prefLabel "pdf" .
+    skos:definition "application/pdf media type"@en ;
+    skos:prefLabel "pdf"@en .
 
 urpx:applicationVndMsExcel rdf:type urpx:MediaTypeValue ;
     rdfs:label "vnd.ms-excel"@en ;
-    skos:definition "application/vnd.ms-excel media type" ;
-    skos:prefLabel "vnd.ms-excel" .
+    skos:definition "application/vnd.ms-excel media type"@en ;
+    skos:prefLabel "vnd.ms-excel"@en .
 
 urpx:applicationVndOasisOpendocumentSpreadsheet rdf:type urpx:MediaTypeValue ;
     rdfs:label "vnd.oasis.opendocument.spreadsheet"@en ;
-    skos:definition "application/vnd.oasis.opendocument.spreadsheet media type" ;
-    skos:prefLabel "vnd.oasis.opendocument.spreadsheet" .
+    skos:definition "application/vnd.oasis.opendocument.spreadsheet media type"@en ;
+    skos:prefLabel "vnd.oasis.opendocument.spreadsheet"@en .
 
 urpx:applicationVndOasisOpendocumentText rdf:type urpx:MediaTypeValue ;
     rdfs:label "vnd.oasis.opendocument.text"@en ;
-    skos:definition "application/vnd.oasis.opendocument.text media type" ;
-    skos:prefLabel "vnd.oasis.opendocument.text" .
+    skos:definition "application/vnd.oasis.opendocument.text media type"@en ;
+    skos:prefLabel "vnd.oasis.opendocument.text"@en .
 
 urpx:applicationVndOpenxmlformatsOfficedocumentSpreadsheetmlSheet rdf:type urpx:MediaTypeValue ;
     rdfs:label "vnd.openxmlformats-officedocument.spreadsheetml.sheet"@en ;
-    skos:definition "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet media type" ;
-    skos:prefLabel "vnd.openxmlformats-officedocument.spreadsheetml.sheet" .
+    skos:definition "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet media type"@en ;
+    skos:prefLabel "vnd.openxmlformats-officedocument.spreadsheetml.sheet"@en .
 
 urpx:imageGif rdf:type urpx:MediaTypeValue ;
     rdfs:label "gif"@en ;
-    skos:definition "image/gif media type" ;
-    skos:prefLabel "gif" .
+    skos:definition "image/gif media type"@en ;
+    skos:prefLabel "gif"@en .
 
 urpx:imageJpeg rdf:type urpx:MediaTypeValue ;
     rdfs:label "jpeg"@en ;
-    skos:definition "image/jpeg media type" ;
-    skos:prefLabel "jpeg" .
+    skos:definition "image/jpeg media type"@en ;
+    skos:prefLabel "jpeg"@en .
 
 urpx:imagePng rdf:type urpx:MediaTypeValue ;
     rdfs:label "png"@en ;
-    skos:definition "image/png media type" ;
-    skos:prefLabel "png" .
+    skos:definition "image/png media type"@en ;
+    skos:prefLabel "png"@en .
 
 urpx:textCsv rdf:type urpx:MediaTypeValue ;
     rdfs:label "csv"@en ;
-    skos:definition "text/csv media type" ;
-    skos:prefLabel "csv" .
+    skos:definition "text/csv media type"@en ;
+    skos:prefLabel "csv"@en .
 
 urpx:textHtml rdf:type urpx:MediaTypeValue ;
     rdfs:label "html"@en ;
-    skos:definition "text/html media type" ;
-    skos:prefLabel "html" .
+    skos:definition "text/html media type"@en ;
+    skos:prefLabel "html"@en .
 
 urpx:textPlain rdf:type urpx:MediaTypeValue ;
     rdfs:label "plain"@en ;
-    skos:definition "text/plain media type" ;
-    skos:prefLabel "plain" .
+    skos:definition "text/plain media type"@en ;
+    skos:prefLabel "plain"@en .
 
 urpx:textRtf rdf:type urpx:MediaTypeValue ;
     rdfs:label "rtf"@en ;
-    skos:definition "text/rtf media type" ;
-    skos:prefLabel "rtf" .
+    skos:definition "text/rtf media type"@en ;
+    skos:prefLabel "rtf"@en .
 
 urpx:textXml rdf:type urpx:MediaTypeValue ;
     rdfs:label "xml"@en ;
-    skos:definition "text/xml media type" ;
-    skos:prefLabel "xml" .
+    skos:definition "text/xml media type"@en ;
+    skos:prefLabel "xml"@en .
 
 # --- Metering Configuration Property (MeteringConfigurationValue) ---
 
 urpx:interval rdf:type urpx:MeteringConfigurationValue ;
     rdfs:label "Interval metering"@en ;
-    skos:definition "Interval metering configuration - interval meter reading" ;
-    skos:prefLabel "Interval" .
+    skos:definition "Interval metering configuration - interval meter reading"@en ;
+    skos:prefLabel "Interval"@en .
 
 urpx:ami rdf:type urpx:MeteringConfigurationValue ;
     rdfs:label "AMI Metering"@en ;
-    skos:definition "Advanced Metering Infrastructure (AMI) configuration - smart meter with remote communication" ;
-    skos:prefLabel "AMI" .
+    skos:definition "Advanced Metering Infrastructure (AMI) configuration - smart meter with remote communication"@en ;
+    skos:prefLabel "AMI"@en .
 
 urpx:demandConfiguration rdf:type urpx:MeteringConfigurationValue ;
     rdfs:label "Demand Metering"@en ;
-    skos:definition "Demand metering configuration - peak demand tracking" ;
-    skos:prefLabel "Demand" .
+    skos:definition "Demand metering configuration - peak demand tracking"@en ;
+    skos:prefLabel "Demand"@en .
 
 urpx:manual rdf:type urpx:MeteringConfigurationValue ;
     rdfs:label "Manual Metering"@en ;
-    skos:definition "Manual metering configuration - manual meter reading" ;
-    skos:prefLabel "Manual" .
+    skos:definition "Manual metering configuration - manual meter reading"@en ;
+    skos:prefLabel "Manual"@en .
 
 urpx:netMetering rdf:type urpx:MeteringConfigurationValue ;
     rdfs:label "Net Metering"@en ;
-    skos:definition "Net metering configuration - bidirectional meter for DER net metering" ;
-    skos:prefLabel "Net" .
+    skos:definition "Net metering configuration - bidirectional meter for DER net metering"@en ;
+    skos:prefLabel "Net"@en .
 
 urpx:prepaid rdf:type urpx:MeteringConfigurationValue ;
     rdfs:label "Prepaid Metering"@en ;
-    skos:definition "Prepaid metering configuration - prepayment billing system" ;
-    skos:prefLabel "Prepaid" .
+    skos:definition "Prepaid metering configuration - prepayment billing system"@en ;
+    skos:prefLabel "Prepaid"@en .
 
 # --- Metric Input Type Property (MetricInputTypeValue) ---
 
 urpx:measuredMetricInput a urpx:MetricInputTypeValue ;
     rdfs:label "Measured Metric Input"@en ;
-    skos:definition "Metric input with measured metrics" .
+    skos:definition "Metric input with measured metrics"@en .
 
 urpx:calculatedMetricInput a urpx:MetricInputTypeValue ;
-    rdfs:label "Calculated Metric Input" ;
-    skos:definition "Metric input with a calculated metric" .
+    rdfs:label "Calculated Metric Input"@en ;
+    skos:definition "Metric input with a calculated metric"@en .
 
 urpx:aggregatedMetricInput a urpx:MetricInputTypeValue ;
     rdfs:label "Aggregated Metric Input"@en ;
-    skos:definition "Metric input with an aggregated metric" .
+    skos:definition "Metric input with an aggregated metric"@en .
 
 urpx:virtualMetricInput a urpx:MetricInputTypeValue ;
     rdfs:label "Virtual Metric Input"@en ;
-    skos:definition "Metric input for virtual net metering" .
+    skos:definition "Metric input for virtual net metering"@en .
 
 urpx:profileMetricInput a urpx:MetricInputTypeValue ;
     rdfs:label "Profile Metric Input"@en ;
-    skos:definition "Metric input from customer/service point profile characteristics" ;
-    skos:note "Used for profile characteristics (not meter measurements). Examples: meterCount, occupancyCount, buildingSquareFootage, billedDemand (utility estimate). NOT for values calculated from meter data like averageMonthlyUsage or loadFactor (use calculatedMetricInput). Profile characteristics can change over time. References profile properties via profileMetricProperty." .
+    skos:definition "Metric input from customer/service point profile characteristics"@en ;
+    skos:note "Used for profile characteristics (not meter measurements). Examples: meterCount, occupancyCount, buildingSquareFootage, billedDemand (utility estimate). NOT for values calculated from meter data like average monthly usage or load factor (use calculatedMetricInput). Profile characteristics can change over time. References profile properties via profileMetricProperty." .
 
 # --- Modifier Category Property (ModifierCategoryValue) ---
 
 urpx:billingCategory rdf:type urpx:ModifierCategoryValue ;
     rdfs:label "Billing Category"@en ;
-    skos:definition "Billing category modifier for payment and billing process changes" ;
-    skos:prefLabel "Billing" .
+    skos:definition "Billing category modifier for payment and billing process changes"@en ;
+    skos:prefLabel "Billing"@en .
 
 urpx:customerServiceCategory rdf:type urpx:ModifierCategoryValue ;
     rdfs:label "Customer Service Category"@en ;
-    skos:definition "Customer service category modifier for service enhancement programs" ;
-    skos:prefLabel "Customer Service" .
+    skos:definition "Customer service category modifier for service enhancement programs"@en ;
+    skos:prefLabel "Customer Service"@en .
 
 urpx:demandManagementCategory rdf:type urpx:ModifierCategoryValue ;
     rdfs:label "Demand Management Category"@en ;
-    skos:definition "Demand management category modifier for load control and peak shaving" ;
-    skos:prefLabel "Demand Management" .
+    skos:definition "Demand management category modifier for load control and peak shaving"@en ;
+    skos:prefLabel "Demand Management"@en .
 
 urpx:environmentalCategory rdf:type urpx:ModifierCategoryValue ;
     rdfs:label "Environmental Category"@en ;
-    skos:definition "Environmental category modifier for sustainability and green energy programs" ;
-    skos:prefLabel "Environmental" .
+    skos:definition "Environmental category modifier for sustainability and green energy programs"@en ;
+    skos:prefLabel "Environmental"@en .
 
 urpx:modifierCategoryOther rdf:type urpx:ModifierCategoryValue ;
     rdfs:label "Other Modifier Category"@en ;
-    skos:definition "Other modifier category not specifically categorized" ;
-    skos:prefLabel "Other" .
+    skos:definition "Other modifier category not specifically categorized"@en ;
+    skos:prefLabel "Other"@en .
 
 urpx:promotionalCategory rdf:type urpx:ModifierCategoryValue ;
     rdfs:label "Promotional Category"@en ;
-    skos:definition "Promotional category modifier for marketing and incentive programs" ;
-    skos:prefLabel "Promotional" .
+    skos:definition "Promotional category modifier for marketing and incentive programs"@en ;
+    skos:prefLabel "Promotional"@en .
 
 urpx:regulatoryCategory rdf:type urpx:ModifierCategoryValue ;
     rdfs:label "Regulatory Category"@en ;
-    skos:definition "Regulatory category modifier for compliance and mandate-driven changes" ;
-    skos:prefLabel "Regulatory" .
+    skos:definition "Regulatory category modifier for compliance and mandate-driven changes"@en ;
+    skos:prefLabel "Regulatory"@en .
 
 # --- Modifier Type Property (ModifierTypeValue) ---
 
 urpx:addOn rdf:type urpx:ModifierTypeValue ;
     rdfs:label "Add-On"@en ;
-    skos:definition "Add-on modifier that extends base rate plan with additional services" ;
-    skos:prefLabel "Add-On" .
+    skos:definition "Add-on modifier that extends base rate plan with additional services"@en ;
+    skos:prefLabel "Add-On"@en .
 
 urpx:adjustment rdf:type urpx:ModifierTypeValue ;
     rdfs:label "Adjustment"@en ;
-    skos:definition "Rate adjustment modifier for price corrections or updates" ;
-    skos:prefLabel "Adjustment" .
+    skos:definition "Price adjustment modifier for price corrections or updates"@en ;
+    skos:prefLabel "Adjustment"@en .
 
 urpx:credit rdf:type urpx:ModifierTypeValue ;
     rdfs:label "Credit"@en ;
-    skos:definition "Credit modifier providing bill reductions or rebates" ;
-    skos:prefLabel "Credit" .
+    skos:definition "Credit modifier providing bill reductions or rebates"@en ;
+    skos:prefLabel "Credit"@en .
 
 urpx:demandResponse rdf:type urpx:ModifierTypeValue ;
     rdfs:label "Demand Response"@en ;
-    skos:definition "Demand response modifier for load management programs" ;
-    skos:prefLabel "Demand Response" .
+    skos:definition "Demand response modifier for load management programs"@en ;
+    skos:prefLabel "Demand Response"@en .
 
 urpx:evCharging rdf:type urpx:ModifierTypeValue ;
     rdfs:label "EV Charging"@en ;
-    skos:definition "Electric vehicle charging modifier for EV-specific rates" ;
-    skos:prefLabel "EV Charging" .
+    skos:definition "Electric vehicle charging modifier for EV-specific rate plans"@en ;
+    skos:prefLabel "EV Charging"@en .
 
 urpx:greenEnergy rdf:type urpx:ModifierTypeValue ;
     rdfs:label "Green Energy"@en ;
-    skos:definition "Green energy modifier for renewable energy programs" ;
-    skos:prefLabel "Green Energy" .
+    skos:definition "Green energy modifier for renewable energy programs"@en ;
+    skos:prefLabel "Green Energy"@en .
 
 urpx:modifierTypeOther rdf:type urpx:ModifierTypeValue ;
     rdfs:label "Other Modifier Type"@en ;
-    skos:definition "Other rate plan modifier type not specifically categorized" ;
-    skos:prefLabel "Other" .
+    skos:definition "Other rate plan modifier type not specifically categorized"@en ;
+    skos:prefLabel "Other"@en .
 
 urpx:optIn rdf:type urpx:ModifierTypeValue ;
     rdfs:label "Opt-In"@en ;
-    skos:definition "Opt-in modifier for voluntary customer-selected services" ;
-    skos:prefLabel "Opt-In" .
+    skos:definition "Opt-in modifier for voluntary customer-selected services"@en ;
+    skos:prefLabel "Opt-In"@en .
 
 urpx:optOut rdf:type urpx:ModifierTypeValue ;
     rdfs:label "Opt-Out"@en ;
-    skos:definition "Opt-out modifier for services customers can decline" ;
-    skos:prefLabel "Opt-Out" .
+    skos:definition "Opt-out modifier for services customers can decline"@en ;
+    skos:prefLabel "Opt-Out"@en .
 
 urpx:rider rdf:type urpx:ModifierTypeValue ;
     rdfs:label "Rider"@en ;
-    skos:definition "Rider modifier for regulatory surcharges or adjustments" ;
-    skos:prefLabel "Rider" .
+    skos:definition "Rider modifier for regulatory surcharges or adjustments"@en ;
+    skos:prefLabel "Rider"@en .
 
 # --- Name Type Property (NameTypeValue) ---
 
 urpx:abbreviationName rdf:type urpx:NameTypeValue ;
     rdfs:label "Abbreviation Name"@en ;
-    skos:definition "Abbreviation name - shortened form of organization name" ;
-    skos:prefLabel "Abbreviation" .
+    skos:definition "Abbreviation name - shortened form of organization name"@en ;
+    skos:prefLabel "Abbreviation"@en .
 
 urpx:acronymName rdf:type urpx:NameTypeValue ;
     rdfs:label "Acronym Name"@en ;
-    skos:definition "Acronym name - initials forming pronounceable word from organization name" ;
-    skos:prefLabel "Acronym" .
+    skos:definition "Acronym name - initials forming pronounceable word from organization name"@en ;
+    skos:prefLabel "Acronym"@en .
 
 urpx:brandName rdf:type urpx:NameTypeValue ;
     rdfs:label "Brand Name"@en ;
-    skos:definition "Brand name - marketing or customer-facing brand identity" ;
-    skos:prefLabel "Brand" .
+    skos:definition "Brand name - marketing or customer-facing brand identity"@en ;
+    skos:prefLabel "Brand"@en .
 
 urpx:commonName rdf:type urpx:NameTypeValue ;
     rdfs:label "Common Name"@en ;
-    skos:definition "Common name - widely recognized informal name used in practice" ;
-    skos:prefLabel "Common" .
+    skos:definition "Common name - widely recognized informal name used in practice"@en ;
+    skos:prefLabel "Common"@en .
 
 urpx:dbaName rdf:type urpx:NameTypeValue ;
     rdfs:label "DBA Name"@en ;
-    skos:definition "DBA name - 'Doing Business As' name for business operations" ;
-    skos:prefLabel "DBA" .
+    skos:definition "DBA name - 'Doing Business As' name for business operations"@en ;
+    skos:prefLabel "DBA"@en .
 
 urpx:formerName rdf:type urpx:NameTypeValue ;
     rdfs:label "Former Name"@en ;
-    skos:definition "Former name - previous legal or operational name before change" ;
-    skos:prefLabel "Former" .
+    skos:definition "Former name - previous legal or operational name before change"@en ;
+    skos:prefLabel "Former"@en .
 
 urpx:legalName rdf:type urpx:NameTypeValue ;
     rdfs:label "Legal Name"@en ;
-    skos:definition "Legal name - official registered corporate legal entity name" ;
-    skos:prefLabel "Legal" .
+    skos:definition "Legal name - official registered corporate legal entity name"@en ;
+    skos:prefLabel "Legal"@en .
 
 urpx:tradeName rdf:type urpx:NameTypeValue ;
     rdfs:label "Trade Name"@en ;
-    skos:definition "Trade name - commercial trading name used in business transactions" ;
-    skos:prefLabel "Trade" .
+    skos:definition "Trade name - commercial trading name used in business transactions"@en ;
+    skos:prefLabel "Trade"@en .
 
 # --- Observance Rule Property (ObservanceRuleValue) ---
 
 urpx:actualDateObservance rdf:type urpx:ObservanceRuleValue ;
     rdfs:label "Actual Date Observance"@en ;
-    skos:definition "Holiday observed on the actual calendar date regardless of day of week" ;
-    skos:prefLabel "Actual Date" .
+    skos:definition "Holiday observed on the actual calendar date regardless of day of week"@en ;
+    skos:prefLabel "Actual Date"@en .
 
 urpx:fridayIfWeekendObservance rdf:type urpx:ObservanceRuleValue ;
     rdfs:label "Friday If Weekend Observance"@en ;
-    skos:definition "Holiday observed on preceding Friday if it falls on weekend" ;
-    skos:prefLabel "If Weekend Then Friday" .
+    skos:definition "Holiday observed on preceding Friday if it falls on weekend"@en ;
+    skos:prefLabel "If Weekend Then Friday"@en .
 
 urpx:mondayIfWeekendObservance rdf:type urpx:ObservanceRuleValue ;
     rdfs:label "Monday If Weekend Observance"@en ;
-    skos:definition "Holiday observed on following Monday if it falls on weekend" ;
-    skos:prefLabel "If Weekend Then Monday" .
+    skos:definition "Holiday observed on following Monday if it falls on weekend"@en ;
+    skos:prefLabel "If Weekend Then Monday"@en .
 
 urpx:nearestWeekdayObservance rdf:type urpx:ObservanceRuleValue ;
     rdfs:label "Nearest Weekday Observance"@en ;
-    skos:definition "Holiday observed on nearest weekday (Friday if Saturday, Monday if Sunday)" ;
-    skos:prefLabel "If Weekend Then Nearest Weekday" .
+    skos:definition "Holiday observed on nearest weekday (Friday if Saturday, Monday if Sunday)"@en ;
+    skos:prefLabel "If Weekend Then Nearest Weekday"@en .
 
 # --- Operator Property (BooleanOperatorValue) ---
 
@@ -5439,13 +5419,13 @@ urpx:andOperator rdf:type urpx:BooleanOperatorValue, urpx:OperatorValue ;
 
 urpx:betweenOperator rdf:type urpx:OperatorValue ;
     rdfs:label "Between Operator"@en ;
-    skos:definition "Range comparison operator (BETWEEN)" ;
-    skos:prefLabel "Between" .
+    skos:definition "Range comparison operator (BETWEEN)"@en ;
+    skos:prefLabel "Between"@en .
 
 urpx:containsOperator rdf:type urpx:OperatorValue ;
     rdfs:label "Contains Operator"@en ;
-    skos:definition "String contains comparison operator (LIKE, CONTAINS)" ;
-    skos:prefLabel "Contains" .
+    skos:definition "String contains comparison operator (LIKE, CONTAINS)"@en ;
+    skos:prefLabel "Contains"@en .
 
 urpx:divideOperator rdf:type urpx:OperatorValue ;
     rdfs:label "Divide Operator"@en ;
@@ -5454,33 +5434,33 @@ urpx:divideOperator rdf:type urpx:OperatorValue ;
 
 urpx:equalsOperator rdf:type urpx:OperatorValue ;
     rdfs:label "Equals Operator"@en ;
-    skos:definition "Equality comparison operator (==, =)" ;
-    skos:prefLabel "Equals" .
+    skos:definition "Equality comparison operator (==, =)"@en ;
+    skos:prefLabel "Equals"@en .
 
 urpx:greaterThanOperator rdf:type urpx:OperatorValue ;
     rdfs:label "Greater Than Operator"@en ;
-    skos:definition "Greater than comparison operator (>)" ;
-    skos:prefLabel "Greater Than" .
+    skos:definition "Greater than comparison operator (>)"@en ;
+    skos:prefLabel "Greater Than"@en .
 
 urpx:greaterThanOrEqualOperator rdf:type urpx:OperatorValue ;
     rdfs:label "Greater Than Or Equal Operator"@en ;
-    skos:definition "Greater than or equal comparison operator (>=)" ;
-    skos:prefLabel "Greater Than Or Equal" .
+    skos:definition "Greater than or equal comparison operator (>=)"@en ;
+    skos:prefLabel "Greater Than Or Equal"@en .
 
 urpx:inOperator rdf:type urpx:OperatorValue ;
     rdfs:label "In Operator"@en ;
-    skos:definition "Set membership operator (IN)" ;
-    skos:prefLabel "In" .
+    skos:definition "Set membership operator (IN)"@en ;
+    skos:prefLabel "In"@en .
 
 urpx:lessThanOperator rdf:type urpx:OperatorValue ;
     rdfs:label "Less Than Operator"@en ;
-    skos:definition "Less than comparison operator (<)" ;
-    skos:prefLabel "Less Than" .
+    skos:definition "Less than comparison operator (<)"@en ;
+    skos:prefLabel "Less Than"@en .
 
 urpx:lessThanOrEqualOperator rdf:type urpx:OperatorValue ;
     rdfs:label "Less Than Or Equal Operator"@en ;
-    skos:definition "Less than or equal comparison operator (<=)" ;
-    skos:prefLabel "Less Than Or Equal" .
+    skos:definition "Less than or equal comparison operator (<=)"@en ;
+    skos:prefLabel "Less Than Or Equal"@en .
 
 urpx:multiplyOperator rdf:type urpx:OperatorValue ;
     rdfs:label "Multiply Operator"@en ;
@@ -5489,13 +5469,13 @@ urpx:multiplyOperator rdf:type urpx:OperatorValue ;
 
 urpx:notEqualsOperator rdf:type urpx:OperatorValue ;
     rdfs:label "Not Equals Operator"@en ;
-    skos:definition "Inequality comparison operator (!=, <>)" ;
-    skos:prefLabel "Not Equals" .
+    skos:definition "Inequality comparison operator (!=, <>)"@en ;
+    skos:prefLabel "Not Equals"@en .
 
 urpx:notInOperator rdf:type urpx:OperatorValue ;
     rdfs:label "Not In Operator"@en ;
-    skos:definition "Set exclusion operator (NOT IN)" ;
-    skos:prefLabel "Not In" .
+    skos:definition "Set exclusion operator (NOT IN)"@en ;
+    skos:prefLabel "Not In"@en .
 
 urpx:notOperator rdf:type urpx:BooleanOperatorValue, urpx:OperatorValue ;
     rdfs:label "Not Operator"@en ;
@@ -5516,92 +5496,92 @@ urpx:subtractOperator rdf:type urpx:OperatorValue ;
 
 urpx:aggregatorOrganization rdf:type urpx:OrganizationTypeValue ;
     rdfs:label "Aggregator Organization"@en ;
-    skos:definition "Energy aggregator organization - combines customer loads for wholesale market participation" ;
-    skos:prefLabel "Aggregator" .
+    skos:definition "Energy aggregator organization - combines customer loads for wholesale market participation"@en ;
+    skos:prefLabel "Aggregator"@en .
 
 urpx:cooperativeOrganization rdf:type urpx:OrganizationTypeValue ;
     rdfs:label "Cooperative Organization"@en ;
-    skos:definition "Cooperative organization - member-owned utility or energy service entity" ;
-    skos:prefLabel "Cooperative" .
+    skos:definition "Cooperative organization - member-owned utility or energy service entity"@en ;
+    skos:prefLabel "Cooperative"@en .
 
 urpx:espOrganization rdf:type urpx:OrganizationTypeValue ;
     rdfs:label "ESP Organization"@en ;
-    skos:definition "Energy Service Provider organization - competitive retail energy supplier" ;
-    skos:prefLabel "ESP" .
+    skos:definition "Energy Service Provider organization - competitive retail energy supplier"@en ;
+    skos:prefLabel "ESP"@en .
 
 urpx:ippOrganization rdf:type urpx:OrganizationTypeValue ;
     rdfs:label "IPP Organization"@en ;
-    skos:definition "Independent Power Producer organization - wholesale electricity generation entity" ;
-    skos:prefLabel "IPP" .
+    skos:definition "Independent Power Producer organization - wholesale electricity generation entity"@en ;
+    skos:prefLabel "IPP"@en .
 
 urpx:isoRtoOrganization rdf:type urpx:OrganizationTypeValue ;
     rdfs:label "ISO-RTO Organization"@en ;
-    skos:definition "Independent System Operator or Regional Transmission Organization - grid management entity" ;
-    skos:prefLabel "ISO-RTO" .
+    skos:definition "Independent System Operator or Regional Transmission Organization - grid management entity"@en ;
+    skos:prefLabel "ISO-RTO"@en .
 
 urpx:municipalOrganization rdf:type urpx:OrganizationTypeValue ;
     rdfs:label "Municipal Organization"@en ;
-    skos:definition "Municipal organization - government-owned utility or energy entity" ;
-    skos:prefLabel "Municipal" .
+    skos:definition "Municipal organization - government-owned utility or energy entity"@en ;
+    skos:prefLabel "Municipal"@en .
 
 urpx:parentOrganization rdf:type urpx:OrganizationTypeValue ;
     rdfs:label "Parent Organization"@en ;
-    skos:definition "Parent organization - holding company or corporate parent entity" ;
-    skos:prefLabel "Parent" .
+    skos:definition "Parent organization - holding company or corporate parent entity"@en ;
+    skos:prefLabel "Parent"@en .
 
 urpx:regulatorOrganization rdf:type urpx:OrganizationTypeValue ;
     rdfs:label "Regulator Organization"@en ;
-    skos:definition "Regulatory organization - government entity with rate-setting or oversight authority" ;
-    skos:prefLabel "Regulator" .
+    skos:definition "Regulatory organization - government entity with rate-setting or oversight authority"@en ;
+    skos:prefLabel "Regulator"@en .
 
 urpx:utilityOrganization rdf:type urpx:OrganizationTypeValue ;
     rdfs:label "Utility Organization"@en ;
-    skos:definition "Utility organization - traditional regulated utility providing electric, gas, or water service" ;
-    skos:prefLabel "Utility" .
+    skos:definition "Utility organization - traditional regulated utility providing electric, gas, or water service"@en ;
+    skos:prefLabel "Utility"@en .
 
 # --- Ownership Type Property (OwnershipTypeValue) ---
 
 urpx:cooperativeOwnership rdf:type urpx:OwnershipTypeValue ;
     rdfs:label "Cooperative Ownership"@en ;
-    skos:definition "Cooperative ownership - member-owned utility operated for members' benefit" ;
-    skos:prefLabel "Cooperative" .
+    skos:definition "Cooperative ownership - member-owned utility operated for members' benefit"@en ;
+    skos:prefLabel "Cooperative"@en .
 
 urpx:federalOwnership rdf:type urpx:OwnershipTypeValue ;
     rdfs:label "Federal Ownership"@en ;
-    skos:definition "Federal government ownership - federally-owned utility or power authority" ;
-    skos:prefLabel "Federal" .
+    skos:definition "Federal government ownership - federally-owned utility or power authority"@en ;
+    skos:prefLabel "Federal"@en .
 
 urpx:investorOwned rdf:type urpx:OwnershipTypeValue ;
     rdfs:label "Investor-Owned"@en ;
-    skos:definition "Investor-owned utility - private company owned by shareholders for profit" ;
-    skos:prefLabel "Investor-Owned" .
+    skos:definition "Investor-owned utility - private company owned by shareholders for profit"@en ;
+    skos:prefLabel "Investor-Owned"@en .
 
 urpx:municipalOwnership rdf:type urpx:OwnershipTypeValue ;
     rdfs:label "Municipal Ownership"@en ;
-    skos:definition "Municipal ownership - city or local government-owned utility" ;
-    skos:prefLabel "Municipal" .
+    skos:definition "Municipal ownership - city or local government-owned utility"@en ;
+    skos:prefLabel "Municipal"@en .
 
 urpx:privateOwnership rdf:type urpx:OwnershipTypeValue ;
     rdfs:label "Private Ownership"@en ;
-    skos:definition "Private ownership - privately-owned utility not publicly traded" ;
-    skos:prefLabel "Private" .
+    skos:definition "Private ownership - privately-owned utility not publicly traded"@en ;
+    skos:prefLabel "Private"@en .
 
 urpx:stateOwnership rdf:type urpx:OwnershipTypeValue ;
     rdfs:label "State Ownership"@en ;
-    skos:definition "State government ownership - state-owned utility or power authority" ;
-    skos:prefLabel "State" .
+    skos:definition "State government ownership - state-owned utility or power authority"@en ;
+    skos:prefLabel "State"@en .
 
 urpx:tribalOwnership rdf:type urpx:OwnershipTypeValue ;
     rdfs:label "Tribal Ownership"@en ;
-    skos:definition "Tribal ownership - Native American tribal nation-owned utility" ;
-    skos:prefLabel "Tribal" .
+    skos:definition "Tribal ownership - Native American tribal nation-owned utility"@en ;
+    skos:prefLabel "Tribal"@en .
 
 # --- Panel Orientation Property (PanelOrientationValue) ---
 
 urpx:east rdf:type urpx:PanelOrientationValue ;
     rdfs:label "East"@en ;
-    skos:definition "East-facing panel orientation - morning generation peak" ;
-    skos:prefLabel "East" .
+    skos:definition "East-facing panel orientation - morning generation peak"@en ;
+    skos:prefLabel "East"@en .
 
 urpx:multipleOrientations rdf:type urpx:PanelOrientationValue ;
     rdfs:label "Multiple Orientations"@en ;
@@ -5610,8 +5590,8 @@ urpx:multipleOrientations rdf:type urpx:PanelOrientationValue ;
 
 urpx:north rdf:type urpx:PanelOrientationValue ;
     rdfs:label "North"@en ;
-    skos:definition "North-facing panel orientation - suboptimal for Northern Hemisphere" ;
-    skos:prefLabel "North" .
+    skos:definition "North-facing panel orientation - suboptimal for Northern Hemisphere"@en ;
+    skos:prefLabel "North"@en .
 
 urpx:northeast rdf:type urpx:PanelOrientationValue ;
     rdfs:label "Northeast"@en ;
@@ -5625,426 +5605,426 @@ urpx:northwest rdf:type urpx:PanelOrientationValue ;
 
 urpx:south rdf:type urpx:PanelOrientationValue ;
     rdfs:label "South"@en ;
-    skos:definition "South-facing panel orientation - optimal for Northern Hemisphere" ;
-    skos:prefLabel "South" .
+    skos:definition "South-facing panel orientation - optimal for Northern Hemisphere"@en ;
+    skos:prefLabel "South"@en .
 
 urpx:southeast rdf:type urpx:PanelOrientationValue ;
     rdfs:label "Southeast"@en ;
-    skos:definition "Southeast-facing panel orientation" ;
-    skos:prefLabel "Southeast" .
+    skos:definition "Southeast-facing panel orientation"@en ;
+    skos:prefLabel "Southeast"@en .
 
 urpx:southwest rdf:type urpx:PanelOrientationValue ;
     rdfs:label "Southwest"@en ;
-    skos:definition "Southwest-facing panel orientation" ;
-    skos:prefLabel "Southwest" .
+    skos:definition "Southwest-facing panel orientation"@en ;
+    skos:prefLabel "Southwest"@en .
 
 urpx:tracking rdf:type urpx:PanelOrientationValue ;
     rdfs:label "Tracking"@en ;
-    skos:definition "Solar tracking system - follows sun movement for optimal generation" ;
-    skos:prefLabel "Tracking" .
+    skos:definition "Solar tracking system - follows sun movement for optimal generation"@en ;
+    skos:prefLabel "Tracking"@en .
 
 urpx:west rdf:type urpx:PanelOrientationValue ;
     rdfs:label "West"@en ;
-    skos:definition "West-facing panel orientation - afternoon generation peak" ;
-    skos:prefLabel "West" .
+    skos:definition "West-facing panel orientation - afternoon generation peak"@en ;
+    skos:prefLabel "West"@en .
 
 # --- Phase Code Kind Property (PhaseCodeKindValue) ---
 
 urpx:A rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase A"@en ;
     skos:notation "A" ;
-    skos:definition "Phase A" ;
+    skos:definition "Phase A"@en ;
     skos:broader urpx:singlePhaseCategory .
 
 urpx:AB rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phases A to B"@en ;
     skos:notation "AB" ;
-    skos:definition "Phases A to B" ;
+    skos:definition "Phases A to B"@en ;
     skos:broader urpx:threePhaseCategory .
 
 urpx:ABC rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Involving All Phases"@en ;
     skos:notation "ABC" ;
-    skos:definition "Involving All Phases" ;
+    skos:definition "Involving All Phases"@en ;
     skos:broader urpx:threePhaseCategory .
 
 urpx:ABCN rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "ABC to Neutral"@en ;
     skos:notation "ABCN" ;
-    skos:definition "Three-phase ABC to Neutral configuration" ;
+    skos:definition "Three-phase ABC to Neutral configuration"@en ;
     skos:broader urpx:threePhaseCategory .
 
 urpx:ABN rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "AB to Neutral"@en ;
     skos:notation "ABN" ;
-    skos:definition "AB to Neutral" ;
+    skos:definition "AB to Neutral"@en ;
     skos:broader urpx:threePhaseCategory .
 
 urpx:AC rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phases A to C"@en ;
     skos:notation "AC" ;
-    skos:definition "Phases A to C" ;
+    skos:definition "Phases A to C"@en ;
     skos:broader urpx:threePhaseCategory .
 
 urpx:ACN rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "AC to Neutral"@en ;
     skos:notation "ACN" ;
-    skos:definition "AC to Neutral" ;
+    skos:definition "AC to Neutral"@en ;
     skos:broader urpx:threePhaseCategory .
 
 urpx:AN rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase A to Neutral"@en ;
     skos:notation "AN" ;
-    skos:definition "Phase A to Neutral" ;
+    skos:definition "Phase A to Neutral"@en ;
     skos:broader urpx:singlePhaseCategory .
 
 urpx:AtoAv rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase A Current Relative to Phase A Voltage"@en ;
     skos:notation "AtoAv" ;
-    skos:definition "Phase A Current Relative to Phase A Voltage" ;
+    skos:definition "Phase A Current Relative to Phase A Voltage"@en ;
     skos:broader urpx:measurementCategory .
 
 urpx:B rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase B"@en ;
     skos:notation "B" ;
-    skos:definition "Phase B" ;
+    skos:definition "Phase B"@en ;
     skos:broader urpx:singlePhaseCategory .
 
 urpx:BAv rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase B Current or Voltage Relative to Phase A Voltage"@en ;
     skos:notation "BAv" ;
-    skos:definition "Phase B Current or Voltage Relative to Phase A Voltage" ;
+    skos:definition "Phase B Current or Voltage Relative to Phase A Voltage"@en ;
     skos:broader urpx:measurementCategory .
 
 urpx:BC rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phases B to C"@en ;
     skos:notation "BC" ;
-    skos:definition "Phases B to C" ;
+    skos:definition "Phases B to C"@en ;
     skos:broader urpx:threePhaseCategory .
 
 urpx:BCN rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "BC to Neutral"@en ;
     skos:notation "BCN" ;
-    skos:definition "BC to Neutral" ;
+    skos:definition "BC to Neutral"@en ;
     skos:broader urpx:threePhaseCategory .
 
 urpx:BN rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase B to Neutral"@en ;
     skos:notation "BN" ;
-    skos:definition "Phase B to Neutral" ;
+    skos:definition "Phase B to Neutral"@en ;
     skos:broader urpx:singlePhaseCategory .
 
 urpx:C rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase C"@en ;
     skos:notation "C" ;
-    skos:definition "Phase C" ;
+    skos:definition "Phase C"@en ;
     skos:broader urpx:singlePhaseCategory .
 
 urpx:CAv rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase C Current or Voltage Relative to Phase A Voltage"@en ;
     skos:notation "CAv" ;
-    skos:definition "Phase C Current or Voltage Relative to Phase A Voltage" ;
+    skos:definition "Phase C Current or Voltage Relative to Phase A Voltage"@en ;
     skos:broader urpx:measurementCategory .
 
 urpx:CN rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase C to Neutral"@en ;
     skos:notation "CN" ;
-    skos:definition "Phase C to Neutral" ;
+    skos:definition "Phase C to Neutral"@en ;
     skos:broader urpx:singlePhaseCategory .
 
 urpx:N rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Neutral"@en ;
     skos:notation "N" ;
-    skos:definition "Neutral" ;
+    skos:definition "Neutral"@en ;
     skos:broader urpx:singlePhaseCategory .
 
 urpx:NG rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Neutral to Ground"@en ;
     skos:notation "NG" ;
-    skos:definition "Neutral to Ground" ;
+    skos:definition "Neutral to Ground"@en ;
     skos:broader urpx:measurementCategory .
 
 urpx:S1 rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase S1"@en ;
     skos:notation "S1" ;
-    skos:definition "Phase S1" ;
+    skos:definition "Phase S1"@en ;
     skos:broader urpx:splitPhaseCategory .
 
 urpx:S12 rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase S1 to S2"@en ;
     skos:notation "S12" ;
-    skos:definition "Phase S1 to S2" ;
+    skos:definition "Phase S1 to S2"@en ;
     skos:broader urpx:splitPhaseCategory .
 
 urpx:S12N rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase S1, S2 to Neutral"@en ;
     skos:notation "S12N" ;
-    skos:definition "Phase S1, S2 to Neutral" ;
+    skos:definition "Phase S1, S2 to Neutral"@en ;
     skos:broader urpx:splitPhaseCategory .
 
 urpx:S1N rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase S1 to Neutral"@en ;
     skos:notation "S1N" ;
-    skos:definition "Phase S1 to Neutral" ;
+    skos:definition "Phase S1 to Neutral"@en ;
     skos:broader urpx:splitPhaseCategory .
 
 urpx:S2 rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase S2"@en ;
     skos:notation "S2" ;
-    skos:definition "Phase S2" ;
+    skos:definition "Phase S2"@en ;
     skos:broader urpx:splitPhaseCategory .
 
 urpx:S2N rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase S2 to Neutral"@en ;
     skos:notation "S2N" ;
-    skos:definition "Phase S2 to Neutral" ;
+    skos:definition "Phase S2 to Neutral"@en ;
     skos:broader urpx:splitPhaseCategory .
 
 # --- Premise Type Property (PremiseTypeValue) ---
 
 urpx:hospital rdf:type urpx:PremiseTypeValue ;
     rdfs:label "Hospital"@en ;
-    skos:definition "Hospital or medical facility" ;
-    skos:prefLabel "Hospital" .
+    skos:definition "Hospital or medical facility"@en ;
+    skos:prefLabel "Hospital"@en .
 
 urpx:manufacturing rdf:type urpx:PremiseTypeValue ;
     rdfs:label "Manufacturing"@en ;
-    skos:definition "Manufacturing or industrial production facility" ;
-    skos:prefLabel "Manufacturing" .
+    skos:definition "Manufacturing or industrial production facility"@en ;
+    skos:prefLabel "Manufacturing"@en .
 
 urpx:multiFamily rdf:type urpx:PremiseTypeValue ;
     rdfs:label "Multi Family"@en ;
-    skos:definition "Multi-family residential building (apartments, condominiums)" ;
-    skos:prefLabel "Multi Family" .
+    skos:definition "Multi-family residential building (apartments, condominiums)"@en ;
+    skos:prefLabel "Multi Family"@en .
 
 urpx:office rdf:type urpx:PremiseTypeValue ;
     rdfs:label "Office"@en ;
-    skos:definition "Office or commercial business premises" ;
-    skos:prefLabel "Office" .
+    skos:definition "Office or commercial business premises"@en ;
+    skos:prefLabel "Office"@en .
 
 urpx:premiseTypeOther rdf:type urpx:PremiseTypeValue ;
     rdfs:label "Other Premise Type"@en ;
-    skos:definition "Other premise type not specifically categorized" ;
-    skos:prefLabel "Other" .
+    skos:definition "Other premise type not specifically categorized"@en ;
+    skos:prefLabel "Other"@en .
 
 urpx:retailStore rdf:type urpx:PremiseTypeValue ;
     rdfs:label "Retail Store"@en ;
-    skos:definition "Retail store or commercial shopping premises" ;
-    skos:prefLabel "Retail Store" .
+    skos:definition "Retail store or commercial shopping premises"@en ;
+    skos:prefLabel "Retail Store"@en .
 
 urpx:school rdf:type urpx:PremiseTypeValue ;
     rdfs:label "School"@en ;
-    skos:definition "Educational facility or school" ;
-    skos:prefLabel "School" .
+    skos:definition "Educational facility or school"@en ;
+    skos:prefLabel "School"@en .
 
 urpx:singleFamily rdf:type urpx:PremiseTypeValue ;
     rdfs:label "Single Family"@en ;
-    skos:definition "Single-family residential dwelling" ;
-    skos:prefLabel "Single Family" .
+    skos:definition "Single-family residential dwelling"@en ;
+    skos:prefLabel "Single Family"@en .
 
 urpx:warehouse rdf:type urpx:PremiseTypeValue ;
     rdfs:label "Warehouse"@en ;
-    skos:definition "Warehouse or storage facility" ;
-    skos:prefLabel "Warehouse" .
+    skos:definition "Warehouse or storage facility"@en ;
+    skos:prefLabel "Warehouse"@en .
 
 # --- Price Source Property (PriceSourceValue) ---
 
 urpx:algorithmicSource rdf:type urpx:PriceSourceValue ;
     rdfs:label "Algorithmic Source"@en ;
-    skos:definition "Pricing calculated by proprietary algorithms" ;
-    skos:prefLabel "Algorithmic" .
+    skos:definition "Pricing calculated by proprietary algorithms"@en ;
+    skos:prefLabel "Algorithmic"@en .
 
 urpx:capacityAuctionSource rdf:type urpx:PriceSourceValue ;
     rdfs:label "Capacity Auction Source"@en ;
-    skos:definition "Pricing from capacity auction markets" ;
-    skos:prefLabel "Capacity Auction" .
+    skos:definition "Pricing from capacity auction markets"@en ;
+    skos:prefLabel "Capacity Auction"@en .
 
 urpx:demandForecastSource rdf:type urpx:PriceSourceValue ;
     rdfs:label "Demand Forecast Source"@en ;
-    skos:definition "Pricing based on demand forecasting models" ;
-    skos:prefLabel "Demand Forecast" .
+    skos:definition "Pricing based on demand forecasting models"@en ;
+    skos:prefLabel "Demand Forecast"@en .
 
 urpx:gasIndexSource rdf:type urpx:PriceSourceValue ;
     rdfs:label "Gas Index Source"@en ;
-    skos:definition "Pricing based on natural gas index prices" ;
-    skos:prefLabel "Gas Index" .
+    skos:definition "Pricing based on natural gas index prices"@en ;
+    skos:prefLabel "Gas Index"@en .
 
 urpx:manualOverrideSource rdf:type urpx:PriceSourceValue ;
     rdfs:label "Manual Override Source"@en ;
-    skos:definition "Manually set pricing overriding automated sources" ;
-    skos:prefLabel "Manual Override" .
+    skos:definition "Manually set pricing overriding automated sources"@en ;
+    skos:prefLabel "Manual Override"@en .
 
 urpx:renewableForecastSource rdf:type urpx:PriceSourceValue ;
     rdfs:label "Renewable Forecast Source"@en ;
-    skos:definition "Pricing based on renewable energy generation forecasts" ;
-    skos:prefLabel "Renewable Forecast" .
+    skos:definition "Pricing based on renewable energy generation forecasts"@en ;
+    skos:prefLabel "Renewable Forecast"@en .
 
 urpx:wholesaleMarketSource rdf:type urpx:PriceSourceValue ;
     rdfs:label "Wholesale Market Source"@en ;
-    skos:definition "Pricing from wholesale electricity markets (ISO/RTO markets)" ;
-    skos:prefLabel "Wholesale Market" .
+    skos:definition "Pricing from wholesale electricity markets (ISO/RTO markets)"@en ;
+    skos:prefLabel "Wholesale Market"@en .
 
 # --- Program Type Property (ProgramTypeValue) ---
 
 urpx:communitySolar rdf:type urpx:ProgramTypeValue ;
     rdfs:label "Community Solar"@en ;
-    skos:definition "Participation in a community solar project or program" ;
-    skos:prefLabel "Community Solar" .
+    skos:definition "Participation in a community solar project or program"@en ;
+    skos:prefLabel "Community Solar"@en .
 
 urpx:communityChoiceAggregation rdf:type urpx:ProgramTypeValue ;
     rdfs:label "Community Choice Aggregation"@en ;
-    skos:definition "Enrollment in a Community Choice Aggregation program" ;
-    skos:prefLabel "CCA" .
+    skos:definition "Enrollment in a Community Choice Aggregation program"@en ;
+    skos:prefLabel "CCA"@en .
 
 urpx:demandResponseProgram rdf:type urpx:ProgramTypeValue ;
     rdfs:label "Demand Response Program"@en ;
-    skos:definition "Demand response program for load management and peak reduction" ;
-    skos:prefLabel "Demand Response" .
+    skos:definition "Demand response program for load management and peak reduction"@en ;
+    skos:prefLabel "Demand Response"@en .
 
 urpx:energyEfficiencyProgram rdf:type urpx:ProgramTypeValue ;
     rdfs:label "Energy Efficiency Program"@en ;
-    skos:definition "Energy efficiency program for conservation and efficiency improvement" ;
-    skos:prefLabel "Energy Efficiency" .
+    skos:definition "Energy efficiency program for conservation and efficiency improvement"@en ;
+    skos:prefLabel "Energy Efficiency"@en .
 
 urpx:greenEnergyProgram rdf:type urpx:ProgramTypeValue ;
     rdfs:label "Green Energy Program"@en ;
-    skos:definition "Green energy program for renewable energy participation" ;
-    skos:prefLabel "Green Energy" .
+    skos:definition "Green energy program for renewable energy participation"@en ;
+    skos:prefLabel "Green Energy"@en .
 
 urpx:lowIncomeProgram rdf:type urpx:ProgramTypeValue ;
     rdfs:label "Low Income Program"@en ;
-    skos:definition "Low income assistance program for customer financial support" ;
-    skos:prefLabel "Low Income" .
+    skos:definition "Low income assistance program for customer financial support"@en ;
+    skos:prefLabel "Low Income"@en .
 
 urpx:moderateIncomeProgram rdf:type urpx:ProgramTypeValue ;
     rdfs:label "Moderate Income Program"@en ;
-    skos:definition "Moderate income assistance program for customer financial support" ;
-    skos:prefLabel "Moderate Income" .
+    skos:definition "Moderate income assistance program for customer financial support"@en ;
+    skos:prefLabel "Moderate Income"@en .
 
 urpx:timeOfUseProgram rdf:type urpx:ProgramTypeValue ;
     rdfs:label "Time of Use Program"@en ;
-    skos:definition "Time-of-use program for time-based pricing participation" ;
-    skos:prefLabel "Time of Use" .
+    skos:definition "Time-of-use program for time-based pricing participation"@en ;
+    skos:prefLabel "Time of Use"@en .
 
 # --- Publication Type Property (PublicationTypeValue) ---
 
 urpx:amendment rdf:type urpx:PublicationTypeValue ;
     rdfs:label "Amendment"@en ;
-    skos:definition "Amendment to existing tariff or rate schedule" ;
-    skos:prefLabel "Amendment" .
+    skos:definition "Amendment to existing tariff or rate schedule"@en ;
+    skos:prefLabel "Amendment"@en .
 
 urpx:notice rdf:type urpx:PublicationTypeValue ;
     rdfs:label "Notice"@en ;
-    skos:definition "Public notice regarding rate or tariff changes" ;
-    skos:prefLabel "Notice" .
+    skos:definition "Public notice regarding rate or tariff changes"@en ;
+    skos:prefLabel "Notice"@en .
 
 urpx:order rdf:type urpx:PublicationTypeValue ;
     rdfs:label "Order"@en ;
-    skos:definition "Regulatory order or decision regarding rates or tariffs" ;
-    skos:prefLabel "Order" .
+    skos:definition "Regulatory order or decision regarding rates or tariffs"@en ;
+    skos:prefLabel "Order"@en .
 
 urpx:ratePlanPublication rdf:type urpx:PublicationTypeValue ;
     rdfs:label "Regulatory Filing"@en ;
-    skos:definition "Rate Plan publication" ;
-    skos:prefLabel "Publication of Rate Plan" .
+    skos:definition "Rate Plan publication"@en ;
+    skos:prefLabel "Publication of Rate Plan"@en .
 
 urpx:ratePlanModifierPublication rdf:type urpx:PublicationTypeValue ;
     rdfs:label "Regulatory Filing"@en ;
-    skos:definition "Rate Plan publication" ;
-    skos:prefLabel "Publication of Rate Plan" .
+    skos:definition "Rate Plan publication"@en ;
+    skos:prefLabel "Publication of Rate Plan"@en .
 
 urpx:regulatoryFiling rdf:type urpx:PublicationTypeValue ;
     rdfs:label "Regulatory Filing"@en ;
-    skos:definition "Official regulatory filing or submission to regulatory authority" ;
-    skos:prefLabel "Regulatory Filing" .
+    skos:definition "Official regulatory filing or submission to regulatory authority"@en ;
+    skos:prefLabel "Regulatory Filing"@en .
 
 urpx:supplement rdf:type urpx:PublicationTypeValue ;
     rdfs:label "Supplement"@en ;
-    skos:definition "Supplement providing additional information to existing publication" ;
-    skos:prefLabel "Supplement" .
+    skos:definition "Supplement providing additional information to existing publication"@en ;
+    skos:prefLabel "Supplement"@en .
 
 urpx:tariffBook rdf:type urpx:PublicationTypeValue ;
     rdfs:label "Tariff Book"@en ;
-    skos:definition "Complete tariff book document containing all rate schedules and terms" ;
-    skos:prefLabel "Tariff Book" .
+    skos:definition "Complete tariff book document containing all rate schedules and terms"@en ;
+    skos:prefLabel "Tariff Book"@en .
 
 urpx:tariffBookLeaves rdf:type urpx:PublicationTypeValue ;
     rdfs:label "Tariff Book Leaves"@en ;
-    skos:definition "Individual sets of leaves or pages from tariff book publications" ;
-    skos:prefLabel "Tariff Book Leaves" .
+    skos:definition "Individual sets of leaves or pages from tariff book publications"@en ;
+    skos:prefLabel "Tariff Book Leaves"@en .
 
 urpx:tariffStatement rdf:type urpx:PublicationTypeValue ;
     rdfs:label "Tariff Statement"@en ;
-    skos:definition "PSC tariff statement filing containing rate adjustments and prices" ;
-    skos:prefLabel "Tariff Statement" .
+    skos:definition "PSC tariff statement filing containing price adjustments and prices"@en ;
+    skos:prefLabel "Tariff Statement"@en .
 
 # --- Regulatory Scope Property (RegulatoryScopeValue) ---
 
 urpx:distributionRegulation rdf:type urpx:RegulatoryScopeValue ;
     rdfs:label "Distribution Regulation"@en ;
-    skos:definition "Distribution regulation - oversight of local power distribution systems and customer service" ;
-    skos:prefLabel "Distribution" .
+    skos:definition "Distribution regulation - oversight of local power distribution systems and customer service"@en ;
+    skos:prefLabel "Distribution"@en .
 
 urpx:environmentalRegulation rdf:type urpx:RegulatoryScopeValue ;
     rdfs:label "Environmental Regulation"@en ;
-    skos:definition "Environmental regulation - oversight of environmental compliance and renewable energy standards" ;
-    skos:prefLabel "Environmental" .
+    skos:definition "Environmental regulation - oversight of environmental compliance and renewable energy standards"@en ;
+    skos:prefLabel "Environmental"@en .
 
 urpx:marketRegulation rdf:type urpx:RegulatoryScopeValue ;
     rdfs:label "Market Regulation"@en ;
-    skos:definition "Market regulation - oversight of wholesale and retail energy market competition and pricing" ;
-    skos:prefLabel "Market" .
+    skos:definition "Market regulation - oversight of wholesale and retail energy market competition and pricing"@en ;
+    skos:prefLabel "Market"@en .
 
 urpx:ratesRegulation rdf:type urpx:RegulatoryScopeValue ;
     rdfs:label "Rates Regulation"@en ;
-    skos:definition "Rates regulation - oversight of utility rate setting and tariff approval processes" ;
-    skos:prefLabel "Rates" .
+    skos:definition "Rates regulation - oversight of utility rate setting and tariff approval processes"@en ;
+    skos:prefLabel "Rates"@en .
 
 urpx:safetyRegulation rdf:type urpx:RegulatoryScopeValue ;
     rdfs:label "Safety Regulation"@en ;
-    skos:definition "Safety regulation - oversight of utility safety standards and operational reliability" ;
-    skos:prefLabel "Safety" .
+    skos:definition "Safety regulation - oversight of utility safety standards and operational reliability"@en ;
+    skos:prefLabel "Safety"@en .
 
 urpx:transmissionRegulation rdf:type urpx:RegulatoryScopeValue ;
     rdfs:label "Transmission Regulation"@en ;
-    skos:definition "Transmission regulation - oversight of high-voltage transmission systems and grid reliability" ;
-    skos:prefLabel "Transmission" .
+    skos:definition "Transmission regulation - oversight of high-voltage transmission systems and grid reliability"@en ;
+    skos:prefLabel "Transmission"@en .
 
 # --- Seasonal Pattern Property (SeasonalPatternValue) ---
 
 urpx:flatPattern rdf:type urpx:SeasonalPatternValue ;
     rdfs:label "Flat Pattern"@en ;
-    skos:definition "Flat seasonal usage pattern - consistent usage throughout the year" ;
-    skos:prefLabel "Flat" .
+    skos:definition "Flat seasonal usage pattern - consistent usage throughout the year"@en ;
+    skos:prefLabel "Flat"@en .
 urpx:summerPeakPattern rdf:type urpx:SeasonalPatternValue ;
     rdfs:label "Summer Peak Pattern"@en ;
-    skos:definition "Summer peak usage pattern - highest usage during summer months" ;
-    skos:prefLabel "Summer Peak" .
+    skos:definition "Summer peak usage pattern - highest usage during summer months"@en ;
+    skos:prefLabel "Summer Peak"@en .
 urpx:variablePattern rdf:type urpx:SeasonalPatternValue ;
     rdfs:label "Variable Pattern"@en ;
-    skos:definition "Variable seasonal usage pattern - irregular usage variations throughout the year" ;
-    skos:prefLabel "Variable" .
+    skos:definition "Variable seasonal usage pattern - irregular usage variations throughout the year"@en ;
+    skos:prefLabel "Variable"@en .
 urpx:winterPeakPattern rdf:type urpx:SeasonalPatternValue ;
     rdfs:label "Winter Peak Pattern"@en ;
-    skos:definition "Winter peak usage pattern - highest usage during winter months" ;
-    skos:prefLabel "Winter Peak" .
+    skos:definition "Winter peak usage pattern - highest usage during winter months"@en ;
+    skos:prefLabel "Winter Peak"@en .
 
 # --- Service Role Property (ServiceRoleValue) ---
 
 urpx:aggregationRole rdf:type urpx:ServiceRoleValue ;
     rdfs:label "Aggregation Role"@en ;
-    skos:definition "Aggregation service role - combining customer loads for wholesale market participation and demand response" ;
-    skos:prefLabel "Aggregation" .
+    skos:definition "Aggregation service role - combining customer loads for wholesale market participation and demand response"@en ;
+    skos:prefLabel "Aggregation"@en .
 
 urpx:bundledServiceRole rdf:type urpx:ServiceRoleValue ;
     rdfs:label "Bundled Service Role"@en ;
-    skos:definition "Bundled service role - utility provides both delivery and supply services" ;
-    skos:prefLabel "Bundled Service" .
+    skos:definition "Bundled service role - utility provides both delivery and supply services"@en ;
+    skos:prefLabel "Bundled Service"@en .
 
 urpx:demandResponseRole rdf:type urpx:ServiceRoleValue ;
     rdfs:label "Demand Response Role"@en ;
-    skos:definition "Demand response service role - managing customer load reduction programs and grid flexibility services" ;
-    skos:prefLabel "Demand Response" .
+    skos:definition "Demand response service role - managing customer load reduction programs and grid flexibility services"@en ;
+    skos:prefLabel "Demand Response"@en .
 
 urpx:communitySolarServiceRole rdf:type urpx:ServiceRoleValue ;
     rdfs:label "Community Solar Service Role"@en ;
@@ -6053,136 +6033,136 @@ urpx:communitySolarServiceRole rdf:type urpx:ServiceRoleValue ;
 
 urpx:distributionServiceRole rdf:type urpx:ServiceRoleValue ;
     rdfs:label "Distribution Service Role"@en ;
-    skos:definition "Distribution service role - utility provides delivery infrastructure only" ;
-    skos:prefLabel "Distribution Service" .
+    skos:definition "Distribution service role - utility provides delivery infrastructure only"@en ;
+    skos:prefLabel "Distribution Service"@en .
 
 urpx:energyEfficiencyRole rdf:type urpx:ServiceRoleValue ;
     rdfs:label "Energy Efficiency Role"@en ;
-    skos:definition "Energy efficiency service role - providing energy conservation programs and efficiency solutions" ;
-    skos:prefLabel "Energy Efficiency" .
+    skos:definition "Energy efficiency service role - providing energy conservation programs and efficiency solutions"@en ;
+    skos:prefLabel "Energy Efficiency"@en .
 
 urpx:retailSupplyRole rdf:type urpx:ServiceRoleValue ;
     rdfs:label "Retail Supply Role"@en ;
-    skos:definition "Retail supply service role - competitive retail energy supplier serving end-use customers" ;
-    skos:prefLabel "Retail Supply" .
+    skos:definition "Retail supply service role - competitive retail energy supplier serving end-use customers"@en ;
+    skos:prefLabel "Retail Supply"@en .
 
 urpx:solarInstallationRole rdf:type urpx:ServiceRoleValue ;
     rdfs:label "Solar Installation Role"@en ;
-    skos:definition "Solar installation service role - distributed solar energy system installation and maintenance services" ;
-    skos:prefLabel "Solar Installation" .
+    skos:definition "Solar installation service role - distributed solar energy system installation and maintenance services"@en ;
+    skos:prefLabel "Solar Installation"@en .
 
 # --- Special Needs Status Property (SpecialNeedsStatusValue) ---
 
 urpx:disabilityAccommodation rdf:type urpx:SpecialNeedsStatusValue ;
     rdfs:label "Disability Accommodation"@en ;
-    skos:definition "Customer requires disability accommodation - accessible services and communications" ;
-    skos:prefLabel "Disability Accommodation" .
+    skos:definition "Customer requires disability accommodation - accessible services and communications"@en ;
+    skos:prefLabel "Disability Accommodation"@en .
 
 urpx:lifeSupport rdf:type urpx:SpecialNeedsStatusValue ;
     rdfs:label "Life Support"@en ;
-    skos:definition "Customer depends on life support equipment - critical uninterrupted power requirement" ;
-    skos:prefLabel "Life Support" .
+    skos:definition "Customer depends on life support equipment - critical uninterrupted power requirement"@en ;
+    skos:prefLabel "Life Support"@en .
 
 urpx:medicalEquipment rdf:type urpx:SpecialNeedsStatusValue ;
     rdfs:label "Medical Equipment"@en ;
-    skos:definition "Customer requires medical equipment - special consideration for uninterrupted service" ;
-    skos:prefLabel "Medical Equipment" .
+    skos:definition "Customer requires medical equipment - special consideration for uninterrupted service"@en ;
+    skos:prefLabel "Medical Equipment"@en .
     
 urpx:noSpecialNeeds rdf:type urpx:SpecialNeedsStatusValue ;
     rdfs:label "No Special Needs"@en ;
-    skos:definition "No special needs designation" ;
-    skos:prefLabel "None" .
+    skos:definition "No special needs designation"@en ;
+    skos:prefLabel "None"@en .
 
 urpx:vulnerableCustomer rdf:type urpx:SpecialNeedsStatusValue ;
     rdfs:label "Vulnerable Customer"@en ;
-    skos:definition "Vulnerable customer status - elderly, health concerns, or other vulnerability factors" ;
-    skos:prefLabel "Vulnerable Customer" .
+    skos:definition "Vulnerable customer status - elderly, health concerns, or other vulnerability factors"@en ;
+    skos:prefLabel "Vulnerable Customer"@en .
 
 # --- Tariff Statement Type Property (TariffStatementTypeValue) ---
 
 urpx:distributionStatement rdf:type urpx:TariffStatementTypeValue ;
     rdfs:label "Distribution Statement"@en ;
-    skos:definition "Distribution-related statement filing type for PSC tariff documentation" ;
-    skos:prefLabel "Distribution Statement" .
+    skos:definition "Distribution-related statement filing type for PSC tariff documentation"@en ;
+    skos:prefLabel "Distribution Statement"@en .
 
 urpx:fuelAdjustmentStatement rdf:type urpx:TariffStatementTypeValue ;
     rdfs:label "Fuel Adjustment Statement"@en ;
-    skos:definition "Fuel adjustment-related statement filing type for PSC tariff documentation" ;
-    skos:prefLabel "Fuel Adjustment Statement" .
+    skos:definition "Fuel adjustment-related statement filing type for PSC tariff documentation"@en ;
+    skos:prefLabel "Fuel Adjustment Statement"@en .
 
 urpx:purchasedPowerStatement rdf:type urpx:TariffStatementTypeValue ;
     rdfs:label "Purchased Power Statement"@en ;
-    skos:definition "Purchased power-related statement filing type for PSC tariff documentation" ;
-    skos:prefLabel "Purchased Power Statement" .
+    skos:definition "Purchased power-related statement filing type for PSC tariff documentation"@en ;
+    skos:prefLabel "Purchased Power Statement"@en .
 
 urpx:statementTypeOther rdf:type urpx:TariffStatementTypeValue ;
     rdfs:label "Other Statement Type"@en ;
-    skos:definition "Other or unclassified statement filing type for PSC tariff documentation" ;
-    skos:prefLabel "Other" .
+    skos:definition "Other or unclassified statement filing type for PSC tariff documentation"@en ;
+    skos:prefLabel "Other"@en .
 
 urpx:transmissionStatement rdf:type urpx:TariffStatementTypeValue ;
     rdfs:label "Transmission Statement"@en ;
-    skos:definition "Transmission-related statement filing type for PSC tariff documentation" ;
-    skos:prefLabel "Transmission Statement" .
+    skos:definition "Transmission-related statement filing type for PSC tariff documentation"@en ;
+    skos:prefLabel "Transmission Statement"@en .
 
 # --- Tax Exempt Status Property (TaxExemptStatusValue) ---
 
 urpx:exempt rdf:type urpx:TaxExemptStatusValue ;
     rdfs:label "Tax Exempt"@en ;
-    skos:definition "Fully tax-exempt status - qualified for full tax exemption" ;
-    skos:prefLabel "Exempt" .
+    skos:definition "Fully tax-exempt status - qualified for full tax exemption"@en ;
+    skos:prefLabel "Exempt"@en .
 
 urpx:nonExempt rdf:type urpx:TaxExemptStatusValue ;
     rdfs:label "Non-Exempt"@en ;
-    skos:definition "Non-exempt tax status - standard taxation applies" ;
-    skos:prefLabel "Non-Exempt" .
+    skos:definition "Non-exempt tax status - standard taxation applies"@en ;
+    skos:prefLabel "Non-Exempt"@en .
 
 urpx:partialExempt rdf:type urpx:TaxExemptStatusValue ;
     rdfs:label "Partial Exempt"@en ;
-    skos:definition "Partially tax-exempt status - qualified for partial tax exemption" ;
-    skos:prefLabel "Partial Exempt" .
+    skos:definition "Partially tax-exempt status - qualified for partial tax exemption"@en ;
+    skos:prefLabel "Partial Exempt"@en .
 
 urpx:pendingVerification rdf:type urpx:TaxExemptStatusValue ;
     rdfs:label "Pending Verification"@en ;
-    skos:definition "Tax exemption status pending verification - application under review" ;
-    skos:prefLabel "Pending Verification" .
+    skos:definition "Tax exemption status pending verification - application under review"@en ;
+    skos:prefLabel "Pending Verification"@en .
 
 # --- TOU Tier Standard Name Property (TOUTierStandardNameValue) ---
 
 urpx:criticalPeakTier rdf:type urpx:TOUTierStandardNameValue ;
     rdfs:label "Critical Peak Tier"@en ;
-    skos:definition "Critical peak pricing tier - emergency demand response period" ;
-    skos:prefLabel "Critical Peak" .
+    skos:definition "Critical peak pricing tier - emergency demand response period"@en ;
+    skos:prefLabel "Critical Peak"@en .
 
 urpx:midPeakTier rdf:type urpx:TOUTierStandardNameValue ;
     rdfs:label "Mid Peak Tier"@en ;
-    skos:definition "Mid peak pricing tier - moderate demand period" ;
-    skos:prefLabel "Mid Peak" .
+    skos:definition "Mid peak pricing tier - moderate demand period"@en ;
+    skos:prefLabel "Mid Peak"@en .
 
 urpx:offPeakTier rdf:type urpx:TOUTierStandardNameValue ;
     rdfs:label "Off Peak Tier"@en ;
-    skos:definition "Off peak pricing tier - low demand period" ;
-    skos:prefLabel "Off Peak" .
+    skos:definition "Off peak pricing tier - low demand period"@en ;
+    skos:prefLabel "Off Peak"@en .
 
 urpx:peakTier rdf:type urpx:TOUTierStandardNameValue ;
     rdfs:label "Peak Tier"@en ;
-    skos:definition "Peak pricing tier - high demand period" ;
-    skos:prefLabel "Peak" .
+    skos:definition "Peak pricing tier - high demand period"@en ;
+    skos:prefLabel "Peak"@en .
 
 urpx:shoulderTier rdf:type urpx:TOUTierStandardNameValue ;
     rdfs:label "Shoulder Tier"@en ;
-    skos:definition "Shoulder pricing tier - transition period between peak and off-peak" ;
-    skos:prefLabel "Shoulder" .
+    skos:definition "Shoulder pricing tier - transition period between peak and off-peak"@en ;
+    skos:prefLabel "Shoulder"@en .
 
 urpx:superOffPeakTier rdf:type urpx:TOUTierStandardNameValue ;
     rdfs:label "Super Off Peak Tier"@en ;
-    skos:definition "Super off peak pricing tier - lowest cost period" ;
-    skos:prefLabel "Super Off Peak" .
+    skos:definition "Super off peak pricing tier - lowest cost period"@en ;
+    skos:prefLabel "Super Off Peak"@en .
 
 urpx:superPeakTier rdf:type urpx:TOUTierStandardNameValue ;
     rdfs:label "Super Peak Tier"@en ;
-    skos:definition "Super peak pricing tier - highest cost period" ;
-    skos:prefLabel "Super Peak" .
+    skos:definition "Super peak pricing tier - highest cost period"@en ;
+    skos:prefLabel "Super Peak"@en .
 
 # --- Unit of Measure Property (UnitOfMeasureValue) ---
 
@@ -6505,72 +6485,72 @@ urpx:Wh rdf:type urpx:UnitOfMeasureValue ;
 
 urpx:continuousUpdates rdf:type urpx:UpdateFrequencyValue ;
     rdfs:label "Continuous Updates"@en ;
-    skos:definition "Continuous real-time price updates" ;
-    skos:prefLabel "Continuous" .
+    skos:definition "Continuous real-time price updates"@en ;
+    skos:prefLabel "Continuous"@en .
 
 urpx:dailyUpdates rdf:type urpx:UpdateFrequencyValue ;
     rdfs:label "Daily Updates"@en ;
-    skos:definition "Price updates daily (P1D)" ;
-    skos:prefLabel "Daily" .
+    skos:definition "Price updates daily (P1D)"@en ;
+    skos:prefLabel "Daily"@en .
 
 urpx:eventTriggeredUpdates rdf:type urpx:UpdateFrequencyValue ;
     rdfs:label "Event Triggered Updates"@en ;
-    skos:definition "Price updates triggered by specific market or grid events" ;
-    skos:prefLabel "Event Triggered" .
+    skos:definition "Price updates triggered by specific market or grid events"@en ;
+    skos:prefLabel "Event Triggered"@en .
 
 urpx:every15Minutes rdf:type urpx:UpdateFrequencyValue ;
     rdfs:label "Every 15 Minutes"@en ;
-    skos:definition "Price updates every 15 minutes (PT15M)" ;
-    skos:prefLabel "Every 15 Minutes" .
+    skos:definition "Price updates every 15 minutes (PT15M)"@en ;
+    skos:prefLabel "Every 15 Minutes"@en .
 
 urpx:every5Minutes rdf:type urpx:UpdateFrequencyValue ;
     rdfs:label "Every 5 Minutes"@en ;
-    skos:definition "Price updates every 5 minutes (PT5M)" ;
-    skos:prefLabel "Every 5 Minutes" .
+    skos:definition "Price updates every 5 minutes (PT5M)"@en ;
+    skos:prefLabel "Every 5 Minutes"@en .
 
 urpx:hourlyUpdates rdf:type urpx:UpdateFrequencyValue ;
     rdfs:label "Hourly Updates"@en ;
-    skos:definition "Price updates every hour (PT1H)" ;
-    skos:prefLabel "Hourly" .
+    skos:definition "Price updates every hour (PT1H)"@en ;
+    skos:prefLabel "Hourly"@en .
 
 urpx:monthlyUpdates rdf:type urpx:UpdateFrequencyValue ;
     rdfs:label "Monthly Updates"@en ;
-    skos:definition "Price updates monthly (P1M)" ;
-    skos:prefLabel "Monthly" .
+    skos:definition "Price updates monthly (P1M)"@en ;
+    skos:prefLabel "Monthly"@en .
 
 urpx:onDemandUpdates rdf:type urpx:UpdateFrequencyValue ;
     rdfs:label "On Demand Updates"@en ;
-    skos:definition "Price updates triggered on demand by external events" ;
-    skos:prefLabel "On Demand" .
+    skos:definition "Price updates triggered on demand by external events"@en ;
+    skos:prefLabel "On Demand"@en .
 
 urpx:weeklyUpdates rdf:type urpx:UpdateFrequencyValue ;
     rdfs:label "Weekly Updates"@en ;
-    skos:definition "Price updates weekly (P1W)" ;
-    skos:prefLabel "Weekly" .
+    skos:definition "Price updates weekly (P1W)"@en ;
+    skos:prefLabel "Weekly"@en .
 
 # --- Voltage Level Property (VoltageLevel) ---
 
 urpx:distributionVoltage rdf:type urpx:VoltageLevelValue ;
     rdfs:label "Distribution Voltage"@en ;
-    skos:definition "Distribution voltage level - general distribution system voltage" ;
-    skos:prefLabel "Distribution" .
+    skos:definition "Distribution voltage level - general distribution system voltage"@en ;
+    skos:prefLabel "Distribution"@en .
 
 urpx:primaryVoltage rdf:type urpx:VoltageLevelValue ;
     rdfs:label "Primary Voltage"@en ;
-    skos:definition "Primary voltage level - typically 2.4kV-34.5kV distribution voltage" ;
-    skos:prefLabel "Primary" .
+    skos:definition "Primary voltage level - typically 2.4kV-34.5kV distribution voltage"@en ;
+    skos:prefLabel "Primary"@en .
 
 urpx:secondaryVoltage rdf:type urpx:VoltageLevelValue ;
     rdfs:label "Secondary Voltage"@en ;
-    skos:definition "Secondary voltage level - typically 120-600V residential and small commercial service" ;
-    skos:prefLabel "Secondary" .
+    skos:definition "Secondary voltage level - typically 120-600V residential and small commercial service"@en ;
+    skos:prefLabel "Secondary"@en .
 
 urpx:subTransmissionVoltage rdf:type urpx:VoltageLevelValue ;
     rdfs:label "Sub-Transmission Voltage"@en ;
-    skos:definition "Sub-transmission voltage level - typically 34.5kV-115kV for regional distribution" ;
-    skos:prefLabel "Sub-Transmission" .
+    skos:definition "Sub-transmission voltage level - typically 34.5kV-115kV for regional distribution"@en ;
+    skos:prefLabel "Sub-Transmission"@en .
 
 urpx:transmissionVoltage rdf:type urpx:VoltageLevelValue ;
     rdfs:label "Transmission Voltage"@en ;
-    skos:definition "Transmission voltage level - typically 115kV and above for bulk power transmission" ;
-    skos:prefLabel "Transmission" .
+    skos:definition "Transmission voltage level - typically 115kV and above for bulk power transmission"@en ;
+    skos:prefLabel "Transmission"@en .

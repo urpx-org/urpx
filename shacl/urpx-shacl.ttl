@@ -627,11 +627,6 @@ urpx-shacl:CustomerProfileShape
         sh:path urpx:taxExemptStatus ;
         sh:node urpx-shacl:TaxExemptStatusValueShape ;
         sh:minCount 0 ;
-    ] ;
-    sh:property [
-        sh:path urpx:usageThreshold ;
-        sh:datatype xsd:decimal ;
-        sh:minCount 0 ;
     ] .
 
 urpx-shacl:CustomOperandNodeShape
@@ -4480,12 +4475,6 @@ urpx-shacl:ServicePointProfileShape
     sh:closed true ;
     sh:ignoredProperties ( rdf:type urpx:hasTemporalScope ) ;
     sh:property [
-        sh:path urpx:averageMonthlyUsage ;
-        sh:datatype xsd:decimal ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
         sh:path urpx:billedDemand ;
         sh:datatype xsd:decimal ;
         sh:minCount 0 ;
@@ -4601,12 +4590,6 @@ urpx-shacl:ServicePointProfileShape
     sh:property [
         sh:path urpx:serviceClassPattern ;
         sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path urpx:usageVariability ;
-        sh:datatype xsd:decimal ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
@@ -5861,7 +5844,7 @@ urpx-shacl:ChargeTypeValueShape
     rdfs:label "ChargeTypeValue Shape"@en ;
     sh:targetClass urpx:ChargeTypeValue ;
     sh:nodeKind sh:IRI ;
-    sh:in ( urpx:adjustmentPowerCost urpx:adjustmentRenewable urpx:adjustmentTariff urpx:ancillaryServices urpx:capacity urpx:capacityCharge urpx:capitalCredit urpx:complianceCharge urpx:congestionCharge urpx:conservationCharge urpx:contractMisc urpx:creditAdministrative urpx:creditEnergy urpx:creditGeneration urpx:creditInfrastructure urpx:creditMisc urpx:creditPriceProtection urpx:creditRenewable urpx:creditTariffRider urpx:customerCharge urpx:deliveryCharge urpx:demandDirect urpx:demandIndirect urpx:demandSideManagement urpx:depositCredit urpx:depositInterest urpx:depositRequest urpx:distributedGeneration urpx:distributionCharge urpx:donation urpx:efficiencyFunding urpx:energyStorage urpx:environmentalFunding urpx:exportCredit urpx:facilities urpx:fuelCharge urpx:generation urpx:handling urpx:heapDiscount urpx:initiationCharge urpx:lateFee urpx:minimumBill urpx:minimumCharge urpx:nonBypassableCharge urpx:powerFactor urpx:publicBenefits urpx:reactiveDemand urpx:recoverySurcharge urpx:reliabilityCharge urpx:renewableFunding urpx:rentalFee urpx:serviceMetered urpx:serviceNonMetered urpx:standbyCharge urpx:strandedCosts urpx:systemBenefitCharge urpx:tariffRider urpx:taxAdjustment urpx:taxCredit urpx:taxMisc urpx:taxMunicipal urpx:taxSales urpx:taxState urpx:taxUtility urpx:transitionCharge urpx:transmission urpx:usageCharge urpx:volumetricCharge ) .
+    sh:in ( urpx:adjustmentPowerCost urpx:adjustmentRenewable urpx:adjustmentTariff urpx:ancillaryServices urpx:capacity urpx:capacityCharge urpx:capitalCredit urpx:complianceCharge urpx:congestionCharge urpx:conservationCharge urpx:contractMisc urpx:creditAdministrative urpx:creditEnergy urpx:creditGeneration urpx:creditInfrastructure urpx:creditMisc urpx:creditPriceProtection urpx:creditRenewable urpx:creditTariffRider urpx:customerCharge urpx:deliveryCharge urpx:demandDirect urpx:demandIndirect urpx:demandSideManagement urpx:depositCredit urpx:depositInterest urpx:depositRequest urpx:distributedGeneration urpx:distributionCharge urpx:donation urpx:efficiencyFunding urpx:energyStorage urpx:environmentalFunding urpx:exportCredit urpx:facilities urpx:fuelCharge urpx:generation urpx:handling urpx:heapDiscount urpx:initiationCharge urpx:lateFee urpx:minimumBill urpx:minimumCharge urpx:nonBypassableCharge urpx:powerFactorCharge urpx:publicBenefits urpx:reactiveDemand urpx:recoverySurcharge urpx:reliabilityCharge urpx:renewableFunding urpx:rentalFee urpx:serviceMetered urpx:serviceNonMetered urpx:standbyCharge urpx:strandedCosts urpx:systemBenefitCharge urpx:tariffRider urpx:taxAdjustment urpx:taxCredit urpx:taxMisc urpx:taxMunicipal urpx:taxSales urpx:taxState urpx:taxUtility urpx:transitionCharge urpx:transmission urpx:usageCharge urpx:volumetricCharge ) .
 
 urpx-shacl:CollectionRoleValueShape
     a sh:NodeShape ;

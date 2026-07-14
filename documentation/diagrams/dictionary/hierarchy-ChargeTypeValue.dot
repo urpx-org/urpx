@@ -134,11 +134,11 @@ digraph "hierarchy_ChargeTypeValue" {
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
     ];
     cat_auxiliaryCharge -> inst_generation [penwidth=1];
-    inst_powerFactor [
-        label="Power Factor"
+    inst_powerFactorCharge [
+        label="Power Factor \nCharge"
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
     ];
-    cat_auxiliaryCharge -> inst_powerFactor [penwidth=1];
+    cat_auxiliaryCharge -> inst_powerFactorCharge [penwidth=1];
     inst_standbyCharge [
         label="Standby Charge"
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1

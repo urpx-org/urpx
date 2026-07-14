@@ -4,9 +4,27 @@
 # URPX Changelog
 
 **Version:** 0.3.0 (Pre-draft)
-**Last Updated:** 2026-07-13
+**Last Updated:** 2026-07-14
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-07-14 — v0.3.0 (pre-release refinements)
+---
+
+Vocabulary clean-up applied before the initial public release, folded into the unreleased 0.3.0.
+
+### Retired
+- Removed the profile usage properties `usageThreshold`, `averageMonthlyUsage`, and `usageVariability`. Usage-derived values are carried by the MetricInput mechanism (measured or calculated metric inputs); the retired properties had no example usage.
+
+### Changed
+- Split the dual-typed `powerFactor`: minted `powerFactorCharge` as the `ChargeTypeValue` member (the power-factor penalty charge) and kept `powerFactor` as a `MeasurementTypeValue` only.
+- Narrowed the domain of `hasDataSourceReference` (dropped `SourcePublication`; citation runs the other way, via `sourcePublication`).
+- Narrowed the domain of `operatesIn` to `UtilityOperator` and `EnergyServiceProvider`.
+- Rewrote the `ProfileAlternative` class annotations to describe the condition-expression model, replacing text that described the earlier dimension mechanism.
+
+### Editorial
+- Language-tagged (`@en`) every `rdfs:label`, `skos:prefLabel`, and `skos:definition` literal in the ontology.
+- Reworded several `skos:definition` entries that used "rate" ambiguously to "price", and de-hyphenated "rate plan" in two class comments.
 
 2026-07-07 — v0.3.0
 ---
