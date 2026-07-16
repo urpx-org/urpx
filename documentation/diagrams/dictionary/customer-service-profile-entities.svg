@@ -25,7 +25,7 @@
 <g id="node9" class="node">
 <title>ProgramEnrollment</title>
 <ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="518.16" cy="-18" rx="58.73" ry="18"/>
-<text xml:space="preserve" text-anchor="middle" x="518.16" y="-14.13" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">ProgramEnrollment</text>
+<text xml:space="preserve" text-anchor="middle" x="518.16" y="-14.12" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">ProgramEnrollment</text>
 </g>
 <!-- CustomerProfile&#45;&gt;ProgramEnrollment -->
 <g id="edge2" class="edge">

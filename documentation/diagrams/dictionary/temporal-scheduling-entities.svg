@@ -73,7 +73,7 @@
 <g id="node12" class="node">
 <title>ProfileAlternative</title>
 <ellipse fill="#aaccff" stroke="#1a5276" stroke-dasharray="5,2" cx="231.21" cy="-18" rx="53.4" ry="18"/>
-<text xml:space="preserve" text-anchor="middle" x="231.21" y="-14.13" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">ProfileAlternative</text>
+<text xml:space="preserve" text-anchor="middle" x="231.21" y="-14.12" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">ProfileAlternative</text>
 </g>
 <!-- TOUSchedule&#45;&gt;ProfileAlternative -->
 <g id="edge4" class="edge">
