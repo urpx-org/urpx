@@ -64,6 +64,45 @@ and authoring work is spun off into **unassigned** tasks any WG member may pick 
 - [KDS] **Offer — California worked set.** Accept; coordinate as a shared test case exercising
   Q2 + Q5. → unassigned task `task.urpx.ont.2026-07-13.california-worked-example-set.md`.
 
+## Follow-up — Don Jackson's confirmations (2026-07-14)
+
+Two notes back from Don Jackson: assent to the filing / snapshot split, and a cross-check of the
+walkthrough deck against the shapes. Reply drafted for the chair to send.
+
+- [x] **Minor 2 confirmed — many schedules per filing.** Don confirms a multi-schedule single
+  document (CPUC advice letter) maps to several `PricingModel`s in one `TariffFiling`
+  (`containsPricingModel` 1→many), each with its own `SourceReference`; delivery vs generation
+  and month-over-month stay separate filings. Our answer holds — loop closable. **Relay the
+  chair's refinement in the reply:** model the advice-letter cover document as its own
+  informational `TariffFiling` carrying the change reason, and keep URPX out of modeling the
+  public-service-commission filing *workflow* (out of scope). Confirm this refinement is what
+  goes back.
+- [x] **Boundary decision confirmed.** Don confirms his reading of "URPX represents publications,
+  it does not model the publication event": effective dates and supersession stay asserted data
+  (validity windows, effective/expiration dates, supersedes links), never an event model. One
+  precision relayed: that ordering data lives on the publication units (`TariffFiling`; and
+  `PricingModel` for filing-less content) and, underneath, on the facts (a price carries its own
+  start/end; `sunsetOn` marks intentional retirement). Ties to the July-14 agenda decision-doc
+  candidate.
+- [x] **New — supersession / cancellation / effective-dating domain question (resolved, no model
+  error).** Don cross-checked the walkthrough's shift #3 ("lifecycle attaches to `TariffFiling`")
+  against the shapes at `236a67f` and found supersedes on `PricingModel` only, no filing-level
+  cancellation, and dates not on the filing. **Cause: `236a67f` predates the filing-lifecycle
+  vocabulary** — that commit added the walkthrough plus a *draft* ontology/SHACL; the lifecycle
+  terms landed at `48cd1af8` ("Add filing lifecycle and identifier vocabulary; complete closed
+  shapes"). On current `main` the deck holds: `replaces`/`replacedBy`/`cancelledBy`/`cancelledOn`/
+  `cancelsPriceDefinition` are all domain `TariffFiling` (filing-level); `effectiveDate`/
+  `expirationDate` are on `TariffFiling` **and** `PricingModel` (filing authoritative when
+  present, filing-less models carry their own); `supersedes` is deliberately dual-domain
+  (`PricingModel ∪ TariffFiling`) — filing chain plus authored-model thread, as its `skos:note`
+  states. Correct Don's intended reading to the two-layer split, not "lifecycle on the authored
+  PricingModel." Reply carries the California threading guidance.
+- [x] **Process — review packet pointed reviewers at a pre-vocabulary commit.** `236a67f` is
+  behind the candidate vocabulary (`48cd1af8`), so reviewers hit a phantom deck-vs-shapes
+  mismatch. Point the v0.3.0 review materials at `48cd1af8` or later (ideally a tagged candidate)
+  before the WG review meeting so nobody else repeats it. Sequence with the review-packet / WG
+  meeting prep.
+
 ## Done when
 
 Every row is confirmed by the chair (`[xK]`) and communicated back to Don / the WG, and each
