@@ -31,6 +31,14 @@ Both projects share the goal of making rate plan data more accessible. URPX can 
 
 Rate plan data comes from many kinds of published sources: tariff books (primary), tariff statements, supplements, addenda, supply price sheets, and market price feeds. URPX models each of these as a `SourcePublication` whose kind is given by the `publicationType` enumeration (`tariffBook`, `tariffStatement`, `tariffSupplement`, `tariffAddendum`, `supplyCharges`, `derExports`, `highlyDynamicPrices`, `marketPriceFeed`). See the [Terminology](#terminology) section below for why URPX never uses the bare word "rate".
 
+**Q: What is the difference between a rate plan and a rate plan modifier?**
+
+A rate plan (`RatePlan`) is the base service a customer is on. A rate plan modifier (`RatePlanModifier`) is a separately published layer — a rider, discount, credit, or adjustment — that modifies a base rate plan rather than standing alone. Each is independently identified, versioned, and sourced: a `RatePlanModifierVersion` links back to its modifier identity via `forRatePlanModifier`, the same way a `RatePlanVersion` links back to its rate plan via `forRatePlan`. See the tutorial's [Rate Plan vs Rate Plan Modifier](urpx-tutorial.md#rate-plan-vs-rate-plan-modifier) section for the full rationale, including why URPX composes plans and modifiers instead of modeling every combination as its own plan.
+
+**Q: Is a rate plan the same as a customer offering?**
+
+No. A rate plan and its available modifiers describe what a utility or supplier publishes. A customer-facing offering — a marketing bundle, comparison listing, or enrollment product — may present a rate plan and a selection of its modifiers together, but assembling that presentation is a concern of consuming applications, not something URPX models. See the tutorial's [Rate Plan Modifiers vs Customer Offerings](urpx-tutorial.md#rate-plan-modifiers-vs-customer-offerings) section for more detail.
+
 **Q: Can URPX work with my existing systems?**
 
 Yes. URPX will provide mapping templates for major standards (Green Button, OpenADR, CIM). You can also create custom mappings for proprietary formats.

@@ -405,9 +405,9 @@
                 "@id": "coned:sp-msc-lds-appnd",
                 "@type": "urpx:SourcePublication",
                 "urpx:publicationType": { "@id": "urpx:marketPriceFeed" },
-                "urpx:name": "ConEd LDS_APPND (4).csv"
+                "urpx:name": "ConEd LDS_APPND CSV"
               },
-              "urpx:fileName": "LDS_APPND (4).csv",
+              "urpx:fileName": "lds-appnd-2025.csv",
               "urpx:mediaType": { "@id": "urpx:textCsv" },
               "urpx:accessURL": "https://www.coned.com/en/accounts-billing/your-bill/rate-calculators/market-supply-charge",
               "urpx:dateRetrieved": "2025-10-16"

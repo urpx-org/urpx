@@ -58,6 +58,25 @@ Understanding these distinctions is critical for working with URPX. For a more d
 
 **In URPX**: We model rate plans (complete packages), their prices, and the rate groups that connect them to the utility's own published groupings. Tariff documents are containers where parts of rate plans appear, plus regulatory metadata.
 
+### Rate Plan vs Rate Plan Modifier
+
+The [Terminology](#terminology) section above covers the base service and how it is published. URPX also has a second identity for content that changes what a customer pays without being a rate plan in its own right: the **rate plan modifier**.
+
+- **Rate Plan** (`RatePlan`): the base service a customer is on — what a customer would be billed under with no modifiers applied.
+- **Rate Plan Modifier** (`RatePlanModifier`): a separately published layer — a rider, discount, credit, or adjustment — that modifies a base rate plan. Examples include low-income discounts, green energy options, demand response programs, and distributed energy resource (DER) export crediting.
+
+**Why two classes.** If every combination of a base rate plan and its available riders were modeled as its own rate plan, the number of distinct plan identities would grow combinatorially with the number of modifiers a utility offers: one rate plan for the discount alone, another for the discount plus the green energy option, another for all programs together, and so on. URPX avoids this by composing a base `RatePlan` with independently published modifier layers instead of enumerating every combination as its own plan. A customer's actual cost comes from the rate plan plus whichever modifiers apply to that customer, not from a single all-in-one plan identity.
+
+**Independently published, independently sourced.** A rate plan modifier is not a section of its base plan's publication. Its pricing content is typically authored and revised on its own — its own tariff filing or statement, on its own revision cycle, carrying its own source references, separate from the base plan's. `RatePlanModifier` carries its own identifier class, `RatePlanModifierIdentifier`, parallel to `RatePlanIdentifier`. The `PricingModel` instances that carry a modifier's authored pricing content reach it through `referencesRatePlanModifier`, the modifier-side counterpart to `referencesRatePlan`.
+
+**Shaped like a rate plan, but applied onto one.** Mechanically, `RatePlanModifier` mirrors `RatePlan`: it is disjoint from its own derived snapshot class, `RatePlanModifierVersion`, the same way `RatePlan` is disjoint from `RatePlanVersion`. A `RatePlanModifierVersion` links back to its identity with `forRatePlanModifier`, the counterpart to `forRatePlan`, and it carries seasons, metric inputs, and prices through the same `PlanElements` and `Prices` structures as a `RatePlanVersion`. What a modifier does not do is stand on its own: it is meant to be applied onto a rate plan rather than enrolled in by itself. A `RatePlanVersion` records which modifiers are available to it — `hasModifierOptions` for the modifier identities, `hasModifierVersionOptions` for the resolved modifier versions — rather than a modifier carrying a full customer bill on its own.
+
+A short comparison, if it helps: a condiment modifies a dish without becoming a new dish. A rate plan modifier works the same way — it changes what is on the bill without becoming a new rate plan.
+
+#### Rate Plan Modifiers vs Customer Offerings
+
+A rate plan together with its available modifiers describes what a utility or supplier publishes. A customer-facing offering — a marketing bundle, comparison listing, or enrollment product — is a different kind of thing: it may present a rate plan and a selection of its modifiers together, but deciding which modifiers to bundle, badge, or default into a signup flow is a concern of consuming applications. URPX models what is published; assembling that content into something a customer chooses is out of scope for the vocabulary.
+
 ### Core Concepts
 
 **Rate Plan**: The stable identity of a plan offered by a utility
@@ -990,7 +1009,7 @@ Extracted from the full list of possible values in `urpx-ontology.ttl`:
 
 1. **Multi-Alternative Rate Plans** - Geographic or service variations
 2. **Customer Profiles** - Complex eligibility rules
-3. **Rate Plan Modifiers** - Optional add-ons and riders
+3. **Rate Plan Modifiers** - See [Rate Plan vs Rate Plan Modifier](#rate-plan-vs-rate-plan-modifier) for the composition rationale, and [Rate Plan Modifiers vs Customer Offerings](#rate-plan-modifiers-vs-customer-offerings) for how modifiers relate to customer-facing offerings
 4. **Dynamic Pricing** - Real-time and event-based pricing
 5. **Pricing Models and Publications** - How tariff filings, statements, and market feeds carry authored (possibly partial) pricing content that resolves into version snapshots; see the [Overview](urpx-overview.md) and the `test-cases/` directory
 

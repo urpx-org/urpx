@@ -190,7 +190,7 @@ request.
 ## Code of conduct
 
 URPX follows the Linux Foundation's code of conduct. Be kind, be
-constructive, assume good faith.
+constructive, assume good faith. See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## Security issues
 

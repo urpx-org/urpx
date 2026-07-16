@@ -850,7 +850,7 @@
 <text xml:space="preserve" text-anchor="middle" x="3322.25" y="-1990.7" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">SourceReference</text>
 <polyline fill="none" stroke="#1a5276" stroke-width="2" points="3205.12,-1985.5 3439.38,-1985.5"/>
 <text xml:space="preserve" text-anchor="start" x="3213.12" y="-1972.95" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">name: ConEd LDS_APPND Market Supply Charges...</text>
-<text xml:space="preserve" text-anchor="start" x="3213.12" y="-1963.2" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">fileName: LDS_APPND (4).csv</text>
+<text xml:space="preserve" text-anchor="start" x="3213.12" y="-1963.2" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">fileName: lds-appnd-2025.csv</text>
 <text xml:space="preserve" text-anchor="start" x="3213.12" y="-1953.45" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">accessURL: https://www.coned.com/en/accounts&#45;bil...</text>
 <text xml:space="preserve" text-anchor="start" x="3213.12" y="-1943.7" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">dateRetrieved: 2025&#45;10&#45;16</text>
 </g>
@@ -901,7 +901,7 @@
 <path fill="#aaccff" stroke="#1a5276" stroke-width="2" d="M3286,-1837.88C3286,-1837.88 3420.5,-1837.88 3420.5,-1837.88 3426.5,-1837.88 3432.5,-1843.88 3432.5,-1849.88 3432.5,-1849.88 3432.5,-1861.88 3432.5,-1861.88 3432.5,-1867.88 3426.5,-1873.88 3420.5,-1873.88 3420.5,-1873.88 3286,-1873.88 3286,-1873.88 3280,-1873.88 3274,-1867.88 3274,-1861.88 3274,-1861.88 3274,-1849.88 3274,-1849.88 3274,-1843.88 3280,-1837.88 3286,-1837.88"/>
 <text xml:space="preserve" text-anchor="middle" x="3353.25" y="-1861.33" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">SourcePublication</text>
 <polyline fill="none" stroke="#1a5276" stroke-width="2" points="3274,-1856.12 3432.5,-1856.12"/>
-<text xml:space="preserve" text-anchor="start" x="3282" y="-1843.58" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">name: ConEd LDS_APPND (4).csv</text>
+<text xml:space="preserve" text-anchor="start" x="3282" y="-1843.58" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">name: ConEd LDS_APPND CSV</text>
 </g>
 <!-- n_coned_sr_lds_appnd_csv&#45;&gt;n_coned_sp_msc_lds_appnd -->
 <g id="edge55" class="edge">

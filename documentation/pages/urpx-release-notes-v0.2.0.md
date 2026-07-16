@@ -29,7 +29,7 @@ Compared with earlier pre-release drafts, this release is not backward-compatibl
 - Tightened eligibility modeling so each `EligibilityRule` uses a single `ConditionExpression`, and direct profile links on rules are no longer valid.
 - Retired direct `ApplicabilityGroup` selector properties in favor of `ConditionExpression` over profile-based properties.
 - Added `ServiceBracket` so tier bounds move off `ServiceTier` and can vary by context.
-- Added `GeneralRule` for reusable tariff-book-level shared rules.
+- Added `GeneralRule` for reusable shared rules at the tariff book level.
 - Added `RateCase` and datetime provenance properties to improve regulatory and source traceability.
 - Renamed identifier properties to make uniqueness explicit and added required `urpx:targetURPXVersion` on `URPXDocument`.
 - Added `customerChoice` and `isDefault` semantics for rate plan versions.
@@ -98,7 +98,7 @@ v0.2.0 strengthens validation and reviewer support:
 - SHACL coverage was expanded to match the new billing, condition, applicability, service-bracket, identifier, and provenance models.
 - [`urpx-condition-modeling.md`](urpx-condition-modeling.md) documents the current structured condition pattern.
 - [`urpx-quality-assurance.md`](urpx-quality-assurance.md) summarizes validation expectations.
-- [`urpx-test-data-review-guide.md`](urpx-test-data-review-guide.md) provides a tariff-book-to-URPX review workflow for test cases.
+- [`urpx-test-data-review-guide.md`](urpx-test-data-review-guide.md) provides a workflow for reviewing test cases against the source tariff book.
 - [`urpx-data-dictionary.md`](urpx-data-dictionary.md) was refreshed for the v0.2.0 ontology surface.
 
 ---
@@ -107,7 +107,7 @@ v0.2.0 strengthens validation and reviewer support:
 
 This release also adds project-level governance and licensing metadata:
 
-- REUSE licensing metadata and public-record handling for third-party tariff-book source material
+- REUSE licensing metadata and public-record handling for third-party tariff book source material
 - `TRANSITION.md` documenting the planned post-Draft license transition
 - updated `CONTRIBUTING.md`, `SECURITY.md`, and `AGENTS.md`
 

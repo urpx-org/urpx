@@ -165,7 +165,7 @@ Examples of details to verify:
 - customer kind or subkind
 - DER requirements such as EV charging, storage, or heat pump participation
 - program enrollment requirements
-- prior-rate-plan or enrollment-history conditions
+- prior rate plan or enrollment-history conditions
 
 For the condition-expression model, see [`urpx-condition-modeling.md`](urpx-condition-modeling.md).
 
@@ -188,7 +188,7 @@ Common mistakes:
 
 - month-based credits modeled only in the price name instead of an applicability rule
 - geographic or service-voltage filters described in prose instead of structured applicability
-- tariff-book-wide eligibility being attached to an individual price
+- eligibility that applies across the whole tariff book being attached to an individual price
 
 ### Profile Alternatives and Customer Choice
 

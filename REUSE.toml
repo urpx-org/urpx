@@ -52,7 +52,7 @@ path = [
     "test-cases/coned-sc1-rate-i/assets/mac-202603.pdf",
     "test-cases/coned-sc1-rate-i/assets/mac-202604.pdf",
     "test-cases/coned-sc1-rate-i/assets/mac-202605.pdf",
-    "test-cases/coned-sc1-rate-i/assets/LDS_APPND (4).csv",
+    "test-cases/coned-sc1-rate-i/assets/lds-appnd-2025.csv",
 ]
 precedence = "override"
 SPDX-FileCopyrightText = "Consolidated Edison Company of New York, Inc."
@@ -67,5 +67,23 @@ path = [
     "test-cases/test-cases-index.csv",
     "test-cases/urpx-edge-cases.csv",
 ]
+SPDX-FileCopyrightText = "Flux Tailor LLC"
+SPDX-License-Identifier = "Apache-2.0"
+
+# -----------------------------------------------------------------------------
+# Working group development documents, the generated data dictionary, and JSON
+# manifests/schemas (JSON cannot carry comment headers) — Flux Tailor-authored,
+# Apache-2.0 alongside the rest of the pre-Draft project.
+# -----------------------------------------------------------------------------
+[[annotations]]
+path = [
+    "dev-docs/**",
+    "documentation/pages/urpx-data-dictionary.md",
+    "documentation/examples/examples-schema.json",
+    "documentation/examples/manifest.json",
+    "test-cases/manifest-all-schema.json",
+    "test-cases/manifest-all.json",
+]
+precedence = "aggregate"
 SPDX-FileCopyrightText = "Flux Tailor LLC"
 SPDX-License-Identifier = "Apache-2.0"

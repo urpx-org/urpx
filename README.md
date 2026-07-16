@@ -3,7 +3,7 @@
 
 # URPX: Utility Rate Plan Exchange Ontology
 
-**Version 0.2.0** | **W3C-Ready Semantic Standard**
+**Version 0.3.0** | **W3C-Ready Semantic Standard**
 
  [![Documentation](https://img.shields.io/badge/Documentation-Complete-green)](documentation/) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
@@ -23,7 +23,7 @@ The **Utility Rate Plan Exchange (URPX)** ontology is an open standard for excha
 - **[Overview](documentation/pages/urpx-overview.md)** - Understanding URPX
 - **[Tutorial](documentation/pages/urpx-tutorial.md)** - Step-by-step guide
 - **[Data Dictionary](documentation/pages/urpx-data-dictionary.md)** - Complete reference
-- **[Examples](documentation/pages/urpx-examples.md)** - Real-world implementations
+- **[Test Cases](test-cases/index.md)** - Real-world example datasets
 - **[FAQ](documentation/pages/urpx-faq.md)** - Frequently asked questions
 
 ---
@@ -33,10 +33,12 @@ The **Utility Rate Plan Exchange (URPX)** ontology is an open standard for excha
 ```
 urpx/
 ├── documentation/     # Complete documentation (start at index)
-├── ontology/           # Core OWL ontology file
+├── ontology/          # Core OWL ontology file
 ├── shacl/             # SHACL validation constraints
-├── skos/     # SKOS mapping
+├── skos/              # SKOS mappings to related standards
 ├── test-cases/        # Test datasets and examples
+├── dev-docs/          # Working group development documents
+├── scripts/           # Project tooling
 ```
 
 ---

@@ -320,6 +320,10 @@ URPX v0.3.0 uses a core ontology file:
 3. **Validate with SHACL** - Use `shacl/urpx-shacl.ttl`
 4. **Check business logic** - Verify price structure, time coverage, and rule intent against the source tariff
 
+### Edge-Case Coverage
+
+The repository maintains an edge-case register at [`test-cases/urpx-edge-cases.csv`](../../test-cases/urpx-edge-cases.csv): a catalog of difficult real-world tariff features, each with the publishing utility, a source link, and the exact source language. Use it to steer test-case coverage, and add a row when a published tariff shows a hard pattern the register does not yet contain.
+
 ### Common Pitfalls to Avoid
 
 **Property Name Errors:**

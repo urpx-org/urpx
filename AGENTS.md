@@ -1,3 +1,6 @@
+<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
 # AGENTS.md
 
 This file provides instructions for automated agents, coding assistants, and other AI-assisted tools working in this repository.
@@ -62,6 +65,16 @@ Do not generate verbose or fully AI-generated directory proposals.
 Test data may be submitted with a pull request when it is clearly scoped and does not require a model change.
 
 If the test data implies changes to the ontology, SHACL constraints, or repository structure, seek working group discussion before generating or submitting the PR.
+
+## Development documents (dev-docs/)
+
+`dev-docs/` holds working group development documents: backlog tasks, specifications, working reports, and review materials.
+
+Follow `dev-docs/README.md` for file naming, frontmatter, lifecycle prefixes, and the public-ready bar.
+
+The sanctioned subfolders are `tasks/`, `specs/`, `reports/`, `review/`, and `roadmaps/`.
+
+Do not add new subfolders without prior working group discussion, per the New directories rule above.
 
 ## Editing guidance
 

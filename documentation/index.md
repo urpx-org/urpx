@@ -5,7 +5,7 @@
 
 # URPX Documentation
 
-## Utility Rate Plan Exchange Standard v0.2.0
+## Utility Rate Plan Exchange Standard v0.3.0
 
 Welcome to the URPX documentation. URPX is an open standard for exchanging utility rate plan information using semantic web technologies.
 
@@ -16,7 +16,7 @@ Welcome to the URPX documentation. URPX is an open standard for exchanging utili
 ### Getting Started
 - **[Overview](pages/urpx-overview.md)** - Understanding URPX and rate plan data exchange
 - **[Tutorial](pages/urpx-tutorial.md)** - Step-by-step guide to creating rate plan data
-- **[Release Notes v0.2.0](pages/urpx-release-notes-v0.2.0.md)** - Summary of v0.2.0 changes and migration impact
+- **[Release Notes v0.3.0](pages/urpx-release-notes-v0.3.0.md)** - Summary of v0.3.0 changes and migration impact (earlier: [v0.2.1](pages/urpx-release-notes-v0.2.1.md), [v0.2.0](pages/urpx-release-notes-v0.2.0.md))
 - **[FAQ](pages/urpx-faq.md)** - Frequently asked questions
 
 ### Technical Reference
@@ -32,6 +32,7 @@ Welcome to the URPX documentation. URPX is an open standard for exchanging utili
 - **[Design Decisions 001-040](pages/urpx-design-decisions-001-040.md)** - Architectural decision log (Part 1)
 - **[Design Decisions 041-080](pages/urpx-design-decisions-041-080.md)** - Architectural decision log (Part 2)
 - **[Design Decisions 081-120](pages/urpx-design-decisions-081-120.md)** - Architectural decision log (Part 3)
+- **[Design Decisions v0.3.0](pages/urpx-design-decisions-v0.3.0.md)** - Architectural decision log for v0.3.0 and later versions
 
 ### Learning & Education
 - **[Semantic Web Guide](pages/urpx-semantic-web-guide.md)** - Introduction to RDF, ontologies, and linked data

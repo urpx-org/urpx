@@ -14,11 +14,11 @@
 
 ## Overview
 
-This document defines the standardized syntax and labeling conventions used in URPX ontologies. These guidelines ensure consistency across all URPX implementations and enable AI agents and automated tools to properly interpret and generate URPX-compliant data.
+This document defines the standardized syntax and labeling conventions used in the URPX ontology. These guidelines ensure consistency across all URPX implementations and enable data consumers, automated processes, and AI agents to properly interpret and generate URPX-compliant data.
 
 ### Audience
 
-**Primary Audience**: Technical developers, ontology engineers, and AI agents working directly with URPX RDF/OWL ontology files.
+**Primary Audience**: URPX Working Group contributors, technical developers, ontology engineers, and AI agents working directly with URPX RDF/OWL ontology files.
 
 **Purpose**: This is a technical reference for ontology manipulation, property naming, and labeling conventions. It provides the precise syntax rules needed for:
 - Creating or modifying ontology definitions

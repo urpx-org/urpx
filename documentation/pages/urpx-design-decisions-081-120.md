@@ -249,7 +249,7 @@ Refactor `DataSourceTypeValue` to capture source origin rather than file format.
 - **Impact:** Low - Non-breaking relaxation of SHACL requirements
 
 **Context:**
-`ProgramEnrollmentShape` and `PriorRatePlanShape` required `enrollmentStatus`, even when the data was being used to represent available or applicable programs and prior rate-plan relationships on a `RatePlan` or `RatePlanModifier`, not a customer-specific scenario. In those contexts, a present-tense enrollment status is not knowable or appropriate, because status only becomes meaningful within a customer scenario model.
+`ProgramEnrollmentShape` and `PriorRatePlanShape` required `enrollmentStatus`, even when the data was being used to represent available or applicable programs and prior rate plan relationships on a `RatePlan` or `RatePlanModifier`, not a customer-specific scenario. In those contexts, a present-tense enrollment status is not knowable or appropriate, because status only becomes meaningful within a customer scenario model.
 
 **Decision:**
 Make `urpx:enrollmentStatus` optional on both `ProgramEnrollmentShape` and `PriorRatePlanShape`.
@@ -269,7 +269,7 @@ Make `urpx:enrollmentStatus` optional on both `ProgramEnrollmentShape` and `Prio
 **Rationale:**
 - Missing status is often a data availability issue, not a modeling error
 - `enrollmentStatus` can only be meaningfully required in a customer scenario model
-- Available or applicable programs and prior-rate-plan references on a rate artifact should not be forced to imply a customer's current status
+- Available or applicable programs and prior-rate plan references on a rate artifact should not be forced to imply a customer's current status
 - Prior-plan references are still useful without a normalized enrollment status
 - Relaxing the constraint improves interoperability with real-world utility source data
 - Optional status is more honest than requiring synthetic default values
@@ -302,7 +302,7 @@ Make `urpx:enrollmentStatus` optional on both `ProgramEnrollmentShape` and `Prio
 Several URPX classes had become user-facing or documentation-facing without being covered by the shared metadata properties already used elsewhere in the ontology. `PriceSummary`, `DataSourceReference`, `EligibilityRule`, `TOUSchedule`, `ServiceTier`, `ApplicabilityRule`, `ApplicabilityGroup`, and `PriceUpdateRule` all benefit from human-readable names. `DataSourceReference` and `PriceUpdateRule` also needed descriptive text, and `ProgramEnrollment` needed URL support. At the same time, core published entities like `RatePlan`, `RatePlanModifier`, `TariffPublication`, and `TOUPeriod` still allowed missing names in SHACL.
 
 **Decision:**
-Expand shared metadata property domains and align SHACL cardinalities so that user-facing classes can carry `name`, `description`, and `url`, while requiring `name` on core rate-plan publication entities.
+Expand shared metadata property domains and align SHACL cardinalities so that user-facing classes can carry `name`, `description`, and `url`, while requiring `name` on core rate plan publication entities.
 
 **Alternatives Considered:**
 
@@ -334,7 +334,7 @@ Expand shared metadata property domains and align SHACL cardinalities so that us
 **Impact Assessment:**
 - **Positive**: Better display metadata, clearer documentation support, and stronger guarantees that core published entities are named
 - **Breaking Change**: Yes - core entities without `name` values now fail SHACL validation
-- **Requirements**: Producers should populate `name` on all top-level rate-plan and publication entities, and may now add optional names/descriptions/URLs to the newly covered classes
+- **Requirements**: Producers should populate `name` on all top-level rate plan and publication entities, and may now add optional names/descriptions/URLs to the newly covered classes
 
 **References:**
 - Commits: `d86f096`, `4589ca5`, `57e2608`
@@ -370,7 +370,7 @@ Add `urpx:hasModifierOptions` as an object property linking `RatePlanVersion` to
    - ❌ Makes version-level option discovery harder
 
 **Rationale:**
-- Version-specific optional modifiers are a first-class concept in the rate-plan model
+- Version-specific optional modifiers are a first-class concept in the rate plan model
 - Explicit graph edges are easier to query, validate, and explain than inferred relationships
 - The new property improves discoverability without changing existing modifier semantics
 
@@ -630,7 +630,7 @@ Promote tariff book and tariff statement references to dedicated nested classes 
 **Implementation Details:**
 - Added `urpx:TariffBookReference` and `urpx:hasTariffBookReference` in [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
 - Added `urpx:TariffStatementReference` and `urpx:hasTariffStatementReference` in [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
-- Added `urpx:anchorLink`, `urpx:leafStart`, and `urpx:leafEnd` for structured tariff-book positioning
+- Added `urpx:anchorLink`, `urpx:leafStart`, and `urpx:leafEnd` for structured tariff book positioning
 - Extended the domains of `urpx:anchorLink`, `urpx:leafStart`, and `urpx:leafEnd` to include `TariffStatementReference`
 - Extended the domain of `urpx:description` to include `TariffBookReference`
 - Extended the domain of `urpx:tariffStatementType` to include `TariffStatementReference`
@@ -1197,16 +1197,16 @@ Represent literal operand types through the specific value property in use, such
 - **Impact:** Medium - Additive shared-rule layer with new ontology and SHACL resources
 
 **Context:**
-URPX already modeled rate-plan-specific rules such as `EligibilityRule` and `ApplicabilityRule`, but tariff books also contain general rules and statements that apply across multiple rate plans or modifier versions. Without a shared rule resource, producers had to duplicate the same rule text and provenance metadata on each versioned artifact, weakening reuse and traceability.
+URPX already modeled rules specific to a single rate plan, such as `EligibilityRule` and `ApplicabilityRule`, but tariff books also contain general rules and statements that apply across multiple rate plans or modifier versions. Without a shared rule resource, producers had to duplicate the same rule text and provenance metadata on each versioned artifact, weakening reuse and traceability.
 
 **Decision:**
-Add a first-class `urpx:GeneralRule` resource for tariff-book-level reusable rules. A `TariffBookDocument` may publish general rules through `urpx:hasGeneralRule`, and `RatePlanVersion` / `RatePlanModifierVersion` may reference applicable rules through `urpx:referencesGeneralRule`. Each `GeneralRule` carries its own identifier, optional human-readable metadata, provenance, and optional `ApplicabilityRule` attachments.
+Add a first-class `urpx:GeneralRule` resource for reusable rules at the tariff book level. A `TariffBookDocument` may publish general rules through `urpx:hasGeneralRule`, and `RatePlanVersion` / `RatePlanModifierVersion` may reference applicable rules through `urpx:referencesGeneralRule`. Each `GeneralRule` carries its own identifier, optional human-readable metadata, provenance, and optional `ApplicabilityRule` attachments.
 
 **Alternatives Considered:**
 
-1. **Add a reusable `GeneralRule` class with tariff-book ownership and version references** ⭐ **SELECTED**
+1. **Add a reusable `GeneralRule` class with tariff book ownership and version references** ⭐ **SELECTED**
    - ✅ Eliminates duplication of shared rule content across versions
-   - ✅ Gives tariff-book-level rules stable IRIs and identifiers
+   - ✅ Gives rules at the tariff book level stable IRIs and identifiers
    - ✅ Preserves provenance and applicability metadata on the shared rule itself
    - ✅ Makes shared-rule discovery queryable from both document and version layers
 
@@ -1214,19 +1214,19 @@ Add a first-class `urpx:GeneralRule` resource for tariff-book-level reusable rul
    - ✅ Avoids adding new classes and properties
    - ❌ Repeats the same rule content across multiple resources
    - ❌ Increases drift risk when a shared rule changes or is corrected
-   - ❌ Weakens the tariff-book layer as the canonical source of shared statements
+   - ❌ Weakens the tariff book layer as the canonical source of shared statements
 
 3. **Attach free-text general rules only to `TariffBookDocument` without a reusable resource**
-   - ✅ Keeps shared rules at the tariff-book level
+   - ✅ Keeps shared rules at the tariff book level
    - ❌ Does not support version-level references to specific rules
    - ❌ Makes provenance, applicability, and rule identity harder to manage
    - ❌ Limits downstream reuse in APIs and graph queries
 
 **Rationale:**
 - General rules are conceptually distinct from plan-specific eligibility or applicability rules
-- Shared tariff-book statements need stable IRIs so multiple versions can point to the same authoritative source
+- Shared tariff book statements need stable IRIs so multiple versions can point to the same authoritative source
 - Provenance and optional applicability metadata belong on the shared rule resource, not repeated per consumer
-- A dedicated resource keeps the tariff-book layer expressive without overloading version objects
+- A dedicated resource keeps the tariff book layer expressive without overloading version objects
 
 **Implementation Details:**
 - Added `urpx:GeneralRule` and `urpx:generalRuleID` in [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
@@ -1237,9 +1237,9 @@ Add a first-class `urpx:GeneralRule` resource for tariff-book-level reusable rul
 - Extended `TariffBookDocumentShape`, `RatePlanVersionShape`, and `RatePlanModifierVersionShape` to validate the new shared-rule links
 
 **Impact Assessment:**
-- **Positive**: Cleaner shared-rule reuse, stronger provenance, less duplication, and more accurate tariff-book modeling
+- **Positive**: Cleaner shared-rule reuse, stronger provenance, less duplication, and more accurate tariff book modeling
 - **Breaking Change**: None - the change is additive
-- **Requirements**: Producers should model tariff-book-wide reusable rules as `GeneralRule` resources rather than duplicating the same text across versions
+- **Requirements**: Producers should model reusable rules that apply across the whole tariff book as `GeneralRule` resources rather than duplicating the same text across versions
 
 **References:**
 - Related Decision: #089 (TariffBookReference and TariffStatementReference Nested Citation Classes)
@@ -1254,7 +1254,7 @@ Add a first-class `urpx:GeneralRule` resource for tariff-book-level reusable rul
 - **Date:** 2026-04-24
 - **Issue:** `isOptional` on `RatePlanModifier` conflated modifier availability with enrollment semantics of base rate plan versions
 - **Category:** Architecture, Naming Convention, Validation
-- **Impact:** High - Breaking change for modifier optionality modeling and rate-plan version enrollment metadata
+- **Impact:** High - Breaking change for modifier optionality modeling and rate plan version enrollment metadata
 
 **Context:**
 The prior `urpx:isOptional` property lived on `RatePlanModifier`, which suggested that optionality was an intrinsic property of the modifier document itself. In practice, optionality is contextual: a modifier is available or not available relative to a specific rate plan version, while the base rate plan version itself may be voluntary or mandatory for qualifying customers and may or may not be the default enrollment. The model needed to separate these concerns more cleanly.
@@ -1273,7 +1273,7 @@ Modifier availability remains contextual through version-to-modifier relationshi
 1. **Model enrollment choice and default status on `RatePlanVersion`, not on `RatePlanModifier`** ⭐ **SELECTED**
    - ✅ Separates base-plan enrollment semantics from modifier availability
    - ✅ Makes voluntary vs mandatory enrollment explicit through a controlled vocabulary
-   - ✅ Gives default-rate-plan selection a dedicated property with clear semantics
+   - ✅ Gives default rate plan selection a dedicated property with clear semantics
    - ✅ Aligns optional modifier availability with version-scoped compatibility relationships
 
 2. **Keep `isOptional` on `RatePlanModifier` and add version-level enrollment properties separately**
@@ -1305,7 +1305,7 @@ Modifier availability remains contextual through version-to-modifier relationshi
 **Impact Assessment:**
 - **Positive**: Cleaner enrollment semantics, clearer default selection modeling, and less ambiguity about modifier optionality
 - **Breaking Change**: Yes - data using `urpx:isOptional` on `RatePlanModifier` must migrate
-- **Requirements**: Producers should use `customerChoice` and `isDefault` for rate-plan version enrollment semantics and use modifier-option relationships to express contextual modifier availability
+- **Requirements**: Producers should use `customerChoice` and `isDefault` for rate plan version enrollment semantics and use modifier-option relationships to express contextual modifier availability
 
 **References:**
 - Related Decision: #084 (RatePlanVersion Modifier Options Relationship)
@@ -1331,7 +1331,7 @@ Broaden the ontology domains of existing compatibility properties rather than in
 1. Expand `urpx:applicableToRatePlan` to allow `urpx:RatePlan` in addition to `urpx:RatePlanVersion` and `urpx:RatePlanModifierVersion`
 2. Expand `urpx:applicableToRatePlanVersion` from `urpx:RatePlanModifierVersion` to a union of `urpx:RatePlanModifierVersion` and `urpx:RatePlanVersion`
 
-The ranges remain unchanged. This keeps the property vocabulary compact while allowing compatibility assertions to be attached to the rate-plan side when needed.
+The ranges remain unchanged. This keeps the property vocabulary compact while allowing compatibility assertions to be attached to the rate plan side when needed.
 
 **Alternatives Considered:**
 
@@ -1619,12 +1619,12 @@ Tighten SHACL so the intended model is enforceable:
 
 - **Status:** ✅ Implemented
 - **Date:** 2026-04-29
-- **Issue:** Prior-rate-plan relationships needed service-role context, but the ontology and SHACL exposed `serviceRole` only on versions and providers
+- **Issue:** Prior-rate plan relationships needed service-role context, but the ontology and SHACL exposed `serviceRole` only on versions and providers
 - **Category:** Architecture, Validation
-- **Impact:** Low - Additive domain and shape expansion for prior-rate-plan context
+- **Impact:** Low - Additive domain and shape expansion for prior-rate plan context
 
 **Context:**
-`urpx:serviceRole` already provides the controlled vocabulary needed to distinguish bundled, distribution, and retail roles on rate-plan versions and energy service providers. Prior-rate-plan references can carry the same distinction when documenting migration or compatibility context, but `PriorRatePlan` was not included in the ontology domain or SHACL surface.
+`urpx:serviceRole` already provides the controlled vocabulary needed to distinguish bundled, distribution, and retail roles on rate plan versions and energy service providers. Prior-rate plan references can carry the same distinction when documenting migration or compatibility context, but `PriorRatePlan` was not included in the ontology domain or SHACL surface.
 
 **Decision:**
 Extend the existing `serviceRole` property rather than inventing a prior-plan-specific variant:
@@ -1637,7 +1637,7 @@ Extend the existing `serviceRole` property rather than inventing a prior-plan-sp
 1. **Reuse `serviceRole` on `PriorRatePlan`** ⭐ **SELECTED**
    - ✅ Reuses an existing controlled vocabulary and query surface
    - ✅ Avoids introducing a near-duplicate prior-plan-specific property
-   - ✅ Keeps prior-plan context aligned with rate-plan and provider modeling
+   - ✅ Keeps prior-plan context aligned with rate plan and provider modeling
 
 2. **Infer prior-plan role from the referenced plan or leave it in free text**
    - ✅ Avoids ontology changes
@@ -1645,7 +1645,7 @@ Extend the existing `serviceRole` property rather than inventing a prior-plan-sp
    - ❌ Weakens validation and makes downstream interpretation less consistent
 
 **Rationale:**
-- Prior-rate-plan context uses the same role semantics already captured by `serviceRole`
+- Prior-rate plan context uses the same role semantics already captured by `serviceRole`
 - Reusing the existing property is lighter-weight than minting a parallel property family
 - Optional validation keeps the change additive while allowing more expressive historical context
 
