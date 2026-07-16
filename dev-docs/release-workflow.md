@@ -36,17 +36,18 @@ The version bump should be a **dedicated commit on `main`** made immediately bef
 
 ### Files to update
 
-**`ontology/urpx-ontology.ttl`** — all four locations in the metadata block:
+**`ontology/urpx-ontology.ttl`** — all locations in the metadata block:
 ```
 # Version: X.Y.Z pre-draft                          ← comment header (line ~8)
 dcterms:modified "YYYY-MM-DD"^^xsd:date             ← today's date
 dcterms:hasVersion <.../ontology/releases/vX.Y.Z>
+owl:versionInfo "X.Y.Z"                             ← on the main ontology resource
 owl:versionIRI <.../vX.Y.Z/ontology/urpx-ontology.ttl>
 
 <.../ontology/releases/vX.Y.Z>
     dcterms:issued "YYYY-MM-DD"^^xsd:date
     owl:versionInfo "X.Y.Z"
-    dcat:distribution <.../ontology/vX.Y.Z/ttl>
+    dcat:distribution <.../ontology/releases/vX.Y.Z/ttl>
 
 <.../ontology/releases/vX.Y.Z/ttl>
     dcat:downloadURL <.../vX.Y.Z/ontology/urpx-ontology.ttl>
@@ -60,11 +61,12 @@ Also update the `skos:note` example URL on `urpx:targetURPXVersion`.
 # Version: X.Y.Z Pre-Draft                          ← comment header
 dcterms:modified "YYYY-MM-DD"^^xsd:date
 dcterms:hasVersion <.../shacl/releases/vX.Y.Z>
+owl:versionInfo "X.Y.Z"                             ← on the main shapes graph resource
 owl:versionIRI <.../vX.Y.Z/shacl/urpx-shacl.ttl>
 
 <.../shacl/releases/vX.Y.Z>
     dcterms:issued "YYYY-MM-DD"^^xsd:date
-    dcat:version "X.Y.Z"
+    owl:versionInfo "X.Y.Z"
     dcat:distribution <.../shacl/releases/vX.Y.Z/ttl>
 
 <.../shacl/releases/vX.Y.Z/ttl>

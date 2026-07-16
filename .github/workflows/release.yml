@@ -12,6 +12,9 @@ on:
       checkout_ref:
         description: Ref to checkout for release notes. Defaults to the tag.
         required: false
+      release_body:
+        description: Optional release body text. Defaults to the checked-in release notes file.
+        required: false
 
 permissions:
   contents: write
@@ -26,6 +29,7 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
           INPUT_TAG: ${{ inputs.tag }}
           INPUT_CHECKOUT_REF: ${{ inputs.checkout_ref }}
+          INPUT_RELEASE_BODY: ${{ inputs.release_body }}
           REF_NAME: ${{ github.ref_name }}
         run: |
           if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
@@ -49,8 +53,14 @@ jobs:
               ;;
           esac
 
+          use_manual_body="false"
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ -n "$INPUT_RELEASE_BODY" ]; then
+            use_manual_body="true"
+          fi
+
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
           echo "checkout_ref=$checkout_ref" >> "$GITHUB_OUTPUT"
+          echo "use_manual_body=$use_manual_body" >> "$GITHUB_OUTPUT"
           echo "Using release tag: $tag"
           echo "Using checkout ref: $checkout_ref"
 
@@ -59,15 +69,34 @@ jobs:
         with:
           ref: ${{ steps.release.outputs.checkout_ref }}
 
+      - name: Write manual release body
+        if: steps.release.outputs.use_manual_body == 'true'
+        env:
+          MANUAL_RELEASE_BODY: ${{ inputs.release_body }}
+        run: printf '%s\n' "$MANUAL_RELEASE_BODY" > release-body.md
+
+      - name: Require automation token for private release helper
+        if: steps.release.outputs.use_manual_body != 'true'
+        env:
+          URPX_AUTOMATION_TOKEN: ${{ secrets.URPX_AUTOMATION_TOKEN }}
+        run: |
+          if [ -z "$URPX_AUTOMATION_TOKEN" ]; then
+            echo "::error::URPX_AUTOMATION_TOKEN is required to checkout the private urpx-website-staging release helper repository."
+            echo "Create an organization or repository secret with read access to urpx-org/urpx-website-staging."
+            exit 1
+          fi
+
       - name: Checkout urpx-website-staging (for release helper)
+        if: steps.release.outputs.use_manual_body != 'true'
         uses: actions/checkout@v6
         with:
           repository: urpx-org/urpx-website-staging
           path: .urpx-website
           ref: main
-          token: ${{ secrets.URPX_AUTOMATION_TOKEN || github.token }}
+          token: ${{ secrets.URPX_AUTOMATION_TOKEN }}
 
       - name: Resolve release notes path
+        if: steps.release.outputs.use_manual_body != 'true'
         id: notes
         run: |
           version="${{ steps.release.outputs.tag }}"
@@ -81,6 +110,7 @@ jobs:
           echo "path=$notes" >> "$GITHUB_OUTPUT"
 
       - name: Strip Docusaurus chrome from release notes
+        if: steps.release.outputs.use_manual_body != 'true'
         run: |
           python3 .urpx-website/scripts/codegen/strip-release-notes-chrome.py \
             "${{ steps.notes.outputs.path }}" \
@@ -89,6 +119,14 @@ jobs:
             --base-path documentation/pages \
             > release-body.md
 
+      - name: Prepare release assets
+        run: |
+          tag="${{ steps.release.outputs.tag }}"
+          mkdir -p release-assets
+          cp ontology/urpx-ontology.ttl "release-assets/urpx-ontology-${tag}.ttl"
+          cp shacl/urpx-shacl.ttl "release-assets/urpx-shacl-${tag}.ttl"
+          sha256sum release-assets/*.ttl > release-assets/SHA256SUMS.txt
+
       - name: Create GitHub release
         uses: softprops/action-gh-release@v3
         with:
@@ -96,4 +134,7 @@ jobs:
           target_commitish: ${{ steps.release.outputs.checkout_ref }}
           name: ${{ steps.release.outputs.tag }}
           body_path: release-body.md
+          files: |
+            release-assets/*.ttl
+            release-assets/SHA256SUMS.txt
           prerelease: ${{ contains(steps.release.outputs.tag, '-') }}

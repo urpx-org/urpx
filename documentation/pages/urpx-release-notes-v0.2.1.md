@@ -39,7 +39,7 @@ No structural changes to the ontology. Existing v0.2.0-conformant data does not 
 | File | Change |
 |------|--------|
 | `ontology/urpx-ontology.ttl` | `owl:versionIRI`, `owl:versionInfo`, `dcterms:hasVersion`, distribution URLs updated to `v0.2.1` |
-| `shacl/urpx-shacl.ttl` | `owl:versionIRI`, `dcat:version`, `dcterms:hasVersion`, distribution URLs updated to `v0.2.1` |
+| `shacl/urpx-shacl.ttl` | `owl:versionIRI`, `owl:versionInfo`, `dcterms:hasVersion`, distribution URLs updated to `v0.2.1` |
 
 ---
 
