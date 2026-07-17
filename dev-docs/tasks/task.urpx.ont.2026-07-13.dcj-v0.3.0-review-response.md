@@ -1,12 +1,12 @@
 ---
 id: taskurpxontdcjv030reviewresponse
-title: "Track responses to Don Jackson's v0.3.0 review"
-desc: "Tracking task for the WG v0.3.0 review from Don Jackson: one row per point (assents, Q1-Q6, two Minor items, gaps #32/#25, the California worked-set offer), each with our position and a completion mark, so we can show when each was answered and closed. Links the source issues, Don's notes, our response report, and the (unassigned) design tasks spun off from it."
+title: "Track responses to DCJ's v0.3.0 review"
+desc: "Tracking task for the WG v0.3.0 review from DCJ: one row per point (assents, Q1-Q6, two Minor items, gaps #32/#25, the California worked-set offer), each with our position and a completion mark, so we can show when each was answered and closed. Links the source issues, Don's notes, our response report, and the (unassigned) design tasks spun off from it."
 updated: 1783900800000
 created: 1783900800000
 ---
 
-# Track responses to Don Jackson's v0.3.0 review
+# Track responses to DCJ's v0.3.0 review
 
 | Field | Value |
 |-------|-------|
@@ -64,9 +64,9 @@ and authoring work is spun off into **unassigned** tasks any WG member may pick 
 - [KDS] **Offer — California worked set.** Accept; coordinate as a shared test case exercising
   Q2 + Q5. → unassigned task `task.urpx.ont.2026-07-13.california-worked-example-set.md`.
 
-## Follow-up — Don Jackson's confirmations (2026-07-14)
+## Follow-up — DCJ's confirmations (2026-07-14)
 
-Two notes back from Don Jackson: assent to the filing / snapshot split, and a cross-check of the
+Two notes back from DCJ: assent to the filing / snapshot split, and a cross-check of the
 walkthrough deck against the shapes. Reply drafted for the chair to send.
 
 - [x] **Minor 2 confirmed — many schedules per filing.** Don confirms a multi-schedule single

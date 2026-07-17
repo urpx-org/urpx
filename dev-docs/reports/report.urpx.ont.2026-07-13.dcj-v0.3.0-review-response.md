@@ -1,12 +1,12 @@
 ---
 id: reporturpxontdcjv030reviewresponse
-title: "Response to Don Jackson's v0.3.0 review"
-desc: "Our point-by-point response to Don Jackson's URPX v0.3.0 review. Don assents to all three §8 checks (incl. the RatePlanVersion re-meaning, which unblocks the release + license transition). For each open question we give a recommended answer with compact options, source references, and links to the tracking task and (unassigned) design tasks. Companion to report.urpx.ont.2026-07-13.dcj-v0.3.0-review-notes."
+title: "Response to DCJ's v0.3.0 review"
+desc: "Our point-by-point response to DCJ's URPX v0.3.0 review. Don assents to all three §8 checks (incl. the RatePlanVersion re-meaning, which unblocks the release + license transition). For each open question we give a recommended answer with compact options, source references, and links to the tracking task and (unassigned) design tasks. Companion to report.urpx.ont.2026-07-13.dcj-v0.3.0-review-notes."
 updated: 1783900800000
 created: 1783900800000
 ---
 
-# Response to Don Jackson's v0.3.0 review
+# Response to DCJ's v0.3.0 review
 
 His full notes: [dcj-v0.3.0-review-notes](report.urpx.ont.2026-07-13.dcj-v0.3.0-review-notes.md).
 Candidate reviewed: [v0.3.0 walkthrough](report.urpx.ont.2026-07-07_urpx-model-update-walkthrough.md).

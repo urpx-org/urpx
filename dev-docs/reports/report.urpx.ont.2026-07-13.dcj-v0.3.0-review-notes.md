@@ -1,12 +1,12 @@
 ---
 id: reporturpxontdcjv030reviewnotes
-title: "Don Jackson — review of the URPX v0.3.0 candidate (WG #012 pre-read)"
-desc: "Don Jackson's reaction, questions and comments on the URPX v0.3.0 candidate walkthrough, grounded in urpx-org/urpx@236a67f: a Bottom line (three assents), where the model lands well for a California corpus, six questions (led by whether a corpus resolves deterministically), two Minor items, an offer to build a California worked set, the reconciled California backlog, and a two-shape companion (issues #32 and #25). Saved 2026-07-13; our response is in report.urpx.ont.2026-07-13.dcj-v0.3.0-review-response."
+title: "DCJ — review of the URPX v0.3.0 candidate (WG #012 pre-read)"
+desc: "DCJ's reaction, questions and comments on the URPX v0.3.0 candidate walkthrough, grounded in urpx-org/urpx@236a67f: a Bottom line (three assents), where the model lands well for a California corpus, six questions (led by whether a corpus resolves deterministically), two Minor items, an offer to build a California worked set, the reconciled California backlog, and a two-shape companion (issues #32 and #25). Saved 2026-07-13; our response is in report.urpx.ont.2026-07-13.dcj-v0.3.0-review-response."
 updated: 1783900800000
 created: 1783900800000
 ---
 
-# Don Jackson — review of the URPX v0.3.0 candidate (WG #012 pre-read)
+# DCJ — review of the URPX v0.3.0 candidate (WG #012 pre-read)
 
 > **Editorial notes (ours, not Don's).** Bracketed **`[plan]`** insertions mark where Don's
 > "rate" means the *rate plan* (the stable identity), to keep it distinct from a rate group,

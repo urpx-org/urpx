@@ -596,7 +596,7 @@ Dual reference pattern:
 - **Dual Access**: Rate plans can reference full calendar OR specific holidays
 
 **References:**
-- Una's UPUB-199 notes (holiday versioning requirement)
+- Working-group notes on the holiday-versioning requirement
 - CIM CalendarTimeInterval patterns
 
 ---
@@ -647,7 +647,7 @@ Create 7 URPXDocument subclasses with clearly defined capability matrix.
 - **Impact:** Medium - Alternative dimension value labeling
 
 **Context:**
-AlternativeDimension `possibleValues` contained only identifiers without human-readable labels, blocking GUI filter button generation for ChargeSetAlternatives in UtiliPub.
+AlternativeDimension `possibleValues` contained only identifiers without human-readable labels, blocking GUI filter button generation for ChargeSetAlternatives in consuming applications.
 
 **Decision:**
 Replace `possibleValues` (string array) with `hasPossibleValues` (structured objects) containing `rdfs:label`, optional `skos:notation`, and value identifiers.
@@ -671,7 +671,7 @@ urpx:hasPossibleValues a owl:ObjectProperty ;
 GUI-ready labels, SKOS standards alignment, extensible for translations/definitions.
 
 **Impact:**
-Enables UtiliPub GUI filter buttons, maintains RDF/linked data patterns.
+Enables consuming-application GUI filter buttons, maintains RDF/linked data patterns.
 
 ---
 
