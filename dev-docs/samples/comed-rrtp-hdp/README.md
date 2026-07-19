@@ -1,12 +1,8 @@
 # ComEd Residential Real-Time Pricing — highly dynamic prices worked set
 
-Models a wholesale-indexed hourly residential rate plan with the proposed
-value-expression, price-series, and endpoint-discovery vocabulary. Real-Time
-Pricing is the utility's name for this rate plan type; the umbrella term for the
-sub-daily price streams here is *highly dynamic prices*.
+Models a wholesale-indexed hourly residential rate plan with the proposed value-expression, price-series, and endpoint-discovery vocabulary. Real-Time Pricing is the utility's name for this rate plan type; the umbrella term for the sub-daily price streams here is *highly dynamic prices*.
 
-**Synthetic test data — not for production use.** Prices are illustrative and are
-not ComEd's actual prices. Every document marks its pricing content `estimated`.
+**Synthetic test data — not for production use.** Prices are illustrative and are not ComEd's actual prices. Every document marks its pricing content `estimated`.
 
 ## Files
 
@@ -25,25 +21,14 @@ not ComEd's actual prices. Every document marks its pricing content `estimated`.
 
 ## Conformance vector
 
-Given the recipe (the `add` expression on `comed:pur-day-ahead-lmp`) and the driver
-series (`comed-rrtp-lmp-series-20260115.jsonld`), a conforming implementation must
-produce values decimal-equal to `comed-rrtp-series-20260115-dayahead.jsonld`. Each
-expected value equals the driver value plus 0.00735. For example, local hour 17
-(`2026-01-15T23:00:00Z`) has driver 0.04100 and expected 0.04835.
+Given the recipe (the `add` expression on `comed:pur-day-ahead-lmp`) and the driver series (`comed-rrtp-lmp-series-20260115.jsonld`), a conforming implementation must produce values decimal-equal to `comed-rrtp-series-20260115-dayahead.jsonld`. Each expected value equals the driver value plus 0.00735. For example, local hour 17 (`2026-01-15T23:00:00Z`) has driver 0.04100 and expected 0.04835.
 
-The driver series supplies the `comed:mi-hourly-wholesale-price` metric input the
-expression references; that binding is declared here rather than in vocabulary, per
-spec 043 open question 3.
+The driver series supplies the `comed:mi-hourly-wholesale-price` metric input the expression references; that binding is declared here rather than in vocabulary, per spec 043 open question 3.
 
 ## True-up
 
-`comed-rrtp-series-20260115-final.jsonld` supersedes the day-ahead series with
-`finalPriceStatus`. The three settled peak-evening hours differ from the projected
-values; the rest are unchanged. This is what `supersedes` plus `priceStatus`
-express: a later settled series replacing an earlier projected one.
+`comed-rrtp-series-20260115-final.jsonld` supersedes the day-ahead series with `finalPriceStatus`. The three settled peak-evening hours differ from the projected values; the rest are unchanged. This is what `supersedes` plus `priceStatus` express: a later settled series replacing an earlier projected one.
 
 ## Validation
 
-These files exercise proposed vocabulary from specs 041–043 and validate only
-against the v0.3.0 candidate (commit `3d474cbd`) merged with those specs' edit
-sets, not against v0.3.0 alone.
+These files exercise proposed vocabulary from specs 041–043 and validate only against the v0.3.0 candidate (commit `3d474cbd`) merged with those specs' edit sets, not against v0.3.0 alone.

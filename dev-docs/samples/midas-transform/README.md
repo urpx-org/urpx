@@ -1,14 +1,8 @@
 # URPX to MIDAS transform — worked example
 
-The PG&E Net Billing Tariff export compensation series
-([`../pge-nbt-export-series/`](../pge-nbt-export-series/)) transformed to a
-California Energy Commission MIDAS v2.0 upload payload, demonstrating the field
-mapping in
-[`spec.urpx.ont.044.urpx-to-midas-transform.md`](../../specs/spec.urpx.ont.044.urpx-to-midas-transform.md).
+The PG&E Net Billing Tariff export compensation series ([`../pge-nbt-export-series/`](../pge-nbt-export-series/)) transformed to a California Energy Commission MIDAS v2.0 upload payload, demonstrating the field mapping in [`spec.urpx.ont.044.urpx-to-midas-transform.md`](../../specs/spec.urpx.ont.044.urpx-to-midas-transform.md).
 
-**Synthetic test data — not for production use.** The RIN `USCA-PGPG-NBTG-0000` is
-fictitious for illustration; it is not registered in MIDAS. Do not upload this
-payload.
+**Synthetic test data — not for production use.** The RIN `USCA-PGPG-NBTG-0000` is fictitious for illustration; it is not registered in MIDAS. Do not upload this payload.
 
 ## File
 
@@ -31,23 +25,13 @@ payload.
 
 Each URPX `PriceObservation` becomes one MIDAS `ValueData` entry:
 
-- `DateStart`/`DateEnd` and `TimeStart`/`TimeEnd` come from the observation's UTC
-  `intervalStart`; `TimeEnd` is the inclusive `HH:59:59`.
-- **Sign flip.** URPX carries export compensation as negative credits; MIDAS
-  publishes `export $/kWh` as positive payments to the customer. The transform
-  negates each value, so URPX `-0.03000` becomes MIDAS `0.03`.
-- `Unit` is `export $/kWh`, derived from the price definition's `exportCredit`
-  charge type.
-- `DayStart`/`DayEnd` are the **local** day type (Monday = 1 … Sunday = 7) of the
-  interval under `America/Los_Angeles`, while all wire times are UTC. In winter the
-  local day flips at `08:00:00Z`, so the first entry of 2026-01-05 is
-  `TimeStart 08:00:00`, `DayStart 1` (Monday).
-- `ValueName` reflects the day type (`winter weekday export` / `winter weekend
-  export`).
+- `DateStart`/`DateEnd` and `TimeStart`/`TimeEnd` come from the observation's UTC `intervalStart`; `TimeEnd` is the inclusive `HH:59:59`.
+- **Sign flip.** URPX carries export compensation as negative credits; MIDAS publishes `export $/kWh` as positive payments to the customer. The transform negates each value, so URPX `-0.03000` becomes MIDAS `0.03`.
+- `Unit` is `export $/kWh`, derived from the price definition's `exportCredit` charge type.
+- `DayStart`/`DayEnd` are the **local** day type (Monday = 1 … Sunday = 7) of the interval under `America/Los_Angeles`, while all wire times are UTC. In winter the local day flips at `08:00:00Z`, so the first entry of 2026-01-05 is `TimeStart 08:00:00`, `DayStart 1` (Monday).
+- `ValueName` reflects the day type (`winter weekday export` / `winter weekend export`).
 
-The payload has 168 gap-free hourly entries: 120 weekday (Monday–Friday) and 48
-weekend (Saturday–Sunday). The weekend block begins at entry 121
-(`2026-01-10T08:00:00Z`).
+The payload has 168 gap-free hourly entries: 120 weekday (Monday–Friday) and 48 weekend (Saturday–Sunday). The weekend block begins at entry 121 (`2026-01-10T08:00:00Z`).
 
 ## Constraints checked
 
@@ -57,11 +41,8 @@ weekend (Saturday–Sunday). The weekend block begins at entry 121
 
 ## Information not carried to MIDAS
 
-`priceStatus` (all `final` here) and the series `supersedes` lifecycle have no
-MIDAS equivalent and are dropped; they remain on the URPX side. See spec 044 §5.
+`priceStatus` (all `final` here) and the series `supersedes` lifecycle have no MIDAS equivalent and are dropped; they remain on the URPX side. See spec 044 §5.
 
 ## Note on this draft
 
-This payload was derived by hand to illustrate the mapping. The reference transform
-(the companion implementation task) will regenerate it mechanically from the URPX
-series and validate it against the published MIDAS upload schema.
+This payload was derived by hand to illustrate the mapping. The reference transform (the companion implementation task) will regenerate it mechanically from the URPX series and validate it against the published MIDAS upload schema.
