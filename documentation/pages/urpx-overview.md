@@ -310,6 +310,43 @@ ex:pd-transmission a urpx:PriceDefinition ;
 
 Reading the chain top-down: the **statement** (`SourcePublication`) is the external document; the **filing** (`TariffFiling`) is the URPX content unit within it, citing its exact source through a `DataSourceReference`; the **pricing model** is the authored pricing the filing carries. Inside the pricing model the structure is the same as inside a rate plan version: `PlanElements` hold the measurement definition (`MetricInput`) and the `BillingModel` with its ledger and stable `PriceDefinition`s, while `Prices` hold the dated values that reference those definitions. When a version snapshot is later consolidated, this pricing model contributes its price to the resolved `RatePlanVersion` for the window in which the statement is effective.
 
+### A California Example: Identity and Partial Coverage
+
+Not every rate plan version is self-contained, and a plan identity often carries more than one identifier. A California Community Choice Aggregation (CCA) or Direct Access customer takes delivery service priced by the utility while generation is priced by a third party, so the utility's version carries delivery in full but references generation externally.
+
+The plan identity carries the identifiers a customer and downstream systems key on. In California the MIDAS RIN (printed on the bill, and the key under which the utility uploads the rate's prices to the state MIDAS feed) rides alongside the utility's own tariff code:
+
+```turtle
+ex:pge-e-tou-c a urpx:RatePlan ;
+    urpx:ratePlanUniqueIdentifier "E-TOU-C" ;
+    urpx:name "Residential Time-of-Use (Peak Pricing 4-9 p.m.)" ;
+    urpx:initialEffectiveDate "2024-01-01"^^xsd:date ;
+    urpx:hasIdentifier
+        [ a urpx:RatePlanIdentifier ;
+          urpx:scheme urpx:ca-midas-rin ;
+          skos:notation "USCA-PGCE-TIME-0001" ] ,
+        [ a urpx:RatePlanIdentifier ;
+          urpx:scheme urpx:utility-tariff-code ;
+          skos:notation "E-TOU-C" ] .
+```
+
+The resolved version for a CCA customer then declares partial coverage. Only `completenessResult` is required on the `CoverageClaim`; `selfContained` and an explaining `Evaluation` are optional, but both make the partial case legible:
+
+```turtle
+ex:pge-e-tou-c-cca-2026-03-01 a urpx:RatePlanVersion ;
+    urpx:forRatePlan ex:pge-e-tou-c ;
+    urpx:effectiveDate "2026-03-01"^^xsd:date ;
+    # delivery PlanElements and Prices carried in full (elided here)
+    urpx:hasCoverageClaim [ a urpx:CoverageClaim ;
+        urpx:completenessResult urpx:partial ;
+        urpx:selfContained false ;
+        urpx:explainedBy [ a urpx:Evaluation ;
+            urpx:evaluationKind urpx:coverageEvaluation ;
+            urpx:description "Delivery charges are carried in full from the PG&E tariff book. Generation is priced by the customer's Community Choice Aggregator and referenced externally, not restated here." ] ] .
+```
+
+The externally-priced generation is attached through a `PriceDefinitionReference` whose `referenceInclusion` is `retrievedElsewhere`, which is what makes `selfContained` false and `completenessResult` `partial`.
+
 ### Geographic Applicability
 
 Prices apply within named geographic areas. Geographic scope is expressed through the general applicability model: an `ApplicabilityRule` carries a `ConditionExpression` that tests geographic vocabulary such as the `ServiceTerritory` class and the `GeographicScopeValue` enumeration (`statewideScope`, `countyScope`, `serviceTerritoryScope`, `municipalityScope`, `customScope`). See the [Condition Modeling](urpx-condition-modeling.md) page for the full applicability pattern.
