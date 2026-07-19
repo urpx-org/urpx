@@ -66,6 +66,7 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 - [ChangeReasonValue](#changereasonvalue)
 - [ChargeCategoryValue](#chargecategoryvalue)
 - [ChargeTypeValue](#chargetypevalue)
+- [CollectionRoleValue](#collectionrolevalue)
 - [CommodityValue](#commodityvalue)
 - [ConnectionKindValue](#connectionkindvalue)
 - [ConnectorTypeValue](#connectortypevalue)
@@ -108,7 +109,9 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 - [PriceSourceValue](#pricesourcevalue)
 - [ProgramTypeValue](#programtypevalue)
 - [PublicationTypeValue](#publicationtypevalue)
+- [ReferenceInclusionValue](#referenceinclusionvalue)
 - [RegulatoryScopeValue](#regulatoryscopevalue)
+- [ScopeKindValue](#scopekindvalue)
 - [SeasonalPatternValue](#seasonalpatternvalue)
 - [ServiceRoleValue](#servicerolevalue)
 - [SpecialNeedsStatusValue](#specialneedsstatusvalue)
@@ -2470,6 +2473,16 @@ potentially spanning multiple administrative boundaries.
 
 <DiagramViewer src="../diagrams/dictionary/hierarchy-ChargeTypeValue.svg" alt="ChargeTypeValue hierarchy" />
 
+### CollectionRoleValue
+
+| Value | Description |
+|-------|-------------|
+| `urpx:adHocSet` | — |
+| `urpx:canonicalSet` | — |
+| `urpx:modelThread` | — |
+| `urpx:scenarioSet` | — |
+| `urpx:submissionSet` | — |
+
 ### CommodityValue
 
 | Value | Description |
@@ -3042,6 +3055,13 @@ potentially spanning multiple administrative boundaries.
 | `urpx:tariffBookLeaves` | — |
 | `urpx:tariffStatement` | — |
 
+### ReferenceInclusionValue
+
+| Value | Description |
+|-------|-------------|
+| `urpx:includedHere` | — |
+| `urpx:retrievedElsewhere` | — |
+
 ### RegulatoryScopeValue
 
 | Value | Description |
@@ -3052,6 +3072,16 @@ potentially spanning multiple administrative boundaries.
 | `urpx:ratesRegulation` | — |
 | `urpx:safetyRegulation` | — |
 | `urpx:transmissionRegulation` | — |
+
+### ScopeKindValue
+
+| Value | Description |
+|-------|-------------|
+| `urpx:applicability` | — |
+| `urpx:coverage` | — |
+| `urpx:observation` | — |
+| `urpx:publication` | — |
+| `urpx:sourceLifecycle` | — |
 
 ### SeasonalPatternValue
 
@@ -3174,6 +3204,7 @@ potentially spanning multiple administrative boundaries.
 | `urpx:therm` | — |
 | `urpx:ton` | — |
 | `urpx:unitOther` | — |
+| `urpx:year` | — |
 
 ### UpdateFrequencyValue
 
