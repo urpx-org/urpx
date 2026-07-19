@@ -1,0 +1,100 @@
+{
+  "@context": {
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "org": "https://urpx-org.github.io/urpx/fixtures/org/",
+    "pge": "https://urpx-org.github.io/urpx/fixtures/pge/",
+    "urpx:intervalStart": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:intervalEnd": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:effectiveDateTime": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:expirationDateTime": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:unitPrice": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:initialEffectiveDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:url": {
+      "@type": "xsd:anyURI"
+    },
+    "urpx:intervalDuration": {
+      "@type": "xsd:duration"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "pge:nbt",
+      "@type": "urpx:RatePlanModifier",
+      "urpx:modifierUniqueIdentifier": "NBT",
+      "urpx:name": "Net Billing Tariff (NBT) Service",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Net billing service for eligible customer-generators, marketed as the Solar Billing Plan. Applies over an otherwise applicable rate plan; exports are credited at the applicable Export Compensation Rate.",
+      "urpx:initialEffectiveDate": "2023-04-15",
+      "urpx:timezoneIdentifier": "America/Los_Angeles",
+      "urpx:commodity": {
+        "@id": "urpx:electricity"
+      },
+      "urpx:url": "https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_SCHEDS_NBT.pdf",
+      "urpx:hasIdentifier": {
+        "@id": "pge:nbt-id-tariff-code",
+        "@type": "urpx:RatePlanModifierIdentifier",
+        "urpx:scheme": {
+          "@id": "urpx:utility-tariff-code"
+        },
+        "skos:notation": "NBT"
+      }
+    },
+    {
+      "@id": "pge:pub-nbt-export-rates",
+      "@type": "urpx:SourcePublication",
+      "urpx:publicationType": {
+        "@id": "urpx:highlyDynamicPrices"
+      },
+      "urpx:name": "PG&E NBT Export Compensation Rate tables",
+      "urpx:issuingAuthority": "Pacific Gas and Electric Company",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Externally published schedule of hourly Export Compensation Rates, differentiated weekday and weekend, per interconnection vintage; generation and delivery components are published separately."
+    },
+    {
+      "@id": "pge:ledger-export-generation",
+      "@type": "urpx:Ledger",
+      "urpx:name": "Export compensation, generation component",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Ledger for the generation avoided-cost component of export compensation."
+    },
+    {
+      "@id": "pge:pd-ecr-generation",
+      "@type": "urpx:PriceDefinition",
+      "urpx:name": "Export Compensation Rate, generation component",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Hourly export compensation for the generation avoided-cost component, differentiated weekday and weekend, resolved from PG&E's published Export Compensation Rate tables.",
+      "urpx:chargeType": {
+        "@id": "urpx:exportCredit"
+      },
+      "urpx:chargeCategory": {
+        "@id": "urpx:auxiliaryCharge"
+      },
+      "urpx:billPortion": {
+        "@id": "urpx:supplyPortion"
+      },
+      "urpx:referencesLedger": {
+        "@id": "pge:ledger-export-generation"
+      },
+      "urpx:hasCalculationMethod": {
+        "@id": "pge:cm-ecr-generation",
+        "@type": "urpx:CalculationMethod",
+        "urpx:name": "ACC-based hourly export compensation (generation)",
+        "urpx:intervalType": {
+          "@id": "urpx:hourlyInterval"
+        },
+        "urpx:intervalDuration": "PT1H",
+        "urpx:description": "Synthetic test data supporting specification review; not for production use. Hourly values differentiated by weekday and weekend, from the Avoided Cost Calculator vintage applicable to the customer's interconnection year."
+      }
+    }
+  ]
+}

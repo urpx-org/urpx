@@ -4008,6 +4008,33 @@ urpx:volumetricCharge rdf:type urpx:ChargeTypeValue ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
     urpx:billPortion urpx:bundledPortion .
 
+# --- Collection Role Property (CollectionRoleValue) ---
+
+urpx:modelThread rdf:type urpx:CollectionRoleValue ;
+    rdfs:label "Model Thread"@en ;
+    skos:definition "A chronological thread tracing one lineage of PricingModels (for example a regulatory thread) across successive RatePlans and RatePlanModifiers."@en ;
+    skos:prefLabel "Model Thread"@en .
+
+urpx:canonicalSet rdf:type urpx:CollectionRoleValue ;
+    rdfs:label "Canonical Set"@en ;
+    skos:definition "The authoritative, canonical grouping of PricingModels for its subject."@en ;
+    skos:prefLabel "Canonical Set"@en .
+
+urpx:adHocSet rdf:type urpx:CollectionRoleValue ;
+    rdfs:label "Ad Hoc Set"@en ;
+    skos:definition "An informal, ad hoc grouping of PricingModels carrying no implied authority or completeness."@en ;
+    skos:prefLabel "Ad Hoc Set"@en .
+
+urpx:submissionSet rdf:type urpx:CollectionRoleValue ;
+    rdfs:label "Submission Set"@en ;
+    skos:definition "A grouping of PricingModels assembled for a single submission or filing."@en ;
+    skos:prefLabel "Submission Set"@en .
+
+urpx:scenarioSet rdf:type urpx:CollectionRoleValue ;
+    rdfs:label "Scenario Set"@en ;
+    skos:definition "A grouping of PricingModels assembled to represent or drive a scenario."@en ;
+    skos:prefLabel "Scenario Set"@en .
+
 # --- Commodity Property (CommodityValue) ---
 
 urpx:biomass rdf:type urpx:CommodityValue ;
@@ -5958,6 +5985,18 @@ urpx:tariffStatement rdf:type urpx:PublicationTypeValue ;
     skos:definition "PSC tariff statement filing containing price adjustments and prices"@en ;
     skos:prefLabel "Tariff Statement"@en .
 
+# --- Reference Inclusion Property (ReferenceInclusionValue) ---
+
+urpx:includedHere rdf:type urpx:ReferenceInclusionValue ;
+    rdfs:label "Included Here"@en ;
+    skos:definition "The referenced price definition is present inline within this plan or publication."@en ;
+    skos:prefLabel "Included Here"@en .
+
+urpx:retrievedElsewhere rdf:type urpx:ReferenceInclusionValue ;
+    rdfs:label "Retrieved Elsewhere"@en ;
+    skos:definition "The referenced price definition is not included here and must be retrieved from an external source."@en ;
+    skos:prefLabel "Retrieved Elsewhere"@en .
+
 # --- Regulatory Scope Property (RegulatoryScopeValue) ---
 
 urpx:distributionRegulation rdf:type urpx:RegulatoryScopeValue ;
@@ -5989,6 +6028,33 @@ urpx:transmissionRegulation rdf:type urpx:RegulatoryScopeValue ;
     rdfs:label "Transmission Regulation"@en ;
     skos:definition "Transmission regulation - oversight of high-voltage transmission systems and grid reliability"@en ;
     skos:prefLabel "Transmission"@en .
+
+# --- Scope Kind Property (ScopeKindValue) ---
+
+urpx:publication rdf:type urpx:ScopeKindValue ;
+    rdfs:label "Publication"@en ;
+    skos:definition "Publication time: when the scoped facts were published or issued."@en ;
+    skos:prefLabel "Publication"@en .
+
+urpx:sourceLifecycle rdf:type urpx:ScopeKindValue ;
+    rdfs:label "Source Lifecycle"@en ;
+    skos:definition "Source-lifecycle time: the validity span of the originating source publication."@en ;
+    skos:prefLabel "Source Lifecycle"@en .
+
+urpx:applicability rdf:type urpx:ScopeKindValue ;
+    rdfs:label "Applicability"@en ;
+    skos:definition "Applicability time: when the scoped facts take effect and apply."@en ;
+    skos:prefLabel "Applicability"@en .
+
+urpx:observation rdf:type urpx:ScopeKindValue ;
+    rdfs:label "Observation"@en ;
+    skos:definition "Observation time: when the scoped facts were observed or measured."@en ;
+    skos:prefLabel "Observation"@en .
+
+urpx:coverage rdf:type urpx:ScopeKindValue ;
+    rdfs:label "Coverage"@en ;
+    skos:definition "Coverage time: the span of time the scoped facts cover."@en ;
+    skos:prefLabel "Coverage"@en .
 
 # --- Seasonal Pattern Property (SeasonalPatternValue) ---
 
@@ -6480,6 +6546,11 @@ urpx:Wh rdf:type urpx:UnitOfMeasureValue ;
     skos:definition "Watt hour - unit of energy"@en ;
     skos:prefLabel "Wh"@en ;
     skos:altLabel "wh"@en, "WH"@en .
+
+urpx:year rdf:type urpx:UnitOfMeasureValue ;
+    rdfs:label "Year"@en ;
+    skos:definition "Year - unit of time"@en ;
+    skos:prefLabel "year"@en .
 
 # --- Update Frequency Property (UpdateFrequencyValue) ---
 

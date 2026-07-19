@@ -72,9 +72,11 @@ If the test data implies changes to the ontology, SHACL constraints, or reposito
 
 Follow `dev-docs/README.md` for file naming, frontmatter, lifecycle prefixes, and the public-ready bar.
 
-The sanctioned subfolders are `tasks/`, `specs/`, `reports/`, `review/`, and `roadmaps/`.
+The sanctioned subfolders are `tasks/`, `specs/`, `reports/`, `review/`, `roadmaps/`, and `samples/` (worked JSON-LD instances that accompany a specification; see `dev-docs/README.md`).
 
 Do not add new subfolders without prior working group discussion, per the New directories rule above.
+
+A `specs/` document that proposes an ontology or SHACL change is delivered with its implementation task in `tasks/` (complete before/after Turtle code blocks) and worked sample instances in `samples/`. See "What a specification carries" in `dev-docs/README.md`.
 
 ## Editing guidance
 
@@ -83,6 +85,7 @@ When making changes in this repository:
 - prefer small, focused diffs;
 - avoid reformatting unrelated files;
 - keep explanations concise;
-- do not add generated prose unless it has been reduced to concise, reviewable text.
+- do not add generated prose unless it has been reduced to concise, reviewable text;
+- write prose for human review — no hard-wrapping mid-sentence, short paragraphs, short sentences (see [`dev-docs/README.md`](dev-docs/README.md) → Prose formatting).
 
 The goal is to support working group review, not to maximize generated output.

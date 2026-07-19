@@ -8,9 +8,9 @@ created: 1783900800000
 
 # DCJ — review of the URPX v0.3.0 candidate (WG #012 pre-read)
 
-> **Editorial notes (ours, not Don's).** Bracketed **`[plan]`** insertions mark where Don's
+> **Editorial notes (ours, not DCJ's).** Bracketed **`[plan]`** insertions mark where DCJ's
 > "rate" means the *rate plan* (the stable identity), to keep it distinct from a rate group,
-> a price, or a schedule. Don also coins **"leaf"** for the resolved `RatePlanVersion`; we
+> a price, or a schedule. DCJ also coins **"leaf"** for the resolved `RatePlanVersion`; we
 > flag it at first use and **do not adopt the term** — "leaf" reads as a static published
 > artifact and belongs to the `TariffFiling` domain, whereas the resolved snapshot is the
 > derived, machine-readable thing. See our [response](report.urpx.ont.2026-07-13.dcj-v0.3.0-review-response.md).

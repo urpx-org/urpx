@@ -1,0 +1,1096 @@
+{
+  "@context": {
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "org": "https://urpx-org.github.io/urpx/fixtures/org/",
+    "pge": "https://urpx-org.github.io/urpx/fixtures/pge/",
+    "urpx:intervalStart": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:effectiveDateTime": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:expirationDateTime": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:unitPrice": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:priceFloor": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:priceCeiling": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:decimalValue": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:booleanValue": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:selfContained": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:requiresAuthentication": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:initialEffectiveDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:startDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:startTime": {
+      "@type": "xsd:time"
+    },
+    "urpx:endTime": {
+      "@type": "xsd:time"
+    },
+    "urpx:touTierNumber": {
+      "@type": "xsd:integer"
+    },
+    "urpx:touPeriodNumber": {
+      "@type": "xsd:integer"
+    },
+    "urpx:url": {
+      "@type": "xsd:anyURI"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "pge:b6-pdp",
+      "@type": "urpx:RatePlan",
+      "urpx:name": "Small General Time-of-Use Service with Peak Day Pricing",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. PG&E Schedule B-6 small general time-of-use service with a Peak Day Pricing overlay: on event days, called day-ahead, the peak-period price is replaced by a higher critical peak price; non-event hours keep standard time-of-use pricing.",
+      "urpx:initialEffectiveDate": "2021-03-01",
+      "urpx:timezoneIdentifier": "America/Los_Angeles",
+      "urpx:commodity": {
+        "@id": "urpx:electricity"
+      },
+      "urpx:url": "https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_SCHEDS_B-6.pdf",
+      "urpx:hasIdentifier": {
+        "@id": "pge:b6-id-tariff-code",
+        "@type": "urpx:RatePlanIdentifier",
+        "urpx:scheme": {
+          "@id": "urpx:utility-tariff-code"
+        },
+        "skos:notation": "B-6-PDP"
+      }
+    },
+    {
+      "@id": "org:utility-pge",
+      "@type": "urpx:Organization",
+      "urpx:legalName": "Pacific Gas and Electric Company",
+      "urpx:eiaId": "14328",
+      "urpx:organizationType": {
+        "@id": "urpx:utilityOrganization"
+      },
+      "urpx:participatesInMarket": {
+        "@id": "org:iso-caiso",
+        "@type": "urpx:SystemOperator",
+        "urpx:legalName": "California Independent System Operator",
+        "urpx:organizationType": {
+          "@id": "urpx:isoRtoOrganization"
+        }
+      }
+    },
+    {
+      "@id": "pge:season-summer",
+      "@type": "urpx:Season",
+      "urpx:seasonName": "Summer",
+      "urpx:name": "Summer (Jun-Sep)"
+    },
+    {
+      "@id": "pge:season-winter",
+      "@type": "urpx:Season",
+      "urpx:seasonName": "Winter (Oct-May)",
+      "urpx:name": "Winter"
+    },
+    {
+      "@id": "pge:ms-energy-kwh",
+      "@type": "urpx:MetricSpecification",
+      "urpx:name": "Energy (kWh)",
+      "urpx:unit": {
+        "@id": "urpx:kWh"
+      }
+    },
+    {
+      "@id": "pge:ms-demand-kw",
+      "@type": "urpx:MetricSpecification",
+      "urpx:name": "Demand (kW)",
+      "urpx:unit": {
+        "@id": "urpx:kW"
+      }
+    },
+    {
+      "@id": "pge:mi-energy",
+      "@type": "urpx:MetricInput",
+      "urpx:name": "Metered energy",
+      "urpx:metricInputType": {
+        "@id": "urpx:measuredMetricInput"
+      },
+      "urpx:hasMetricSpecification": {
+        "@id": "pge:ms-energy-kwh"
+      }
+    },
+    {
+      "@id": "pge:mi-max-demand",
+      "@type": "urpx:MetricInput",
+      "urpx:name": "Maximum demand",
+      "urpx:metricInputType": {
+        "@id": "urpx:measuredMetricInput"
+      },
+      "urpx:hasMetricSpecification": {
+        "@id": "pge:ms-demand-kw"
+      }
+    },
+    {
+      "@id": "pge:mi-pdp-event-active",
+      "@type": "urpx:MetricInput",
+      "urpx:name": "Peak Day Pricing event active",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Boolean state, true during the hours of a called Peak Day Pricing event. Externally signaled through the utility demand response channels; modeled as a measured input because it is an observed external signal, not derived from other inputs.",
+      "urpx:metricInputType": {
+        "@id": "urpx:measuredMetricInput"
+      }
+    },
+    {
+      "@id": "pge:tp-summer-peak",
+      "@type": "urpx:TOUPeriod",
+      "urpx:name": "Summer Peak",
+      "urpx:touPeriodNumber": 1,
+      "urpx:hasTimeBracket": [
+        {
+          "@id": "pge:tb-summer-peak-wd",
+          "@type": "urpx:TimeBracket",
+          "urpx:name": "Summer weekday peak",
+          "urpx:startTime": "12:00:00",
+          "urpx:endTime": "18:00:00",
+          "urpx:dayType": {
+            "@id": "urpx:weekdayDays"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "pge:tp-summer-offpeak",
+      "@type": "urpx:TOUPeriod",
+      "urpx:name": "Summer Off-Peak",
+      "urpx:touPeriodNumber": 2,
+      "urpx:hasTimeBracket": [
+        {
+          "@id": "pge:tb-summer-op-wd",
+          "@type": "urpx:TimeBracket",
+          "urpx:name": "Summer weekday off-peak",
+          "urpx:startTime": "18:00:00",
+          "urpx:endTime": "12:00:00",
+          "urpx:dayType": {
+            "@id": "urpx:weekdayDays"
+          }
+        },
+        {
+          "@id": "pge:tb-summer-op-we",
+          "@type": "urpx:TimeBracket",
+          "urpx:name": "Summer weekend off-peak",
+          "urpx:startTime": "00:00:00",
+          "urpx:endTime": "23:59:59",
+          "urpx:dayType": {
+            "@id": "urpx:weekendDays"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "pge:tp-winter-peak",
+      "@type": "urpx:TOUPeriod",
+      "urpx:name": "Winter Peak",
+      "urpx:touPeriodNumber": 3,
+      "urpx:hasTimeBracket": [
+        {
+          "@id": "pge:tb-winter-peak-wd",
+          "@type": "urpx:TimeBracket",
+          "urpx:name": "Winter weekday peak",
+          "urpx:startTime": "16:00:00",
+          "urpx:endTime": "21:00:00",
+          "urpx:dayType": {
+            "@id": "urpx:weekdayDays"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "pge:tp-winter-offpeak",
+      "@type": "urpx:TOUPeriod",
+      "urpx:name": "Winter Off-Peak",
+      "urpx:touPeriodNumber": 4,
+      "urpx:hasTimeBracket": [
+        {
+          "@id": "pge:tb-winter-op-wd",
+          "@type": "urpx:TimeBracket",
+          "urpx:name": "Winter weekday off-peak",
+          "urpx:startTime": "21:00:00",
+          "urpx:endTime": "16:00:00",
+          "urpx:dayType": {
+            "@id": "urpx:weekdayDays"
+          }
+        },
+        {
+          "@id": "pge:tb-winter-op-we",
+          "@type": "urpx:TimeBracket",
+          "urpx:name": "Winter weekend off-peak",
+          "urpx:startTime": "00:00:00",
+          "urpx:endTime": "23:59:59",
+          "urpx:dayType": {
+            "@id": "urpx:weekendDays"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "pge:tt-peak",
+      "@type": "urpx:TOUTier",
+      "urpx:touTierNumber": 1,
+      "urpx:name": "Peak",
+      "urpx:hasTOUPeriod": [
+        {
+          "@id": "pge:tp-summer-peak"
+        },
+        {
+          "@id": "pge:tp-winter-peak"
+        }
+      ]
+    },
+    {
+      "@id": "pge:tt-offpeak",
+      "@type": "urpx:TOUTier",
+      "urpx:touTierNumber": 2,
+      "urpx:name": "Off-Peak",
+      "urpx:hasTOUPeriod": [
+        {
+          "@id": "pge:tp-summer-offpeak"
+        },
+        {
+          "@id": "pge:tp-winter-offpeak"
+        }
+      ]
+    },
+    {
+      "@id": "pge:tou-b6",
+      "@type": "urpx:TOUSchedule",
+      "urpx:name": "B-6 time-of-use schedule",
+      "urpx:referencesMetricInput": {
+        "@id": "pge:mi-energy"
+      },
+      "urpx:hasTOUTier": [
+        {
+          "@id": "pge:tt-peak"
+        },
+        {
+          "@id": "pge:tt-offpeak"
+        }
+      ]
+    },
+    {
+      "@id": "pge:pd-b6-gen-summer-peak",
+      "@type": "urpx:PriceDefinition",
+      "urpx:name": "Generation, summer peak",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Generation, summer peak",
+      "urpx:chargeType": {
+        "@id": "urpx:generation"
+      },
+      "urpx:chargeCategory": {
+        "@id": "urpx:auxiliaryCharge"
+      },
+      "urpx:billPortion": {
+        "@id": "urpx:supplyPortion"
+      },
+      "urpx:referencesLedger": {
+        "@id": "pge:ledger-b6-supply"
+      }
+    },
+    {
+      "@id": "pge:pd-b6-gen-summer-offpeak",
+      "@type": "urpx:PriceDefinition",
+      "urpx:name": "Generation, summer off-peak",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Generation, summer off-peak",
+      "urpx:chargeType": {
+        "@id": "urpx:generation"
+      },
+      "urpx:chargeCategory": {
+        "@id": "urpx:auxiliaryCharge"
+      },
+      "urpx:billPortion": {
+        "@id": "urpx:supplyPortion"
+      },
+      "urpx:referencesLedger": {
+        "@id": "pge:ledger-b6-supply"
+      }
+    },
+    {
+      "@id": "pge:pd-b6-gen-winter-peak",
+      "@type": "urpx:PriceDefinition",
+      "urpx:name": "Generation, winter peak",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Generation, winter peak",
+      "urpx:chargeType": {
+        "@id": "urpx:generation"
+      },
+      "urpx:chargeCategory": {
+        "@id": "urpx:auxiliaryCharge"
+      },
+      "urpx:billPortion": {
+        "@id": "urpx:supplyPortion"
+      },
+      "urpx:referencesLedger": {
+        "@id": "pge:ledger-b6-supply"
+      }
+    },
+    {
+      "@id": "pge:pd-b6-gen-winter-offpeak",
+      "@type": "urpx:PriceDefinition",
+      "urpx:name": "Generation, winter off-peak",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Generation, winter off-peak",
+      "urpx:chargeType": {
+        "@id": "urpx:generation"
+      },
+      "urpx:chargeCategory": {
+        "@id": "urpx:auxiliaryCharge"
+      },
+      "urpx:billPortion": {
+        "@id": "urpx:supplyPortion"
+      },
+      "urpx:referencesLedger": {
+        "@id": "pge:ledger-b6-supply"
+      }
+    },
+    {
+      "@id": "pge:pd-b6-distribution",
+      "@type": "urpx:PriceDefinition",
+      "urpx:name": "Distribution",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Distribution",
+      "urpx:chargeType": {
+        "@id": "urpx:distributionCharge"
+      },
+      "urpx:chargeCategory": {
+        "@id": "urpx:infrastructure"
+      },
+      "urpx:billPortion": {
+        "@id": "urpx:deliveryPortion"
+      },
+      "urpx:referencesLedger": {
+        "@id": "pge:ledger-b6-delivery"
+      }
+    },
+    {
+      "@id": "pge:pd-b6-transmission",
+      "@type": "urpx:PriceDefinition",
+      "urpx:name": "Transmission",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Transmission",
+      "urpx:chargeType": {
+        "@id": "urpx:transmission"
+      },
+      "urpx:chargeCategory": {
+        "@id": "urpx:infrastructure"
+      },
+      "urpx:billPortion": {
+        "@id": "urpx:deliveryPortion"
+      },
+      "urpx:referencesLedger": {
+        "@id": "pge:ledger-b6-delivery"
+      }
+    },
+    {
+      "@id": "pge:pd-b6-demand-summer",
+      "@type": "urpx:PriceDefinition",
+      "urpx:name": "Demand, summer",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Demand, summer",
+      "urpx:chargeType": {
+        "@id": "urpx:demandDirect"
+      },
+      "urpx:chargeCategory": {
+        "@id": "urpx:infrastructure"
+      },
+      "urpx:billPortion": {
+        "@id": "urpx:deliveryPortion"
+      },
+      "urpx:referencesLedger": {
+        "@id": "pge:ledger-b6-delivery"
+      }
+    },
+    {
+      "@id": "pge:pd-b6-demand-winter",
+      "@type": "urpx:PriceDefinition",
+      "urpx:name": "Demand, winter",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Demand, winter",
+      "urpx:chargeType": {
+        "@id": "urpx:demandDirect"
+      },
+      "urpx:chargeCategory": {
+        "@id": "urpx:infrastructure"
+      },
+      "urpx:billPortion": {
+        "@id": "urpx:deliveryPortion"
+      },
+      "urpx:referencesLedger": {
+        "@id": "pge:ledger-b6-delivery"
+      }
+    },
+    {
+      "@id": "pge:pd-b6-customer",
+      "@type": "urpx:PriceDefinition",
+      "urpx:name": "Customer charge",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Customer charge",
+      "urpx:chargeType": {
+        "@id": "urpx:customerCharge"
+      },
+      "urpx:chargeCategory": {
+        "@id": "urpx:serviceCharge"
+      },
+      "urpx:billPortion": {
+        "@id": "urpx:deliveryPortion"
+      },
+      "urpx:referencesLedger": {
+        "@id": "pge:ledger-b6-service"
+      }
+    },
+    {
+      "@id": "pge:pd-b6-pdp-critical-peak",
+      "@type": "urpx:PriceDefinition",
+      "urpx:name": "Peak Day Pricing critical peak adder",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Additional charge applied during Peak Day Pricing event hours (14:00-18:00 local), on top of the standard peak price.",
+      "urpx:chargeType": {
+        "@id": "urpx:usageCharge"
+      },
+      "urpx:chargeCategory": {
+        "@id": "urpx:adjustment"
+      },
+      "urpx:billPortion": {
+        "@id": "urpx:supplyPortion"
+      },
+      "urpx:referencesLedger": {
+        "@id": "pge:ledger-b6-supply"
+      }
+    },
+    {
+      "@id": "pge:pd-b6-pdp-credit",
+      "@type": "urpx:PriceDefinition",
+      "urpx:name": "Peak Day Pricing bill credit",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Monthly bill credit offsetting the risk of Peak Day Pricing events.",
+      "urpx:chargeType": {
+        "@id": "urpx:creditEnergy"
+      },
+      "urpx:chargeCategory": {
+        "@id": "urpx:discount"
+      },
+      "urpx:billPortion": {
+        "@id": "urpx:supplyPortion"
+      },
+      "urpx:referencesLedger": {
+        "@id": "pge:ledger-b6-supply"
+      }
+    },
+    {
+      "@id": "pge:price-b6-gen-summer-peak",
+      "@type": "urpx:Price",
+      "urpx:referencesPriceDefinition": {
+        "@id": "pge:pd-b6-gen-summer-peak"
+      },
+      "urpx:startDate": "2026-01-01",
+      "urpx:name": "Generation summer peak",
+      "urpx:unitPrice": "0.18741"
+    },
+    {
+      "@id": "pge:price-b6-gen-summer-offpeak",
+      "@type": "urpx:Price",
+      "urpx:referencesPriceDefinition": {
+        "@id": "pge:pd-b6-gen-summer-offpeak"
+      },
+      "urpx:startDate": "2026-01-01",
+      "urpx:name": "Generation summer off-peak",
+      "urpx:unitPrice": "0.11024"
+    },
+    {
+      "@id": "pge:price-b6-gen-winter-peak",
+      "@type": "urpx:Price",
+      "urpx:referencesPriceDefinition": {
+        "@id": "pge:pd-b6-gen-winter-peak"
+      },
+      "urpx:startDate": "2026-01-01",
+      "urpx:name": "Generation winter peak",
+      "urpx:unitPrice": "0.13820"
+    },
+    {
+      "@id": "pge:price-b6-gen-winter-offpeak",
+      "@type": "urpx:Price",
+      "urpx:referencesPriceDefinition": {
+        "@id": "pge:pd-b6-gen-winter-offpeak"
+      },
+      "urpx:startDate": "2026-01-01",
+      "urpx:name": "Generation winter off-peak",
+      "urpx:unitPrice": "0.10233"
+    },
+    {
+      "@id": "pge:price-b6-distribution",
+      "@type": "urpx:Price",
+      "urpx:referencesPriceDefinition": {
+        "@id": "pge:pd-b6-distribution"
+      },
+      "urpx:startDate": "2026-01-01",
+      "urpx:name": "Distribution",
+      "urpx:unitPrice": "0.04512"
+    },
+    {
+      "@id": "pge:price-b6-transmission",
+      "@type": "urpx:Price",
+      "urpx:referencesPriceDefinition": {
+        "@id": "pge:pd-b6-transmission"
+      },
+      "urpx:startDate": "2026-01-01",
+      "urpx:name": "Transmission",
+      "urpx:unitPrice": "0.02184"
+    },
+    {
+      "@id": "pge:price-b6-demand-summer",
+      "@type": "urpx:Price",
+      "urpx:referencesPriceDefinition": {
+        "@id": "pge:pd-b6-demand-summer"
+      },
+      "urpx:startDate": "2026-01-01",
+      "urpx:name": "Demand summer",
+      "urpx:unitPrice": "8.35"
+    },
+    {
+      "@id": "pge:price-b6-demand-winter",
+      "@type": "urpx:Price",
+      "urpx:referencesPriceDefinition": {
+        "@id": "pge:pd-b6-demand-winter"
+      },
+      "urpx:startDate": "2026-01-01",
+      "urpx:name": "Demand winter",
+      "urpx:unitPrice": "6.42"
+    },
+    {
+      "@id": "pge:price-b6-customer",
+      "@type": "urpx:Price",
+      "urpx:referencesPriceDefinition": {
+        "@id": "pge:pd-b6-customer"
+      },
+      "urpx:startDate": "2026-01-01",
+      "urpx:name": "Customer charge",
+      "urpx:unitPrice": "0.32854"
+    },
+    {
+      "@id": "pge:price-b6-pdp-credit-v2026-01-01",
+      "@type": "urpx:Price",
+      "urpx:referencesPriceDefinition": {
+        "@id": "pge:pd-b6-pdp-credit"
+      },
+      "urpx:startDate": "2026-01-01",
+      "urpx:name": "PDP bill credit",
+      "urpx:unitPrice": "-0.05830"
+    },
+    {
+      "@id": "pge:price-b6-pdp-critical-peak-v2026-01-01",
+      "@type": "urpx:Price",
+      "urpx:referencesPriceDefinition": {
+        "@id": "pge:pd-b6-pdp-critical-peak"
+      },
+      "urpx:startDate": "2026-01-01",
+      "urpx:name": "Peak Day Pricing critical peak adder",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Applied during PDP event hours (14:00-18:00 local) on up to 15 event days per year.",
+      "urpx:unitPrice": "1.20000",
+      "urpx:hasDynamicPricing": {
+        "@id": "pge:dp-pdp-event",
+        "@type": "urpx:DynamicPricing",
+        "urpx:dynamicPricingType": {
+          "@id": "urpx:criticalPeakPricing"
+        },
+        "urpx:priceSource": {
+          "@id": "urpx:wholesaleMarketSource"
+        },
+        "urpx:updateFrequency": {
+          "@id": "urpx:eventTriggeredUpdates"
+        },
+        "urpx:priceCeiling": "1.50000",
+        "urpx:priceFloor": "0.60000",
+        "urpx:hasPriceUpdateRule": {
+          "@id": "pge:pur-pdp-event-trigger",
+          "@type": "urpx:PriceUpdateRule",
+          "urpx:name": "PDP event day trigger rule",
+          "urpx:description": "Synthetic test data supporting specification review; not for production use. The critical peak adder applies during event hours (14:00-18:00 local) on called event days; otherwise it is zero. Events are called by 14:00 the day before based on grid conditions.",
+          "urpx:hasValueExpression": {
+            "@type": "urpx:ValueExpression",
+            "urpx:name": "Event adder applies only during a called event",
+            "urpx:rootNode": {
+              "@type": "urpx:ConditionalValueNode",
+              "urpx:guard": {
+                "@type": "urpx:ComparisonNode",
+                "urpx:operator": {
+                  "@id": "urpx:equalsOperator"
+                },
+                "urpx:leftOperand": {
+                  "@type": "urpx:ObjectOperandNode",
+                  "urpx:referencesMetricInput": {
+                    "@id": "pge:mi-pdp-event-active"
+                  }
+                },
+                "urpx:rightOperand": {
+                  "@type": "urpx:DatatypeOperandNode",
+                  "urpx:booleanValue": true
+                }
+              },
+              "urpx:thenOperand": {
+                "@type": "urpx:DatatypeOperandNode",
+                "urpx:decimalValue": "1.20000"
+              },
+              "urpx:elseOperand": {
+                "@type": "urpx:DatatypeOperandNode",
+                "urpx:decimalValue": "0.00000"
+              }
+            }
+          }
+        },
+        "urpx:hasDynamicPriceEndpoint": [
+          {
+            "@type": "urpx:DynamicPriceEndpoint",
+            "urpx:name": "Peak Day Pricing program information",
+            "urpx:url": "https://www.pge.com/en/account/rate-plans/hourly-flex-pricing.html",
+            "urpx:endpointProtocol": {
+              "@id": "urpx:otherProtocol"
+            },
+            "urpx:requiresAuthentication": false,
+            "urpx:description": "Program information page; event notifications are delivered through the utility demand response channels, not a public price API."
+          }
+        ]
+      }
+    },
+    {
+      "@id": "pge:elig-b6",
+      "@type": "urpx:EligibilityRule",
+      "urpx:name": "Small general eligibility",
+      "urpx:hasConditionExpression": {
+        "@id": "pge:ce-b6",
+        "@type": "urpx:ConditionExpression",
+        "urpx:name": "Commercial customer with maximum demand at or below 75 kW",
+        "urpx:rootNode": {
+          "@id": "pge:cn-b6-and",
+          "@type": "urpx:BooleanOperationNode",
+          "urpx:operator": {
+            "@id": "urpx:andOperator"
+          },
+          "urpx:operandNodes": [
+            {
+              "@id": "pge:cn-b6-commercial",
+              "@type": "urpx:ComparisonNode",
+              "urpx:operator": {
+                "@id": "urpx:equalsOperator"
+              },
+              "urpx:leftOperand": {
+                "@type": "urpx:ObjectOperandNode",
+                "urpx:conditionProperty": {
+                  "@id": "urpx:hasCustomerKind"
+                }
+              },
+              "urpx:rightOperand": {
+                "@type": "urpx:ObjectOperandNode",
+                "urpx:referencesValue": {
+                  "@id": "urpx:commercialKind"
+                }
+              }
+            },
+            {
+              "@id": "pge:cn-b6-demand",
+              "@type": "urpx:ComparisonNode",
+              "urpx:operator": {
+                "@id": "urpx:lessThanOrEqualOperator"
+              },
+              "urpx:leftOperand": {
+                "@type": "urpx:ObjectOperandNode",
+                "urpx:referencesMetricInput": {
+                  "@id": "pge:mi-max-demand"
+                }
+              },
+              "urpx:rightOperand": {
+                "@type": "urpx:DatatypeOperandNode",
+                "urpx:decimalValue": "75"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "@id": "pge:ledger-b6-supply",
+      "@type": "urpx:Ledger",
+      "urpx:name": "Supply"
+    },
+    {
+      "@id": "pge:ledger-b6-delivery",
+      "@type": "urpx:Ledger",
+      "urpx:name": "Delivery"
+    },
+    {
+      "@id": "pge:ledger-b6-service",
+      "@type": "urpx:Ledger",
+      "urpx:name": "Service"
+    },
+    {
+      "@id": "pge:ledger-b6-adjustments",
+      "@type": "urpx:Ledger",
+      "urpx:name": "Adjustments"
+    },
+    {
+      "@id": "pge:bm-b6",
+      "@type": "urpx:BillingModel",
+      "urpx:name": "B-6 billing model",
+      "urpx:hasTOUSchedule": {
+        "@id": "pge:tou-b6"
+      },
+      "urpx:hasLedger": [
+        {
+          "@id": "pge:ledger-b6-supply"
+        },
+        {
+          "@id": "pge:ledger-b6-delivery"
+        },
+        {
+          "@id": "pge:ledger-b6-service"
+        },
+        {
+          "@id": "pge:ledger-b6-adjustments"
+        }
+      ],
+      "urpx:hasPriceDefinition": [
+        {
+          "@id": "pge:pd-b6-gen-summer-peak"
+        },
+        {
+          "@id": "pge:pd-b6-gen-summer-offpeak"
+        },
+        {
+          "@id": "pge:pd-b6-gen-winter-peak"
+        },
+        {
+          "@id": "pge:pd-b6-gen-winter-offpeak"
+        },
+        {
+          "@id": "pge:pd-b6-distribution"
+        },
+        {
+          "@id": "pge:pd-b6-transmission"
+        },
+        {
+          "@id": "pge:pd-b6-demand-summer"
+        },
+        {
+          "@id": "pge:pd-b6-demand-winter"
+        },
+        {
+          "@id": "pge:pd-b6-customer"
+        },
+        {
+          "@id": "pge:pd-b6-pdp-critical-peak"
+        },
+        {
+          "@id": "pge:pd-b6-pdp-credit"
+        }
+      ]
+    },
+    {
+      "@id": "pge:pe-b6",
+      "@type": "urpx:PlanElements",
+      "urpx:name": "B-6 plan elements",
+      "urpx:hasSeason": [
+        {
+          "@id": "pge:season-summer"
+        },
+        {
+          "@id": "pge:season-winter"
+        }
+      ],
+      "urpx:hasMetricInput": [
+        {
+          "@id": "pge:mi-energy"
+        },
+        {
+          "@id": "pge:mi-max-demand"
+        },
+        {
+          "@id": "pge:mi-pdp-event-active"
+        }
+      ],
+      "urpx:hasBillingModel": {
+        "@id": "pge:bm-b6"
+      },
+      "urpx:hasTOUSchedule": {
+        "@id": "pge:tou-b6"
+      },
+      "urpx:hasEligibilityRule": {
+        "@id": "pge:elig-b6"
+      },
+      "urpx:hasLedger": [
+        {
+          "@id": "pge:ledger-b6-supply"
+        },
+        {
+          "@id": "pge:ledger-b6-delivery"
+        },
+        {
+          "@id": "pge:ledger-b6-service"
+        },
+        {
+          "@id": "pge:ledger-b6-adjustments"
+        }
+      ]
+    },
+    {
+      "@id": "pge:prices-b6",
+      "@type": "urpx:Prices",
+      "urpx:hasPrice": [
+        {
+          "@id": "pge:price-b6-gen-summer-peak"
+        },
+        {
+          "@id": "pge:price-b6-gen-summer-offpeak"
+        },
+        {
+          "@id": "pge:price-b6-gen-winter-peak"
+        },
+        {
+          "@id": "pge:price-b6-gen-winter-offpeak"
+        },
+        {
+          "@id": "pge:price-b6-distribution"
+        },
+        {
+          "@id": "pge:price-b6-transmission"
+        },
+        {
+          "@id": "pge:price-b6-demand-summer"
+        },
+        {
+          "@id": "pge:price-b6-demand-winter"
+        },
+        {
+          "@id": "pge:price-b6-customer"
+        },
+        {
+          "@id": "pge:price-b6-pdp-credit-v2026-01-01"
+        },
+        {
+          "@id": "pge:price-b6-pdp-critical-peak-v2026-01-01"
+        }
+      ]
+    },
+    {
+      "@id": "pge:pm-b6-2026",
+      "@type": "urpx:PricingModel",
+      "urpx:name": "B-6 PDP authored content 2026",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Authored pricing content for the B-6 Peak Day Pricing rate plan effective 2026-01-01, including the time-of-use structure, demand charges, and the event-triggered critical peak adder.",
+      "urpx:confidence": {
+        "@id": "urpx:estimated"
+      },
+      "urpx:referencesRatePlan": {
+        "@id": "pge:b6-pdp"
+      },
+      "urpx:hasPlanElements": {
+        "@id": "pge:pe-b6"
+      },
+      "urpx:hasPriceDefinition": [
+        {
+          "@id": "pge:pd-b6-gen-summer-peak"
+        },
+        {
+          "@id": "pge:pd-b6-gen-summer-offpeak"
+        },
+        {
+          "@id": "pge:pd-b6-gen-winter-peak"
+        },
+        {
+          "@id": "pge:pd-b6-gen-winter-offpeak"
+        },
+        {
+          "@id": "pge:pd-b6-distribution"
+        },
+        {
+          "@id": "pge:pd-b6-transmission"
+        },
+        {
+          "@id": "pge:pd-b6-demand-summer"
+        },
+        {
+          "@id": "pge:pd-b6-demand-winter"
+        },
+        {
+          "@id": "pge:pd-b6-customer"
+        },
+        {
+          "@id": "pge:pd-b6-pdp-critical-peak"
+        },
+        {
+          "@id": "pge:pd-b6-pdp-credit"
+        }
+      ]
+    },
+    {
+      "@id": "pge:b6-pdp-2026-01-01",
+      "@type": "urpx:RatePlanVersion",
+      "urpx:name": "B-6 PDP resolved snapshot effective 2026-01-01",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Fully resolved, self-contained snapshot of the B-6 Peak Day Pricing rate plan for the window opening 2026-01-01. Every price value, including the event adder, is carried inline.",
+      "urpx:forRatePlan": {
+        "@id": "pge:b6-pdp"
+      },
+      "urpx:publishedBy": {
+        "@id": "org:utility-pge"
+      },
+      "urpx:changeReason": {
+        "@id": "urpx:rateCase"
+      },
+      "urpx:serviceRole": {
+        "@id": "urpx:bundledServiceRole"
+      },
+      "urpx:priceCurrency": "USD",
+      "urpx:commodity": {
+        "@id": "urpx:electricity"
+      },
+      "urpx:effectiveDateTime": "2026-01-01T08:00:00Z",
+      "urpx:hasPlanElements": {
+        "@id": "pge:pe-b6"
+      },
+      "urpx:hasPrices": {
+        "@id": "pge:prices-b6"
+      },
+      "urpx:selfContained": true,
+      "urpx:hasPriceDefinitionReference": [
+        {
+          "@id": "pge:pdr-pd-b6-gen-summer-peak",
+          "@type": "urpx:PriceDefinitionReference",
+          "urpx:referenceInclusion": {
+            "@id": "urpx:includedHere"
+          },
+          "urpx:referencesPriceDefinition": {
+            "@id": "pge:pd-b6-gen-summer-peak"
+          }
+        },
+        {
+          "@id": "pge:pdr-pd-b6-gen-summer-offpeak",
+          "@type": "urpx:PriceDefinitionReference",
+          "urpx:referenceInclusion": {
+            "@id": "urpx:includedHere"
+          },
+          "urpx:referencesPriceDefinition": {
+            "@id": "pge:pd-b6-gen-summer-offpeak"
+          }
+        },
+        {
+          "@id": "pge:pdr-pd-b6-gen-winter-peak",
+          "@type": "urpx:PriceDefinitionReference",
+          "urpx:referenceInclusion": {
+            "@id": "urpx:includedHere"
+          },
+          "urpx:referencesPriceDefinition": {
+            "@id": "pge:pd-b6-gen-winter-peak"
+          }
+        },
+        {
+          "@id": "pge:pdr-pd-b6-gen-winter-offpeak",
+          "@type": "urpx:PriceDefinitionReference",
+          "urpx:referenceInclusion": {
+            "@id": "urpx:includedHere"
+          },
+          "urpx:referencesPriceDefinition": {
+            "@id": "pge:pd-b6-gen-winter-offpeak"
+          }
+        },
+        {
+          "@id": "pge:pdr-pd-b6-distribution",
+          "@type": "urpx:PriceDefinitionReference",
+          "urpx:referenceInclusion": {
+            "@id": "urpx:includedHere"
+          },
+          "urpx:referencesPriceDefinition": {
+            "@id": "pge:pd-b6-distribution"
+          }
+        },
+        {
+          "@id": "pge:pdr-pd-b6-transmission",
+          "@type": "urpx:PriceDefinitionReference",
+          "urpx:referenceInclusion": {
+            "@id": "urpx:includedHere"
+          },
+          "urpx:referencesPriceDefinition": {
+            "@id": "pge:pd-b6-transmission"
+          }
+        },
+        {
+          "@id": "pge:pdr-pd-b6-demand-summer",
+          "@type": "urpx:PriceDefinitionReference",
+          "urpx:referenceInclusion": {
+            "@id": "urpx:includedHere"
+          },
+          "urpx:referencesPriceDefinition": {
+            "@id": "pge:pd-b6-demand-summer"
+          }
+        },
+        {
+          "@id": "pge:pdr-pd-b6-demand-winter",
+          "@type": "urpx:PriceDefinitionReference",
+          "urpx:referenceInclusion": {
+            "@id": "urpx:includedHere"
+          },
+          "urpx:referencesPriceDefinition": {
+            "@id": "pge:pd-b6-demand-winter"
+          }
+        },
+        {
+          "@id": "pge:pdr-pd-b6-customer",
+          "@type": "urpx:PriceDefinitionReference",
+          "urpx:referenceInclusion": {
+            "@id": "urpx:includedHere"
+          },
+          "urpx:referencesPriceDefinition": {
+            "@id": "pge:pd-b6-customer"
+          }
+        },
+        {
+          "@id": "pge:pdr-pd-b6-pdp-critical-peak",
+          "@type": "urpx:PriceDefinitionReference",
+          "urpx:referenceInclusion": {
+            "@id": "urpx:includedHere"
+          },
+          "urpx:referencesPriceDefinition": {
+            "@id": "pge:pd-b6-pdp-critical-peak"
+          }
+        },
+        {
+          "@id": "pge:pdr-pd-b6-pdp-credit",
+          "@type": "urpx:PriceDefinitionReference",
+          "urpx:referenceInclusion": {
+            "@id": "urpx:includedHere"
+          },
+          "urpx:referencesPriceDefinition": {
+            "@id": "pge:pd-b6-pdp-credit"
+          }
+        }
+      ],
+      "urpx:hasCoverageClaim": {
+        "@id": "pge:cc-b6-2026-01-01",
+        "@type": "urpx:CoverageClaim",
+        "urpx:completenessResult": {
+          "@id": "urpx:complete"
+        },
+        "urpx:selfContained": true,
+        "urpx:confidence": {
+          "@id": "urpx:estimated"
+        },
+        "urpx:explainedBy": {
+          "@id": "pge:eval-b6-2026-01-01",
+          "@type": "urpx:Evaluation",
+          "urpx:evaluationKind": {
+            "@id": "urpx:coverageEvaluation"
+          },
+          "urpx:description": "Synthetic test data supporting specification review; not for production use. All price values are carried inline, including the event adder, so the snapshot is complete and self contained. Which days become event days is operational scheduling, signaled through demand response channels; it is not pricing content and does not affect coverage."
+        }
+      }
+    }
+  ]
+}
