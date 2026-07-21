@@ -91,7 +91,7 @@ A rate plan together with its available modifiers describes what a utility or su
 - Applies to specific customer classes and service types
 - Links to centralized PlanElements for seasons, holidays, and pricing rules including time-of-use schedules
 - Contains Prices container with PriceSet instances
-- Declares its own coverage: a required `CoverageClaim` states whether the snapshot is complete and self-contained
+- Declares its own coverage: a required `CoverageClaim` states the snapshot's completeness result (self-containment and an explaining `Evaluation` are optional)
 
 **Price**: An individual component of a bill
 - May have a **chargeType** (specific implementation like `minimumCharge`, `usageCharge`)
@@ -206,7 +206,7 @@ The package carries the plan identity. The identity is deliberately small — a 
 }
 ```
 
-The version is its own top-level node in the graph. It points back to the plan identity with `forRatePlan`, and it must declare a `CoverageClaim` — an explicit statement of whether the snapshot is complete and self-contained:
+The version is its own top-level node in the graph. It points back to the plan identity with `forRatePlan`, and it must declare a `CoverageClaim` — an explicit statement of the snapshot's completeness result (only `completenessResult` is required; `selfContained` and an explaining `Evaluation` are optional, and are shown here):
 
 ```json
 {
@@ -267,7 +267,7 @@ The version is its own top-level node in the graph. It points back to the plan i
     "hasPriceSet": {
       "@id": "ex:priceset-basic",
       "@type": "PriceSet",
-      "name": "Basic Residential Prices",
+      "name": "Basic Residential Prices"
     }
   }
 }
@@ -644,7 +644,7 @@ Time-of-use rate plans vary pricing based on time of day, day of week, and seaso
       ]
     },
     "hasBillingModel": {
-      "@id": "ex-example-billing-model",
+      "@id": "ex:example-billing-model",
       "@type": "BillingModel",
       "hasTOUSchedule": {
         "@id": "ex:tou-schedule-summer",
@@ -846,7 +846,7 @@ Each price references the measurement definitions in PlanElements, and TOU price
 Every RatePlanVersion must have:
 
 1. **forRatePlan** - The link back to the plan identity the snapshot was built for
-2. **hasCoverageClaim** - A `CoverageClaim` with a `completenessResult`, a `selfContained` flag, and an explaining `Evaluation`
+2. **hasCoverageClaim** - A `CoverageClaim` with a `completenessResult` (required); a `selfContained` flag and an explaining `Evaluation` are optional
 3. **changeReason**, **publishedBy**, **serviceRole**, **hasPlanElements**, and **hasPrices**
 
 Every Price must have:

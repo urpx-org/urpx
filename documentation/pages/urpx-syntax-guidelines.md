@@ -5,7 +5,7 @@
 
 # URPX Syntax Guidelines
 
-**Version:** 0.2.0 (Pre-draft)
+**Version:** 0.3.0 (Pre-draft)
 **Last Updated:** December 2, 2025
 
 [← Back to Index](/docs/getting-started/overview) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)

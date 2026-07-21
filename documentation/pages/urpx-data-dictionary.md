@@ -31,7 +31,7 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 
 | Prefix | Namespace URI | Description |
 |--------|--------------|-------------|
-| `urpx:` | https://schema.urpx.org/ | Core URPX ontology |
+| `urpx:` | https://urpx-org.github.io/urpx/ontology/ | Core URPX ontology |
 | `xsd:` | http://www.w3.org/2001/XMLSchema# | XML Schema datatypes |
 | `owl:` | http://www.w3.org/2002/07/owl# | OWL ontology language |
 | `rdfs:` | http://www.w3.org/2000/01/rdf-schema# | RDF Schema |
@@ -170,9 +170,10 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 **Description:** Stable identity of a utility rate plan, independent of time.
 
 **Semantic Context:**  
-A RatePlan represents the regulatory-approved pricing structure that
-persists across time, containing multiple versions as rates change
-due to regulatory orders, fuel adjustments, or seasonal variations.
+A RatePlan is the stable identity of a utility rate plan, independent
+of time. It carries no pricing content itself: authored pricing lives in
+PricingModels, and the complete read artifact for a given window is the
+derived RatePlanVersion snapshot.
 
 **Properties:**
 
@@ -263,6 +264,8 @@ continuous pricing coverage.
 | `urpx:hasCoverageClaim` | Object | 1..1 | [`CoverageClaim`](#coverageclaim) | Attaches a CoverageClaim to a derived snapshot or a scenario cost model. |
 | `urpx:hasDataSourceReference` | Object | 0..* | [`SourceReference`](#sourcereference) | Links an entity to a structured data source reference. |
 | `urpx:hasEligibilityRule` | Object | 0..* | [`EligibilityRule`](#eligibilityrule) | Customer qualification rules |
+| `urpx:hasIdentifier` | Object | 0..* | [`RatePlanIdentifier`](#rateplanidentifier) | Links an organization identity, rate plan, or rate plan modifier to a typed external identifier. |
+| `urpx:hasLocationDataSet` | Object | 0..* | [`LocationDataSet`](#locationdataset) | Links organization to versioned location auxiliary data |
 | `urpx:hasModifierOptions` | Object | 0..* | [`RatePlanModifier`](#rateplanmodifier) | Links rate plan version to its available modifier options |
 | `urpx:hasModifierVersionOptions` | Object | 0..* | [`RatePlanModifierVersion`](#rateplanmodifierversion) | Modifier versions available as options for this rate plan version |
 | `urpx:hasPlanElements` | Object | 1..1 | [`PlanElements`](#planelements) | Centralized temporal and pricing elements for rate plan or modifier versions |
@@ -278,6 +281,7 @@ continuous pricing coverage.
 | `urpx:referencesGeneralRule` | Object | 0..* | [`GeneralRule`](#generalrule) | References a general rule applicable to this rate plan version or modifier version |
 | `urpx:selfContained` | Datatype | 0..1 | `xsd:boolean` | Derived: false iff any PriceDefinitionReference is referenceInclusion retrievedElsewhere. |
 | `urpx:serviceRole` | Datatype | 1..1 | — | Service role for rate plan (distribution/retail/bundled) |
+| `urpx:timezoneIdentifier` | Datatype | 0..1 | `xsd:string` | IANA timezone identifier for this location dataset |
 | `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
 | `urpx:version` | Datatype | 0..1 | `xsd:string` | The version of the CreativeWork embodied by a specified resource |
 
@@ -380,6 +384,8 @@ Modifier versions track changes to rider rates and conditions over time.
 | `urpx:hasCoverageClaim` | Object | 1..1 | [`CoverageClaim`](#coverageclaim) | Attaches a CoverageClaim to a derived snapshot or a scenario cost model. |
 | `urpx:hasDataSourceReference` | Object | 0..* | [`SourceReference`](#sourcereference) | Links an entity to a structured data source reference. |
 | `urpx:hasEligibilityRule` | Object | 0..* | [`EligibilityRule`](#eligibilityrule) | Customer qualification rules |
+| `urpx:hasIdentifier` | Object | 0..* | [`RatePlanModifierIdentifier`](#rateplanmodifieridentifier) | Links an organization identity, rate plan, or rate plan modifier to a typed external identifier. |
+| `urpx:hasLocationDataSet` | Object | 0..* | [`LocationDataSet`](#locationdataset) | Links organization to versioned location auxiliary data |
 | `urpx:hasPlanElements` | Object | 1..1 | [`PlanElements`](#planelements) | Centralized temporal and pricing elements for rate plan or modifier versions |
 | `urpx:hasPriceDefinitionReference` | Object | 0..* | [`PriceDefinitionReference`](#pricedefinitionreference) | Attaches a PriceDefinitionReference relator to an authored model or a derived snapshot. |
 | `urpx:hasPrices` | Object | 1..1 | [`Prices`](#prices) | Links a rate plan version or authored pricing model to actual price instances with amounts or unit prices |
@@ -394,6 +400,7 @@ Modifier versions track changes to rider rates and conditions over time.
 | `urpx:referencesGeneralRule` | Object | 0..* | [`GeneralRule`](#generalrule) | References a general rule applicable to this rate plan version or modifier version |
 | `urpx:selfContained` | Datatype | 0..1 | `xsd:boolean` | Derived: false iff any PriceDefinitionReference is referenceInclusion retrievedElsewhere. |
 | `urpx:serviceRole` | Datatype | 1..1 | — | Service role for rate plan (distribution/retail/bundled) |
+| `urpx:timezoneIdentifier` | Datatype | 0..1 | `xsd:string` | IANA timezone identifier for this location dataset |
 | `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
 | `urpx:version` | Datatype | 0..1 | `xsd:string` | The version of the CreativeWork embodied by a specified resource |
 
@@ -430,6 +437,8 @@ Modifier versions track changes to rider rates and conditions over time.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
+| `urpx:cancelledBy` | Datatype | 0..1 | — | Marks a publication unit — a tariff filing, or a standalone pricing model — as no longer valid (voided) and links it to what cancelled it: the successor unit for a same-period correction (see urpx:replacedBy), or the publication that withdrew it when there is no successor. A cancelled unit is retained for audit but excluded from active reads. |
+| `urpx:cancelledOn` | Datatype | 0..1 | `xsd:date` | Date on which a tariff filing or standalone pricing model was cancelled or voided — when its content left the active set. |
 | `urpx:confidence` | Datatype | 1..1 | — | The epistemic confidence of the subject's pricing content. |
 | `urpx:documentedBy` | Object | 0..* | [`SourceReference`](#sourcereference) | Links an authored PricingModel (or a resolved reference) to a SourceReference identifying the source evidence it models, interprets, or was derived from. |
 | `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Validity-window start for a pricing model that is not published within a tariff filing — for example competitive-supply, contract, or scenario pricing. When a pricing model is published within a tariff filing, its validity dates derive from that filing; where a filing and this date are both present, they describe the same window. |
@@ -444,6 +453,8 @@ Modifier versions track changes to rider rates and conditions over time.
 | `urpx:pursuantTo` | Object | 0..* | [`GeneralRule`](#generalrule) | The general rule that legally grounds this PricingModel or PriceDefinition. |
 | `urpx:referencesRatePlan` | Object | 0..* | [`RatePlan`](#rateplan) | Plan-specific content link (PricingModel → RatePlan); or links a PriorRatePlan record to the actual rate plan. |
 | `urpx:referencesRatePlanModifier` | Object | 0..* | [`RatePlanModifier`](#rateplanmodifier) | Plan-specific content link: this PricingModel applies to this RatePlanModifier. |
+| `urpx:replacedBy` | Object | 0..1 | [`PricingModel`](#pricingmodel) | Inverse of urpx:replaces: the successor publication unit (tariff filing, or standalone pricing model) that corrects and voids this one for the same effective period. |
+| `urpx:replaces` | Object | 0..1 | [`PricingModel`](#pricingmodel) | Links a corrected publication unit — a tariff filing, or a standalone pricing model with no enclosing filing — to the prior one it replaces for the SAME effective period. The replaced subject is voided; the replacing one occupies the same effective window with corrected content. A filing replaces a filing; a pricing model replaces a pricing model. Use urpx:supersedes for a forward-in-time change of effective period; use urpx:replaces for an in-place correction of an existing period. |
 | `urpx:supersedes` | Object | 0..* | [`PricingModel`](#pricingmodel) | Links a publication unit to the prior one it supersedes: a tariff filing to the prior filing, or an authored pricing model to the prior model in the same thread. The superseded subject's effective span ends when the superseding one begins; it remains valid history. Supersession is a forward-in-time change of effective period — it is NOT a same-period correction (urpx:replaces) nor a cancellation/withdrawal (urpx:cancelledBy). |
 | `urpx:withinPublication` | Object | 0..1 | [`TariffFiling`](#tarifffiling) | Inverse of containsPricingModel: the TariffFiling this PricingModel was published within. |
 
@@ -792,7 +803,9 @@ specifications.
 | `urpx:completenessResult` | Datatype | 1..1 | — | The completeness verdict of a CoverageClaim. |
 | `urpx:confidence` | Datatype | 0..1 | — | The epistemic confidence of the subject's pricing content. |
 | `urpx:explainedBy` | Object | 0..* | [`Evaluation`](#evaluation) | Links a CoverageClaim (verdict) to the Evaluation (rationale) behind it. |
+| `urpx:fallbackSourced` | Datatype | 0..1 | `xsd:boolean` | Derived: true iff any content in the snapshot was resolved from a declared fallback source rather than the primary one. The content is present (this is distinct from selfContained, which reports whether content is carried inline versus retrieved elsewhere); its basis is the fallback. |
 | `urpx:selfContained` | Datatype | 0..1 | `xsd:boolean` | Derived: false iff any PriceDefinitionReference is referenceInclusion retrievedElsewhere. |
+| `urpx:stale` | Datatype | 0..1 | `xsd:boolean` | Derived: true iff any content contributing to the snapshot is older than its source's expected publication cadence, so a newer value should exist that has not been obtained. Freshness is independent of coverage — a complete snapshot can be stale. |
 
 ---
 
@@ -808,6 +821,8 @@ specifications.
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
 | `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
+| `urpx:evaluatedBy` | Object | 0..1 | [`Organization`](#organization) | The organization that performed this evaluation and attests its content. |
+| `urpx:evaluatedOn` | Datatype | 0..1 | `xsd:dateTime` | When this evaluation was performed. |
 | `urpx:evaluationKind` | Datatype | 0..1 | — | The kind of an Evaluation. |
 
 ---
@@ -870,8 +885,8 @@ specifications.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
-| `urpx:cancelledBy` | Datatype | 0..1 | — | Marks a tariff filing as no longer valid (voided) and links it to what cancelled it: the successor filing for a same-period correction (see urpx:replacedBy), or the publication that withdrew it when there is no successor. A cancelled filing is retained for audit but excluded from active reads. |
-| `urpx:cancelledOn` | Datatype | 0..1 | `xsd:date` | Date on which a tariff filing was cancelled or voided — when its content left the active set. |
+| `urpx:cancelledBy` | Datatype | 0..1 | — | Marks a publication unit — a tariff filing, or a standalone pricing model — as no longer valid (voided) and links it to what cancelled it: the successor unit for a same-period correction (see urpx:replacedBy), or the publication that withdrew it when there is no successor. A cancelled unit is retained for audit but excluded from active reads. |
+| `urpx:cancelledOn` | Datatype | 0..1 | `xsd:date` | Date on which a tariff filing or standalone pricing model was cancelled or voided — when its content left the active set. |
 | `urpx:cancelsPriceDefinition` | Object | 0..* | [`PriceDefinition`](#pricedefinition) | Asserts that this tariff filing cancels the referenced price definition. |
 | `urpx:containsPricingModel` | Object | 1..* | [`PricingModel`](#pricingmodel) | Links a TariffFiling to the PricingModels it contains. |
 | `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
@@ -882,8 +897,8 @@ specifications.
 | `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
 | `urpx:hasGeneralRule` | Object | 0..* | [`GeneralRule`](#generalrule) | Links a TariffFiling or PricingModel to general rules that apply across rate plans. |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
-| `urpx:replacedBy` | Object | 0..1 | [`TariffFiling`](#tarifffiling) | Inverse of urpx:replaces: the successor filing that corrects and voids this one for the same effective period. |
-| `urpx:replaces` | Object | 0..1 | [`TariffFiling`](#tarifffiling) | Links a corrected tariff filing to the prior filing it replaces for the SAME effective period. The replaced filing is voided; the replacing filing occupies the same effective window with corrected content. Use urpx:supersedes for a forward-in-time change of effective period; use urpx:replaces for an in-place correction of an existing period. |
+| `urpx:replacedBy` | Object | 0..1 | [`TariffFiling`](#tarifffiling) | Inverse of urpx:replaces: the successor publication unit (tariff filing, or standalone pricing model) that corrects and voids this one for the same effective period. |
+| `urpx:replaces` | Object | 0..1 | [`TariffFiling`](#tarifffiling) | Links a corrected publication unit — a tariff filing, or a standalone pricing model with no enclosing filing — to the prior one it replaces for the SAME effective period. The replaced subject is voided; the replacing one occupies the same effective window with corrected content. A filing replaces a filing; a pricing model replaces a pricing model. Use urpx:supersedes for a forward-in-time change of effective period; use urpx:replaces for an in-place correction of an existing period. |
 | `urpx:supersedes` | Object | 0..1 | [`TariffFiling`](#tarifffiling) | Links a publication unit to the prior one it supersedes: a tariff filing to the prior filing, or an authored pricing model to the prior model in the same thread. The superseded subject's effective span ends when the superseding one begins; it remains valid history. Supersession is a forward-in-time change of effective period — it is NOT a same-period correction (urpx:replaces) nor a cancellation/withdrawal (urpx:cancelledBy). |
 
 ---
@@ -2031,8 +2046,6 @@ while preserving original designations.
 
 ## Regulatory Entities
 
-<DiagramViewer src="../diagrams/dictionary/regulatory-entities.svg" alt="Regulatory Entities diagram" />
-
 ### RateCase
 
 **URI:** `https://urpx-org.github.io/urpx/ontology/RateCase`  
@@ -2261,8 +2274,6 @@ energy service providers.
 
 ## Geographic Entities
 
-<DiagramViewer src="../diagrams/dictionary/geographic-entities.svg" alt="Geographic Entities diagram" />
-
 ### AdministrativeBoundary
 
 **URI:** `https://urpx-org.github.io/urpx/ontology/AdministrativeBoundary`  
@@ -2322,47 +2333,47 @@ potentially spanning multiple administrative boundaries.
 
 | Value | Description |
 |-------|-------------|
-| `urpx:bulk` | — |
-| `urpx:delta` | — |
-| `urpx:instantaneous` | — |
-| `urpx:summation` | — |
+| `urpx:bulk` | Bulk accumulation - cumulative total quantity |
+| `urpx:delta` | Delta accumulation - difference since last reading |
+| `urpx:instantaneous` | Instantaneous value - snapshot at specific moment |
+| `urpx:summation` | Summation accumulation - sum over period |
 
 ### AggregationMethodValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:average` | — |
-| `urpx:maximum` | — |
-| `urpx:median` | — |
-| `urpx:minimum` | — |
-| `urpx:sum` | — |
+| `urpx:average` | Average (mean) value over measurement interval |
+| `urpx:maximum` | Maximum (peak) value over measurement interval |
+| `urpx:median` | Median (middle) value over measurement interval |
+| `urpx:minimum` | Minimum (lowest) value over measurement interval |
+| `urpx:sum` | Sum (total) value over measurement interval |
 
 ### AnnualIncomeRangeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:highIncome` | — |
-| `urpx:lowIncome` | — |
-| `urpx:middleIncome` | — |
-| `urpx:moderateIncome` | — |
-| `urpx:veryLowIncome` | — |
+| `urpx:highIncome` | High income range - typically above 200% of area median income |
+| `urpx:lowIncome` | Low income range - typically 50-80% of area median income |
+| `urpx:middleIncome` | Middle income range - typically 120-200% of area median income |
+| `urpx:moderateIncome` | Moderate income range - typically 80-120% of area median income |
+| `urpx:veryLowIncome` | Very low income range - typically below 50% of area median income |
 
 ### AssistanceEligibilityLevelValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:notQualifiedAssistance` | — |
-| `urpx:provisionallyQualifiedAssistance` | — |
-| `urpx:qualifiedAssistance` | — |
-| `urpx:underReviewAssistance` | — |
+| `urpx:notQualifiedAssistance` | Customer does not qualify for assistance program benefits |
+| `urpx:provisionallyQualifiedAssistance` | Customer provisionally qualifies pending verification |
+| `urpx:qualifiedAssistance` | Customer qualifies for assistance program benefits |
+| `urpx:underReviewAssistance` | Customer assistance eligibility application under review |
 
 ### BillPortionValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:bundledPortion` | — |
-| `urpx:deliveryPortion` | — |
-| `urpx:supplyPortion` | — |
+| `urpx:bundledPortion` | Combined delivery and supply charges not separately stated |
+| `urpx:deliveryPortion` | Charges for delivering energy to the customer |
+| `urpx:supplyPortion` | Charges for energy commodity and generation |
 
 ### BooleanOperatorValue
 
@@ -2376,100 +2387,100 @@ potentially spanning multiple administrative boundaries.
 
 | Value | Description |
 |-------|-------------|
-| `urpx:changeReasonOther` | — |
-| `urpx:correction` | — |
-| `urpx:fuelAdjustment` | — |
-| `urpx:initial` | — |
-| `urpx:rateCase` | — |
-| `urpx:regulatoryOrder` | — |
-| `urpx:riderUpdate` | — |
-| `urpx:seasonalChange` | — |
+| `urpx:changeReasonOther` | Other change reason not specifically categorized |
+| `urpx:correction` | Correction of error in previous filing |
+| `urpx:fuelAdjustment` | Change due to fuel cost adjustment mechanism |
+| `urpx:initial` | Initial rate plan filing - first version of a new rate |
+| `urpx:rateCase` | Change resulting from formal rate case proceeding |
+| `urpx:regulatoryOrder` | Change mandated by regulatory authority order or directive |
+| `urpx:riderUpdate` | Change to rate rider or surcharge component |
+| `urpx:seasonalChange` | Scheduled seasonal price adjustment |
 
 ### ChargeCategoryValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:adjustment` | — |
-| `urpx:auxiliaryCharge` | — |
-| `urpx:discount` | — |
-| `urpx:environmental` | — |
-| `urpx:infrastructure` | — |
-| `urpx:regulatory` | — |
-| `urpx:serviceCharge` | — |
-| `urpx:taxes` | — |
+| `urpx:adjustment` | Price adjustments, true-ups, and reconciliation charges |
+| `urpx:auxiliaryCharge` | Ancillary services and miscellaneous fees |
+| `urpx:discount` | Discounts, rebates, and bill reductions |
+| `urpx:environmental` | Environmental and renewable energy program charges |
+| `urpx:infrastructure` | General infrastructure investment charge |
+| `urpx:regulatory` | Regulatory compliance and mandated program charges |
+| `urpx:serviceCharge` | Base service fees, customer charges, and monthly recurring charges |
+| `urpx:taxes` | All tax-related charges including state, local, and utility taxes |
 
 ### ChargeTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:adjustmentPowerCost` | — |
-| `urpx:adjustmentRenewable` | — |
-| `urpx:adjustmentTariff` | — |
-| `urpx:ancillaryServices` | — |
-| `urpx:capacity` | — |
-| `urpx:capacityCharge` | — |
-| `urpx:capitalCredit` | — |
-| `urpx:complianceCharge` | — |
-| `urpx:congestionCharge` | — |
-| `urpx:conservationCharge` | — |
-| `urpx:contractMisc` | — |
-| `urpx:creditAdministrative` | — |
-| `urpx:creditEnergy` | — |
-| `urpx:creditGeneration` | — |
-| `urpx:creditInfrastructure` | — |
-| `urpx:creditMisc` | — |
-| `urpx:creditPriceProtection` | — |
-| `urpx:creditRenewable` | — |
-| `urpx:creditTariffRider` | — |
-| `urpx:customerCharge` | — |
-| `urpx:deliveryCharge` | — |
-| `urpx:demandDirect` | — |
-| `urpx:demandIndirect` | — |
-| `urpx:demandSideManagement` | — |
-| `urpx:depositCredit` | — |
-| `urpx:depositInterest` | — |
-| `urpx:depositRequest` | — |
-| `urpx:distributedGeneration` | — |
-| `urpx:distributionCharge` | — |
-| `urpx:donation` | — |
-| `urpx:efficiencyFunding` | — |
-| `urpx:energyStorage` | — |
-| `urpx:environmentalFunding` | — |
-| `urpx:exportCredit` | — |
-| `urpx:facilities` | — |
-| `urpx:fuelCharge` | — |
-| `urpx:generation` | — |
-| `urpx:handling` | — |
-| `urpx:heapDiscount` | — |
-| `urpx:initiationCharge` | — |
-| `urpx:lateFee` | — |
-| `urpx:minimumBill` | — |
-| `urpx:minimumCharge` | — |
-| `urpx:nonBypassableCharge` | — |
-| `urpx:powerFactorCharge` | — |
-| `urpx:publicBenefits` | — |
-| `urpx:reactiveDemand` | — |
-| `urpx:recoverySurcharge` | — |
-| `urpx:reliabilityCharge` | — |
-| `urpx:renewableFunding` | — |
-| `urpx:rentalFee` | — |
-| `urpx:serviceMetered` | — |
-| `urpx:serviceNonMetered` | — |
-| `urpx:standbyCharge` | — |
-| `urpx:strandedCosts` | — |
-| `urpx:systemBenefitCharge` | — |
-| `urpx:tariffRider` | — |
-| `urpx:taxAdjustment` | — |
-| `urpx:taxCredit` | — |
-| `urpx:taxMisc` | — |
-| `urpx:taxMunicipal` | — |
-| `urpx:taxSales` | — |
-| `urpx:taxState` | — |
-| `urpx:taxUtility` | — |
-| `urpx:transitionCharge` | — |
-| `urpx:transmission` | — |
-| `urpx:usageCharge` | — |
-| `urpx:volumetricCharge` | — |
+| `urpx:adjustmentPowerCost` | Adjustment for changes in power costs |
+| `urpx:adjustmentRenewable` | Adjustment for renewable energy costs |
+| `urpx:adjustmentTariff` | General tariff price adjustment |
+| `urpx:ancillaryServices` | Grid ancillary services charge |
+| `urpx:capacity` | General capacity-related charge |
+| `urpx:capacityCharge` | Charge for reserved capacity |
+| `urpx:capitalCredit` | Cooperative capital credit allocation |
+| `urpx:complianceCharge` | Regulatory compliance cost charge |
+| `urpx:congestionCharge` | Locational marginal pricing congestion component |
+| `urpx:conservationCharge` | Energy conservation program charge |
+| `urpx:contractMisc` | Miscellaneous contract-related charge |
+| `urpx:creditAdministrative` | Administrative or billing credit |
+| `urpx:creditEnergy` | Credit for energy charges |
+| `urpx:creditGeneration` | Credit for customer generation |
+| `urpx:creditInfrastructure` | Credit against infrastructure charges |
+| `urpx:creditMisc` | Other credits |
+| `urpx:creditPriceProtection` | Credit from price protection program |
+| `urpx:creditRenewable` | Credit for renewable energy |
+| `urpx:creditTariffRider` | Credit from tariff rider |
+| `urpx:customerCharge` | Fixed recurring (typically monthly) charge for being a connected customer, independent of usage |
+| `urpx:deliveryCharge` | Combined charge for energy delivery |
+| `urpx:demandDirect` | Charge based on peak demand measurement |
+| `urpx:demandIndirect` | Allocated or estimated demand charge |
+| `urpx:demandSideManagement` | DSM program charge |
+| `urpx:depositCredit` | Return of security deposit |
+| `urpx:depositInterest` | Interest on security deposit |
+| `urpx:depositRequest` | Security deposit requirement |
+| `urpx:distributedGeneration` | Charge related to distributed generation |
+| `urpx:distributionCharge` | Local distribution system charge |
+| `urpx:donation` | Voluntary donation or contribution |
+| `urpx:efficiencyFunding` | Energy efficiency program funding |
+| `urpx:energyStorage` | Energy storage-related charge |
+| `urpx:environmentalFunding` | Environmental program funding charge |
+| `urpx:exportCredit` | Credit for energy exported to the grid under net metering or net billing |
+| `urpx:facilities` | Charge for specific facilities or equipment |
+| `urpx:fuelCharge` | Fuel-cost recovery / fuel adjustment, including gas purchased-gas-adjustment style cost pass-through |
+| `urpx:generation` | Charge for electricity generation |
+| `urpx:handling` | Administrative handling fee |
+| `urpx:heapDiscount` | Home Energy Assistance Program discount |
+| `urpx:initiationCharge` | One-time charge for service initiation or reconnection |
+| `urpx:lateFee` | Penalty charge for late payment of a bill |
+| `urpx:minimumBill` | Ensures total bill meets a minimum amount; different from minimum charge |
+| `urpx:minimumCharge` | Fixed monthly minimum charge for being a customer |
+| `urpx:nonBypassableCharge` | Charges that apply regardless of energy supplier choice |
+| `urpx:powerFactorCharge` | Power factor correction charge or penalty |
+| `urpx:publicBenefits` | Public purpose program charge |
+| `urpx:reactiveDemand` | Charge based on peak reactive power demand (kVAr); the reactive analogue of demandDirect |
+| `urpx:recoverySurcharge` | Surcharge for cost recovery |
+| `urpx:reliabilityCharge` | Reliability-must-run contracts and capacity performance charges |
+| `urpx:renewableFunding` | Charge supporting renewable energy programs |
+| `urpx:rentalFee` | Equipment rental charges |
+| `urpx:serviceMetered` | Service charge based on metered usage |
+| `urpx:serviceNonMetered` | Fixed service charge for unmetered services |
+| `urpx:standbyCharge` | Charge for standby or backup service to customers with on-site generation |
+| `urpx:strandedCosts` | Recovery of stranded utility investments |
+| `urpx:systemBenefitCharge` | Universal service fund and public purpose program charges |
+| `urpx:tariffRider` | Additional tariff provision or adjustment |
+| `urpx:taxAdjustment` | Adjustment to tax calculations |
+| `urpx:taxCredit` | Credit against taxes |
+| `urpx:taxMisc` | Other tax-related charges |
+| `urpx:taxMunicipal` | City or local government tax |
+| `urpx:taxSales` | General sales tax |
+| `urpx:taxState` | State-level tax |
+| `urpx:taxUtility` | Tax on utility services |
+| `urpx:transitionCharge` | Market restructuring and stranded cost recovery charges |
+| `urpx:transmission` | High-voltage transmission system charge |
+| `urpx:usageCharge` | Volumetric energy consumption charge |
+| `urpx:volumetricCharge` | Generic volumetric charge based on usage quantity |
 
 <DiagramViewer src="../diagrams/dictionary/hierarchy-ChargeTypeValue.svg" alt="ChargeTypeValue hierarchy" />
 
@@ -2477,436 +2488,436 @@ potentially spanning multiple administrative boundaries.
 
 | Value | Description |
 |-------|-------------|
-| `urpx:adHocSet` | — |
-| `urpx:canonicalSet` | — |
-| `urpx:modelThread` | — |
-| `urpx:scenarioSet` | — |
-| `urpx:submissionSet` | — |
+| `urpx:adHocSet` | An informal, ad hoc grouping of PricingModels carrying no implied authority or completeness. |
+| `urpx:canonicalSet` | The authoritative, canonical grouping of PricingModels for its subject. |
+| `urpx:modelThread` | A chronological thread tracing one lineage of PricingModels (for example a regulatory thread) across successive RatePlans and RatePlanModifiers. |
+| `urpx:scenarioSet` | A grouping of PricingModels assembled to represent or drive a scenario. |
+| `urpx:submissionSet` | A grouping of PricingModels assembled for a single submission or filing. |
 
 ### CommodityValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:biomass` | — |
-| `urpx:cableTv` | — |
-| `urpx:chilledWater` | — |
-| `urpx:coal` | — |
-| `urpx:commodityOther` | — |
-| `urpx:compressedAir` | — |
-| `urpx:diesel` | — |
-| `urpx:districtCooling` | — |
-| `urpx:districtHeating` | — |
-| `urpx:electricity` | — |
-| `urpx:fuelOil` | — |
-| `urpx:gasoline` | — |
-| `urpx:geothermal` | — |
-| `urpx:hotWater` | — |
-| `urpx:hydroelectric` | — |
-| `urpx:internet` | — |
-| `urpx:irrigation` | — |
-| `urpx:naturalGas` | — |
-| `urpx:nonPotableWater` | — |
-| `urpx:nuclear` | — |
-| `urpx:potableWater` | — |
-| `urpx:propane` | — |
-| `urpx:recycling` | — |
-| `urpx:security` | — |
-| `urpx:sewage` | — |
-| `urpx:solar` | — |
-| `urpx:steam` | — |
-| `urpx:stormwater` | — |
-| `urpx:telecommunications` | — |
-| `urpx:wasteHeat` | — |
-| `urpx:wasteManagement` | — |
-| `urpx:water` | — |
-| `urpx:wind` | — |
+| `urpx:biomass` | Biomass renewable energy source |
+| `urpx:cableTv` | Cable television service |
+| `urpx:chilledWater` | Chilled water cooling service |
+| `urpx:coal` | Coal fuel commodity |
+| `urpx:commodityOther` | Other commodity not specifically categorized |
+| `urpx:compressedAir` | Compressed air utility service |
+| `urpx:diesel` | Diesel fuel commodity |
+| `urpx:districtCooling` | District cooling utility service |
+| `urpx:districtHeating` | District heating utility service |
+| `urpx:electricity` | Electric energy commodity |
+| `urpx:fuelOil` | Fuel oil heating commodity |
+| `urpx:gasoline` | Gasoline fuel commodity |
+| `urpx:geothermal` | Geothermal energy source |
+| `urpx:hotWater` | Hot water heating service |
+| `urpx:hydroelectric` | Hydroelectric energy generation |
+| `urpx:internet` | Internet connectivity service |
+| `urpx:irrigation` | Irrigation water service |
+| `urpx:naturalGas` | Natural gas commodity |
+| `urpx:nonPotableWater` | Non-drinking water service |
+| `urpx:nuclear` | Nuclear energy generation |
+| `urpx:potableWater` | Drinking water service |
+| `urpx:propane` | Propane gas fuel |
+| `urpx:recycling` | Recycling utility service |
+| `urpx:security` | Security monitoring service |
+| `urpx:sewage` | Sewage treatment service |
+| `urpx:solar` | Solar energy generation |
+| `urpx:steam` | Steam heating service |
+| `urpx:stormwater` | Stormwater management service |
+| `urpx:telecommunications` | Telecommunications service |
+| `urpx:wasteHeat` | Waste heat recovery energy |
+| `urpx:wasteManagement` | Waste management utility service |
+| `urpx:water` | Water utility service |
+| `urpx:wind` | Wind energy generation |
 
 ### ConnectionKindValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:directConnection` | — |
-| `urpx:overheadConnection` | — |
-| `urpx:padMountedConnection` | — |
-| `urpx:permanentConnection` | — |
-| `urpx:temporaryConnection` | — |
-| `urpx:undergroundConnection` | — |
+| `urpx:directConnection` | Direct service connection without transformation |
+| `urpx:overheadConnection` | Overhead power line service connection |
+| `urpx:padMountedConnection` | Pad-mounted transformer service connection |
+| `urpx:permanentConnection` | Permanent service connection to the electrical grid |
+| `urpx:temporaryConnection` | Temporary service connection for construction or events |
+| `urpx:undergroundConnection` | Underground cable service connection |
 
 ### ConnectorTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:ccs` | — |
-| `urpx:chademo` | — |
-| `urpx:dcFast` | — |
-| `urpx:level1` | — |
-| `urpx:level2` | — |
-| `urpx:teslaSupercharger` | — |
+| `urpx:ccs` | CCS (Combined Charging System) connector - European/North American DC fast charging standard |
+| `urpx:chademo` | CHAdeMO connector - Japanese DC fast charging standard |
+| `urpx:dcFast` | DC Fast charging connector - high-power direct current charging |
+| `urpx:level1` | Level 1 EV charging connector - standard 120V household outlet |
+| `urpx:level2` | Level 2 EV charging connector - 240V dedicated charging station |
+| `urpx:teslaSupercharger` | Tesla Supercharger connector - proprietary Tesla fast charging |
 
 ### CustomerChoiceValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:mandatoryChoice` | — |
-| `urpx:voluntaryChoice` | — |
+| `urpx:mandatoryChoice` | Enrollment in this rate plan version is mandatory for qualifying customers |
+| `urpx:voluntaryChoice` | Customer may opt in or out of this rate plan version |
 
 ### CustomerKindValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:commercialKind` | — |
-| `urpx:enterpriseKind` | — |
-| `urpx:industrialKind` | — |
-| `urpx:internalUseKind` | — |
-| `urpx:nonResidentialKind` | — |
-| `urpx:residentialKind` | — |
-| `urpx:serviceProviderKind` | — |
+| `urpx:commercialKind` | Commercial customer - business and office service |
+| `urpx:enterpriseKind` | Enterprise customer - large-scale corporate operations including subsidiaries and regional operators |
+| `urpx:industrialKind` | Industrial customer - manufacturing and heavy industry service |
+| `urpx:internalUseKind` | Internal use customer - utility's own facilities and operations |
+| `urpx:nonResidentialKind` | Non residential customer - does not qualify as other CustomerKind |
+| `urpx:residentialKind` | Residential customer - domestic household service |
+| `urpx:serviceProviderKind` | Service provider customer - energy suppliers, schedulers, and wholesale market participants |
 
 ### CustomerSubKindValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:commercialPumping` | — |
-| `urpx:commercialStandard` | — |
-| `urpx:commercialStreetlight` | — |
-| `urpx:energyScheduler` | — |
-| `urpx:energySupplier` | — |
-| `urpx:industrialLargeLoad` | — |
-| `urpx:industrialStandard` | — |
-| `urpx:regionalOperator` | — |
-| `urpx:religiousInstitution` | — |
-| `urpx:residentialFarm` | — |
-| `urpx:residentialMultiUnit` | — |
-| `urpx:residentialStandard` | — |
-| `urpx:subsidiary` | — |
-| `urpx:windMachine` | — |
+| `urpx:commercialPumping` | Commercial pumping service - water pumping and irrigation operations |
+| `urpx:commercialStandard` | Standard commercial service - general business, retail, and office operations |
+| `urpx:commercialStreetlight` | Commercial streetlight service - municipal and private street lighting |
+| `urpx:energyScheduler` | Energy scheduler service - wholesale market schedulers and aggregators |
+| `urpx:energySupplier` | Energy supplier service - retail energy providers and competitive suppliers |
+| `urpx:industrialLargeLoad` | Industrial large load service - high-demand manufacturing and processing facilities |
+| `urpx:industrialStandard` | Standard industrial service - manufacturing and production facilities |
+| `urpx:regionalOperator` | Regional operator service - large-scale regional facility operations |
+| `urpx:religiousInstitution` | Service for religious institutions |
+| `urpx:residentialFarm` | Residential farm service - agricultural operations with residential characteristics |
+| `urpx:residentialMultiUnit` | Residential multi-unit service - apartments, condominiums, and multi-family dwellings |
+| `urpx:residentialStandard` | Standard residential service - single-family homes and standard household service |
+| `urpx:subsidiary` | Subsidiary service - corporate subsidiary operations |
+| `urpx:windMachine` | Wind machine service - renewable energy generation facilities |
 
 ### DERTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:evChargingDER` | — |
-| `urpx:generatorDER` | — |
-| `urpx:geothermalDER` | — |
-| `urpx:hydroDER` | — |
-| `urpx:nuclearDER` | — |
-| `urpx:solarDER` | — |
-| `urpx:storageDER` | — |
-| `urpx:wasteDigestionDER` | — |
-| `urpx:windDER` | — |
+| `urpx:evChargingDER` | Electric vehicle charging station |
+| `urpx:generatorDER` | Backup generator or combined heat and power system |
+| `urpx:geothermalDER` | Geothermal heat pump or generation system |
+| `urpx:hydroDER` | Hydroelectric power generation system |
+| `urpx:nuclearDER` | Nuclear power generation system |
+| `urpx:solarDER` | Solar photovoltaic generation system |
+| `urpx:storageDER` | Battery energy storage system |
+| `urpx:wasteDigestionDER` | Waste digestion or biogas generation system |
+| `urpx:windDER` | Small-scale wind turbine generation |
 
 ### DataSourceTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:apiSource` | — |
-| `urpx:databaseSource` | — |
-| `urpx:manualSource` | — |
-| `urpx:regulatoryWebsiteSource` | — |
-| `urpx:utilityWebsiteSource` | — |
+| `urpx:apiSource` | Data sourced from a web API or REST/GraphQL endpoint |
+| `urpx:databaseSource` | Data sourced directly from a relational or non-relational database |
+| `urpx:manualSource` | Data entered manually by a human operator |
+| `urpx:regulatoryWebsiteSource` | Data sourced from a regulatory agency's official website or database |
+| `urpx:utilityWebsiteSource` | Data sourced from a utility's official website or customer portal |
 
 ### DayTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:allDays` | — |
-| `urpx:customDays` | — |
-| `urpx:weekdayDays` | — |
-| `urpx:weekendDays` | — |
+| `urpx:allDays` | All days of the week |
+| `urpx:customDays` | Custom day selection pattern |
+| `urpx:weekdayDays` | Monday through Friday (ISO 8601 weekdays) |
+| `urpx:weekendDays` | Saturday and Sunday (ISO 8601 weekend) |
 
 ### DynamicPricingTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:criticalPeakPricing` | — |
-| `urpx:demandResponsePricing` | — |
-| `urpx:eventDrivenPricing` | — |
-| `urpx:indexBasedPricing` | — |
-| `urpx:realTimePricing` | — |
-| `urpx:timeVaryingPricing` | — |
+| `urpx:criticalPeakPricing` | Special pricing during critical peak demand periods |
+| `urpx:demandResponsePricing` | Pricing for demand response programs and events |
+| `urpx:eventDrivenPricing` | Pricing triggered by specific events or conditions |
+| `urpx:indexBasedPricing` | Pricing based on external market indices |
+| `urpx:realTimePricing` | Real-time pricing based on current market conditions |
+| `urpx:timeVaryingPricing` | Pricing that varies over time based on predetermined schedules |
 
 ### EndUseValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:agriculturalEndUse` | — |
-| `urpx:cookingEndUse` | — |
-| `urpx:dataCenterEndUse` | — |
-| `urpx:dryingEndUse` | — |
-| `urpx:heatingEndUse` | — |
-| `urpx:lightingEndUse` | — |
-| `urpx:municipalEndUse` | — |
-| `urpx:nonheatingEndUse` | — |
-| `urpx:otherEndUse` | — |
-| `urpx:refrigerationEndUse` | — |
-| `urpx:spaceCoolingEndUse` | — |
-| `urpx:spaceHeatingEndUse` | — |
-| `urpx:streetLightingEndUse` | — |
-| `urpx:waterHeatingEndUse` | — |
+| `urpx:agriculturalEndUse` | Agricultural service for farming operations |
+| `urpx:cookingEndUse` | Cooking electric service - ranges, ovens, and cooking appliances |
+| `urpx:dataCenterEndUse` | Data center electric service - high-density computing and server operations |
+| `urpx:dryingEndUse` | Drying electric service - clothes dryers |
+| `urpx:heatingEndUse` | Electric heating service - space heating, water heating, and other thermal applications |
+| `urpx:lightingEndUse` | Lighting electric service - interior and exterior lighting |
+| `urpx:municipalEndUse` | Municipal service for government facilities |
+| `urpx:nonheatingEndUse` | General electric service excluding heating - lighting, appliances, motors, and other non-thermal applications |
+| `urpx:otherEndUse` | Other end use not specifically categorized |
+| `urpx:refrigerationEndUse` | Refrigeration electric service - refrigerators, freezers, and cold storage |
+| `urpx:spaceCoolingEndUse` | Space cooling electric service - air conditioning and building cooling |
+| `urpx:spaceHeatingEndUse` | Space heating electric service - building interior heating |
+| `urpx:streetLightingEndUse` | Street lighting service for public lighting |
+| `urpx:waterHeatingEndUse` | Water heating electric service - domestic hot water |
 
 ### EnrollmentStatusValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:activeStatus` | — |
-| `urpx:expiredStatus` | — |
-| `urpx:inactiveStatus` | — |
-| `urpx:pendingStatus` | — |
-| `urpx:suspendedStatus` | — |
-| `urpx:terminatedStatus` | — |
+| `urpx:activeStatus` | Active enrollment status - currently participating in rate plan or program |
+| `urpx:expiredStatus` | Expired enrollment status - enrollment period has ended |
+| `urpx:inactiveStatus` | Inactive enrollment status - not currently participating |
+| `urpx:pendingStatus` | Pending enrollment status - enrollment request awaiting approval or processing |
+| `urpx:suspendedStatus` | Suspended enrollment status - temporarily paused participation |
+| `urpx:terminatedStatus` | Terminated enrollment status - participation ended before normal completion |
 
 ### EntityTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:corporationEntity` | — |
-| `urpx:entityOther` | — |
-| `urpx:governmentEntity` | — |
-| `urpx:individualEntity` | — |
-| `urpx:llcEntity` | — |
-| `urpx:nonprofitEntity` | — |
-| `urpx:partnershipEntity` | — |
-| `urpx:trustEntity` | — |
+| `urpx:corporationEntity` | Corporate legal entity (C-Corp, S-Corp) |
+| `urpx:entityOther` | Other legal entity type not specifically categorized |
+| `urpx:governmentEntity` | Government agency or department legal entity |
+| `urpx:individualEntity` | Individual person legal entity |
+| `urpx:llcEntity` | Limited Liability Company legal entity |
+| `urpx:nonprofitEntity` | Nonprofit organization legal entity |
+| `urpx:partnershipEntity` | Partnership legal entity (general or limited partnership) |
+| `urpx:trustEntity` | Trust legal entity |
 
 ### FlowDirectionValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:bidirectional` | — |
-| `urpx:forward` | — |
-| `urpx:net` | — |
-| `urpx:reverse` | — |
+| `urpx:bidirectional` | Bidirectional energy flow - both import and export |
+| `urpx:forward` | Forward energy flow - consumption/import from grid |
+| `urpx:net` | Net energy flow - net of consumption and generation |
+| `urpx:reverse` | Reverse energy flow - generation/export to grid |
 
 ### GeographicScopeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:countyScope` | — |
-| `urpx:customScope` | — |
-| `urpx:municipalityScope` | — |
-| `urpx:serviceTerritoryScope` | — |
-| `urpx:statewideScope` | — |
+| `urpx:countyScope` | County-level geographic scope for applicability rules |
+| `urpx:customScope` | Custom geographic scope with non-standard boundaries |
+| `urpx:municipalityScope` | Municipality-level geographic scope for local applicability rules |
+| `urpx:serviceTerritoryScope` | Service territory geographic scope for utility-specific applicability |
+| `urpx:statewideScope` | State-level geographic scope for broad applicability rules |
 
 ### GeographicZoneValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:coastalZone` | — |
-| `urpx:desertZone` | — |
-| `urpx:geographicZoneOther` | — |
-| `urpx:industrialZone` | — |
-| `urpx:mountainZone` | — |
-| `urpx:ruralZone` | — |
-| `urpx:suburbanZone` | — |
-| `urpx:urbanZone` | — |
+| `urpx:coastalZone` | Coastal geographic zone - areas near oceans, lakes, or major waterways |
+| `urpx:desertZone` | Desert geographic zone - arid and semi-arid regions |
+| `urpx:geographicZoneOther` | Other geographic zone not specifically categorized |
+| `urpx:industrialZone` | Industrial geographic zone - manufacturing and heavy industry areas |
+| `urpx:mountainZone` | Mountain geographic zone - elevated terrain and mountainous regions |
+| `urpx:ruralZone` | Rural geographic zone - countryside and agricultural areas |
+| `urpx:suburbanZone` | Suburban geographic zone - residential areas outside city centers |
+| `urpx:urbanZone` | Urban geographic zone - densely populated city areas |
 
 ### HVACKindValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:airConditioner` | — |
-| `urpx:airSourceHeatPump` | — |
-| `urpx:districtHeatingConnection` | — |
-| `urpx:groundSourceHeatPump` | — |
-| `urpx:spaceHeater` | — |
+| `urpx:airConditioner` | Standard air conditioning system |
+| `urpx:airSourceHeatPump` | Air source heat pump system for heating and cooling |
+| `urpx:districtHeatingConnection` | Connection to a district heating network |
+| `urpx:groundSourceHeatPump` | Ground source (geothermal) heat pump system |
+| `urpx:spaceHeater` | Individual space heating unit |
 
 ### IdentifierSchemeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:companyNumberScheme` | — |
-| `urpx:dunsScheme` | — |
-| `urpx:eiaScheme` | — |
-| `urpx:gleifScheme` | — |
-| `urpx:gridScheme` | — |
-| `urpx:isinScheme` | — |
-| `urpx:leiScheme` | — |
-| `urpx:localRegulatorScheme` | — |
-| `urpx:vatScheme` | — |
+| `urpx:companyNumberScheme` | Company number identifier scheme - government-issued company registration number |
+| `urpx:dunsScheme` | DUNS identifier scheme - Dun & Bradstreet Universal Numbering System |
+| `urpx:eiaScheme` | EIA identifier scheme - US Energy Information Administration utility identifier |
+| `urpx:gleifScheme` | GLEIF identifier scheme - Global Legal Entity Identifier Foundation system |
+| `urpx:gridScheme` | GRID identifier scheme - Global Research Identifier Database for organizations |
+| `urpx:isinScheme` | ISIN identifier scheme - International Securities Identification Number |
+| `urpx:leiScheme` | LEI identifier scheme - Legal Entity Identifier for financial market participants |
+| `urpx:localRegulatorScheme` | Local regulator identifier scheme - jurisdiction-specific regulatory identifier |
+| `urpx:vatScheme` | VAT identifier scheme - Value Added Tax registration number |
 
 ### InterconnectionStatusValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:disconnectedStatus` | — |
-| `urpx:interconnectedStatus` | — |
-| `urpx:notApplicableInterconnection` | — |
-| `urpx:pendingInterconnection` | — |
+| `urpx:disconnectedStatus` | DER is physically installed but not connected to grid |
+| `urpx:interconnectedStatus` | DER is connected and operational on the grid |
+| `urpx:notApplicableInterconnection` | Interconnection status not applicable to this resource type |
+| `urpx:pendingInterconnection` | DER interconnection application is pending utility approval |
 
 ### IntervalAlignmentValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:billingPeriodAligned` | — |
-| `urpx:calendarAligned` | — |
-| `urpx:fixedAligned` | — |
-| `urpx:rollingAligned` | — |
+| `urpx:billingPeriodAligned` | Interval is aligned to the utility's billing cycle period (e.g., Bill Cycle 1, Trip 2). |
+| `urpx:calendarAligned` | Interval is aligned to calendar boundaries (e.g., calendar month, calendar year). |
+| `urpx:fixedAligned` | Interval is defined by fixed start/end dates independent of billing cycle or current date. |
+| `urpx:rollingAligned` | Interval is aligned to the current evaluation date (e.g., past 365 days from today). |
 
 ### IntervalSelectionValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:consecutivePeriodsSelection` | — |
-| `urpx:fixedWindowSelection` | — |
-| `urpx:rollingWindowSelection` | — |
+| `urpx:consecutivePeriodsSelection` | Selection based on a contiguous sequence of discrete periods meeting a criteria (e.g., 3 consecutive months of peak demand > X). |
+| `urpx:fixedWindowSelection` | Selection based on a fixed time window defined by specific start/end dates (e.g., calendar year 2024). |
+| `urpx:rollingWindowSelection` | Selection using a continuous time window of fixed duration that moves forward in time relative to a defined alignment (e.g., rolling 12 months). |
 
 ### IntervalTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:annualInterval` | — |
-| `urpx:customInterval` | — |
-| `urpx:dailyInterval` | — |
-| `urpx:fifteenMinuteInterval` | — |
-| `urpx:fiveMinuteInterval` | — |
-| `urpx:hourlyInterval` | — |
-| `urpx:monthlyInterval` | — |
-| `urpx:quarterlyInterval` | — |
-| `urpx:realTimeInterval` | — |
-| `urpx:thirtyMinuteInterval` | — |
-| `urpx:weeklyInterval` | — |
+| `urpx:annualInterval` | Annual time interval (P1Y or P12M equivalent) |
+| `urpx:customInterval` | Custom or non-standard time interval, must use intervalDuration property |
+| `urpx:dailyInterval` | Daily time interval (P1D equivalent) |
+| `urpx:fifteenMinuteInterval` | Fifteen-minute time interval (PT15M equivalent) |
+| `urpx:fiveMinuteInterval` | Five-minute time interval (PT5M equivalent) |
+| `urpx:hourlyInterval` | Hourly time interval (PT1H equivalent) |
+| `urpx:monthlyInterval` | Monthly time interval (P1M equivalent) |
+| `urpx:quarterlyInterval` | Quarterly time interval (P3M equivalent) |
+| `urpx:realTimeInterval` | Real-time or continuous interval |
+| `urpx:thirtyMinuteInterval` | Thirty-minute time interval (PT30M equivalent) |
+| `urpx:weeklyInterval` | Weekly time interval (P7D equivalent) |
 
 ### InverterTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:centralInverter` | — |
-| `urpx:hybridInverter` | — |
-| `urpx:microInverter` | — |
-| `urpx:powerOptimizer` | — |
-| `urpx:stringInverter` | — |
+| `urpx:centralInverter` | Central inverter - large-scale inverter for commercial installations |
+| `urpx:hybridInverter` | Hybrid inverter - combined solar and battery storage inverter |
+| `urpx:microInverter` | Micro inverter - individual inverter for each solar panel |
+| `urpx:powerOptimizer` | Power optimizer - panel-level optimization with centralized inverter |
+| `urpx:stringInverter` | String inverter - centralized inverter for multiple solar panels |
 
 ### LedgerTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:bundledLedger` | — |
-| `urpx:calculatedLedger` | — |
-| `urpx:deliveryLedger` | — |
-| `urpx:distributionLedger` | — |
-| `urpx:measuredLedger` | — |
-| `urpx:profileMetricLedger` | — |
-| `urpx:supplyLedger` | — |
-| `urpx:transmissionLedger` | — |
+| `urpx:bundledLedger` | Ledger for bundled supply and delivery charges |
+| `urpx:calculatedLedger` | Ledger for charges calculated based on charges in other ledgers under this BillingModel |
+| `urpx:deliveryLedger` | Ledger for transmission and distribution charges |
+| `urpx:distributionLedger` | Ledger specifically for distribution charges |
+| `urpx:measuredLedger` | Ledger containing charges dependent on measured usage data |
+| `urpx:profileMetricLedger` | Ledger containing charges dependent on static profile characteristics |
+| `urpx:supplyLedger` | Ledger for energy supply and generation charges |
+| `urpx:transmissionLedger` | Ledger specifically for transmission charges |
 
 ### LoadProfileValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:baseload` | — |
-| `urpx:intermittent` | — |
-| `urpx:loadProfileOther` | — |
-| `urpx:peaking` | — |
-| `urpx:seasonal` | — |
-| `urpx:variable` | — |
+| `urpx:baseload` | Baseload profile - consistent usage with minimal variation |
+| `urpx:intermittent` | Intermittent profile - sporadic or occasional usage |
+| `urpx:loadProfileOther` | Other load profile not specifically categorized |
+| `urpx:peaking` | Peaking profile - high demand during specific periods |
+| `urpx:seasonal` | Seasonal profile - usage varies by season |
+| `urpx:variable` | Variable profile - irregular usage patterns |
 
 ### MeasurementTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:apparentPower` | — |
-| `urpx:current` | — |
-| `urpx:demand` | — |
-| `urpx:energy` | — |
-| `urpx:frequency` | — |
-| `urpx:power` | — |
-| `urpx:powerFactor` | — |
-| `urpx:pressure` | — |
-| `urpx:reactiveEnergy` | — |
-| `urpx:reactivePower` | — |
-| `urpx:temperature` | — |
-| `urpx:voltage` | — |
-| `urpx:volume` | — |
-| `urpx:volumetricFlow` | — |
+| `urpx:apparentPower` | Apparent power / apparent demand measurement (kVA, VA, MVA) |
+| `urpx:current` | Electric current measurement (A, mA, etc.) |
+| `urpx:demand` | Power demand measurement (kW, MW, etc.) |
+| `urpx:energy` | Energy consumption measurement (kWh, MWh, etc.) |
+| `urpx:frequency` | Frequency measurement (Hz) |
+| `urpx:power` | Instantaneous power measurement (kW, MW, etc.) |
+| `urpx:powerFactor` | Power factor measurement (ratio, percentage) |
+| `urpx:pressure` | Pressure measurement (psi, bar, etc.) |
+| `urpx:reactiveEnergy` | Reactive energy measurement (kVArh, VArh) |
+| `urpx:reactivePower` | Reactive power / reactive demand measurement (kVAr, VAr) |
+| `urpx:temperature` | Temperature measurement (°F, °C, K) |
+| `urpx:voltage` | Voltage level measurement (V, kV, etc.) |
+| `urpx:volume` | Volume measurement (gallons, cubic feet, liters, etc.) |
+| `urpx:volumetricFlow` | Volumetric flow rate measurement (gallons/min, cubic feet/hour, etc.) |
 
 ### MediaTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:applicationJson` | — |
-| `urpx:applicationPdf` | — |
-| `urpx:applicationVndMsExcel` | — |
-| `urpx:applicationVndOasisOpendocumentSpreadsheet` | — |
-| `urpx:applicationVndOasisOpendocumentText` | — |
-| `urpx:applicationVndOpenxmlformatsOfficedocumentSpreadsheetmlSheet` | — |
-| `urpx:imageGif` | — |
-| `urpx:imageJpeg` | — |
-| `urpx:imagePng` | — |
-| `urpx:textCsv` | — |
-| `urpx:textHtml` | — |
-| `urpx:textPlain` | — |
-| `urpx:textRtf` | — |
-| `urpx:textXml` | — |
+| `urpx:applicationJson` | application/json media type |
+| `urpx:applicationPdf` | application/pdf media type |
+| `urpx:applicationVndMsExcel` | application/vnd.ms-excel media type |
+| `urpx:applicationVndOasisOpendocumentSpreadsheet` | application/vnd.oasis.opendocument.spreadsheet media type |
+| `urpx:applicationVndOasisOpendocumentText` | application/vnd.oasis.opendocument.text media type |
+| `urpx:applicationVndOpenxmlformatsOfficedocumentSpreadsheetmlSheet` | application/vnd.openxmlformats-officedocument.spreadsheetml.sheet media type |
+| `urpx:imageGif` | image/gif media type |
+| `urpx:imageJpeg` | image/jpeg media type |
+| `urpx:imagePng` | image/png media type |
+| `urpx:textCsv` | text/csv media type |
+| `urpx:textHtml` | text/html media type |
+| `urpx:textPlain` | text/plain media type |
+| `urpx:textRtf` | text/rtf media type |
+| `urpx:textXml` | text/xml media type |
 
 ### MeteringConfigurationValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:ami` | — |
-| `urpx:demandConfiguration` | — |
-| `urpx:interval` | — |
-| `urpx:manual` | — |
-| `urpx:netMetering` | — |
-| `urpx:prepaid` | — |
+| `urpx:ami` | Advanced Metering Infrastructure (AMI) configuration - smart meter with remote communication |
+| `urpx:demandConfiguration` | Demand metering configuration - peak demand tracking |
+| `urpx:interval` | Interval metering configuration - interval meter reading |
+| `urpx:manual` | Manual metering configuration - manual meter reading |
+| `urpx:netMetering` | Net metering configuration - bidirectional meter for DER net metering |
+| `urpx:prepaid` | Prepaid metering configuration - prepayment billing system |
 
 ### MetricInputTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:aggregatedMetricInput` | — |
-| `urpx:calculatedMetricInput` | — |
-| `urpx:measuredMetricInput` | — |
-| `urpx:profileMetricInput` | — |
-| `urpx:virtualMetricInput` | — |
+| `urpx:aggregatedMetricInput` | Metric input with an aggregated metric |
+| `urpx:calculatedMetricInput` | Metric input with a calculated metric |
+| `urpx:measuredMetricInput` | Metric input with measured metrics |
+| `urpx:profileMetricInput` | Metric input from customer/service point profile characteristics |
+| `urpx:virtualMetricInput` | Metric input for virtual net metering |
 
 ### ModifierCategoryValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:billingCategory` | — |
-| `urpx:customerServiceCategory` | — |
-| `urpx:demandManagementCategory` | — |
-| `urpx:environmentalCategory` | — |
-| `urpx:modifierCategoryOther` | — |
-| `urpx:promotionalCategory` | — |
-| `urpx:regulatoryCategory` | — |
+| `urpx:billingCategory` | Billing category modifier for payment and billing process changes |
+| `urpx:customerServiceCategory` | Customer service category modifier for service enhancement programs |
+| `urpx:demandManagementCategory` | Demand management category modifier for load control and peak shaving |
+| `urpx:environmentalCategory` | Environmental category modifier for sustainability and green energy programs |
+| `urpx:modifierCategoryOther` | Other modifier category not specifically categorized |
+| `urpx:promotionalCategory` | Promotional category modifier for marketing and incentive programs |
+| `urpx:regulatoryCategory` | Regulatory category modifier for compliance and mandate-driven changes |
 
 ### ModifierTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:addOn` | — |
-| `urpx:adjustment` | — |
-| `urpx:credit` | — |
-| `urpx:demandResponse` | — |
-| `urpx:evCharging` | — |
-| `urpx:greenEnergy` | — |
-| `urpx:modifierTypeOther` | — |
-| `urpx:optIn` | — |
-| `urpx:optOut` | — |
-| `urpx:rider` | — |
+| `urpx:addOn` | Add-on modifier that extends base rate plan with additional services |
+| `urpx:adjustment` | Price adjustments, true-ups, and reconciliation charges |
+| `urpx:credit` | Credit modifier providing bill reductions or rebates |
+| `urpx:demandResponse` | Demand response modifier for load management programs |
+| `urpx:evCharging` | Electric vehicle charging modifier for EV-specific rate plans |
+| `urpx:greenEnergy` | Green energy modifier for renewable energy programs |
+| `urpx:modifierTypeOther` | Other rate plan modifier type not specifically categorized |
+| `urpx:optIn` | Opt-in modifier for voluntary customer-selected services |
+| `urpx:optOut` | Opt-out modifier for services customers can decline |
+| `urpx:rider` | Rider modifier for regulatory surcharges or adjustments |
 
 ### NameTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:abbreviationName` | — |
-| `urpx:acronymName` | — |
-| `urpx:brandName` | — |
-| `urpx:commonName` | — |
-| `urpx:dbaName` | — |
-| `urpx:formerName` | — |
+| `urpx:abbreviationName` | Abbreviation name - shortened form of organization name |
+| `urpx:acronymName` | Acronym name - initials forming pronounceable word from organization name |
+| `urpx:brandName` | Brand name - marketing or customer-facing brand identity |
+| `urpx:commonName` | Common name - widely recognized informal name used in practice |
+| `urpx:dbaName` | DBA name - 'Doing Business As' name for business operations |
+| `urpx:formerName` | Former name - previous legal or operational name before change |
 | `urpx:legalName` | Official legal name of the organization |
-| `urpx:tradeName` | — |
+| `urpx:tradeName` | Trade name - commercial trading name used in business transactions |
 
 ### ObservanceRuleValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:actualDateObservance` | — |
-| `urpx:fridayIfWeekendObservance` | — |
-| `urpx:mondayIfWeekendObservance` | — |
-| `urpx:nearestWeekdayObservance` | — |
+| `urpx:actualDateObservance` | Holiday observed on the actual calendar date regardless of day of week |
+| `urpx:fridayIfWeekendObservance` | Holiday observed on preceding Friday if it falls on weekend |
+| `urpx:mondayIfWeekendObservance` | Holiday observed on following Monday if it falls on weekend |
+| `urpx:nearestWeekdayObservance` | Holiday observed on nearest weekday (Friday if Saturday, Monday if Sunday) |
 
 ### OperatorValue
 
@@ -2914,18 +2925,18 @@ potentially spanning multiple administrative boundaries.
 |-------|-------------|
 | `urpx:addOperator` | Represents addition in condition expressions |
 | `urpx:andOperator` | Represents logical conjunction in condition-expression boolean composition |
-| `urpx:betweenOperator` | — |
-| `urpx:containsOperator` | — |
+| `urpx:betweenOperator` | Range comparison operator (BETWEEN) |
+| `urpx:containsOperator` | String contains comparison operator (LIKE, CONTAINS) |
 | `urpx:divideOperator` | Represents division in condition expressions |
-| `urpx:equalsOperator` | — |
-| `urpx:greaterThanOperator` | — |
-| `urpx:greaterThanOrEqualOperator` | — |
-| `urpx:inOperator` | — |
-| `urpx:lessThanOperator` | — |
-| `urpx:lessThanOrEqualOperator` | — |
+| `urpx:equalsOperator` | Equality comparison operator (==, =) |
+| `urpx:greaterThanOperator` | Greater than comparison operator (>) |
+| `urpx:greaterThanOrEqualOperator` | Greater than or equal comparison operator (>=) |
+| `urpx:inOperator` | Set membership operator (IN) |
+| `urpx:lessThanOperator` | Less than comparison operator (<) |
+| `urpx:lessThanOrEqualOperator` | Less than or equal comparison operator (<=) |
 | `urpx:multiplyOperator` | Represents multiplication in condition expressions |
-| `urpx:notEqualsOperator` | — |
-| `urpx:notInOperator` | — |
+| `urpx:notEqualsOperator` | Inequality comparison operator (!=, <>) |
+| `urpx:notInOperator` | Set exclusion operator (NOT IN) |
 | `urpx:notOperator` | Represents logical negation in condition-expression boolean composition |
 | `urpx:orOperator` | Represents logical disjunction in condition-expression boolean composition |
 | `urpx:subtractOperator` | Represents subtraction in condition expressions |
@@ -2934,301 +2945,301 @@ potentially spanning multiple administrative boundaries.
 
 | Value | Description |
 |-------|-------------|
-| `urpx:aggregatorOrganization` | — |
-| `urpx:cooperativeOrganization` | — |
-| `urpx:espOrganization` | — |
-| `urpx:ippOrganization` | — |
-| `urpx:isoRtoOrganization` | — |
-| `urpx:municipalOrganization` | — |
-| `urpx:parentOrganization` | — |
-| `urpx:regulatorOrganization` | — |
-| `urpx:utilityOrganization` | — |
+| `urpx:aggregatorOrganization` | Energy aggregator organization - combines customer loads for wholesale market participation |
+| `urpx:cooperativeOrganization` | Cooperative organization - member-owned utility or energy service entity |
+| `urpx:espOrganization` | Energy Service Provider organization - competitive retail energy supplier |
+| `urpx:ippOrganization` | Independent Power Producer organization - wholesale electricity generation entity |
+| `urpx:isoRtoOrganization` | Independent System Operator or Regional Transmission Organization - grid management entity |
+| `urpx:municipalOrganization` | Municipal organization - government-owned utility or energy entity |
+| `urpx:parentOrganization` | Parent organization - holding company or corporate parent entity |
+| `urpx:regulatorOrganization` | Regulatory organization - government entity with rate-setting or oversight authority |
+| `urpx:utilityOrganization` | Utility organization - traditional regulated utility providing electric, gas, or water service |
 
 ### OwnershipTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:cooperativeOwnership` | — |
-| `urpx:federalOwnership` | — |
-| `urpx:investorOwned` | — |
-| `urpx:municipalOwnership` | — |
-| `urpx:privateOwnership` | — |
-| `urpx:stateOwnership` | — |
-| `urpx:tribalOwnership` | — |
+| `urpx:cooperativeOwnership` | Cooperative ownership - member-owned utility operated for members' benefit |
+| `urpx:federalOwnership` | Federal government ownership - federally-owned utility or power authority |
+| `urpx:investorOwned` | Investor-owned utility - private company owned by shareholders for profit |
+| `urpx:municipalOwnership` | Municipal ownership - city or local government-owned utility |
+| `urpx:privateOwnership` | Private ownership - privately-owned utility not publicly traded |
+| `urpx:stateOwnership` | State government ownership - state-owned utility or power authority |
+| `urpx:tribalOwnership` | Tribal ownership - Native American tribal nation-owned utility |
 
 ### PanelOrientationValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:east` | — |
-| `urpx:multipleOrientations` | — |
-| `urpx:north` | — |
-| `urpx:northeast` | — |
-| `urpx:northwest` | — |
-| `urpx:south` | — |
-| `urpx:southeast` | — |
-| `urpx:southwest` | — |
-| `urpx:tracking` | — |
-| `urpx:west` | — |
+| `urpx:east` | East-facing panel orientation - morning generation peak |
+| `urpx:multipleOrientations` | Solar installations with panels in multiple orientations |
+| `urpx:north` | North-facing panel orientation - suboptimal for Northern Hemisphere |
+| `urpx:northeast` | Northeast-facing panel orientation |
+| `urpx:northwest` | Northwest-facing panel orientation |
+| `urpx:south` | South-facing panel orientation - optimal for Northern Hemisphere |
+| `urpx:southeast` | Southeast-facing panel orientation |
+| `urpx:southwest` | Southwest-facing panel orientation |
+| `urpx:tracking` | Solar tracking system - follows sun movement for optimal generation |
+| `urpx:west` | West-facing panel orientation - afternoon generation peak |
 
 ### PhaseCodeKindValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:A` | — |
-| `urpx:AB` | — |
-| `urpx:ABC` | — |
-| `urpx:ABCN` | — |
-| `urpx:ABN` | — |
-| `urpx:AC` | — |
-| `urpx:ACN` | — |
-| `urpx:AN` | — |
-| `urpx:AtoAv` | — |
-| `urpx:B` | — |
-| `urpx:BAv` | — |
-| `urpx:BC` | — |
-| `urpx:BCN` | — |
-| `urpx:BN` | — |
-| `urpx:C` | — |
-| `urpx:CAv` | — |
-| `urpx:CN` | — |
-| `urpx:N` | — |
-| `urpx:NG` | — |
-| `urpx:S1` | — |
-| `urpx:S12` | — |
-| `urpx:S12N` | — |
-| `urpx:S1N` | — |
-| `urpx:S2` | — |
-| `urpx:S2N` | — |
+| `urpx:A` | Phase A |
+| `urpx:AB` | Phases A to B |
+| `urpx:ABC` | Involving All Phases |
+| `urpx:ABCN` | Three-phase ABC to Neutral configuration |
+| `urpx:ABN` | AB to Neutral |
+| `urpx:AC` | Phases A to C |
+| `urpx:ACN` | AC to Neutral |
+| `urpx:AN` | Phase A to Neutral |
+| `urpx:AtoAv` | Phase A Current Relative to Phase A Voltage |
+| `urpx:B` | Phase B |
+| `urpx:BAv` | Phase B Current or Voltage Relative to Phase A Voltage |
+| `urpx:BC` | Phases B to C |
+| `urpx:BCN` | BC to Neutral |
+| `urpx:BN` | Phase B to Neutral |
+| `urpx:C` | Phase C |
+| `urpx:CAv` | Phase C Current or Voltage Relative to Phase A Voltage |
+| `urpx:CN` | Phase C to Neutral |
+| `urpx:N` | Neutral |
+| `urpx:NG` | Neutral to Ground |
+| `urpx:S1` | Phase S1 |
+| `urpx:S12` | Phase S1 to S2 |
+| `urpx:S12N` | Phase S1, S2 to Neutral |
+| `urpx:S1N` | Phase S1 to Neutral |
+| `urpx:S2` | Phase S2 |
+| `urpx:S2N` | Phase S2 to Neutral |
 
 ### PremiseTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:hospital` | — |
-| `urpx:manufacturing` | — |
-| `urpx:multiFamily` | — |
-| `urpx:office` | — |
-| `urpx:premiseTypeOther` | — |
-| `urpx:retailStore` | — |
-| `urpx:school` | — |
-| `urpx:singleFamily` | — |
-| `urpx:warehouse` | — |
+| `urpx:hospital` | Hospital or medical facility |
+| `urpx:manufacturing` | Manufacturing or industrial production facility |
+| `urpx:multiFamily` | Multi-family residential building (apartments, condominiums) |
+| `urpx:office` | Office or commercial business premises |
+| `urpx:premiseTypeOther` | Other premise type not specifically categorized |
+| `urpx:retailStore` | Retail store or commercial shopping premises |
+| `urpx:school` | Educational facility or school |
+| `urpx:singleFamily` | Single-family residential dwelling |
+| `urpx:warehouse` | Warehouse or storage facility |
 
 ### PriceSourceValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:algorithmicSource` | — |
-| `urpx:capacityAuctionSource` | — |
-| `urpx:demandForecastSource` | — |
-| `urpx:gasIndexSource` | — |
-| `urpx:manualOverrideSource` | — |
-| `urpx:renewableForecastSource` | — |
-| `urpx:wholesaleMarketSource` | — |
+| `urpx:algorithmicSource` | Pricing calculated by proprietary algorithms |
+| `urpx:capacityAuctionSource` | Pricing from capacity auction markets |
+| `urpx:demandForecastSource` | Pricing based on demand forecasting models |
+| `urpx:gasIndexSource` | Pricing based on natural gas index prices |
+| `urpx:manualOverrideSource` | Manually set pricing overriding automated sources |
+| `urpx:renewableForecastSource` | Pricing based on renewable energy generation forecasts |
+| `urpx:wholesaleMarketSource` | Pricing from wholesale electricity markets (ISO/RTO markets) |
 
 ### ProgramTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:communityChoiceAggregation` | — |
-| `urpx:communitySolar` | — |
-| `urpx:demandResponseProgram` | — |
-| `urpx:energyEfficiencyProgram` | — |
-| `urpx:greenEnergyProgram` | — |
-| `urpx:lowIncomeProgram` | — |
-| `urpx:moderateIncomeProgram` | — |
-| `urpx:timeOfUseProgram` | — |
+| `urpx:communityChoiceAggregation` | Enrollment in a Community Choice Aggregation program |
+| `urpx:communitySolar` | Participation in a community solar project or program |
+| `urpx:demandResponseProgram` | Demand response program for load management and peak reduction |
+| `urpx:energyEfficiencyProgram` | Energy efficiency program for conservation and efficiency improvement |
+| `urpx:greenEnergyProgram` | Green energy program for renewable energy participation |
+| `urpx:lowIncomeProgram` | Low income assistance program for customer financial support |
+| `urpx:moderateIncomeProgram` | Moderate income assistance program for customer financial support |
+| `urpx:timeOfUseProgram` | Time-of-use program for time-based pricing participation |
 
 ### PublicationTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:amendment` | — |
-| `urpx:notice` | — |
-| `urpx:order` | — |
-| `urpx:ratePlanModifierPublication` | — |
-| `urpx:ratePlanPublication` | — |
-| `urpx:regulatoryFiling` | — |
-| `urpx:supplement` | — |
-| `urpx:tariffBook` | — |
-| `urpx:tariffBookLeaves` | — |
-| `urpx:tariffStatement` | — |
+| `urpx:amendment` | Amendment to existing tariff or rate schedule |
+| `urpx:notice` | Public notice regarding rate or tariff changes |
+| `urpx:order` | Regulatory order or decision regarding rates or tariffs |
+| `urpx:ratePlanModifierPublication` | Rate Plan publication |
+| `urpx:ratePlanPublication` | Rate Plan publication |
+| `urpx:regulatoryFiling` | Official regulatory filing or submission to regulatory authority |
+| `urpx:supplement` | Supplement providing additional information to existing publication |
+| `urpx:tariffBook` | Complete tariff book document containing all rate schedules and terms |
+| `urpx:tariffBookLeaves` | Individual sets of leaves or pages from tariff book publications |
+| `urpx:tariffStatement` | PSC tariff statement filing containing price adjustments and prices |
 
 ### ReferenceInclusionValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:includedHere` | — |
-| `urpx:retrievedElsewhere` | — |
+| `urpx:includedHere` | The referenced price definition is present inline within this plan or publication. |
+| `urpx:retrievedElsewhere` | The referenced price definition is not included here and must be retrieved from an external source. |
 
 ### RegulatoryScopeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:distributionRegulation` | — |
-| `urpx:environmentalRegulation` | — |
-| `urpx:marketRegulation` | — |
-| `urpx:ratesRegulation` | — |
-| `urpx:safetyRegulation` | — |
-| `urpx:transmissionRegulation` | — |
+| `urpx:distributionRegulation` | Distribution regulation - oversight of local power distribution systems and customer service |
+| `urpx:environmentalRegulation` | Environmental regulation - oversight of environmental compliance and renewable energy standards |
+| `urpx:marketRegulation` | Market regulation - oversight of wholesale and retail energy market competition and pricing |
+| `urpx:ratesRegulation` | Rates regulation - oversight of utility rate setting and tariff approval processes |
+| `urpx:safetyRegulation` | Safety regulation - oversight of utility safety standards and operational reliability |
+| `urpx:transmissionRegulation` | Transmission regulation - oversight of high-voltage transmission systems and grid reliability |
 
 ### ScopeKindValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:applicability` | — |
-| `urpx:coverage` | — |
-| `urpx:observation` | — |
-| `urpx:publication` | — |
-| `urpx:sourceLifecycle` | — |
+| `urpx:applicability` | Applicability time: when the scoped facts take effect and apply. |
+| `urpx:coverage` | Coverage time: the span of time the scoped facts cover. |
+| `urpx:observation` | Observation time: when the scoped facts were observed or measured. |
+| `urpx:publication` | Publication time: when the scoped facts were published or issued. |
+| `urpx:sourceLifecycle` | Source-lifecycle time: the validity span of the originating source publication. |
 
 ### SeasonalPatternValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:flatPattern` | — |
-| `urpx:summerPeakPattern` | — |
-| `urpx:variablePattern` | — |
-| `urpx:winterPeakPattern` | — |
+| `urpx:flatPattern` | Flat seasonal usage pattern - consistent usage throughout the year |
+| `urpx:summerPeakPattern` | Summer peak usage pattern - highest usage during summer months |
+| `urpx:variablePattern` | Variable seasonal usage pattern - irregular usage variations throughout the year |
+| `urpx:winterPeakPattern` | Winter peak usage pattern - highest usage during winter months |
 
 ### ServiceRoleValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:aggregationRole` | — |
-| `urpx:bundledServiceRole` | — |
-| `urpx:communitySolarServiceRole` | — |
-| `urpx:demandResponseRole` | — |
-| `urpx:distributionServiceRole` | — |
-| `urpx:energyEfficiencyRole` | — |
-| `urpx:retailSupplyRole` | — |
-| `urpx:solarInstallationRole` | — |
+| `urpx:aggregationRole` | Aggregation service role - combining customer loads for wholesale market participation and demand response |
+| `urpx:bundledServiceRole` | Bundled service role - utility provides both delivery and supply services |
+| `urpx:communitySolarServiceRole` | Community solar service role  |
+| `urpx:demandResponseRole` | Demand response service role - managing customer load reduction programs and grid flexibility services |
+| `urpx:distributionServiceRole` | Distribution service role - utility provides delivery infrastructure only |
+| `urpx:energyEfficiencyRole` | Energy efficiency service role - providing energy conservation programs and efficiency solutions |
+| `urpx:retailSupplyRole` | Retail supply service role - competitive retail energy supplier serving end-use customers |
+| `urpx:solarInstallationRole` | Solar installation service role - distributed solar energy system installation and maintenance services |
 
 ### SpecialNeedsStatusValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:disabilityAccommodation` | — |
-| `urpx:lifeSupport` | — |
-| `urpx:medicalEquipment` | — |
-| `urpx:noSpecialNeeds` | — |
-| `urpx:vulnerableCustomer` | — |
+| `urpx:disabilityAccommodation` | Customer requires disability accommodation - accessible services and communications |
+| `urpx:lifeSupport` | Customer depends on life support equipment - critical uninterrupted power requirement |
+| `urpx:medicalEquipment` | Customer requires medical equipment - special consideration for uninterrupted service |
+| `urpx:noSpecialNeeds` | No special needs designation |
+| `urpx:vulnerableCustomer` | Vulnerable customer status - elderly, health concerns, or other vulnerability factors |
 
 ### TOUTierStandardNameValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:criticalPeakTier` | — |
-| `urpx:midPeakTier` | — |
-| `urpx:offPeakTier` | — |
-| `urpx:peakTier` | — |
-| `urpx:shoulderTier` | — |
-| `urpx:superOffPeakTier` | — |
-| `urpx:superPeakTier` | — |
+| `urpx:criticalPeakTier` | Critical peak pricing tier - emergency demand response period |
+| `urpx:midPeakTier` | Mid peak pricing tier - moderate demand period |
+| `urpx:offPeakTier` | Off peak pricing tier - low demand period |
+| `urpx:peakTier` | Peak pricing tier - high demand period |
+| `urpx:shoulderTier` | Shoulder pricing tier - transition period between peak and off-peak |
+| `urpx:superOffPeakTier` | Super off peak pricing tier - lowest cost period |
+| `urpx:superPeakTier` | Super peak pricing tier - highest cost period |
 
 ### TariffStatementTypeValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:distributionStatement` | — |
-| `urpx:fuelAdjustmentStatement` | — |
-| `urpx:purchasedPowerStatement` | — |
-| `urpx:statementTypeOther` | — |
-| `urpx:transmissionStatement` | — |
+| `urpx:distributionStatement` | Distribution-related statement filing type for PSC tariff documentation |
+| `urpx:fuelAdjustmentStatement` | Fuel adjustment-related statement filing type for PSC tariff documentation |
+| `urpx:purchasedPowerStatement` | Purchased power-related statement filing type for PSC tariff documentation |
+| `urpx:statementTypeOther` | Other or unclassified statement filing type for PSC tariff documentation |
+| `urpx:transmissionStatement` | Transmission-related statement filing type for PSC tariff documentation |
 
 ### TaxExemptStatusValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:exempt` | — |
-| `urpx:nonExempt` | — |
-| `urpx:partialExempt` | — |
-| `urpx:pendingVerification` | — |
+| `urpx:exempt` | Fully tax-exempt status - qualified for full tax exemption |
+| `urpx:nonExempt` | Non-exempt tax status - standard taxation applies |
+| `urpx:partialExempt` | Partially tax-exempt status - qualified for partial tax exemption |
+| `urpx:pendingVerification` | Tax exemption status pending verification - application under review |
 
 ### UnitOfMeasureValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:GW` | — |
-| `urpx:GWh` | — |
-| `urpx:Gbps` | — |
-| `urpx:MVA` | — |
-| `urpx:MVAh` | — |
-| `urpx:MW` | — |
-| `urpx:MWh` | — |
-| `urpx:Mbps` | — |
-| `urpx:VA` | — |
-| `urpx:VAh` | — |
-| `urpx:VAr` | — |
-| `urpx:VArh` | — |
-| `urpx:W` | — |
-| `urpx:Wh` | — |
-| `urpx:acre` | — |
-| `urpx:barrel` | — |
-| `urpx:bcf` | — |
-| `urpx:bit` | — |
-| `urpx:btu` | — |
-| `urpx:byte` | — |
-| `urpx:ccf` | — |
-| `urpx:cord` | — |
-| `urpx:count` | — |
-| `urpx:cubicFoot` | — |
-| `urpx:cubicMeter` | — |
-| `urpx:decatherm` | — |
-| `urpx:gallon` | — |
-| `urpx:hectare` | — |
-| `urpx:hertz` | — |
-| `urpx:item` | — |
-| `urpx:kVA` | — |
-| `urpx:kVAh` | — |
-| `urpx:kVAr` | — |
-| `urpx:kVArh` | — |
-| `urpx:kW` | — |
-| `urpx:kWh` | — |
-| `urpx:kilogallon` | — |
-| `urpx:kilogram` | — |
-| `urpx:kilometer` | — |
-| `urpx:liter` | — |
-| `urpx:mcf` | — |
-| `urpx:metricTon` | — |
-| `urpx:mile` | — |
-| `urpx:mmbtu` | — |
-| `urpx:mmcf` | — |
-| `urpx:percent` | — |
-| `urpx:pound` | — |
-| `urpx:ratio` | — |
-| `urpx:squareFoot` | — |
-| `urpx:squareMeter` | — |
-| `urpx:tcf` | — |
-| `urpx:therm` | — |
-| `urpx:ton` | — |
-| `urpx:unitOther` | — |
-| `urpx:year` | — |
+| `urpx:GW` | Gigawatt - unit of power demand |
+| `urpx:GWh` | Gigawatt hour - unit of energy |
+| `urpx:Gbps` | Gigabits per second - unit of data transfer rate |
+| `urpx:MVA` | Megavolt-ampere - unit of apparent power |
+| `urpx:MVAh` | Megavolt-ampere hour - unit of reactive energy |
+| `urpx:MW` | Megawatt - unit of power demand |
+| `urpx:MWh` | Megawatt hour - unit of energy |
+| `urpx:Mbps` | Megabits per second - unit of data transfer rate |
+| `urpx:VA` | Volt-ampere - unit of apparent power |
+| `urpx:VAh` | Volt-ampere hour - unit of reactive energy |
+| `urpx:VAr` | Volt-ampere reactive - unit of reactive energy |
+| `urpx:VArh` | Volt-ampere reactive hour - unit of reactive energy |
+| `urpx:W` | Watt - unit of power demand |
+| `urpx:Wh` | Watt hour - unit of energy |
+| `urpx:acre` | Acre - unit of area |
+| `urpx:barrel` | Barrel - unit of oil volume |
+| `urpx:bcf` | Billion cubic feet - unit of gas volume |
+| `urpx:bit` | Bit - unit of digital information |
+| `urpx:btu` | British thermal unit - unit of energy |
+| `urpx:byte` | Byte - unit of digital information (8 bits) |
+| `urpx:ccf` | Hundred cubic feet - unit of gas volume |
+| `urpx:cord` | Cord - unit of wood volume |
+| `urpx:count` | Generic count unit (dimensionless) |
+| `urpx:cubicFoot` | Cubic foot - unit of volume |
+| `urpx:cubicMeter` | Cubic meter - unit of volume |
+| `urpx:decatherm` | Decatherm - unit of heat energy (10 therms) |
+| `urpx:gallon` | Gallon - unit of liquid volume |
+| `urpx:hectare` | Hectare - unit of area |
+| `urpx:hertz` | Hertz - unit of frequency |
+| `urpx:item` | Discrete item count (e.g., trash bin, bag, device) |
+| `urpx:kVA` | Kilovolt-ampere - unit of apparent power |
+| `urpx:kVAh` | Kilovolt-ampere hour - unit of reactive energy |
+| `urpx:kVAr` | Kilovolt-ampere reactive - unit of reactive energy |
+| `urpx:kVArh` | Kilovolt-ampere reactive hour - unit of reactive energy |
+| `urpx:kW` | Kilowatt - unit of power demand |
+| `urpx:kWh` | Kilowatt hour - unit of energy |
+| `urpx:kilogallon` | Kilogallon - unit of liquid volume |
+| `urpx:kilogram` | Kilogram - unit of weight |
+| `urpx:kilometer` | Kilometer - unit of distance |
+| `urpx:liter` | Liter - unit of liquid volume |
+| `urpx:mcf` | Thousand cubic feet - unit of gas volume |
+| `urpx:metricTon` | Metric ton - unit of weight |
+| `urpx:mile` | Mile - unit of distance |
+| `urpx:mmbtu` | Million British thermal units - unit of energy |
+| `urpx:mmcf` | Million cubic feet - unit of gas volume |
+| `urpx:percent` | Percent - percentage unit |
+| `urpx:pound` | Pound - unit of weight |
+| `urpx:ratio` | Ratio - proportional unit |
+| `urpx:squareFoot` | Square foot - unit of area |
+| `urpx:squareMeter` | Square meter - unit of area |
+| `urpx:tcf` | Trillion cubic feet - unit of gas volume |
+| `urpx:therm` | Therm - unit of natural gas energy content |
+| `urpx:ton` | Ton - unit of weight (US) |
+| `urpx:unitOther` | Other unit of measure not specifically categorized |
+| `urpx:year` | Year - unit of time |
 
 ### UpdateFrequencyValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:continuousUpdates` | — |
-| `urpx:dailyUpdates` | — |
-| `urpx:eventTriggeredUpdates` | — |
-| `urpx:every15Minutes` | — |
-| `urpx:every5Minutes` | — |
-| `urpx:hourlyUpdates` | — |
-| `urpx:monthlyUpdates` | — |
-| `urpx:onDemandUpdates` | — |
-| `urpx:weeklyUpdates` | — |
+| `urpx:continuousUpdates` | Continuous real-time price updates |
+| `urpx:dailyUpdates` | Price updates daily (P1D) |
+| `urpx:eventTriggeredUpdates` | Price updates triggered by specific market or grid events |
+| `urpx:every15Minutes` | Price updates every 15 minutes (PT15M) |
+| `urpx:every5Minutes` | Price updates every 5 minutes (PT5M) |
+| `urpx:hourlyUpdates` | Price updates every hour (PT1H) |
+| `urpx:monthlyUpdates` | Price updates monthly (P1M) |
+| `urpx:onDemandUpdates` | Price updates triggered on demand by external events |
+| `urpx:weeklyUpdates` | Price updates weekly (P1W) |
 
 ### VoltageLevelValue
 
 | Value | Description |
 |-------|-------------|
-| `urpx:distributionVoltage` | — |
-| `urpx:primaryVoltage` | — |
-| `urpx:secondaryVoltage` | — |
-| `urpx:subTransmissionVoltage` | — |
-| `urpx:transmissionVoltage` | — |
+| `urpx:distributionVoltage` | Distribution voltage level - general distribution system voltage |
+| `urpx:primaryVoltage` | Primary voltage level - typically 2.4kV-34.5kV distribution voltage |
+| `urpx:secondaryVoltage` | Secondary voltage level - typically 120-600V residential and small commercial service |
+| `urpx:subTransmissionVoltage` | Sub-transmission voltage level - typically 34.5kV-115kV for regional distribution |
+| `urpx:transmissionVoltage` | Transmission voltage level - typically 115kV and above for bulk power transmission |
 
 ---
 

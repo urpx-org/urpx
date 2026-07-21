@@ -535,6 +535,18 @@ urpx-shacl:CoverageClaimShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:stale ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:fallbackSourced ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:explainedBy ;
         sh:class urpx:Evaluation ;
         sh:minCount 0 ;
@@ -1282,6 +1294,18 @@ urpx-shacl:EvaluationShape
     sh:property [
         sh:path urpx:description ;
         sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:evaluatedBy ;
+        sh:class urpx:Organization ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:evaluatedOn ;
+        sh:datatype xsd:dateTime ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] .
@@ -3037,6 +3061,33 @@ urpx-shacl:PricingModelShape
         sh:minCount 0 ;
     ] ;
     sh:property [
+        sh:path urpx:replaces ;
+        sh:class urpx:PricingModel ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:replacedBy ;
+        sh:class urpx:PricingModel ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:cancelledBy ;
+        sh:or (
+            [ sh:class urpx:PricingModel ]
+            [ sh:class urpx:SourcePublication ]
+        ) ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:cancelledOn ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:hasGeneralRule ;
         sh:class urpx:GeneralRule ;
         sh:minCount 0 ;
@@ -3692,6 +3743,23 @@ urpx-shacl:RatePlanModifierVersionShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:hasIdentifier ;
+        sh:class urpx:RatePlanModifierIdentifier ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:timezoneIdentifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:pattern "^[A-Za-z]+(/[A-Za-z0-9_+-]+)+$" ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasLocationDataSet ;
+        sh:class urpx:LocationDataSet ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
         sh:path urpx:hasCoverageClaim ;
         sh:class urpx:CoverageClaim ;
         sh:minCount 1 ;
@@ -4085,6 +4153,23 @@ urpx-shacl:RatePlanVersionShape
         sh:class urpx:RatePlan ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasIdentifier ;
+        sh:class urpx:RatePlanIdentifier ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:timezoneIdentifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:pattern "^[A-Za-z]+(/[A-Za-z0-9_+-]+)+$" ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasLocationDataSet ;
+        sh:class urpx:LocationDataSet ;
+        sh:minCount 0 ;
     ] ;
     sh:property [
         sh:path urpx:selfContained ;
@@ -5861,7 +5946,7 @@ urpx-shacl:CommodityValueShape
 urpx-shacl:CompletenessResultValueShape
     a sh:NodeShape ;
     rdfs:label "CompletenessResultValue Shape"@en ;
-    sh:in ( urpx:complete urpx:partial urpx:pending urpx:unsupported urpx:unknown urpx:fallbackSourced urpx:stale urpx:noCoverage ) .
+    sh:in ( urpx:complete urpx:partial urpx:pending urpx:unsupported urpx:unknown urpx:noCoverage ) .
 
 urpx-shacl:ConfidenceValueShape
     a sh:NodeShape ;

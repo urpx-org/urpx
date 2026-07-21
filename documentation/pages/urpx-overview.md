@@ -41,8 +41,6 @@ Built on RDF and OWL standards, URPX defines a rich vocabulary for describing ev
 
 #### 2. Modular Architecture
 
-[URPX Core Schema diagram creation in progress]
-
 URPX is built on a core ontology ([`urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)) that includes:
 
 **Core Rate Plan Structure:**
@@ -141,7 +139,7 @@ Utilities rarely publish a complete rate plan in one place. A tariff book states
 
 #### Rate Plan Versions and Coverage
 
-A `RatePlanVersion` is the derived, complete snapshot of the resolved plan facts for a temporal window — the artifact a billing engine or comparison tool actually reads. It is consolidated from the applicable pricing models and linked back to the plan identity via `forRatePlan`. Completeness is honest by construction: every version must declare a `CoverageClaim` stating its completeness result and whether it is self-contained (`selfContained`), with an explaining `Evaluation`.
+A `RatePlanVersion` is the derived, complete snapshot of the resolved plan facts for a temporal window — the artifact a billing engine or comparison tool actually reads. It is consolidated from the applicable pricing models and linked back to the plan identity via `forRatePlan`. Completeness is honest by construction: every version must declare a `CoverageClaim`. Only the completeness result (`completenessResult`) is required; the self-containment flag (`selfContained`) and an explaining `Evaluation` are optional additions.
 
 #### Prices
 
@@ -279,15 +277,7 @@ Reading the chain top-down: the **statement** (`SourcePublication`) is the exter
 
 ### Geographic Applicability
 
-Prices apply within specific geographic boundaries. URPX provides hierarchical scoping:
-
-```turtle
-# Applicability group with geographic hierarchy
-ex:NorthernRegionApplicability a urpx:ApplicabilityGroup ;
-    urpx:appliesInState ex:California ;
-    urpx:appliesInCounty ex:AlamedaCounty, ex:ContraCostaCounty ;
-    urpx:appliesInServiceTerritory ex:PGE-NorthernTerritory .
-```
+Prices apply within named geographic areas. Geographic scope is expressed through the general applicability model: an `ApplicabilityRule` carries a `ConditionExpression` that tests geographic vocabulary such as the `ServiceTerritory` class and the `GeographicScopeValue` enumeration (`statewideScope`, `countyScope`, `serviceTerritoryScope`, `municipalityScope`, `customScope`). See the [Condition Modeling](urpx-condition-modeling.md) page for the full applicability pattern.
 
 ### Customer Eligibility
 

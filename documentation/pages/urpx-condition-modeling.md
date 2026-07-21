@@ -4,9 +4,9 @@
 
 # URPX Condition Model
 
-**Version:** 0.2.0  
+**Version:** 0.3.0
 **Last Updated:** 2026-05-01  
-**Status:** Adopted for URPX 0.2.0  
+**Status:** Adopted for URPX 0.3.0  
 **Scope:** Structured condition-expression modeling in eligibility, applicability, and related contexts  
 **Ontology Source:** [`urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)  
 **SHACL Source:** [`urpx-shacl.ttl`](/ontology/urpx-shacl.ttl)
@@ -492,7 +492,7 @@ Datatype-specific value properties allow compact JSON-LD authoring by declaring 
 ```json
 {
   "@context": {
-    "urpx": "https://schema.urpx.org/",
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "urpx:booleanValue": { "@id": "urpx:booleanValue", "@type": "xsd:boolean" },
     "urpx:dateValue": { "@id": "urpx:dateValue", "@type": "xsd:date" },
@@ -717,7 +717,7 @@ graph TD
 ```json
 {
   "@context": {
-    "urpx": "https://schema.urpx.org/",
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "urpx:booleanValue": { "@id": "urpx:booleanValue", "@type": "xsd:boolean" },
     "urpx:dateValue": { "@id": "urpx:dateValue", "@type": "xsd:date" },

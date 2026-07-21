@@ -90,7 +90,7 @@ urpx:BillingCycle a owl:Class ;
 urpx:BillingModel a owl:Class ;
     rdfs:label "Billing Model"@en ;
     rdfs:comment "Billing-specific rules and calculation patterns for rate plan version with ledger-based organization" ;
-    skos:note """Defines billing calculation rules, proration patterns, and adjustment mechanisms. Contains one or more ledgers for organizing prices by billing category (supply, delivery, etc.). Each ledger can have multiple MetricInputs for per-meter or per-service-point pricing.""" .
+    skos:note "Defines billing calculation rules, proration patterns, and adjustment mechanisms. Contains one or more ledgers for organizing prices by billing category (supply, delivery, etc.). Each ledger can have multiple MetricInputs for per-meter or per-service-point pricing." .
 
 urpx:BooleanOperationNode a owl:Class ;
     rdfs:label "Boolean Operation Node"@en ;
@@ -123,13 +123,7 @@ urpx:County a owl:Class ;
     rdfs:label "County"@en ;
     rdfs:comment "County or equivalent second-level administrative division" ;
     rdfs:subClassOf urpx:AdministrativeBoundary ;
-    skos:note """Second-level administrative division for local governance.
-                 Important for municipal utilities and local regulatory oversight.
-                 
-                 Standards Alignment:
-                 - FIPS county codes for standardized identification
-                 - Census county definitions for demographic data
-                 - Geographic business practices for utility operations""" .
+    skos:note "Second-level administrative division for local governance. Important for municipal utilities and local regulatory oversight. Standards Alignment: FIPS county codes for standardized identification; Census county definitions for demographic data; Geographic business practices for utility operations." .
 
 urpx:CoverageClaim a owl:Class ;
     rdfs:label "Coverage Claim"@en ;
@@ -231,39 +225,32 @@ urpx:OperationNode a owl:Class ;
 urpx:Organization a owl:Class ;
     rdfs:label "Organization"@en ;
     rdfs:comment "Any entity participating in energy markets or rate regulation" ;
-    skos:note """Base class for all organizational entities in the energy sector.
-                 Includes utilities, regulators, ISOs/RTOs, aggregators, energy service companies, and parent holdings.
-                 Supports international entities with flexible identification.""" .
+    skos:note "Base class for all organizational entities in the energy sector. Includes utilities, regulators, ISOs/RTOs, aggregators, energy service companies, and parent holdings. Supports international entities with flexible identification." .
 
 urpx:OrganizationEvent a owl:Class ;
     rdfs:label "Organization Event"@en ;
     rdfs:comment "Corporate transition event affecting organization structure or identity" ;
-    skos:note """Base class for M&A, rebranding, territory changes affecting organizations.
-                 Tracks predecessor and successor relationships for rate plan continuity.""" .
+    skos:note "Base class for M&A, rebranding, territory changes affecting organizations. Tracks predecessor and successor relationships for rate plan continuity." .
 
 urpx:OrganizationIdentifier a owl:Class ;
     rdfs:label "Organization Identifier"@en ;
     rdfs:comment "External identifier from regulatory or financial systems" ;
-    skos:note """Captures EIA ID, DUNS, LEI, and other jurisdiction-specific identifiers.
-                 Supports international identification schemes with issuing authority tracking.""" .
+    skos:note "Captures EIA ID, DUNS, LEI, and other jurisdiction-specific identifiers. Supports international identification schemes with issuing authority tracking." .
 
 urpx:OrganizationIdentity a owl:Class ;
     rdfs:label "Organization Identity"@en ;
     rdfs:comment "Temporal identity record tracking names and identifiers over time" ;
-    skos:note """Captures organization identity at a point in time with validity period.
-                 Supports name changes, rebranding, and identifier updates.""" .              
+    skos:note "Captures organization identity at a point in time with validity period. Supports name changes, rebranding, and identifier updates." .
 
 urpx:OrganizationName a owl:Class ;
     rdfs:label "Organization Name"@en ;
     rdfs:comment "Name variant with type, language, and canonical/preferred status" ;
-    skos:note """Supports multiple names per organization with different purposes.
-                 Tracks canonical (official) and preferred (for display) designations.""" .
+    skos:note "Supports multiple names per organization with different purposes. Tracks canonical (official) and preferred (for display) designations." .
 
 urpx:OrganizationTransition a owl:Class ;
     rdfs:label "Organization Transition"@en ;
     rdfs:comment "N-ary relator for complex organization transitions" ;
-    skos:note """Captures full context of organization changes including multiple
-                 predecessors/successors, partial transfers, and regulatory approvals.""" .
+    skos:note "Captures full context of organization changes including multiple predecessors/successors, partial transfers, and regulatory approvals." .
 
 urpx:PlanElements a owl:Class ;
     rdfs:label "Plan Elements"@en ;
@@ -311,9 +298,7 @@ urpx:PriceSetAlternatives a owl:Class ;
 urpx:PriceSummary a owl:Class ;
     rdfs:label "Price Summary"@en ;
     rdfs:comment "Total or subtotal aggregating multiple price line items" ;
-    skos:note """Aggregates multiple prices into totals/subtotals for billing presentation.
-                 Explicitly references included line items to avoid double counting.
-                 Supports transition from summary to detailed billing formats.""" .
+    skos:note "Aggregates multiple prices into totals/subtotals for billing presentation. Explicitly references included line items to avoid double counting. Supports transition from summary to detailed billing formats." .
 
 urpx:PriceUpdateRule a owl:Class ;
     rdfs:label "Price Update Rule"@en ;
@@ -396,13 +381,12 @@ urpx:RegulatoryAuthority a owl:Class ;
     rdfs:label "Regulatory Authority"@en ;
     rdfs:comment "Entity with jurisdiction to approve and regulate utility rates" ;
     rdfs:subClassOf urpx:Organization ;
-    skos:note """Government or quasi-government entity with rate-setting authority.
-                 Includes PUCs, FERC, international regulators with nested jurisdictions.""" .
+    skos:note "Government or quasi-government entity with rate-setting authority. Includes PUCs, FERC, international regulators with nested jurisdictions." .
 
 urpx:Season a owl:Class ;
     rdfs:label "Season"@en ;
     rdfs:comment "Seasonal period definition with flexible date or month-based specifications" ;
-    skos:note """Defines seasonal pricing periods with a choice of 1) date-based: urpx:startDate + urpx:endDate for year-specific seasons and 2. Month-based: month (xsd:gMonth) for recurring annual patterns""" .
+    skos:note "Defines seasonal pricing periods with a choice of 1) date-based: urpx:startDate + urpx:endDate for year-specific seasons and 2. Month-based: month (xsd:gMonth) for recurring annual patterns" .
 
 urpx:ServiceBracket a owl:Class ;
     rdfs:label "Service Bracket"@en ;
@@ -412,15 +396,13 @@ urpx:ServiceBracket a owl:Class ;
 urpx:ServiceClass a owl:Class ;
     rdfs:label "Service Class"@en ;
     rdfs:comment "Region-specific rate plan classification with raw and cleaned identifiers" ;
-    skos:note """Service class identifiers as used in tariff books. Maintains both raw format
-                 (as published) and cleaned format (for system use). Links prices to rate plans
-                 across different contexts. Can contain multiple RateGroups for detailed organization.""" .
+    skos:note "Service class identifiers as used in tariff books. Maintains both raw format (as published) and cleaned format (for system use). Links prices to rate plans across different contexts. Can contain multiple RateGroups for detailed organization." .
 
 urpx:ServicePointProfile a owl:Class ;
     rdfs:label "Service Point Profile"@en ;
     rdfs:comment "Service delivery point characteristics for rate plan eligibility and service configuration evaluation" ;
     rdfs:subClassOf urpx:Profile ;
-    skos:note """Represents the physical and technical characteristics of a utility service delivery point.""" .
+    skos:note "Represents the physical and technical characteristics of a utility service delivery point." .
 
 urpx:ServiceTerritory a owl:Class ;
     rdfs:label "Service Territory"@en ;
@@ -457,8 +439,7 @@ urpx:SystemOperator a owl:Class ;
     rdfs:label "System Operator"@en ;
     rdfs:comment "ISO, RTO, or transmission system operator managing grid operations" ;
     rdfs:subClassOf urpx:Organization ;
-    skos:note """Independent system operators and regional transmission organizations.
-                 Manages wholesale markets and grid reliability for multiple jurisdictions.""" .
+    skos:note "Independent system operators and regional transmission organizations. Manages wholesale markets and grid reliability for multiple jurisdictions." .
 
 urpx:TariffBookReference a owl:Class ;
     rdfs:label "Tariff Book Reference"@en ;
@@ -517,8 +498,7 @@ urpx:UtilityOperator a owl:Class ;
     rdfs:label "Utility Operator"@en ;
     rdfs:comment "Entity providing utility services and publishing rate plans" ;
     rdfs:subClassOf urpx:Organization ;
-    skos:note """Actual service provider that operates infrastructure and serves customers.
-                 May be electric, gas, water, or multi-service utility with specific ownership structure.""" .
+    skos:note "Actual service provider that operates infrastructure and serves customers. May be electric, gas, water, or multi-service utility with specific ownership structure." .
 
 
 # ============================================================================
@@ -588,7 +568,9 @@ urpx:CommodityValue a owl:Class ;
 
 urpx:CompletenessResultValue a owl:Class ;
     rdfs:label "Completeness Result Value"@en ;
-    owl:equivalentClass [ owl:oneOf ( urpx:complete urpx:partial urpx:pending urpx:unsupported urpx:unknown urpx:fallbackSourced urpx:stale urpx:noCoverage ) ] .
+    rdfs:comment "The coverage verdict for a CoverageClaim's completenessResult: how completely the consolidated snapshot covers the content required for its claimed scope, as evaluated against the sources. Coverage only — freshness is urpx:stale and resolution provenance is urpx:fallbackSourced, both separate booleans on the claim."@en ;
+    owl:equivalentClass [ owl:oneOf ( urpx:complete urpx:partial urpx:pending urpx:unsupported urpx:unknown urpx:noCoverage ) ] ;
+    skos:note "Member semantics. complete: every element required to compute cost for the claimed scope is present in the snapshot. partial: at least one known required element is missing or unresolved; what is present is usable. pending: required content is expected from the source but not yet published or available at evaluation time (for example a future-period price); the absence is anticipated, not a gap. unsupported: the source publishes content for the scope that the consuming representation cannot express, so coverage cannot be claimed although data exists. unknown: the scope has not been (or could not be) evaluated against sources; there is no basis to assert coverage either way. noCoverage: evaluated, and no applicable content exists for the claimed scope in any source — distinct from pending (content expected later) and from unknown (not evaluated). Exactly one coverage verdict is asserted. Freshness (urpx:stale) and resolution provenance (urpx:fallbackSourced) are orthogonal booleans and are asserted independently; the claim's evaluation records the detail. Publication lifecycle events (correction, withdrawal, supersession) are not coverage verdicts — they ride the tariff filing or pricing model chain (urpx:replaces, urpx:cancelledBy, urpx:supersedes)."@en .
 
 urpx:ConfidenceValue a owl:Class ;
     rdfs:label "Confidence Value"@en ;
@@ -658,8 +640,7 @@ urpx:EnergyServiceProvider a owl:Class ;
     rdfs:label "Energy Service Provider"@en ;
     rdfs:comment "Retail energy provider, aggregator, or energy service company" ;
     rdfs:subClassOf urpx:Organization ;
-    skos:note """Competitive retail providers, community choice aggregators, ESCOs.
-                 Offer rate plans and DER rate plan modifiers but typically don't own distribution infrastructure.""" .
+    skos:note "Competitive retail providers, community choice aggregators, ESCOs. Offer rate plans and DER rate plan modifiers but typically don't own distribution infrastructure." .
 
 urpx:EnrollmentStatusValue a owl:Class ;
     rdfs:label "Enrollment Status Value"@en ;
@@ -1153,16 +1134,18 @@ urpx:calculationRule a owl:ObjectProperty ;
 
 urpx:cancelledBy a owl:ObjectProperty ;
     rdfs:label "Cancelled By"@en ;
-    rdfs:comment "Marks a tariff filing as no longer valid (voided) and links it to what cancelled it: the successor filing for a same-period correction (see urpx:replacedBy), or the publication that withdrew it when there is no successor. A cancelled filing is retained for audit but excluded from active reads." ;
-    rdfs:domain urpx:TariffFiling ;
+    rdfs:comment "Marks a publication unit — a tariff filing, or a standalone pricing model — as no longer valid (voided) and links it to what cancelled it: the successor unit for a same-period correction (see urpx:replacedBy), or the publication that withdrew it when there is no successor. A cancelled unit is retained for audit but excluded from active reads." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:PricingModel urpx:TariffFiling ) ] ;
     rdfs:range [ a owl:Class ;
-            owl:unionOf ( urpx:TariffFiling urpx:SourcePublication ) ] ;
-    skos:note "Presence of urpx:cancelledBy is the void marker — the filing is voided without deletion. For a replacement, point it at the urpx:replacedBy successor; for a withdrawal, point it at the cancelling publication. A superseded filing is NOT cancelled (it stays valid history); cancellation applies only to replacement and withdrawal." .
+            owl:unionOf ( urpx:PricingModel urpx:TariffFiling urpx:SourcePublication ) ] ;
+    skos:note "Presence of urpx:cancelledBy is the void marker — the subject is voided without deletion. For a replacement, point it at the urpx:replacedBy successor (a filing's successor is a filing; a model's successor is a model). For a withdrawal, point it at the cancelling publication. A superseded subject is NOT cancelled (it stays valid history); cancellation applies only to replacement and withdrawal. For a pricing model published within a filing, cancellation rides the filing chain." .
 
 urpx:cancelledOn a owl:DatatypeProperty ;
     rdfs:label "Cancelled On"@en ;
-    rdfs:comment "Date on which a tariff filing was cancelled or voided — when its content left the active set." ;
-    rdfs:domain urpx:TariffFiling ;
+    rdfs:comment "Date on which a tariff filing or standalone pricing model was cancelled or voided — when its content left the active set." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:PricingModel urpx:TariffFiling ) ] ;
     rdfs:range xsd:date .
 
 urpx:cancelsPriceDefinition a owl:ObjectProperty ;
@@ -1610,6 +1593,20 @@ urpx:entityType a owl:ObjectProperty ;
     rdfs:range urpx:EntityTypeValue ;
     skos:note "Entity types enumeration. with standardized legal entity type definitions." .
 
+urpx:evaluatedBy a owl:ObjectProperty ;
+    rdfs:label "Evaluated By"@en ;
+    rdfs:comment "The organization that performed this evaluation and attests its content."@en ;
+    rdfs:domain urpx:Evaluation ;
+    rdfs:range urpx:Organization ;
+    skos:note "Interchange attribution: when a receiving party resolves or re-evaluates a claim, it attaches its own Evaluation carrying evaluatedBy and evaluatedOn, so the attestation travels with the claim rather than living in a private system. Corresponds to prov:wasAttributedTo by alignment; URPX does not import PROV. The producing software and scoring method remain implementation-specific (see the Evaluation class note) — the attributed party is the accountable organization, not its tooling."@en .
+
+urpx:evaluatedOn a owl:DatatypeProperty ;
+    rdfs:label "Evaluated On"@en ;
+    rdfs:comment "When this evaluation was performed."@en ;
+    rdfs:domain urpx:Evaluation ;
+    rdfs:range xsd:dateTime ;
+    skos:note "Corresponds to prov:generatedAtTime by alignment. An Evaluation is immutable once minted: a re-evaluation is a new Evaluation with its own evaluatedOn, attached to the claim alongside the original, not an update of it."@en .
+
 urpx:evaluationKind a owl:ObjectProperty ;
     rdfs:label "Evaluation Kind"@en ;
     rdfs:comment "The kind of an Evaluation." ;
@@ -1660,6 +1657,13 @@ urpx:explainedBy a owl:ObjectProperty ;
     rdfs:comment "Links a CoverageClaim (verdict) to the Evaluation (rationale) behind it." ;
     rdfs:domain urpx:CoverageClaim ;
     rdfs:range urpx:Evaluation .
+
+urpx:fallbackSourced a owl:DatatypeProperty ;
+    rdfs:label "Fallback Sourced"@en ;
+    rdfs:comment "Derived: true iff any content in the snapshot was resolved from a declared fallback source rather than the primary one. The content is present (this is distinct from selfContained, which reports whether content is carried inline versus retrieved elsewhere); its basis is the fallback."@en ;
+    rdfs:domain urpx:CoverageClaim ;
+    rdfs:range xsd:boolean ;
+    skos:note "Asserted on the coverage claim. Orthogonal to selfContained: fallbackSourced is about which source resolution used; selfContained is about whether content is carried inline. A snapshot can be selfContained true and fallbackSourced true at once. The which-source detail lives in the claim's Evaluation."@en .
 
 urpx:fileName a owl:DatatypeProperty ;
     rdfs:label "File Name"@en ;
@@ -1916,7 +1920,7 @@ urpx:hasIdentifier a owl:ObjectProperty ;
     rdfs:label "Has Identifier"@en ;
     rdfs:comment "Links an organization identity, rate plan, or rate plan modifier to a typed external identifier." ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:OrganizationIdentity urpx:RatePlan urpx:RatePlanModifier ) ] ;
+            owl:unionOf ( urpx:OrganizationIdentity urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion ) ] ;
     rdfs:range [ a owl:Class ;
             owl:unionOf ( urpx:OrganizationIdentifier urpx:RatePlanIdentifier urpx:RatePlanModifierIdentifier ) ] ;
     skos:note "For organization identity: links to OrganizationIdentifier (EIA ID, DUNS, LEI). For rate plan: links to RatePlanIdentifier; for rate plan modifier: links to RatePlanModifierIdentifier (each typed, URI-addressable; skos:notation value; aligned to adms:Identifier by reference)." .
@@ -1946,7 +1950,7 @@ urpx:hasLocationDataSet a owl:ObjectProperty ;
     rdfs:label "Has Location Data Set"@en ;
     rdfs:comment "Links organization to versioned location auxiliary data" ;
     rdfs:domain [ a owl:Class;
-            owl:unionOf ( urpx:Organization urpx:RatePlan urpx:RatePlanModifier ) ] ;
+            owl:unionOf ( urpx:Organization urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion ) ] ;
     rdfs:range urpx:LocationDataSet ;
     skos:note "Organizations publish versioned LocationDataSet instances containing holidays, timezone, and DST rules. Multiple versions can exist for temporal evolution." .
 
@@ -2013,7 +2017,7 @@ urpx:hasPossibleValues a owl:ObjectProperty ;
     rdfs:comment "List of possible values" ;
     rdfs:domain urpx:AlternativeDimension ;
     rdfs:range rdf:List ;
-    skos:note """List of objects for possible values.""" .
+    skos:note "List of objects for possible values." .
 
 urpx:hasPrice a owl:ObjectProperty ;
     rdfs:label "Has Price"@en ;
@@ -3013,18 +3017,22 @@ urpx:regulatoryScope a owl:ObjectProperty ;
 
 urpx:replacedBy a owl:ObjectProperty ;
     rdfs:label "Replaced By"@en ;
-    rdfs:comment "Inverse of urpx:replaces: the successor filing that corrects and voids this one for the same effective period." ;
-    rdfs:domain urpx:TariffFiling ;
-    rdfs:range urpx:TariffFiling ;
+    rdfs:comment "Inverse of urpx:replaces: the successor publication unit (tariff filing, or standalone pricing model) that corrects and voids this one for the same effective period." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:PricingModel urpx:TariffFiling ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( urpx:PricingModel urpx:TariffFiling ) ] ;
     owl:inverseOf urpx:replaces .
 
 urpx:replaces a owl:ObjectProperty ;
     rdfs:label "Replaces"@en ;
-    rdfs:comment "Links a corrected tariff filing to the prior filing it replaces for the SAME effective period. The replaced filing is voided; the replacing filing occupies the same effective window with corrected content. Use urpx:supersedes for a forward-in-time change of effective period; use urpx:replaces for an in-place correction of an existing period." ;
-    rdfs:domain urpx:TariffFiling ;
-    rdfs:range urpx:TariffFiling ;
+    rdfs:comment "Links a corrected publication unit — a tariff filing, or a standalone pricing model with no enclosing filing — to the prior one it replaces for the SAME effective period. The replaced subject is voided; the replacing one occupies the same effective window with corrected content. A filing replaces a filing; a pricing model replaces a pricing model. Use urpx:supersedes for a forward-in-time change of effective period; use urpx:replaces for an in-place correction of an existing period." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:PricingModel urpx:TariffFiling ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( urpx:PricingModel urpx:TariffFiling ) ] ;
     owl:inverseOf urpx:replacedBy ;
-    skos:note "The replacing filing carries the corrected content plus the unchanged content, so it stands alone for its effective window. A replaced filing should also be marked voided via urpx:cancelledBy. Distinct from supersession (forward-in-time end-dating; the prior stays valid history) and from withdrawal (cancellation with no successor)." .
+    skos:note "For a pricing model published within a filing, corrections ride the filing chain: the corrected filing replaces the prior filing, and the models inside carry no lifecycle assertions of their own. Model-level replacement is for standalone models (market or dynamic feeds, competitive supply, contracts, scenarios). The replacing subject carries the corrected content plus the unchanged content, so it stands alone for its effective window. A replaced subject should also be marked voided via urpx:cancelledBy. Distinct from supersession (forward-in-time end-dating; the prior stays valid history) and from withdrawal (cancellation with no successor)." .
 
 urpx:resolvedFrom a owl:ObjectProperty ;
     rdfs:label "Resolved From"@en ;
@@ -3091,8 +3099,9 @@ urpx:seasonName a owl:DatatypeProperty ;
 urpx:selfContained a owl:DatatypeProperty ;
     rdfs:label "Self Contained"@en ;
     rdfs:comment "Derived: false iff any PriceDefinitionReference is referenceInclusion retrievedElsewhere." ;
-    rdfs:domain [ a owl:Class ; owl:unionOf ( urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
-    rdfs:range xsd:boolean .
+    rdfs:domain [ a owl:Class ; owl:unionOf ( urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:CoverageClaim ) ] ;
+    rdfs:range xsd:boolean ;
+    skos:note "Asserted on the coverage claim as part of the snapshot's verdict. The version shapes also permit a materialized copy on the version itself for direct query; when both are present they MUST agree, and the claim is authoritative."@en .
 
 urpx:serviceClassCleaned a owl:DatatypeProperty ;
     rdfs:label "Service Class Cleaned"@en ;
@@ -3171,6 +3180,13 @@ urpx:specialNeedsStatus a owl:ObjectProperty ;
     rdfs:domain urpx:CustomerProfile ;
     rdfs:range urpx:SpecialNeedsStatusValue ;
     skos:note "Special needs: medical equipment, disability accommodation, life support, vulnerable customer, none. Affects rate plan eligibility and service priority." .
+
+urpx:stale a owl:DatatypeProperty ;
+    rdfs:label "Stale"@en ;
+    rdfs:comment "Derived: true iff any content contributing to the snapshot is older than its source's expected publication cadence, so a newer value should exist that has not been obtained. Freshness is independent of coverage — a complete snapshot can be stale."@en ;
+    rdfs:domain urpx:CoverageClaim ;
+    rdfs:range xsd:boolean ;
+    skos:note "Asserted on the coverage claim alongside completenessResult. Its absence is not an assertion of freshness; assert stale true only when a cadence has been evaluated and missed. The which-content / how-stale detail lives in the claim's Evaluation."@en .
 
 urpx:startDate a owl:DatatypeProperty ;
     rdfs:label "Start Date"@en ;
@@ -3275,7 +3291,7 @@ urpx:timezoneIdentifier a owl:DatatypeProperty ;
     rdfs:label "Timezone Identifier"@en ;
     rdfs:comment "IANA timezone identifier for this location dataset" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:LocationDataSet urpx:URPXPackage urpx:RatePlan urpx:RatePlanModifier ) ] ;
+            owl:unionOf ( urpx:LocationDataSet urpx:URPXPackage urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion ) ] ;
     rdfs:range xsd:string ;
     skos:note "Standard IANA timezone identifier (e.g., 'America/New_York'). Used for temporal calculations and DST handling." .
 

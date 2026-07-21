@@ -8,6 +8,40 @@
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
 
+2026-07-20 — v0.3.0 (pre-tag model corrections)
+---
+
+Vocabulary corrections applied before the initial public tag, folded into the unreleased 0.3.0.
+
+### Changed
+- Widened the domain of `hasIdentifier` to include `RatePlanVersion` and `RatePlanModifierVersion` (previously `OrganizationIdentity ∪ RatePlan ∪ RatePlanModifier`), so a resolved version snapshot can carry the customer-facing identifiers a consumer reads directly from the snapshot (for example the California MIDAS RIN), in addition to reaching them through `forRatePlan` / `forRatePlanModifier`.
+- Widened the domains of `timezoneIdentifier` and `hasLocationDataSet` to include `RatePlanVersion` and `RatePlanModifierVersion`, so a resolved snapshot carries the timezone and location context needed to interpret its own timestamps and geographic scope directly, without dereferencing the plan identity.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- `RatePlanVersionShape` gains a `hasIdentifier` path (`sh:class urpx:RatePlanIdentifier`, optional).
+- `RatePlanModifierVersionShape` gains a `hasIdentifier` path (`sh:class urpx:RatePlanModifierIdentifier`, optional).
+- `RatePlanVersionShape` and `RatePlanModifierVersionShape` each gain `timezoneIdentifier` and `hasLocationDataSet` paths (optional).
+
+2026-07-19 — v0.3.0 (pre-tag model corrections)
+---
+
+Vocabulary corrections applied before the initial public tag, folded into the unreleased 0.3.0.
+
+### Changed
+- Widened `replaces`, `replacedBy`, `cancelledBy`, and `cancelledOn` from a `TariffFiling`-only domain/range to the `PricingModel ∪ TariffFiling` union (matching the existing `supersedes` union), so a standalone pricing model — market or dynamic feed, competitive supply, contract, or scenario pricing — can be corrected in place or withdrawn the same way a tariff filing can. `PricingModelShape` gains the four corresponding property paths, constrained like-for-like (`sh:class urpx:PricingModel`) so a filing cannot replace a model, or a model a filing.
+- Narrowed `CompletenessResultValue` from eight members to six genuine coverage verdicts (`complete`, `partial`, `pending`, `unsupported`, `unknown`, `noCoverage`); removed `stale` and `fallbackSourced`, which conflated freshness and resolution provenance with coverage. The class annotation now states per-member semantics directly.
+- Widened the domain of `selfContained` to include `CoverageClaim` (previously `RatePlanVersion ∪ RatePlanModifierVersion` only), aligning the ontology with the SHACL shape and every existing fixture, all of which already assert it on the claim. Added a note naming the claim as the authoritative home on the rare occasion a materialized version-level mirror is also present.
+
+### Added
+- `stale` and `fallbackSourced`: two new boolean properties on `CoverageClaim`, parallel to `selfContained`, carrying the freshness and resolution-provenance facts split out of the completeness enum. A snapshot can now state coverage, freshness, and provenance as three independent, simultaneous facts instead of collapsing them into one enum value.
+- `evaluatedBy` (range `Organization`) and `evaluatedOn` (`xsd:dateTime`) on `Evaluation`, so who attested a coverage verdict and when travels with the claim at interchange rather than living only in a private system. `EvaluationShape` gains the two corresponding property paths and remains closed.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- `PricingModelShape` gains `replaces`, `replacedBy`, `cancelledBy`, and `cancelledOn` property paths.
+- `CompletenessResultValueShape`'s `sh:in` narrows to the six retained members.
+- `CoverageClaimShape` gains `stale` and `fallbackSourced` (boolean, optional).
+- `EvaluationShape` gains `evaluatedBy` and `evaluatedOn` (both optional); the shape stays closed.
+
 2026-07-14 — v0.3.0 (pre-release refinements)
 ---
 

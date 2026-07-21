@@ -5,7 +5,7 @@
 
 # URPX v0.3.0 Release Notes (Draft)
 
-**Status:** Draft — pending Working Group review and vote. Content reflects `urpx` main through commit `48cd1af8`; two sessions are still open and may add content before this is tagged (annotation wording, legacy-backlog dispositions). Re-diff against `urpx-changelog.md` before treating this as final. Dates and version metadata will be finalized when this pre-draft is tagged.
+**Status:** Draft — pending Working Group review and vote. Dates and version metadata are finalized when this draft is tagged.
 **Type:** Pre-draft minor release
 **Previous release:** [`v0.2.1`](urpx-release-notes-v0.2.1.md)
 
@@ -15,7 +15,7 @@
 
 ## Overview
 
-URPX v0.3.0 reframes how published pricing material relates to the rate plan. Pricing content now lives in `PricingModel` nodes carried by publication-level containers (`TariffFiling`, `SourcePublication`); rate plans and modifiers are sharpened to pure identity records; and versions become consolidation artifacts that declare their own coverage through a required `CoverageClaim` and explaining `Evaluation`.
+URPX v0.3.0 reframes how published pricing material relates to the rate plan. Pricing content now lives in `PricingModel` nodes carried by publication-level containers (`TariffFiling`, `SourcePublication`); rate plans and modifiers are sharpened to pure identity records; and versions become consolidation artifacts that declare their own coverage through a required `CoverageClaim`, which states completeness; self-containment and an explaining `Evaluation` are optional.
 
 This release is not backward-compatible with v0.2.x. Existing URPX datasets should be reviewed and migrated before being treated as v0.3.0-conformant.
 
@@ -27,7 +27,7 @@ This release is not backward-compatible with v0.2.x. Existing URPX datasets shou
 - Retired the tariff document class family (`TariffPublication` and its subclasses) in favor of a single `SourcePublication` class with a `publicationType` enumeration.
 - Renamed `DataSourceReference` → `SourceReference` and `URPXDocument` → `URPXPackage`.
 - Added first-class identity classes, `RatePlanIdentifier` and `RatePlanModifierIdentifier`, linked from `RatePlan` / `RatePlanModifier` via `hasIdentifier`.
-- Made `RatePlanVersion` and `RatePlanModifierVersion` consolidation artifacts: each now requires a `CoverageClaim` stating completeness (`completenessResult`) and self-containment (`selfContained`), with an explaining `Evaluation`.
+- Made `RatePlanVersion` and `RatePlanModifierVersion` consolidation artifacts: each now requires a `CoverageClaim` stating completeness (`completenessResult`); self-containment (`selfContained`) and an explaining `Evaluation` are optional.
 - Added a filing-lifecycle vocabulary: `supersedes`, `replaces` / `replacedBy`, `cancelledBy`, `cancelledOn`, `cancelsPriceDefinition`, and `sunsetOn` for intentional terminal discontinuation (as distinct from a data gap).
 - Added scenario cost modeling (`ScenarioCostModel`, `ScenarioCostResult`) and temporal scoping (`TemporalScope`, `TemporalPeriod`).
 - Extended `commodity`, `publishedBy`, and `serviceRole` to `RatePlan` and `RatePlanModifier`; `commodity` is now multi-valued at the plan/modifier level (a plan or modifier may span commodities, e.g. a combined water/sewer modifier) and single-valued at the price and metric level.
@@ -51,7 +51,7 @@ If you maintain datasets or downstream tooling, pay particular attention to thes
    `hasRatePlanVersion` and `hasRatePlanModifierVersion` are removed. A version now points at its plan or modifier via `forRatePlan` / `forRatePlanModifier`; there is no inverse property on the plan side.
 
 4. **`RatePlanVersion` and `RatePlanModifierVersion` now require a coverage claim.**
-   Every version must carry exactly one `CoverageClaim` (via `hasCoverageClaim`), stating `completenessResult` and `selfContained`, with an explaining `Evaluation`. Versions without a coverage claim will fail validation.
+   Every version must carry exactly one `CoverageClaim` (via `hasCoverageClaim`). Only `completenessResult` is required; `selfContained` and an explaining `Evaluation` are optional. Versions without a coverage claim will fail validation.
 
 5. **`ReferenceInclusionValue` members are renamed.**
    `included` → `includedHere`; `shopFor` → `retrievedElsewhere`.
@@ -71,7 +71,7 @@ Datasets built against v0.2.x require rework, not just a metadata bump:
 - Move tariff-document typing to `SourcePublication` + `publicationType`.
 - Rename `DataSourceReference` references to `SourceReference`, and `URPXDocument` references to `URPXPackage`.
 - Replace `hasRatePlanVersion` / `hasRatePlanModifierVersion` with `forRatePlan` / `forRatePlanModifier` on the version node.
-- Add a `CoverageClaim` (with an explaining `Evaluation`) to every `RatePlanVersion` and `RatePlanModifierVersion`.
+- Add a `CoverageClaim` (at minimum `completenessResult`; `selfContained` and an explaining `Evaluation` are optional) to every `RatePlanVersion` and `RatePlanModifierVersion`.
 - Move any pricing content that was previously attached directly to a rate plan or modifier into a `PricingModel`, carried by a `TariffFiling` or `SourcePublication` as appropriate.
 - Re-run SHACL validation against `urpx-shacl.ttl` — the closed-shape batch in this release will surface any property used outside its now-explicit declared surface.
 

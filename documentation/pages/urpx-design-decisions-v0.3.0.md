@@ -23,9 +23,11 @@ this page begins at Decision #121, at the start of the next block after the
 
 - Decision #121: Pricing Model Architecture — PricingModel, TariffFiling, and SourcePublication
 - Decision #122: Filing-Owned Lifecycle and Shared Validity Dates
-- Decision #123: Required CoverageClaim and Evaluation on Version Snapshots
+- Decision #123: Required CoverageClaim on Version Snapshots
 - Decision #124: Charge/Measurement Split for Power Factor
 - Decision #125: Version-to-Plan Link Inversion
+- Decision #126: Correction and Withdrawal Parity for Standalone Pricing Models
+- Decision #127: Identity, Timezone, and Location Metadata on Resolved Version Snapshots
 
 ---
 
@@ -118,15 +120,17 @@ Lifecycle properties (`supersedes`, `replaces`/`replacedBy`, `cancelledBy`, `can
 ---
 
 <a id="decision-123"></a>
-### Decision #123: Required CoverageClaim and Evaluation on Version Snapshots
+### Decision #123: Required CoverageClaim on Version Snapshots
 
 - **Status:** Accepted (pre-Draft)
 - **Date:** 2026-07-07
 - **Issue:** A resolved `RatePlanVersion` or `RatePlanModifierVersion` snapshot had no stated way to declare whether it was complete or self-contained, so a consumer could not distinguish a fully consolidated snapshot from a partial one without out-of-band knowledge.
 - **Category:** Architecture, Validation
 
+> **Revision (2026-07-20):** the required node is the `CoverageClaim` itself; within it, only `completenessResult` is required. Self-containment (`selfContained`) and the explaining `Evaluation` (linked via `explainedBy`) are optional — this matters for partial-coverage rate plans (for example Community Choice Aggregation and Direct Access, where completeness is partial and self-containment may be absent). Separately, freshness (`stale`) and resolution provenance (`fallbackSourced`) were split out of the completeness enum into independent boolean properties on the claim, so `CompletenessResultValue` is now the six coverage verdicts below. The title dropped "and Evaluation" to match. Authority: `CoverageClaimShape`, and the `urpx-changelog.md` 2026-07-19 entry.
+
 **Context:**
-`RatePlanVersion` and `RatePlanModifierVersion` are derived, materialized snapshots consolidated from applicable `PricingModel`s for a temporal window. v0.3.0 requires each snapshot to carry exactly one `CoverageClaim` (via `hasCoverageClaim`), stating a `completenessResult` (`complete`, `partial`, `pending`, `unsupported`, `unknown`, `fallbackSourced`, `stale`, or `noCoverage`) and a derived `selfContained` boolean (false if any `PriceDefinitionReference` is `retrievedElsewhere`), together with an `Evaluation` (linked via `explainedBy`) that gives the rationale.
+`RatePlanVersion` and `RatePlanModifierVersion` are derived, materialized snapshots consolidated from applicable `PricingModel`s for a temporal window. v0.3.0 requires each snapshot to carry exactly one `CoverageClaim` (via `hasCoverageClaim`), stating a `completenessResult` (`complete`, `partial`, `pending`, `unsupported`, `unknown`, or `noCoverage`). A derived `selfContained` boolean (false if any `PriceDefinitionReference` is `retrievedElsewhere`) and an explaining `Evaluation` (linked via `explainedBy`) are optional additions; freshness (`stale`) and resolution provenance (`fallbackSourced`) are separate optional booleans on the claim (see the Revision above).
 
 **Decision:**
 Make `hasCoverageClaim` required (exactly one) on both version shapes, so completeness is honest-by-construction rather than asserted separately from the snapshot's actual contents.
@@ -238,3 +242,85 @@ Remove `hasRatePlanVersion` and `hasRatePlanModifierVersion`. A version now poin
 - Changelog: `urpx-changelog.md`, 2026-07-07 entry ("Removed: `hasRatePlanVersion` / `hasRatePlanModifierVersion`").
 - Release notes: `documentation/pages/urpx-release-notes-v0.3.0.md`, Breaking Changes item 3 and Migration.
 - Ontology: `ontology/urpx-ontology.ttl` — `urpx:forRatePlan`, `urpx:RatePlan` annotations.
+
+---
+
+<a id="decision-126"></a>
+### Decision #126: Correction and Withdrawal Parity for Standalone Pricing Models
+
+- **Status:** Accepted (pre-Draft)
+- **Date:** 2026-07-19
+- **Issue:** `replaces`/`replacedBy` (same-period correction) and `cancelledBy`/`cancelledOn` (voiding) were scoped to `TariffFiling` only, so a standalone `PricingModel` published with no enclosing filing — market or dynamic feed, competitive supply, contract, or scenario pricing — had no conformant way to be corrected in place or withdrawn. `supersedes` already covered both publication units (Decision #122), but supersession is the wrong tool for a same-period correction: a superseded subject stays valid history, while a corrected bad window must be voided.
+- **Category:** Architecture, Validation
+
+**Context:**
+Decision #122 established that lifecycle attaches to publication units and extended `supersedes` to the `PricingModel ∪ TariffFiling` union so filing-less content could be threaded forward in time. The same extension was not carried through to `replaces`/`replacedBy`/`cancelledBy`/`cancelledOn`, which remained `TariffFiling`-only, leaving the two-layer split incomplete for the correction and withdrawal facet of lifecycle.
+
+**Decision:**
+Widen `replaces`, `replacedBy`, `cancelledBy`, and `cancelledOn` from a `TariffFiling`-only domain/range to the `PricingModel ∪ TariffFiling` union, matching `supersedes`, and add the four corresponding property paths to `PricingModelShape`, each constrained like-for-like (`sh:class urpx:PricingModel`) so cross-type replacement — a filing replacing a model, or a model replacing a filing — fails validation, mirroring the existing per-shape constraint already shipped on `TariffFilingShape`.
+
+**Options Considered:**
+
+1. **Widen to `PricingModel ∪ TariffFiling`, constrained like-for-like per shape (Selected)**
+   - Pro: Completes the two-layer split Decision #122 started, so all four lifecycle predicates — not just `supersedes` — treat a standalone pricing model as its own publication unit.
+   - Pro: The OWL union alone cannot forbid a filing from replacing a model; the per-shape `sh:class` constraint can and does, exactly as it already does for `supersedes`.
+   - Con: `cancelledBy`'s range grows to three members (`PricingModel`, `TariffFiling`, `SourcePublication`).
+
+2. **Treat a corrected or withdrawn standalone model as "superseded" instead**
+   - Pro: No new domain/range widening required.
+   - Con: Wrong semantics — supersession end-dates the prior subject but keeps it valid history; a corrected bad window must be voided, not retained as valid history.
+
+3. **Wrap every standalone model in a synthetic `TariffFiling` so the filing-only predicates still apply**
+   - Pro: No property widening needed.
+   - Con: Fabricates a regulatory filing artifact that does not exist for market or dynamic-feed content; burdens every emitter with a wrapper that misrepresents the source.
+
+**Rationale:**
+- `urpx:supersedes` already carries the `PricingModel ∪ TariffFiling` union; leaving the other three lifecycle predicates filing-only made the two-layer split inconsistent across the four terms that together express lifecycle.
+- The like-for-like shape constraint keeps cross-type replacement invalid even though the OWL-level union, by itself, permits it.
+- For a pricing model published within a filing, correction and cancellation continue to ride the filing chain; the widened predicates apply to a standalone model with no enclosing filing.
+
+**Consequences / Impact:**
+- **Positive:** A standalone pricing model now has a conformant way to be corrected in place or withdrawn, completing the two-layer lifecycle split that supersession already established.
+- **Breaking Change:** No — the domain/range widening is additive, and the four new `PricingModelShape` property paths are optional (`0..1`).
+- **Requirements:** None for existing data. A producer correcting or withdrawing a standalone pricing model may now assert `replaces`/`replacedBy`/`cancelledBy`/`cancelledOn` on it directly.
+
+**References:**
+- Changelog: `urpx-changelog.md`, 2026-07-19 entry ("Widened `replaces`, `replacedBy`, `cancelledBy`, and `cancelledOn`...").
+- Ontology: `ontology/urpx-ontology.ttl` — `urpx:replaces`, `urpx:replacedBy`, `urpx:cancelledBy`, `urpx:cancelledOn` annotations.
+- SHACL: `shacl/urpx-shacl.ttl` — `PricingModelShape` gains the `replaces`/`replacedBy`/`cancelledBy`/`cancelledOn` property paths.
+
+---
+
+<a id="decision-127"></a>
+### Decision #127: Identity, Timezone, and Location Metadata on Resolved Version Snapshots
+
+- **Status:** Accepted (pre-Draft)
+- **Date:** 2026-07-20
+- **Issue:** A resolved `RatePlanVersion` / `RatePlanModifierVersion` is the artifact a consumer reads standalone, but the customer-facing identifier (for example the California MIDAS RIN), the timezone needed to interpret the snapshot's own timestamps, and the location dataset (holidays, DST rules) were reachable only by dereferencing the plan identity through `forRatePlan`. A consumer holding only the snapshot could not read them directly.
+- **Category:** Architecture, Interoperability
+
+**Decision:**
+Make `hasIdentifier`, `timezoneIdentifier`, and `hasLocationDataSet` available directly on `RatePlanVersion` and `RatePlanModifierVersion`, so a standalone snapshot carries its own identity, timezone, and location context. The plan identity remains the authoritative home; a version-level copy is a denormalized convenience for standalone-snapshot consumption and, where present, MUST agree with the identity.
+
+**Options Considered (reuse ladder):**
+
+1. **Reuse by widening (Selected).** Widen the existing `hasIdentifier`, `timezoneIdentifier`, and `hasLocationDataSet` property domain unions to include the two version classes, and add the corresponding optional paths to both version shapes (`hasIdentifier` → `RatePlanIdentifier` / `RatePlanModifierIdentifier` respectively). No new property is minted.
+   - Pro: The version reuses the same properties and identifier classes the plan identity already uses; a consumer resolves identity uniformly whether it holds the plan or the snapshot.
+   - Pro: Additive — every prior domain member is retained; existing data is unaffected.
+   - Con: The identifier can now appear in two places (identity and version), raising a consistency obligation (addressed by the authority rule below).
+2. **Mint a version-scoped identifier/timezone/location property set.** Rejected — a parallel twin of terms that already carry the role; the reuse loss and ongoing maintenance cost are not justified when a domain widening suffices.
+3. **Leave it reachable only via `forRatePlan`.** Rejected for the standalone-snapshot use case the reviewer raised (a consumer reading only the snapshot needs the RIN and timezone in hand).
+
+**Rationale:**
+- Reuse-first: the correct rung is reuse-by-widening (rung 3), not a mint. The identifier already has a home on the identity; the version gains reach to the same term, it does not get its own.
+- The contested version-level fields from the first review (`ratePlanUniqueIdentifier`, `initialEffectiveDate`, `hasRateGroup`, `applicableToRateGroup`) are deliberately NOT added — they are identity/structure facts, not snapshot-interpretation metadata.
+
+**Consequences / Impact:**
+- **Positive:** A resolved snapshot is self-describing for identity, timezone, and location without dereferencing the plan identity.
+- **Breaking Change:** No — the domain widenings are additive and the version-shape paths are optional.
+- **Authority rule:** the plan identity is authoritative; when a version carries a copy of an identifier, timezone, or location dataset, it MUST agree with the identity's. (Parallels the `selfContained` claim-vs-version rule already noted in the ontology.)
+
+**References:**
+- Changelog: `urpx-changelog.md`, 2026-07-20 entry ("Widened the domain of `hasIdentifier` ... `timezoneIdentifier` and `hasLocationDataSet` ...").
+- Ontology: `ontology/urpx-ontology.ttl` — `urpx:hasIdentifier`, `urpx:timezoneIdentifier`, `urpx:hasLocationDataSet` domain unions.
+- SHACL: `shacl/urpx-shacl.ttl` — `RatePlanVersionShape` and `RatePlanModifierVersionShape` gain the three optional paths.
