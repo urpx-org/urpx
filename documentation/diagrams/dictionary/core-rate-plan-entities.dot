@@ -58,6 +58,9 @@ digraph "Core Rate Plan Entities" {
     RatePlanVersion -> RatePlan [
         label="forRatePlan\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=10
     ];
+    RatePlanVersion -> RatePlanIdentifier [
+        label="hasIdentifier\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
     RatePlanVersion -> RatePlanModifier [
         label="hasModifierOptions\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
@@ -75,6 +78,9 @@ digraph "Core Rate Plan Entities" {
     ];
     RatePlanModifierVersion -> RatePlanModifier [
         label="forRatePlanModifier\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=10
+    ];
+    RatePlanModifierVersion -> RatePlanModifierIdentifier [
+        label="hasIdentifier\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
 
     // Layout-specified rank groups
