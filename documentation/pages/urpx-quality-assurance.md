@@ -75,7 +75,7 @@ URPX v0.3.0 uses a core ontology file:
 - Must have `name`
 - Must have `initialEffectiveDate`
 - Must have `ratePlanUniqueIdentifier`
-- Carries no pricing content and no list of versions — versions point back to the plan
+- Carries no pricing content and no list of versions: versions point back to the plan
 
 **RatePlanVersion Requirements:**
 - Must have `forRatePlan` (the link back to the plan identity)
@@ -294,8 +294,8 @@ URPX v0.3.0 uses a core ontology file:
 **CRITICAL REQUIREMENT**: Never use the bare word "rate" in URPX data, annotations, or documentation. Pick the unambiguous term for what is meant:
 
 - **"rate plan"** for the complete package (`RatePlan`)
-- **"price"** for a single value (`Price`) — "the summer energy price", not "the summer rate"
-- **"rate group"** for a utility's named grouping within a service class (`RateGroup`) — e.g. *Rate I* within *SC 1*
+- **"price"** for a single value (`Price`): "the summer energy price", not "the summer rate"
+- **"rate group"** for a utility's named grouping within a service class (`RateGroup`): e.g. *Rate I* within *SC 1*
 
 **Correct Usage:**
 - "rate plan data"
@@ -311,7 +311,7 @@ URPX v0.3.0 uses a core ontology file:
 - "rate information"
 - "rate calculations", "rate eligibility"
 
-**Exceptions** — established terms of art and published names are kept as-is: "rate case" (`RateCase`), "rate-setting", "rate regulation", "flat-rate billing", and utilities' own published names such as "Rate I". Quoted utility source material is never rewritten. See the [FAQ Terminology section](urpx-faq.md#terminology) for the full explanation.
+**Exceptions**: established terms of art and published names are kept as-is: "rate case" (`RateCase`), "rate-setting", "rate regulation", "flat-rate billing", and utilities' own published names such as "Rate I". Quoted utility source material is never rewritten. See the [FAQ Terminology section](urpx-faq.md#terminology) for the full explanation.
 
 ### Validation Workflow
 

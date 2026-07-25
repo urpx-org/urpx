@@ -20,7 +20,7 @@
         "urpx:confidence": { "@id": "urpx:verified" },
         "urpx:documentedBy": {
           "@id": "coned:sr-psc10-sc1-leaf388-2026-02-01",
-          "@type": "urpx:SourceReference",
+          "@type": "urpx:DataSourceReference",
           "urpx:name": "PSC No. 10 Electricity — SC1 Rate I, Leaf 388, Revision 23",
           "urpx:sourcePublication": {
             "@id": "coned:sp-psc10-elec-2026-02-01",
@@ -40,7 +40,7 @@
           "urpx:name": "General Rule 26 — Additional Delivery Charges and Adjustments",
           "urpx:hasDataSourceReference": {
             "@id": "coned:sr-psc10-gr26",
-            "@type": "urpx:SourceReference",
+            "@type": "urpx:DataSourceReference",
             "urpx:name": "PSC No. 10 — General Rule 26",
             "urpx:sourcePublication": { "@id": "coned:sp-psc10-elec-2026-02-01" },
             "urpx:fileName": "conedtariffbook2025_general_rule_26.pdf",

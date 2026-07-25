@@ -2,7 +2,7 @@
 id: specurpxont042highlydynamicpriceseries
 title: "SPEC-URPX-ONT-042 — Highly dynamic price series: the interchange payload"
 desc: "Optional-profile specification for exchanging streams of resolved price values: PriceTimeSeries and PriceObservation classes with a settlement-status enumeration, maximal reuse of existing vocabulary (interval types, price definitions, publications, supersession), and an explicit analysis of why repeated Price instances are not a workable series encoding."
-updated: 1784419200000
+updated: 1784937600000
 created: 1784419200000
 ---
 
@@ -11,6 +11,8 @@ created: 1784419200000
 | Field | Value |
 |-------|-------|
 | **Status** | Proposed — open for working group review |
+| **Author** | Flux Tailor |
+| **Assignee** | Unassigned — open for any working-group member |
 | **Delivered against** | URPX v0.3.0 candidate, branch `v0.3.0-wg-review`, commit `3d474cbd` |
 | **Target release** | v0.4.0 (fully additive; no change required to the v0.3.0 candidate before its tag) |
 | **Targets** | `ontology/urpx-ontology.ttl`, `shacl/urpx-shacl.ttl`, documentation pages, data dictionary regen |
@@ -43,7 +45,7 @@ So the existing vocabulary *can* express a short price sequence, but not tractab
 |---|---|---|
 | `IntervalTypeValue` (resolution enum) | `intervalType`, `effectiveDateTime`, `expirationDateTime`, `priceCurrency`, `unitPrice`, `touPeriodNumber`, `priceSource`, `documentedBy`, `referencesPriceDefinition`, `supersedes` | `PriceTimeSeries`, `PriceObservation`, `PriceStatusValue` (3 members), `hasPriceObservation`, `intervalStart`, `intervalEnd`, `priceStatus`, `producedByRule` |
 | `PriceDefinition` (the charge slot a series resolves) | | |
-| `SourceReference` / `SourcePublication` + `publicationType` | | |
+| `DataSourceReference` / `SourcePublication` + `publicationType` | | |
 | `DynamicPricing` / `PriceUpdateRule` (the recipe side) | | |
 | `LocationDataSet` / `timezoneIdentifier` (local-time interpretation) | | |
 
@@ -67,7 +69,7 @@ flowchart LR
     end
     TS -- referencesPriceDefinition --> PD
     TS -- producedByRule --> PUR
-    TS -- documentedBy --> SR[SourceReference] -- sourcePublication --> SP[SourcePublication<br/>publicationType: highlyDynamicPrices]
+    TS -- documentedBy --> SR[DataSourceReference] -- sourcePublication --> SP[SourcePublication<br/>publicationType: highlyDynamicPrices]
     TS2[later PriceTimeSeries] -- supersedes --> TS
 ```
 
@@ -116,7 +118,7 @@ urpx-shacl:PriceTimeSeriesShape
     sh:property [ sh:path urpx:priceSource ; sh:node urpx-shacl:PriceSourceValueShape ; sh:minCount 0 ; sh:maxCount 1 ; ] ;
     sh:property [ sh:path urpx:priceStatus ; sh:node urpx-shacl:PriceStatusValueShape ; sh:minCount 0 ; sh:maxCount 1 ; ] ;
     sh:property [ sh:path urpx:producedByRule ; sh:class urpx:PriceUpdateRule ; sh:minCount 0 ; sh:maxCount 1 ; ] ;
-    sh:property [ sh:path urpx:documentedBy ; sh:class urpx:SourceReference ; sh:minCount 0 ; ] ;
+    sh:property [ sh:path urpx:documentedBy ; sh:class urpx:DataSourceReference ; sh:minCount 0 ; ] ;
     sh:property [ sh:path urpx:supersedes ; sh:class urpx:PriceTimeSeries ; sh:minCount 0 ; sh:maxCount 1 ; ] ;
     sh:property [ sh:path urpx:hasPriceObservation ; sh:class urpx:PriceObservation ; sh:minCount 1 ; ] .
 ```
@@ -257,7 +259,7 @@ Each is a one-line change to an existing `rdfs:domain`; annotations are untouche
 
 2. **`urpx:effectiveDateTime`** — domain union gains `urpx:PriceTimeSeries`:
 
-   **Before:** `owl:unionOf ( urpx:SourceReference urpx:RatePlan urpx:RatePlanModifier urpx:PricingModel urpx:SourcePublication urpx:URPXPackage urpx:TariffFiling urpx:PriceDefinition urpx:TOUSchedule urpx:Season urpx:HolidayCalendar urpx:ServiceTiers )` **After:** append `urpx:PriceTimeSeries` to the union.
+   **Before:** `owl:unionOf ( urpx:DataSourceReference urpx:RatePlan urpx:RatePlanModifier urpx:PricingModel urpx:SourcePublication urpx:URPXPackage urpx:TariffFiling urpx:PriceDefinition urpx:TOUSchedule urpx:Season urpx:HolidayCalendar urpx:ServiceTiers )` **After:** append `urpx:PriceTimeSeries` to the union.
 
 3. **`urpx:expirationDateTime`** — same widening as 2.
 

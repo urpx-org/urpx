@@ -122,24 +122,24 @@ urpx-shacl:RatePlanVersionShape a sh:NodeShape ;
 
 #### Rate Plans
 
-A `RatePlan` is the stable identity of a utility rate plan, independent of time — a durable record carrying the plan's name, identifiers (`hasIdentifier` / `RatePlanIdentifier`), service class and rate group links, and publisher. The identity itself carries no pricing content: pricing is stated by pricing models and read from derived version snapshots.
+A `RatePlan` is the stable identity of a utility rate plan, independent of time: a durable record carrying the plan's name, identifiers (`hasIdentifier` / `RatePlanIdentifier`), service class and rate group links, and publisher. The identity itself carries no pricing content: pricing is stated by pricing models and read from derived version snapshots.
 
 #### Rate Plan Modifiers
 
-A `RatePlanModifier` is the parallel identity record for an optional add-on (a rider): something a customer takes in addition to a rate plan, never on its own. Modifiers follow the same pattern as plans — a stable identity, pricing models that state pricing content, and derived `RatePlanModifierVersion` snapshots linked back via `forRatePlanModifier`.
+A `RatePlanModifier` is the parallel identity record for an optional add-on (a rider): something a customer takes in addition to a rate plan, never on its own. Modifiers follow the same pattern as plans: a stable identity, pricing models that state pricing content, and derived `RatePlanModifierVersion` snapshots linked back via `forRatePlanModifier`.
 
 #### Pricing Models and Publications
 
-Utilities rarely publish a complete rate plan in one place. A tariff book states delivery charges, a monthly statement adjusts one charge, a market feed publishes supply prices. URPX models each published statement of pricing as a `PricingModel` — an authored, citable, possibly-partial unit of pricing content carried by a publication:
+Utilities rarely publish a complete rate plan in one place. A tariff book states delivery charges, a monthly statement adjusts one charge, a market feed publishes supply prices. URPX models each published statement of pricing as a `PricingModel`, an authored, citable, possibly-partial unit of pricing content carried by a publication:
 
 - A `SourcePublication` is the external published artifact (its kind given by `publicationType`)
 - A `TariffFiling` is the regulatory publication unit within a source publication, holding pricing models via `containsPricingModel`
-- A `SourceReference` records exactly where a URPX fact was interpreted from — file name or URL, media type, and an optional selector into a page or region
+- A `DataSourceReference` records exactly where a URPX fact was interpreted from: file name or URL, media type, and an optional selector into a page or region
 - Each `PricingModel` carries a `confidence` value (`verified`, `estimated`, or `projected`) stating how its content relates to the published source
 
 #### Rate Plan Versions and Coverage
 
-A `RatePlanVersion` is the derived, complete snapshot of the resolved plan facts for a temporal window — the artifact a billing engine or comparison tool actually reads. It is consolidated from the applicable pricing models and linked back to the plan identity via `forRatePlan`. Completeness is honest by construction: every version must declare a `CoverageClaim`. Only the completeness result (`completenessResult`) is required; the self-containment flag (`selfContained`) and an explaining `Evaluation` are optional additions.
+A `RatePlanVersion` is the derived, complete snapshot of the resolved plan facts for a temporal window: the artifact a billing engine or comparison tool actually reads. It is consolidated from the applicable pricing models and linked back to the plan identity via `forRatePlan`. Completeness is honest by construction: every version must declare a `CoverageClaim`. Only the completeness result (`completenessResult`) is required; the self-containment flag (`selfContained`) and an explaining `Evaluation` are optional additions.
 
 #### Prices
 
@@ -227,7 +227,7 @@ URPX supports the full spectrum of utility charges:
 
 ### Statement Prices Integration
 
-Regulatory statements typically adjust a single charge rather than restate a whole plan. URPX models this directly: the statement is a `SourcePublication`, the filed excerpt is a `TariffFiling`, and the pricing content it carries is a `PricingModel` — deliberately partial, citable back to its source:
+Regulatory statements typically adjust a single charge rather than restate a whole plan. URPX models this directly: the statement is a `SourcePublication`, the filed excerpt is a `TariffFiling`, and the pricing content it carries is a `PricingModel`, deliberately partial, citable back to its source:
 
 ```turtle
 # The published statement, cited as an external source
@@ -240,7 +240,7 @@ ex:psc-statement-2025-001 a urpx:SourcePublication ;
 ex:filing-2025-001 a urpx:TariffFiling ;
     urpx:filingNumber "2025-EL-0123" ;
     urpx:effectiveDate "2025-01-15"^^xsd:date ;
-    urpx:documentedBy [ a urpx:SourceReference ;
+    urpx:documentedBy [ a urpx:DataSourceReference ;
         urpx:sourcePublication ex:psc-statement-2025-001 ;
         urpx:fileName "psc-statement-2025-001.pdf" ] ;
     urpx:containsPricingModel ex:pm-transmission-2025 .
@@ -273,7 +273,7 @@ ex:pd-transmission a urpx:PriceDefinition ;
     urpx:referencesMetricInput ex:mi-energy-kwh .
 ```
 
-Reading the chain top-down: the **statement** (`SourcePublication`) is the external document; the **filing** (`TariffFiling`) is the URPX content unit within it, citing its exact source through a `SourceReference`; the **pricing model** is the authored pricing the filing carries. Inside the pricing model the structure is the same as inside a rate plan version: `PlanElements` hold the measurement definition (`MetricInput`) and the `BillingModel` with its ledger and stable `PriceDefinition`s, while `Prices` hold the dated values that reference those definitions. When a version snapshot is later consolidated, this pricing model contributes its price to the resolved `RatePlanVersion` for the window in which the statement is effective.
+Reading the chain top-down: the **statement** (`SourcePublication`) is the external document; the **filing** (`TariffFiling`) is the URPX content unit within it, citing its exact source through a `DataSourceReference`; the **pricing model** is the authored pricing the filing carries. Inside the pricing model the structure is the same as inside a rate plan version: `PlanElements` hold the measurement definition (`MetricInput`) and the `BillingModel` with its ledger and stable `PriceDefinition`s, while `Prices` hold the dated values that reference those definitions. When a version snapshot is later consolidated, this pricing model contributes its price to the resolved `RatePlanVersion` for the window in which the statement is effective.
 
 ### Geographic Applicability
 
@@ -300,13 +300,13 @@ ex:DemandResponseProgram a urpx:ProgramEnrollment ;
 
 URPX includes SHACL (Shapes Constraint Language) validation shapes in a unified file ([`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl), pre-draft v0.3.0):
 
-**Core Validation** — Rate plan structure integrity, price consistency rules, temporal constraint validation
+**Core Validation**: Rate plan structure integrity, price consistency rules, temporal constraint validation
 
-**Organization Validation** — Identity tracking consistency, corporate relationship rules, regulatory jurisdiction validation
+**Organization Validation**: Identity tracking consistency, corporate relationship rules, regulatory jurisdiction validation
 
-**Geography Validation** — Territory coverage rules, hierarchical boundary consistency, coordinate range validation
+**Geography Validation**: Territory coverage rules, hierarchical boundary consistency, coordinate range validation
 
-Because SHACL shapes are modular and composable, additional shape definitions can be authored to enforce jurisdiction-specific constraints — such as required fields, value ranges, or expected relationships between classes that vary by regulatory context.
+Because SHACL shapes are modular and composable, additional shape definitions can be authored to enforce jurisdiction-specific constraints, such as required fields, value ranges, or expected relationships between classes that vary by regulatory context.
 
 ### Benefits of URPX
 

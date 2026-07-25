@@ -28,6 +28,15 @@ A specification is not complete on its own. When a `specs/` document proposes an
 
 This keeps a proposal, its implementation path, and its evidence together rather than leaving a specification as an unactioned document.
 
+## Specification metadata
+
+Each specification opens with a metadata table. Two fields identify who is behind it:
+
+- **Author** — the organization that authored the specification. Current specifications are authored by Flux Tailor.
+- **Assignee** — who is carrying the specification forward. Use a GitHub handle when a specific person owns it; otherwise `Unassigned — open for any working group member`.
+
+The same table records the specification's status, the candidate version and commit it is written against, its target release, the ontology, SHACL, and documentation it targets, its implementation task, and any specifications it depends on.
+
 ## File naming
 
 Files use a dot-separated name:

@@ -2,7 +2,7 @@
 id: specurpxont043dynamicpricediscoveryconformance
 title: "SPEC-URPX-ONT-043 — Dynamic price discovery and output-based conformance"
 desc: "Descriptive endpoint-discovery metadata for highly dynamic prices (DynamicPriceEndpoint on DynamicPricing: URL, protocol hint, payload media type, authentication flag) plus the expected-output conformance vector pattern that makes value expressions and price series testable across implementations."
-updated: 1784419200000
+updated: 1784937600000
 created: 1784419200000
 ---
 
@@ -11,6 +11,8 @@ created: 1784419200000
 | Field | Value |
 |-------|-------|
 | **Status** | Proposed — open for working group review |
+| **Author** | Flux Tailor |
+| **Assignee** | Unassigned — open for any working-group member |
 | **Delivered against** | URPX v0.3.0 candidate, branch `v0.3.0-wg-review`, commit `3d474cbd` |
 | **Target release** | v0.4.0 (fully additive; no change required to the v0.3.0 candidate before its tag) |
 | **Targets** | `ontology/urpx-ontology.ttl`, `shacl/urpx-shacl.ttl`, `test-cases/`, documentation pages |
@@ -177,13 +179,13 @@ urpx-shacl:EndpointProtocolValueShape
 
 1. **`urpx:url`** — domain union gains `urpx:DynamicPriceEndpoint`:
 
-   **Before:** `owl:unionOf ( urpx:SourcePublication urpx:URPXPackage urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:SourceReference urpx:ProgramEnrollment urpx:RateCase )` **After:** append `urpx:DynamicPriceEndpoint` to the union.
+   **Before:** `owl:unionOf ( urpx:SourcePublication urpx:URPXPackage urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:DataSourceReference urpx:ProgramEnrollment urpx:RateCase )` **After:** append `urpx:DynamicPriceEndpoint` to the union.
 
-2. **`urpx:mediaType`** — **Before:** `rdfs:domain urpx:SourceReference ;` **After:**
+2. **`urpx:mediaType`** — **Before:** `rdfs:domain urpx:DataSourceReference ;` **After:**
 
    ```turtle
    rdfs:domain [ a owl:Class ;
-           owl:unionOf ( urpx:SourceReference urpx:DynamicPriceEndpoint ) ] ;
+           owl:unionOf ( urpx:DataSourceReference urpx:DynamicPriceEndpoint ) ] ;
    ```
 
 3. **`urpx:MediaTypeValue`** gains one member so a JSON-LD payload (the URPX `PriceTimeSeries` shape) is declarable:

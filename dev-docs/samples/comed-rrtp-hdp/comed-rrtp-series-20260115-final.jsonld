@@ -102,7 +102,7 @@
       },
       "urpx:documentedBy": {
         "@id": "comed:sr-hourly-final",
-        "@type": "urpx:SourceReference",
+        "@type": "urpx:DataSourceReference",
         "urpx:name": "ComEd hourly pricing feed",
         "urpx:sourcePublication": {
           "@id": "comed:pub-comed-hourly-prices"

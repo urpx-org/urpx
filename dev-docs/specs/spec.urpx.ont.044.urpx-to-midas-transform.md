@@ -11,6 +11,8 @@ created: 1784419200000
 | Field | Value |
 |-------|-------|
 | **Status** | Proposed — open for working group review |
+| **Author** | Flux Tailor |
+| **Assignee** | Unassigned — open for any working-group member |
 | **Delivered against** | URPX v0.3.0 candidate, branch `v0.3.0-wg-review`, commit `3d474cbd`; MIDAS v2.0 (June 2026), `https://github.com/california-energy-commission/MIDAS` |
 | **Target release** | v0.4.0 documentation/tooling; **no ontology or SHACL changes** |
 | **Targets** | documentation pages (interoperability), `scripts/` (reference transform, follow-up) |

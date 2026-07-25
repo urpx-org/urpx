@@ -96,7 +96,7 @@
       },
       "urpx:documentedBy": {
         "@id": "comed:sr-pjm-driver",
-        "@type": "urpx:SourceReference",
+        "@type": "urpx:DataSourceReference",
         "urpx:name": "PJM day-ahead LMP feed",
         "urpx:sourcePublication": {
           "@id": "comed:pub-pjm-da-feed"

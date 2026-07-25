@@ -5,7 +5,7 @@
 
 # URPX v0.3.0 Release Notes (Draft)
 
-**Status:** Draft — pending Working Group review and vote. Dates and version metadata are finalized when this draft is tagged.
+**Status:** Draft, pending Working Group review and vote. Dates and version metadata are finalized when this draft is tagged.
 **Type:** Pre-draft minor release
 **Previous release:** [`v0.2.1`](urpx-release-notes-v0.2.1.md)
 
@@ -25,7 +25,7 @@ This release is not backward-compatible with v0.2.x. Existing URPX datasets shou
 
 - Introduced the pricing-model architecture: `PricingModel` carries pricing content, filed publicly through a `TariffFiling` or, for filing-less material (competitive supply, contract, market-indexed, scenario, partial ingest), standing on its own with its own validity dates.
 - Retired the tariff document class family (`TariffPublication` and its subclasses) in favor of a single `SourcePublication` class with a `publicationType` enumeration.
-- Renamed `DataSourceReference` → `SourceReference` and `URPXDocument` → `URPXPackage`.
+- Renamed `URPXDocument` → `URPXPackage`.
 - Added first-class identity classes, `RatePlanIdentifier` and `RatePlanModifierIdentifier`, linked from `RatePlan` / `RatePlanModifier` via `hasIdentifier`.
 - Made `RatePlanVersion` and `RatePlanModifierVersion` consolidation artifacts: each now requires a `CoverageClaim` stating completeness (`completenessResult`); self-containment (`selfContained`) and an explaining `Evaluation` are optional.
 - Added a filing-lifecycle vocabulary: `supersedes`, `replaces` / `replacedBy`, `cancelledBy`, `cancelledOn`, `cancelsPriceDefinition`, and `sunsetOn` for intentional terminal discontinuation (as distinct from a data gap).
@@ -44,7 +44,7 @@ If you maintain datasets or downstream tooling, pay particular attention to thes
 1. **The tariff document class family is retired.**
    `TariffPublication`, `TariffBookDocument`, `TariffStatementDocument`, `TariffSupplementDocument`, `TariffAddendumDocument`, `SupplyChargesDocument`, `DERExportsDocument`, and `HighlyDynamicPricesDocument` are removed. Use `SourcePublication` with the `publicationType` enumeration (`SourcePublicationType`) instead.
 
-2. **`DataSourceReference` is renamed to `SourceReference`; `URPXDocument` is renamed to `URPXPackage`.**
+2. **`URPXDocument` is renamed to `URPXPackage`.**
    All property domains, ranges, and shapes follow the rename.
 
 3. **The version-to-plan link is inverted.**
@@ -69,11 +69,11 @@ If you maintain datasets or downstream tooling, pay particular attention to thes
 Datasets built against v0.2.x require rework, not just a metadata bump:
 
 - Move tariff-document typing to `SourcePublication` + `publicationType`.
-- Rename `DataSourceReference` references to `SourceReference`, and `URPXDocument` references to `URPXPackage`.
+- Rename `URPXDocument` references to `URPXPackage`.
 - Replace `hasRatePlanVersion` / `hasRatePlanModifierVersion` with `forRatePlan` / `forRatePlanModifier` on the version node.
 - Add a `CoverageClaim` (at minimum `completenessResult`; `selfContained` and an explaining `Evaluation` are optional) to every `RatePlanVersion` and `RatePlanModifierVersion`.
 - Move any pricing content that was previously attached directly to a rate plan or modifier into a `PricingModel`, carried by a `TariffFiling` or `SourcePublication` as appropriate.
-- Re-run SHACL validation against `urpx-shacl.ttl` — the closed-shape batch in this release will surface any property used outside its now-explicit declared surface.
+- Re-run SHACL validation against `urpx-shacl.ttl`. The closed-shape batch in this release will surface any property used outside its now-explicit declared surface.
 
 ---
 
@@ -81,5 +81,5 @@ Datasets built against v0.2.x require rework, not just a metadata bump:
 
 - [v0.2.1 Release Notes](urpx-release-notes-v0.2.1.md)
 - [Data Dictionary](urpx-data-dictionary.md)
-- [Tutorial — Terminology](urpx-tutorial.md)
+- [Tutorial: Terminology](urpx-tutorial.md)
 - [Changelog](https://github.com/urpx-org/urpx/blob/main/urpx-changelog.md)

@@ -25,7 +25,7 @@ implementers modelling the same MIDAS-derived monthly feed will choose different
 ## Approach
 
 Write the authoring rule: **regulated statements → one `TariffFiling` per publication event**
-(supersession thread — each filing is its own document with its own `SourceReference`);
+(supersession thread — each filing is its own document with its own `DataSourceReference`);
 **market / dynamic feeds → a single `PricingModel` with validity-dated windows.** Ground it
 in the worked example and in the chair's publication-boundary principle (URPX represents
 publications; it does not model the publication event).

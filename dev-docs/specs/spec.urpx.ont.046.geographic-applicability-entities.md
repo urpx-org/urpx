@@ -11,7 +11,8 @@ created: 1784505600000
 | Field | Value |
 |-------|-------|
 | **Status** | Backlog — stub for a working-group contributor |
-| **Assignment** | **Unassigned — open for any working-group member to pick up** |
+| **Author** | Flux Tailor |
+| **Assignee** | **Unassigned — open for any working-group member to pick up** |
 | **Target** | v0.4.0 (post-launch; not launch-gating) |
 
 ## Why

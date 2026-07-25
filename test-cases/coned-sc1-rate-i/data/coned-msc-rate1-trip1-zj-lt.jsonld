@@ -21,14 +21,14 @@
         "urpx:name": "General Rule 25 — Market Supply Charge",
         "urpx:hasDataSourceReference": {
           "@id": "coned:sr-msc-calculator",
-          "@type": "urpx:SourceReference",
+          "@type": "urpx:DataSourceReference",
           "urpx:name": "ConEd Market Supply Charge Rate Calculator",
           "urpx:accessURL": "https://www.coned.com/en/accounts-billing/your-bill/rate-calculators/market-supply-charge"
         }
       },
       "urpx:documentedBy": {
         "@id": "coned:sr-lds-appnd-csv",
-        "@type": "urpx:SourceReference",
+        "@type": "urpx:DataSourceReference",
         "urpx:name": "ConEd LDS_APPND Market Supply Charges CSV",
         "urpx:sourcePublication": {
           "@id": "coned:sp-msc-lds-appnd",

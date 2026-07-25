@@ -48,13 +48,13 @@ Before starting this tutorial, ensure you have:
 
 Understanding these distinctions is critical for working with URPX. For a more detailed explanation, please see the [URPX FAQ](urpx-faq.md).
 
-- **Rate Plan**: A complete package with all parameters needed to calculate customer cost — prices, TOU schedules, service tiers, seasonal variations, eligibility rules, and applicability conditions. The rate plan is the first-class thing URPX models.
-- **Tariff**: A regulatory document (tariff book) containing material from one or more rate plans. Published by utilities and approved by regulatory authorities. In URPX, tariffs are publication vehicles — places where parts of a rate plan appear — not the plan itself.
-- **Price**: A single value applied to something measured or counted (e.g., $0.12/kWh, an $18.75 monthly charge) — incomplete without the full rate plan context.
+- **Rate Plan**: A complete package with all parameters needed to calculate customer cost: prices, TOU schedules, service tiers, seasonal variations, eligibility rules, and applicability conditions. The rate plan is the first-class thing URPX models.
+- **Tariff**: A regulatory document (tariff book) containing material from one or more rate plans. Published by utilities and approved by regulatory authorities. In URPX, tariffs are publication vehicles (places where parts of a rate plan appear), not the plan itself.
+- **Price**: A single value applied to something measured or counted (e.g., $0.12/kWh, an $18.75 monthly charge), incomplete without the full rate plan context.
 
 **Why URPX says "price", not "rate".** In everyday utility usage, "rate" can mean at least three different things: a single per-unit value ("the summer rate is $0.12/kWh"), a named grouping inside a service classification ("Rate I", "Rate II"), or the whole plan ("switch to the EV rate"). Because one word carries three meanings, URPX does not use "rate" on its own anywhere in the vocabulary. A single value is a **price** (`Price`, `PriceSet`). The complete package is a **rate plan** (`RatePlan`). And the named grouping has its own term:
 
-- **Rate Group** (`RateGroup`): The named grouping within a service class that utilities themselves often call a "rate" — for example, *Rate I* within *Service Classification No. 1*. A rate group is a subdivision of a service class, not a kind of service class: Rate I is not a type of SC 1, it is a grouping inside it (`parentServiceClass` points from the rate group to its service class). A rate plan links to its grouping via `hasRateGroup`, so when a utility's published material says "SC 1 Rate I", the plan maps directly to that published grouping — without importing the ambiguous word "rate" into any other part of the model.
+- **Rate Group** (`RateGroup`): The named grouping within a service class that utilities themselves often call a "rate", for example, *Rate I* within *Service Classification No. 1*. A rate group is a subdivision of a service class, not a kind of service class: Rate I is not a type of SC 1, it is a grouping inside it (`parentServiceClass` points from the rate group to its service class). A rate plan links to its grouping via `hasRateGroup`, so when a utility's published material says "SC 1 Rate I", the plan maps directly to that published grouping, without importing the ambiguous word "rate" into any other part of the model.
 
 **In URPX**: We model rate plans (complete packages), their prices, and the rate groups that connect them to the utility's own published groupings. Tariff documents are containers where parts of rate plans appear, plus regulatory metadata.
 
@@ -62,26 +62,26 @@ Understanding these distinctions is critical for working with URPX. For a more d
 
 The [Terminology](#terminology) section above covers the base service and how it is published. URPX also has a second identity for content that changes what a customer pays without being a rate plan in its own right: the **rate plan modifier**.
 
-- **Rate Plan** (`RatePlan`): the base service a customer is on — what a customer would be billed under with no modifiers applied.
-- **Rate Plan Modifier** (`RatePlanModifier`): a separately published layer — a rider, discount, credit, or adjustment — that modifies a base rate plan. Examples include low-income discounts, green energy options, demand response programs, and distributed energy resource (DER) export crediting.
+- **Rate Plan** (`RatePlan`): the base service a customer is on, what a customer would be billed under with no modifiers applied.
+- **Rate Plan Modifier** (`RatePlanModifier`): a separately published layer (a rider, discount, credit, or adjustment) that modifies a base rate plan. Examples include low-income discounts, green energy options, demand response programs, and distributed energy resource (DER) export crediting.
 
 **Why two classes.** If every combination of a base rate plan and its available riders were modeled as its own rate plan, the number of distinct plan identities would grow combinatorially with the number of modifiers a utility offers: one rate plan for the discount alone, another for the discount plus the green energy option, another for all programs together, and so on. URPX avoids this by composing a base `RatePlan` with independently published modifier layers instead of enumerating every combination as its own plan. A customer's actual cost comes from the rate plan plus whichever modifiers apply to that customer, not from a single all-in-one plan identity.
 
-**Independently published, independently sourced.** A rate plan modifier is not a section of its base plan's publication. Its pricing content is typically authored and revised on its own — its own tariff filing or statement, on its own revision cycle, carrying its own source references, separate from the base plan's. `RatePlanModifier` carries its own identifier class, `RatePlanModifierIdentifier`, parallel to `RatePlanIdentifier`. The `PricingModel` instances that carry a modifier's authored pricing content reach it through `referencesRatePlanModifier`, the modifier-side counterpart to `referencesRatePlan`.
+**Independently published, independently sourced.** A rate plan modifier is not a section of its base plan's publication. Its pricing content is typically authored and revised on its own: its own tariff filing or statement, on its own revision cycle, carrying its own source references, separate from the base plan's. `RatePlanModifier` carries its own identifier class, `RatePlanModifierIdentifier`, parallel to `RatePlanIdentifier`. The `PricingModel` instances that carry a modifier's authored pricing content reach it through `referencesRatePlanModifier`, the modifier-side counterpart to `referencesRatePlan`.
 
-**Shaped like a rate plan, but applied onto one.** Mechanically, `RatePlanModifier` mirrors `RatePlan`: it is disjoint from its own derived snapshot class, `RatePlanModifierVersion`, the same way `RatePlan` is disjoint from `RatePlanVersion`. A `RatePlanModifierVersion` links back to its identity with `forRatePlanModifier`, the counterpart to `forRatePlan`, and it carries seasons, metric inputs, and prices through the same `PlanElements` and `Prices` structures as a `RatePlanVersion`. What a modifier does not do is stand on its own: it is meant to be applied onto a rate plan rather than enrolled in by itself. A `RatePlanVersion` records which modifiers are available to it — `hasModifierOptions` for the modifier identities, `hasModifierVersionOptions` for the resolved modifier versions — rather than a modifier carrying a full customer bill on its own.
+**Shaped like a rate plan, but applied onto one.** Mechanically, `RatePlanModifier` mirrors `RatePlan`: it is disjoint from its own derived snapshot class, `RatePlanModifierVersion`, the same way `RatePlan` is disjoint from `RatePlanVersion`. A `RatePlanModifierVersion` links back to its identity with `forRatePlanModifier`, the counterpart to `forRatePlan`, and it carries seasons, metric inputs, and prices through the same `PlanElements` and `Prices` structures as a `RatePlanVersion`. What a modifier does not do is stand on its own: it is meant to be applied onto a rate plan rather than enrolled in by itself. A `RatePlanVersion` records which modifiers are available to it (`hasModifierOptions` for the modifier identities, `hasModifierVersionOptions` for the resolved modifier versions) rather than a modifier carrying a full customer bill on its own.
 
-A short comparison, if it helps: a condiment modifies a dish without becoming a new dish. A rate plan modifier works the same way — it changes what is on the bill without becoming a new rate plan.
+A short comparison, if it helps: a condiment modifies a dish without becoming a new dish. A rate plan modifier works the same way: it changes what is on the bill without becoming a new rate plan.
 
 #### Rate Plan Modifiers vs Customer Offerings
 
-A rate plan together with its available modifiers describes what a utility or supplier publishes. A customer-facing offering — a marketing bundle, comparison listing, or enrollment product — is a different kind of thing: it may present a rate plan and a selection of its modifiers together, but deciding which modifiers to bundle, badge, or default into a signup flow is a concern of consuming applications. URPX models what is published; assembling that content into something a customer chooses is out of scope for the vocabulary.
+A rate plan together with its available modifiers describes what a utility or supplier publishes. A customer-facing offering (a marketing bundle, comparison listing, or enrollment product) is a different kind of thing: it may present a rate plan and a selection of its modifiers together, but deciding which modifiers to bundle, badge, or default into a signup flow is a concern of consuming applications. URPX models what is published; assembling that content into something a customer chooses is out of scope for the vocabulary.
 
 ### Core Concepts
 
 **Rate Plan**: The stable identity of a plan offered by a utility
 - A durable record: name, unique identifier, publisher, service class and rate group links
-- Carries no pricing content itself — pricing lives in versions (this tutorial) and in the pricing models publications carry (see the [Overview](urpx-overview.md))
+- Carries no pricing content itself: pricing lives in versions (this tutorial) and in the pricing models publications carry (see the [Overview](urpx-overview.md))
 
 **Rate Plan Version**: The complete, resolved snapshot of a rate plan for a temporal window
 - A top-level node that points back to its plan identity via `forRatePlan`
@@ -184,11 +184,11 @@ Let's build a basic residential rate plan step by step using JSON-LD.
 }
 ```
 
-The `URPXPackage` is URPX's exchange container — the unit a system hands to another system. `targetURPXVersion` is required and names the exact ontology version the data was authored and validated against.
+The `URPXPackage` is URPX's exchange container: the unit a system hands to another system. `targetURPXVersion` is required and names the exact ontology version the data was authored and validated against.
 
 ### Step 2: Rate Plan Identity and Version
 
-The package carries the plan identity. The identity is deliberately small — a durable record with no pricing content:
+The package carries the plan identity. The identity is deliberately small, a durable record with no pricing content:
 
 ```json
 {
@@ -206,7 +206,7 @@ The package carries the plan identity. The identity is deliberately small — a 
 }
 ```
 
-The version is its own top-level node in the graph. It points back to the plan identity with `forRatePlan`, and it must declare a `CoverageClaim` — an explicit statement of the snapshot's completeness result (only `completenessResult` is required; `selfContained` and an explaining `Evaluation` are optional, and are shown here):
+The version is its own top-level node in the graph. It points back to the plan identity with `forRatePlan`, and it must declare a `CoverageClaim`: an explicit statement of the snapshot's completeness result (only `completenessResult` is required; `selfContained` and an explaining `Evaluation` are optional, and are shown here):
 
 ```json
 {
@@ -366,7 +366,7 @@ The minimum price below uses `amount` (fixed). The energy price in Step 5 uses `
 
 ### Understanding MetricInput
 
-Prices don't measure things directly — they reference a MetricInput that defines what's being measured. This keeps measurement definitions centralized and reusable:
+Prices don't measure things directly. They reference a MetricInput that defines what's being measured. This keeps measurement definitions centralized and reusable:
 
 ```mermaid
 %%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
@@ -590,7 +590,7 @@ graph TB
     class Price1,Price2 priceClass
 ```
 
-Prices connect to TOU periods via `touPeriodNumber` — a simple integer reference rather than a nested relationship. The JSON-LD below builds this structure from the inside out.
+Prices connect to TOU periods via `touPeriodNumber`: a simple integer reference rather than a nested relationship. The JSON-LD below builds this structure from the inside out.
 
 ---
 

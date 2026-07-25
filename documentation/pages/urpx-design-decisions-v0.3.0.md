@@ -28,6 +28,7 @@ this page begins at Decision #121, at the start of the next block after the
 - Decision #125: Version-to-Plan Link Inversion
 - Decision #126: Correction and Withdrawal Parity for Standalone Pricing Models
 - Decision #127: Identity, Timezone, and Location Metadata on Resolved Version Snapshots
+- Decision #128: Collapse Nested Tariff Reference Classes into DataSourceReference
 
 ---
 
@@ -324,3 +325,46 @@ Make `hasIdentifier`, `timezoneIdentifier`, and `hasLocationDataSet` available d
 - Changelog: `urpx-changelog.md`, 2026-07-20 entry ("Widened the domain of `hasIdentifier` ... `timezoneIdentifier` and `hasLocationDataSet` ...").
 - Ontology: `ontology/urpx-ontology.ttl` — `urpx:hasIdentifier`, `urpx:timezoneIdentifier`, `urpx:hasLocationDataSet` domain unions.
 - SHACL: `shacl/urpx-shacl.ttl` — `RatePlanVersionShape` and `RatePlanModifierVersionShape` gain the three optional paths.
+
+---
+
+<a id="decision-128"></a>
+### Decision #128: Collapse Nested Tariff Reference Classes into DataSourceReference
+
+- **Status:** Accepted (pre-Draft)
+- **Date:** 2026-07-25
+- **Supersedes:** Decision #089 (TariffBookReference and TariffStatementReference Nested Citation Classes), in `urpx-design-decisions-081-120.md`
+- **Issue:** `TariffBookReference` and `TariffStatementReference`, minted in Decision #089, duplicated citation metadata that `DataSourceReference` already carries, and the tariff-book-versus-statement distinction they encoded is already stated by the referenced publication's `publicationType`.
+- **Category:** Architecture, Validation
+
+**Context:**
+Decision #089 promoted tariff book and tariff statement citations to two nested classes, `TariffBookReference` and `TariffStatementReference`, reached from `DataSourceReference` through `hasTariffBookReference` and `hasTariffStatementReference`, to carry structured in-document locators (page and leaf position, statement type). A `DataSourceReference` already cites a `SourcePublication`, and that publication carries a `publicationType` (tariff book, statement, supplement, market price feed), so the kind of source is already data on the publication. The only content the two subclasses added beyond that distinction was ordinary optional locator metadata: `pageStart`, `pageEnd`, `leafStart`, `leafEnd`, `tariffStatementType`, and receipt dates, all of which sit naturally on the citation itself.
+
+**Decision:**
+Remove `TariffBookReference` and `TariffStatementReference` and their linking properties `hasTariffBookReference` and `hasTariffStatementReference`. Carry the page and leaf locators, statement type, and receipt dates directly on `DataSourceReference`, and let the tariff-book-versus-statement distinction ride the referenced `SourcePublication`'s `publicationType`.
+
+**Options Considered (reuse ladder):**
+
+1. **Reuse by widening, flattening the locators onto `DataSourceReference` (Selected).** Widen the domains of `leafStart`, `leafEnd`, `tariffStatementType`, and the receipt-date properties onto `DataSourceReference`, drop the two subclasses and their linking properties, and let `publicationType` carry the source-kind distinction. No new term is minted; the reference reuses the metadata terms it already neighbors.
+   - Pro: The book-versus-statement distinction stays where it already lives, on the referenced publication's `publicationType`, with no parallel encoding.
+   - Pro: One citation class instead of three, and two fewer shapes; a citation's page and leaf position are optional metadata on the citation, not a distinct kind of thing.
+   - Pro: Additive for locator data; every locator the subclasses held is preserved on the reference.
+   - Con: Nested `hasTariffBookReference` / `hasTariffStatementReference` structures in existing data must flatten their locators onto the parent reference.
+
+2. **Keep the nested classes (Decision #089 as-is).** Rejected. A near-twin mint of a role `DataSourceReference` plus `publicationType` already cover, adding ongoing maintenance (two classes, two properties, two shapes) with no added expressiveness. This is the reuse-before-minting smell the collapse removes.
+
+**Rationale:**
+- The reuse ladder's correct rung here is reuse-by-widening (rung 3), not a mint (rung 4): the locators widen onto the existing reference class, and the source-kind distinction reuses `publicationType` rather than being re-encoded as a subclass. Decision #089 took the mint rung where widening suffices.
+- Leaf and page positions are optional descriptive metadata on a citation, not a separate kind of citation. Minting a class per document kind is the over-modeling pattern v0.3.0 has otherwise retired (see Decision #121's move from a document-class family to `publicationType`).
+- Removing the twins before the initial public tag keeps the first published vocabulary minimal.
+
+**Consequences / Impact:**
+- **Positive:** One citation class, fewer shapes, and no loss of locating detail; the source-kind distinction has a single home on `publicationType`.
+- **Breaking Change:** Yes. Nested `hasTariffBookReference` / `hasTariffStatementReference` structures must flatten their page and leaf locators onto the `DataSourceReference`. Folded into the unreleased v0.3.0 before the initial public tag, so no released vocabulary is affected.
+- **Requirements:** Producers place page and leaf locators, statement type, and receipt dates directly on `DataSourceReference`, and rely on the referenced publication's `publicationType` for the tariff-book-versus-statement distinction.
+
+**References:**
+- Changelog: `urpx-changelog.md`, 2026-07-25 entry ("Removed the `TariffBookReference` and `TariffStatementReference` classes and their linking properties...").
+- Supersedes: Decision #089 (`urpx-design-decisions-081-120.md`), which minted the two nested classes.
+- Ontology (`ontology/urpx-ontology.ttl`): `urpx:DataSourceReference`; the removed `urpx:TariffBookReference`, `urpx:TariffStatementReference`, `urpx:hasTariffBookReference`, `urpx:hasTariffStatementReference`; the widened `urpx:leafStart`, `urpx:leafEnd`, and `urpx:tariffStatementType` domains.
+- SHACL (`shacl/urpx-shacl.ttl`): `DataSourceReferenceShape` gains the flattened paths and stays closed; `TariffBookReferenceShape` and `TariffStatementReferenceShape` removed.

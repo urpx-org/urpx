@@ -100,8 +100,8 @@ At this stage, also check:
 - `urpx:effectiveDate` or `urpx:effectiveDateTime`
 - `urpx:changeReason`
 - `urpx:priceCurrency`
-- `urpx:forRatePlan` on every `RatePlanVersion` — the version must point at the right plan identity
-- `urpx:hasCoverageClaim` on every version — and whether the claimed `completenessResult` and `selfContained` value are actually true of the file: a version claiming `complete` while a component is only referenced externally is a review finding
+- `urpx:forRatePlan` on every `RatePlanVersion`: the version must point at the right plan identity
+- `urpx:hasCoverageClaim` on every version, and whether the claimed `completenessResult` and `selfContained` value are actually true of the file: a version claiming `complete` while a component is only referenced externally is a review finding
 - `urpx:hasRateCase`, if the tariff book references a rate case or docket
 
 ---
@@ -344,17 +344,16 @@ Check:
 
 Every review should end with a provenance pass.
 
-Check every `SourceReference` (attached via `urpx:hasDataSourceReference` or `urpx:documentedBy`) and related tariff book references for:
+Check every `DataSourceReference` (attached via `urpx:hasDataSourceReference` or `urpx:documentedBy`) for:
 
 - correct local file or source URL
 - `urpx:accessURL` when applicable
 - `urpx:mediaType`
 - `urpx:dataSourceType`
 - `urpx:dateRetrieved`
-- `urpx:sourcePublication` — the `SourcePublication` node with the correct `urpx:publicationType` (tariff book vs. statement vs. supplement vs. market price feed) and its own effective date
-- `urpx:hasTariffBookReference`
+- `urpx:sourcePublication`: the `SourcePublication` node with the correct `urpx:publicationType` (tariff book vs. statement vs. supplement vs. market price feed) and its own effective date
 
-For `TariffBookReference`, verify:
+For a tariff book or statement citation, the page and leaf locators sit directly on the `DataSourceReference`; verify:
 
 - `urpx:pageStart`
 - `urpx:pageEnd`

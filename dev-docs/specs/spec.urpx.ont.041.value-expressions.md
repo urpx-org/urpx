@@ -11,6 +11,8 @@ created: 1784419200000
 | Field | Value |
 |-------|-------|
 | **Status** | Proposed — open for working group review |
+| **Author** | Flux Tailor |
+| **Assignee** | Unassigned — open for any working-group member |
 | **Delivered against** | URPX v0.3.0 candidate, branch `v0.3.0-wg-review`, commit `3d474cbd` |
 | **Target release** | v0.4.0 (fully additive; no change required to the v0.3.0 candidate before its tag) |
 | **Targets** | `ontology/urpx-ontology.ttl`, `shacl/urpx-shacl.ttl`, documentation pages, data dictionary regen |

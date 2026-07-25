@@ -8,6 +8,22 @@
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
 
+2026-07-25 — v0.3.0 (pre-tag model corrections)
+---
+
+Vocabulary corrections applied before the initial public tag, folded into the unreleased 0.3.0.
+
+### Removed
+- Removed the `TariffBookReference` and `TariffStatementReference` classes and their linking properties `hasTariffBookReference` and `hasTariffStatementReference`. A reference already points at a `SourcePublication` carrying a `publicationType`, so the tariff book vs. statement distinction is data, not a subclass. The page and leaf locators the subclasses carried (`pageStart`, `pageEnd`, `leafStart`, `leafEnd`, `tariffStatementType`, `dateReceived`, `dateTimeReceived`) now sit directly on the reference.
+
+### Changed
+- Renamed the generic reference class to `DataSourceReference` so it agrees with its property `hasDataSourceReference`. This reverts the earlier pre-tag rename to `SourceReference`; the property name was `hasDataSourceReference` throughout.
+- Widened the domains of `leafStart`, `leafEnd`, and `tariffStatementType` onto `DataSourceReference`, and folded the removed subclasses out of the union domains and ranges of `anchorLink`, `dateApproved`, `dateTimeApproved`, `datePublished`, `dateTimePublished`, `dateModified`, `dateTimeModified`, `dateReceived`, `dateTimeReceived`, `pageStart`, `pageEnd`, and `description`.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- Renamed `SourceReferenceShape` to `DataSourceReferenceShape`; it gains `leafStart`, `leafEnd`, `tariffStatementType`, `dateReceived`, and `dateTimeReceived`, and drops the `hasTariffBookReference` and `hasTariffStatementReference` paths. The shape stays closed.
+- Removed `TariffBookReferenceShape` and `TariffStatementReferenceShape`.
+
 2026-07-20 — v0.3.0 (pre-tag model corrections)
 ---
 

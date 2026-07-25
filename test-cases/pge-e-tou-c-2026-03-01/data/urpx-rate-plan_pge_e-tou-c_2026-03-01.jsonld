@@ -176,7 +176,7 @@
           },
           "urpx:isDefault": false,
           "urpx:hasDataSourceReference": {
-            "@type": "urpx:SourceReference",
+            "@type": "urpx:DataSourceReference",
             "urpx:fileName": "ELEC_SCHEDS_E-TOU-C.pdf",
             "urpx:mediaType": {
               "@id": "urpx:applicationPdf"
@@ -186,13 +186,10 @@
             "urpx:dataSourceType": {
               "@id": "urpx:utilityWebsiteSource"
             },
-            "urpx:hasTariffBookReference": {
-              "@type": "urpx:TariffBookReference",
-              "urpx:pageStart": 1,
-              "urpx:pageEnd": 10,
-              "urpx:leafStart": "61124-E",
-              "urpx:leafEnd": "61133-E"
-            }
+            "urpx:pageStart": 1,
+            "urpx:pageEnd": 10,
+            "urpx:leafStart": "61124-E",
+            "urpx:leafEnd": "61133-E"
           },
           "urpx:hasEligibilityRule": [
             {
@@ -1387,7 +1384,7 @@
             }
           },
           "urpx:hasDataSourceReference": {
-            "@type": "urpx:SourceReference",
+            "@type": "urpx:DataSourceReference",
             "urpx:fileName": "ELEC_SCHEDS_E-TOU-C.pdf",
             "urpx:mediaType": {
               "@id": "urpx:applicationPdf"
@@ -1397,13 +1394,10 @@
             "urpx:dataSourceType": {
               "@id": "urpx:utilityWebsiteSource"
             },
-            "urpx:hasTariffBookReference": {
-              "@type": "urpx:TariffBookReference",
-              "urpx:pageStart": 8,
-              "urpx:pageEnd": 8,
-              "urpx:leafStart": "61131-E",
-              "urpx:leafEnd": "61131-E"
-            }
+            "urpx:pageStart": 8,
+            "urpx:pageEnd": 8,
+            "urpx:leafStart": "61131-E",
+            "urpx:leafEnd": "61131-E"
           },
           "urpx:hasEligibilityRule": [
             {
@@ -2516,7 +2510,7 @@
         }
       ],
       "urpx:hasDataSourceReference": {
-        "@type": "urpx:SourceReference",
+        "@type": "urpx:DataSourceReference",
         "urpx:fileName": "ELEC_SCHEDS_E-TOU-C.pdf",
         "urpx:mediaType": {
           "@id": "urpx:applicationPdf"

@@ -596,7 +596,7 @@ Expand `DataSourceReference` so it can carry retrieval provenance, publication/e
 <a id="decision-089"></a>
 ### 🔗 Decision #089: TariffBookReference and TariffStatementReference Nested Citation Classes
 
-- **Status:** ✅ Implemented
+- **Status:** ✅ Implemented (superseded by Decision #128, 2026-07-25)
 - **Date:** 2026-04-06
 - **Issue:** Tariff book and tariff statement citations were modeled as opaque strings without structured location metadata
 - **Category:** Architecture, Validation

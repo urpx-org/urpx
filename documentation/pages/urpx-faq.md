@@ -26,18 +26,18 @@ Both projects share the goal of making rate plan data more accessible. URPX can 
 **Q: What's the difference between a rate plan, a tariff, and a price?**
 
 - **Rate Plan**: A complete package with all parameters needed to calculate customer cost (prices, schedules, eligibility rules). The rate plan is the first-class thing URPX models.
-- **Tariff**: A regulatory document (tariff book) containing material from one or more rate plans. In URPX, tariffs are publication vehicles — places where parts of a rate plan appear — not the plan itself.
-- **Price**: A single value applied to something measured or counted (e.g., $0.12/kWh) — incomplete without the full rate plan context.
+- **Tariff**: A regulatory document (tariff book) containing material from one or more rate plans. In URPX, tariffs are publication vehicles (places where parts of a rate plan appear), not the plan itself.
+- **Price**: A single value applied to something measured or counted (e.g., $0.12/kWh), incomplete without the full rate plan context.
 
 Rate plan data comes from many kinds of published sources: tariff books (primary), tariff statements, supplements, addenda, supply price sheets, and market price feeds. URPX models each of these as a `SourcePublication` whose kind is given by the `publicationType` enumeration (`tariffBook`, `tariffStatement`, `tariffSupplement`, `tariffAddendum`, `supplyCharges`, `derExports`, `highlyDynamicPrices`, `marketPriceFeed`). See the [Terminology](#terminology) section below for why URPX never uses the bare word "rate".
 
 **Q: What is the difference between a rate plan and a rate plan modifier?**
 
-A rate plan (`RatePlan`) is the base service a customer is on. A rate plan modifier (`RatePlanModifier`) is a separately published layer — a rider, discount, credit, or adjustment — that modifies a base rate plan rather than standing alone. Each is independently identified, versioned, and sourced: a `RatePlanModifierVersion` links back to its modifier identity via `forRatePlanModifier`, the same way a `RatePlanVersion` links back to its rate plan via `forRatePlan`. See the tutorial's [Rate Plan vs Rate Plan Modifier](urpx-tutorial.md#rate-plan-vs-rate-plan-modifier) section for the full rationale, including why URPX composes plans and modifiers instead of modeling every combination as its own plan.
+A rate plan (`RatePlan`) is the base service a customer is on. A rate plan modifier (`RatePlanModifier`) is a separately published layer (a rider, discount, credit, or adjustment) that modifies a base rate plan rather than standing alone. Each is independently identified, versioned, and sourced: a `RatePlanModifierVersion` links back to its modifier identity via `forRatePlanModifier`, the same way a `RatePlanVersion` links back to its rate plan via `forRatePlan`. See the tutorial's [Rate Plan vs Rate Plan Modifier](urpx-tutorial.md#rate-plan-vs-rate-plan-modifier) section for the full rationale, including why URPX composes plans and modifiers instead of modeling every combination as its own plan.
 
 **Q: Is a rate plan the same as a customer offering?**
 
-No. A rate plan and its available modifiers describe what a utility or supplier publishes. A customer-facing offering — a marketing bundle, comparison listing, or enrollment product — may present a rate plan and a selection of its modifiers together, but assembling that presentation is a concern of consuming applications, not something URPX models. See the tutorial's [Rate Plan Modifiers vs Customer Offerings](urpx-tutorial.md#rate-plan-modifiers-vs-customer-offerings) section for more detail.
+No. A rate plan and its available modifiers describe what a utility or supplier publishes. A customer-facing offering (a marketing bundle, comparison listing, or enrollment product) may present a rate plan and a selection of its modifiers together, but assembling that presentation is a concern of consuming applications, not something URPX models. See the tutorial's [Rate Plan Modifiers vs Customer Offerings](urpx-tutorial.md#rate-plan-modifiers-vs-customer-offerings) section for more detail.
 
 **Q: Can URPX work with my existing systems?**
 
@@ -84,16 +84,16 @@ Throughout URPX documentation and the ontology, the term **"rate plan"** is used
 
 **Why URPX avoids the bare word "rate".** In everyday utility usage, "rate" can mean at least three different things:
 
-1. A **single per-unit value** — "the summer rate is $0.15/kWh"
-2. A **named grouping inside a service classification** — "Rate I", "Rate II"
-3. The **whole plan** — "switch to the EV rate"
+1. A **single per-unit value**: "the summer rate is $0.15/kWh"
+2. A **named grouping inside a service classification**: "Rate I", "Rate II"
+3. The **whole plan**: "switch to the EV rate"
 
 One word carrying three meanings is exactly the kind of ambiguity a data exchange standard exists to remove. So URPX gives each meaning its own unambiguous term: a single value is a **price** (`Price`, `PriceSet`); the complete package is a **rate plan** (`RatePlan`); and the named grouping is a **rate group**:
 
 **Rate Group** (`RateGroup`):
-- The named grouping within a service class that utilities themselves often call a "rate" — for example, *Rate I* within *Service Classification No. 1*
+- The named grouping within a service class that utilities themselves often call a "rate", for example, *Rate I* within *Service Classification No. 1*
 - A subdivision of a service class, not a kind of service class: Rate I is not a type of SC 1, it is a grouping inside it (`parentServiceClass` points from the rate group to its service class)
-- A rate plan links to its grouping via `hasRateGroup`, so when a utility's published material says "SC 1 Rate I", the plan maps directly to that published grouping — without importing the ambiguous word "rate" into any other part of the model
+- A rate plan links to its grouping via `hasRateGroup`, so when a utility's published material says "SC 1 Rate I", the plan maps directly to that published grouping, without importing the ambiguous word "rate" into any other part of the model
 
 Compound terms of art keep their established names: "rate case" (a regulatory proceeding, `RateCase`), "rate-setting", and utilities' own published names such as "Rate I" are used as-is.
 

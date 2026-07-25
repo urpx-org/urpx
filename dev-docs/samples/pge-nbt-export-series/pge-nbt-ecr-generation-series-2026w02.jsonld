@@ -50,7 +50,7 @@
       },
       "urpx:documentedBy": {
         "@id": "pge:sr-ecr-tables",
-        "@type": "urpx:SourceReference",
+        "@type": "urpx:DataSourceReference",
         "urpx:name": "PG&E NBT Export Compensation Rate tables (generation component)",
         "urpx:sourcePublication": {
           "@id": "pge:pub-nbt-export-rates"

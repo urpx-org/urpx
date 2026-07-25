@@ -152,7 +152,7 @@
       },
       "urpx:documentedBy": {
         "@id": "comed:sr-pjm-da",
-        "@type": "urpx:SourceReference",
+        "@type": "urpx:DataSourceReference",
         "urpx:name": "PJM day-ahead LMP feed",
         "urpx:sourcePublication": {
           "@id": "comed:pub-pjm-da-feed"
@@ -615,7 +615,7 @@
           },
           "urpx:documentedBy": {
             "@id": "comed:sr-lmp-resolved",
-            "@type": "urpx:SourceReference",
+            "@type": "urpx:DataSourceReference",
             "urpx:name": "PJM day-ahead LMP feed",
             "urpx:sourcePublication": {
               "@id": "comed:pub-pjm-da-feed"

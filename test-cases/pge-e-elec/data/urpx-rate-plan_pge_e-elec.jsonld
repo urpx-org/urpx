@@ -107,7 +107,7 @@
         "urpx:url": "https://apps.cpuc.ca.gov/c/A2409015"
       },
       "urpx:hasDataSourceReference": {
-        "@type": "urpx:SourceReference",
+        "@type": "urpx:DataSourceReference",
         "urpx:url": "file://./assets/PGE_E-ELEC_2026-01-01.pdf",
         "urpx:fileName": "ELEC_SCHEDS_E-ELEC.pdf",
         "urpx:mediaType": {
@@ -118,13 +118,10 @@
         "urpx:dataSourceType": {
           "@id": "urpx:utilityWebsiteSource"
         },
-        "urpx:hasTariffBookReference": {
-          "@type": "urpx:TariffBookReference",
-          "urpx:pageStart": 1,
-          "urpx:pageEnd": 5,
-          "urpx:leafStart": "60519-E",
-          "urpx:leafEnd": "54740-E"
-        }
+        "urpx:pageStart": 1,
+        "urpx:pageEnd": 5,
+        "urpx:leafStart": "60519-E",
+        "urpx:leafEnd": "54740-E"
       },
       "urpx:hasEligibilityRule": [
         {
