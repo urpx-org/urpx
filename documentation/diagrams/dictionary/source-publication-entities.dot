@@ -22,16 +22,8 @@ digraph "Source & Publication Entities" {
         label="TariffFiling"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
-    SourceReference [
-        label="SourceReference"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
-    ];
-    TariffBookReference [
-        label="TariffBook\nReference"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
-    ];
-    TariffStatementReference [
-        label="TariffStatement\nReference"
+    DataSourceReference [
+        label="DataSource\nReference"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
 
@@ -56,19 +48,13 @@ digraph "Source & Publication Entities" {
     TariffFiling -> PricingModel [
         label="containsPricingModel\n1..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
-    TariffFiling -> SourceReference [
+    TariffFiling -> DataSourceReference [
         label="documentedBy\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     TariffFiling -> GeneralRule [
         label="hasGeneralRule\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
-    SourceReference -> TariffBookReference [
-        label="hasTariffBookReference\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-    SourceReference -> TariffStatementReference [
-        label="hasTariffStatementReference\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-    SourceReference -> SourcePublication [
+    DataSourceReference -> SourcePublication [
         label="sourcePublication\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
 

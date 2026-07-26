@@ -50,6 +50,14 @@ digraph "Temporal & Scheduling Entities" {
         label="DynamicPricing"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
+    TemporalScope [
+        label="TemporalScope"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    TemporalPeriod [
+        label="TemporalPeriod"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
 
     // Cross-section references
     MetricInput [
@@ -95,6 +103,9 @@ digraph "Temporal & Scheduling Entities" {
     ];
     DynamicPricing -> PriceUpdateRule [
         label="hasPriceUpdateRule\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TemporalScope -> TemporalPeriod [
+        label="hasTemporalPeriod\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
 
     subgraph cluster_legend {

@@ -48,17 +48,10 @@ digraph "urpx-rate-plan_pge_e-elec" {
         penwidth=2
     ];
     n__anon_5 [
-        label="{SourceReference|url: file://./assets/PGE_E-ELEC_2026-01-01...\lfileName: ELEC_SCHEDS_E-ELEC.pdf\laccessURL: https://www.pge.com/tariffs/assets/pd...\ldateRetrieved: 2026-01-05\l}"
-        fillcolor="#aaccff"
-        color="#1a5276"
-        fontcolor="#1a365d"
-        penwidth=2
-    ];
-    n__anon_6 [
-        label="{TariffBookReference|pageStart: 1\lpageEnd: 5\lleafStart: 60519-E\lleafEnd: 54740-E\l}"
-        fillcolor="#aaccff"
-        color="#1a5276"
-        fontcolor="#1a365d"
+        label="{DataSourceReference|url: file://./assets/PGE_E-ELEC_2026-01-01...\lfileName: ELEC_SCHEDS_E-ELEC.pdf\laccessURL: https://www.pge.com/tariffs/assets/pd...\ldateRetrieved: 2026-01-05\lpageStart: 1\lpageEnd: 5\lleafStart: 60519-E\lleafEnd: 54740-E\l}"
+        fillcolor="#A8D8CF"
+        color="#86b6ad"
+        fontcolor="#333333"
         penwidth=2
     ];
     n_pge_er_residential_service [
@@ -89,14 +82,14 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_11 [
+    n__anon_10 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_12 [
+    n__anon_11 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -117,14 +110,14 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_15 [
+    n__anon_14 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_16 [
+    n__anon_15 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -138,14 +131,14 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_18 [
+    n__anon_17 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_19 [
+    n__anon_18 [
         label="ObjectOperandNode"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -159,14 +152,14 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_21 [
+    n__anon_20 [
         label="{CustomOperandNode|customConditionProperty: Has Heat Pump\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_22 [
+    n__anon_21 [
         label="{CustomOperandNode|booleanValue: True\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -180,14 +173,14 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_24 [
+    n__anon_23 [
         label="{CustomOperandNode|customConditionProperty: Program Enrollment\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_25 [
+    n__anon_24 [
         label="{CustomOperandNode|stringValue: Net Billing Tariff (NBT)\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -208,7 +201,7 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_28 [
+    n__anon_27 [
         label="PlanElements"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -257,7 +250,7 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_35 [
+    n__anon_34 [
         label="BillingModel"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -607,7 +600,7 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_85 [
+    n__anon_84 [
         label="{CalculationMethod|intervalDuration: P1D\l}"
         fillcolor="#aaccff"
         color="#1a5276"
@@ -621,14 +614,14 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_87 [
+    n__anon_86 [
         label="ApplicabilityRule"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
         penwidth=2
     ];
-    n__anon_88 [
+    n__anon_87 [
         label="Prices"
         fillcolor="#00bd7e"
         color="#009966"
@@ -870,12 +863,6 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_5 -> n__anon_6 [
-        label="hasTariffBookReference"
-        color="#1a5276"
-        fontcolor="#1a5276"
-        penwidth=1.5
-    ];
     n_pge_e_elec_2026_01_01 -> n_pge_er_residential_service [
         label="hasEligibilityRule"
         color="#1a5276"
@@ -900,13 +887,13 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_condition_customer_kind -> n__anon_11 [
+    n_pge_condition_customer_kind -> n__anon_10 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_condition_customer_kind -> n__anon_12 [
+    n_pge_condition_customer_kind -> n__anon_11 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -924,13 +911,13 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_condition_storage -> n__anon_15 [
+    n_pge_condition_storage -> n__anon_14 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_condition_storage -> n__anon_16 [
+    n_pge_condition_storage -> n__anon_15 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -942,13 +929,13 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_condition_EVCharging -> n__anon_18 [
+    n_pge_condition_EVCharging -> n__anon_17 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_condition_EVCharging -> n__anon_19 [
+    n_pge_condition_EVCharging -> n__anon_18 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -960,13 +947,13 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_condition_heatpump -> n__anon_21 [
+    n_pge_condition_heatpump -> n__anon_20 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_condition_heatpump -> n__anon_22 [
+    n_pge_condition_heatpump -> n__anon_21 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -978,13 +965,13 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_condition_NBT -> n__anon_24 [
+    n_pge_condition_NBT -> n__anon_23 [
         label="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_condition_NBT -> n__anon_25 [
+    n_pge_condition_NBT -> n__anon_24 [
         label="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -1002,25 +989,25 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_e_elec_2026_01_01 -> n__anon_28 [
+    n_pge_e_elec_2026_01_01 -> n__anon_27 [
         label="hasPlanElements"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_28 -> n_pge_season_summer [
+    n__anon_27 -> n_pge_season_summer [
         label="hasSeasons"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_28 -> n_pge_season_winter [
+    n__anon_27 -> n_pge_season_winter [
         label="hasSeasons"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_28 -> n_pge_mi_energy [
+    n__anon_27 -> n_pge_mi_energy [
         label="hasMetricInput"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -1032,25 +1019,25 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_28 -> n_pge_mi_meter_count [
+    n__anon_27 -> n_pge_mi_meter_count [
         label="hasMetricInput"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_28 -> n_pge_mi_household_count [
+    n__anon_27 -> n_pge_mi_household_count [
         label="hasMetricInput"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_28 -> n__anon_35 [
+    n__anon_27 -> n__anon_34 [
         label="hasBillingModel"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_tou_e_elec [
+    n__anon_34 -> n_pge_tou_e_elec [
         label="hasTOUSchedule"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -1158,229 +1145,229 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_ledger_energy_supply [
+    n__anon_34 -> n_pge_ledger_energy_supply [
         label="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_ledger_energy_delivery [
+    n__anon_34 -> n_pge_ledger_energy_delivery [
         label="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_ledger_adjustments [
+    n__anon_34 -> n_pge_ledger_adjustments [
         label="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_ledger_service [
+    n__anon_34 -> n_pge_ledger_service [
         label="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_ledger_climate_credit [
+    n__anon_34 -> n_pge_ledger_climate_credit [
         label="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_gen_summer_peak [
+    n__anon_34 -> n_pge_pd_gen_summer_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_gen_summer_part_peak [
+    n__anon_34 -> n_pge_pd_gen_summer_part_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_gen_summer_off_peak [
+    n__anon_34 -> n_pge_pd_gen_summer_off_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_gen_winter_peak [
+    n__anon_34 -> n_pge_pd_gen_winter_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_gen_winter_part_peak [
+    n__anon_34 -> n_pge_pd_gen_winter_part_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_gen_winter_off_peak [
+    n__anon_34 -> n_pge_pd_gen_winter_off_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_pcia [
+    n__anon_34 -> n_pge_pd_pcia [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_dist_summer_peak [
+    n__anon_34 -> n_pge_pd_dist_summer_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_dist_summer_part_peak [
+    n__anon_34 -> n_pge_pd_dist_summer_part_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_dist_summer_off_peak [
+    n__anon_34 -> n_pge_pd_dist_summer_off_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_dist_winter_peak [
+    n__anon_34 -> n_pge_pd_dist_winter_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_dist_winter_part_peak [
+    n__anon_34 -> n_pge_pd_dist_winter_part_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_dist_winter_off_peak [
+    n__anon_34 -> n_pge_pd_dist_winter_off_peak [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_new_sys_gen [
+    n__anon_34 -> n_pge_pd_new_sys_gen [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_transmission [
+    n__anon_34 -> n_pge_pd_transmission [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_transmission_adj [
+    n__anon_34 -> n_pge_pd_transmission_adj [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_reliability [
+    n__anon_34 -> n_pge_pd_reliability [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_public_purpose [
+    n__anon_34 -> n_pge_pd_public_purpose [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_nuclear [
+    n__anon_34 -> n_pge_pd_nuclear [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_ctc [
+    n__anon_34 -> n_pge_pd_ctc [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_energy_cost_recovery [
+    n__anon_34 -> n_pge_pd_energy_cost_recovery [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_wildfire_fund [
+    n__anon_34 -> n_pge_pd_wildfire_fund [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_wildfire_hardening [
+    n__anon_34 -> n_pge_pd_wildfire_hardening [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_recovery_bond [
+    n__anon_34 -> n_pge_pd_recovery_bond [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_recovery_bond_credit [
+    n__anon_34 -> n_pge_pd_recovery_bond_credit [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_base_charge [
+    n__anon_34 -> n_pge_pd_base_charge [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_pd_base_charge -> n__anon_85 [
+    n_pge_pd_base_charge -> n__anon_84 [
         label="hasCalculationMethod"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_35 -> n_pge_pd_climate_credit [
+    n__anon_34 -> n_pge_pd_climate_credit [
         label="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_pd_climate_credit -> n__anon_87 [
+    n_pge_pd_climate_credit -> n__anon_86 [
         label="hasApplicabilityRule"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n_pge_e_elec_2026_01_01 -> n__anon_88 [
+    n_pge_e_elec_2026_01_01 -> n__anon_87 [
         label="hasPrices"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_88 -> n_pge_price_climate_credit [
+    n__anon_87 -> n_pge_price_climate_credit [
         label="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_88 -> n_pge_price_base_charge [
+    n__anon_87 -> n_pge_price_base_charge [
         label="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_88 -> n_pge_ps_generation_charges [
+    n__anon_87 -> n_pge_ps_generation_charges [
         label="hasPriceSet"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -1428,7 +1415,7 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_88 -> n_pge_ps_distribution_charges [
+    n__anon_87 -> n_pge_ps_distribution_charges [
         label="hasPriceSet"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -1494,7 +1481,7 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
-    n__anon_88 -> n_pge_ps_adjustment_charges [
+    n__anon_87 -> n_pge_ps_adjustment_charges [
         label="hasPriceSet"
         color="#1a5276"
         fontcolor="#1a5276"
@@ -1563,32 +1550,31 @@ digraph "urpx-rate-plan_pge_e-elec" {
         leg_2 [label="RatePlanVersion", shape=box, fillcolor="#1c5a8f", color="#0e3a5f", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
         leg_3 [label="UtilityOperator", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
         leg_4 [label="RateCase", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_5 [label="SourceReference", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_6 [label="TariffBookReference", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_7 [label="EligibilityRule", shape=box, fillcolor="#AA3377", color="#882255", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_8 [label="ConditionExpression", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_9 [label="BooleanOperationNode", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_10 [label="ComparisonNode", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_11 [label="ObjectOperandNode", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_12 [label="CustomOperandNode", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_13 [label="CoverageClaim", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_14 [label="Evaluation", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_15 [label="PlanElements", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_16 [label="Season", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_17 [label="MetricInput", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_18 [label="MetricSpecification", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_19 [label="BillingModel", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_20 [label="TOUSchedule", shape=box, fillcolor="#77AADD", color="#5588bb", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_21 [label="TOUTier", shape=box, fillcolor="#6699CC", color="#4477aa", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_22 [label="TOUPeriod", shape=box, fillcolor="#EEDD88", color="#ccbb66", fontcolor="#333333", fontsize=9, penwidth=1.5];
-        leg_23 [label="TimeBracket", shape=box, fillcolor="#EE8866", color="#cc6644", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_24 [label="Ledger", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_25 [label="PriceDefinition", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_26 [label="CalculationMethod", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_27 [label="ApplicabilityRule", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_28 [label="Prices", shape=box, fillcolor="#00bd7e", color="#009966", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_29 [label="Price", shape=box, fillcolor="#44BB99", color="#339977", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_30 [label="PriceSet", shape=box, fillcolor="#00ADEF", color="#0088cc", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_0 -> leg_1 -> leg_2 -> leg_3 -> leg_4 -> leg_5 -> leg_6 -> leg_7 -> leg_8 -> leg_9 -> leg_10 -> leg_11 -> leg_12 -> leg_13 -> leg_14 -> leg_15 -> leg_16 -> leg_17 -> leg_18 -> leg_19 -> leg_20 -> leg_21 -> leg_22 -> leg_23 -> leg_24 -> leg_25 -> leg_26 -> leg_27 -> leg_28 -> leg_29 -> leg_30 [style=invis];
+        leg_5 [label="DataSourceReference", shape=box, fillcolor="#A8D8CF", color="#86b6ad", fontcolor="#333333", fontsize=9, penwidth=1.5];
+        leg_6 [label="EligibilityRule", shape=box, fillcolor="#AA3377", color="#882255", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_7 [label="ConditionExpression", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_8 [label="BooleanOperationNode", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_9 [label="ComparisonNode", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_10 [label="ObjectOperandNode", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_11 [label="CustomOperandNode", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_12 [label="CoverageClaim", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_13 [label="Evaluation", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_14 [label="PlanElements", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_15 [label="Season", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_16 [label="MetricInput", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_17 [label="MetricSpecification", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_18 [label="BillingModel", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_19 [label="TOUSchedule", shape=box, fillcolor="#77AADD", color="#5588bb", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_20 [label="TOUTier", shape=box, fillcolor="#6699CC", color="#4477aa", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_21 [label="TOUPeriod", shape=box, fillcolor="#EEDD88", color="#ccbb66", fontcolor="#333333", fontsize=9, penwidth=1.5];
+        leg_22 [label="TimeBracket", shape=box, fillcolor="#EE8866", color="#cc6644", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_23 [label="Ledger", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_24 [label="PriceDefinition", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_25 [label="CalculationMethod", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_26 [label="ApplicabilityRule", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_27 [label="Prices", shape=box, fillcolor="#00bd7e", color="#009966", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_28 [label="Price", shape=box, fillcolor="#44BB99", color="#339977", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_29 [label="PriceSet", shape=box, fillcolor="#00ADEF", color="#0088cc", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_0 -> leg_1 -> leg_2 -> leg_3 -> leg_4 -> leg_5 -> leg_6 -> leg_7 -> leg_8 -> leg_9 -> leg_10 -> leg_11 -> leg_12 -> leg_13 -> leg_14 -> leg_15 -> leg_16 -> leg_17 -> leg_18 -> leg_19 -> leg_20 -> leg_21 -> leg_22 -> leg_23 -> leg_24 -> leg_25 -> leg_26 -> leg_27 -> leg_28 -> leg_29 [style=invis];
     }
 }

@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0.0",
   "generator": "urpx-website-staging/scripts/codegen/generate-all.py",
-  "generatedAt": "2026-07-13T06:59:08Z",
+  "generatedAt": "2026-07-26T02:06:21Z",
   "examples": [
     {
       "id": "coned-sc1-rate-i",
-      "instanceJsonld": "coned-sc1-rate-i/data/coned-sc1-rate-i-v20260201-resolved.jsonld",
+      "instanceJsonld": "coned-sc1-rate-i/data/coned-sc1-rate-i-v20260201-supply-referenced.jsonld",
       "diagramSvg": "coned-sc1-rate-i/assets/diagram.svg",
       "tariffBookPdf": null
     },

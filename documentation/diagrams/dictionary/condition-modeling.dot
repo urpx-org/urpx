@@ -36,17 +36,27 @@ digraph "Condition Modeling" {
     ];
 
     // Cross-section references
-    SourceReference [
-        label="SourceReference"
+    DataSourceReference [
+        label="DataSource\nReference"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    PricingModel [
+        label="PricingModel"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
     ];
 
     // Object property edges
+    EligibilityRule -> PricingModel [
+        label="contributedBy\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
     EligibilityRule -> ConditionExpression [
         label="hasConditionExpression\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
-    EligibilityRule -> SourceReference [
+    EligibilityRule -> DataSourceReference [
         label="hasDataSourceReference\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ApplicabilityRule -> PricingModel [
+        label="contributedBy\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     ApplicabilityRule -> ConditionExpression [
         label="hasConditionExpression\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
@@ -54,10 +64,13 @@ digraph "Condition Modeling" {
     ApplicabilityGroup -> ConditionExpression [
         label="hasConditionExpression\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
+    GeneralRule -> PricingModel [
+        label="contributedBy\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
     GeneralRule -> ApplicabilityRule [
         label="hasApplicabilityRule\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
-    GeneralRule -> SourceReference [
+    GeneralRule -> DataSourceReference [
         label="hasDataSourceReference\n1..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
 

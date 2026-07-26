@@ -67,6 +67,9 @@ digraph "Pricing & Alternatives Entities" {
     Prices -> PriceSetAlternatives [
         label="hasPriceSetAlternatives\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=8
     ];
+    PriceSet -> PricingModel [
+        label="contributedBy\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
     PriceSet -> Price [
         label="hasPrice\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=8
     ];
@@ -85,8 +88,14 @@ digraph "Pricing & Alternatives Entities" {
     PriceSetAlternatives -> PriceSetAlternative [
         label="hasPriceSetAlternative\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
+    Price -> PricingModel [
+        label="contributedBy\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
     Price -> PriceDefinition [
         label="referencesPriceDefinition\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PriceDefinition -> PricingModel [
+        label="contributedBy\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     PriceDefinitionReference -> PriceDefinition [
         label="referencesPriceDefinition\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
