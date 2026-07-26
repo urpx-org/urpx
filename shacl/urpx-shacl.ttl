@@ -194,10 +194,21 @@ urpx-shacl:ApplicabilityRuleShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:sunsetOnDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:description ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:contributedBy ;
+        sh:class urpx:PricingModel ;
+        sh:minCount 0 ;
     ] .
 
 urpx-shacl:BillingCycleShape
@@ -1221,6 +1232,17 @@ urpx-shacl:EligibilityRuleShape
         sh:datatype xsd:date ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:sunsetOnDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:contributedBy ;
+        sh:class urpx:PricingModel ;
+        sh:minCount 0 ;
     ] .
 
 urpx-shacl:EnergyServiceProviderShape
@@ -1343,6 +1365,11 @@ urpx-shacl:GeneralRuleShape
         sh:path urpx:hasApplicabilityRule ;
         sh:class urpx:ApplicabilityRule ;
         sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:contributedBy ;
+        sh:class urpx:PricingModel ;
+        sh:minCount 0 ;
     ] .
 
 urpx-shacl:HolidayCalendarShape
@@ -1458,6 +1485,17 @@ urpx-shacl:LedgerShape
         sh:datatype xsd:date ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:sunsetOnDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:contributedBy ;
+        sh:class urpx:PricingModel ;
+        sh:minCount 0 ;
     ] .
 
 urpx-shacl:LocationDataSetShape
@@ -2168,6 +2206,17 @@ urpx-shacl:PriceDefinitionShape
         sh:datatype xsd:date ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:sunsetOnDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:contributedBy ;
+        sh:class urpx:PricingModel ;
+        sh:minCount 0 ;
     ] .
 
 urpx-shacl:PriceSetAlternativeShape
@@ -2648,6 +2697,17 @@ urpx-shacl:PriceSetShape
         sh:datatype xsd:date ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:sunsetOnDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:contributedBy ;
+        sh:class urpx:PricingModel ;
+        sh:minCount 0 ;
     ] .
 
 urpx-shacl:PriceShape
@@ -2931,6 +2991,17 @@ urpx-shacl:PriceShape
         sh:datatype xsd:date ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:sunsetOnDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:contributedBy ;
+        sh:class urpx:PricingModel ;
+        sh:minCount 0 ;
     ] .
 
 urpx-shacl:PricesShape
@@ -3084,6 +3155,12 @@ urpx-shacl:PricingModelShape
     sh:property [
         sh:path urpx:cancelledOn ;
         sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:cancelledOnDateTime ;
+        sh:datatype xsd:dateTime ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
@@ -3775,6 +3852,11 @@ urpx-shacl:RatePlanModifierVersionShape
         sh:datatype xsd:boolean ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:consolidatedFrom ;
+        sh:class urpx:PricingModel ;
+        sh:minCount 0 ;
     ] .
 
 urpx-shacl:RatePlanShape
@@ -4195,6 +4277,11 @@ urpx-shacl:RatePlanVersionShape
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:description "Materialization timestamp with dateTime precision: when this derived snapshot was generated. Not an authored lifecycle date."@en ;
+    ] ;
+    sh:property [
+        sh:path urpx:consolidatedFrom ;
+        sh:class urpx:PricingModel ;
+        sh:minCount 0 ;
     ] .
 
 urpx-shacl:RegulatoryAuthorityShape
@@ -5174,6 +5261,12 @@ urpx-shacl:TariffFilingShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:cancelledOnDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:cancelsPriceDefinition ;
         sh:class urpx:PriceDefinition ;
         sh:minCount 0 ;
@@ -5294,6 +5387,24 @@ urpx-shacl:TemporalScopeShape
     sh:property [
         sh:path urpx:endDate ;
         sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasTemporalPeriod ;
+        sh:class urpx:TemporalPeriod ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:startDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:endDateTime ;
+        sh:datatype xsd:dateTime ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] .

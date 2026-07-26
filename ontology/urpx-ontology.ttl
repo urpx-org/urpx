@@ -1137,6 +1137,13 @@ urpx:cancelledOn a owl:DatatypeProperty ;
             owl:unionOf ( urpx:PricingModel urpx:TariffFiling ) ] ;
     rdfs:range xsd:date .
 
+urpx:cancelledOnDateTime a owl:DatatypeProperty ;
+    rdfs:label "Cancelled On Date Time"@en ;
+    rdfs:comment "Date and time at which a tariff filing or standalone pricing model was cancelled or voided — when its content left the active set. Precise variant of urpx:cancelledOn." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:PricingModel urpx:TariffFiling ) ] ;
+    rdfs:range xsd:dateTime .
+
 urpx:cancelsPriceDefinition a owl:ObjectProperty ;
     rdfs:label "Cancels Price Definition"@en ;
     rdfs:comment "Asserts that this tariff filing cancels the referenced price definition." ;
@@ -1239,6 +1246,14 @@ urpx:connectorType a owl:ObjectProperty ;
     rdfs:range urpx:ConnectorTypeValue ;
     skos:note "Connector types: Level 1, Level 2, DC Fast, Tesla Supercharger, CHAdeMO, CCS. Affects charging capabilities." .
 
+urpx:consolidatedFrom a owl:ObjectProperty ;
+    rdfs:label "Consolidated From"@en ;
+    rdfs:comment "Links a derived rate plan version snapshot to a pricing model whose content was consolidated into it." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
+    rdfs:range urpx:PricingModel ;
+    skos:note "The complete set of contributing models for the snapshot. Supports source-document indexing and a completeness cross-check: every element-level urpx:contributedBy target should appear here, and every model listed here should contribute at least one element or have its exclusion explained in the claim's Evaluation. Element-level lineage lives on the elements via urpx:contributedBy." .
+
 urpx:consumesVersion a owl:ObjectProperty ;
     rdfs:label "Consumes Version"@en ;
     rdfs:comment "The RatePlanVersion a ScenarioCostModel consumes for a prospect quote (future-window cost computation)." ;
@@ -1265,6 +1280,14 @@ urpx:contractExpirationDate a owl:DatatypeProperty ;
     rdfs:domain urpx:AccountServiceAgreement ;
     rdfs:range xsd:dateTime ;
     skos:note "ISO 8601 dateTime format required. Timezone may be inherited from document or organization level. Tracks contract validity period for rate plan eligibility." .
+
+urpx:contributedBy a owl:ObjectProperty ;
+    rdfs:label "Contributed By"@en ;
+    rdfs:comment "Links an element of a consolidated rate plan version snapshot to the pricing model via which it entered the snapshot. Asserted at the most parent-level element the model contributed wholly." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:PriceDefinition urpx:Price urpx:PriceSet urpx:Ledger urpx:EligibilityRule urpx:ApplicabilityRule urpx:GeneralRule ) ] ;
+    rdfs:range urpx:PricingModel ;
+    skos:note "Element-level consolidation lineage. From the pricing model, provenance continues along the publication chain: urpx:withinPublication to the tariff filing, its source publication, and urpx:pursuantTo to the rate case. Asserted on the snapshot's consolidated content, not on authored pricing model content. Complements urpx:consolidatedFrom on the version, which lists every contributing model." .
 
 urpx:creditRating a owl:DatatypeProperty ;
     rdfs:label "Credit Rating"@en ;
@@ -1533,7 +1556,7 @@ urpx:endDateTime a owl:DatatypeProperty ;
     rdfs:label "End Date Time"@en ;
     rdfs:comment "End date and time for validity period (with time component). Omit for indefinite validity." ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season ) ] ;
+            owl:unionOf ( urpx:Price urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season urpx:TemporalScope ) ] ;
     rdfs:range xsd:dateTime ;
     skos:note "When endDateTime is not present, the validity period is considered open-ended until superseded or explicitly terminated." .
 
@@ -2202,6 +2225,13 @@ urpx:hasTariffPublication a owl:ObjectProperty ;
     rdfs:domain urpx:URPXPackage ;
     rdfs:range urpx:SourcePublication ;
     skos:note "Links to official tariff documents, PDFs, or regulatory filings." .
+
+urpx:hasTemporalPeriod a owl:ObjectProperty ;
+    rdfs:label "Has Temporal Period"@en ;
+    rdfs:comment "Links a temporal scope to the reusable named time interval its span denotes." ;
+    rdfs:domain urpx:TemporalScope ;
+    rdfs:range urpx:TemporalPeriod ;
+    skos:note "Use when the span is a shared named interval (for example a quarter or a season year). Inline startDate/endDate (or the dateTime pair) and a referenced period may coexist; when both are present they must denote the same span." .
 
 urpx:hasTemporalScope a owl:ObjectProperty ;
     rdfs:label "Has Temporal Scope"@en ;
@@ -3171,7 +3201,7 @@ urpx:startDateTime a owl:DatatypeProperty ;
     rdfs:label "Start Date"@en ;
     rdfs:comment "The start date and time of the item (in ISO 8601 date format)" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:Price urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season ) ] ;
+            owl:unionOf ( urpx:Price urpx:PriceSet urpx:TOUPeriod urpx:BillingCycle urpx:Season urpx:TemporalScope ) ] ;
     rdfs:range xsd:dateTime ;
     skos:note "Represents when prices and pricing structures begin applying to customers." .
 
@@ -3211,6 +3241,13 @@ urpx:sunsetOn a owl:DatatypeProperty ;
             owl:unionOf ( urpx:PriceDefinition urpx:Price urpx:PriceSet urpx:Ledger urpx:EligibilityRule urpx:ApplicabilityRule ) ] ;
     rdfs:range xsd:date ;
     skos:note "After urpx:sunsetOn, the resource's absence is expected and is not missing data. Without this marker, an ended resource with no successor is ambiguous and should be read as a gap. Use urpx:sunsetOn when a component is retired while its plan remains otherwise in force." .
+
+urpx:sunsetOnDateTime a owl:DatatypeProperty ;
+    rdfs:label "Sunset On Date Time"@en ;
+    rdfs:comment "Date and time at which a plan sub-resource is intentionally discontinued with no expected successor. Precise variant of urpx:sunsetOn." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:PriceDefinition urpx:Price urpx:PriceSet urpx:Ledger urpx:EligibilityRule urpx:ApplicabilityRule ) ] ;
+    rdfs:range xsd:dateTime .
 
 urpx:supersedes a owl:ObjectProperty ;
     rdfs:label "Supersedes"@en ;

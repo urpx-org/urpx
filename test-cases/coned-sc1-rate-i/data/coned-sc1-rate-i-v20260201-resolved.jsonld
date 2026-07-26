@@ -30,6 +30,44 @@
         "urpx:organizationType": { "@id": "urpx:utilityOrganization" }
       },
       "urpx:serviceRole": { "@id": "urpx:distributionServiceRole" },
+      "urpx:consolidatedFrom": [
+        {
+          "@id": "coned:pm-sc1-delivery-2026-02-01",
+          "@type": "urpx:PricingModel",
+          "urpx:confidence": { "@id": "urpx:verified" },
+          "urpx:documentedBy": { "@id": "coned:sr-psc10-sc1-leaf388-2026-02-01" }
+        },
+        {
+          "@id": "coned:pm-gr26-mac-2026-02-01",
+          "@type": "urpx:PricingModel",
+          "urpx:confidence": { "@id": "urpx:verified" },
+          "urpx:documentedBy": { "@id": "coned:sr-gr26-mac-202602" }
+        },
+        {
+          "@id": "coned:pm-gr26-mac-2026-03-01",
+          "@type": "urpx:PricingModel",
+          "urpx:confidence": { "@id": "urpx:verified" },
+          "urpx:documentedBy": { "@id": "coned:sr-gr26-mac-202603" }
+        },
+        {
+          "@id": "coned:pm-gr26-mac-2026-04-01",
+          "@type": "urpx:PricingModel",
+          "urpx:confidence": { "@id": "urpx:verified" },
+          "urpx:documentedBy": { "@id": "coned:sr-gr26-mac-202604" }
+        },
+        {
+          "@id": "coned:pm-gr26-mac-2026-05-01",
+          "@type": "urpx:PricingModel",
+          "urpx:confidence": { "@id": "urpx:verified" },
+          "urpx:documentedBy": { "@id": "coned:sr-gr26-mac-202605" }
+        },
+        {
+          "@id": "coned:pm-msc-rate1-trip1-zj-lt",
+          "@type": "urpx:PricingModel",
+          "urpx:confidence": { "@id": "urpx:verified" },
+          "urpx:documentedBy": { "@id": "coned:sr-lds-appnd-csv" }
+        }
+      ],
       "urpx:forRatePlan": {
         "@id": "coned:coned-sc1-rate-i",
         "@type": "urpx:RatePlan",
@@ -113,6 +151,7 @@
             {
               "@id": "coned:pd-customer-charge",
               "@type": "urpx:PriceDefinition",
+              "urpx:contributedBy": { "@id": "coned:pm-sc1-delivery-2026-02-01" },
               "urpx:name": "Customer Charge",
               "urpx:chargeType": { "@id": "urpx:deliveryCharge" },
               "urpx:chargeCategory": { "@id": "urpx:infrastructure" },
@@ -123,6 +162,7 @@
             {
               "@id": "coned:pd-energy-first-250",
               "@type": "urpx:PriceDefinition",
+              "urpx:contributedBy": { "@id": "coned:pm-sc1-delivery-2026-02-01" },
               "urpx:name": "Energy Delivery — First 250 kWh",
               "urpx:chargeType": { "@id": "urpx:deliveryCharge" },
               "urpx:chargeCategory": { "@id": "urpx:infrastructure" },
@@ -133,6 +173,7 @@
             {
               "@id": "coned:pd-energy-over-250",
               "@type": "urpx:PriceDefinition",
+              "urpx:contributedBy": { "@id": "coned:pm-sc1-delivery-2026-02-01" },
               "urpx:name": "Energy Delivery — Over 250 kWh (Summer)",
               "urpx:chargeType": { "@id": "urpx:deliveryCharge" },
               "urpx:chargeCategory": { "@id": "urpx:infrastructure" },
@@ -143,6 +184,7 @@
             {
               "@id": "coned:pd-mac-energy-charge",
               "@type": "urpx:PriceDefinition",
+              "urpx:contributedBy": { "@id": "coned:pm-gr26-mac-2026-02-01" },
               "urpx:name": "MAC Energy Charge",
               "urpx:chargeType": { "@id": "urpx:deliveryCharge" },
               "urpx:chargeCategory": { "@id": "urpx:infrastructure" },
@@ -207,6 +249,7 @@
             {
               "@id": "coned:pd-msc-energy",
               "@type": "urpx:PriceDefinition",
+              "urpx:contributedBy": { "@id": "coned:pm-msc-rate1-trip1-zj-lt" },
               "urpx:name": "MSC Energy Charge — All Hours",
               "urpx:chargeType": { "@id": "urpx:usageCharge" },
               "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
@@ -307,6 +350,7 @@
               {
                 "@id": "coned:p-v20260201-mac-202602",
                 "@type": "urpx:Price",
+                "urpx:contributedBy": { "@id": "coned:pm-gr26-mac-2026-02-01" },
                 "urpx:amount": "0.00420",
                 "urpx:startDate": "2026-02-01",
                 "urpx:endDate": "2026-03-01",
@@ -328,6 +372,7 @@
               {
                 "@id": "coned:p-v20260201-mac-202603",
                 "@type": "urpx:Price",
+                "urpx:contributedBy": { "@id": "coned:pm-gr26-mac-2026-03-01" },
                 "urpx:amount": "0.00813",
                 "urpx:startDate": "2026-03-01",
                 "urpx:endDate": "2026-04-01",
@@ -349,6 +394,7 @@
               {
                 "@id": "coned:p-v20260201-mac-202604",
                 "@type": "urpx:Price",
+                "urpx:contributedBy": { "@id": "coned:pm-gr26-mac-2026-04-01" },
                 "urpx:amount": "0.01104",
                 "urpx:startDate": "2026-04-01",
                 "urpx:endDate": "2026-05-01",
@@ -370,6 +416,7 @@
               {
                 "@id": "coned:p-v20260201-mac-202605",
                 "@type": "urpx:Price",
+                "urpx:contributedBy": { "@id": "coned:pm-gr26-mac-2026-05-01" },
                 "urpx:amount": "0.00459",
                 "urpx:startDate": "2026-05-01",
                 "urpx:hasDataSourceReference": {

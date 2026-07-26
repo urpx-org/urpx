@@ -29,6 +29,7 @@ this page begins at Decision #121, at the start of the next block after the
 - Decision #126: Correction and Withdrawal Parity for Standalone Pricing Models
 - Decision #127: Identity, Timezone, and Location Metadata on Resolved Version Snapshots
 - Decision #128: Collapse Nested Tariff Reference Classes into DataSourceReference
+- Proposed (unnumbered): Element-Level Consolidation Lineage and Temporal Completeness
 
 ---
 
@@ -368,3 +369,49 @@ Remove `TariffBookReference` and `TariffStatementReference` and their linking pr
 - Supersedes: Decision #089 (`urpx-design-decisions-081-120.md`), which minted the two nested classes.
 - Ontology (`ontology/urpx-ontology.ttl`): `urpx:DataSourceReference`; the removed `urpx:TariffBookReference`, `urpx:TariffStatementReference`, `urpx:hasTariffBookReference`, `urpx:hasTariffStatementReference`; the widened `urpx:leafStart`, `urpx:leafEnd`, and `urpx:tariffStatementType` domains.
 - SHACL (`shacl/urpx-shacl.ttl`): `DataSourceReferenceShape` gains the flattened paths and stays closed; `TariffBookReferenceShape` and `TariffStatementReferenceShape` removed.
+
+---
+
+## Proposed Decisions (unnumbered)
+
+Entries below are proposed and carry no decision number. A number mints only at ratification.
+
+<a id="proposed-consolidation-lineage-temporal-completeness"></a>
+### Proposed decision (unnumbered): Element-Level Consolidation Lineage and Temporal Completeness
+
+- **Status:** Proposed (unnumbered; number mints at ratification)
+- **Date:** 2026-07-25
+- **Issue:** A resolved rate plan version snapshot could not record which pricing model contributed each of its elements; a `TemporalScope` could not reference the named time interval its documentation described, nor express an intraday boundary; and the `cancelledOn` and `sunsetOn` lifecycle dates had no dateTime-precise twin.
+- **Category:** Provenance, Temporal, Validation
+
+**Context:**
+A `RatePlanVersion` or `RatePlanModifierVersion` is a consolidated snapshot derived from one or more applicable pricing models, but no property recorded that derivation at the element level. `documentedBy` cites a source document and `resolvedFrom` points a reference at a `ModelCollection` thread; neither answers the question a consumer holding a resolved snapshot needs answered: which pricing model supplied this price definition, and through which filing and rate case did it arrive. Separately, the `TemporalScope` annotation said a scope may reference a `TemporalPeriod`, but no property carried that domain and range, and the scope admitted only date-granular boundaries, so it could not express an intraday publication or observation window. Finally, most event properties carry a dateTime twin (for example `effectiveDate` and `effectiveDateTime`), but `cancelledOn` and `sunsetOn` did not, so an intraday cancellation or retirement could not be stated precisely. Every shape involved is closed, so none of these could be layered on after the initial public tag.
+
+**Decision:**
+Add two object properties for consolidation lineage: `contributedBy`, from a snapshot element (a price definition, price, price set, ledger, eligibility rule, applicability rule, or general rule) to the pricing model via which it entered the snapshot, asserted at the most parent-level element the model contributed wholly; and `consolidatedFrom`, from the version snapshot to each contributing pricing model. Both range on `PricingModel`. Add `hasTemporalPeriod` to link a `TemporalScope` to the named interval its span denotes, and widen `startDateTime` and `endDateTime` onto `TemporalScope`. Add `cancelledOnDateTime` and `sunsetOnDateTime` as dateTime-precise twins of the two lifecycle dates. All additions are optional in the shapes, and all touched shapes stay closed.
+
+**Options Considered:**
+
+1. **Two lineage properties: element-level `contributedBy` plus version-level `consolidatedFrom` (Selected).** The element property answers the per-element source question; the version property gives a cheap source-document index and a completeness cross-check (every element-level `contributedBy` target should appear in `consolidatedFrom`, and every model in `consolidatedFrom` should contribute at least one element or have its exclusion explained in the claim's Evaluation).
+   - Pro: Answers both the per-element lineage question and the version-level indexing and cross-check needs.
+   - Pro: Keeps the snapshot flat and queryable; per-link document metadata already lives on `DataSourceReference`.
+2. **Version-level link only.** Rejected. Loses per-element lineage, which is exactly the consumer story (show the source tariff document and rate case for this element).
+3. **Element-level link only.** Rejected. Loses the version-level source index and the completeness cross-check.
+4. **A reified lineage node (a class carrying element, model, and role).** Rejected as heavier; per-link metadata is already carried at the document layer, and the two-property design keeps snapshots flat.
+5. **Import PROV.** Rejected. The standard aligns with PROV by reference only; `Evaluation` is deliberately not a `prov:Activity`.
+
+**Rationale:**
+- Element-level lineage answers the audit, regulator-review, and source-display question directly, and from the model the existing publication chain (`withinPublication` to the tariff filing, `pursuantTo` to the rate case) completes the walk.
+- The temporal additions reuse existing terms where possible: `startDateTime` and `endDateTime` widen onto `TemporalScope` (reuse by widening) rather than minting scope-specific boundary properties, and the two lifecycle twins follow the established `effectiveDate` to `effectiveDateTime` append precedent.
+- `hasTemporalPeriod` closes a documented-but-unwired relationship rather than adding new semantics.
+
+**Consequences / Impact:**
+- **Positive:** A resolved snapshot can carry its own consolidation lineage and intraday temporal detail, readable without dereferencing the source models.
+- **Breaking Change:** No. Every addition is optional and every existing fixture stays valid.
+- **Requirements:** Producing implementations SHOULD assert both lineage properties on consolidated snapshots. Whether a future version makes `consolidatedFrom` mandatory on new snapshots is left open.
+
+**References:**
+- Changelog: `urpx-changelog.md`, 2026-07-25 entry ("pre-tag consolidation lineage and temporal completeness").
+- Ontology (`ontology/urpx-ontology.ttl`): `urpx:contributedBy`, `urpx:consolidatedFrom`, `urpx:hasTemporalPeriod`, `urpx:cancelledOnDateTime`, `urpx:sunsetOnDateTime`; the widened `urpx:startDateTime` and `urpx:endDateTime` domains.
+- SHACL (`shacl/urpx-shacl.ttl`): the `contributedBy`, `consolidatedFrom`, `hasTemporalPeriod`, `startDateTime`, `endDateTime`, `cancelledOnDateTime`, and `sunsetOnDateTime` paths; all touched shapes stay closed.
+- Test cases: the Consolidated Edison SC1 Rate I resolved snapshot (consolidation lineage) and its supply snapshot variant (a `retrievedElsewhere` `PriceDefinitionReference` resolved against a `ModelCollection` thread, not self-contained and fallback-sourced).

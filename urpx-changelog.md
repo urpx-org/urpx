@@ -8,6 +8,29 @@
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
 
+2026-07-25 — v0.3.0 (pre-tag consolidation lineage and temporal completeness)
+---
+
+Vocabulary additions applied before the initial public tag, folded into the unreleased 0.3.0. Every shape touched is closed, so these could not be layered on after the tag.
+
+### Added
+- Element-level consolidation lineage. `contributedBy` links an element of a consolidated rate plan version snapshot (a price definition, price, price set, ledger, eligibility rule, applicability rule, or general rule) to the pricing model via which it entered the snapshot, asserted at the most parent-level element the model contributed wholly. `consolidatedFrom` links the version snapshot to each contributing pricing model. Both are object properties ranged on `PricingModel`. A consumer holding a resolved snapshot can now record which pricing model supplied each element and, from the model, follow the publication chain to the tariff filing and rate case.
+- `hasTemporalPeriod`: an object property linking a `TemporalScope` to the reusable named time interval (`TemporalPeriod`) its span denotes, wiring a relationship the scope's documentation described but no property expressed.
+- `cancelledOnDateTime` and `sunsetOnDateTime`: dateTime-precise twins of the `cancelledOn` and `sunsetOn` lifecycle dates, for intraday cancellation of a tariff filing or standalone pricing model and intraday retirement of a plan sub-resource, matching the dateTime twin every other event property already carries.
+
+### Changed
+- Widened the domains of `startDateTime` and `endDateTime` to include `TemporalScope` (added alongside the existing `Price`, `PriceSet`, `TOUPeriod`, `BillingCycle`, `Season`), so a scope can express an intraday boundary for dynamic-feed publication and observation windows.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- Added a `contributedBy` path (`sh:class urpx:PricingModel`, optional) to `PriceDefinitionShape`, `PriceShape`, `PriceSetShape`, `LedgerShape`, `EligibilityRuleShape`, `ApplicabilityRuleShape`, and `GeneralRuleShape`.
+- Added a `consolidatedFrom` path (`sh:class urpx:PricingModel`, optional) to `RatePlanVersionShape` and `RatePlanModifierVersionShape`.
+- Added `hasTemporalPeriod`, `startDateTime`, and `endDateTime` paths (all optional) to `TemporalScopeShape`.
+- Added a `cancelledOnDateTime` path (optional) beside `cancelledOn` in `PricingModelShape` and `TariffFilingShape`, and a `sunsetOnDateTime` path (optional) beside `sunsetOn` in `PriceDefinitionShape`, `PriceShape`, `PriceSetShape`, `LedgerShape`, `EligibilityRuleShape`, and `ApplicabilityRuleShape`. All touched shapes stay closed.
+
+### Test cases
+- Extended the Consolidated Edison SC1 Rate I resolved snapshot with consolidation lineage: `consolidatedFrom` listing its contributing delivery, monthly adjustment, and market supply models, and `contributedBy` on each top-level contributed element.
+- Added a Consolidated Edison SC1 Rate I supply snapshot variant that exercises a `retrievedElsewhere` `PriceDefinitionReference` resolved against a `ModelCollection` thread, with a coverage claim that is not self-contained and is fallback-sourced.
+
 2026-07-25 — v0.3.0 (pre-tag model corrections)
 ---
 
