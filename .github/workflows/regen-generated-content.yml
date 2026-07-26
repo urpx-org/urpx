@@ -160,7 +160,7 @@ jobs:
         with:
           name: dictionary-config-pending
           path: urpx-website-staging/scripts/codegen/config/dictionary-config-pending.yaml
-          no-files-found: ignore
+          if-no-files-found: ignore
 
       - name: Capture generated diff
         id: diff
