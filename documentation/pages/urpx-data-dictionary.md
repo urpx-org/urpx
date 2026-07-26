@@ -80,6 +80,7 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 - [EndUseValue](#endusevalue)
 - [EnrollmentStatusValue](#enrollmentstatusvalue)
 - [EntityTypeValue](#entitytypevalue)
+- [ExclusionReasonValue](#exclusionreasonvalue)
 - [FlowDirectionValue](#flowdirectionvalue)
 - [GeographicScopeValue](#geographicscopevalue)
 - [GeographicZoneValue](#geographiczonevalue)
@@ -108,12 +109,12 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 - [PremiseTypeValue](#premisetypevalue)
 - [PriceSourceValue](#pricesourcevalue)
 - [ProgramTypeValue](#programtypevalue)
-- [PublicationTypeValue](#publicationtypevalue)
 - [ReferenceInclusionValue](#referenceinclusionvalue)
 - [RegulatoryScopeValue](#regulatoryscopevalue)
 - [ScopeKindValue](#scopekindvalue)
 - [SeasonalPatternValue](#seasonalpatternvalue)
 - [ServiceRoleValue](#servicerolevalue)
+- [SourcePublicationTypeValue](#sourcepublicationtypevalue)
 - [SpecialNeedsStatusValue](#specialneedsstatusvalue)
 - [TOUTierStandardNameValue](#toutierstandardnamevalue)
 - [TariffStatementTypeValue](#tariffstatementtypevalue)
@@ -443,7 +444,9 @@ Modifier versions track changes to rider rates and conditions over time.
 | `urpx:cancelledOn` | Datatype | 0..1 | `xsd:date` | Date on which a tariff filing or standalone pricing model was cancelled or voided — when its content left the active set. |
 | `urpx:cancelledOnDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date and time at which a tariff filing or standalone pricing model was cancelled or voided — when its content left the active set. Precise variant of urpx:cancelledOn. |
 | `urpx:confidence` | Datatype | 1..1 | — | The epistemic confidence of the subject's pricing content. |
-| `urpx:documentedBy` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an authored PricingModel (or a resolved reference) to a DataSourceReference identifying the source evidence it models, interprets, or was derived from. |
+| `urpx:dateModified` | Datatype | 0..1 | `xsd:date` | Date the source document, publication unit, or data was last updated |
+| `urpx:dateTimeModified` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document, publication unit, or data was last updated |
+| `urpx:documentedBy` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an authored PricingModel, a TariffFiling, or a resolved reference to a DataSourceReference identifying the source evidence it models, interprets, or was derived from. |
 | `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Validity-window start for a pricing model that is not published within a tariff filing — for example competitive-supply, contract, or scenario pricing. When a pricing model is published within a tariff filing, its validity dates derive from that filing; where a filing and this date are both present, they describe the same window. |
 | `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Validity-window start, with dateTime precision, for a pricing model that is not published within a tariff filing — for example competitive-supply, contract, or scenario pricing. When a pricing model is published within a tariff filing, its validity dates derive from that filing; where a filing and this date are both present, they describe the same window. |
 | `urpx:expectedEndDate` | Datatype | 0..1 | `xsd:date` | Forecast end: provisional end date subject to change, as with pricing effective until further notice. Distinct from the validity-window end carried by expirationDate. |
@@ -753,7 +756,7 @@ specifications.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
-| `urpx:documentedBy` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an authored PricingModel (or a resolved reference) to a DataSourceReference identifying the source evidence it models, interprets, or was derived from. |
+| `urpx:documentedBy` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an authored PricingModel, a TariffFiling, or a resolved reference to a DataSourceReference identifying the source evidence it models, interprets, or was derived from. |
 | `urpx:referenceInclusion` | Datatype | 1..1 | — | Whether a referenced price definition is included in the plan or retrieved from elsewhere. |
 | `urpx:referencesPriceDefinition` | Object | 0..1 | [`PriceDefinition`](#pricedefinition) | IRI reference linking a Price, PriceSet, or PriceSetAlternative instance to its PriceDefinition |
 | `urpx:resolvedFrom` | Object | 0..* | [`ModelCollection`](#modelcollection) | Traceability path for retrievedElsewhere references: the ModelCollection thread the reference resolves against. |
@@ -833,6 +836,24 @@ specifications.
 | `urpx:evaluatedBy` | Object | 0..1 | [`Organization`](#organization) | The organization that performed this evaluation and attests its content. |
 | `urpx:evaluatedOn` | Datatype | 0..1 | `xsd:dateTime` | When this evaluation was performed. |
 | `urpx:evaluationKind` | Datatype | 0..1 | — | The kind of an Evaluation. |
+| `urpx:hasModelExclusion` | Object | 0..* | [`ModelExclusion`](#modelexclusion) | Links an evaluation to the record of a consolidatedFrom model that contributed no element to the snapshot. |
+
+---
+
+### ModelExclusion
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/ModelExclusion`  
+**Parent:** `owl:Thing`
+
+**Description:** Records, on a coverage claim's evaluation, that a pricing model listed in the version's consolidatedFrom set contributed no element to the snapshot, and why.
+
+**Properties:**
+
+| Property | Type | Cardinality | Range | Description |
+|----------|------|-------------|-------|-------------|
+| `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
+| `urpx:excludedModel` | Object | 1..1 | [`PricingModel`](#pricingmodel) | The pricing model this exclusion record is about: listed in the version's consolidatedFrom set but contributing no element to the snapshot. |
+| `urpx:exclusionReason` | Datatype | 1..1 | — | Why the excluded model contributed no element to the snapshot. |
 
 ---
 
@@ -853,12 +874,12 @@ specifications.
 |----------|------|-------------|-------|-------------|
 | `urpx:dateApproved` | Datatype | 0..1 | `xsd:date` | Regulatory approval date |
 | `urpx:dateCreated` | Datatype | 0..1 | `xsd:date` | Date the source document or data was created |
-| `urpx:dateModified` | Datatype | 0..1 | `xsd:date` | Date the source document or data was last updated |
+| `urpx:dateModified` | Datatype | 0..1 | `xsd:date` | Date the source document, publication unit, or data was last updated |
 | `urpx:datePublished` | Datatype | 0..1 | `xsd:date` | Date of first broadcast/publication |
 | `urpx:dateReceived` | Datatype | 0..1 | `xsd:date` | Date the document was received |
 | `urpx:dateTimeApproved` | Datatype | 0..1 | `xsd:dateTime` | Regulatory approval date and time |
 | `urpx:dateTimeCreated` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was created |
-| `urpx:dateTimeModified` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was last updated |
+| `urpx:dateTimeModified` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document, publication unit, or data was last updated |
 | `urpx:dateTimePublished` | Datatype | 0..1 | `xsd:dateTime` | Date and time of first broadcast/publication |
 | `urpx:dateTimeReceived` | Datatype | 0..1 | `xsd:dateTime` | Date and time the document was received |
 | `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
@@ -873,13 +894,6 @@ specifications.
 | `urpx:publicationType` | Datatype | 0..1 | — | The kind of external source publication. |
 | `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
 | `urpx:version` | Datatype | 0..1 | `xsd:string` | The version of the CreativeWork embodied by a specified resource |
-
----
-
-### SourcePublicationType
-
-**URI:** `https://urpx-org.github.io/urpx/ontology/SourcePublicationType`  
-**Parent:** `owl:Thing`
 
 ---
 
@@ -899,8 +913,10 @@ specifications.
 | `urpx:cancelledOnDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date and time at which a tariff filing or standalone pricing model was cancelled or voided — when its content left the active set. Precise variant of urpx:cancelledOn. |
 | `urpx:cancelsPriceDefinition` | Object | 0..* | [`PriceDefinition`](#pricedefinition) | Asserts that this tariff filing cancels the referenced price definition. |
 | `urpx:containsPricingModel` | Object | 1..* | [`PricingModel`](#pricingmodel) | Links a TariffFiling to the PricingModels it contains. |
+| `urpx:dateModified` | Datatype | 0..1 | `xsd:date` | Date the source document, publication unit, or data was last updated |
+| `urpx:dateTimeModified` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document, publication unit, or data was last updated |
 | `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
-| `urpx:documentedBy` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an authored PricingModel (or a resolved reference) to a DataSourceReference identifying the source evidence it models, interprets, or was derived from. |
+| `urpx:documentedBy` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an authored PricingModel, a TariffFiling, or a resolved reference to a DataSourceReference identifying the source evidence it models, interprets, or was derived from. |
 | `urpx:effectiveDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes active |
 | `urpx:effectiveDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes active |
 | `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
@@ -929,13 +945,13 @@ specifications.
 | `urpx:dataSourceType` | Datatype | 0..1 | — | Type of source of the data |
 | `urpx:dateApproved` | Datatype | 0..1 | `xsd:date` | Regulatory approval date |
 | `urpx:dateCreated` | Datatype | 0..1 | `xsd:date` | Date the source document or data was created |
-| `urpx:dateModified` | Datatype | 0..1 | `xsd:date` | Date the source document or data was last updated |
+| `urpx:dateModified` | Datatype | 0..1 | `xsd:date` | Date the source document, publication unit, or data was last updated |
 | `urpx:datePublished` | Datatype | 0..1 | `xsd:date` | Date of first broadcast/publication |
 | `urpx:dateReceived` | Datatype | 0..1 | `xsd:date` | Date the document was received |
 | `urpx:dateRetrieved` | Datatype | 0..1 | `xsd:date` | Date on which data was retrieved |
 | `urpx:dateTimeApproved` | Datatype | 0..1 | `xsd:dateTime` | Regulatory approval date and time |
 | `urpx:dateTimeCreated` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was created |
-| `urpx:dateTimeModified` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document or data was last updated |
+| `urpx:dateTimeModified` | Datatype | 0..1 | `xsd:dateTime` | Date and time the source document, publication unit, or data was last updated |
 | `urpx:dateTimePublished` | Datatype | 0..1 | `xsd:dateTime` | Date and time of first broadcast/publication |
 | `urpx:dateTimeReceived` | Datatype | 0..1 | `xsd:dateTime` | Date and time the document was received |
 | `urpx:dateTimeRetrieved` | Datatype | 0..1 | `xsd:dateTime` | Date and time on which data was retrieved |
@@ -2642,6 +2658,15 @@ potentially spanning multiple administrative boundaries.
 | `urpx:partnershipEntity` | Partnership legal entity (general or limited partnership) |
 | `urpx:trustEntity` | Trust legal entity |
 
+### ExclusionReasonValue
+
+| Value | Description |
+|-------|-------------|
+| `urpx:fullySuperseded` | Every element the model could contribute is superseded by a later model within the snapshot's window |
+| `urpx:outOfScope` | The model's content falls outside the snapshot's claimed scope |
+| `urpx:pruned` | The model's content was considered during consolidation and dropped in favor of other contributions |
+| `urpx:voided` | The model was cancelled or replaced and is excluded from active reads |
+
 ### FlowDirectionValue
 
 | Value | Description |
@@ -3014,21 +3039,6 @@ potentially spanning multiple administrative boundaries.
 | `urpx:moderateIncomeProgram` | Moderate income assistance program for customer financial support |
 | `urpx:timeOfUseProgram` | Time-of-use program for time-based pricing participation |
 
-### PublicationTypeValue
-
-| Value | Description |
-|-------|-------------|
-| `urpx:amendment` | Amendment to existing tariff or rate schedule |
-| `urpx:notice` | Public notice regarding rate or tariff changes |
-| `urpx:order` | Regulatory order or decision regarding rates or tariffs |
-| `urpx:ratePlanModifierPublication` | Rate Plan publication |
-| `urpx:ratePlanPublication` | Rate Plan publication |
-| `urpx:regulatoryFiling` | Official regulatory filing or submission to regulatory authority |
-| `urpx:supplement` | Supplement providing additional information to existing publication |
-| `urpx:tariffBook` | Complete tariff book document containing all rate schedules and terms |
-| `urpx:tariffBookLeaves` | Individual sets of leaves or pages from tariff book publications |
-| `urpx:tariffStatement` | PSC tariff statement filing containing price adjustments and prices |
-
 ### ReferenceInclusionValue
 
 | Value | Description |
@@ -3078,6 +3088,19 @@ potentially spanning multiple administrative boundaries.
 | `urpx:energyEfficiencyRole` | Energy efficiency service role - providing energy conservation programs and efficiency solutions |
 | `urpx:retailSupplyRole` | Retail supply service role - competitive retail energy supplier serving end-use customers |
 | `urpx:solarInstallationRole` | Solar installation service role - distributed solar energy system installation and maintenance services |
+
+### SourcePublicationTypeValue
+
+| Value | Description |
+|-------|-------------|
+| `urpx:derExports` | Publication of compensation values for distributed energy resource exports |
+| `urpx:highlyDynamicPrices` | Publication of prices that change at sub-daily granularity, such as hourly or real-time prices |
+| `urpx:marketPriceFeed` | Machine-readable feed of market-determined prices published on a recurring schedule |
+| `urpx:supplyCharges` | Publication of commodity supply charges, typically issued on a recurring schedule |
+| `urpx:tariffAddendum` | Addendum attached to a tariff publication carrying additional terms or corrections |
+| `urpx:tariffBook` | Complete tariff book document containing all rate schedules and terms |
+| `urpx:tariffStatement` | PSC tariff statement filing containing price adjustments and prices |
+| `urpx:tariffSupplement` | Supplement to a tariff book adding or revising content without republishing the full book |
 
 ### SpecialNeedsStatusValue
 

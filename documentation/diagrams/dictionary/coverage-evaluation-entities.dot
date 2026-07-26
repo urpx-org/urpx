@@ -21,10 +21,18 @@ digraph "Coverage & Evaluation Entities" {
         label="Evaluation"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
+    ModelExclusion [
+        label="ModelExclusion"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
 
     // Cross-section references
     Organization [
         label="Organization"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    PricingModel [
+        label="PricingModel"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
     ];
 
@@ -35,6 +43,14 @@ digraph "Coverage & Evaluation Entities" {
     Evaluation -> Organization [
         label="evaluatedBy\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
+    Evaluation -> ModelExclusion [
+        label="hasModelExclusion\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ModelExclusion -> PricingModel [
+        label="excludedModel\n1..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+
+    // Auto-computed rank hints
 
     subgraph cluster_legend {
         label="Legend";

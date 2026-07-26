@@ -1,0 +1,328 @@
+digraph "coned-sc1-rate-i-v20260201-supply-referenced" {
+    rankdir=TB;
+    bgcolor="white";
+    pad=0.5;
+    nodesep=0.5;
+    ranksep=0.7;
+    fontname="Inter, Helvetica, Arial, sans-serif";
+    label="coned-sc1-rate-i-v20260201-supply-referenced";
+    labelloc="t";
+    fontsize=16;
+    fontcolor="#1a365d";
+    node [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=9, style=filled, shape=Mrecord];
+    edge [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=8, fontcolor="#1a365d"];
+
+    n_coned_coned_sc1_rate_i_v20260201_supply_referenced [
+        label="{RatePlanVersion|name: SC1 Rate I — Supply, resolved snapsho...\ldescription: Resolved RatePlanVersion snapshot for...\lversion: 2026-02-01-supply-ref\leffectiveDate: 2026-02-01\lpriceCurrency: USD\l}"
+        fillcolor="#1c5a8f"
+        color="#0e3a5f"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_org_consolidated_edison [
+        label="{UtilityOperator|legalName: Consolidated Edison Company of New Yo...\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_coned_pm_sc1_supply_service_2026_02_01 [
+        label="PricingModel"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_coned_coned_sc1_rate_i [
+        label="{RatePlan|name: SC1 Rate I — Residential and Religious\lratePlanUniqueIdentifier: CONED-SC1-RATE-I\linitialEffectiveDate: 2018-01-01\l}"
+        fillcolor="#00386e"
+        color="#002244"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_coned_cc_sc1_rate_i_v20260201_supply_ref [
+        label="{CoverageClaim|selfContained: False\lstale: False\lfallbackSourced: True\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_coned_eval_sc1_rate_i_v20260201_supply_ref [
+        label="{Evaluation|description: Coverage is complete for the claimed ...\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_coned_pdref_msc_energy_2026_02_01 [
+        label="PriceDefinitionReference"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_coned_ts_pdref_msc_energy_applicability [
+        label="{TemporalScope|startDate: 2026-02-01\lendDate: 2026-03-01\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_coned_sr_lds_appnd_csv_supply_ref [
+        label="{DataSourceReference|name: ConEd LDS_APPND Market Supply Charges...\lfileName: lds-appnd-2025.csv\laccessURL: https://www.coned.com/en/accounts-bil...\ldateRetrieved: 2025-10-16\l}"
+        fillcolor="#A8D8CF"
+        color="#86b6ad"
+        fontcolor="#333333"
+        penwidth=2
+    ];
+    n_coned_sp_msc_lds_appnd [
+        label="{SourcePublication|name: ConEd LDS_APPND CSV\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_coned_mc_msc_feed_thread [
+        label="{ModelCollection|name: ConEd Market Supply Charge feed model...\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_coned_pm_msc_feed_rate1_2026_02 [
+        label="PricingModel"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_coned_pm_msc_feed_rate1_2026_01 [
+        label="PricingModel"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_coned_pe_sc1_rate_i_v20260201_supply_ref [
+        label="PlanElements"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_coned_mi_energy_kwh [
+        label="{MetricInput|name: Electricity consumption (kWh)\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_coned_ms_energy_kwh [
+        label="MetricSpecification"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_coned_bm_sc1_rate_i_v20260201_supply_ref [
+        label="BillingModel"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_coned_ledger_supply [
+        label="{Ledger|name: Supply\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_coned_pd_supply_service_charge [
+        label="{PriceDefinition|name: Supply Service Charge\lpriceCurrency: USD\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
+    n_coned_prices_sc1_rate_i_v20260201_supply_ref [
+        label="Prices"
+        fillcolor="#00bd7e"
+        color="#009966"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_coned_ps_v20260201_supply_service_charge [
+        label="{PriceSet|name: Supply Service Charge\lpriceCurrency: USD\l}"
+        fillcolor="#00ADEF"
+        color="#0088cc"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_coned_p_v20260201_supply_service_charge [
+        label="{Price|amount: 0.00230\lstartDate: 2026-02-01\l}"
+        fillcolor="#44BB99"
+        color="#339977"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+
+    n_coned_coned_sc1_rate_i_v20260201_supply_referenced -> n_org_consolidated_edison [
+        label="publishedBy"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_coned_sc1_rate_i_v20260201_supply_referenced -> n_coned_pm_sc1_supply_service_2026_02_01 [
+        label="consolidatedFrom"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_coned_sc1_rate_i_v20260201_supply_referenced -> n_coned_coned_sc1_rate_i [
+        label="forRatePlan"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_coned_sc1_rate_i_v20260201_supply_referenced -> n_coned_cc_sc1_rate_i_v20260201_supply_ref [
+        label="hasCoverageClaim"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_cc_sc1_rate_i_v20260201_supply_ref -> n_coned_eval_sc1_rate_i_v20260201_supply_ref [
+        label="explainedBy"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_coned_sc1_rate_i_v20260201_supply_referenced -> n_coned_pdref_msc_energy_2026_02_01 [
+        label="hasPriceDefinitionReference"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_pdref_msc_energy_2026_02_01 -> n_coned_ts_pdref_msc_energy_applicability [
+        label="hasTemporalScope"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_pdref_msc_energy_2026_02_01 -> n_coned_sr_lds_appnd_csv_supply_ref [
+        label="documentedBy"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_sr_lds_appnd_csv_supply_ref -> n_coned_sp_msc_lds_appnd [
+        label="sourcePublication"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_pdref_msc_energy_2026_02_01 -> n_coned_mc_msc_feed_thread [
+        label="resolvedFrom"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_mc_msc_feed_thread -> n_coned_pm_msc_feed_rate1_2026_02 [
+        label="collectsPricingModel"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_mc_msc_feed_thread -> n_coned_pm_msc_feed_rate1_2026_01 [
+        label="collectsPricingModel"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_coned_sc1_rate_i_v20260201_supply_referenced -> n_coned_pe_sc1_rate_i_v20260201_supply_ref [
+        label="hasPlanElements"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_pe_sc1_rate_i_v20260201_supply_ref -> n_coned_mi_energy_kwh [
+        label="hasMetricInput"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_mi_energy_kwh -> n_coned_ms_energy_kwh [
+        label="hasMetricSpecification"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_pe_sc1_rate_i_v20260201_supply_ref -> n_coned_bm_sc1_rate_i_v20260201_supply_ref [
+        label="hasBillingModel"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_bm_sc1_rate_i_v20260201_supply_ref -> n_coned_ledger_supply [
+        label="hasLedger"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_bm_sc1_rate_i_v20260201_supply_ref -> n_coned_pd_supply_service_charge [
+        label="hasPriceDefinition"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_coned_sc1_rate_i_v20260201_supply_referenced -> n_coned_prices_sc1_rate_i_v20260201_supply_ref [
+        label="hasPrices"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_prices_sc1_rate_i_v20260201_supply_ref -> n_coned_ps_v20260201_supply_service_charge [
+        label="hasPriceSet"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_coned_ps_v20260201_supply_service_charge -> n_coned_p_v20260201_supply_service_charge [
+        label="hasPrice"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+
+    subgraph cluster_legend {
+        label="Legend — Node Colors by @type";
+        fontname="Inter, Helvetica, Arial, sans-serif";
+        fontsize=10;
+        fontcolor="#1a365d";
+        style=rounded;
+        color="#cccccc";
+        bgcolor="#f8f8f8";
+        margin=12;
+        leg_0 [label="RatePlanVersion", shape=box, fillcolor="#1c5a8f", color="#0e3a5f", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_1 [label="UtilityOperator", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_2 [label="PricingModel", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_3 [label="RatePlan", shape=box, fillcolor="#00386e", color="#002244", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_4 [label="CoverageClaim", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_5 [label="Evaluation", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_6 [label="PriceDefinitionReference", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_7 [label="TemporalScope", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_8 [label="DataSourceReference", shape=box, fillcolor="#A8D8CF", color="#86b6ad", fontcolor="#333333", fontsize=9, penwidth=1.5];
+        leg_9 [label="SourcePublication", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_10 [label="ModelCollection", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_11 [label="PlanElements", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_12 [label="MetricInput", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_13 [label="MetricSpecification", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_14 [label="BillingModel", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_15 [label="Ledger", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_16 [label="PriceDefinition", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_17 [label="Prices", shape=box, fillcolor="#00bd7e", color="#009966", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_18 [label="PriceSet", shape=box, fillcolor="#00ADEF", color="#0088cc", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_19 [label="Price", shape=box, fillcolor="#44BB99", color="#339977", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
+        leg_0 -> leg_1 -> leg_2 -> leg_3 -> leg_4 -> leg_5 -> leg_6 -> leg_7 -> leg_8 -> leg_9 -> leg_10 -> leg_11 -> leg_12 -> leg_13 -> leg_14 -> leg_15 -> leg_16 -> leg_17 -> leg_18 -> leg_19 [style=invis];
+    }
+}
