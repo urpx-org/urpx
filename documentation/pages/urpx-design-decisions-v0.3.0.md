@@ -29,7 +29,8 @@ this page begins at Decision #121, at the start of the next block after the
 - Decision #126: Correction and Withdrawal Parity for Standalone Pricing Models
 - Decision #127: Identity, Timezone, and Location Metadata on Resolved Version Snapshots
 - Decision #128: Collapse Nested Tariff Reference Classes into DataSourceReference
-- Proposed (unnumbered): Element-Level Consolidation Lineage and Temporal Completeness
+- Decision #129: Element-Level Consolidation Lineage and Temporal Completeness
+- Decision #130: Publication Type Enumeration Consolidation
 
 ---
 
@@ -372,14 +373,11 @@ Remove `TariffBookReference` and `TariffStatementReference` and their linking pr
 
 ---
 
-## Proposed Decisions (unnumbered)
-
-Entries below are proposed and carry no decision number. A number mints only at ratification.
-
+<a id="decision-129"></a>
 <a id="proposed-consolidation-lineage-temporal-completeness"></a>
-### Proposed decision (unnumbered): Element-Level Consolidation Lineage and Temporal Completeness
+### Decision #129: Element-Level Consolidation Lineage and Temporal Completeness
 
-- **Status:** Proposed (unnumbered; number mints at ratification)
+- **Status:** Accepted (pre-Draft); amended 2026-07-26 (see the amendment at the end of this entry)
 - **Date:** 2026-07-25
 - **Issue:** A resolved rate plan version snapshot could not record which pricing model contributed each of its elements; a `TemporalScope` could not reference the named time interval its documentation described, nor express an intraday boundary; and the `cancelledOn` and `sunsetOn` lifecycle dates had no dateTime-precise twin.
 - **Category:** Provenance, Temporal, Validation
@@ -415,3 +413,42 @@ Add two object properties for consolidation lineage: `contributedBy`, from a sna
 - Ontology (`ontology/urpx-ontology.ttl`): `urpx:contributedBy`, `urpx:consolidatedFrom`, `urpx:hasTemporalPeriod`, `urpx:cancelledOnDateTime`, `urpx:sunsetOnDateTime`; the widened `urpx:startDateTime` and `urpx:endDateTime` domains.
 - SHACL (`shacl/urpx-shacl.ttl`): the `contributedBy`, `consolidatedFrom`, `hasTemporalPeriod`, `startDateTime`, `endDateTime`, `cancelledOnDateTime`, and `sunsetOnDateTime` paths; all touched shapes stay closed.
 - Test cases: the Consolidated Edison SC1 Rate I resolved snapshot (consolidation lineage) and its supply snapshot variant (a `retrievedElsewhere` `PriceDefinitionReference` resolved against a `ModelCollection` thread, not self-contained and fallback-sourced).
+
+**Amendment (2026-07-26):**
+Three carriage gaps found while writing a consuming reconciliation design against this decision were closed the next day, under the same decision:
+- **Machine-readable exclusions.** The completeness cross-check in option 1 said an excluded model's reason lives "in the claim's Evaluation", but the closed `EvaluationShape` carried only free text, so no consumer could re-run the check. Added `ModelExclusion` (a relator node pairing `excludedModel` with an `exclusionReason` from the new `ExclusionReasonValue` enumeration: `pruned`, `fullySuperseded`, `voided`, `outOfScope`), carried by `hasModelExclusion` on `Evaluation`. A flat two-property alternative was rejected because reasons could not be paired to models when more than one is excluded.
+- **Publication-unit recency.** Reconciliation of two overlapping publication units with no lifecycle link needs an ordering signal the vocabulary carries. Widened `dateModified` and `dateTimeModified` onto `PricingModel` and `TariffFiling` (reuse by widening; the property's role is unchanged) and documented the later-modification-date ordering convention in the property notes.
+- **`documentedBy` domain alignment.** The ontology domain excluded `TariffFiling` while the closed `TariffFilingShape` admitted the path and the shipping statement fixtures assert it on filing nodes. Widened the domain to `PricingModel`, `TariffFiling`, `PriceDefinitionReference`; rejecting the usage instead would have stripped the document citation exactly where a regulatory filing needs it.
+- The reference test cases were extended to demonstrate all of the above, plus a coverage-scoped `TemporalScope` on the claim, evaluation attribution (`evaluatedBy`/`evaluatedOn`), and continuous market supply cycles from the shipped feed data. The flagship snapshot's verdict is stated as `partial`, with the evaluation naming what is not yet modeled, so the reference set demonstrates an honest partial claim. See the changelog entry of 2026-07-26.
+
+---
+
+<a id="decision-130"></a>
+### Decision #130: Publication Type Enumeration Consolidation
+
+- **Status:** Accepted (pre-Draft)
+- **Date:** 2026-07-26
+- **Issue:** Two enumeration classes carried the publication-kind role. `publicationType` ranged over `SourcePublicationType` (eight members, no member documentation, no typed individuals, and a name breaking the `*Value` suffix convention), while an orphaned `PublicationTypeValue` (ten members, all typed and documented, plus its own shape) was referenced by no property and no shape. The two shared the member IRIs `tariffBook` and `tariffStatement`.
+- **Category:** Architecture, Naming, Validation
+
+**Context:**
+Decision #128 made `publicationType` the sole carrier of the tariff book versus tariff statement distinction on citations, which raised the stakes on the enumeration behind it. An implementer asking "what are the valid publication types" found an empty data-dictionary section for the live enumeration and a fully documented table for the orphaned one, with member sets that disagree; `marketPriceFeed`, asserted by the shipping test cases, was defined nowhere.
+
+**Decision:**
+Consolidate on one enumeration class, renamed `SourcePublicationTypeValue` to match the `*Value` suffix every other enumeration carries (its own label already read "Source Publication Type Value"). Give all eight members typed individuals with labels and definitions, reusing the two definitions that existed on the orphan. Remove the `PublicationTypeValue` class, its ten member individuals, and its shape: its eight exclusive members (`amendment`, `notice`, `order`, `ratePlanPublication`, `ratePlanModifierPublication`, `regulatoryFiling`, `supplement`, `tariffBookLeaves`) had zero usage anywhere in the vocabulary, shapes, or fixtures.
+
+**Rationale:**
+- One documented enumeration with a single home for the publication-kind distinction; the empty dictionary section fills on the next regeneration.
+- The rename is free before the initial public tag and never again: member IRIs and the `publicationType` property are untouched, so no data changes.
+- Keeping the first published vocabulary minimal (the Decision #128 rationale) argues against shipping ten defined-but-unreachable members.
+
+**Consequences / Impact:**
+- **Positive:** The distinction Decision #128 relies on is now backed by a documented, singly-homed enumeration.
+- **Breaking Change:** Only relative to unreleased pre-tag states; no released vocabulary carried `SourcePublicationTypeValue` under its old name, and no data asserts the removed members.
+- **Requirements:** Producers set `publicationType` to one of the eight `SourcePublicationTypeValue` members.
+
+**References:**
+- Changelog: `urpx-changelog.md`, 2026-07-26 entry.
+- Ontology (`ontology/urpx-ontology.ttl`): `urpx:SourcePublicationTypeValue` and its eight typed member individuals; the removed `urpx:PublicationTypeValue` and its members.
+- SHACL (`shacl/urpx-shacl.ttl`): `SourcePublicationTypeValueShape` (renamed, with `sh:targetClass` and `sh:nodeKind`); the removed `PublicationTypeValueShape`.
+- Related: Decision #128 (the distinction rides `publicationType`); Decision #121 (the document class family retired in favor of `publicationType`).

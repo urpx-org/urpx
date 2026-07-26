@@ -18,7 +18,7 @@
       "@id": "coned:coned-sc1-rate-i-v20260201-supply-referenced",
       "@type": "urpx:RatePlanVersion",
       "urpx:name": "SC1 Rate I — Supply, resolved snapshot with an externally referenced price definition (effective 2026-02-01)",
-      "urpx:description": "Resolved RatePlanVersion snapshot for Consolidated Edison SC1 Rate I supply that exercises the reference and collection machinery. The Market Supply Charge is not carried inline: it appears as a PriceDefinitionReference marked retrievedElsewhere, whose price definition is resolved against a ModelCollection thread of the published market price feed models rather than materialised into the snapshot. Because a component is priced from an external feed, the coverage claim is not self-contained and is fallback-sourced. One supply service charge is carried inline so the billing model has authored content; its lineage is recorded with contributedBy, and the version lists its contributing models with consolidatedFrom.",
+      "urpx:description": "Resolved RatePlanVersion snapshot for Consolidated Edison SC1 Rate I supply that exercises the reference and collection machinery. The Market Supply Charge is not carried inline: it appears as a PriceDefinitionReference marked retrievedElsewhere, whose price definition is resolved against a ModelCollection thread of the published market price feed models rather than materialised into the snapshot. Because a component is priced from an external feed, the coverage claim is not self-contained and is fallback-sourced. One supply service charge is carried inline so the billing model has authored content; its lineage is recorded with contributedBy, and the version lists its contributing model with consolidatedFrom. The feed models appear only in the reference's resolution thread: content resolved through a reference is not consolidated into the snapshot.",
       "urpx:version": "2026-02-01-supply-ref",
       "urpx:effectiveDate": "2026-02-01",
       "urpx:changeReason": { "@id": "urpx:fuelAdjustment" },
@@ -35,16 +35,6 @@
           "@id": "coned:pm-sc1-supply-service-2026-02-01",
           "@type": "urpx:PricingModel",
           "urpx:confidence": { "@id": "urpx:verified" }
-        },
-        {
-          "@id": "coned:pm-msc-feed-rate1-2026-02",
-          "@type": "urpx:PricingModel",
-          "urpx:confidence": { "@id": "urpx:estimated" }
-        },
-        {
-          "@id": "coned:pm-msc-feed-rate1-2026-01",
-          "@type": "urpx:PricingModel",
-          "urpx:confidence": { "@id": "urpx:estimated" }
         }
       ],
       "urpx:forRatePlan": {
@@ -65,13 +55,20 @@
         "urpx:explainedBy": {
           "@id": "coned:eval-sc1-rate-i-v20260201-supply-ref",
           "@type": "urpx:Evaluation",
-          "urpx:description": "Coverage is complete for the claimed supply scope. The Market Supply Charge is priced from ConEd's published market price feed rather than a filed value, so it is carried as a retrievedElsewhere PriceDefinitionReference resolved against the feed model thread; the snapshot is therefore not self-contained (selfContained false) and its Market Supply value was obtained through fallback resolution (fallbackSourced true). The supply service charge is authored content, carried inline. Derived confidence is estimated, the minimum across the contributing feed and filed models."
+          "urpx:description": "Coverage is complete for the claimed supply scope. The Market Supply Charge is priced from ConEd's published market price feed rather than a filed value, so it is carried as a retrievedElsewhere PriceDefinitionReference resolved against the feed model thread; the snapshot is therefore not self-contained (selfContained false) and its Market Supply value was obtained through fallback resolution (fallbackSourced true). The supply service charge is authored content, carried inline. The feed models are not listed in consolidatedFrom: their content reaches the snapshot through the reference's resolution thread. Derived confidence is estimated, the minimum across the filed model and the feed models the reference resolves against."
         }
       },
       "urpx:hasPriceDefinitionReference": {
         "@id": "coned:pdref-msc-energy-2026-02-01",
         "@type": "urpx:PriceDefinitionReference",
         "urpx:referenceInclusion": { "@id": "urpx:retrievedElsewhere" },
+        "urpx:hasTemporalScope": {
+          "@id": "coned:ts-pdref-msc-energy-applicability",
+          "@type": "urpx:TemporalScope",
+          "urpx:scopeKind": { "@id": "urpx:applicability" },
+          "urpx:startDate": "2026-02-01",
+          "urpx:endDate": "2026-03-01"
+        },
         "urpx:documentedBy": {
           "@id": "coned:sr-lds-appnd-csv-supply-ref",
           "@type": "urpx:DataSourceReference",

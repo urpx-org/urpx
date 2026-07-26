@@ -53,6 +53,7 @@ path = [
     "test-cases/coned-sc1-rate-i/assets/mac-202604.pdf",
     "test-cases/coned-sc1-rate-i/assets/mac-202605.pdf",
     "test-cases/coned-sc1-rate-i/assets/lds-appnd-2025.csv",
+    "test-cases/coned-sc1-rate-i-supply-ref/assets/lds-appnd-2025.csv",
 ]
 precedence = "override"
 SPDX-FileCopyrightText = "Consolidated Edison Company of New York, Inc."

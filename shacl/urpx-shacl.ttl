@@ -1330,6 +1330,11 @@ urpx-shacl:EvaluationShape
         sh:datatype xsd:dateTime ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasModelExclusion ;
+        sh:class urpx:ModelExclusion ;
+        sh:minCount 0 ;
     ] .
 
 urpx-shacl:GeneralRuleShape
@@ -1678,6 +1683,31 @@ urpx-shacl:ModelCollectionShape
     ] ;
     sh:property [
         sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
+urpx-shacl:ModelExclusionShape
+    a sh:NodeShape ;
+    rdfs:label "ModelExclusion Shape"@en ;
+    sh:targetClass urpx:ModelExclusion ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type urpx:hasTemporalScope ) ;
+    sh:property [
+        sh:path urpx:excludedModel ;
+        sh:class urpx:PricingModel ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:exclusionReason ;
+        sh:node urpx-shacl:ExclusionReasonValueShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:description ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
@@ -3160,6 +3190,18 @@ urpx-shacl:PricingModelShape
     ] ;
     sh:property [
         sh:path urpx:cancelledOnDateTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:dateModified ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:dateTimeModified ;
         sh:datatype xsd:dateTime ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
@@ -4869,7 +4911,7 @@ urpx-shacl:SourcePublicationShape
     sh:ignoredProperties ( rdf:type urpx:hasTemporalScope ) ;
     sh:property [
         sh:path urpx:publicationType ;
-        sh:node urpx-shacl:SourcePublicationTypeShape ;
+        sh:node urpx-shacl:SourcePublicationTypeValueShape ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
@@ -5275,6 +5317,18 @@ urpx-shacl:TariffFilingShape
         sh:path urpx:containsPricingModel ;
         sh:class urpx:PricingModel ;
         sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:dateModified ;
+        sh:datatype xsd:date ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:dateTimeModified ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path urpx:description ;
@@ -5966,6 +6020,13 @@ urpx-shacl:EvaluationKindValueShape
     rdfs:label "EvaluationKindValue Shape"@en ;
     sh:in ( urpx:consolidation urpx:coverageEvaluation urpx:validation urpx:comparison urpx:benchmark ) .
 
+urpx-shacl:ExclusionReasonValueShape
+    a sh:NodeShape ;
+    rdfs:label "ExclusionReasonValue Shape"@en ;
+    sh:targetClass urpx:ExclusionReasonValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:pruned urpx:fullySuperseded urpx:voided urpx:outOfScope ) .
+
 urpx-shacl:FlowDirectionValueShape
     a sh:NodeShape ;
     rdfs:label "FlowDirectionValue Shape"@en ;
@@ -6162,13 +6223,6 @@ urpx-shacl:ProgramTypeValueShape
     sh:nodeKind sh:IRI ;
     sh:in ( urpx:demandResponseProgram urpx:energyEfficiencyProgram urpx:greenEnergyProgram urpx:lowIncomeProgram urpx:moderateIncomeProgram urpx:timeOfUseProgram urpx:communityChoiceAggregation urpx:communitySolar ) .
 
-urpx-shacl:PublicationTypeValueShape
-    a sh:NodeShape ;
-    rdfs:label "PublicationTypeValue Shape"@en ;
-    sh:targetClass urpx:PublicationTypeValue ;
-    sh:nodeKind sh:IRI ;
-    sh:in ( urpx:amendment urpx:notice urpx:order urpx:ratePlanPublication urpx:ratePlanModifierPublication urpx:regulatoryFiling urpx:supplement urpx:tariffBook urpx:tariffBookLeaves urpx:tariffStatement ) .
-
 urpx-shacl:ReferenceInclusionValueShape
     a sh:NodeShape ;
     rdfs:label "ReferenceInclusionValue Shape"@en ;
@@ -6200,9 +6254,11 @@ urpx-shacl:ServiceRoleValueShape
     sh:nodeKind sh:IRI ;
     sh:in ( urpx:aggregationRole urpx:bundledServiceRole urpx:demandResponseRole urpx:communitySolarServiceRole urpx:distributionServiceRole urpx:energyEfficiencyRole urpx:retailSupplyRole urpx:solarInstallationRole ) .
 
-urpx-shacl:SourcePublicationTypeShape
+urpx-shacl:SourcePublicationTypeValueShape
     a sh:NodeShape ;
-    rdfs:label "SourcePublicationType Shape"@en ;
+    rdfs:label "SourcePublicationTypeValue Shape"@en ;
+    sh:targetClass urpx:SourcePublicationTypeValue ;
+    sh:nodeKind sh:IRI ;
     sh:in ( urpx:tariffBook urpx:tariffStatement urpx:tariffSupplement urpx:tariffAddendum urpx:supplyCharges urpx:derExports urpx:highlyDynamicPrices urpx:marketPriceFeed ) .
 
 urpx-shacl:SpecialNeedsStatusValueShape

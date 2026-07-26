@@ -14,6 +14,14 @@
       "@id": "coned:pm-msc-rate1-trip1-zj-lt",
       "@type": "urpx:PricingModel",
       "urpx:confidence": { "@id": "urpx:verified" },
+      "urpx:dateModified": { "@value": "2026-05-01", "@type": "xsd:date" },
+      "urpx:referencesRatePlan": {
+        "@id": "coned:coned-sc1-rate-i",
+        "@type": "urpx:RatePlan",
+        "urpx:name": "SC1 Rate I — Residential and Religious",
+        "urpx:ratePlanUniqueIdentifier": "CONED-SC1-RATE-I",
+        "urpx:initialEffectiveDate": { "@value": "2018-01-01", "@type": "xsd:date" }
+      },
       "urpx:pursuantTo": {
         "@id": "coned:gr-25-msc",
         "@type": "urpx:GeneralRule",
@@ -180,6 +188,27 @@
               "urpx:amount": "0.129362",
               "urpx:startDate": "2025-12-31",
               "urpx:endDate": "2026-02-02"
+            },
+            {
+              "@id": "coned:p-msc-20260202",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.124850",
+              "urpx:startDate": "2026-02-02",
+              "urpx:endDate": "2026-03-04"
+            },
+            {
+              "@id": "coned:p-msc-20260304",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.100885",
+              "urpx:startDate": "2026-03-04",
+              "urpx:endDate": "2026-04-02"
+            },
+            {
+              "@id": "coned:p-msc-20260402",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.097202",
+              "urpx:startDate": "2026-04-02",
+              "urpx:endDate": "2026-05-01"
             },
             {
               "@id": "coned:p-msc-20260501",

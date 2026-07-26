@@ -4,9 +4,42 @@
 # URPX Changelog
 
 **Version:** 0.3.0 (Pre-draft)
-**Last Updated:** 2026-07-14
+**Last Updated:** 2026-07-26
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-07-26 — v0.3.0 (pre-tag reconciliation carriage and publication-type consolidation)
+---
+
+Vocabulary additions and corrections applied before the initial public tag, folded into the unreleased 0.3.0. The additions carry facts a consuming implementation needs when reconciling published units into resolved snapshots; the corrections close defects found in the post-application review of the two 2026-07-25 batches.
+
+### Added
+- `ModelExclusion`, a relator node on a coverage claim's `Evaluation`, recording that a pricing model listed in the version's `consolidatedFrom` set contributed no element to the snapshot, and why. Carried by `hasModelExclusion` (Evaluation to ModelExclusion), pairing `excludedModel` (the pricing model) with `exclusionReason` (a new `ExclusionReasonValue` enumeration: `pruned`, `fullySuperseded`, `voided`, `outOfScope`) and an optional `description`. This makes the consolidation completeness cross-check machine-checkable by any consumer holding the snapshot, instead of a producer-side prose promise.
+- Typed member individuals with labels and definitions for the `publicationType` enumeration (`tariffBook`, `tariffStatement`, `tariffSupplement`, `tariffAddendum`, `supplyCharges`, `derExports`, `highlyDynamicPrices`, `marketPriceFeed`), which previously had no documentation anywhere.
+
+### Changed
+- Widened the domains of `dateModified` and `dateTimeModified` to include `PricingModel` and `TariffFiling`, so a publication unit can carry its own modification date. Where two publication units overlap with no `supersedes`, `replaces`, or `cancelledBy` link, the later modification date is the intended ordering signal; without this carriage a consumer reconciling two overlapping publications had no vocabulary-carried basis to order them.
+- Widened the domain of `documentedBy` to include `TariffFiling`. The closed `TariffFilingShape` already admitted the path and the shipping statement fixtures already assert it on filing nodes; the ontology domain now agrees, removing an incorrect entailment.
+- Renamed the enumeration class `SourcePublicationType` to `SourcePublicationTypeValue`, matching the `*Value` suffix every other enumeration class carries. Member IRIs and the `publicationType` property are unchanged, so no data is affected.
+- Amended the `consolidatedFrom` note to route exclusion records to `hasModelExclusion`, and the `CoverageClaim` note to recommend a `TemporalScope` with `scopeKind` `coverage` stating the window a verdict covers.
+- Tightened the `referencesRatePlan` note to state current semantics only.
+
+### Removed
+- Removed the orphaned `PublicationTypeValue` enumeration class, its ten member individuals, and its shape. No property or shape referenced it; its two live members (`tariffBook`, `tariffStatement`) move to the consolidated enumeration above, and the remaining eight members had zero usage anywhere in the vocabulary, shapes, or fixtures.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- Added `ModelExclusionShape` (closed: `excludedModel` required, `exclusionReason` required against `ExclusionReasonValueShape`, optional `description`) and `ExclusionReasonValueShape`.
+- `EvaluationShape` gains a `hasModelExclusion` path (optional, unbounded); it stays closed.
+- `PricingModelShape` and `TariffFilingShape` gain `dateModified` and `dateTimeModified` paths (optional, 0..1); both stay closed.
+- Renamed `SourcePublicationTypeShape` to `SourcePublicationTypeValueShape` and aligned it with the house enumeration-shape pattern (`sh:targetClass`, `sh:nodeKind sh:IRI`).
+- Removed `PublicationTypeValueShape`.
+
+### Test cases
+- Moved the supply-referenced snapshot variant into its own test-case directory (`test-cases/coned-sc1-rate-i-supply-ref/`), so each directory carries one test case and its generated collateral depicts the right fixture.
+- Filled the resolved snapshot's Market Supply Charge gap with the three published cycle prices from the shipped feed CSV (February 2 through May 1), making the modeled slots continuous for the coverage window. The claim is stated as `partial`: applicable statement charges beyond the MAC are not yet modeled for this plan, and the evaluation says so. The market feed fixture carries the same cycles and now binds to its rate plan via `referencesRatePlan` and carries a `dateModified`.
+- The resolved snapshot now demonstrates the full coverage vocabulary: a coverage `TemporalScope` on the claim, `evaluatedBy`/`evaluatedOn` attribution on the evaluation, and a `ModelExclusion` recording that the January statement is listed as a source but fully superseded before the version's effective date.
+- The supply-referenced variant no longer lists the feed models in `consolidatedFrom`: content resolved through a reference is not consolidated into the snapshot, so the feed models ride the reference's resolution thread only. Its reference now carries an applicability `TemporalScope`.
+- Corrected the documented validation recipe for the statement filings: each validates merged with the identity, the delivery filing, and the earlier statements in its supersedes chain.
 
 2026-07-25 — v0.3.0 (pre-tag consolidation lineage and temporal completeness)
 ---
