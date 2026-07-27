@@ -41,6 +41,10 @@ Vocabulary additions and corrections applied before the initial public tag, fold
 - The supply-referenced variant no longer lists the feed models in `consolidatedFrom`: content resolved through a reference is not consolidated into the snapshot, so the feed models ride the reference's resolution thread only. Its reference now carries an applicability `TemporalScope`.
 - Corrected the documented validation recipe for the statement filings: each validates merged with the identity, the delivery filing, and the earlier statements in its supersedes chain.
 
+### Standards integration (`skos/standards-integration/urpx-green-button-mappings.ttl`)
+- Refreshed the URPX to Green Button (NAESB ESPI) SKOS alignment to the 0.3.0 vocabulary and verified it against the NAESB ESPI V4 schemas. Aligned the Green Button bill line-item classification (`ItemKind`) to the URPX charge categories, replacing an earlier alignment to a `KindCategory` enumeration and `itemKind` member values the V4 schemas do not contain. Added `PriceSummary` as the rollup that lines up several URPX prices with one bill line item.
+- Corrected the `urpx:` namespace in the mappings to the ontology IRI so the alignment resolves against real terms, and declared the missing `rdfs` prefix so the file parses. Stamped `owl:versionInfo` 0.3.0 with a `dcterms:conformsTo` pointer to the 0.3.0 release.
+
 2026-07-25 — v0.3.0 (pre-tag consolidation lineage and temporal completeness)
 ---
 

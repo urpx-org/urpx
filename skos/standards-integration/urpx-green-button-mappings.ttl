@@ -5,34 +5,40 @@
 # Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md.
 
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix urpx: <https://schema.urpx.org/> .
+@prefix urpx: <https://urpx-org.github.io/urpx/ontology/> .
 @prefix gb: <http://naesb.org/espi#> .
 
-<https://schema.urpx.org/mapping/green-button> 
+<https://urpx-org.github.io/urpx/ontology/mapping/green-button>
     a owl:Ontology ;
     rdfs:label "URPX to Green Button Mappings"@en ;
     dcterms:title "URPX - Green Button ESPI Integration" ;
-    dcterms:description "SKOS alignment between URPX Ontology and Green Button (NAESB ESPI) standard."@en ;
+    dcterms:description "SKOS alignment between URPX and the Green Button (NAESB ESPI) standard, verified against the NAESB ESPI V4 schemas."@en ;
     dcterms:created "2026-01-27"^^xsd:date ;
-    dcterms:modified "2026-01-27"^^xsd:date ;
-    owl:versionInfo "0.1.1" .
+    dcterms:modified "2026-07-26"^^xsd:date ;
+    dcterms:conformsTo <https://urpx-org.github.io/urpx/ontology/releases/v0.3.0> ;
+    rdfs:seeAlso <https://urpx-org.github.io/urpx/ontology> ;
+    owl:versionInfo "0.3.0" .
 
 # ============================================
-# GBC Structural Extensions
+# Structural anchors (confirmed in ESPI V4)
 # ============================================
 
 urpx:RatePlan skos:relatedMatch gb:PricingStructure ;
-    skos:note "URPX RatePlan URL serves as the resolvable URI for the ESPI PricingStructure hook."@en .
+    skos:note "The RatePlan URL is the resolvable URI for the ESPI PricingStructure hook. The rate plan is the identity a customer is on; its pricing content is carried by pricing models consolidated into versions."@en .
+
+urpx:PriceSummary skos:closeMatch gb:LineItem ;
+    skos:note "A Green Button bill line item is typically a summary of several URPX prices. PriceSummary aggregates prices into the subtotal presented as one bill line item, which is how URPX prices line up against a real bill."@en .
 
 urpx:Price skos:broadMatch gb:LineItem ;
-    skos:note "URPX procedural prices map to static ESPI bill line items."@en .
+    skos:note "An individual URPX price is finer-grained than a Green Button bill line item; several prices roll up into one line item via PriceSummary."@en .
 
 # ============================================
-# Green Button ServiceCategory Mappings
+# ServiceCategory (ESPI V4 ServiceKind codes)
 # ============================================
 
 gb:ServiceCategory_Electricity a skos:Concept ;
@@ -56,87 +62,49 @@ gb:ServiceCategory_Heat a skos:Concept ;
     skos:exactMatch urpx:steam .
 
 # ============================================
-# Green Button KindCategory Mappings
+# Line Item Alignment — ESPI V4 ItemKind to URPX charge category
+# (LineItem/itemKind; espi_v4.xsd ItemKind simple type)
+# A Green Button bill line item is a summarized unit; it lines up with a URPX
+# charge category rather than a single fine-grained charge type. Payment (9) and
+# Information (10) carry no charge and are outside this alignment.
 # ============================================
 
-gb:KindCategory_Access a skos:Concept ;
-    skos:prefLabel "Access Charge"@en ;
+gb:ItemKind_EnergyGenerationFee a skos:Concept ;
+    skos:prefLabel "Energy Generation Fee"@en ;
     skos:notation "1" ;
-    skos:exactMatch urpx:minimumCharge ;
-    skos:note "Access charge maps to URPX minimumCharge."@en .
+    skos:closeMatch urpx:auxiliaryCharge .
 
-gb:KindCategory_Demand a skos:Concept ;
-    skos:prefLabel "Demand"@en ;
+gb:ItemKind_EnergyDeliveryFee a skos:Concept ;
+    skos:prefLabel "Energy Delivery Fee"@en ;
     skos:notation "2" ;
-    skos:exactMatch urpx:demandDirect ;
-    skos:note "Demand charge maps to URPX demandDirect."@en .
+    skos:closeMatch urpx:infrastructure .
 
-gb:KindCategory_Energy a skos:Concept ;
-    skos:prefLabel "Energy"@en ;
+gb:ItemKind_EnergyUsageFee a skos:Concept ;
+    skos:prefLabel "Energy Usage Fee"@en ;
     skos:notation "3" ;
-    skos:exactMatch urpx:usageCharge ;
-    skos:note "Energy charge maps to URPX usageCharge."@en .
+    skos:closeMatch urpx:auxiliaryCharge .
 
-gb:KindCategory_FixedCharge a skos:Concept ;
-    skos:prefLabel "Fixed Charge"@en ;
+gb:ItemKind_AdministrativeFee a skos:Concept ;
+    skos:prefLabel "Administrative Fee"@en ;
     skos:notation "4" ;
-    skos:closeMatch urpx:serviceMetered, urpx:minimumCharge ;
-    skos:note "Fixed charge maps to URPX serviceMetered or minimumCharge."@en .
+    skos:closeMatch urpx:serviceCharge .
 
-gb:KindCategory_Tax a skos:Concept ;
+gb:ItemKind_Tax a skos:Concept ;
     skos:prefLabel "Tax"@en ;
     skos:notation "5" ;
-    skos:exactMatch urpx:taxes ;
-    skos:note "Tax category maps directly to urpx:taxes."@en .
+    skos:closeMatch urpx:taxes .
 
-gb:KindCategory_Fee a skos:Concept ;
-    skos:prefLabel "Fee"@en ;
+gb:ItemKind_EnergyGenerationCredit a skos:Concept ;
+    skos:prefLabel "Energy Generation Credit"@en ;
     skos:notation "6" ;
-    skos:closeMatch urpx:rentalFee, urpx:initiationCharge, urpx:handling ;
-    skos:note "Fee category maps to various URPX auxiliary fees."@en .
+    skos:closeMatch urpx:discount .
 
-gb:KindCategory_Rebate a skos:Concept ;
-    skos:prefLabel "Rebate"@en ;
+gb:ItemKind_EnergyDeliveryCredit a skos:Concept ;
+    skos:prefLabel "Energy Delivery Credit"@en ;
     skos:notation "7" ;
-    skos:exactMatch urpx:discount ;
-    skos:note "Rebate maps to URPX discount category."@en .
+    skos:closeMatch urpx:discount .
 
-gb:KindCategory_GenerationCredit a skos:Concept ;
-    skos:prefLabel "Generation Credit"@en ;
+gb:ItemKind_AdministrativeCredit a skos:Concept ;
+    skos:prefLabel "Administrative Credit"@en ;
     skos:notation "8" ;
-    skos:exactMatch urpx:creditGeneration ;
-    skos:note "Generation credit maps to URPX creditGeneration."@en .
-
-gb:KindCategory_Other a skos:Concept ;
-    skos:prefLabel "Other"@en ;
-    skos:notation "9" ;
-    skos:closeMatch urpx:contractMisc, urpx:ancillaryServices ;
-    skos:note "Other category maps to miscellaneous URPX charges."@en .
-
-# ============================================
-# Green Button ItemKind Mappings
-# ============================================
-
-gb:itemKind_energy a skos:Concept ;
-    skos:exactMatch urpx:usageCharge .
-
-gb:itemKind_demand a skos:Concept ;
-    skos:exactMatch urpx:demandDirect .
-
-gb:itemKind_service a skos:Concept ;
-    skos:exactMatch urpx:serviceMetered .
-
-gb:itemKind_tax a skos:Concept ;
-    skos:exactMatch urpx:taxSales .
-
-gb:itemKind_adjustment a skos:Concept ;
-    skos:exactMatch urpx:adjustmentPowerCost .
-
-# ============================================
-# URPX to Green Button Reverse Alignment (Informational)
-# ============================================
-
-urpx:serviceCharge skos:closeMatch gb:KindCategory_Access, gb:KindCategory_FixedCharge .
-urpx:taxes skos:exactMatch gb:KindCategory_Tax .
-urpx:auxiliaryCharge skos:closeMatch gb:KindCategory_Energy, gb:KindCategory_Demand, gb:KindCategory_Fee, gb:KindCategory_Other .
-urpx:discount skos:closeMatch gb:KindCategory_Rebate, gb:KindCategory_GenerationCredit .
+    skos:closeMatch urpx:discount .
