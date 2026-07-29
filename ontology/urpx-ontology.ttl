@@ -381,12 +381,12 @@ urpx:RatePlanModifierIdentifier a owl:Class ;
 urpx:RatePlanModifierVersion a owl:Class ;
     rdfs:label "Rate Plan Modifier Version"@en ;
     rdfs:comment "Derived, materialized snapshot of the resolved rate plan modifier facts for a temporal window." ;
-    skos:note "A derived consolidation result containing the resolved modifier facts applicable for a temporal window, derived from applicable modifier PricingModels. Every snapshot has a required CoverageClaim. No authored lifecycle dates. Linked to the modifier identity via forRatePlanModifier (no inverse)." .
+    skos:note "A derived consolidation result containing the resolved modifier facts applicable for a temporal window, derived from applicable modifier PricingModels. Every snapshot has a required CoverageClaim. No authored lifecycle dates. Linked to the modifier identity via forRatePlanModifier." .
 
 urpx:RatePlanVersion a owl:Class ;
     rdfs:label "Rate Plan Version"@en ;
     rdfs:comment "Derived, materialized complete snapshot of the resolved rate plan facts for a temporal window — the read artifact." ;
-    skos:note "A derived consolidation result containing the resolved plan facts applicable for a temporal window, derived from applicable PricingModels. Completeness is honest-by-construction: every snapshot has a required CoverageClaim, and self-containment is derived from whether any component is retrievedElsewhere. No authored lifecycle dates. Linked to the plan identity via forRatePlan (no inverse)." .
+    skos:note "A derived consolidation result containing the resolved plan facts applicable for a temporal window, derived from applicable PricingModels. Completeness is honest-by-construction: every snapshot has a required CoverageClaim, and self-containment is derived from whether any component is retrievedElsewhere. No authored lifecycle dates. Linked to the plan identity via forRatePlan." .
 
 urpx:RegulatoryAuthority a owl:Class ;
     rdfs:label "Regulatory Authority"@en ;
@@ -575,7 +575,9 @@ urpx:CompletenessResultValue a owl:Class ;
 
 urpx:ConfidenceValue a owl:Class ;
     rdfs:label "Confidence Value"@en ;
-    owl:equivalentClass [ owl:oneOf ( urpx:verified urpx:estimated urpx:projected ) ] .
+    rdfs:comment "The epistemic confidence in pricing content: how well the asserted values are grounded in the authoritative published source."@en ;
+    owl:equivalentClass [ owl:oneOf ( urpx:verified urpx:estimated urpx:projected ) ] ;
+    skos:note "Member semantics. verified: confirmed against the authoritative published source. estimated: derived or inferred where the source does not state it directly. projected: asserted for a future period ahead of the source publishing it. On a pricing model the value describes its authored content; on a coverage claim it is derived as the minimum of the contributing models' values, and the claim's evaluation records the mix." .
 
 urpx:ConnectionKindValue a owl:Class ;
     rdfs:label "Connection Kind Value"@en ;
@@ -657,7 +659,9 @@ urpx:EntityTypeValue a owl:Class ;
 
 urpx:EvaluationKindValue a owl:Class ;
     rdfs:label "Evaluation Kind Value"@en ;
-    owl:equivalentClass [ owl:oneOf ( urpx:consolidation urpx:coverageEvaluation urpx:validation urpx:comparison urpx:benchmark ) ] .
+    rdfs:comment "What an Evaluation was performed to establish."@en ;
+    owl:equivalentClass [ owl:oneOf ( urpx:consolidation urpx:coverageEvaluation urpx:validation urpx:comparison urpx:benchmark ) ] ;
+    skos:note "Member semantics. consolidation: explains how a resolved snapshot was assembled from its contributing pricing models. coverageEvaluation: establishes a coverage claim's completeness verdict for its claimed scope. validation: checks a snapshot or claim against its sources or shapes, independently of the party that produced it. comparison: contrasts two or more rate plans, versions, or snapshots. benchmark: scores a rate plan or snapshot against a reference set. Several evaluations may attach to one claim, each attributed and dated." .
 
 urpx:FlowDirectionValue a owl:Class ;
     rdfs:label "Flow Direction Value"@en ;
@@ -808,6 +812,12 @@ urpx:PhaseCodeKindValue a owl:Class ;
     rdfs:comment "Enumeration of electrical phase configurations." ;
     owl:equivalentClass [ owl:oneOf (urpx:A urpx:AB urpx:ABN urpx:ABC urpx:ABCN urpx:AC urpx:ACN urpx:AN urpx:AtoAv urpx:B urpx:BAv urpx:BC urpx:BCN urpx:BN urpx:C urpx:CAv urpx:CN urpx:N urpx:NG urpx:S1 urpx:S12 urpx:S12N urpx:S1N urpx:S2 urpx:S2N ) ] ;
     skos:note "Enumeration class for electrical phase code classification." .
+
+urpx:PhaseCategoryValue a owl:Class ;
+    rdfs:label "Phase Category Value"@en ;
+    rdfs:comment "Enumeration of valid phase category values"@en ;
+    owl:equivalentClass [ owl:oneOf ( urpx:singlePhaseCategory urpx:splitPhaseCategory urpx:threePhaseCategory urpx:measurementCategory ) ] ;
+    skos:note "Enumeration class grouping phase codes by electrical service configuration." .
 
 urpx:PremiseTypeValue a owl:Class ;
     rdfs:label "Premise Type Value"@en ;
@@ -1727,14 +1737,16 @@ urpx:forRatePlan a owl:ObjectProperty ;
     rdfs:comment "Links a derived RatePlanVersion snapshot back to the RatePlan identity it was built for." ;
     rdfs:domain urpx:RatePlanVersion ;
     rdfs:range urpx:RatePlan ;
-    skos:note "No inverse. forRatePlan is the version→plan binding. No RatePlan→version navigation property." .
+    owl:inverseOf urpx:hasRatePlanVersion ;
+    skos:note "The authored version-to-plan binding: a snapshot names the plan it was built for. The plan-to-version direction is available can optionally be inferred from and asserted in instance data as the entailed inverse hasRatePlanVersion." .
 
 urpx:forRatePlanModifier a owl:ObjectProperty ;
     rdfs:label "For Rate Plan Modifier"@en ;
     rdfs:comment "Links a derived RatePlanModifierVersion snapshot back to the RatePlanModifier identity it was built for." ;
     rdfs:domain urpx:RatePlanModifierVersion ;
     rdfs:range urpx:RatePlanModifier ;
-    skos:note "No inverse. Parallel to forRatePlan." .
+    owl:inverseOf urpx:hasRatePlanModifierVersion ;
+    skos:note "The authored version-to-plan-modifier binding. Parallel to forRatePlan; the entailed inverse is hasRatePlanModifierVersion." .
 
 urpx:forScenario a owl:ObjectProperty ;
     rdfs:label "For Scenario"@en ;
@@ -2180,6 +2192,22 @@ urpx:hasRatePlanModifier a owl:ObjectProperty ;
     rdfs:domain urpx:URPXPackage ;
     rdfs:range urpx:RatePlanModifier ;
     skos:note "Optional add-ons or adjustments that can be applied across rate plans." .
+
+urpx:hasRatePlanModifierVersion a owl:ObjectProperty ;
+    rdfs:label "Has Rate Plan Modifier Version"@en ;
+    rdfs:comment "Links a rate plan modifier to a resolved version snapshot built for it." ;
+    owl:inverseOf urpx:forRatePlanModifier ;
+    rdfs:domain urpx:RatePlanModifier ;
+    rdfs:range urpx:RatePlanModifierVersion ;
+    skos:note "OWL-entailed from forRatePlanModifier; not asserted in instance data. Parallel to hasRatePlanVersion." .
+
+urpx:hasRatePlanVersion a owl:ObjectProperty ;
+    rdfs:label "Has Rate Plan Version"@en ;
+    rdfs:comment "Links a rate plan to a resolved version snapshot built for it." ;
+    owl:inverseOf urpx:forRatePlan ;
+    rdfs:domain urpx:RatePlan ;
+    rdfs:range urpx:RatePlanVersion ;
+    skos:note "OWL-entailed from forRatePlan; optionally derived from and asserted in instance data. Enables plan-centric traversal to every version of a rate plan without a stored reciprocal triple." .
 
 urpx:hasSeasons a owl:ObjectProperty ;
     rdfs:label "Has Seasons"@en ;
@@ -2763,6 +2791,13 @@ urpx:parentServiceClass a owl:ObjectProperty ;
     rdfs:domain urpx:RateGroup ;
     rdfs:range urpx:ServiceClass ;
     skos:note "Links rate group to its containing service class." .
+
+urpx:phaseCategory a owl:ObjectProperty ;
+    rdfs:label "Phase Category"@en ;
+    rdfs:comment "Electrical service configuration grouping of a phase code"@en ;
+    rdfs:domain urpx:PhaseCodeKindValue ;
+    rdfs:range urpx:PhaseCategoryValue ;
+    skos:note "Groups phase codes by service configuration for reporting and selection." .
 
 urpx:phaseCodeKind a owl:ObjectProperty ;
     rdfs:label "Phase Code Kind"@en ;
@@ -3398,7 +3433,6 @@ urpx:utilityId a owl:DatatypeProperty ;
     rdfs:comment "Utility identifier as defined by the implementing jurisdiction" ;
     rdfs:domain urpx:OrganizationIdentifier ;
     rdfs:range xsd:string ;
-    rdfs:subPropertyOf urpx:identifierValue ;
     skos:note "Generic utility identifier property. Each URPX implementation specifies the identifier system used (e.g., US EIA ID, UK MPAN, EU EIC code). For standard identifier types, use identifierScheme to specify the system." ;
     skos:example "US: EIA-12345, UK: S12345678901, EU: 12X-UTILITY-A" .
 
@@ -3738,13 +3772,13 @@ urpx:creditPriceProtection rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Credit Price Protection"@en ;
     skos:definition "Credit from price protection program"@en ;
     urpx:chargeCategory urpx:discount ;
-    urpx:billPortion urpx:supply .
+    urpx:billPortion urpx:supplyPortion .
 
 urpx:creditRenewable rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Credit Renewable"@en ;
     skos:definition "Credit for renewable energy"@en ;
     urpx:chargeCategory urpx:discount ;
-    urpx:billPortion urpx:supply .
+    urpx:billPortion urpx:supplyPortion .
 
 urpx:creditTariffRider rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Credit Tariff Rider"@en ;
@@ -3862,7 +3896,7 @@ urpx:generation rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Generation"@en ;
     skos:definition "Charge for electricity generation"@en ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
-    urpx:billPortion urpx:supply .
+    urpx:billPortion urpx:supplyPortion .
 
 urpx:handling rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Handling"@en ;
@@ -3938,7 +3972,7 @@ urpx:reliabilityCharge rdf:type urpx:ChargeTypeValue ;
     skos:definition "Reliability-must-run contracts and capacity performance charges"@en ;
     skos:note "Common in ISO/RTO markets"@en ;
     urpx:chargeCategory urpx:infrastructure ;
-    urpx:billPortion urpx:supply .
+    urpx:billPortion urpx:supplyPortion .
 
 urpx:renewableFunding rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Renewable Funding"@en ;
@@ -4048,7 +4082,7 @@ urpx:usageCharge rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Usage Charge"@en ;
     skos:definition "Volumetric energy consumption charge"@en ;
     urpx:chargeCategory urpx:auxiliaryCharge ;
-    urpx:billPortion urpx:supply .
+    urpx:billPortion urpx:supplyPortion .
 
 urpx:volumetricCharge rdf:type urpx:ChargeTypeValue ;
     rdfs:label "Volumetric Charge"@en ;
@@ -4250,6 +4284,55 @@ urpx:wind rdf:type urpx:CommodityValue ;
     rdfs:label "Wind"@en ;
     skos:definition "Wind energy generation"@en ;
     skos:prefLabel "Wind"@en .
+
+# --- Completeness Result Property (CompletenessResultValue) ---
+
+urpx:complete rdf:type urpx:CompletenessResultValue ;
+    rdfs:label "Complete"@en ;
+    skos:definition "Every element required to compute cost for the claimed scope is present in the snapshot."@en ;
+    skos:prefLabel "Complete"@en .
+
+urpx:noCoverage rdf:type urpx:CompletenessResultValue ;
+    rdfs:label "No Coverage"@en ;
+    skos:definition "Evaluated, and no applicable content exists for the claimed scope in any source. Distinct from pending, where content is expected later, and from unknown, where no evaluation has run."@en ;
+    skos:prefLabel "No Coverage"@en .
+
+urpx:partial rdf:type urpx:CompletenessResultValue ;
+    rdfs:label "Partial"@en ;
+    skos:definition "At least one known required element is missing or unresolved; what is present is usable."@en ;
+    skos:prefLabel "Partial"@en .
+
+urpx:pending rdf:type urpx:CompletenessResultValue ;
+    rdfs:label "Pending"@en ;
+    skos:definition "Required content is expected from the source but is not yet published or available at evaluation time, so the absence is anticipated rather than a gap."@en ;
+    skos:prefLabel "Pending"@en .
+
+urpx:unknown rdf:type urpx:CompletenessResultValue ;
+    rdfs:label "Unknown"@en ;
+    skos:definition "The scope has not been evaluated against sources, so there is no basis to assert coverage either way."@en ;
+    skos:prefLabel "Unknown"@en .
+
+urpx:unsupported rdf:type urpx:CompletenessResultValue ;
+    rdfs:label "Unsupported"@en ;
+    skos:definition "The source publishes content for the scope that the consuming representation cannot express, so coverage cannot be claimed although the data exists."@en ;
+    skos:prefLabel "Unsupported"@en .
+
+# --- Confidence Property (ConfidenceValue) ---
+
+urpx:estimated rdf:type urpx:ConfidenceValue ;
+    rdfs:label "Estimated"@en ;
+    skos:definition "The pricing content is derived or inferred where the authoritative source does not state it directly."@en ;
+    skos:prefLabel "Estimated"@en .
+
+urpx:projected rdf:type urpx:ConfidenceValue ;
+    rdfs:label "Projected"@en ;
+    skos:definition "The pricing content is asserted for a future period ahead of the authoritative source publishing it."@en ;
+    skos:prefLabel "Projected"@en .
+
+urpx:verified rdf:type urpx:ConfidenceValue ;
+    rdfs:label "Verified"@en ;
+    skos:definition "The pricing content is confirmed against the authoritative published source."@en ;
+    skos:prefLabel "Verified"@en .
 
 # --- Connection Kind Property (ConnectionKindValue) ---
 
@@ -4727,6 +4810,33 @@ urpx:trustEntity rdf:type urpx:EntityTypeValue ;
     rdfs:label "Trust Entity"@en ;
     skos:definition "Trust legal entity"@en ;
     skos:prefLabel "Trust"@en .
+
+# --- Evaluation Kind Property (EvaluationKindValue) ---
+
+urpx:benchmark rdf:type urpx:EvaluationKindValue ;
+    rdfs:label "Benchmark"@en ;
+    skos:definition "Scores a rate plan or a resolved snapshot against a reference set."@en ;
+    skos:prefLabel "Benchmark"@en .
+
+urpx:comparison rdf:type urpx:EvaluationKindValue ;
+    rdfs:label "Comparison"@en ;
+    skos:definition "Contrasts two or more rate plans, rate plan versions, or resolved snapshots against each other."@en ;
+    skos:prefLabel "Comparison"@en .
+
+urpx:consolidation rdf:type urpx:EvaluationKindValue ;
+    rdfs:label "Consolidation"@en ;
+    skos:definition "Explains how a resolved snapshot was assembled from its contributing pricing models: what was selected, what was excluded, and what was missing."@en ;
+    skos:prefLabel "Consolidation"@en .
+
+urpx:coverageEvaluation rdf:type urpx:EvaluationKindValue ;
+    rdfs:label "Coverage Evaluation"@en ;
+    skos:definition "Establishes a coverage claim's completeness verdict for its claimed scope by assessing the snapshot against its sources."@en ;
+    skos:prefLabel "Coverage Evaluation"@en .
+
+urpx:validation rdf:type urpx:EvaluationKindValue ;
+    rdfs:label "Validation"@en ;
+    skos:definition "Checks a snapshot or a coverage claim against its sources or shapes, independently of the party that produced it."@en ;
+    skos:prefLabel "Validation"@en .
 
 # --- Exclusion Reason Property (ExclusionReasonValue) ---
 
@@ -5726,157 +5836,179 @@ urpx:west rdf:type urpx:PanelOrientationValue ;
     skos:definition "West-facing panel orientation - afternoon generation peak"@en ;
     skos:prefLabel "West"@en .
 
+# --- Phase Category Property (PhaseCategoryValue) ---
+
+urpx:measurementCategory rdf:type urpx:PhaseCategoryValue ;
+    rdfs:label "Measurement Category"@en ;
+    skos:definition "Phase codes identifying a measurement reference rather than a service configuration"@en ;
+    skos:example "Phase-to-average readings, neutral-to-ground readings"@en .
+
+urpx:singlePhaseCategory rdf:type urpx:PhaseCategoryValue ;
+    rdfs:label "Single Phase Category"@en ;
+    skos:definition "Phase codes describing a single energized phase, alone or referenced to neutral"@en ;
+    skos:example "Phase A, Phase B to neutral, neutral"@en .
+
+urpx:splitPhaseCategory rdf:type urpx:PhaseCategoryValue ;
+    rdfs:label "Split Phase Category"@en ;
+    skos:definition "Phase codes describing a split secondary service, where two half-voltage legs share a neutral"@en ;
+    skos:example "Split-phase leg 1, both legs to neutral"@en .
+
+urpx:threePhaseCategory rdf:type urpx:PhaseCategoryValue ;
+    rdfs:label "Three Phase Category"@en ;
+    skos:definition "Phase codes describing two or three energized phases of a three-phase service, alone or referenced to neutral"@en ;
+    skos:example "Phases A to B, all three phases, ABC to neutral"@en .
+
 # --- Phase Code Kind Property (PhaseCodeKindValue) ---
 
 urpx:A rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase A"@en ;
     skos:notation "A" ;
     skos:definition "Phase A"@en ;
-    skos:broader urpx:singlePhaseCategory .
+    urpx:phaseCategory urpx:singlePhaseCategory .
 
 urpx:AB rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phases A to B"@en ;
     skos:notation "AB" ;
     skos:definition "Phases A to B"@en ;
-    skos:broader urpx:threePhaseCategory .
+    urpx:phaseCategory urpx:threePhaseCategory .
 
 urpx:ABC rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Involving All Phases"@en ;
     skos:notation "ABC" ;
     skos:definition "Involving All Phases"@en ;
-    skos:broader urpx:threePhaseCategory .
+    urpx:phaseCategory urpx:threePhaseCategory .
 
 urpx:ABCN rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "ABC to Neutral"@en ;
     skos:notation "ABCN" ;
     skos:definition "Three-phase ABC to Neutral configuration"@en ;
-    skos:broader urpx:threePhaseCategory .
+    urpx:phaseCategory urpx:threePhaseCategory .
 
 urpx:ABN rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "AB to Neutral"@en ;
     skos:notation "ABN" ;
     skos:definition "AB to Neutral"@en ;
-    skos:broader urpx:threePhaseCategory .
+    urpx:phaseCategory urpx:threePhaseCategory .
 
 urpx:AC rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phases A to C"@en ;
     skos:notation "AC" ;
     skos:definition "Phases A to C"@en ;
-    skos:broader urpx:threePhaseCategory .
+    urpx:phaseCategory urpx:threePhaseCategory .
 
 urpx:ACN rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "AC to Neutral"@en ;
     skos:notation "ACN" ;
     skos:definition "AC to Neutral"@en ;
-    skos:broader urpx:threePhaseCategory .
+    urpx:phaseCategory urpx:threePhaseCategory .
 
 urpx:AN rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase A to Neutral"@en ;
     skos:notation "AN" ;
     skos:definition "Phase A to Neutral"@en ;
-    skos:broader urpx:singlePhaseCategory .
+    urpx:phaseCategory urpx:singlePhaseCategory .
 
 urpx:AtoAv rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase A Current Relative to Phase A Voltage"@en ;
     skos:notation "AtoAv" ;
     skos:definition "Phase A Current Relative to Phase A Voltage"@en ;
-    skos:broader urpx:measurementCategory .
+    urpx:phaseCategory urpx:measurementCategory .
 
 urpx:B rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase B"@en ;
     skos:notation "B" ;
     skos:definition "Phase B"@en ;
-    skos:broader urpx:singlePhaseCategory .
+    urpx:phaseCategory urpx:singlePhaseCategory .
 
 urpx:BAv rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase B Current or Voltage Relative to Phase A Voltage"@en ;
     skos:notation "BAv" ;
     skos:definition "Phase B Current or Voltage Relative to Phase A Voltage"@en ;
-    skos:broader urpx:measurementCategory .
+    urpx:phaseCategory urpx:measurementCategory .
 
 urpx:BC rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phases B to C"@en ;
     skos:notation "BC" ;
     skos:definition "Phases B to C"@en ;
-    skos:broader urpx:threePhaseCategory .
+    urpx:phaseCategory urpx:threePhaseCategory .
 
 urpx:BCN rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "BC to Neutral"@en ;
     skos:notation "BCN" ;
     skos:definition "BC to Neutral"@en ;
-    skos:broader urpx:threePhaseCategory .
+    urpx:phaseCategory urpx:threePhaseCategory .
 
 urpx:BN rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase B to Neutral"@en ;
     skos:notation "BN" ;
     skos:definition "Phase B to Neutral"@en ;
-    skos:broader urpx:singlePhaseCategory .
+    urpx:phaseCategory urpx:singlePhaseCategory .
 
 urpx:C rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase C"@en ;
     skos:notation "C" ;
     skos:definition "Phase C"@en ;
-    skos:broader urpx:singlePhaseCategory .
+    urpx:phaseCategory urpx:singlePhaseCategory .
 
 urpx:CAv rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase C Current or Voltage Relative to Phase A Voltage"@en ;
     skos:notation "CAv" ;
     skos:definition "Phase C Current or Voltage Relative to Phase A Voltage"@en ;
-    skos:broader urpx:measurementCategory .
+    urpx:phaseCategory urpx:measurementCategory .
 
 urpx:CN rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase C to Neutral"@en ;
     skos:notation "CN" ;
     skos:definition "Phase C to Neutral"@en ;
-    skos:broader urpx:singlePhaseCategory .
+    urpx:phaseCategory urpx:singlePhaseCategory .
 
 urpx:N rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Neutral"@en ;
     skos:notation "N" ;
     skos:definition "Neutral"@en ;
-    skos:broader urpx:singlePhaseCategory .
+    urpx:phaseCategory urpx:singlePhaseCategory .
 
 urpx:NG rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Neutral to Ground"@en ;
     skos:notation "NG" ;
     skos:definition "Neutral to Ground"@en ;
-    skos:broader urpx:measurementCategory .
+    urpx:phaseCategory urpx:measurementCategory .
 
 urpx:S1 rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase S1"@en ;
     skos:notation "S1" ;
     skos:definition "Phase S1"@en ;
-    skos:broader urpx:splitPhaseCategory .
+    urpx:phaseCategory urpx:splitPhaseCategory .
 
 urpx:S12 rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase S1 to S2"@en ;
     skos:notation "S12" ;
     skos:definition "Phase S1 to S2"@en ;
-    skos:broader urpx:splitPhaseCategory .
+    urpx:phaseCategory urpx:splitPhaseCategory .
 
 urpx:S12N rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase S1, S2 to Neutral"@en ;
     skos:notation "S12N" ;
     skos:definition "Phase S1, S2 to Neutral"@en ;
-    skos:broader urpx:splitPhaseCategory .
+    urpx:phaseCategory urpx:splitPhaseCategory .
 
 urpx:S1N rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase S1 to Neutral"@en ;
     skos:notation "S1N" ;
     skos:definition "Phase S1 to Neutral"@en ;
-    skos:broader urpx:splitPhaseCategory .
+    urpx:phaseCategory urpx:splitPhaseCategory .
 
 urpx:S2 rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase S2"@en ;
     skos:notation "S2" ;
     skos:definition "Phase S2"@en ;
-    skos:broader urpx:splitPhaseCategory .
+    urpx:phaseCategory urpx:splitPhaseCategory .
 
 urpx:S2N rdf:type urpx:PhaseCodeKindValue ;
     rdfs:label "Phase S2 to Neutral"@en ;
     skos:notation "S2N" ;
     skos:definition "Phase S2 to Neutral"@en ;
-    skos:broader urpx:splitPhaseCategory .
+    urpx:phaseCategory urpx:splitPhaseCategory .
 
 # --- Premise Type Property (PremiseTypeValue) ---
 

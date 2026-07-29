@@ -6195,6 +6195,13 @@ urpx-shacl:PanelOrientationValueShape
     sh:nodeKind sh:IRI ;
     sh:in ( urpx:south urpx:southeast urpx:southwest urpx:east urpx:west urpx:north urpx:northeast urpx:northwest urpx:tracking urpx:multipleOrientations ) .
 
+urpx-shacl:PhaseCategoryValueShape
+    a sh:NodeShape ;
+    rdfs:label "PhaseCategoryValue Shape"@en ;
+    sh:targetClass urpx:PhaseCategoryValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:singlePhaseCategory urpx:splitPhaseCategory urpx:threePhaseCategory urpx:measurementCategory ) .
+
 urpx-shacl:PhaseCodeKindValueShape
     a sh:NodeShape ;
     rdfs:label "PhaseCodeKindValue Shape"@en ;

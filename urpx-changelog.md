@@ -4,9 +4,30 @@
 # URPX Changelog
 
 **Version:** 0.3.0 (Pre-draft)
-**Last Updated:** 2026-07-26
+**Last Updated:** 2026-07-29
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-07-29 — v0.3.0 (pre-tag referential integrity and enumeration documentation)
+---
+
+Vocabulary definitions and corrections applied before the initial public tag, folded into the unreleased 0.3.0.
+
+### Added
+- `PhaseCategoryValue`, an enumeration grouping phase codes by electrical service configuration (`singlePhaseCategory`, `splitPhaseCategory`, `threePhaseCategory`, `measurementCategory`), and `phaseCategory`, the object property carrying a phase code's category. The 25 `PhaseCodeKindValue` members assert their category through it, grouping phase codes the way `ChargeCategoryValue` groups charge types.
+- Typed member individuals with labels and definitions for the `CompletenessResultValue` (six members), `ConfidenceValue` (three) and `EvaluationKindValue` (five) enumerations, so each member carries interchange semantics and appears in the data dictionary.
+- `rdfs:comment` and member-semantics notes on `ConfidenceValue` and `EvaluationKindValue`.
+- `hasRatePlanVersion` and `hasRatePlanModifierVersion`, inverses of `forRatePlan` and `forRatePlanModifier`, so a consumer can traverse from a rate plan or a rate plan modifier to every resolved version snapshot built for it. Both are OWL-entailed and not asserted in instance data, matching `isReferencedByPricingModel`.
+
+### Changed
+- Corrected the `billPortion` classification on `creditPriceProtection`, `creditRenewable`, `generation`, `reliabilityCharge` and `usageCharge` to `supplyPortion`, the `BillPortionValue` member their supply-side siblings already carry.
+- Revised the `forRatePlan` and `forRatePlanModifier` notes to state the authored version-to-plan direction and name the entailed inverse.
+
+### Removed
+- Removed the `rdfs:subPropertyOf` assertion on `utilityId`. The property itself is unchanged.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- Added `PhaseCategoryValueShape` (`sh:targetClass`, `sh:nodeKind sh:IRI`, `sh:in` over the four members). No property shape is added for `phaseCategory`, matching the arrangement `chargeCategory` has on `ChargeTypeValue`: the assertion lives on the vocabulary's enumeration members rather than in instance data.
 
 2026-07-26 — v0.3.0 (pre-tag reconciliation carriage and publication-type consolidation)
 ---
