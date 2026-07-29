@@ -68,6 +68,8 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 - [ChargeTypeValue](#chargetypevalue)
 - [CollectionRoleValue](#collectionrolevalue)
 - [CommodityValue](#commodityvalue)
+- [CompletenessResultValue](#completenessresultvalue)
+- [ConfidenceValue](#confidencevalue)
 - [ConnectionKindValue](#connectionkindvalue)
 - [ConnectorTypeValue](#connectortypevalue)
 - [CustomerChoiceValue](#customerchoicevalue)
@@ -80,6 +82,7 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 - [EndUseValue](#endusevalue)
 - [EnrollmentStatusValue](#enrollmentstatusvalue)
 - [EntityTypeValue](#entitytypevalue)
+- [EvaluationKindValue](#evaluationkindvalue)
 - [ExclusionReasonValue](#exclusionreasonvalue)
 - [FlowDirectionValue](#flowdirectionvalue)
 - [GeographicScopeValue](#geographicscopevalue)
@@ -105,6 +108,7 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 - [OrganizationTypeValue](#organizationtypevalue)
 - [OwnershipTypeValue](#ownershiptypevalue)
 - [PanelOrientationValue](#panelorientationvalue)
+- [PhaseCategoryValue](#phasecategoryvalue)
 - [PhaseCodeKindValue](#phasecodekindvalue)
 - [PremiseTypeValue](#premisetypevalue)
 - [PriceSourceValue](#pricesourcevalue)
@@ -2511,6 +2515,25 @@ potentially spanning multiple administrative boundaries.
 | `urpx:water` | Water utility service |
 | `urpx:wind` | Wind energy generation |
 
+### CompletenessResultValue
+
+| Value | Description |
+|-------|-------------|
+| `urpx:complete` | Every element required to compute cost for the claimed scope is present in the snapshot. |
+| `urpx:noCoverage` | Evaluated, and no applicable content exists for the claimed scope in any source. Distinct from pending, where content is expected later, and from unknown, where no evaluation has run. |
+| `urpx:partial` | At least one known required element is missing or unresolved; what is present is usable. |
+| `urpx:pending` | Required content is expected from the source but is not yet published or available at evaluation time, so the absence is anticipated rather than a gap. |
+| `urpx:unknown` | The scope has not been evaluated against sources, so there is no basis to assert coverage either way. |
+| `urpx:unsupported` | The source publishes content for the scope that the consuming representation cannot express, so coverage cannot be claimed although the data exists. |
+
+### ConfidenceValue
+
+| Value | Description |
+|-------|-------------|
+| `urpx:estimated` | The pricing content is derived or inferred where the authoritative source does not state it directly. |
+| `urpx:projected` | The pricing content is asserted for a future period ahead of the authoritative source publishing it. |
+| `urpx:verified` | The pricing content is confirmed against the authoritative published source. |
+
 ### ConnectionKindValue
 
 | Value | Description |
@@ -2657,6 +2680,16 @@ potentially spanning multiple administrative boundaries.
 | `urpx:nonprofitEntity` | Nonprofit organization legal entity |
 | `urpx:partnershipEntity` | Partnership legal entity (general or limited partnership) |
 | `urpx:trustEntity` | Trust legal entity |
+
+### EvaluationKindValue
+
+| Value | Description |
+|-------|-------------|
+| `urpx:benchmark` | Scores a rate plan or a resolved snapshot against a reference set. |
+| `urpx:comparison` | Contrasts two or more rate plans, rate plan versions, or resolved snapshots against each other. |
+| `urpx:consolidation` | Explains how a resolved snapshot was assembled from its contributing pricing models: what was selected, what was excluded, and what was missing. |
+| `urpx:coverageEvaluation` | Establishes a coverage claim's completeness verdict for its claimed scope by assessing the snapshot against its sources. |
+| `urpx:validation` | Checks a snapshot or a coverage claim against its sources or shapes, independently of the party that produced it. |
 
 ### ExclusionReasonValue
 
@@ -2970,6 +3003,15 @@ potentially spanning multiple administrative boundaries.
 | `urpx:tracking` | Solar tracking system - follows sun movement for optimal generation |
 | `urpx:west` | West-facing panel orientation - afternoon generation peak |
 
+### PhaseCategoryValue
+
+| Value | Description |
+|-------|-------------|
+| `urpx:measurementCategory` | Phase codes identifying a measurement reference rather than a service configuration |
+| `urpx:singlePhaseCategory` | Phase codes describing a single energized phase, alone or referenced to neutral |
+| `urpx:splitPhaseCategory` | Phase codes describing a split secondary service, where two half-voltage legs share a neutral |
+| `urpx:threePhaseCategory` | Phase codes describing two or three energized phases of a three-phase service, alone or referenced to neutral |
+
 ### PhaseCodeKindValue
 
 | Value | Description |
@@ -2999,6 +3041,8 @@ potentially spanning multiple administrative boundaries.
 | `urpx:S1N` | Phase S1 to Neutral |
 | `urpx:S2` | Phase S2 |
 | `urpx:S2N` | Phase S2 to Neutral |
+
+<DiagramViewer src="../diagrams/dictionary/hierarchy-PhaseCodeKindValue.svg" alt="PhaseCodeKindValue hierarchy" />
 
 ### PremiseTypeValue
 

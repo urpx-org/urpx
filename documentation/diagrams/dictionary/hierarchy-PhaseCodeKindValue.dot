@@ -1,0 +1,172 @@
+digraph "hierarchy_PhaseCodeKindValue" {
+    rankdir=TB;
+    bgcolor="white";
+    pad=0.4;
+    nodesep=0.3;
+    ranksep=0.5;
+    fontname="Inter, Helvetica, Arial, sans-serif";
+    label="PhaseCodeKindValue Hierarchy (URPX v0.3.0)";
+    labelloc="t";
+    fontsize=14;
+    fontcolor="#1a365d";
+    node [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=10, style=filled,
+          fontcolor="#1a365d", shape=box];
+    edge [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=8, fontcolor="#1a365d",
+          color="#1a5276"];
+
+    PhaseCodeKindValue [
+        label="PhaseCodeKindValue"
+        fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+
+    // Category nodes (second level)
+    cat_measurementCategory [
+        label="Measurement Category"
+        fillcolor="#aaccff", color="#1a5276", penwidth=1.5
+    ];
+    cat_singlePhaseCategory [
+        label="Single Phase Category"
+        fillcolor="#aaccff", color="#1a5276", penwidth=1.5
+    ];
+    cat_splitPhaseCategory [
+        label="Split Phase Category"
+        fillcolor="#aaccff", color="#1a5276", penwidth=1.5
+    ];
+    cat_threePhaseCategory [
+        label="Three Phase Category"
+        fillcolor="#aaccff", color="#1a5276", penwidth=1.5
+    ];
+
+    // Root to category edges
+    PhaseCodeKindValue -> cat_measurementCategory [penwidth=1.5];
+    PhaseCodeKindValue -> cat_singlePhaseCategory [penwidth=1.5];
+    PhaseCodeKindValue -> cat_splitPhaseCategory [penwidth=1.5];
+    PhaseCodeKindValue -> cat_threePhaseCategory [penwidth=1.5];
+
+    // Leaf instance nodes
+    inst_AtoAv [
+        label="Phase A Current Relative to \nPhase A Voltage"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_measurementCategory -> inst_AtoAv [penwidth=1];
+    inst_BAv [
+        label="Phase B Current or Voltage \nRelative to Phase A Voltage"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_measurementCategory -> inst_BAv [penwidth=1];
+    inst_CAv [
+        label="Phase C Current or Voltage \nRelative to Phase A Voltage"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_measurementCategory -> inst_CAv [penwidth=1];
+    inst_NG [
+        label="Neutral to Ground"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_measurementCategory -> inst_NG [penwidth=1];
+    inst_A [
+        label="Phase A"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_singlePhaseCategory -> inst_A [penwidth=1];
+    inst_AN [
+        label="Phase A to Neutral"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_singlePhaseCategory -> inst_AN [penwidth=1];
+    inst_B [
+        label="Phase B"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_singlePhaseCategory -> inst_B [penwidth=1];
+    inst_BN [
+        label="Phase B to Neutral"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_singlePhaseCategory -> inst_BN [penwidth=1];
+    inst_C [
+        label="Phase C"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_singlePhaseCategory -> inst_C [penwidth=1];
+    inst_CN [
+        label="Phase C to Neutral"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_singlePhaseCategory -> inst_CN [penwidth=1];
+    inst_N [
+        label="Neutral"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_singlePhaseCategory -> inst_N [penwidth=1];
+    inst_S1 [
+        label="Phase S1"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_splitPhaseCategory -> inst_S1 [penwidth=1];
+    inst_S12 [
+        label="Phase S1 to S2"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_splitPhaseCategory -> inst_S12 [penwidth=1];
+    inst_S12N [
+        label="Phase S1, S2 to \nNeutral"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_splitPhaseCategory -> inst_S12N [penwidth=1];
+    inst_S1N [
+        label="Phase S1 to \nNeutral"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_splitPhaseCategory -> inst_S1N [penwidth=1];
+    inst_S2 [
+        label="Phase S2"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_splitPhaseCategory -> inst_S2 [penwidth=1];
+    inst_S2N [
+        label="Phase S2 to \nNeutral"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_splitPhaseCategory -> inst_S2N [penwidth=1];
+    inst_AB [
+        label="Phases A to B"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_threePhaseCategory -> inst_AB [penwidth=1];
+    inst_ABC [
+        label="Involving \nAll Phases"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_threePhaseCategory -> inst_ABC [penwidth=1];
+    inst_ABCN [
+        label="ABC to Neutral"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_threePhaseCategory -> inst_ABCN [penwidth=1];
+    inst_ABN [
+        label="AB to Neutral"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_threePhaseCategory -> inst_ABN [penwidth=1];
+    inst_AC [
+        label="Phases A to C"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_threePhaseCategory -> inst_AC [penwidth=1];
+    inst_ACN [
+        label="AC to Neutral"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_threePhaseCategory -> inst_ACN [penwidth=1];
+    inst_BC [
+        label="Phases B to C"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_threePhaseCategory -> inst_BC [penwidth=1];
+    inst_BCN [
+        label="BC to Neutral"
+        fillcolor="#e8f4fd", color="#1a5276", penwidth=1
+    ];
+    cat_threePhaseCategory -> inst_BCN [penwidth=1];
+}
