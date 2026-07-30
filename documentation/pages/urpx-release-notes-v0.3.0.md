@@ -49,22 +49,19 @@ If you maintain datasets or downstream tooling, pay particular attention to thes
 2. **`URPXDocument` is renamed to `URPXPackage`.**
    All property domains, ranges, and shapes follow the rename.
 
-3. **The version-to-plan link is inverted.**
-   `hasRatePlanVersion` and `hasRatePlanModifierVersion` are removed. A version now points at its plan or modifier via `forRatePlan` / `forRatePlanModifier`; there is no inverse property on the plan side.
-
-4. **`RatePlanVersion` and `RatePlanModifierVersion` now require a coverage claim.**
+3. **`RatePlanVersion` and `RatePlanModifierVersion` now require a coverage claim.**
    Every version must carry exactly one `CoverageClaim` (via `hasCoverageClaim`). Only `completenessResult` is required; `selfContained` and an explaining `Evaluation` are optional. Versions without a coverage claim will fail validation.
 
-5. **`ReferenceInclusionValue` members are renamed.**
+4. **`ReferenceInclusionValue` members are renamed.**
    `included` → `includedHere`; `shopFor` → `retrievedElsewhere`.
 
-6. **`RateGroup` no longer subclasses `ServiceClass`.**
+5. **`RateGroup` no longer subclasses `ServiceClass`.**
    A rate group is a named grouping inside a service class, not a kind of service class. Containment is now expressed via `parentServiceClass`.
 
-7. **Version shapes no longer allow `supersedes`.**
+6. **Version shapes no longer allow `supersedes`.**
    Lifecycle now lives on the filing; a version's timeline position derives from the filing chain rather than from a direct `supersedes` link on the version itself.
 
-8. **The nested tariff reference classes are removed.**
+7. **The nested tariff reference classes are removed.**
    `TariffBookReference` and `TariffStatementReference`, and their linking properties `hasTariffBookReference` and `hasTariffStatementReference`, are removed. Page and leaf locators, statement type, and receipt dates sit directly on `DataSourceReference`; the tariff book versus statement distinction is carried by the referenced `SourcePublication`'s `publicationType`.
 
 ---
@@ -75,7 +72,6 @@ Datasets built against v0.2.x require rework, not just a metadata bump:
 
 - Move tariff-document typing to `SourcePublication` + `publicationType`.
 - Rename `URPXDocument` references to `URPXPackage`.
-- Replace `hasRatePlanVersion` / `hasRatePlanModifierVersion` with `forRatePlan` / `forRatePlanModifier` on the version node.
 - Add a `CoverageClaim` (at minimum `completenessResult`; `selfContained` and an explaining `Evaluation` are optional) to every `RatePlanVersion` and `RatePlanModifierVersion`.
 - Move any pricing content that was previously attached directly to a rate plan or modifier into a `PricingModel`, carried by a `TariffFiling` or `SourcePublication` as appropriate.
 - Flatten nested `hasTariffBookReference` / `hasTariffStatementReference` structures: move `pageStart`/`pageEnd`, `leafStart`/`leafEnd`, `tariffStatementType`, and the receipt dates onto the parent `DataSourceReference`, and set the referenced publication's `publicationType`.

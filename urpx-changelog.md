@@ -8,6 +8,12 @@
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
 
+2026-07-29 — v0.3.0 (plan-to-version links assertable)
+---
+
+### Changed
+- `hasRatePlanVersion` and `hasRatePlanModifierVersion` may now be asserted in instance data. `RatePlanShape` and `RatePlanModifierShape` admit the plan-side property (optional, unbounded), so a data set can carry the plan-to-version link directly instead of requiring a consumer to scan every version for a matching `forRatePlan`. Each pair stays declared `owl:inverseOf`, so where only one direction is asserted the other is entailed; where both are asserted they must agree. Revises design decision #125, which had restricted the relationship to the version side.
+
 2026-07-29 — v0.3.0 (pre-tag referential integrity and enumeration documentation)
 ---
 

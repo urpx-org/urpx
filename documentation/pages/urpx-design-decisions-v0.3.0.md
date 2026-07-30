@@ -208,43 +208,38 @@ Mint `urpx:powerFactorCharge` as a new `ChargeTypeValue` member (the power-facto
 ---
 
 <a id="decision-125"></a>
-### Decision #125: Version-to-Plan Link Inversion
+### Decision #125: Plan and Version Link in Both Directions
 
-- **Status:** Accepted (pre-Draft)
-- **Date:** 2026-07-07
-- **Issue:** With `RatePlan` and `RatePlanModifier` sharpened to pure identity records (Decision #121), the prior two-way link between a plan and its versions (`hasRatePlanVersion` / `hasRatePlanModifierVersion` on the plan, alongside a version pointing back) no longer fit a plan that carries no derived content of its own.
+- **Status:** Accepted (pre-Draft). **Revised 2026-07-29**, reversing the original 2026-07-07 ruling recorded below.
+- **Date:** 2026-07-07; revised 2026-07-29
+- **Issue:** Whether a `RatePlan` or `RatePlanModifier` may link directly to the resolved version snapshots built for it, or whether the link exists only on the version side.
 - **Category:** Architecture
 
 **Context:**
-`hasRatePlanVersion` and `hasRatePlanModifierVersion` previously let a `RatePlan` or `RatePlanModifier` point at its versions directly.
+`RatePlan` and `RatePlanModifier` are pure identity records (Decision #121). The versions built from them are derived consolidation artifacts. The question is which end of that relationship carries the link.
 
-**Decision:**
-Remove `hasRatePlanVersion` and `hasRatePlanModifierVersion`. A version now points at its plan or modifier via `forRatePlan` / `forRatePlanModifier`; there is no inverse property on the plan or modifier side.
+**Decision (as revised 2026-07-29):**
+Both directions are available and either may be asserted. `hasRatePlanVersion` links a `RatePlan` to each `RatePlanVersion` built for it, and `hasRatePlanModifierVersion` does the same for modifiers. `forRatePlan` and `forRatePlanModifier` carry the version-to-plan direction. Each pair is declared `owl:inverseOf`, so where a data set asserts only one direction the other is entailed. `RatePlanShape` and `RatePlanModifierShape` admit the plan-side property, so an asserted plan-to-version link validates.
 
-**Options Considered:**
+**Rationale for the revision:**
+- Once the links exist in a data set they should be preserved and directly traversable. A consumer holding a rate plan should not have to scan every `RatePlanVersion` in the graph to discover which ones belong to it.
+- The identity/derived-artifact boundary that motivated the original ruling is about *what content a plan carries*, not about whether the plan can reference its own derived artifacts. A reference is not derived content.
+- Declaring the inverse makes the relationship explicit in the vocabulary rather than leaving plan-to-version navigation as an undocumented query convention.
 
-1. **Version-to-plan only, no inverse (Selected)**
-   - Pro: `urpx:forRatePlan` is documented as "the version→plan binding. No RatePlan→version navigation property," keeping `RatePlan` a stable identity that does not enumerate its own derived snapshots.
-   - Pro: Matches `RatePlan`'s own annotation as "the stable identifier... independent of time," with derived content reached only from the version side.
-   - Con: A consumer must query for versions referencing a plan rather than read them off the plan directly.
+**Original ruling (2026-07-07, now reversed):**
+Remove `hasRatePlanVersion` and `hasRatePlanModifierVersion`; a version points at its plan via `forRatePlan` / `forRatePlanModifier` only, with no inverse on the plan side. Its stated grounds were that a stable identity should not carry a growing list of derived snapshots, and that a two-way link duplicates one relationship in both directions.
 
-2. **Keep a two-way link (plan-to-version and version-to-plan)**
-   - Pro: Direct navigation from a plan to its versions.
-   - Con: Duplicates the same relationship in both directions on a class that is meant to carry no derived content.
-
-**Rationale:**
-- `RatePlan` and `RatePlanModifier` are identity records; a stable identity does not need to carry a growing list of the derived snapshots built from it over time.
-- The single-direction link keeps the derived-artifact relationship on the derived artifact (the version), not on the identity it was built for.
+Disposition of that ruling's elements: the identity/derived-content boundary is **carried** (a plan still carries no pricing content of its own, and versions remain the derived artifacts); the single-direction restriction is **dropped**; the duplication concern is **transformed** into an `owl:inverseOf` declaration, so the two directions are one relationship in the vocabulary rather than two independent facts, and a consumer may rely on entailment instead of storing both.
 
 **Consequences / Impact:**
-- **Positive:** A cleaner identity/derived-artifact boundary — versions reference their plan, plans do not reference their versions.
-- **Breaking Change:** Yes — `hasRatePlanVersion` / `hasRatePlanModifierVersion` are removed; consumers must query by `forRatePlan` / `forRatePlanModifier` instead of reading a version list off the plan.
-- **Requirements:** Producers must replace `hasRatePlanVersion` / `hasRatePlanModifierVersion` with `forRatePlan` / `forRatePlanModifier` on the version node.
+- **Positive:** Plan-to-version navigation is direct and vocabulary-documented; a delivered data set keeps its links rather than requiring a graph-wide scan to rebuild them.
+- **Breaking Change:** None relative to v0.2.x. Both properties existed there and remain available, so the earlier removal never reaches a released version.
+- **Requirements:** Producers may assert either direction or both. Where both are asserted they must agree; a consumer may treat one direction as authoritative and derive the other.
 
 **References:**
-- Changelog: `urpx-changelog.md`, 2026-07-07 entry ("Removed: `hasRatePlanVersion` / `hasRatePlanModifierVersion`").
-- Release notes: `documentation/pages/urpx-release-notes-v0.3.0.md`, Breaking Changes item 3 and Migration.
-- Ontology: `ontology/urpx-ontology.ttl` — `urpx:forRatePlan`, `urpx:RatePlan` annotations.
+- Changelog: `urpx-changelog.md`, 2026-07-07 entry (removal) and 2026-07-29 entry (restoration with the inverse declared).
+- Ontology: `ontology/urpx-ontology.ttl`: `urpx:hasRatePlanVersion`, `urpx:hasRatePlanModifierVersion`, `urpx:forRatePlan`, `urpx:forRatePlanModifier`.
+- SHACL: `shacl/urpx-shacl.ttl`: `RatePlanShape`, `RatePlanModifierShape`.
 
 ---
 

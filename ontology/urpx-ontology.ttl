@@ -1738,7 +1738,7 @@ urpx:forRatePlan a owl:ObjectProperty ;
     rdfs:domain urpx:RatePlanVersion ;
     rdfs:range urpx:RatePlan ;
     owl:inverseOf urpx:hasRatePlanVersion ;
-    skos:note "The authored version-to-plan binding: a snapshot names the plan it was built for. The plan-to-version direction is available can optionally be inferred from and asserted in instance data as the entailed inverse hasRatePlanVersion." .
+    skos:note "The version-to-plan binding: a snapshot names the plan it was built for. Inverse of hasRatePlanVersion: a data set may assert either direction or both, and where only one is asserted the other is entailed." .
 
 urpx:forRatePlanModifier a owl:ObjectProperty ;
     rdfs:label "For Rate Plan Modifier"@en ;
@@ -1746,7 +1746,7 @@ urpx:forRatePlanModifier a owl:ObjectProperty ;
     rdfs:domain urpx:RatePlanModifierVersion ;
     rdfs:range urpx:RatePlanModifier ;
     owl:inverseOf urpx:hasRatePlanModifierVersion ;
-    skos:note "The authored version-to-plan-modifier binding. Parallel to forRatePlan; the entailed inverse is hasRatePlanModifierVersion." .
+    skos:note "The version-to-plan-modifier binding. Inverse of hasRatePlanModifierVersion." .
 
 urpx:forScenario a owl:ObjectProperty ;
     rdfs:label "For Scenario"@en ;
@@ -2199,7 +2199,7 @@ urpx:hasRatePlanModifierVersion a owl:ObjectProperty ;
     owl:inverseOf urpx:forRatePlanModifier ;
     rdfs:domain urpx:RatePlanModifier ;
     rdfs:range urpx:RatePlanModifierVersion ;
-    skos:note "OWL-entailed from forRatePlanModifier; not asserted in instance data. Parallel to hasRatePlanVersion." .
+    skos:note "Links a rate plan modifier to each resolved version snapshot built for it. Inverse of forRatePlanModifier; a data set may assert either direction or both." .
 
 urpx:hasRatePlanVersion a owl:ObjectProperty ;
     rdfs:label "Has Rate Plan Version"@en ;
@@ -2207,7 +2207,7 @@ urpx:hasRatePlanVersion a owl:ObjectProperty ;
     owl:inverseOf urpx:forRatePlan ;
     rdfs:domain urpx:RatePlan ;
     rdfs:range urpx:RatePlanVersion ;
-    skos:note "OWL-entailed from forRatePlan; optionally derived from and asserted in instance data. Enables plan-centric traversal to every version of a rate plan without a stored reciprocal triple." .
+    skos:note "Links a rate plan to each resolved version snapshot built for it, so a consumer holding the plan reaches its versions directly rather than searching every version for a matching forRatePlan. Inverse of forRatePlan: a data set may assert either direction or both, and where only one is asserted the other is entailed." .
 
 urpx:hasSeasons a owl:ObjectProperty ;
     rdfs:label "Has Seasons"@en ;
