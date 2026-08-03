@@ -5,6 +5,23 @@
 
 This runbook covers URPX source releases and the GitHub Pages publication mesh. Keep release changes small and reviewable.
 
+## Release Sequence
+
+The v0.3 series ships as three tags, each carrying one kind of change, so that every diff a reviewer opens is about one subject.
+
+| Tag | Carries |
+|-----|---------|
+| `v0.3.0` | The vocabulary and shapes as reviewed, on the current namespace |
+| `v0.3.1` | The licence transition described in `TRANSITION.md`: specifications to the W3C Document Licence, datasets to CDLA-Permissive-2.0, source and metadata remaining Apache-2.0 |
+| `v0.3.2` | The move to the `urpx.org` namespace, the dereferencing that goes with it, and the published JSON-LD context |
+
+Run `deno task release:validate` and the full Turtle and SHACL checks at each tag, not only the last one.
+
+Two consequences for anyone following this runbook:
+
+- **The namespace changes at `v0.3.2`.** Every `urpx:` IRI takes a new base. A consumer binding to URPX IRIs should bind to the `v0.3.2` namespace; the earlier published mesh remains resolvable as an archive of the `v0.2.x` state.
+- **Local names are settled before `v0.3.0`.** The `v0.3.2` change is a base-IRI substitution and nothing else, so a term whose local name is wrong at `v0.3.0` stays wrong through the substitution.
+
 ## Release Surfaces
 
 - Source repo: `git@github.com-fluxtailor:urpx-org/urpx.git`
@@ -62,9 +79,19 @@ deno task release:validate -- --version 0.2.1 --require-tag
 
 The `GitHub Release` workflow normally builds its release body from `documentation/pages/urpx-release-notes-vX.Y.Z.md` using private release-helper code from `urpx-org/urpx-website-staging`. Until that repository is public, configure `URPX_AUTOMATION_TOKEN` as an organization or repository secret with access to the helper repository. A manual workflow run can instead provide `release_body` text in the Actions UI, which skips the helper checkout.
 
+The release notes are read from the tagged commit, so they must be committed before the tag rather than added afterwards.
+
+The `v0.3.1` release replaces `URPX_AUTOMATION_TOKEN` with an organization-owned GitHub App that mints a short-lived token per run, so automation is no longer tied to one contributor's account. Three workflows change together: `regen-generated-content.yml`, `release.yml` and `trigger-staging-rebuild.yml`. The existing secret stays in place until all three are converted and verified, because `trigger-staging-rebuild.yml` fails closed without it and the website would stop rebuilding.
+
+## Website Publication
+
+A push to `main` triggers `trigger-staging-rebuild.yml`, which dispatches a rebuild of the documentation website. That build re-syncs the pages in `documentation/pages/`, including `urpx-release-notes-v*.md`, into the website's own release-notes section. Publishing release notes to the site therefore needs no manual step beyond committing them here.
+
 ## Pages Publication
 
-The manual GitHub Actions workflow for this path is `Weave URPX Semantic Flow Site`. It uses Node 24 action versions, initializes `gh-pages` when needed, and publishes the woven site to `gh-pages`.
+**The GitHub Actions workflow is the path to use.** Run `Weave URPX Semantic Flow Site` from the Actions tab, giving it the release version and the source ref. It uses Node 24 action versions, initializes `gh-pages` when needed, and publishes the woven site to `gh-pages`. Running it from Actions rather than a laptop is what keeps the publication reproducible by anyone with repository access.
+
+The rest of this section is the **local fallback**: the same sequence by hand, for diagnosing a workflow failure or publishing when Actions is unavailable. It is not the normal path.
 
 Use the npm-published Weave CLI. Pin the package version used for the release:
 
@@ -73,10 +100,10 @@ npm view @semantic-flow/weave version bin
 weave() { npx -y @semantic-flow/weave@0.1.2 "$@"; }
 ```
 
-Set local paths:
+Set local paths. `URPX_REPO` is your own clone of this repository and `URPX_PUB` a separate worktree checked out on `gh-pages`:
 
 ```sh
-export URPX_REPO=/home/djradon/hub/urpx-org/urpx
+export URPX_REPO="$HOME/path/to/urpx"
 export URPX_PUB=/tmp/urpx-gh-pages
 export URPX_RELEASE_VERSION=0.2.1
 export URPX_RELEASE_STATE="v$URPX_RELEASE_VERSION"
