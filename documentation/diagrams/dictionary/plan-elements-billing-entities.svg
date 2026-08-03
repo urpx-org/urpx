@@ -9,7 +9,7 @@
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(28.8 614.23)">
 <title>Plan Elements &amp; Billing Entities</title>
 <polygon fill="white" stroke="transparent" points="-28.8,28.8 -28.8,-614.23 406.66,-614.23 406.66,28.8 -28.8,28.8"/>
-<text text-anchor="middle" x="188.93" y="-570.23" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">Plan Elements &amp; Billing Entities (URPX v0.2.0)</text>
+<text text-anchor="middle" x="188.93" y="-570.23" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">Plan Elements &amp; Billing Entities (URPX v0.3.0)</text>
 <g id="clust5" class="cluster">
 <title>cluster_legend</title>
 <path fill="#f8f8f8" stroke="#cccccc" d="M217.86,-365.64C217.86,-365.64 357.86,-365.64 357.86,-365.64 363.86,-365.64 369.86,-371.64 369.86,-377.64 369.86,-377.64 369.86,-542.43 369.86,-542.43 369.86,-548.43 363.86,-554.43 357.86,-554.43 357.86,-554.43 217.86,-554.43 217.86,-554.43 211.86,-554.43 205.86,-548.43 205.86,-542.43 205.86,-542.43 205.86,-377.64 205.86,-377.64 205.86,-371.64 211.86,-365.64 217.86,-365.64"/>

@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: Flux Tailor LLC
+# SPDX-License-Identifier: Apache-2.0
+
+cff-version: 1.2.0
+message: "If you use URPX, please cite it as below."
+title: "URPX: Utility Rate Plan Exchange Ontology"
+type: dataset
+authors:
+  - family-names: "De Schepper"
+    given-names: "Klaartje"
+  - name: "URPX Working Group"
+version: 0.3.0
+license: Apache-2.0
+repository-code: "https://github.com/urpx-org/urpx"
+abstract: "An open standard for exchanging utility rate plan information using semantic web technologies (RDF, OWL, SHACL)."
+keywords:
+  - utility
+  - rate plan
+  - tariff
+  - ontology
+  - semantic web
+  - energy

@@ -1,0 +1,54 @@
+{
+  "@context": {
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "coned": "https://urpx-org.github.io/urpx/fixtures/coned/",
+    "org": "https://urpx-org.github.io/urpx/fixtures/org/",
+    "urpx:initialEffectiveDate": { "@type": "xsd:date" }
+  },
+  "@graph": [
+    {
+      "@id": "coned:coned-sc1-rate-i",
+      "@type": "urpx:RatePlan",
+      "urpx:name": "SC1 Rate I — Residential and Religious",
+      "urpx:description": "Consolidated Edison Service Classification No. 1 (Residential and Religious), Rate I — stable identity record. No pricing content. Delivery plan.",
+      "urpx:ratePlanUniqueIdentifier": "CONED-SC1-RATE-I",
+      "urpx:initialEffectiveDate": "2018-01-01",
+      "urpx:priceCurrency": "USD",
+      "urpx:timezoneIdentifier": "America/New_York",
+      "urpx:commodity": { "@id": "urpx:electricity" },
+      "urpx:serviceRole": { "@id": "urpx:distributionServiceRole" },
+      "urpx:offeredBy": { "@id": "org:consolidated-edison" },
+      "urpx:hasIdentifier": { "@id": "coned:coned-sc1-rate-i-id-utility-code" },
+      "urpx:hasServiceClass": { "@id": "coned:sc1" },
+      "urpx:hasRateGroup": { "@id": "coned:sc1-rate-i-rategroup" }
+    },
+    {
+      "@id": "coned:coned-sc1-rate-i-id-utility-code",
+      "@type": "urpx:RatePlanIdentifier",
+      "skos:notation": "SC1-RATE-I",
+      "urpx:scheme": { "@id": "https://urpx-org.github.io/urpx/ontology/utility-tariff-code" }
+    },
+    {
+      "@id": "org:consolidated-edison",
+      "@type": "urpx:UtilityOperator",
+      "urpx:legalName": "Consolidated Edison Company of New York, Inc.",
+      "urpx:organizationType": { "@id": "urpx:utilityOrganization" }
+    },
+    {
+      "@id": "coned:sc1",
+      "@type": "urpx:ServiceClass",
+      "urpx:serviceClassName": "Service Classification No. 1",
+      "urpx:serviceClassRaw": "SC1",
+      "urpx:hasRateGroup": { "@id": "coned:sc1-rate-i-rategroup" }
+    },
+    {
+      "@id": "coned:sc1-rate-i-rategroup",
+      "@type": "urpx:RateGroup",
+      "urpx:rateGroupIdentifier": "RATE-I",
+      "urpx:rateGroupName": "Rate I — Residential and Religious",
+      "urpx:parentServiceClass": { "@id": "coned:sc1" }
+    }
+  ]
+}

@@ -1,10 +1,10 @@
 {
   "@context": {
-    "urpx": "https://schema.urpx.org/",
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
     "schema": "http://schema.org/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "org": "https://example.com/organizations/",
-    "pge": "https://example.com/pge/",
+    "org": "https://urpx-org.github.io/urpx/fixtures/org/",
+    "pge": "https://urpx-org.github.io/urpx/fixtures/pge/",
     "urpx:unitPrice": {
       "@type": "xsd:decimal"
     },
@@ -60,21 +60,26 @@
       "@type": "xsd:anyURI"
     }
   },
-  "@type": "urpx:URPXDocument",
-  "@id": "pge:doc-e-elec-2026-01-01",
-  "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl",
-  "urpx:hasRatePlan": {
-    "@type": "urpx:RatePlan",
-    "@id": "pge:e-elec",
-    "urpx:ratePlanUniqueIdentifier": "E-ELEC",
-    "urpx:name": "Residential Time-of-Use (Electric Home) Service",
-    "urpx:initialEffectiveDate": "2022-12-01",
-    "urpx:timezoneIdentifier": "America/Los_Angeles",
-    "urpx:hasRatePlanVersion": {
+  "@graph": [
+    {
+      "@type": "urpx:URPXPackage",
+      "@id": "pge:doc-e-elec-2026-01-01",
+      "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.3.0/ontology/urpx-ontology.ttl",
+      "urpx:hasRatePlan": {
+        "@type": "urpx:RatePlan",
+        "@id": "pge:e-elec",
+        "urpx:ratePlanUniqueIdentifier": "E-ELEC",
+        "urpx:name": "Residential Time-of-Use (Electric Home) Service",
+        "urpx:initialEffectiveDate": "2022-12-01",
+        "urpx:timezoneIdentifier": "America/Los_Angeles",
+        "urpx:offeredBy": { "@id": "org:utility-pge" }
+      }
+    },
+    {
       "@type": "urpx:RatePlanVersion",
       "@id": "pge:e-elec-2026-01-01",
-      "urpx:publishedBy": {
-        "@type": "urpx:Organization",
+      "urpx:offeredBy": {
+        "@type": "urpx:UtilityOperator",
         "@id": "org:utility-pge",
         "urpx:legalName": "Pacific Gas & Electric Company",
         "urpx:organizationType": {
@@ -92,6 +97,9 @@
       },
       "urpx:serviceRole": {
         "@id": "urpx:bundledServiceRole"
+      },
+      "urpx:forRatePlan": {
+        "@id": "pge:e-elec"
       },
       "urpx:hasRateCase": {
         "@type": "urpx:RateCase",
@@ -111,13 +119,10 @@
         "urpx:dataSourceType": {
           "@id": "urpx:utilityWebsiteSource"
         },
-        "urpx:hasTariffBookReference": {
-          "@type": "urpx:TariffBookReference",
-          "urpx:pageStart": 1,
-          "urpx:pageEnd": 5,
-          "urpx:leafStart": "60519-E",
-          "urpx:leafEnd": "54740-E"
-        }
+        "urpx:pageStart": 1,
+        "urpx:pageEnd": 5,
+        "urpx:leafStart": "60519-E",
+        "urpx:leafEnd": "54740-E"
       },
       "urpx:hasEligibilityRule": [
         {
@@ -242,6 +247,19 @@
           }
         }
       ],
+      "urpx:hasCoverageClaim": {
+        "@type": "urpx:CoverageClaim",
+        "@id": "pge:cc-e-elec-2026-01-01",
+        "urpx:completenessResult": {
+          "@id": "urpx:complete"
+        },
+        "urpx:selfContained": true,
+        "urpx:explainedBy": {
+          "@type": "urpx:Evaluation",
+          "@id": "pge:eval-e-elec-2026-01-01",
+          "urpx:description": "All plan elements and prices of Schedule E-ELEC effective 2026-01-01 are carried inline from the published tariff sheets, including the generation, distribution, and adjustment prices and the base services charge and California Climate Credit. No component is priced externally, so the version is self-contained."
+        }
+      },
       "urpx:hasPlanElements": {
         "@type": "urpx:PlanElements",
         "urpx:hasSeasons": [
@@ -1321,5 +1339,5 @@
         ]
       }
     }
-  }
+  ]
 }

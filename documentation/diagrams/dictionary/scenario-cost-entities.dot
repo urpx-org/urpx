@@ -1,0 +1,91 @@
+digraph "Scenario & Cost Entities" {
+    rankdir=TB;
+    bgcolor="white";
+    pad=0.4;
+    nodesep=0.7;
+    ranksep=0.9;
+    fontname="Inter, Helvetica, Arial, sans-serif";
+    label="Scenario & Cost Entities (URPX v0.3.0)";
+    labelloc="t";
+    fontsize=14;
+    fontcolor="#1a365d";
+    node [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=10, style=filled, fontcolor="#1a365d"];
+    edge [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=8, fontcolor="#1a365d"];
+
+    // Section classes
+    Scenario [
+        label="Scenario"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    ScenarioCostModel [
+        label="ScenarioCostModel"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    ScenarioCostResult [
+        label="ScenarioCostResult"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+
+    // Cross-section references
+    CoverageClaim [
+        label="CoverageClaim"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    CustomerProfile [
+        label="CustomerProfile"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    RatePlanVersion [
+        label="RatePlanVersion"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    ServicePointProfile [
+        label="ServicePoint\nProfile"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+
+    // Object property edges
+    Scenario -> CustomerProfile [
+        label="hasCustomerProfile\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Scenario -> ServicePointProfile [
+        label="hasServicePointProfile\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ScenarioCostModel -> RatePlanVersion [
+        label="consumesVersion\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ScenarioCostModel -> Scenario [
+        label="forScenario\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ScenarioCostModel -> CoverageClaim [
+        label="hasCoverageClaim\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ScenarioCostModel -> ScenarioCostResult [
+        label="producesResult\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ScenarioCostResult -> CoverageClaim [
+        label="hasCoverageClaim\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+
+    // Auto-computed rank hints
+    { rank=same; Scenario; ScenarioCostResult; }
+
+    subgraph cluster_legend {
+        label="Legend";
+        fontname="Inter, Helvetica, Arial, sans-serif";
+        fontsize=11;
+        fontcolor="#1a365d";
+        style=rounded;
+        color="#cccccc";
+        bgcolor="#f8f8f8";
+        margin=12;
+
+        leg_class [label="OWL Class\n(this section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
+        leg_xref [label="OWL Class\n(other section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"];
+        leg_src [label=" ", shape=point, width=0.01];
+        leg_tgt1 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+        leg_tgt2 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt2 [label="cross-section ref", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+    }
+}

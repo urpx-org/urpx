@@ -5,11 +5,11 @@
 
 # URPX Tutorial: Building Your First Rate Plan
 
-**Version**: 0.2.0 (Pre-draft)
-**Last Updated**: 2026-04-29
+**Version**: 0.3.0 (Pre-draft)
+**Last Updated**: 2026-07-07
 **Status**: Active
 
-**Learn the basics of creating and validating utility rate plan data using the URPX v0.2.0 ontology**
+**Learn the basics of creating and validating utility rate plan data using the URPX v0.3.0 ontology**
 
 ---
 
@@ -44,29 +44,58 @@ Before starting this tutorial, ensure you have:
 
 ### Terminology
 
-**Rate Plan vs Rate vs Tariff**
+**Rate Plan vs Tariff vs Price**
 
 Understanding these distinctions is critical for working with URPX. For a more detailed explanation, please see the [URPX FAQ](urpx-faq.md).
 
-- **Tariff**: A regulatory document (tariff book) containing one or more rate plans. Published by utilities and approved by regulatory authorities.
-- **Rate Plan**: A complete package with all parameters needed to calculate customer cost - prices, TOU schedules, service tiers, seasonal variations, eligibility rules, and applicability conditions.
-- **Rate**: A single price value (e.g., $0.12/kWh) - incomplete without the full rate plan context.
+- **Rate Plan**: A complete package with all parameters needed to calculate customer cost: prices, TOU schedules, service tiers, seasonal variations, eligibility rules, and applicability conditions. The rate plan is the first-class thing URPX models.
+- **Tariff**: A regulatory document (tariff book) containing material from one or more rate plans. Published by utilities and approved by regulatory authorities. In URPX, tariffs are publication vehicles (places where parts of a rate plan appear), not the plan itself.
+- **Price**: A single value applied to something measured or counted (e.g., $0.12/kWh, an $18.75 monthly charge), incomplete without the full rate plan context.
 
-**In URPX**: We model rate plans (complete pricing structures), not individual rates. Tariff documents are containers that may include multiple rate plans plus regulatory metadata.
+**Why URPX says "price", not "rate".** In everyday utility usage, "rate" can mean at least three different things: a single per-unit value ("the summer rate is $0.12/kWh"), a named grouping inside a service classification ("Rate I", "Rate II"), or the whole plan ("switch to the EV rate"). Because one word carries three meanings, URPX does not use "rate" on its own anywhere in the vocabulary. A single value is a **price** (`Price`, `PriceSet`). The complete package is a **rate plan** (`RatePlan`). And the named grouping has its own term:
+
+- **Rate Group** (`RateGroup`): The named grouping within a service class that utilities themselves often call a "rate", for example, *Rate I* within *Service Classification No. 1*. A rate group is a subdivision of a service class, not a kind of service class: Rate I is not a type of SC 1, it is a grouping inside it (`parentServiceClass` points from the rate group to its service class). A rate plan links to its grouping via `hasRateGroup`, so when a utility's published material says "SC 1 Rate I", the plan maps directly to that published grouping, without importing the ambiguous word "rate" into any other part of the model.
+
+**In URPX**: We model rate plans (complete packages), their prices, and the rate groups that connect them to the utility's own published groupings. Tariff documents are containers where parts of rate plans appear, plus regulatory metadata.
+
+### Rate Plan vs Rate Plan Modifier
+
+The [Terminology](#terminology) section above covers the base service and how it is published. URPX also has a second identity for content that changes what a customer pays without being a rate plan in its own right: the **rate plan modifier**.
+
+- **Rate Plan** (`RatePlan`): the base service a customer is on, what a customer would be billed under with no modifiers applied.
+- **Rate Plan Modifier** (`RatePlanModifier`): a separately published layer (a rider, discount, credit, or adjustment) that modifies a base rate plan. Examples include low-income discounts, green energy options, demand response programs, and distributed energy resource (DER) export crediting.
+
+**Why two classes.** If every combination of a base rate plan and its available riders were modeled as its own rate plan, the number of distinct plan identities would grow combinatorially with the number of modifiers a utility offers: one rate plan for the discount alone, another for the discount plus the green energy option, another for all programs together, and so on. URPX avoids this by composing a base `RatePlan` with independently published modifier layers instead of enumerating every combination as its own plan. A customer's actual cost comes from the rate plan plus whichever modifiers apply to that customer, not from a single all-in-one plan identity.
+
+**Independently published, independently sourced.** A rate plan modifier is not a section of its base plan's publication. Its pricing content is typically authored and revised on its own: its own tariff filing or statement, on its own revision cycle, carrying its own source references, separate from the base plan's. `RatePlanModifier` carries its own identifier class, `RatePlanModifierIdentifier`, parallel to `RatePlanIdentifier`. The `PricingModel` instances that carry a modifier's authored pricing content reach it through `referencesRatePlanModifier`, the modifier-side counterpart to `referencesRatePlan`.
+
+**Shaped like a rate plan, but applied onto one.** Mechanically, `RatePlanModifier` mirrors `RatePlan`: it is disjoint from its own derived snapshot class, `RatePlanModifierVersion`, the same way `RatePlan` is disjoint from `RatePlanVersion`. A `RatePlanModifierVersion` links back to its identity with `forRatePlanModifier`, the counterpart to `forRatePlan`, and it carries seasons, metric inputs, and prices through the same `PlanElements` and `Prices` structures as a `RatePlanVersion`. What a modifier does not do is stand on its own: it is meant to be applied onto a rate plan rather than enrolled in by itself. A `RatePlanVersion` records which modifiers are available to it (`hasModifierOptions` for the modifier identities, `hasModifierVersionOptions` for the resolved modifier versions) rather than a modifier carrying a full customer bill on its own.
+
+A short comparison, if it helps: a condiment modifies a dish without becoming a new dish. A rate plan modifier works the same way: it changes what is on the bill without becoming a new rate plan.
+
+#### Scope: Rate Plan Data, Not Enrollment Events
+
+URPX represents rate plan data: the plan, its modifiers, the pricing that applies, and the conditions under which it applies. `offeredBy` names the organization that offers it.
+
+It does not represent the event-based data that moves customers between plans, the adds, drops, and updates applied to customer profiles as enrollments start, change, and end. `CustomerProfile` and `ProgramEnrollment` carry the characteristics and the enrollment state that eligibility is evaluated against. They are not a transaction feed, and URPX defines no vocabulary for exchanging one.
+
+Deciding which modifiers to bundle, badge, or default into a signup flow is likewise a consuming-application concern.
 
 ### Core Concepts
 
-**Rate Plan**: A complete pricing structure offered by a utility
-- Contains temporal versions with specific effective dates
-- Valid for specific time periods
+**Rate Plan**: The stable identity of a plan offered by a utility
+- A durable record: name, unique identifier, offering organization, service class and rate group links
+- Carries no pricing content itself: pricing lives in versions (this tutorial) and in the pricing models publications carry (see the [Overview](urpx-overview.md))
 
-**Rate Plan Version**: Time-bound instance of a rate plan
+**Rate Plan Version**: The complete, resolved snapshot of a rate plan for a temporal window
+- A top-level node that points back to its plan identity via `forRatePlan`
 - Contains actual prices and pricing structures
 - Has specific effectiveDateTime and optional expirationDateTime
 - Has eligibility criteria for customer qualification
 - Applies to specific customer classes and service types
 - Links to centralized PlanElements for seasons, holidays, and pricing rules including time-of-use schedules
 - Contains Prices container with PriceSet instances
+- Declares its own coverage: a required `CoverageClaim` states the snapshot's completeness result (self-containment and an explaining `Evaluation` are optional)
 
 **Price**: An individual component of a bill
 - May have a **chargeType** (specific implementation like `minimumCharge`, `usageCharge`)
@@ -105,14 +134,16 @@ This tutorial builds a rate plan from the outside in. Here's the structure:
 %%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
 
 graph TB
-    Doc["<b>URPXDocument</b><br/>Root container<br/><i>Step 1</i>"]
+    Doc["<b>URPXPackage</b><br/>Exchange container<br/><i>Step 1</i>"]
     RP["<b>RatePlan</b><br/>Permanent plan identity<br/><i>Step 2</i>"]
-    RPV["<b>RatePlanVersion</b><br/>Time-bound instance<br/><i>Step 2</i>"]
+    RPV["<b>RatePlanVersion</b><br/>Resolved snapshot<br/><i>Step 2</i>"]
+    CC["<b>CoverageClaim</b><br/>Completeness declaration<br/><i>Step 2</i>"]
     PE["<b>PlanElements</b><br/>Seasons, metrics, billing<br/><i>Step 2</i>"]
     Prices["<b>Prices</b><br/>All pricing data<br/><i>Steps 3–6</i>"]
 
     Doc -->|"hasRatePlan"| RP
-    RP -->|"hasRatePlanVersion"| RPV
+    RPV -->|"forRatePlan"| RP
+    RPV -->|"hasCoverageClaim"| CC
     RPV -->|"hasPlanElements"| PE
     RPV -->|"hasPrices"| Prices
 
@@ -122,10 +153,10 @@ graph TB
 
     class Doc docClass
     class RP,RPV planClass
-    class PE,Prices priceClass
+    class CC,PE,Prices priceClass
 ```
 
-We'll build each piece in the steps below, starting with the URPXDocument wrapper.
+Note the direction of the version link: the version points back to its plan with `forRatePlan`. The plan identity carries no list of versions. We'll build each piece in the steps below, starting with the URPXPackage wrapper.
 
 ---
 
@@ -133,22 +164,20 @@ We'll build each piece in the steps below, starting with the URPXDocument wrappe
 
 Let's build a basic residential rate plan step by step using JSON-LD.
 
-### Step 1: Document and Context
+### Step 1: Package and Context
 
 ```json
 {
   "@context": {
-    "@vocab": "https://schema.urpx.org/",
-    "urpx": "https://schema.urpx.org/",
-    "urpx-org": "https://schema.urpx.org/organization/",
-    "schema": "https://schema.org/",
+    "@vocab": "https://urpx-org.github.io/urpx/ontology/",
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
     "ex": "https://example.org/tutorial/",
     "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
   "@id": "ex:doc-tutorial-basic",
-  "@type": "URPXDocument",
-  "version": "0.2.0",
-  "targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl",
+  "@type": "URPXPackage",
+  "version": "0.3.0",
+  "targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.3.0/ontology/urpx-ontology.ttl",
   "name": "Tutorial Basic Residential Rate Plan",
   "description": "Simple residential rate plan with minimum price and energy price",
   "effectiveDateTime": {
@@ -159,7 +188,11 @@ Let's build a basic residential rate plan step by step using JSON-LD.
 }
 ```
 
-### Step 2: Rate Plan and Version
+The `URPXPackage` is URPX's exchange container: the unit a system hands to another system. `targetURPXVersion` is required and names the exact ontology version the data was authored and validated against.
+
+### Step 2: Rate Plan Identity and Version
+
+The package carries the plan identity. The identity is deliberately small, a durable record with no pricing content:
 
 ```json
 {
@@ -172,39 +205,57 @@ Let's build a basic residential rate plan step by step using JSON-LD.
     "initialEffectiveDate": {
       "@type": "xsd:date",
       "@value": "2025-01-01"
-    },
-    "hasRatePlanVersion": {
-      "@id": "ex:version-basic-res-v1",
-      "@type": "RatePlanVersion",
-      "version": "1.0",
-      "priceCurrency": "USD",
-      "effectiveDateTime": {
-        "@type": "xsd:dateTime",
-        "@value": "2025-01-01T00:00:00-05:00"
-      },
-      "changeReason": {"@id": "urpx:initial"},
-      "publishedBy": {
-        "@id": "ex:tutorial-utility",
-        "@type": "urpx-org:Organization",
-        "name": "Tutorial Electric Company"
-      },
-      "serviceRole": {"@id": "urpx:bundledServiceRole"},
-      "hasPlanElements": {
-        "@id": "ex:plan-elements-basic",
-        "@type": "PlanElements",
-        "hasMetricInput": {
-          "@id": "ex:metric-input-energy",
-          "@type": "MetricInput",
-          "name": "Standard Energy Measurement",
-          "metricInputType": { "@id": "urpx:measuredMetricInput" },
-          "hasMetricSpecification": {
-            "@id": "ex:metric-spec-energy-supply",
-            "@type": "MetricSpecification",
-            "commodity": {"@id": "urpx:electricity"},
-            "measurementKind": {"@id": "urpx:energy"},
-            "unitOfMeasure": {"@id": "urpx:kWh"}
-          }
-        }
+    }
+  }
+}
+```
+
+The version is its own top-level node in the graph. It points back to the plan identity with `forRatePlan`, and it must declare a `CoverageClaim`: an explicit statement of the snapshot's completeness result (only `completenessResult` is required; `selfContained` and an explaining `Evaluation` are optional, and are shown here):
+
+```json
+{
+  "@id": "ex:version-basic-res-v1",
+  "@type": "RatePlanVersion",
+  "forRatePlan": {"@id": "ex:rateplan-basic-res"},
+  "version": "1.0",
+  "priceCurrency": "USD",
+  "effectiveDateTime": {
+    "@type": "xsd:dateTime",
+    "@value": "2025-01-01T00:00:00-05:00"
+  },
+  "changeReason": {"@id": "urpx:initial"},
+  "offeredBy": {
+    "@id": "ex:tutorial-utility",
+    "@type": "UtilityOperator",
+    "legalName": "Tutorial Electric Company",
+    "organizationType": {"@id": "urpx:utilityOrganization"}
+  },
+  "serviceRole": {"@id": "urpx:bundledServiceRole"},
+  "hasCoverageClaim": {
+    "@id": "ex:coverage-basic-res-v1",
+    "@type": "CoverageClaim",
+    "completenessResult": {"@id": "urpx:complete"},
+    "selfContained": true,
+    "explainedBy": {
+      "@id": "ex:evaluation-basic-res-v1",
+      "@type": "Evaluation",
+      "description": "All prices and plan elements are carried inline in this snapshot; no component is priced externally."
+    }
+  },
+  "hasPlanElements": {
+    "@id": "ex:plan-elements-basic",
+    "@type": "PlanElements",
+    "hasMetricInput": {
+      "@id": "ex:metric-input-energy",
+      "@type": "MetricInput",
+      "name": "Standard Energy Measurement",
+      "metricInputType": { "@id": "urpx:measuredMetricInput" },
+      "hasMetricSpecification": {
+        "@id": "ex:metric-spec-energy-supply",
+        "@type": "MetricSpecification",
+        "commodity": {"@id": "urpx:electricity"},
+        "measurementKind": {"@id": "urpx:energy"},
+        "unitOfMeasure": {"@id": "urpx:kWh"}
       }
     }
   }
@@ -220,7 +271,7 @@ Let's build a basic residential rate plan step by step using JSON-LD.
     "hasPriceSet": {
       "@id": "ex:priceset-basic",
       "@type": "PriceSet",
-      "name": "Basic Residential Prices",
+      "name": "Basic Residential Prices"
     }
   }
 }
@@ -319,7 +370,7 @@ The minimum price below uses `amount` (fixed). The energy price in Step 5 uses `
 
 ### Understanding MetricInput
 
-Prices don't measure things directly — they reference a MetricInput that defines what's being measured. This keeps measurement definitions centralized and reusable:
+Prices don't measure things directly. They reference a MetricInput that defines what's being measured. This keeps measurement definitions centralized and reusable:
 
 ```mermaid
 %%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
@@ -405,7 +456,7 @@ Before adding complex prices, define the MetricInputs they will reference. These
 
 ### Demand Price
 
-Commercial and industrial rates often include demand prices based on peak power consumption. The price references the MetricInput defined above.
+Commercial and industrial rate plans often include demand prices based on peak power consumption. The price references the MetricInput defined above.
 
 ```json
 {
@@ -543,13 +594,13 @@ graph TB
     class Price1,Price2 priceClass
 ```
 
-Prices connect to TOU periods via `touPeriodNumber` — a simple integer reference rather than a nested relationship. The JSON-LD below builds this structure from the inside out.
+Prices connect to TOU periods via `touPeriodNumber`: a simple integer reference rather than a nested relationship. The JSON-LD below builds this structure from the inside out.
 
 ---
 
 ## Time-of-Use Pricing
 
-Time-of-use rates vary pricing based on time of day, day of week, and season.
+Time-of-use rate plans vary pricing based on time of day, day of week, and season.
 
 ### Complete TOU Structure
 
@@ -557,6 +608,7 @@ Time-of-use rates vary pricing based on time of day, day of week, and season.
 {
   "@id": "ex:version-tou",
   "@type": "RatePlanVersion",
+  "forRatePlan": {"@id": "ex:rateplan-basic-res"},
   "version": "1.0",
   "effectiveDateTime": {
     "@type": "xsd:dateTime",
@@ -596,7 +648,7 @@ Time-of-use rates vary pricing based on time of day, day of week, and season.
       ]
     },
     "hasBillingModel": {
-      "@id": "ex-example-billing-model",
+      "@id": "ex:example-billing-model",
       "@type": "BillingModel",
       "hasTOUSchedule": {
         "@id": "ex:tou-schedule-summer",
@@ -732,9 +784,10 @@ Here's the complete structure of the rate plan you've assembled across this tuto
 %%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
 
 graph TB
-    Doc["<b>URPXDocument</b>"]
+    Doc["<b>URPXPackage</b>"]
     RP["<b>RatePlan</b><br/>TUTORIAL-BASIC-RES-001"]
     RPV["<b>RatePlanVersion</b><br/>Effective: 2025-01-01"]
+    CC["<b>CoverageClaim</b><br/>complete · self-contained"]
 
     subgraph Elements["PlanElements"]
         direction LR
@@ -766,7 +819,8 @@ graph TB
     end
 
     Doc -->|hasRatePlan| RP
-    RP -->|hasRatePlanVersion| RPV
+    RPV -->|forRatePlan| RP
+    RPV -->|hasCoverageClaim| CC
     RPV --> Elements
     RPV --> Pricing
     BM --> TOU
@@ -779,7 +833,7 @@ graph TB
     classDef elemClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#333
 
     class Doc docClass
-    class RP,RPV planClass
+    class RP,RPV,CC planClass
     class Season,HC,BM,MI1,MI2 elemClass
     class Sched,Peak,OffPeak touClass
     class PS,P1,P2,P3,P4,P5,P6,P7,P8 priceClass
@@ -792,6 +846,14 @@ Each price references the measurement definitions in PlanElements, and TOU price
 ## Validation and Best Practices
 
 ### Required Properties
+
+Every RatePlanVersion must have:
+
+1. **forRatePlan** - The link back to the plan identity the snapshot was built for
+2. **hasCoverageClaim** - A `CoverageClaim` with a `completenessResult` (required); a `selfContained` flag and an explaining `Evaluation` are optional
+3. **changeReason**, **serviceRole**, **hasPlanElements**, and **hasPrices**
+
+**offeredBy** is optional on both the plan and the snapshot. Name the organization that offers the plan whenever it is known; leave it out for teaching, sandbox, and research data that models no real utility.
 
 Every Price must have:
 
@@ -953,8 +1015,9 @@ Extracted from the full list of possible values in `urpx-ontology.ttl`:
 
 1. **Multi-Alternative Rate Plans** - Geographic or service variations
 2. **Customer Profiles** - Complex eligibility rules
-3. **Rate Plan Modifiers** - Optional add-ons and riders
+3. **Rate Plan Modifiers** - See [Rate Plan vs Rate Plan Modifier](#rate-plan-vs-rate-plan-modifier) for the composition rationale, and [Scope: Rate Plan Data, Not Enrollment Events](#scope-rate-plan-data-not-enrollment-events) for what sits outside the vocabulary
 4. **Dynamic Pricing** - Real-time and event-based pricing
+5. **Pricing Models and Publications** - How tariff filings, statements, and market feeds carry authored (possibly partial) pricing content that resolves into version snapshots; see the [Overview](urpx-overview.md) and the `test-cases/` directory
 
 ### Production Examples
 
@@ -971,4 +1034,4 @@ For complete current examples with tariff-linked test data:
 
 ---
 
-*Tutorial based on URPX v0.2.0 ontology. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
+*Tutorial based on URPX v0.3.0 ontology. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*

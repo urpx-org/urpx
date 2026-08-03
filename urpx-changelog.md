@@ -1,17 +1,311 @@
 <!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
-# 📋 URPX Changelog
+# URPX Changelog
 
-**Version:** 0.2.1 (Pre-draft)
-**Last Updated:** 2026-05-28
+**Version:** 0.3.0 (Pre-draft)
+**Last Updated:** 2026-08-02
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-08-02 — v0.3.0 (offering and publication separated)
+---
+
+### Changed
+- The link naming the organization behind a plan is renamed from `publishedBy` to `offeredBy`, and its domain is `PricingModel ∪ RatePlan ∪ RatePlanModifier ∪ RatePlanVersion ∪ RatePlanModifierVersion`. The property names the organization that offers the pricing for service, whether as a regulated tariff or a competitive supply product. Range and cardinality are unchanged.
+- The organization-side link is renamed from `publishes` to `offers`, its range is widened from `RatePlan` to the same five-class union, and it is declared `owl:inverseOf offeredBy`. The widened range matches the domain of `offeredBy` exactly, so the entailed direction asserts no class membership its subject does not hold. `OrganizationShape`, `EnergyServiceProviderShape`, `RegulatoryAuthorityShape`, `SystemOperatorShape`, and `UtilityOperatorShape` admit `offers` in place of `publishes`. Both terms align with schema.org `offeredBy` and `offers` by reference; URPX does not import schema.org.
+- `offeredBy` is optional in both directions, on the plan identity and on the version snapshot alike. The version shapes previously required the organization link (`minCount 1`); they now admit it at `minCount 0`. Teaching, sandbox, and research data that models no real utility validates without naming one.
+- `publishedBy` is re-homed onto the artifacts that are published: its domain is now `PricingModel ∪ TariffFiling ∪ SourcePublication ∪ URPXPackage`, and all four shapes admit it (optional, at most one). Publication is a property of the artifact rather than of the rate plan whose terms that artifact states. A `PricingModel` carries both properties, being an authored unit that is itself published; where a model sits inside a filing, the filing carries the publisher. On a `SourcePublication`, `issuingAuthority` continues to name the issuing or approving body where that differs from the publisher.
+
+### Migration
+- Rename the `publishedBy` key to `offeredBy` on pricing models, rate plans, rate plan modifiers, and both version snapshots. On pricing models, filings, sources, and packages, `publishedBy` keeps its name and now has a shape that admits it.
+- Rename `publishes` to `offers` on organizations.
+- No data becomes invalid for want of an organization: the link is optional everywhere it appears.
+
+2026-07-31 — v0.3.0 (external alignment annotations)
+---
+
+### Removed
+- The Semantic Flow alignment annotations on `PriceDefinitionReference` and `resolvedFrom`: the `compatibleWith` assertion on the class and the `rdfs:seeAlso` pointers into that vocabulary from both terms. The relator model is unchanged, and every role the class holds is expressed in URPX terms: inclusion on `referenceInclusion`, the charge identity on `referencesPriceDefinition`, source evidence on `documentedBy`, temporal scope on `hasTemporalScope`, and the resolution thread on `resolvedFrom`, whose domain and range are unchanged.
+- The `prov:` and `geosparql:` prefix declarations. Neither bound a term. The `Evaluation` class note and the attribution notes name PROV in prose, which needs no binding; URPX aligns with PROV by reference and does not import it.
+
+2026-07-29 — v0.3.0 (plan-to-version links assertable)
+---
+
+### Changed
+- `isReferencedByPricingModel` may now be asserted in instance data, and applies to `RatePlanModifier` as well as `RatePlan`. `RatePlanShape` and `RatePlanModifierShape` both admit it (optional, unbounded), so a data set can carry the link from a rate plan or modifier to the pricing models that declare content for it rather than requiring a consumer to search every model.
+- Removed the `owl:inverseOf referencesRatePlan` declaration on `isReferencedByPricingModel`. The two are not inverses: `referencesRatePlan` admits `PriorRatePlan` as a subject while `isReferencedByPricingModel` ranges on `PricingModel` alone, so the pairing entailed that a `PriorRatePlan` is a `PricingModel`. Dropping it also lets the property serve rate plan modifiers, and further subjects later, without carrying an unsound entailment.
+- `hasRatePlanVersion` and `hasRatePlanModifierVersion` may now be asserted in instance data. `RatePlanShape` and `RatePlanModifierShape` admit the plan-side property (optional, unbounded), so a data set can carry the plan-to-version link directly instead of requiring a consumer to scan every version for a matching `forRatePlan`. Each pair stays declared `owl:inverseOf`, so where only one direction is asserted the other is entailed; where both are asserted they must agree. Revises design decision #125, which had restricted the relationship to the version side.
+
+2026-07-29 — v0.3.0 (pre-tag referential integrity and enumeration documentation)
+---
+
+Vocabulary definitions and corrections applied before the initial public tag, folded into the unreleased 0.3.0.
+
+### Added
+- `PhaseCategoryValue`, an enumeration grouping phase codes by electrical service configuration (`singlePhaseCategory`, `splitPhaseCategory`, `threePhaseCategory`, `measurementCategory`), and `phaseCategory`, the object property carrying a phase code's category. The 25 `PhaseCodeKindValue` members assert their category through it, grouping phase codes the way `ChargeCategoryValue` groups charge types.
+- Typed member individuals with labels and definitions for the `CompletenessResultValue` (six members), `ConfidenceValue` (three) and `EvaluationKindValue` (five) enumerations, so each member carries interchange semantics and appears in the data dictionary.
+- `rdfs:comment` and member-semantics notes on `ConfidenceValue` and `EvaluationKindValue`.
+- `hasRatePlanVersion` and `hasRatePlanModifierVersion`, inverses of `forRatePlan` and `forRatePlanModifier`, so a consumer can traverse from a rate plan or a rate plan modifier to every resolved version snapshot built for it. Both are OWL-entailed and not asserted in instance data, matching `isReferencedByPricingModel`.
+
+### Changed
+- Corrected the `billPortion` classification on `creditPriceProtection`, `creditRenewable`, `generation`, `reliabilityCharge` and `usageCharge` to `supplyPortion`, the `BillPortionValue` member their supply-side siblings already carry.
+- Revised the `forRatePlan` and `forRatePlanModifier` notes to state the authored version-to-plan direction and name the entailed inverse.
+
+### Removed
+- Removed the `rdfs:subPropertyOf` assertion on `utilityId`. The property itself is unchanged.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- Added `PhaseCategoryValueShape` (`sh:targetClass`, `sh:nodeKind sh:IRI`, `sh:in` over the four members). No property shape is added for `phaseCategory`, matching the arrangement `chargeCategory` has on `ChargeTypeValue`: the assertion lives on the vocabulary's enumeration members rather than in instance data.
+
+2026-07-26 — v0.3.0 (pre-tag reconciliation carriage and publication-type consolidation)
+---
+
+Vocabulary additions and corrections applied before the initial public tag, folded into the unreleased 0.3.0. The additions carry facts a consuming implementation needs when reconciling published units into resolved snapshots; the corrections close defects found in the post-application review of the two 2026-07-25 batches.
+
+### Added
+- `ModelExclusion`, a relator node on a coverage claim's `Evaluation`, recording that a pricing model listed in the version's `consolidatedFrom` set contributed no element to the snapshot, and why. Carried by `hasModelExclusion` (Evaluation to ModelExclusion), pairing `excludedModel` (the pricing model) with `exclusionReason` (a new `ExclusionReasonValue` enumeration: `pruned`, `fullySuperseded`, `voided`, `outOfScope`) and an optional `description`. This makes the consolidation completeness cross-check machine-checkable by any consumer holding the snapshot, instead of a producer-side prose promise.
+- Typed member individuals with labels and definitions for the `publicationType` enumeration (`tariffBook`, `tariffStatement`, `tariffSupplement`, `tariffAddendum`, `supplyCharges`, `derExports`, `highlyDynamicPrices`, `marketPriceFeed`), which previously had no documentation anywhere.
+
+### Changed
+- Widened the domains of `dateModified` and `dateTimeModified` to include `PricingModel` and `TariffFiling`, so a publication unit can carry its own modification date. Where two publication units overlap with no `supersedes`, `replaces`, or `cancelledBy` link, the later modification date is the intended ordering signal; without this carriage a consumer reconciling two overlapping publications had no vocabulary-carried basis to order them.
+- Widened the domain of `documentedBy` to include `TariffFiling`. The closed `TariffFilingShape` already admitted the path and the shipping statement fixtures already assert it on filing nodes; the ontology domain now agrees, removing an incorrect entailment.
+- Renamed the enumeration class `SourcePublicationType` to `SourcePublicationTypeValue`, matching the `*Value` suffix every other enumeration class carries. Member IRIs and the `publicationType` property are unchanged, so no data is affected.
+- Amended the `consolidatedFrom` note to route exclusion records to `hasModelExclusion`, and the `CoverageClaim` note to recommend a `TemporalScope` with `scopeKind` `coverage` stating the window a verdict covers.
+- Tightened the `referencesRatePlan` note to state current semantics only.
+
+### Removed
+- Removed the orphaned `PublicationTypeValue` enumeration class, its ten member individuals, and its shape. No property or shape referenced it; its two live members (`tariffBook`, `tariffStatement`) move to the consolidated enumeration above, and the remaining eight members had zero usage anywhere in the vocabulary, shapes, or fixtures.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- Added `ModelExclusionShape` (closed: `excludedModel` required, `exclusionReason` required against `ExclusionReasonValueShape`, optional `description`) and `ExclusionReasonValueShape`.
+- `EvaluationShape` gains a `hasModelExclusion` path (optional, unbounded); it stays closed.
+- `PricingModelShape` and `TariffFilingShape` gain `dateModified` and `dateTimeModified` paths (optional, 0..1); both stay closed.
+- Renamed `SourcePublicationTypeShape` to `SourcePublicationTypeValueShape` and aligned it with the house enumeration-shape pattern (`sh:targetClass`, `sh:nodeKind sh:IRI`).
+- Removed `PublicationTypeValueShape`.
+
+### Test cases
+- Moved the supply-referenced snapshot variant into its own test-case directory (`test-cases/coned-sc1-rate-i-supply-ref/`), so each directory carries one test case and its generated collateral depicts the right fixture.
+- Filled the resolved snapshot's Market Supply Charge gap with the three published cycle prices from the shipped feed CSV (February 2 through May 1), making the modeled slots continuous for the coverage window. The claim is stated as `partial`: applicable statement charges beyond the MAC are not yet modeled for this plan, and the evaluation says so. The market feed fixture carries the same cycles and now binds to its rate plan via `referencesRatePlan` and carries a `dateModified`.
+- The resolved snapshot now demonstrates the full coverage vocabulary: a coverage `TemporalScope` on the claim, `evaluatedBy`/`evaluatedOn` attribution on the evaluation, and a `ModelExclusion` recording that the January statement is listed as a source but fully superseded before the version's effective date.
+- The supply-referenced variant no longer lists the feed models in `consolidatedFrom`: content resolved through a reference is not consolidated into the snapshot, so the feed models ride the reference's resolution thread only. Its reference now carries an applicability `TemporalScope`.
+- Corrected the documented validation recipe for the statement filings: each validates merged with the identity, the delivery filing, and the earlier statements in its supersedes chain.
+
+### Standards integration (`skos/standards-integration/urpx-green-button-mappings.ttl`)
+- Refreshed the URPX to Green Button (NAESB ESPI) SKOS alignment to the 0.3.0 vocabulary and verified it against the NAESB ESPI V4 schemas. Aligned the Green Button bill line-item classification (`ItemKind`) to the URPX charge categories, replacing an earlier alignment to a `KindCategory` enumeration and `itemKind` member values the V4 schemas do not contain. Added `PriceSummary` as the rollup that lines up several URPX prices with one bill line item.
+- Corrected the `urpx:` namespace in the mappings to the ontology IRI so the alignment resolves against real terms, and declared the missing `rdfs` prefix so the file parses. Stamped `owl:versionInfo` 0.3.0 with a `dcterms:conformsTo` pointer to the 0.3.0 release.
+
+2026-07-25 — v0.3.0 (pre-tag consolidation lineage and temporal completeness)
+---
+
+Vocabulary additions applied before the initial public tag, folded into the unreleased 0.3.0. Every shape touched is closed, so these could not be layered on after the tag.
+
+### Added
+- Element-level consolidation lineage. `contributedBy` links an element of a consolidated rate plan version snapshot (a price definition, price, price set, ledger, eligibility rule, applicability rule, or general rule) to the pricing model via which it entered the snapshot, asserted at the most parent-level element the model contributed wholly. `consolidatedFrom` links the version snapshot to each contributing pricing model. Both are object properties ranged on `PricingModel`. A consumer holding a resolved snapshot can now record which pricing model supplied each element and, from the model, follow the publication chain to the tariff filing and rate case.
+- `hasTemporalPeriod`: an object property linking a `TemporalScope` to the reusable named time interval (`TemporalPeriod`) its span denotes, wiring a relationship the scope's documentation described but no property expressed.
+- `cancelledOnDateTime` and `sunsetOnDateTime`: dateTime-precise twins of the `cancelledOn` and `sunsetOn` lifecycle dates, for intraday cancellation of a tariff filing or standalone pricing model and intraday retirement of a plan sub-resource, matching the dateTime twin every other event property already carries.
+
+### Changed
+- Widened the domains of `startDateTime` and `endDateTime` to include `TemporalScope` (added alongside the existing `Price`, `PriceSet`, `TOUPeriod`, `BillingCycle`, `Season`), so a scope can express an intraday boundary for dynamic-feed publication and observation windows.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- Added a `contributedBy` path (`sh:class urpx:PricingModel`, optional) to `PriceDefinitionShape`, `PriceShape`, `PriceSetShape`, `LedgerShape`, `EligibilityRuleShape`, `ApplicabilityRuleShape`, and `GeneralRuleShape`.
+- Added a `consolidatedFrom` path (`sh:class urpx:PricingModel`, optional) to `RatePlanVersionShape` and `RatePlanModifierVersionShape`.
+- Added `hasTemporalPeriod`, `startDateTime`, and `endDateTime` paths (all optional) to `TemporalScopeShape`.
+- Added a `cancelledOnDateTime` path (optional) beside `cancelledOn` in `PricingModelShape` and `TariffFilingShape`, and a `sunsetOnDateTime` path (optional) beside `sunsetOn` in `PriceDefinitionShape`, `PriceShape`, `PriceSetShape`, `LedgerShape`, `EligibilityRuleShape`, and `ApplicabilityRuleShape`. All touched shapes stay closed.
+
+### Test cases
+- Extended the Consolidated Edison SC1 Rate I resolved snapshot with consolidation lineage: `consolidatedFrom` listing its contributing delivery, monthly adjustment, and market supply models, and `contributedBy` on each top-level contributed element.
+- Added a Consolidated Edison SC1 Rate I supply snapshot variant that exercises a `retrievedElsewhere` `PriceDefinitionReference` resolved against a `ModelCollection` thread, with a coverage claim that is not self-contained and is fallback-sourced.
+
+2026-07-25 — v0.3.0 (pre-tag model corrections)
+---
+
+Vocabulary corrections applied before the initial public tag, folded into the unreleased 0.3.0.
+
+### Removed
+- Removed the `TariffBookReference` and `TariffStatementReference` classes and their linking properties `hasTariffBookReference` and `hasTariffStatementReference`. A reference already points at a `SourcePublication` carrying a `publicationType`, so the tariff book vs. statement distinction is data, not a subclass. The page and leaf locators the subclasses carried (`pageStart`, `pageEnd`, `leafStart`, `leafEnd`, `tariffStatementType`, `dateReceived`, `dateTimeReceived`) now sit directly on the reference.
+
+### Changed
+- Renamed the generic reference class to `DataSourceReference` so it agrees with its property `hasDataSourceReference`. This reverts the earlier pre-tag rename to `SourceReference`; the property name was `hasDataSourceReference` throughout.
+- Widened the domains of `leafStart`, `leafEnd`, and `tariffStatementType` onto `DataSourceReference`, and folded the removed subclasses out of the union domains and ranges of `anchorLink`, `dateApproved`, `dateTimeApproved`, `datePublished`, `dateTimePublished`, `dateModified`, `dateTimeModified`, `dateReceived`, `dateTimeReceived`, `pageStart`, `pageEnd`, and `description`.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- Renamed `SourceReferenceShape` to `DataSourceReferenceShape`; it gains `leafStart`, `leafEnd`, `tariffStatementType`, `dateReceived`, and `dateTimeReceived`, and drops the `hasTariffBookReference` and `hasTariffStatementReference` paths. The shape stays closed.
+- Removed `TariffBookReferenceShape` and `TariffStatementReferenceShape`.
+
+2026-07-20 — v0.3.0 (pre-tag model corrections)
+---
+
+Vocabulary corrections applied before the initial public tag, folded into the unreleased 0.3.0.
+
+### Changed
+- Widened the domain of `hasIdentifier` to include `RatePlanVersion` and `RatePlanModifierVersion` (previously `OrganizationIdentity ∪ RatePlan ∪ RatePlanModifier`), so a resolved version snapshot can carry the customer-facing identifiers a consumer reads directly from the snapshot (for example the California MIDAS RIN), in addition to reaching them through `forRatePlan` / `forRatePlanModifier`.
+- Widened the domains of `timezoneIdentifier` and `hasLocationDataSet` to include `RatePlanVersion` and `RatePlanModifierVersion`, so a resolved snapshot carries the timezone and location context needed to interpret its own timestamps and geographic scope directly, without dereferencing the plan identity.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- `RatePlanVersionShape` gains a `hasIdentifier` path (`sh:class urpx:RatePlanIdentifier`, optional).
+- `RatePlanModifierVersionShape` gains a `hasIdentifier` path (`sh:class urpx:RatePlanModifierIdentifier`, optional).
+- `RatePlanVersionShape` and `RatePlanModifierVersionShape` each gain `timezoneIdentifier` and `hasLocationDataSet` paths (optional).
+
+2026-07-19 — v0.3.0 (pre-tag model corrections)
+---
+
+Vocabulary corrections applied before the initial public tag, folded into the unreleased 0.3.0.
+
+### Changed
+- Widened `replaces`, `replacedBy`, `cancelledBy`, and `cancelledOn` from a `TariffFiling`-only domain/range to the `PricingModel ∪ TariffFiling` union (matching the existing `supersedes` union), so a standalone pricing model — market or dynamic feed, competitive supply, contract, or scenario pricing — can be corrected in place or withdrawn the same way a tariff filing can. `PricingModelShape` gains the four corresponding property paths, constrained like-for-like (`sh:class urpx:PricingModel`) so a filing cannot replace a model, or a model a filing.
+- Narrowed `CompletenessResultValue` from eight members to six genuine coverage verdicts (`complete`, `partial`, `pending`, `unsupported`, `unknown`, `noCoverage`); removed `stale` and `fallbackSourced`, which conflated freshness and resolution provenance with coverage. The class annotation now states per-member semantics directly.
+- Widened the domain of `selfContained` to include `CoverageClaim` (previously `RatePlanVersion ∪ RatePlanModifierVersion` only), aligning the ontology with the SHACL shape and every existing fixture, all of which already assert it on the claim. Added a note naming the claim as the authoritative home on the rare occasion a materialized version-level mirror is also present.
+
+### Added
+- `stale` and `fallbackSourced`: two new boolean properties on `CoverageClaim`, parallel to `selfContained`, carrying the freshness and resolution-provenance facts split out of the completeness enum. A snapshot can now state coverage, freshness, and provenance as three independent, simultaneous facts instead of collapsing them into one enum value.
+- `evaluatedBy` (range `Organization`) and `evaluatedOn` (`xsd:dateTime`) on `Evaluation`, so who attested a coverage verdict and when travels with the claim at interchange rather than living only in a private system. `EvaluationShape` gains the two corresponding property paths and remains closed.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+- `PricingModelShape` gains `replaces`, `replacedBy`, `cancelledBy`, and `cancelledOn` property paths.
+- `CompletenessResultValueShape`'s `sh:in` narrows to the six retained members.
+- `CoverageClaimShape` gains `stale` and `fallbackSourced` (boolean, optional).
+- `EvaluationShape` gains `evaluatedBy` and `evaluatedOn` (both optional); the shape stays closed.
+
+2026-07-14 — v0.3.0 (pre-release refinements)
+---
+
+Vocabulary clean-up applied before the initial public release, folded into the unreleased 0.3.0.
+
+### Retired
+- Removed the profile usage properties `usageThreshold`, `averageMonthlyUsage`, and `usageVariability`. Usage-derived values are carried by the MetricInput mechanism (measured or calculated metric inputs); the retired properties had no example usage.
+
+### Changed
+- Split the dual-typed `powerFactor`: minted `powerFactorCharge` as the `ChargeTypeValue` member (the power-factor penalty charge) and kept `powerFactor` as a `MeasurementTypeValue` only.
+- Narrowed the domain of `hasDataSourceReference` (dropped `SourcePublication`; citation runs the other way, via `sourcePublication`).
+- Narrowed the domain of `operatesIn` to `UtilityOperator` and `EnergyServiceProvider`.
+- Rewrote the `ProfileAlternative` class annotations to describe the condition-expression model, replacing text that described the earlier dimension mechanism.
+
+### Editorial
+- Language-tagged (`@en`) every `rdfs:label`, `skos:prefLabel`, and `skos:definition` literal in the ontology.
+- Reworded several `skos:definition` entries that used "rate" ambiguously to "price", and de-hyphenated "rate plan" in two class comments.
+
+2026-07-07 — v0.3.0
+---
+
+Release 0.3.0 reframes how published pricing material relates to the rate plan: pricing content is now carried by `PricingModel` nodes inside publication-level containers (`TariffFiling`, `SourcePublication`), rate plans and modifiers are sharpened to pure identity records, and versions become consolidation artifacts that declare their own coverage.
+
+### Breaking Changes
+
+#### Retired: tariff document class family in favor of `publicationType`
+- Removed `TariffPublication`, `TariffBookDocument`, `TariffStatementDocument`, `TariffSupplementDocument`, `TariffAddendumDocument`, `SupplyChargesDocument`, `DERExportsDocument`, and `HighlyDynamicPricesDocument`. Publication kinds are now expressed with the `publicationType` enumeration (`SourcePublicationType`) on `SourcePublication`.
+
+#### Renamed: `DataSourceReference` → `SourceReference`, `URPXDocument` → `URPXPackage`
+- Class renames with all property domains/ranges and shapes updated accordingly.
+
+#### Removed: `hasRatePlanVersion` / `hasRatePlanModifierVersion`
+- The version→plan link is now `forRatePlan` / `forRatePlanModifier` on the version node; there is no inverse property on the plan.
+
+#### Renamed: `ReferenceInclusionValue` members
+- `included` → `includedHere`; `shopFor` → `retrievedElsewhere`.
+
+#### Removed: `RateGroup` subclassing of `ServiceClass`
+- A rate group is a named grouping inside a service class, not a kind of service class; containment is expressed via `parentServiceClass`.
+
+### Ontology Changes
+
+#### Added: pricing model and publication classes
+- `PricingModel` (pricing content as documented by a publication), `TariffFiling` (a filed publication carrying pricing models), `SourcePublication`, `ModelCollection`, `PriceDefinitionReference`, `TemporalPeriod`, `TemporalScope`.
+
+#### Added: identity, coverage, and evaluation classes
+- `RatePlanIdentifier` and `RatePlanModifierIdentifier` (parallel plan / modifier identifier classes, with the new `scheme` property and `hasIdentifier` linking from `RatePlan` / `RatePlanModifier`), `CoverageClaim`, `Evaluation`, `ScenarioCostModel`, `ScenarioCostResult`.
+
+#### Modified: identity and version semantics
+- `RatePlan` and `RatePlanModifier` are pure identity records; pricing content lives in pricing models and resolved versions.
+- `RatePlanVersion` and `RatePlanModifierVersion` are consolidation artifacts: each requires a `CoverageClaim` (`hasCoverageClaim`) stating completeness (`completenessResult`), self-containment (`selfContained`), and an explaining `Evaluation` (`explainedBy`).
+
+#### Added: properties
+- Publication and provenance: `containsPricingModel`, `withinPublication`, `documentedBy`, `sourcePublication`, `pursuantTo`, `referencesRatePlan`, `referencesRatePlanModifier`.
+- Version and coverage: `forRatePlan`, `forRatePlanModifier`, `hasCoverageClaim`, `selfContained`, `completenessResult`, `explainedBy`, `resolvedFrom`, `hasPriceDefinitionReference`, `referenceInclusion`, `referencesPriceDefinition`.
+- Collections and scenarios: `collectsPricingModel`, `collectionRole`, `forScenario`, `consumesVersion`, `producesResult`, `evaluationKind`.
+- Temporal scoping: `hasTemporalScope`, `scopeKind`, `hasSelector`.
+- Confidence: `confidence` on `PricingModel` and (derived) on `CoverageClaim` — on a claim it is the minimum of the contributing models' confidence values.
+- Filing lifecycle: `cancelsPriceDefinition`, `replaces` / `replacedBy`, `cancelledBy`, `cancelledOn` on `TariffFiling`; `supersedes` extended to thread tariff filings as well as pricing models (version classes carry no lifecycle of their own — a version's timeline position derives from the filing chain).
+- Sub-resource retirement: `sunsetOn` on `PriceDefinition | Price | PriceSet | Ledger | EligibilityRule | ApplicabilityRule` — distinguishes an intentional terminal discontinuation from a data gap.
+- Validity-date domains: `effectiveDate` / `effectiveDateTime` / `expirationDate` / `expirationDateTime` extended to `TariffFiling`, `PriceDefinition`, and the plan components `TOUSchedule | Season | HolidayCalendar | ServiceTiers`.
+- Named inverse: `isReferencedByPricingModel` (`owl:inverseOf` `referencesRatePlan`; entailed, not asserted in instance data).
+
+#### Added: enumerations and members
+- New: `ConfidenceValue` (`verified`, `estimated`, `projected`), `ScopeKindValue`, `EvaluationKindValue`, `CollectionRoleValue`.
+- Extended: `CompletenessResultValue` gains `pending`; `SourcePublicationType` gains `marketPriceFeed`; `MeasurementTypeValue` gains `reactivePower`, `apparentPower`, `reactiveEnergy` (pairing the existing reactive/apparent units); `ChargeTypeValue` gains `reactiveDemand`, `customerCharge`, `fuelCharge`, `exportCredit`, `standbyCharge`, `lateFee`.
+
+#### Domain expansions
+- `publishedBy`, `serviceRole`, and `commodity` now also apply to `RatePlan` and `RatePlanModifier`.
+- `hasIdentifier` carries the combined domain `OrganizationIdentity | RatePlan | RatePlanModifier` and range `OrganizationIdentifier | RatePlanIdentifier | RatePlanModifierIdentifier`; `scheme` applies to both identifier classes.
+
+#### Annotation clean-up
+- Eight annotation strings still describing retired v0.2.x terms (`DataSourceReference`, `URPXDocument`, `TariffPublication`) rewritten to the v0.3.0 vocabulary (`SourceReference`, `URPXPackage`, `publicationType`); wording only, no semantic change.
+- Annotation literals using bare "rate" reworded to "rate plan," "pricing," "price," or "cost" as appropriate to the sentence, so that the term now consistently names the rate plan itself rather than a generic pricing concept; wording only, no semantic change.
+
+### SHACL Updates (`shacl/urpx-shacl.ttl`)
+
+#### Added: node shapes for the new classes
+- `PricingModelShape`, `TariffFilingShape`, `RatePlanIdentifierShape`, `CoverageClaimShape`, `EvaluationShape`, `ModelCollectionShape`, `PriceDefinitionReferenceShape`, `SourcePublicationShape`, `SourceReferenceShape`, `TemporalPeriodShape`, `TemporalScopeShape`, `ScenarioCostModelShape`, `ScenarioCostResultShape`, `URPXPackageShape`, plus value shapes for the new enumerations.
+
+#### Updated: identity and version shapes
+- `RatePlanShape` gains `hasIdentifier`, `commodity`, `publishedBy`, and `serviceRole` property blocks.
+- `RatePlanVersionShape` requires `forRatePlan` and `hasCoverageClaim`.
+- The version shapes no longer allow `supersedes` — lifecycle lives on the filing, and a version's timeline position derives from the filing chain.
+
+#### Updated: filing, coverage, and component shapes
+- `TariffFilingShape` gains the filing-lifecycle property blocks: `supersedes`, `replaces`, `replacedBy`, `cancelledBy` (filing or publication), `cancelledOn`, and `cancelsPriceDefinition`.
+- `CoverageClaimShape` gains `confidence` (a `ConfidenceValue`).
+- `PriceDefinitionShape` and the `TOUSchedule` / `Season` / `HolidayCalendar` / `ServiceTiers` shapes gain the four validity-date property blocks; `sunsetOn` is allowed on `PriceDefinitionShape`, `PriceShape`, `PriceSetShape`, `PriceSetAlternativeShape`, `LedgerShape`, `EligibilityRuleShape`, and `ApplicabilityRuleShape`.
+
+#### Shape-alignment batch: closed shapes carry their full declared surface
+- Constraint completeness across the closed shapes — every ontology-declared property is now either listed or covered by a design-rationale exclusion comment on the shape:
+  - `RatePlanModifierVersionShape` mirrors its `RatePlanVersionShape` twin: `forRatePlanModifier` (required, exactly one), `hasCoverageClaim` (required, exactly one), `hasPriceDefinitionReference`, and `selfContained`.
+  - `hasCoverageClaim` on both version shapes is exactly one: a snapshot is immutable, so a re-evaluation mints a new snapshot rather than a second claim.
+  - `RatePlanVersionShape` also gains `hasPriceDefinitionReference` and the materialization timestamps `dateCreated` / `dateTimeCreated`, annotated as generation timestamps rather than authored lifecycle dates.
+  - `RatePlanModifierShape` reaches identity parity with `RatePlanShape`: `commodity`, `hasIdentifier` (a `RatePlanModifierIdentifier`), `publishedBy`, `serviceRole`; the new closed `RatePlanModifierIdentifierShape` validates the identifier (`skos:notation` + `scheme`, each exactly one).
+  - `SourcePublicationShape` gains its nineteen declared publication-provenance and filing-metadata properties (approval / creation / modification / publication / receipt dates in date and dateTime precision, `description`, `effectiveDateTime`, expiration dates, `filingNumber`, `issuingAuthority`, `pageReference`, `url`, `version`); `hasDataSourceReference` is a documented exclusion — references cite publications via `sourcePublication`, not the reverse.
+  - `PricingModelShape` gains `hasGeneralRule`, the four validity dates (annotated: they carry the validity window of a pricing model not published within a tariff filing), and the forecast `expectedEndDate` / `expectedEndDateTime` pair (distinct from validity expiration).
+  - `TariffFilingShape` gains `hasGeneralRule`; `PriceDefinitionReferenceShape` gains `resolvedFrom` (the `retrievedElsewhere` traceability path); `SourceReferenceShape` gains `hasSelector` (Web Annotation `oa:Selector`, external vocabulary used by reference).
+  - `SystemOperatorShape` documents the deliberate exclusion of `operatesIn` (an organization operates in an ISO/RTO market; a system operator operating in a system operator would be circular).
+  - `ScenarioCostModelShape`'s optional `hasCoverageClaim` is annotated as deliberate (a scenario cost model may pre-date coverage evaluation).
+  - `description` (and on `ConditionExpressionShape` also `name`) allowed on the condition-tree shapes: `ConditionExpressionShape`, `ApplicabilityRuleShape`, `BooleanOperationNodeShape`, `OperationNodeShape`.
+  - `commodity` is multi-valued on the rate plan, rate plan version, rate plan modifier, and rate plan modifier version shapes (a plan or modifier may span commodities — e.g. a combined water/sewer modifier) and single-valued on the price-level and metric shapes (`MetricSpecificationShape`, `PriceDefinitionShape`, `PriceSetShape`, `PriceSetAlternativeShape`, `PriceShape`).
+
+#### Structural clean-up
+- Shape targets follow the class renames (`SourceReference`, `URPXPackage`); the retired tariff document shapes are removed; the orphaned `DimensionValuePairShape` (no backing class) is removed.
+- Operational shapes are closed (`sh:closed true`), with three deliberate open exceptions whose design rationale is documented on the shapes: `OrganizationShape` (base class of the four closed organization subclass shapes) and the `PriceSetShape` / `PriceSetAlternativeShape` pair (`PriceSetAlternative` subclasses `PriceSet`, so its instances are validated by both shapes and the pair must stay open for the subclass-specific properties).
+
+### Test Data Updates
+
+#### Updated: PG&E test cases carried to the v0.3.0 model
+- Both `pge-e-elec` and `pge-e-tou-c-2026-03-01` now use `URPXPackage` (with a v0.3.0 `targetURPXVersion`) and `SourceReference`; rate plan and modifier versions are top-level graph nodes linked back through `forRatePlan` / `forRatePlanModifier`, and each version carries a `CoverageClaim` with an explaining `Evaluation`.
+- `pge-e-elec` also corrects its `urpx` context IRI to the ontology namespace (`https://urpx-org.github.io/urpx/ontology/`), so its content is now genuinely validated by the shapes.
+- `pge-e-tou-c-2026-03-01` remodels its advice-letter wrapper as a `SourcePublication` (`publicationType` `tariffSupplement`) referenced from the package; its income-tier and PCIA-vintage `PriceSetAlternatives` structure is unchanged.
+- Both modifier versions in `pge-e-tou-c-2026-03-01` carry the consolidation surface: `forRatePlanModifier` back to their modifier identity and a `CoverageClaim` with explaining `Evaluation` (the PCIA version `complete`; the baseline-tier version `partial`, as medical baseline codes are not modeled). `applicableToRatePlan` is retained.
+- Both validate `Conforms: True` against the v0.3.0 shapes.
+
+#### Added: Consolidated Edison SC1 Rate I test case (`test-cases/coned-sc1-rate-i/`)
+- Nine JSON-LD fixtures: rate plan identity, delivery-charges tariff filing, five monthly GR26 MAC Energy Charge statement filings (Statements Nos. 168–172), a Market Supply Charge pricing model from ConEd's published market price feed, and a fully self-contained resolved `RatePlanVersion` snapshot (effective 2026-02-01) carrying a `CoverageClaim` with `Evaluation` and per-price source references to the statements it consolidates.
+- Source documents (tariff leaf PDF, General Rule 26 PDF, five monthly MAC statement PDFs, market supply charge CSV) are packaged under `assets/`; the test case is registered in `test-cases-index.csv` and `index.md`.
+- The five MAC statement filings assert their supersession chain (`urpx:supersedes`, each statement to its predecessor), and the resolved snapshot's `CoverageClaim` carries a first-class `confidence` of `urpx:verified` (previously stated only in the `Evaluation` prose).
+
+### Documentation Updates
+
+#### Updated: tutorial Terminology section
+- The section is now "Rate Plan vs Tariff vs Price": the rate plan leads as the first-class concept, the old **Rate** entry is replaced by **Price**, a new paragraph explains why URPX avoids the bare word "rate", and a **Rate Group** entry documents the named grouping utilities colloquially call a "rate".
+
+#### Updated: documentation pages carried to the v0.3.0 vocabulary
+- All prose pages now use `URPXPackage` (was `URPXDocument`), `SourceReference` (was `DataSourceReference`), and `SourcePublication` + `publicationType` (replacing the retired tariff document class family); versions are shown as top-level nodes linking back via `forRatePlan` / `forRatePlanModifier` instead of `hasRatePlanVersion` / `hasRatePlanModifierVersion`. Affected pages: [urpx-overview.md](documentation/pages/urpx-overview.md), [urpx-tutorial.md](documentation/pages/urpx-tutorial.md), [urpx-faq.md](documentation/pages/urpx-faq.md), [urpx-semantic-web-guide.md](documentation/pages/urpx-semantic-web-guide.md), [urpx-api-spec.md](documentation/pages/urpx-api-spec.md), [urpx-quality-assurance.md](documentation/pages/urpx-quality-assurance.md), [urpx-test-data-review-guide.md](documentation/pages/urpx-test-data-review-guide.md), and the SPARQL query diagram (`urpx-sparql-query-visual.mmd`).
+- The tutorial now builds the v0.3.0 shape end to end: `URPXPackage` wrapper, a pricing-free `RatePlan` identity, and a top-level `RatePlanVersion` carrying `forRatePlan` and a required `CoverageClaim` with an explaining `Evaluation`. JSON-LD and SPARQL examples use the ontology namespace (`https://urpx-org.github.io/urpx/ontology/`).
+- The overview describes the pricing-model architecture (pricing models carried by publications, source references, coverage and confidence) and its statement-prices example now models a `SourcePublication` + `TariffFiling` + `PricingModel` chain.
+- The FAQ Terminology section tells the full "why not bare 'rate'" story (price / rate plan / rate group) that the tutorial links to; the quality-assurance page's terminology standard now states the same three-way rule with its exceptions, and its required-property lists match the v0.3.0 shapes (`forRatePlan`, `hasCoverageClaim`, `completenessResult`).
+- The test-data review guide adds v0.3.0 review checks: `forRatePlan` targets, coverage-claim honesty (`completenessResult` / `selfContained` versus the file contents), and `sourcePublication` / `publicationType` provenance.
 
 2026-05-07
 ---
 
-### ⚠️ Breaking Changes
+### Breaking Changes
 
 #### Introduced: `urpx:ServiceBracket` for contextual tier bounds
 - Added `urpx:ServiceBracket` plus `urpx:hasServiceBracket` so `urpx:ServiceTier` remains the logical tier identity while bracket-specific bounds live on attached bracket nodes.
@@ -30,7 +324,7 @@
 2026-05-05
 ---
 
-### ⚠️ Breaking Changes
+### Breaking Changes
 
 #### Reworked: Applicability selectors onto profile properties
 - Retired direct `ApplicabilityGroup` selector properties such as `appliesInCounty`, `appliesInMunicipality`, `appliesInServiceTerritory`, `appliesInState`, `appliesInGeographicZone`, `endUse`, `geographicScope`, `serviceClassPattern`, and `voltageLevel`.
@@ -129,7 +423,7 @@
 2026-04-28
 ---
 
-### ⚠️ Breaking Changes
+### Breaking Changes
 
 #### Renamed: Unique Identifier Properties and Required Document Target Version
 - Renamed `urpx:ratePlanIdentifier` → `urpx:ratePlanUniqueIdentifier`.
@@ -207,7 +501,7 @@
 2026-04-24
 ---
 
-### ⚠️ Breaking Changes
+### Breaking Changes
 
 #### Reworked: Rate Plan Enrollment and Default Semantics
 - Removed `urpx:isOptional` from `RatePlanModifier`; modifier optionality should be expressed through version-scoped option or compatibility relationships rather than a document-level boolean.
@@ -285,7 +579,7 @@
 2026-04-17
 ---
 
-### ⚠️ Breaking Changes
+### Breaking Changes
 
 #### Replaced: Condition Modeling with Rooted Condition Expressions
 - Rule data must use `urpx:hasConditionExpression` instead of `urpx:hasCondition` and `urpx:hasConditionLogic`.
@@ -317,7 +611,7 @@
 2026-04-13
 ---
 
-### ⚠️ Breaking Changes
+### Breaking Changes
 
 #### Refactored: `urpx:hasPriceDefinition` — Ownership Moved to `BillingModel`
 - Domain changed from `urpx:Ledger` to `urpx:BillingModel`; existing data must be migrated.
@@ -344,8 +638,7 @@
 - **Design Decision:** [#095](documentation/pages/urpx-design-decisions-081-120.md#decision-095)
 
 #### Added: Datetime Provenance Properties
-- Added `xsd:dateTime` companions for all existing `xsd:date` provenance properties:
-  `urpx:dateTimeApproved`, `urpx:dateTimeCreated`, `urpx:dateTimeModified`, `urpx:dateTimePublished`, `urpx:dateTimeReceived`, `urpx:dateTimeRetrieved`.
+- Added `xsd:dateTime` companions for all existing `xsd:date` provenance properties: `urpx:dateTimeApproved`, `urpx:dateTimeCreated`, `urpx:dateTimeModified`, `urpx:dateTimePublished`, `urpx:dateTimeReceived`, `urpx:dateTimeRetrieved`.
 - Domains mirror the corresponding `xsd:date` properties; existing date-only fields are preserved.
 - **Rationale:** Enables full timestamp-level provenance for sources that report at sub-day precision, without overloading the `xsd:date` fields used where only date precision is available or intended.
 - **Design Decision:** [#096](documentation/pages/urpx-design-decisions-081-120.md#decision-096)
@@ -988,7 +1281,8 @@ Update to urpx/documentation/index.md to remove broken links.
 2026-01-27
 ---
 Added for accounting purposes:
-```urpx:isCredit a owl:DatatypeProperty ;
+```turtle
+urpx:isCredit a owl:DatatypeProperty ;
     rdfs:label "Is Credit"@en ;
     rdfs:comment "Indicates if the charge is a credit to the customer account."@en ;
     rdfs:domain [ a owl:Class ;
@@ -1001,21 +1295,23 @@ Added for accounting purposes:
 
 Updated domain to allow for season price tagging:
 
-```urpx:appliesInSeason a owl:ObjectProperty ;
+```turtle
+urpx:appliesInSeason a owl:ObjectProperty ;
     rdfs:label "Applies In Season"@en ;
     rdfs:comment "Season(s) this time bracket applies to" ;
     rdfs:domain [ a owl:Class ;
         owl:unionOf ( urpx:TimeBracket urpx:Price urpx:PriceSet urpx:PriceSetAlternative uprx:PriceSetAlternatives ) ] ;
     rdfs:range urpx:Season ;
-    skos:note "URI references to seasons defined in PlanElements. Enables TimeBrackets to reference seasons without nesting. Multiple seasons can be referenced for brackets that apply across seasonal boundaries. Part of flat version architecture (Decision #018)." .```
+    skos:note "URI references to seasons defined in PlanElements. Enables TimeBrackets to reference seasons without nesting. Multiple seasons can be referenced for brackets that apply across seasonal boundaries. Part of flat version architecture (Decision #018)." .
+```
 
 ---
 
-## Version 0.1.1 - January 27, 2026 🔧 **EPIC 0016 TASK 0008: FINAL DOCUMENTATION CLEANUP**
+## Version 0.1.1 - January 27, 2026  **EPIC 0016 TASK 0008: FINAL DOCUMENTATION CLEANUP**
 
-### 🎯 Ontology Final Cleanup for Working Group Review
+### Ontology Final Cleanup for Working Group Review
 
-### 🎯 Final Documentation Scan and Cleanup
+### Final Documentation Scan and Cleanup
 - **Standards Consolidation**: Merged redundant `urpx-standards-mapping.md`, `urpx-standards-mapping-with-skos.md`, and `urpx-standards-integration.md` into one MECE-compliant document: [`urpx-interoperability.md`](documentation/pages/urpx-interoperability.md).
 - **Data Dictionary Finalization**:
     - Added missing key properties: `urpx:endUse`, `urpx:hasHVAC`, `urpx:ledgerType`, and `urpx:metricInputType`.
@@ -1031,9 +1327,9 @@ Updated domain to allow for season price tagging:
 
 ---
 
-## Version 0.1.1 - January 21, 2026 🎯 **EPIC 0016: ONTOLOGY CONSOLIDATION COMPLETE**
+## Version 0.1.1 - January 21, 2026 **EPIC 0016: ONTOLOGY CONSOLIDATION COMPLETE**
 
-### 🎯 Single Unified Ontology File (Epic 0016 Task 0005)
+### Single Unified Ontology File (Epic 0016 Task 0005)
 
 #### Ontology Consolidation Achievement
 - **Consolidated**: 5 separate ontology files into single `urpx-ontology.ttl` (~7,492 triples)
@@ -1075,9 +1371,9 @@ Updated domain to allow for season price tagging:
 
 ---
 
-## Version 0.1.1 - January 20, 2026 🔧 **EPIC 0016: CONSOLIDATION PHASE PREP COMPLETE**
+## Version 0.1.1 - January 20, 2026  **EPIC 0016: CONSOLIDATION PHASE PREP COMPLETE**
 
-### 🎯 Consolidation Prep Complete (Epic 0016 Tasks 0001-0003)
+### Consolidation Prep Complete (Epic 0016 Tasks 0001-0003)
 
 #### 1. CDS/CIM Reference Removal
 - **Action**: Removed all remaining CDS, NAESB, and problematic CIM references across `urpx-organization.ttl`, `urpx-geography.ttl`, `urpx-profile.ttl`, and `urpx-core-ontology.ttl`.
@@ -1106,9 +1402,9 @@ Updated domain to allow for season price tagging:
 
 ---
 
-## Version 0.1.1 - January 20, 2026 (Late Afternoon) 🔧 **EPIC 0016 TASK 0002: STRUCTURED DATA SOURCE REFERENCE**
+## Version 0.1.1 - January 20, 2026 (Late Afternoon)  **EPIC 0016 TASK 0002: STRUCTURED DATA SOURCE REFERENCE**
 
-### 🎯 Structured Data Source Reference Architecture (BREAKING CHANGE)
+### Structured Data Source Reference Architecture (BREAKING CHANGE)
 
 #### Refactored `dataSourceReference` to Class
 - **Implemented**: Structured Data Source Reference pattern (Decision #052)
@@ -1123,16 +1419,16 @@ Updated domain to allow for season price tagging:
 - `dev-documentation/urpx-design-decisions-041-080.md` - Decision #052 documented.
 - `dev-documentation/v0.1.1/epics/epic_0016_cleanup_and_consolidation/task_0002_refactor_data_source.md` - Status updated to Complete.
 
-#### ⚠️ Breaking Changes
+#### Breaking Changes
 - **Property Rename**: `urpx:dataSourceReference` → `urpx:hasDataSourceReference`.
 - **Range Change**: Range changed from `xsd:string` to `urpx:DataSourceReference`.
 - **Migration Required**: Existing instances using the string-based property must be updated to the new structured object pattern.
 
 ---
 
-## Version 0.1.1 - January 20, 2026 🔧 **EPIC 0015 TASK 0004: TIME INTERVAL PROPERTY CONSOLIDATION**
+## Version 0.1.1 - January 20, 2026  **EPIC 0015 TASK 0004: TIME INTERVAL PROPERTY CONSOLIDATION**
 
-### 🎯 Consolidated Interval Architecture (BREAKING CHANGE)
+### Consolidated Interval Architecture (BREAKING CHANGE)
 
 #### Property Consolidation & Simplification
 - **Implemented**: Duration-First with Semantic Types pattern (Decision #051)
@@ -1146,16 +1442,16 @@ Updated domain to allow for season price tagging:
 - `dev-documentation/urpx-design-decisions-041-080.md` - Decision #051 updated with complex temporal constraints rationale.
 - `dev-documentation/v0.1.1/epics/epic_0015_profile_metric_architecture/task_0004_interval_consolidation.md` - Status updated to Complete.
 
-#### ⚠️ Breaking Changes
+#### Breaking Changes
 - **Removal**: `CycleTypeValue`, `BillingIntervalTypeValue`, `MeasurementIntervalTypeValue` enumerations.
 - **Removal**: Five interval-related properties: `cycleDuration`, `cycleType`, `billingIntervalType`, `measurementIntervalDuration`, `measurementIntervalType`.
 - **Migration Required**: Existing data instances must be updated to use the new canonical `urpx:intervalDuration`/`urpx:intervalType` pattern.
 
 ---
 
-## Version 0.1.1 - January 19, 2026 🔧 **EPIC 0015 TASK 0003: CALCULATION METHOD ARCHITECTURE VERIFICATION**
+## Version 0.1.1 - January 19, 2026  **EPIC 0015 TASK 0003: CALCULATION METHOD ARCHITECTURE VERIFICATION**
 
-### 🏗️ CalculationMethod Architecture Verification and ProfileAlternative Rename
+### CalculationMethod Architecture Verification and ProfileAlternative Rename
 
 #### Architecture Verification Complete
 - **Verified**: CalculationMethod architecture correctly supports bill calculation definition
@@ -1197,7 +1493,7 @@ Updated domain to allow for season price tagging:
 - **Priority**: P2 - Medium (can be implemented after Epic 0016)
 - **Impact**: Simplifies interval handling while preserving "custom" interval support
 
-### 📁 Files Modified
+### Files Modified
 - `ontology/urpx-core-ontology.ttl` - ProfileAlternative class rename, property updates
 - `dev-documentation/urpx-design-decisions-041-080.md` - Decision #049 documented
 - `dev-documentation/v0.1.1/epics/epic_0015_profile_metric_architecture/task_0003_calculation_method_architecture.md` - Status updated to Complete
@@ -1209,13 +1505,13 @@ Updated domain to allow for season price tagging:
 - `plans/calculation-method-architecture-examples.md` - Architecture verification examples created
 - `urpx-changelog.md` - This changelog entry
 
-### 🎯 Quality Impact
-- ✅ **Architecture Verified**: CalculationMethod proven to support diverse billing scenarios
-- ✅ **Naming Clarity**: ProfileAlternative name better reflects semantic meaning
-- ✅ **Sibling Architecture**: Clear distinction between dimension definitions and alternative instances
-- ✅ **Future Optimization**: Interval consolidation opportunity identified and documented
+### Quality Impact
+- **Architecture Verified**: CalculationMethod proven to support diverse billing scenarios
+- **Naming Clarity**: ProfileAlternative name better reflects semantic meaning
+- **Sibling Architecture**: Clear distinction between dimension definitions and alternative instances
+- **Future Optimization**: Interval consolidation opportunity identified and documented
 
-### ⚠️ Breaking Changes
+### Breaking Changes
 - **Class Rename**: `AlternativeDimensionSet` → `ProfileAlternative`
   - Existing data using old class name requires migration
   - SHACL validation rules need updating
@@ -1223,9 +1519,9 @@ Updated domain to allow for season price tagging:
 
 ---
 
-## Version 0.1.1 - January 19, 2026 🔧 **EPIC 0015 TASK 0002: PROFILE ONTOLOGY UPDATES**
+## Version 0.1.1 - January 19, 2026  **EPIC 0015 TASK 0002: PROFILE ONTOLOGY UPDATES**
 
-### 🚀 Profile Ontology Updates
+### Profile Ontology Updates
 
 #### ADDED
 - **`numberOfMeters` property**: Added to `ServicePointProfile`.
@@ -1233,18 +1529,18 @@ Updated domain to allow for season price tagging:
 - **`billedDemand` property**: Added to `ServicePointProfile`.
 - **`numberOfOccupants` property**: Added to `CustomerProfile`.
 
-### 📁 Files Modified
+### Files Modified
 - `ontology/urpx-profile.ttl`
 - `urpx-changelog.md`
 
-### 🎯 Quality Impact
-- ✅ **Complete Profile Metrics**: Added all necessary properties for profile-based rate calculations.
+### Quality Impact
+- **Complete Profile Metrics**: Added all necessary properties for profile-based rate calculations.
 
 ---
 
-## Version 0.1.1 - January 19, 2026 🔧 **EPIC 0015 TASK 0001: PROFILE METRIC ARCHITECTURE**
+## Version 0.1.1 - January 19, 2026  **EPIC 0015 TASK 0001: PROFILE METRIC ARCHITECTURE**
 
-### 🚀 Profile Metric Architecture Implementation
+### Profile Metric Architecture Implementation
 
 #### ADDED
 - **`profileMetricInput` enumeration value**: Added to `MetricInputTypeValue` for profile-based metrics.
@@ -1262,21 +1558,21 @@ Updated domain to allow for season price tagging:
 #### Design Decisions Documented
 - **Decision #048**: ProfileMetric Architecture
 
-### 📁 Files Modified
+### Files Modified
 - `ontology/urpx-core-ontology.ttl`
 - `dev-documentation/urpx-design-decisions-041-080.md`
 - `urpx-changelog.md`
 
-### 🎯 Quality Impact
-- ✅ **Clear Architecture**: Profile metric architecture is now clearly defined.
-- ✅ **Simplified Ontology**: Removed unused and inaccurate classes, properties, and enumerations.
-- ✅ **Improved Consistency**: Renamed `MeteredMetric` to `MetricSpecification` for clarity.
+### Quality Impact
+- **Clear Architecture**: Profile metric architecture is now clearly defined.
+- **Simplified Ontology**: Removed unused and inaccurate classes, properties, and enumerations.
+- **Improved Consistency**: Renamed `MeteredMetric` to `MetricSpecification` for clarity.
 
 ---
 
-## Version 0.1.1 - January 15, 2026 🔧 **EPIC 0014 TASK 0004: ONTOLOGY UPDATES FROM REVIEW**
+## Version 0.1.1 - January 15, 2026  **EPIC 0014 TASK 0004: ONTOLOGY UPDATES FROM REVIEW**
 
-### 🔧 Ontology Quality Improvements (Task 0004)
+### Ontology Quality Improvements (Task 0004)
 
 #### Duplicate Property Resolution
 - **Fixed**: Removed duplicate `hasDimensionValue` definition (lines 769 and 775)
@@ -1328,25 +1624,25 @@ Updated domain to allow for season price tagging:
 - **Decision #046**: hasPrices Range Specification
 - **Decision #047**: minimumTenure Property Addition
 
-### 📁 Files Modified
+### Files Modified
 - `ontology/urpx-core-ontology.ttl` - Duplicate resolution, class removals, property updates
 - `ontology/urpx-profile.ttl` - Enumeration additions, property migrations
 - `dev-documentation/urpx-design-decisions-041-080.md` - 7 design decisions documented
 - `dev-documentation/progress.md` - Task completion logged
 - `urpx-changelog.md` - This changelog entry
 
-### 🎯 Quality Impact
-- ✅ **Zero Syntax Errors**: Both ontologies validate successfully
-- ✅ **No Duplicates**: All duplicate definitions resolved
-- ✅ **Complete Enumerations**: All identified gaps filled
-- ✅ **Clear Architecture**: Redundancies eliminated, patterns clarified
-- ✅ **Better Organization**: Properties in appropriate ontology files
+### Quality Impact
+- **Zero Syntax Errors**: Both ontologies validate successfully
+- **No Duplicates**: All duplicate definitions resolved
+- **Complete Enumerations**: All identified gaps filled
+- **Clear Architecture**: Redundancies eliminated, patterns clarified
+- **Better Organization**: Properties in appropriate ontology files
 
 ---
 
-## Version 0.1.1 - January 4, 2026 🔧 **EPIC 0010: BILLING ARCHITECTURE REFINEMENT**
+## Version 0.1.1 - January 4, 2026  **EPIC 0010: BILLING ARCHITECTURE REFINEMENT**
 
-### 🔧 Billing Architecture Refinements (Task 0003 Sub-phases 3.2 & 3.3)
+### Billing Architecture Refinements (Task 0003 Sub-phases 3.2 & 3.3)
 
 #### Property Renaming and Class Creation
 - **Renamed**: `hasChannel` to `hasMetricInput`
@@ -1369,7 +1665,7 @@ Updated domain to allow for season price tagging:
 - **Deprecated**: `possibleValues` property
 - **Expanded**: `currency` domain to include `RatePlanModifier` and `RatePlanModifierVersion`
 
-### 🔄 Major Breaking Change: Charge → Price Renaming Complete
+### Major Breaking Change: Charge → Price Renaming Complete
 
 #### Terminology Standardization Across Entire Ontology
 - **Renamed**: All "Charge" terminology → "Price" throughout all 4 ontology files
@@ -1406,9 +1702,9 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 
 ---
 
-## Version 0.1.1 - December 17, 2025 🎉 **INITIAL REVIEW VERSION COMPLETE**
+## Version 0.1.1 - December 17, 2025  **INITIAL REVIEW VERSION COMPLETE**
 
-### 🎉 v0.1.1 INITIAL REVIEW VERSION - Ready for Working Group Review
+### v0.1.1 INITIAL REVIEW VERSION - Ready for Working Group Review
 
 #### W3C Ontology Cleanup Complete (Task 0014)
 - **Removed**: All "Developer Notes:" sections from ontology files (zero instances remain)
@@ -1448,7 +1744,7 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 - **Next Steps**: Address feedback in v0.1.2
 - **Deferred Work**: Epics 0001, 0005, 0006 moved to v0.1.2
 
-### 📁 Files Modified
+### Files Modified
 - `ontology/urpx-core-ontology.ttl` - Developer notes removed, metadata updated
 - `ontology/urpx-geography.ttl` - Developer notes removed, metadata updated
 - `ontology/urpx-organization.ttl` - Developer notes removed, metadata updated, empty label fixed
@@ -1458,9 +1754,9 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 
 ---
 
-## Version 0.1.1 - December 3, 2025 🔧 **EPIC 0008: CRITICAL FIXES - CHARGE CLASSIFICATION**
+## Version 0.1.1 - December 3, 2025  **EPIC 0008: CRITICAL FIXES - CHARGE CLASSIFICATION**
 
-### 🔧 Charge Classification File Critical Fixes
+### Charge Classification File Critical Fixes
 
 #### Duplicate Definition Removal
 - **Fixed**: Removed duplicate `urpx:serviceCharge` definition (was defined in both ChargeCategoryValue and ChargeTypeValue sections)
@@ -1476,9 +1772,9 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 
 ---
 
-## Version 0.1.1 - December 2, 2025 📘 **SYNTAX GUIDELINES & EPIC 0009 PLANNING**
+## Version 0.1.1 - December 2, 2025  **SYNTAX GUIDELINES & EPIC 0009 PLANNING**
 
-### 📘 URPX Syntax Guidelines & v0.1.2 Planning
+### URPX Syntax Guidelines & v0.1.2 Planning
 
 #### Documentation & Standards
 - **Created**: `documentation/pages/urpx-syntax-guidelines.md` - Labeling conventions for rdfs:label, skos:prefLabel, skos:definition
@@ -1491,21 +1787,21 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 - **Purpose**: RDF compliance and internationalization support
 - **Standards**: RFC 5646 language tag compliance
 
-#### Epic 0008 Status - COMPLETE ✅
+#### Epic 0008 Status - COMPLETE
 - **Completed**: All 12 tasks finished including critical property fixes, property parity, enumeration additions, architectural cleanup
 - **Achievement**: Production-ready ontology with comprehensive standards compliance and architectural improvements
 - **Impact**: Test data generation unblocked, v0.1.1 ontology finalized for working group review
 
-### 📁 Files Created/Modified
+### Files Created/Modified
 - `documentation/pages/urpx-syntax-guidelines.md` (NEW)
 - `design/v0.1.2/epics/epic_0009_language_tag_standardization/EPIC_0009.md` (NEW)
 - `documentation/pages/index.md` (UPDATED)
 
 ---
 
-## Version 0.1.1 - December 1, 2025 📋 **EPIC 0008: FINAL ONTOLOGY UPDATE PLANNING COMPLETE**
+## Version 0.1.1 - December 1, 2025 **EPIC 0008: FINAL ONTOLOGY UPDATE PLANNING COMPLETE**
 
-### 📋 Pre-Test Data Generation Planning - Comprehensive Task Breakdown
+### Pre-Test Data Generation Planning - Comprehensive Task Breakdown
 
 #### Epic 0008 Complete Documentation (12 Tasks)
 - **Created**: Complete task breakdown addressing Dave's review (2025-11-26), Una's reviews (Nov 24 + Dec 1), and architectural cleanup
@@ -1558,7 +1854,7 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 - **Documentation Recreation**: Deferred to future epic (comprehensive doc overhaul)
 - **Test Data Generation**: Dependent on P0-Critical task completion
 
-### 📊 Task Documentation Structure
+### Task Documentation Structure
 
 #### Epic Directory Organization
 - **EPIC_0008.md**: Master epic documentation with overview and rationale
@@ -1570,7 +1866,7 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 - **Rationale Capture**: Clear reasoning for each architectural choice
 - **Future Reference**: Design decisions inform future development and reviews
 
-### 🎯 Success Criteria
+### Success Criteria
 
 #### Epic Completion Gates
 1. **P0-Critical Resolution**: Test data generation unblocked
@@ -1585,7 +1881,7 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 - **Cross-Reference Integrity**: All internal links and references work
 - **Standards Alignment**: Rate plan terminology and RDF compliance maintained
 
-### 📁 Files Created/Modified
+### Files Created/Modified
 
 #### Epic Documentation Structure
 - `design/v0.1.1/epics/epic_0008_final_ontology_update/EPIC_0008.md` - Master epic overview
@@ -1596,7 +1892,7 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 - Task prioritization matrix with effort estimates and dependencies
 - Implementation timeline with parallel work identification
 
-### 🚀 Next Steps
+### Next Steps
 
 #### Immediate Implementation (This Week)
 1. **Execute P0-Critical Tasks**: Unblock test data generation (2-3 hours)
@@ -1610,9 +1906,9 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 
 ---
 
-## Version 0.1.1 - November 25, 2025 🔧 **ONTOLOGY CLASS RESTORATION - CRITICAL FIX**
+## Version 0.1.1 - November 25, 2025  **ONTOLOGY CLASS RESTORATION - CRITICAL FIX**
 
-### 🔧 Critical Class Restoration - 52 Class Definitions Recovered
+### Critical Class Restoration - 52 Class Definitions Recovered
 
 **Issue**: Classes were accidentally deleted from 3 ontology files in commit 2d46f14 ("restore") from October 2025.  
 **Impact**: Organization, charge-classification, and geography ontologies were missing critical class definitions.  
@@ -1628,28 +1924,28 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 ##### urpx-organization.ttl (28 class definitions restored)
 | Metric | Pre-Restoration | Post-Restoration | Status |
 |--------|-----------------|------------------|--------|
-| Classes | 5 | 45 | ✓ RESTORED (+40) |
-| ObjectProperties | 67 | 67 | ✓ MATCH |
-| DatatypeProperties | 0 | 0 | ✓ MATCH |
-| Instances | 89 | 89 | ✓ MATCH |
+| Classes | 5 | 45 | RESTORED (+40) |
+| ObjectProperties | 67 | 67 | MATCH |
+| DatatypeProperties | 0 | 0 | MATCH |
+| Instances | 89 | 89 | MATCH |
 
 ##### urpx-charge-classification.ttl (3 class definitions restored)
 | Metric | Pre-Restoration | Post-Restoration | Status |
 |--------|-----------------|------------------|--------|
-| Classes | 1 | 7 | ✓ RESTORED (+6) |
-| ObjectProperties | 4 | 4 | ✓ MATCH |
-| DatatypeProperties | 0 | 0 | ✓ MATCH |
-| Instances | 83 | 83 | ✓ MATCH |
+| Classes | 1 | 7 | RESTORED (+6) |
+| ObjectProperties | 4 | 4 | MATCH |
+| DatatypeProperties | 0 | 0 | MATCH |
+| Instances | 83 | 83 | MATCH |
 
 **Classes restored**: BillPortionValue, ChargeCategoryValue, ChargeTypeValue
 
 ##### urpx-geography.ttl (21 class definitions restored + section reorganization)
 | Metric | Pre-Restoration | Post-Restoration | Status |
 |--------|-----------------|------------------|--------|
-| Classes | 5 | 36 | ✓ RESTORED (+31) |
-| ObjectProperties | 20 | 20 | ✓ MATCH |
-| DatatypeProperties | 31 | 31 | ✓ MATCH |
-| Instances | 54 | 54 | ✓ MATCH |
+| Classes | 5 | 36 | RESTORED (+31) |
+| ObjectProperties | 20 | 20 | MATCH |
+| DatatypeProperties | 31 | 31 | MATCH |
+| Instances | 54 | 54 | MATCH |
 
 **Note**: Grep count of 36 includes 10 enumeration blank nodes and 4 domain blank nodes. Actual explicit class count is 22.
 
@@ -1670,7 +1966,7 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 4. Document expected vs actual counts
 5. ABORT if counts decrease unexpectedly
 
-### 📁 Files Modified
+### Files Modified
 
 #### Ontology Files (3)
 - `ontology/urpx-organization.ttl` - 28 class definitions restored
@@ -1681,26 +1977,26 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 - `design/design.md` - Added "Ontology Integrity Verification" section
 - `design/v0.1.1/epics/EPIC_CLASS_RESTORATION_REPORT.md` - Complete restoration documentation
 
-### 🎯 Quality Assurance
+### Quality Assurance
 
 #### Verification Completed
-- ✅ All class counts match expected values from pre-deletion commit (d1d945b)
-- ✅ All ObjectProperty counts preserved
-- ✅ All DatatypeProperty counts preserved
-- ✅ All Instance counts preserved
-- ✅ No data loss during restoration process
+- All class counts match expected values from pre-deletion commit (d1d945b)
+- All ObjectProperty counts preserved
+- All DatatypeProperty counts preserved
+- All Instance counts preserved
+- No data loss during restoration process
 
 #### Prevention Measures Established
-- ✅ Integrity verification process documented
-- ✅ Pre/post checksum workflow mandatory for ontology changes
-- ✅ `replace_in_file` preferred over `write_to_file` for existing files
-- ✅ Immediate abort protocol if unexpected count decreases detected
+- Integrity verification process documented
+- Pre/post checksum workflow mandatory for ontology changes
+- `replace_in_file` preferred over `write_to_file` for existing files
+- Immediate abort protocol if unexpected count decreases detected
 
 ---
 
-## Version 0.1.1 - November 23, 2025 (Afternoon) 🔄 **EPIC 0005: COMPLETE DOCUMENTATION RECREATION FROM ONTOLOGY**
+## Version 0.1.1 - November 23, 2025 (Afternoon)  **EPIC 0005: COMPLETE DOCUMENTATION RECREATION FROM ONTOLOGY**
 
-### 🔄 Documentation Overhaul - Clean Recreation from v0.1.1 Ontology
+### Documentation Overhaul - Clean Recreation from v0.1.1 Ontology
 
 #### Complete File Recreation Strategy (task_0019)
 - **Approach**: Full file recreation from ontology rather than line-by-line updates to eliminate legacy content
@@ -1789,14 +2085,14 @@ urpx:Price, urpx:hasPrices, urpx:priceType
    - urpx-diagram-index.md.pre-v0.1.1
 
 #### Verification Completed
-- **Terminology**: Zero instances of "rate data", "rate structure", "rate information" (except ❌ examples)
+- **Terminology**: Zero instances of "rate data", "rate structure", "rate information" (except examples)
 - **Deprecated Properties**: Zero references to hasTemporalDefinition, UsagePointProfile, CustomerCharge
 - **Backwards Compatibility**: Zero content about migration, deprecation, legacy patterns
 - **Version References**: All v0.0.1 references updated to v0.1.1
 - **Broken Links**: All links fixed after file/directory renames
 - **Ontology Compliance**: All examples use correct properties and enum values from v0.1.1 ontology
 
-### 📁 Files Created/Modified
+### Files Created/Modified
 
 #### Completely Recreated (6 files)
 - `documentation/pages/urpx-tutorial.md` - Fresh from ontology
@@ -1820,7 +2116,7 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 #### Epic Tracking (1 file)
 - `design/v0.1.1/epics/epic_0005_documentation_errors/EPIC_0005.md` - Complete task_0019 documentation
 
-### 🎯 Quality Achievements
+### Quality Achievements
 
 #### Ontology Compliance
 - All examples use correct v0.1.1 property names from both ontology files
@@ -1843,7 +2139,7 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 - Clean, focused v0.1.1 documentation
 - Standards-compliant language throughout
 
-### 📊 Epic 0005 Status Update
+### Epic 0005 Status Update
 
 **Total Hours Completed**: 30 hours (was 6, now 30)  
 **Epic Status**: 70% Complete
@@ -1864,9 +2160,9 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 
 ---
 
-## Version 0.1.1 - November 23, 2025 (Morning) 📚 **EPIC 0005: SEMANTIC WEB & STANDARDS CURRICULUM COMPLETE**
+## Version 0.1.1 - November 23, 2025 (Morning)  **EPIC 0005: SEMANTIC WEB & STANDARDS CURRICULUM COMPLETE**
 
-### 📚 Educational Content & Standards Mapping - Working Group Learning Materials
+### Educational Content & Standards Mapping - Working Group Learning Materials
 
 #### Comprehensive Semantic Web Guide (task_0010)
 - **Created**: `documentation/pages/urpx-semantic-web-guide.md` - Complete introduction to semantic web for working group
@@ -1930,7 +2226,7 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 - **Estimated**: 19 hours total for complete epic (12 hours P1, 5 hours P2, 2 hours P3)
 - **Impact**: Clear roadmap for remaining documentation updates
 
-### 📁 Files Created
+### Files Created
 
 #### New Documentation Pages (3)
 - `documentation/pages/urpx-semantic-web-guide.md` - Comprehensive semantic web introduction
@@ -1943,7 +2239,7 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 - `documentation/diagrams/urpx-sparql-query-visual.mmd` - Query traversal visualization
 - `documentation/diagrams/diagram-archive-2025-11-23/` - Archive of 25 PNG/SVG files
 
-### 📁 Files Modified
+### Files Modified
 
 #### Documentation Updates (6)
 - `documentation/pages/index.md` - Learning & Education navigation added, duplicate content removed
@@ -1957,27 +2253,27 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 - `documentation/diagrams/urpx-rdf-triple-example.mmd` - Paul Tol colors applied
 - `documentation/diagrams/urpx-rate-plan-graph.mmd` - Paul Tol colors with comprehensive styling
 
-### 🎯 Working Group Impact
+### Working Group Impact
 
 #### Educational Accessibility
-- ✅ **Semantic Web Newcomers**: Complete learning path with curated resources
-- ✅ **Standards Integration**: Clear methodology for mapping to other standards
-- ✅ **Visual Learning**: Diagrams explain complex concepts accessibly
-- ✅ **Self-Service**: FAQ answers common questions without requiring meetings
+- **Semantic Web Newcomers**: Complete learning path with curated resources
+- **Standards Integration**: Clear methodology for mapping to other standards
+- **Visual Learning**: Diagrams explain complex concepts accessibly
+- **Self-Service**: FAQ answers common questions without requiring meetings
 
 #### Professional Standards
-- ✅ **Academic Citations**: BibTeX for all diagrams enables proper attribution
-- ✅ **Terminology Precision**: Consistent "rate plan data" throughout eliminates confusion
-- ✅ **Standards Alignment**: OpenADR, Zigbee, Matter integration roadmap clear
-- ✅ **Color Accessibility**: Paul Tol 2.7 Light supports color-blind users
+- **Academic Citations**: BibTeX for all diagrams enables proper attribution
+- **Terminology Precision**: Consistent "rate plan data" throughout eliminates confusion
+- **Standards Alignment**: OpenADR, Zigbee, Matter integration roadmap clear
+- **Color Accessibility**: Paul Tol 2.7 Light supports color-blind users
 
 #### Development Readiness
-- ✅ **Learning Resources**: Videos, tutorials, tools curated and validated
-- ✅ **Integration Patterns**: Clear examples for multi-standard environments
-- ✅ **Diagram Archive**: Organized historical versions for reference
-- ✅ **Citation Ready**: Proper attribution for publications and presentations
+- **Learning Resources**: Videos, tutorials, tools curated and validated
+- **Integration Patterns**: Clear examples for multi-standard environments
+- **Diagram Archive**: Organized historical versions for reference
+- **Citation Ready**: Proper attribution for publications and presentations
 
-### 🚀 Next Steps
+### Next Steps
 
 **Remaining Epic 0005 Work:**
 - task_0011: Documentation Log Batch #001 (serviceType rename) - 1 hour
@@ -1988,15 +2284,15 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 - task_0009: Learning assessment questions (P3 - future) - 2 hours
 
 **Phase Completion:**
-- ✅ Phase 1 (P1 tasks) - 65% complete
+- Phase 1 (P1 tasks) - 65% complete
 - ⏳ Phase 2 (P2 tasks) - Ready to begin
 - ⏳ Phase 3 (P3 tasks) - Future expansion
 
 ---
 
-## Version 0.1.1 - November 18, 2025 📊 **EPIC 0005: DIAGRAM UPDATES COMPLETE**
+## Version 0.1.1 - November 18, 2025 **EPIC 0005: DIAGRAM UPDATES COMPLETE**
 
-### 📊 Documentation Diagrams - v0.1.1 Architecture Visualization
+### Documentation Diagrams - v0.1.1 Architecture Visualization
 
 #### All Core Diagrams Updated for WG Presentation (task_0008)
 - **Updated**: 7 Mermaid diagrams reflecting v0.1.1 ontology architecture
@@ -2014,19 +2310,19 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 - Flat architecture pattern with IRI references (no nesting)
 - Standards alignment (CIM, CDS, Green Button, FERC)
 
-### 📁 Files Modified
+### Files Modified
 - `documentation/diagrams/` - 7 diagram files updated
 - `design/v0.1.1/epics/epic_0005_documentation_errors/task_0008_diagram_updates.md` - Task documentation
 - `design/v0.1.1/epics/epic_0005_documentation_errors/EPIC_0005.md` - Epic tracking with next session prompt
 
-**Task Status**: ✅ task_0008 Complete  
+**Task Status**: task_0008 Complete  
 **Next**: task_0001 - Fix tutorial page enum errors (~40 instances)
 
 ---
 
-## Version 0.1.1 - November 18, 2025 🏗️ **EPIC 0004: ARCHITECTURAL ISSUES COMPLETE**
+## Version 0.1.1 - November 18, 2025  **EPIC 0004: ARCHITECTURAL ISSUES COMPLETE**
 
-### 🏗️ Architectural Enhancements - 6 Tasks Complete, 2 Design Decisions
+### Architectural Enhancements - 6 Tasks Complete, 2 Design Decisions
 
 #### Epic 0004 Complete Implementation (6/6 tasks)
 - **Added**: `basedOnCharge` property enabling charge calculation dependencies (Task 0001)
@@ -2100,21 +2396,21 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 - **Documented**: Business rules, cardinality, standards alignment, SPARQL constraints
 - **Priority**: Critical validations flagged for circular dependency prevention and context requirements
 
-### 📁 Files Modified
+### Files Modified
 - `ontology/urpx-core-ontology.ttl` - All architectural enhancements (6 tasks)
 - `design/urpx-design-decisions.md` - Decisions #023 and #024 documented
 - `design/v0.1.1/epics/epic_0004_architectural_issues/` - Complete epic and task documentation (7 files)
 - `design/shacl-update-tracking/shacl-tracker-updates/` - 6 SHACL trackers created
 - `backups/epic_0004_20251117_114800/` - Pre-epic backup created
 
-**Epic Status**: ✅ COMPLETE - All 6 tasks implemented and documented  
+**Epic Status**: COMPLETE - All 6 tasks implemented and documented  
 **Next Steps**: SHACL constraint implementation for new properties and dual-pattern validation
 
 ---
 
-## Version 0.1.1 - November 16, 2025 🎯 **EPIC 0003: STRING-TO-ENUMERATION CONVERSIONS COMPLETE**
+## Version 0.1.1 - November 16, 2025 **EPIC 0003: STRING-TO-ENUMERATION CONVERSIONS COMPLETE**
 
-### 🎯 Enumeration Pattern Implementation - 10 Properties Converted, 58 Instances Created
+### Enumeration Pattern Implementation - 10 Properties Converted, 58 Instances Created
 
 #### Complete Enumeration Conversion Achievement
 - **Converted**: 10 properties from xsd:string DatatypeProperty to ObjectProperty with EnumValue ranges
@@ -2165,21 +2461,21 @@ urpx:Price, urpx:hasPrices, urpx:priceType
 - **Files**: epic_0003_task_0001_tracker.csv (ServicePointProfile), epic_0003_task_0002_tracker.csv (CustomerProfile), epic_0003_task_0003_tracker.csv (DER), epic_0003_task_0005_tracker.csv (serviceRole), epic_0003_task_0006_tracker.csv (meter unit)
 - **Documented**: Business rules, cardinality requirements, standards alignment for all 58 instances
 
-### 📁 Files Modified
+### Files Modified
 - `ontology/urpx-core-ontology.ttl` - Complete enumeration implementation (10 properties, 11 classes, 58 instances)
 - `design/v0.1.1/epics/epic_0003_string_to_enumeration/EPIC_0003.md` - Complete epic documentation
 - `design/shacl-update-tracking/shacl-tracker-updates/` - 5 CSV trackers for SHACL updates
 - `design/urpx-design-decisions.md` - Decision #023 documented
 - `backups/epic_0003_20251116_231745/` - Pre-conversion backup created
 
-**Epic Status**: ✅ COMPLETE - Documentation Phase  
+**Epic Status**: COMPLETE - Documentation Phase  
 **Next Steps**: SHACL constraint updates (sh:datatype → sh:class for all converted properties)
 
 ---
 
-## Version 0.1.1 - November 16, 2025 🏗️ **EPIC 0002: PROFILE CLASS HIERARCHY COMPLETE**
+## Version 0.1.1 - November 16, 2025  **EPIC 0002: PROFILE CLASS HIERARCHY COMPLETE**
 
-### 🏗️ Missing Parent Classes Resolved - Clean Profile Architecture
+### Missing Parent Classes Resolved - Clean Profile Architecture
 
 #### Profile Parent Class Implementation
 - **Added**: `urpx:Profile` class - Abstract parent for all profile types with NO properties (pure semantic grouping)
@@ -2218,20 +2514,20 @@ urpx:ProfileAlternatives (SEPARATE - charge alternatives architecture)
 - **Validated**: All business rules documented per design.md governance requirements
 - **Status**: Existing SHACL shapes for CustomerProfileSet confirmed functional
 
-### 📁 Files Modified
+### Files Modified
 - `ontology/urpx-core-ontology.ttl` - Profile class hierarchy implementation
 - `design/urpx-design-decisions.md` - Decision #022 documented
 - `design/v0.1.1/epics/epic_0002_missing_parent_classes/` - Complete epic documentation
 - `design/shacl-update-tracking/shacl-tracker-updates/epic_0002_task_0001_tracker.csv` - SHACL tracker
 
-**Epic Status**: ✅ COMPLETE  
+**Epic Status**: COMPLETE  
 **Next Epic**: Epic 0003 - String-to-Enumeration Conversions (P1 - High Priority)
 
 ---
 
-## Version 0.1.1 - November 16, 2025 🔄 **EPIC 0000: CHARGE ALTERNATIVES REFACTOR COMPLETE**
+## Version 0.1.1 - November 16, 2025  **EPIC 0000: CHARGE ALTERNATIVES REFACTOR COMPLETE**
 
-### 🔄 Charge Alternatives Architecture - Complete Refactoring
+### Charge Alternatives Architecture - Complete Refactoring
 
 #### Architecture Transformation Complete
 - **Separated**: Charge storage (Charges container) from dimension definition (ProfileAlternatives)
@@ -2264,19 +2560,19 @@ urpx:ProfileAlternatives (SEPARATE - charge alternatives architecture)
 - **Old**: Direct charge set alternatives on RatePlanVersion
 - **New**: Charges container with separated alternatives structure
 
-### 📁 Files Modified
+### Files Modified
 - `ontology/urpx-core-ontology.ttl` - Complete charge alternatives architecture
 - `design/v0.1.1/epics/epic_0000_charge_alternatives_refactor/` - 9 task files with implementation details
 - `design/shacl-update-tracking/shacl-tracker-updates/epic_0000_*_tracker.csv` - 7 SHACL CSV trackers
 
-**Epic Status**: ✅ COMPLETE (9/9 tasks)  
+**Epic Status**: COMPLETE (9/9 tasks)  
 **Architecture**: Production-ready charge alternatives with clean separation and IRI pattern
 
 ---
 
-## Version 0.1.1 - November 4, 2025 🌍 **SEASON DEFINITION FLEXIBILITY & ARCHITECTURE COMPLETION**
+## Version 0.1.1 - November 4, 2025  **SEASON DEFINITION FLEXIBILITY & ARCHITECTURE COMPLETION**
 
-### 🌍 Season Enhancement - Three Flexible Definition Approaches
+### Season Enhancement - Three Flexible Definition Approaches
 
 #### ISO-Compliant Season Specifications
 - **Added**: `startMonth`/`endMonth` properties (two-digit ISO 8601 --MM format: 01-12)
@@ -2296,15 +2592,15 @@ urpx:ProfileAlternatives (SEPARATE - charge alternatives architecture)
 - **Business Rules**: Season must use ONE approach; seasons must not overlap within PlanElements
 - **Validation**: Month format validation (01-12), season non-overlap relationship rules
 
-### 📁 Files Modified
+### Files Modified
 - `ontology/urpx-core-ontology.ttl` - Season enhancement, SeasonalSchedule removal
 - `design/shacl-update-tracking/season-decision19-completion.csv` - SHACL update tracking
 
 ---
 
-## Version 0.1.1 - October 31, 2025 📝 **RATE PLAN TERMINOLOGY & W3C STANDARDS CLEANUP**
+## Version 0.1.1 - October 31, 2025  **RATE PLAN TERMINOLOGY & W3C STANDARDS CLEANUP**
 
-### 📝 Documentation & Ontology Standards Compliance for v0.01 Review
+### Documentation & Ontology Standards Compliance for v0.01 Review
 
 #### Rate Plan Terminology Standardization
 - **Added**: Comprehensive "rate plan" vs "rate" terminology explanation across documentation
@@ -2348,9 +2644,9 @@ urpx:ProfileAlternatives (SEPARATE - charge alternatives architecture)
 
 ---
 
-## Version 0.1.1 - October 24, 2025 🕐 **CIM VALIDITYINTERVAL TEMPORAL PROPERTIES**
+## Version 0.1.1 - October 24, 2025  **CIM VALIDITYINTERVAL TEMPORAL PROPERTIES**
 
-### 🕐 CIM-Aligned Temporal Property Architecture (Breaking Change)
+### CIM-Aligned Temporal Property Architecture (Breaking Change)
 
 **Major Refactoring**: Added CIM validityInterval pattern for charge-level temporality, creating semantic separation between publication dates and billing applicability dates.
 
@@ -2397,8 +2693,8 @@ urpx:ProfileAlternatives (SEPARATE - charge alternatives architecture)
 - **Migration**: Test data update required for ~150 property instances
 
 #### Implementation Status
-- ✅ Ontology updated with 6 new properties
-- ✅ Complete specification created (TEMPORAL_PROPERTY_REFACTORING_SPEC.md)
+- Ontology updated with 6 new properties
+- Complete specification created (TEMPORAL_PROPERTY_REFACTORING_SPEC.md)
 - ⏳ Test data migration pending
 - ⏳ SHACL constraints update pending
 - ⏳ Seasonal/holiday calendar test data enhancement pending
@@ -2407,9 +2703,9 @@ urpx:ProfileAlternatives (SEPARATE - charge alternatives architecture)
 
 ---
 
-## Version 0.1.1 - October 23, 2025 🚨 **CRITICAL CLASS RESTORATION**
+## Version 0.1.1 - October 23, 2025  **CRITICAL CLASS RESTORATION**
 
-### 🚨 Emergency Class Restoration - Accidental Deletion Recovery
+### Emergency Class Restoration - Accidental Deletion Recovery
 
 **Critical Issue:** During enum reorganization on October 21st, 83 classes were accidentally deleted from urpx-core-ontology.ttl, including critical classes like RatePlan, RatePlanVersion, Charge, ChargeSet, and 79 others.
 
@@ -2420,11 +2716,11 @@ urpx:ProfileAlternatives (SEPARATE - charge alternatives architecture)
 - **Cost**: $20 in API tokens + significant engineering time
 
 #### Restoration Completed
-- ✅ **83 classes restored** from backup (urpx-core-ontology_backup_20251021_114249.ttl)
-- ✅ **2 classes excluded** (PricingModel, TemporalDefinition - intentionally replaced per Decision #019)
-- ✅ **2 new classes preserved** (PlanElements, PlanElementSet from Phase 6B)
-- ✅ **7 document classes maintained** (already present, not missing)
-- ✅ **File structure corrected**: Classes → Properties → Enumerations
+- **83 classes restored** from backup (urpx-core-ontology_backup_20251021_114249.ttl)
+- **2 classes excluded** (PricingModel, TemporalDefinition - intentionally replaced per Decision #019)
+- **2 new classes preserved** (PlanElements, PlanElementSet from Phase 6B)
+- **7 document classes maintained** (already present, not missing)
+- **File structure corrected**: Classes → Properties → Enumerations
 
 #### Classes Restored (83 total)
 **Core Business Classes (43):**
@@ -2474,9 +2770,9 @@ AlternativeDimension
 
 ---
 
-## Version 0.1.1 - October 23, 2025 🏗️ **PLANELEMENTS ARCHITECTURE - PHASE 6B MODIFIER EXTENSION COMPLETE**
+## Version 0.1.1 - October 23, 2025  **PLANELEMENTS ARCHITECTURE - PHASE 6B MODIFIER EXTENSION COMPLETE**
 
-### 🏗️ PlanElements Architecture Extension to RatePlanModifierVersion (Phase 6B)
+### PlanElements Architecture Extension to RatePlanModifierVersion (Phase 6B)
 
 **Major Extension:** Extended PlanElements architecture to RatePlanModifierVersion for unified temporal and pricing structure across rate plans and modifiers.
 
@@ -2516,20 +2812,20 @@ RatePlanVersion OR RatePlanModifierVersion
 ```
 
 #### Benefits Achieved
-- ✅ Modifiers can now have complex pricing with seasons, TOU schedules, and service tiers
-- ✅ Unified architecture reduces ontology complexity and duplication
-- ✅ Hybrid linking approach balances operational simplicity with sophisticated eligibility logic
-- ✅ Clean terminology supports both rate plan and modifier contexts
-- ✅ Scalable pattern for future pricing structure enhancements
+- Modifiers can now have complex pricing with seasons, TOU schedules, and service tiers
+- Unified architecture reduces ontology complexity and duplication
+- Hybrid linking approach balances operational simplicity with sophisticated eligibility logic
+- Clean terminology supports both rate plan and modifier contexts
+- Scalable pattern for future pricing structure enhancements
 
 **Issue Reference:** Issue #015 (BillingModel architecture review)  
 **Decision Reference:** Decision #019 (PlanElements unified architecture)
 
 ---
 
-## Version 0.1.1 - October 22, 2025 🏗️ **PLANELEMENTS ARCHITECTURE REFACTORING - PHASE 6A COMPLETE**
+## Version 0.1.1 - October 22, 2025  **PLANELEMENTS ARCHITECTURE REFACTORING - PHASE 6A COMPLETE**
 
-### 🏗️ PlanElements Architecture Core Implementation (Phase 6A)
+### PlanElements Architecture Core Implementation (Phase 6A)
 
 **Critical Fix:** Added missing MetricRuleSet organizational layer discovered during SHACL review.
 
@@ -2560,11 +2856,11 @@ RatePlanVersion OR RatePlanModifierVersion
 - **hasHolidayCalendar:** Domain updated (TemporalDefinition → RatePlanElements in union)
 
 #### Deleted (5 items - Phase 6A)
-- ❌ PricingModel class (now RatePlanElements, then PlanElements)
-- ❌ TemporalDefinition class (merged into RatePlanElements)
-- ❌ hasPricingModel property (now hasRatePlanElements, then hasPlanElements)
-- ❌ hasTemporalDefinition property (no longer needed)
-- ❌ hasSeason property (singular - now hasSeasons plural)
+- PricingModel class (now RatePlanElements, then PlanElements)
+- TemporalDefinition class (merged into RatePlanElements)
+- hasPricingModel property (now hasRatePlanElements, then hasPlanElements)
+- hasTemporalDefinition property (no longer needed)
+- hasSeason property (singular - now hasSeasons plural)
 
 #### Impact
 **Why This Matters:** The missing MetricRuleSet layer prevented proper organization of pricing rules by measurement metric. Without it, unclear which TOU schedules and service tiers applied to which metrics (energy vs demand). Now fixed with clean per-metric organization.
@@ -2576,16 +2872,16 @@ RatePlanVersion OR RatePlanModifierVersion
 
 ---
 
-## Version 0.1.1 - October 21, 2025 📂 **ENUM ORGANIZATION**
+## Version 0.1.1 - October 21, 2025  **ENUM ORGANIZATION**
 
-### 🏗️ RatePlanVersion Flat Architecture - Phases 1-5 COMPLETE
+### RatePlanVersion Flat Architecture - Phases 1-5 COMPLETE
 
 **Major Achievement:** Completed implementation of flat RatePlanVersion architecture with TemporalDefinition, PricingModel, and BillingModel as direct properties.
 
 **Issue Reference:** [Issue #014: TOUSchedule Architecture Problem](design/urpx-design-issues.md#issue-014)  
 **Decision Reference:** [Decision #018: Flat RatePlanVersion Architecture](design/urpx-design-decisions.md#decision-018)
 
-#### Phase 1: Core Classes ✅ COMPLETE
+#### Phase 1: Core Classes COMPLETE
 **Three New Classes Implemented:**
 - **TemporalDefinition** - Centralized temporal data for seasons and holiday calendars
   - `hasSeason` property (TemporalDefinition → Season[])
@@ -2602,19 +2898,19 @@ RatePlanVersion OR RatePlanModifierVersion
 - `hasPricingModel` (RatePlanVersion → PricingModel)
 - `hasBillingModel` (RatePlanVersion → BillingModel)
 
-#### Phase 2: MetricSpecification Enhancement ✅ COMPLETE
+#### Phase 2: MetricSpecification Enhancement COMPLETE
 - **billPortion domain expanded** to include MetricSpecification
 - Enables billPortion specification at metric-level for better architectural organization
 - Charge-level billPortion still supported for flexibility
 
-#### Phase 3: TemporalDefinition Structure ✅ COMPLETE
+#### Phase 3: TemporalDefinition Structure COMPLETE
 - **Season class separated** from TOUSchedule nesting
 - **appliesInSeason property** created (TimeBracket → Season[])
 - Enables seasons defined once, referenced many times via URI
 - Multiple season references per time bracket supported
 - Eliminates season definition redundancy
 
-#### Phase 4: PricingModel RuleSet ✅ COMPLETE
+#### Phase 4: PricingModel RuleSet COMPLETE
 - **ServiceTier class** with operator-based boundary comparison
   - `lowerBound`/`upperBound` properties (xsd:decimal)
   - `lowerBoundOperator`/`upperBoundOperator` (→ OperatorValue)
@@ -2625,7 +2921,7 @@ RatePlanVersion OR RatePlanModifierVersion
   - Enables >= vs > and <= vs < comparisons
   - Consistent with operator usage throughout ontology
 
-#### Phase 5: Charge Reference Pattern ✅ COMPLETE
+#### Phase 5: Charge Reference Pattern COMPLETE
 - **Embedded MetricSpecification** pattern maintained on Charge
 - Charges match to PricingModel metrics by comparing embedded properties
 - `touPeriodNumber` (xsd:integer) for TOU period matching
@@ -2633,20 +2929,20 @@ RatePlanVersion OR RatePlanModifierVersion
 - Simple matching pattern: embedded MetricSpec + touPeriod + serviceTier
 
 #### Architectural Benefits Achieved
-✅ Flat structure - single level from RatePlanVersion  
-✅ Seasons defined once, referenced many times  
-✅ Multiple TOUSchedules/ServiceTiers per MetricSpecification supported  
-✅ Simple charge matching pattern  
-✅ billPortion at correct architectural level  
-✅ Clean separation: temporal/pricing/billing concerns  
-✅ Operator-based tier bounds more maintainable  
-✅ Scalable to utility-grade complexity
+Flat structure - single level from RatePlanVersion  
+Seasons defined once, referenced many times  
+Multiple TOUSchedules/ServiceTiers per MetricSpecification supported  
+Simple charge matching pattern  
+billPortion at correct architectural level  
+Clean separation: temporal/pricing/billing concerns  
+Operator-based tier bounds more maintainable  
+Scalable to utility-grade complexity
 
 #### Remaining Work
 - **Phase 6**: SHACL Validation (2-3 hours)
 - **Phase 7**: Documentation & Examples (1-2 hours)
 
-### 📋 Design Governance Updates - Documentation Audit Complete
+### Design Governance Updates - Documentation Audit Complete
 
 **Comprehensive Ontology Audit Completed:**
 - **Issue #002 RESOLVED**: Multiple serviceType properties - all conflicts eliminated through renames
@@ -2654,11 +2950,11 @@ RatePlanVersion OR RatePlanModifierVersion
 - **Issue #014 IN PROGRESS**: RatePlanVersion architecture - Phases 1-5 complete, SHACL/docs remaining
 
 **Audit Findings:**
-- ✅ No serviceType property conflicts (utilityServiceKind, serviceRole renames complete)
-- ✅ All 970+ properties/classes/instances have rdfs:label with @en language tags
-- ✅ Property naming consolidated (metricCommodity, metricUnitOfMeasure, measurementType removed)
-- ✅ ISO 8601 compliance verified (dual property approach correct per Issue #013)
-- ✅ SI unit symbols preserved (W, MW, kWh - Issue #011 compliance)
+- No serviceType property conflicts (utilityServiceKind, serviceRole renames complete)
+- All 970+ properties/classes/instances have rdfs:label with @en language tags
+- Property naming consolidated (metricCommodity, metricUnitOfMeasure, measurementType removed)
+- ISO 8601 compliance verified (dual property approach correct per Issue #013)
+- SI unit symbols preserved (W, MW, kWh - Issue #011 compliance)
 
 **Documentation Updates:**
 - urpx-design-issues.md updated with resolution status for Issues #002, #008, #014
@@ -2670,7 +2966,7 @@ RatePlanVersion OR RatePlanModifierVersion
 - `design/urpx-todo.md` - RatePlanVersion phases marked complete
 - `design/urpx-production-readiness-plan.md` - Audit findings incorporated
 
-### 📂 Enumeration Instances Reorganized by Enum Class - COMPLETE
+### Enumeration Instances Reorganized by Enum Class - COMPLETE
 
 **Script Created**: `scripts/reorganize_enums_by_property.py`
 - Groups enum instances by enum class (not property) to eliminate duplications
@@ -2680,10 +2976,10 @@ RatePlanVersion OR RatePlanModifierVersion
 - Clear section headers showing all properties that use each enum class
 
 **Files Reorganized:**
-- ✅ `urpx-core-ontology.ttl` - 37 enum classes, 500+ instances grouped
-- ✅ `urpx-charge-classification.ttl` - 3 enum classes, 82 instances grouped (NO duplications)
-- ✅ `urpx-geography.ttl` - 10 enum classes, 54 instances grouped
-- ✅ `urpx-organization.ttl` - 12 enum classes, 73 instances grouped
+- `urpx-core-ontology.ttl` - 37 enum classes, 500+ instances grouped
+- `urpx-charge-classification.ttl` - 3 enum classes, 82 instances grouped (NO duplications)
+- `urpx-geography.ttl` - 10 enum classes, 54 instances grouped
+- `urpx-organization.ttl` - 12 enum classes, 73 instances grouped
 
 **Script Fixes:**
 - Fixed namespace manager usage to prevent `<http://www.w3.org/...>` URI corruption
@@ -2692,13 +2988,13 @@ RatePlanVersion OR RatePlanModifierVersion
 
 **Benefits**: Dramatically improved readability and maintainability. Eliminated enum instance duplication.
 
-### 🔧 ServiceTier Operator-Based Boundary Comparison
+### ServiceTier Operator-Based Boundary Comparison
 
 **Replaced Boolean Flags with OperatorValue Reuse:**
-- ❌ **Removed**: `lowerBoundInclusive` (boolean property)
-- ❌ **Removed**: `upperBoundInclusive` (boolean property)
-- ✅ **Added**: `lowerBoundOperator` (ObjectProperty → OperatorValue)
-- ✅ **Added**: `upperBoundOperator` (ObjectProperty → OperatorValue)
+- **Removed**: `lowerBoundInclusive` (boolean property)
+- **Removed**: `upperBoundInclusive` (boolean property)
+- **Added**: `lowerBoundOperator` (ObjectProperty → OperatorValue)
+- **Added**: `upperBoundOperator` (ObjectProperty → OperatorValue)
 
 **Benefits:**
 - Reuses existing OperatorValue enum (greaterThanOperator, greaterThanOrEqualOperator, lessThanOperator, lessThanOrEqualOperator)
@@ -2717,18 +3013,18 @@ ex:tier1 a urpx:ServiceTier ;
 
 **Impact**: Cleaner, more maintainable tier boundary logic with consistent operator pattern.
 
-### 🏗️ Flat RatePlanVersion Architecture (Phases 2-4 Complete)
+### Flat RatePlanVersion Architecture (Phases 2-4 Complete)
 
-**Phase 2: MetricSpecification Enhancement** ✅
+**Phase 2: MetricSpecification Enhancement**
 - Expanded `billPortion` domain to include MetricSpecification (preferred location)
 
-**Phase 3: TemporalDefinition Structure** ✅
+**Phase 3: TemporalDefinition Structure**
 - Created `Season` class (standalone, separated from SeasonalSchedule)
 - Added `hasSeason` property (TemporalDefinition → Season)
 - Added `appliesInSeason` property (TimeBracket → Season)
 - Updated 4 season properties to use new Season class
 
-**Phase 4: PricingModel RuleSet** ✅
+**Phase 4: PricingModel RuleSet**
 - Expanded `hasMetricSpecification` domain (+PricingModel)
 - Expanded `hasTOUSchedule` domain (+PricingModel)
 - Created `ServiceTier` class with upper/lower bounds and inclusivity flags
@@ -2741,9 +3037,9 @@ ex:tier1 a urpx:ServiceTier ;
 
 ---
 
-## Version 0.1.1 - October 20, 2025 (Evening Update) 🎯 **PHASE 2 CONSOLIDATION COMPLETE**
+## Version 0.1.1 - October 20, 2025 (Evening Update) **PHASE 2 CONSOLIDATION COMPLETE**
 
-### 🏗️ Measurement Framework Property Consolidation & CIM PhaseCodeKind
+### Measurement Framework Property Consolidation & CIM PhaseCodeKind
 
 #### Property Consolidation Complete (3 properties consolidated, 9 removed)
 - **commodity** - Single canonical property (domain expanded, replaced metricCommodity)
@@ -2766,31 +3062,31 @@ ex:tier1 a urpx:ServiceTier ;
 - **Removed 8 old codes**: Replaced with standardized CIM codes
 - **Impact**: Complete CIM electrical phase code coverage with hierarchical organization
 
-### 📁 Files Modified
+### Files Modified
 - `ontology/urpx-core-ontology.ttl` - Complete consolidation implementation
 - `design/urpx-design-decisions.md` - Decision #017
 - `design/urpx-documentation-update-log.md` - Batch #014
 
-### ⚠️ Breaking Changes
+### Breaking Changes
 Property removals, class removals, phase code renames - see Migration Guide in Decision #017
 
 ---
 
-## Version 0.1.1 - October 16-20, 2025 🎉 **MEASUREMENT FRAMEWORK IMPLEMENTATION COMPLETE**
+## Version 0.1.1 - October 16-20, 2025  **MEASUREMENT FRAMEWORK IMPLEMENTATION COMPLETE**
 
-### 🏗️ Major Achievement: Comprehensive Measurement Framework for Complex Billing
+### Major Achievement: Comprehensive Measurement Framework for Complex Billing
 
 #### Measurement Framework Architecture Complete
-- **✅ COMPLETE**: Comprehensive measurement framework supporting complex billing scenarios
-- **✅ COMPLETE**: ServicePointProfile rename for CIM alignment (UsagePointProfile → ServicePointProfile)
-- **✅ COMPLETE**: MeasurementTypeValue expanded from 5 to 11 types with Green Button naming
-- **✅ COMPLETE**: MetricSpecification class for simplified measurement specification
-- **✅ COMPLETE**: 4 new enumeration classes with 21 instances for measurement metadata
-- **✅ COMPLETE**: Dual-level currency architecture (document + charge level)
-- **✅ COMPLETE**: Measurement interval properties for time-based charges
+- **COMPLETE**: Comprehensive measurement framework supporting complex billing scenarios
+- **COMPLETE**: ServicePointProfile rename for CIM alignment (UsagePointProfile → ServicePointProfile)
+- **COMPLETE**: MeasurementTypeValue expanded from 5 to 11 types with Green Button naming
+- **COMPLETE**: MetricSpecification class for simplified measurement specification
+- **COMPLETE**: 4 new enumeration classes with 21 instances for measurement metadata
+- **COMPLETE**: Dual-level currency architecture (document + charge level)
+- **COMPLETE**: Measurement interval properties for time-based charges
 - **Impact**: Production-ready measurement framework supporting 15-minute demand charges, net metering, multi-currency analysis, and complex time-based rates
 
-### 📊 Measurement Framework Components
+### Measurement Framework Components
 
 #### ServicePointProfile CIM Standards Alignment
 - **Renamed**: `UsagePointProfile` → `ServicePointProfile` (class + 11 properties)
@@ -2881,7 +3177,7 @@ Property removals, class removals, phase code renames - see Migration Guide in D
   - International operations: Mix of local and foreign currency charges
   - Exchange rate analysis: Track original currency for each charge
 
-### 🎯 Complex Billing Scenarios Now Supported
+### Complex Billing Scenarios Now Supported
 
 #### Time-Based Measurement Intervals
 ```turtle
@@ -2931,7 +3227,7 @@ ex:charge2 a urpx:Charge ;
     urpx:currency "EUR" .  # Explicit for cross-currency comparison
 ```
 
-### 📋 Design Documentation Updated
+### Design Documentation Updated
 
 #### Measurement Framework Design Document
 - **Updated**: `design/measurement-framework-design.md` with all architectural decisions
@@ -2943,7 +3239,7 @@ ex:charge2 a urpx:Charge ;
 - **Added**: Future research notes (GHG emissions, CIM deep-dive, water/gas expansion)
 - **Status**: Complete architecture specification ready for implementation
 
-### 📁 Files Modified
+### Files Modified
 
 #### Core Ontology Architecture
 - `ontology/urpx-core-ontology.ttl` - Major measurement framework implementation
@@ -2960,28 +3256,28 @@ ex:charge2 a urpx:Charge ;
 - `design/measurement-framework-design.md` - Complete architecture specification with decisions
 - Changelog updated with comprehensive implementation details
 
-### 🎯 Production Readiness Impact
+### Production Readiness Impact
 
 #### Standards Compliance Achievement
-- ✅ **Green Button Alignment**: MeasurementTypeValue naming, ReadingType patterns, accumulation methods
-- ✅ **CIM IEC 61968-9**: ServicePointProfile terminology, core metering properties
-- ✅ **CDS Integration**: Billing cycle compatibility maintained
-- ✅ **ISO 8601**: Duration formats for all intervals (PT15M, P1M, P1D)
+- **Green Button Alignment**: MeasurementTypeValue naming, ReadingType patterns, accumulation methods
+- **CIM IEC 61968-9**: ServicePointProfile terminology, core metering properties
+- **CDS Integration**: Billing cycle compatibility maintained
+- **ISO 8601**: Duration formats for all intervals (PT15M, P1M, P1D)
 
 #### Measurement Capabilities Achieved
-- ✅ **Time-Based Rates**: 15-minute demand, hourly averages, monthly billing cycles
-- ✅ **Interval Measurements**: Comprehensive support for utility metering intervals
-- ✅ **Net Metering**: Flow direction and accumulation for DER scenarios
-- ✅ **Multi-Commodity**: Electricity, gas, water with appropriate measurement types
-- ✅ **International**: Dual-level currency for global utility operations
+- **Time-Based Rates**: 15-minute demand, hourly averages, monthly billing cycles
+- **Interval Measurements**: Comprehensive support for utility metering intervals
+- **Net Metering**: Flow direction and accumulation for DER scenarios
+- **Multi-Commodity**: Electricity, gas, water with appropriate measurement types
+- **International**: Dual-level currency for global utility operations
 
 #### Architecture Quality
-- ✅ **Simplified Approach**: MetricSpecification handles 80% of cases without ReadingType complexity
-- ✅ **Backward Compatible**: All existing properties maintained, new properties are additive
-- ✅ **Extensible**: Framework supports future measurement types without breaking changes
-- ✅ **Type Safe**: ObjectProperty enumerations with proper SHACL validation patterns
+- **Simplified Approach**: MetricSpecification handles 80% of cases without ReadingType complexity
+- **Backward Compatible**: All existing properties maintained, new properties are additive
+- **Extensible**: Framework supports future measurement types without breaking changes
+- **Type Safe**: ObjectProperty enumerations with proper SHACL validation patterns
 
-### ⚠️ Breaking Changes
+### Breaking Changes
 
 **Property Renaming (CIM Alignment):**
 - **BREAKING**: `UsagePointProfile` class renamed to `ServicePointProfile`
@@ -2995,7 +3291,7 @@ ex:charge2 a urpx:Charge ;
 - Currency can be specified at document level or charge level (override pattern)
 - Interval-based charges should include measurementIntervalDuration and aggregationMethod
 
-### 📈 Migration Guide for Measurement Framework
+### Migration Guide for Measurement Framework
 
 #### ServicePointProfile Migration
 ```turtle
@@ -3030,7 +3326,7 @@ ex:charge1 a urpx:Charge ;
     ] .
 ```
 
-### 🔮 Future Enhancements (Documented for Phase 2)
+### Future Enhancements (Documented for Phase 2)
 
 #### Standards Verification Tasks
 - **Phase 2A**: Verify PhaseConfigurationValue against CIM IEC 61968 PhaseCode
@@ -3049,7 +3345,7 @@ ex:charge1 a urpx:Charge ;
 - **Section Headers**: Add comment headers for each enum group for better maintainability
 - **Estimated**: 45 minutes to reorganize for improved file structure
 
-### 📊 Implementation Statistics
+### Implementation Statistics
 
 #### Classes and Properties
 - **1 Class Renamed**: UsagePointProfile → ServicePointProfile
@@ -3066,29 +3362,29 @@ ex:charge1 a urpx:Charge ;
 - **Alphabetical Organization**: All classes, properties, and instances properly ordered
 - **Comprehensive Documentation**: Complete standards alignment notes and usage patterns
 
-### 🎯 Success Criteria Met
+### Success Criteria Met
 
 #### Design Phase Complete
-- ✅ **Architecture Approved**: Measurement framework design fully documented
-- ✅ **Standards Research**: Green Button, CIM, CDS patterns comprehensively analyzed
-- ✅ **Edge Cases Solved**: 5 complex scenarios (time-based rates, interval measurements, compound pricing) addressed
-- ✅ **Backward Compatible**: No breaking changes to existing valid data
+- **Architecture Approved**: Measurement framework design fully documented
+- **Standards Research**: Green Button, CIM, CDS patterns comprehensively analyzed
+- **Edge Cases Solved**: 5 complex scenarios (time-based rates, interval measurements, compound pricing) addressed
+- **Backward Compatible**: No breaking changes to existing valid data
 
 #### Implementation Phase Complete  
-- ✅ **Core Classes**: MetricSpecification and 4 enumeration classes implemented
-- ✅ **Properties**: All 9 measurement properties added and documented
-- ✅ **Enumerations**: 21 instances created with proper definitions
-- ✅ **Currency**: Dual-level architecture fully functional
-- ✅ **Documentation**: Design document complete with all decisions
+- **Core Classes**: MetricSpecification and 4 enumeration classes implemented
+- **Properties**: All 9 measurement properties added and documented
+- **Enumerations**: 21 instances created with proper definitions
+- **Currency**: Dual-level architecture fully functional
+- **Documentation**: Design document complete with all decisions
 
 #### Quality Gates Passed
-- ✅ **Standards Alignment**: Green Button, CIM, CDS, ISO 8601 compliance verified
-- ✅ **Naming Conventions**: Green Button alignment (no "Measurement" suffix)
-- ✅ **Format Standards**: Vertical enumerations, alphabetical organization
-- ✅ **Property Patterns**: ObjectProperty with proper enumeration classes
-- ✅ **Documentation**: Comprehensive notes with usage examples
+- **Standards Alignment**: Green Button, CIM, CDS, ISO 8601 compliance verified
+- **Naming Conventions**: Green Button alignment (no "Measurement" suffix)
+- **Format Standards**: Vertical enumerations, alphabetical organization
+- **Property Patterns**: ObjectProperty with proper enumeration classes
+- **Documentation**: Comprehensive notes with usage examples
 
-### 📁 Files Modified
+### Files Modified
 
 #### Core Ontology
 - `ontology/urpx-core-ontology.ttl` - Major measurement framework implementation (version 0.1.1)
@@ -3097,7 +3393,7 @@ ex:charge1 a urpx:Charge ;
 - `design/measurement-framework-design.md` - Complete architecture specification (version 2.0)
 - `urpx-changelog.md` - Comprehensive changelog update
 
-### 🚀 Next Steps (Phase 2)
+### Next Steps (Phase 2)
 
 **Standards Verification** (Future Task):
 - Verify PhaseConfigurationValue against CIM PhaseCode
@@ -3119,9 +3415,9 @@ ex:charge1 a urpx:Charge ;
 
 ---
 
-## Version 0.1.1 - October 14, 2025 (Evening Update) ✅ **CUSTOMER KIND/SUBKIND ENUMERATION UPDATE COMPLETE**
+## Version 0.1.1 - October 14, 2025 (Evening Update) **CUSTOMER KIND/SUBKIND ENUMERATION UPDATE COMPLETE**
 
-### 🎯 CustomerKind/CustomerSubKind Proper Enumeration Implementation
+### CustomerKind/CustomerSubKind Proper Enumeration Implementation
 
 #### Complete Enumeration Architecture Conversion
 - **Created**: `CustomerKindValue` enumeration class with 6 instances (residential, commercial, industrial, enterprise, serviceProvider, internalUse)
@@ -3180,7 +3476,7 @@ ex:charge1 a urpx:Charge ;
 - **BREAKING**: parentKind property removed (use skos:broader instead)
 - **MIGRATION REQUIRED**: Update all customer classification references to new enumeration pattern
 
-### 📁 Files Modified
+### Files Modified
 
 #### Core Ontology Architecture
 - `ontology/urpx-core-ontology.ttl` - Complete CustomerKind/CustomerSubKind enumeration implementation with proper structure
@@ -3190,31 +3486,31 @@ ex:charge1 a urpx:Charge ;
 - Todo list items completed and documented
 - Design issues and decisions documentation pending
 
-### 🎯 Production Readiness Impact
+### Production Readiness Impact
 
 #### Standards Compliance
-- ✅ **Green Button Alignment**: Customer classification follows Green Button V4 patterns
-- ✅ **Enumeration Consistency**: Follows established ObjectProperty pattern with "Value" suffix
-- ✅ **Hierarchical Organization**: skos:broader relationships provide clear taxonomy structure
-- ✅ **Type Safety**: Object properties enable proper validation and prevent string typos
+- **Green Button Alignment**: Customer classification follows Green Button V4 patterns
+- **Enumeration Consistency**: Follows established ObjectProperty pattern with "Value" suffix
+- **Hierarchical Organization**: skos:broader relationships provide clear taxonomy structure
+- **Type Safety**: Object properties enable proper validation and prevent string typos
 
 #### Architectural Benefits
-- ✅ **Charge Filtering**: ApplicabilityGroup properties enable precise customer-based charge selection
-- ✅ **Multiple Classification**: Supports complex customer profiles with multiple kinds/subkinds
-- ✅ **Clean Separation**: Removed deprecated properties and old class structure
-- ✅ **CIM Compatibility**: Customer classification ready for utility industry integration
+- **Charge Filtering**: ApplicabilityGroup properties enable precise customer-based charge selection
+- **Multiple Classification**: Supports complex customer profiles with multiple kinds/subkinds
+- **Clean Separation**: Removed deprecated properties and old class structure
+- **CIM Compatibility**: Customer classification ready for utility industry integration
 
 ---
 
-## Version 0.1.1 - October 14, 2025 (Morning Update) 🔬 **MEASUREMENT FRAMEWORK RESEARCH & DESIGN**
+## Version 0.1.1 - October 14, 2025 (Morning Update)  **MEASUREMENT FRAMEWORK RESEARCH & DESIGN**
 
-### 🔍 Comprehensive Standards Research Complete
+### Comprehensive Standards Research Complete
 
 #### hasPossibleValues Range Definition
 - **Fixed**: Added `rdfs:range rdf:List` to `hasPossibleValues` property
 - **Impact**: Properly defines expected list structure for structured dimension values
 - **File**: `ontology/urpx-core-ontology.ttl`
-- **Status**: ✅ Complete - minor gap closed
+- **Status**: Complete - minor gap closed
 
 #### Measurement Framework Design Research (6-8 hours)
 - **Research Complete**: Comprehensive analysis of Green Button, CIM, and CDS standards
@@ -3229,11 +3525,11 @@ ex:charge1 a urpx:Charge ;
 3. **CDS (LF Energy)**: BillingPeriod, IntervalBlock, timeConfiguration patterns reviewed
 
 **Architecture Design Complete:**
-- ✅ 4 new core classes: BillingInterval, MeasurementInterval, ReadingType, MeasurementKindValue
-- ✅ 5 new enumeration classes with 40+ instances
-- ✅ 15 new properties defined
-- ✅ Full backward compatibility maintained
-- ✅ Complex edge case solutions provided (time-based rates, interval measurements, compound pricing)
+- 4 new core classes: BillingInterval, MeasurementInterval, ReadingType, MeasurementKindValue
+- 5 new enumeration classes with 40+ instances
+- 15 new properties defined
+- Full backward compatibility maintained
+- Complex edge case solutions provided (time-based rates, interval measurements, compound pricing)
 
 **Implementation Plan:**
 - Phase 1: Core Classes (2-3 hours)
@@ -3246,7 +3542,7 @@ ex:charge1 a urpx:Charge ;
 - Begin Phase 1 implementation
 - This will inform the flexible eligibilityLimit architecture design
 
-### 📁 Files Created
+### Files Created
 
 #### Design Documentation
 - `design/measurement-framework-design.md` - Complete measurement framework architecture specification
@@ -3256,9 +3552,9 @@ ex:charge1 a urpx:Charge ;
 
 ---
 
-## Version 0.1.1 - October 13, 2025 (Late Evening Update) 🎉 **ARCHITECTURAL CLEANUP & INTERNATIONALIZATION - COMPLETE**
+## Version 0.1.1 - October 13, 2025 (Late Evening Update)  **ARCHITECTURAL CLEANUP & INTERNATIONALIZATION - COMPLETE**
 
-### 🏗️ Architectural Improvements: ChargeTypeValue Cleanup
+### Architectural Improvements: ChargeTypeValue Cleanup
 
 #### Duplicate ChargeTypeValue Removal
 - **Removed**: 15 duplicate ChargeTypeValue instances from urpx-core-ontology.ttl
@@ -3267,12 +3563,12 @@ ex:charge1 a urpx:Charge ;
 - **Impact**: Clean architectural boundaries, 97 triples removed from core
 
 **Architectural Achievement:**
-- ✅ Core ontology: 3,568 → 3,471 triples (proper scope)
-- ✅ Charge classification: Maintains all 66 ChargeTypeValue instances
-- ✅ Clean separation: Charge taxonomy separate from core ontology
-- ✅ Validation: 100% success across all files
+- Core ontology: 3,568 → 3,471 triples (proper scope)
+- Charge classification: Maintains all 66 ChargeTypeValue instances
+- Clean separation: Charge taxonomy separate from core ontology
+- Validation: 100% success across all files
 
-### 🌍 Complete Internationalization: 970 Labels with @en Tags
+### Complete Internationalization: 970 Labels with @en Tags
 
 #### Universal Label Coverage Achievement
 - **Added**: 303 new rdfs:label properties to all entities missing labels
@@ -3297,12 +3593,12 @@ ex:charge1 a urpx:Charge ;
    - Already complete with proper language tags
 
 **Internationalization Benefits:**
-- ✅ **Standards Compliance**: RDF language tag best practices (RFC 5646)
-- ✅ **Future-Ready**: Foundation for Spanish, French, Chinese translations
-- ✅ **UI Generation**: All labels ready for multilingual interfaces
-- ✅ **Complete Coverage**: 970 total labels, zero missing language tags
+- **Standards Compliance**: RDF language tag best practices (RFC 5646)
+- **Future-Ready**: Foundation for Spanish, French, Chinese translations
+- **UI Generation**: All labels ready for multilingual interfaces
+- **Complete Coverage**: 970 total labels, zero missing language tags
 
-### 🛠️ Automation Scripts Created
+### Automation Scripts Created
 
 **Architectural Cleanup:**
 1. `scripts/remove_duplicate_charge_types.py` - Automated duplicate removal
@@ -3313,7 +3609,7 @@ ex:charge1 a urpx:Charge ;
 4. `scripts/add_all_labels_complete.py` - Universal label addition (properties + classes + instances)
 5. `scripts/add_language_tags_to_all_labels.py` - @en internationalization across all 4 files
 
-### 📁 Files Modified
+### Files Modified
 
 #### Ontology Architecture
 - `ontology/urpx-core-ontology.ttl` - ChargeTypeValue cleanup, 193 labels added, 386 @en tags
@@ -3324,33 +3620,33 @@ ex:charge1 a urpx:Charge ;
 #### Automation Scripts
 - All 5 scripts created for automated cleanup and label management
 
-### 🎯 Production Readiness Impact
+### Production Readiness Impact
 
 #### Quality Improvements
-- ✅ **Clean Architecture**: No duplicate definitions across ontology files
-- ✅ **Complete Labels**: 100% coverage for UI generation
-- ✅ **Internationalization**: Ready for multilingual deployments
-- ✅ **Validation**: All files pass enumeration architecture validation
+- **Clean Architecture**: No duplicate definitions across ontology files
+- **Complete Labels**: 100% coverage for UI generation
+- **Internationalization**: Ready for multilingual deployments
+- **Validation**: All files pass enumeration architecture validation
 
 #### Standards Compliance
-- ✅ **RDF Best Practices**: Proper language tags on all literals
-- ✅ **Architectural Separation**: Clean boundaries between ontology modules
-- ✅ **W3C Guidelines**: Internationalization-ready label management
-- ✅ **UI/UX Ready**: Complete label coverage for application development
+- **RDF Best Practices**: Proper language tags on all literals
+- **Architectural Separation**: Clean boundaries between ontology modules
+- **W3C Guidelines**: Internationalization-ready label management
+- **UI/UX Ready**: Complete label coverage for application development
 
 ---
 
-## Version 0.1.1 - October 13, 2025 (Evening Update) 🎉 **SHACL MODULARIZATION - COMPLETE**
+## Version 0.1.1 - October 13, 2025 (Evening Update)  **SHACL MODULARIZATION - COMPLETE**
 
-### 🏗️ Major Achievement: Modular SHACL Architecture Implementation
+### Major Achievement: Modular SHACL Architecture Implementation
 
 #### Complete SHACL File Modularization (Phase 3)
-- **✅ COMPLETE**: Modular SHACL architecture with 7 specialized validation files
-- **✅ COMPLETE**: Clean dependency tree - each document type imports only urpx-core-shacl.ttl
-- **✅ COMPLETE**: All 54 enumeration validations consolidated in core foundation
+- **COMPLETE**: Modular SHACL architecture with 7 specialized validation files
+- **COMPLETE**: Clean dependency tree - each document type imports only urpx-core-shacl.ttl
+- **COMPLETE**: All 54 enumeration validations consolidated in core foundation
 - **Impact**: Jurisdiction-specific validation customization now possible with maintained foundation
 
-### 📊 Modular SHACL Structure
+### Modular SHACL Structure
 
 #### Core Foundation (urpx-core-shacl.ttl)
 - **Renamed**: urpx-shacl.ttl → urpx-core-shacl.ttl for clarity
@@ -3400,7 +3696,7 @@ ex:charge1 a urpx:Charge ;
 - **Features**: Critical peak pricing event rules
 - **Use Case**: Real-time pricing, critical peak pricing, demand response programs
 
-### 🎯 Architecture Characteristics
+### Architecture Characteristics
 
 #### Clean Dependency Tree
 - **Pattern**: Each document-specific file imports ONLY urpx-core-shacl.ttl
@@ -3417,7 +3713,7 @@ ex:charge1 a urpx:Charge ;
 - **Document-Type Focus**: Validation rules tailored to specific publication types
 - **Standards Alignment**: Document type capabilities enforce proper usage
 
-### 📁 Files Created/Modified
+### Files Created/Modified
 
 #### SHACL Modularization
 - `shacl/urpx-core-shacl.ttl` - Renamed and updated with modular architecture header
@@ -3428,13 +3724,13 @@ ex:charge1 a urpx:Charge ;
 - `shacl/urpx-shacl-der-exports.ttl` - DER export validation placeholder (NEW)
 - `shacl/urpx-shacl-realtime-prices.ttl` - Real-time pricing validation placeholder (NEW)
 
-### 🚀 Production Readiness Impact
+### Production Readiness Impact
 
 #### Validation Capabilities
-- ✅ **Complete Foundation**: All 54 enumerations validated in core
-- ✅ **Document Type Safety**: Enforces proper usage (e.g., statements cannot contain rate plans)
-- ✅ **Flexible Architecture**: Jurisdiction-specific rules can be added as needed
-- ✅ **Clean Dependencies**: No import complexity or circular dependencies
+- **Complete Foundation**: All 54 enumerations validated in core
+- **Document Type Safety**: Enforces proper usage (e.g., statements cannot contain rate plans)
+- **Flexible Architecture**: Jurisdiction-specific rules can be added as needed
+- **Clean Dependencies**: No import complexity or circular dependencies
 
 #### Immediate Benefits
 - **Jurisdiction Customization**: NY PSC vs CA PUC validation differences supported
@@ -3443,46 +3739,46 @@ ex:charge1 a urpx:Charge ;
 - **Scalability**: Foundation supports unlimited jurisdiction-specific overlays
 
 #### Future-Proofing
-- 🚀 **Extensible**: Easy to add new document types or jurisdiction overlays
-- 🚀 **Modular**: Changes to one module don't affect others
-- 🚀 **Standards-Ready**: Document type validation enforces proper semantic usage
-- 🚀 **Validation-First**: Comprehensive SHACL prevents architectural degradation
+- **Extensible**: Easy to add new document types or jurisdiction overlays
+- **Modular**: Changes to one module don't affect others
+- **Standards-Ready**: Document type validation enforces proper semantic usage
+- **Validation-First**: Comprehensive SHACL prevents architectural degradation
 
 ---
 
-## Version 0.1.1 - October 13, 2025 (Final Update) 🎉 **FORMAL OWL ENUMERATION ARCHITECTURE - COMPLETE**
+## Version 0.1.1 - October 13, 2025 (Final Update)  **FORMAL OWL ENUMERATION ARCHITECTURE - COMPLETE**
 
-### 🏆 Major Milestone: W3C OWL 2 Primer Compliance Achieved
+### Major Milestone: W3C OWL 2 Primer Compliance Achieved
 
 #### Complete Formal OWL Transformation
-- **✅ COMPLETE**: All 59 enumeration classes now have formal `owl:oneOf` declarations
-- **✅ COMPLETE**: All 500+ enumeration instances converted to camelCase naming
-- **✅ COMPLETE**: W3C OWL 2 Primer compliance throughout entire ontology
-- **✅ COMPLETE**: SI unit symbol preservation (IEC 80000, NIST SP 811 compliance)
-- **✅ COMPLETE**: ChargeType consolidation (removed 15 duplicates from core)
+- **COMPLETE**: All 59 enumeration classes now have formal `owl:oneOf` declarations
+- **COMPLETE**: All 500+ enumeration instances converted to camelCase naming
+- **COMPLETE**: W3C OWL 2 Primer compliance throughout entire ontology
+- **COMPLETE**: SI unit symbol preservation (IEC 80000, NIST SP 811 compliance)
+- **COMPLETE**: ChargeType consolidation (removed 15 duplicates from core)
 - **Impact**: Production-ready formal OWL architecture ready for senior engineer review
 
-### 📊 Transformation Scope and Results
+### Transformation Scope and Results
 
 #### Ontology Files Transformed (4/4)
-1. **urpx-core-ontology.ttl** ✅
+1. **urpx-core-ontology.ttl**
    - 34 enumeration classes updated with `owl:oneOf`
    - 400+ instances: snake_case → camelCase
    - Removed 15 duplicate ChargeTypeValue instances
    - Version: 0.1.1 (2025-10-13)
 
-2. **urpx-charge-classification.ttl** ✅
+2. **urpx-charge-classification.ttl**
    - 3 enumeration classes updated with `owl:oneOf`
    - 82 instances standardized to camelCase
    - Fixed ontology declaration (now properly typed as `owl:Ontology`)
    - Version: 0.1.1 (2025-10-13)
 
-3. **urpx-geography.ttl** ✅
+3. **urpx-geography.ttl**
    - 10 enumeration classes updated with `owl:oneOf`
    - 54 instances converted to camelCase
    - Version: 0.1.1 (2025-10-13)
 
-4. **urpx-organization.ttl** ✅
+4. **urpx-organization.ttl**
    - 12 enumeration classes updated with `owl:oneOf`
    - 73 instances converted to camelCase
    - Version: 0.1.1 (2025-10-13)
@@ -3493,7 +3789,7 @@ ex:charge1 a urpx:Charge ;
 - **100% Validation Success**: Zero errors, zero warnings
 - **Backup Created**: `ontology/backup_20251013_200720/`
 
-### 🎯 Critical Design Achievements
+### Critical Design Achievements
 
 #### SI Unit Symbol Preservation (Issue #011, Decision #010)
 **Critical Catch During Validation:**
@@ -3508,11 +3804,11 @@ ex:charge1 a urpx:Charge ;
 - `MVA` (megavolt-ampere) → Would have become `mva` (loses technical precision)
 
 **Standards Preserved:**
-- ✅ IEC 80000: International System of Quantities and Units
-- ✅ NIST SP 811: Guide for the Use of the International System of Units (SI)
-- ✅ ISO 80000: Quantities and units
-- ✅ IEEE Std 260.1: Standard Letter Symbols for Units of Measurement
-- ✅ CIM Compatibility: Exact SI symbols as used in Common Information Model
+- IEC 80000: International System of Quantities and Units
+- NIST SP 811: Guide for the Use of the International System of Units (SI)
+- ISO 80000: Quantities and units
+- IEEE Std 260.1: Standard Letter Symbols for Units of Measurement
+- CIM Compatibility: Exact SI symbols as used in Common Information Model
 
 #### Formal OWL Architecture (Issue #010, Decision #009)
 **W3C OWL 2 Primer Compliance:**
@@ -3541,24 +3837,24 @@ urpx:energyCharge a urpx:ChargeTypeValue ;
     skos:definition "Volumetric charge based on energy consumption" .
 ```
 
-### 🛠️ Automated Transformation Infrastructure
+### Automated Transformation Infrastructure
 
 #### Transformation Scripts Created
-1. **transform_enums_to_owl.py** ✅
+1. **transform_enums_to_owl.py**
    - RDFLib-based safe transformation
    - Adds `owl:oneOf` to all `*Value` classes
    - Converts snake_case → camelCase
    - Preserves all labels, definitions, comments
    - Updates version metadata
 
-2. **validate_enum_architecture.py** ✅
+2. **validate_enum_architecture.py**
    - Validates `owl:oneOf` declarations
    - Checks instance/class alignment
    - Verifies camelCase naming
    - SI unit symbol exceptions
    - Version metadata validation
 
-3. **batch_transform.sh** ✅
+3. **batch_transform.sh**
    - Automated backup creation
    - Batch processing of 4 files
    - Built-in validation
@@ -3570,7 +3866,7 @@ urpx:energyCharge a urpx:ChargeTypeValue ;
 - **Validation**: 100% success rate across all files
 - **Safety**: Complete rollback capability maintained
 
-### 📋 Design Documentation Complete
+### Design Documentation Complete
 
 #### Design Issues Documented
 - **Issue #010**: Enumeration architecture inconsistency (mixed owl:oneOf, naming, duplicates)
@@ -3583,23 +3879,23 @@ urpx:energyCharge a urpx:ChargeTypeValue ;
 #### Documentation Updates
 - **Update Log Batch #010**: Complete transformation scope, SI unit discovery documented
 
-### 🎯 Production Readiness Impact
+### Production Readiness Impact
 
 #### Standards Compliance Excellence
-- ✅ **W3C OWL 2 Primer**: Full formal enumeration compliance
-- ✅ **JSON-LD Ecosystem**: JavaScript naming convention alignment
-- ✅ **SI/IEC Standards**: International unit symbol preservation
-- ✅ **Tool Ecosystem**: Protégé, Jena, RDFLib compatibility
-- ✅ **CIM Integration**: Maintained exact symbol compatibility
+- **W3C OWL 2 Primer**: Full formal enumeration compliance
+- **JSON-LD Ecosystem**: JavaScript naming convention alignment
+- **SI/IEC Standards**: International unit symbol preservation
+- **Tool Ecosystem**: Protégé, Jena, RDFLib compatibility
+- **CIM Integration**: Maintained exact symbol compatibility
 
 #### Senior Engineer Review Ready
-- ✅ **Authoritative References**: W3C, IEC, NIST, ISO, IEEE citations
-- ✅ **Technical Precision**: Critical review caught SI unit issue
-- ✅ **Consistent Architecture**: Single pattern across 500+ instances
-- ✅ **Automated Validation**: Scripts ensure ongoing compliance
-- ✅ **Complete Documentation**: Issues, decisions, justifications recorded
+- **Authoritative References**: W3C, IEC, NIST, ISO, IEEE citations
+- **Technical Precision**: Critical review caught SI unit issue
+- **Consistent Architecture**: Single pattern across 500+ instances
+- **Automated Validation**: Scripts ensure ongoing compliance
+- **Complete Documentation**: Issues, decisions, justifications recorded
 
-### ⚠️ Breaking Changes
+### Breaking Changes
 
 **Enumeration Instance URIs Changed:**
 - All 500+ instances: snake_case → camelCase
@@ -3607,7 +3903,7 @@ urpx:energyCharge a urpx:ChargeTypeValue ;
 - Exception: SI symbols preserved (W, MW, GW, kW, kWh, MVA, etc.)
 - **Migration Required**: All JSON-LD data using old URIs must be updated
 
-### 📁 Files Modified
+### Files Modified
 
 #### Ontology Architecture
 - `ontology/urpx-core-ontology.ttl` - 34 classes, 400+ instances
@@ -3625,7 +3921,7 @@ urpx:energyCharge a urpx:ChargeTypeValue ;
 - `design/urpx-design-decisions.md` - Decisions #009, #010
 - `design/urpx-documentation-update-log.md` - Batch #010
 
-### 📈 Migration Guide
+### Migration Guide
 
 ```turtle
 # BEFORE (v0.1.2 - snake_case)
@@ -3643,7 +3939,7 @@ urpx:unitOfMeasure urpx:kWh ;   # Correct
 urpx:unitOfMeasure urpx:MW ;    # Correct
 ```
 
-### 🔮 Next Phase
+### Next Phase
 
 **SHACL Modularization** (Ready for new task):
 - Rename urpx-shacl.ttl → urpx-core-shacl.ttl
@@ -3656,7 +3952,7 @@ urpx:unitOfMeasure urpx:MW ;    # Correct
 
 ## Version 0.1.2 - October 13, 2025 - Alternative Dimension Labels
 
-### 🏷️ AlternativeDimension Human-Readable Labels Implementation
+### AlternativeDimension Human-Readable Labels Implementation
 
 #### Core Ontology Enhancements
 - **Added**: `urpx:hasPossibleValues` object property for structured dimension values with GUI-ready labels
@@ -3689,49 +3985,49 @@ Enables UtiliPub GUI filter buttons, maintains SKOS/RDF standards, unblocks deve
 
 ---
 
-## Version 0.1.1 - October 10, 2025 (Evening Update) 🎉 **SHACL V0.1.1 COMPLETE - 100% ENUMERATION VALIDATION**
+## Version 0.1.1 - October 10, 2025 (Evening Update)  **SHACL V0.1.1 COMPLETE - 100% ENUMERATION VALIDATION**
 
-### 🏆 Major Milestone: Complete SHACL Enumeration Validation
+### Major Milestone: Complete SHACL Enumeration Validation
 
 #### All 54 Enumeration Properties Now Have Comprehensive SHACL Validation
-- **✅ COMPLETE**: All 54 ObjectProperty enumerations now have production-ready SHACL validation
+- **COMPLETE**: All 54 ObjectProperty enumerations now have production-ready SHACL validation
 - **Added**: 42 new comprehensive enumeration validation shapes with business rules
 - **Enhanced**: Version metadata updated to v0.1.1 (from v0.1.0)
 - **Impact**: Complete type safety and validation coverage for entire ontology
 
-### 📊 SHACL Update Implementation (4 Phases)
+### SHACL Update Implementation (4 Phases)
 
-#### Phase 1: Critical Infrastructure Fixes ✅
+#### Phase 1: Critical Infrastructure Fixes
 - **Updated**: Version from 0.1.0 → 0.1.1 in SHACL ontology metadata
 - **Updated**: Date from 2025-09-26 → 2025-10-10
 - **Enhanced**: Description to reference v0.1.1 ontology architecture alignment
 - **Verified**: Existing 3 correct validations (chargeType, commodity, unitOfMeasure)
 
-#### Phase 2: Core Enumeration Validations ✅ (13 properties)
+#### Phase 2: Core Enumeration Validations (13 properties)
 - **TOU Properties (5)**: touTierStandardName, dayType, observanceRule, changeReason, operator
 - **Dynamic Pricing (3)**: dynamicPricingType, updateFrequency, priceSource
 - **Publications (3)**: publicationType, statementType, geographicScope
 - **Modifiers (2)**: modifierType, modifierCategory
 - **Pattern**: sh:class + minCount/maxCount + severity + message + business rules
 
-#### Phase 3: Organization & Geography Validations ✅ (21 properties)
+#### Phase 3: Organization & Geography Validations (21 properties)
 - **Organization (12)**: organizationType, organizationStatus, ownershipType, nameType, identifierScheme, eventType, acquisitionType, rebrandingReason, transferType, regulatoryScope, marketType, serviceRole
 - **Geography (9)**: utilityServiceKind, segmentType, geometryFormat, jurisdictionLevel, boundaryLevel, municipalType, relationshipType, overlapType, resolutionStatus
 
-#### Phase 4: Remaining Enumerations ✅ (8 properties)
+#### Phase 4: Remaining Enumerations (8 properties)
 - **Customer/Usage (8)**: geographicZone, alternativesType, enrollmentStatus, programType, seasonalPattern, annualIncomeRange, assistanceEligibilityLevel, entityType
 - **Standards (6)**: connectionKind, phaseConfiguration, endUseCategory, interconnectionStatus, accountServiceType, measurementType, cycleType, calculationMethod
 
-### 🎯 Comprehensive Validation Features
+### Comprehensive Validation Features
 
 #### Production-Ready Validation Depth
 Each enumeration includes:
-- ✅ **Type Safety**: sh:class constraints ensuring ObjectProperty usage
-- ✅ **Cardinality**: minCount/maxCount requirements per property semantics
-- ✅ **Severity Levels**: Violation/Warning/Info for proper error handling
-- ✅ **Clear Messages**: Descriptive error messages with valid value lists
-- ✅ **Business Rules**: 200+ SPARQL constraints enforcing business logic
-- ✅ **Cross-Property Checks**: Consistency validation across related properties
+- **Type Safety**: sh:class constraints ensuring ObjectProperty usage
+- **Cardinality**: minCount/maxCount requirements per property semantics
+- **Severity Levels**: Violation/Warning/Info for proper error handling
+- **Clear Messages**: Descriptive error messages with valid value lists
+- **Business Rules**: 200+ SPARQL constraints enforcing business logic
+- **Cross-Property Checks**: Consistency validation across related properties
 
 #### Business Rule Examples
 - Tier number alignment with standard name hierarchy (super_peak = tier 1)
@@ -3742,7 +4038,7 @@ Each enumeration includes:
 - EIA identifiers must be numeric with 1-6 digits
 - Asset purchases should be marked as partial acquisitions
 
-### 📋 Documentation Updates
+### Documentation Updates
 
 #### Planning Documents Enhanced
 - **Updated**: `urpx-todo.md` - Added URGENT SHACL V0.1.1 Alignment section with 4-phase plan
@@ -3756,7 +4052,7 @@ Each enumeration includes:
 - **Impact Assessment**: CRITICAL P0 severity, HIGH risk level, IMMEDIATE remediation priority
 - **Remediation Plan**: 4-phase approach with time estimates (10-14 hours total)
 
-### 🚀 Next Steps: SHACL File Modularization
+### Next Steps: SHACL File Modularization
 
 #### Approved Modularization Strategy (Option A - Document Type)
 1. **urpx-shacl-core.ttl** - Universal validations + ALL 54 enumeration validations (shared)
@@ -3773,7 +4069,7 @@ Each enumeration includes:
 - **Maintainability**: Smaller, focused files easier to understand and modify
 - **Extensibility**: Easy to add jurisdiction-specific overlays (e.g., urpx-shacl-statement-ny.ttl)
 
-### 📁 Files Modified
+### Files Modified
 
 #### SHACL Validation
 - `shacl/urpx-shacl.ttl` - Complete v0.1.1 update with all 54 enumeration validations (~5,100 lines)
@@ -3782,18 +4078,18 @@ Each enumeration includes:
 - `design/urpx-todo.md` - Added SHACL alignment priority section
 - `design/urpx-production-readiness-plan.md` - Added detailed audit findings
 
-### 🎯 Production Readiness Impact
+### Production Readiness Impact
 
-#### Critical Blocker Resolved ✅
+#### Critical Blocker Resolved
 - **BEFORE**: 54 ObjectProperty enumerations validated as string datatypes (BROKEN)
 - **AFTER**: 54 ObjectProperty enumerations with proper class-based validation (WORKING)
 - **Impact**: Production deployment unblocked, data quality assured, type safety enforced
 
 #### Validation Coverage Statistics
-- ✅ **100% Enumeration Coverage**: All 54 properties validated
-- ✅ **500+ Enum Instances**: Complete validation of all enumeration values
-- ✅ **200+ Business Rules**: Comprehensive SPARQL constraints
-- ✅ **Standards Compliance**: CIM, CDS, FERC, ISO, OGC alignment verified
+- **100% Enumeration Coverage**: All 54 properties validated
+- **500+ Enum Instances**: Complete validation of all enumeration values
+- **200+ Business Rules**: Comprehensive SPARQL constraints
+- **Standards Compliance**: CIM, CDS, FERC, ISO, OGC alignment verified
 
 #### Quality Metrics Achieved
 - **Type Safety**: ObjectProperty validation prevents string-based enum usage
@@ -3801,7 +4097,7 @@ Each enumeration includes:
 - **Data Quality**: Cross-property consistency checks prevent invalid combinations
 - **Developer Experience**: Clear error messages guide proper data creation
 
-### 📝 Technical Implementation Notes
+### Technical Implementation Notes
 
 #### SHACL File Status
 - **Current State**: Single monolithic file (~5,110 lines, production-complete)
@@ -3817,9 +4113,9 @@ Each enumeration includes:
 
 ---
 
-## Version 0.1.1 - October 10, 2025 (Morning Update) 🎉 **V0.1.1 CORE ARCHITECTURE COMPLETE**
+## Version 0.1.1 - October 10, 2025 (Morning Update)  **V0.1.1 CORE ARCHITECTURE COMPLETE**
 
-### 🏗️ Major Architectural Improvements
+### Major Architectural Improvements
 
 #### EligibilityRule Parallel Properties Architecture
 - **Changed**: `hasUsageProfile` → `hasUsagePointProfile` with domain `EligibilityRule`
@@ -3852,13 +4148,13 @@ Each enumeration includes:
 - **Pattern**: Organizations published as separate URPXDocument instances for modularity
 
 #### Seven URPXDocument Type Classes with Capability Matrix
-- **Created**: `TariffBookDocument` - RatePlans ✓, Modifiers ✓, Charges ✓ (full capabilities)
-- **Created**: `TariffStatementDocument` - Modifiers ✓, Charges ✓ (NO RatePlans)
+- **Created**: `TariffBookDocument` - RatePlans , Modifiers , Charges (full capabilities)
+- **Created**: `TariffStatementDocument` - Modifiers , Charges (NO RatePlans)
 - **Created**: `TariffSupplementDocument` - Modifiers ONLY
 - **Created**: `TariffAddendumDocument` - Modifiers ONLY  
-- **Created**: `SupplyChargesDocument` - Modifiers ✓, Charges ✓ (competitive retail markets)
-- **Created**: `DERExportsDocument` - Modifiers ✓, Charges ✓ (IEEE 1547 future alignment)
-- **Created**: `RealTimePricesDocument` - RatePlans ✓, Modifiers ✓, Charges ✓ (MIDAS/OpenADR future)
+- **Created**: `SupplyChargesDocument` - Modifiers , Charges (competitive retail markets)
+- **Created**: `DERExportsDocument` - Modifiers , Charges (IEEE 1547 future alignment)
+- **Created**: `RealTimePricesDocument` - RatePlans , Modifiers , Charges (MIDAS/OpenADR future)
 - **Impact**: Clear document type semantics with standards alignment placeholders
 
 #### RatePlanModifier Naming Consistency
@@ -3866,7 +4162,7 @@ Each enumeration includes:
 - **Updated**: Property names (`hasRatePlanModifierDefinition` → `hasRatePlanModifier`)
 - **Impact**: Consistent naming throughout ontology and documentation
 
-### 🧹 CDS Integration Cleanup
+### CDS Integration Cleanup
 
 #### Removed Unused CDS Integration Classes
 - **Removed**: `TemporalAlignment` class (not needed in immediate term)
@@ -3880,7 +4176,7 @@ Each enumeration includes:
 - **Kept**: `cdsHolidayReference` (on HolidayCalendar for CDS sync when needed)
 - **Impact**: Cleaner ontology focused on immediate production needs
 
-### 📊 Files Modified
+### Files Modified
 
 #### Core Ontology Architecture
 - `ontology/urpx-ontology.ttl` - Major architecture updates (EligibilityRule, LocationDataSet, document types, CDS cleanup)
@@ -3893,20 +4189,20 @@ Each enumeration includes:
 - `design/urpx-todo-new.md` - Emptied (temporary working file)
 - `design/urpx-documentation-update-log.md` - Added Update Batch #007
 
-### 🎯 Production Readiness Impact
+### Production Readiness Impact
 
 #### Architecture Maturity Achieved
-- ✅ **CIM Standards Alignment**: UsagePointProfile, parallel properties pattern
-- ✅ **Modular Design**: LocationDataSet separation, document type specialization
-- ✅ **Naming Consistency**: RatePlanModifier throughout, no definition suffix
-- ✅ **Clean Boundaries**: Removed unused CDS classes, kept essential integration points
+- **CIM Standards Alignment**: UsagePointProfile, parallel properties pattern
+- **Modular Design**: LocationDataSet separation, document type specialization
+- **Naming Consistency**: RatePlanModifier throughout, no definition suffix
+- **Clean Boundaries**: Removed unused CDS classes, kept essential integration points
 
 #### Remaining Production Gaps (Post v0.1.1)
-- ❌ **SHACL Validation**: 54+ ObjectProperty enumerations still need class-based validation
-- ❌ **User Labels**: Many properties lack rdfs:label for UI generation
-- ❌ **Architecture Constraints**: billPortion/serviceRole usage not yet enforced via SHACL
+- **SHACL Validation**: 54+ ObjectProperty enumerations still need class-based validation
+- **User Labels**: Many properties lack rdfs:label for UI generation
+- **Architecture Constraints**: billPortion/serviceRole usage not yet enforced via SHACL
 
-### 📈 Breaking Changes Summary
+### Breaking Changes Summary
 
 #### Property Domain Changes
 - **BREAKING**: `hasCustomerProfile` domain moved from `RatePlanVersion` to `EligibilityRule`
@@ -3922,7 +4218,7 @@ Each enumeration includes:
 - **REMOVED**: Associated properties and enum classes (13 total instances)
 - **Impact**: Unused CDS integration removed, cleaner ontology
 
-### 🔮 Next Steps for v0.1.2
+### Next Steps for v0.1.2
 
 1. **SHACL Validation Updates** - Update all 54+ ObjectProperty enum validations
 2. **User-Facing Labels** - Add rdfs:label for UI generation
@@ -3931,12 +4227,12 @@ Each enumeration includes:
 
 ---
 
-## Version 0.1.2 - September 26, 2025 🚨 **ENUMERATION CONVERSION COMPLETE - PRODUCTION BLOCKERS IDENTIFIED**
+## Version 0.1.2 - September 26, 2025  **ENUMERATION CONVERSION COMPLETE - PRODUCTION BLOCKERS IDENTIFIED**
 
-### 🎉 Major Milestone: 100% Enumeration Conversion Complete
+### Major Milestone: 100% Enumeration Conversion Complete
 
 #### Final Enumeration Properties Complete - Production Ready Architecture
-- **✅ COMPLETE**: All 54 enumeration properties converted to ObjectProperty pattern
+- **COMPLETE**: All 54 enumeration properties converted to ObjectProperty pattern
 - **Added**: Final 4 critical enumeration completions:
   - `annualIncomeRange` → `urpx:AnnualIncomeRangeValue` (5 instances: very_low_income through high_income)
   - `interconnectionStatus` → `urpx:InterconnectionStatusValue` (4 instances: interconnected, pending, disconnected, not_applicable)
@@ -3946,35 +4242,35 @@ Each enumeration includes:
 - **Standards**: Full CIM, CDS, FERC, ISO compliance across all converted properties
 
 #### Phase Architecture - All Phases Complete
-- **✅ Phase 1**: 14/14 properties (CDS/Standards Critical + Core Business Logic + Market & Pricing)
-- **✅ Phase 2A**: 15/15 properties (Core Ontology Properties) 
-- **✅ Phase 2B**: 9/9 properties (Geographic Properties)
-- **✅ Phase 2C**: 12/12 properties (Organization Properties)
-- **✅ Phase 2D**: 4/4 properties (Final Critical Properties) - **COMPLETED TODAY**
+- **Phase 1**: 14/14 properties (CDS/Standards Critical + Core Business Logic + Market & Pricing)
+- **Phase 2A**: 15/15 properties (Core Ontology Properties) 
+- **Phase 2B**: 9/9 properties (Geographic Properties)
+- **Phase 2C**: 12/12 properties (Organization Properties)
+- **Phase 2D**: 4/4 properties (Final Critical Properties) - **COMPLETED TODAY**
 - **Result**: **100% conversion complete** with comprehensive standards alignment
 
-### 🚨 Critical Production Blockers Identified
+### Critical Production Blockers Identified
 
 #### SHACL Validation Crisis - Immediate Action Required
-- **❌ CRITICAL ISSUE**: 54+ ObjectProperty enumerations still validated as string datatypes in SHACL
+- **CRITICAL ISSUE**: 54+ ObjectProperty enumerations still validated as string datatypes in SHACL
 - **Impact**: Invalid data can be created despite ObjectProperty conversion
 - **Example**: `chargeType` converted to ObjectProperty but SHACL still expects `sh:datatype xsd:string`
 - **Scope**: Every converted enumeration property lacks proper SHACL ObjectProperty validation
 - **Priority**: **P0 - Production Blocker** requiring immediate fix
 
 #### Architecture Issues - Customer Profile Domain Incorrect
-- **❌ ARCHITECTURE BUG**: `hasCustomerProfile` domain incorrectly on `URPXDocument` instead of `RatePlan`
+- **ARCHITECTURE BUG**: `hasCustomerProfile` domain incorrectly on `URPXDocument` instead of `RatePlan`
 - **Impact**: Breaks rate plan eligibility logic and architectural consistency
 - **Business Logic**: Customer profiles should be plan-specific, not document-level
 - **Priority**: **P0 - Production Blocker** requiring immediate fix
 
 #### Missing User-Facing Labels - UI Generation Gap
-- **❌ UX ISSUE**: Many properties lack `rdfs:label` for UI generation
+- **UX ISSUE**: Many properties lack `rdfs:label` for UI generation
 - **Impact**: Poor developer experience, missing UI labels in applications
 - **Example**: `commodity` property needs `rdfs:label "Service Type"` for user interfaces
 - **Priority**: **P1 - High Priority** affecting developer experience
 
-### 📋 Tomorrow's Critical Action Plan (September 27, 2025)
+### Tomorrow's Critical Action Plan (September 27, 2025)
 
 #### Phase 1A: Emergency SHACL Fixes (Morning - 2-3 hours)
 - [ ] **Fix CustomerProfile Architecture** (30 minutes - P0)
@@ -3992,19 +4288,19 @@ Each enumeration includes:
   - Add `rdfs:label "Service Type"` for `commodity`
   - Audit all core properties for missing labels
 
-### 📊 Current Production Readiness Status
+### Current Production Readiness Status
 
 #### Major Achievements
-- ✅ **100% Enumeration Conversion Complete** (54/54 properties)
-- ✅ **500+ Enum Instances** with complete standards alignment
-- ✅ **Architecture Maturity** - Clean ObjectProperty pattern throughout
-- ✅ **Standards Compliance** - Full CIM, CDS, FERC, ISO alignment
+- **100% Enumeration Conversion Complete** (54/54 properties)
+- **500+ Enum Instances** with complete standards alignment
+- **Architecture Maturity** - Clean ObjectProperty pattern throughout
+- **Standards Compliance** - Full CIM, CDS, FERC, ISO alignment
 
 #### Critical Gaps Preventing Production
-- ❌ **54+ SHACL Validations** - ObjectProperty enums validated as strings
-- ❌ **Architecture Issues** - CustomerProfile domain incorrect
-- ❌ **Missing Labels** - UI generation gaps
-- ❌ **Constraint Enforcement** - Architectural boundaries not enforced
+- **54+ SHACL Validations** - ObjectProperty enums validated as strings
+- **Architecture Issues** - CustomerProfile domain incorrect
+- **Missing Labels** - UI generation gaps
+- **Constraint Enforcement** - Architectural boundaries not enforced
 
 #### Success Metrics for Production Readiness
 - **Tomorrow's Goals**: CustomerProfile fixed, 5 core SHACL validations updated, architectural constraints added
@@ -4013,9 +4309,9 @@ Each enumeration includes:
 
 ---
 
-## Version 0.1.1 - September 26, 2025 🚨 **CRITICAL PRODUCTION FIXES**
+## Version 0.1.1 - September 26, 2025  **CRITICAL PRODUCTION FIXES**
 
-### 🚨 Critical Architecture Fixes
+### Critical Architecture Fixes
 
 #### CustomerProfile Domain Correction - Production Blocker Fixed
 - **Fixed**: `hasCustomerProfileSet` domain moved from `RatePlan` to `RatePlanVersion` 
@@ -4036,28 +4332,28 @@ Each enumeration includes:
 - **Solution**: Pattern established for remaining 51+ enumeration validation fixes
 - **Documentation**: Comprehensive production readiness plan created with 4-week timeline
 
-### 📋 Production Readiness Plan Implementation
+### Production Readiness Plan Implementation
 - **Created**: `design/urpx-production-readiness-plan.md` with comprehensive assessment
 - **Tier 1 Critical Fixes**: Production blockers requiring immediate attention
 - **Tier 2 Moderate Effort**: Architectural cleanup items
 - **Success Metrics**: Clear quality gates and validation requirements
 - **Implementation Matrix**: Priority-based 4-week timeline with effort estimates
 
-### 📊 Current Production Status
+### Current Production Status
 
 #### Major Achievements (96% Complete)
-- ✅ **Phase 1-2C Complete**: All major enum conversions with 119+ instances
-- ✅ **Core Ontology**: 15 properties converted with 336+ instances
-- ✅ **Geography Ontology**: 9/9 properties (100% complete) 
-- ✅ **Organization Ontology**: 12/12 properties (100% complete)
-- ✅ **Standards Alignment**: Full CIM, CDS, FERC, ISO compliance
+- **Phase 1-2C Complete**: All major enum conversions with 119+ instances
+- **Core Ontology**: 15 properties converted with 336+ instances
+- **Geography Ontology**: 9/9 properties (100% complete) 
+- **Organization Ontology**: 12/12 properties (100% complete)
+- **Standards Alignment**: Full CIM, CDS, FERC, ISO compliance
 
 #### Critical Blockers Addressed
-- ✅ **CustomerProfile Architecture**: Fixed domain issue preventing production deployment
-- ✅ **Core SHACL Validation**: Added validation for most critical converted properties
-- ✅ **Architectural Constraints**: Established pattern for remaining validation gaps
+- **CustomerProfile Architecture**: Fixed domain issue preventing production deployment
+- **Core SHACL Validation**: Added validation for most critical converted properties
+- **Architectural Constraints**: Established pattern for remaining validation gaps
 
-### 🔄 Remaining Work (Well-Defined Path)
+### Remaining Work (Well-Defined Path)
 - **51+ Additional SHACL Validations**: Pattern established, straightforward implementation
 - **Missing User-Facing Labels**: `rdfs:label` properties for UI generation
 - **Standards Compliance Validation**: ISO 4217, FIPS codes, EIA ID validation
@@ -4065,9 +4361,9 @@ Each enumeration includes:
 
 ---
 
-## Version 0.1.0 - September 26, 2025 🚨 **BREAKING CHANGES**
+## Version 0.1.0 - September 26, 2025  **BREAKING CHANGES**
 
-### ⚠️ Breaking Changes
+### Breaking Changes
 
 #### CustomerProfileSet Architecture - Major Breaking Change
 - **BREAKING**: `hasCustomerProfile` moved from URPXDocument to RatePlan domain via CustomerProfileSet
@@ -4085,7 +4381,7 @@ Each enumeration includes:
 - **BREAKING**: serviceRole and billPortion usage now strictly enforced at correct architectural levels
 - **IMPACT**: Data with architectural violations will now be rejected
 
-### 🏗️ Major Architectural Implementation - CustomerProfileSet Architecture
+### Major Architectural Implementation - CustomerProfileSet Architecture
 
 #### CustomerProfileSet Architecture Complete Implementation
 - **Added**: `CustomerProfileSet` class as container for related customer profiles with shared eligibility logic
@@ -4124,7 +4420,7 @@ Each enumeration includes:
 - **Added**: Comprehensive architectural constraint compliance validation across all improvements
 - **Impact**: Production-ready semantic validation ensuring data quality and architectural compliance
 
-### 📋 Migration Guide for v0.1.0
+### Migration Guide for v0.1.0
 
 #### CustomerProfileSet Migration
 ```turtle
@@ -4151,7 +4447,7 @@ urpx:charge urpx:tierNumber 1 .
 urpx:charge urpx:serviceTierNumber 1 .
 ```
 
-### 📊 Implementation Statistics
+### Implementation Statistics
 
 #### CustomerProfileSet Architecture
 - **3 New Classes**: CustomerProfileSet, enhanced CustomerProfile, architectural constraint shapes
@@ -4165,7 +4461,7 @@ urpx:charge urpx:serviceTierNumber 1 .
 - **15+ SHACL Constraint Groups**: Validation for inheritance patterns, architectural boundaries, cross-validation
 - **Production-Ready**: All improvements include comprehensive documentation and validation
 
-### 📁 Files Modified
+### Files Modified
 
 #### Core Ontology Architecture
 - `ontology/urpx-ontology.ttl` - Major CustomerProfileSet implementation with architectural enhancements
@@ -4176,33 +4472,33 @@ urpx:charge urpx:serviceTierNumber 1 .
 - `design/urpx-design-decisions.md` - Complete architectural decision documentation with alternatives analysis
 - `documentation/pages/urpx-changelog.md` - This comprehensive changelog update
 
-### 🎯 Production Readiness Achievements
+### Production Readiness Achievements
 
 #### Architectural Maturity
-- ✅ **Clean Architecture**: Complete separation of concerns between customer characteristics and eligibility logic
-- ✅ **Standards Alignment**: CIM UsagePointGroup pattern implementation with industry compatibility
-- ✅ **Boolean Logic Support**: Complex eligibility scenarios with full boolean operator support
-- ✅ **Charge Selection Precision**: ProfileId references enable exact charge applicability determination
-- ✅ **Comprehensive Validation**: Production-ready SHACL constraints ensuring data quality and consistency
+- **Clean Architecture**: Complete separation of concerns between customer characteristics and eligibility logic
+- **Standards Alignment**: CIM UsagePointGroup pattern implementation with industry compatibility
+- **Boolean Logic Support**: Complex eligibility scenarios with full boolean operator support
+- **Charge Selection Precision**: ProfileId references enable exact charge applicability determination
+- **Comprehensive Validation**: Production-ready SHACL constraints ensuring data quality and consistency
 
 #### Technical Excellence
-- ✅ **Property Consistency**: serviceTierNumber alignment with service tier terminology conventions
-- ✅ **Architectural Boundaries**: Clear separation between charge properties and eligibility conditions  
-- ✅ **Structured References**: DataSourceTypeValue enumeration enabling better traceability
-- ✅ **User Experience**: Enhanced property names for improved UI/application development
-- ✅ **Documentation**: Complete developer notes with usage patterns and best practices
+- **Property Consistency**: serviceTierNumber alignment with service tier terminology conventions
+- **Architectural Boundaries**: Clear separation between charge properties and eligibility conditions  
+- **Structured References**: DataSourceTypeValue enumeration enabling better traceability
+- **User Experience**: Enhanced property names for improved UI/application development
+- **Documentation**: Complete developer notes with usage patterns and best practices
 
 #### Future-Proofing
-- 🚀 **Extensible**: CustomerProfileSet architecture supports complex rate plan evolution
-- 🚀 **Maintainable**: Clean architectural boundaries reduce technical debt
-- 🚀 **Standards-Ready**: CIM alignment ensures interoperability with utility industry systems
-- 🚀 **Validation-First**: Comprehensive SHACL validation prevents architectural degradation
+- **Extensible**: CustomerProfileSet architecture supports complex rate plan evolution
+- **Maintainable**: Clean architectural boundaries reduce technical debt
+- **Standards-Ready**: CIM alignment ensures interoperability with utility industry systems
+- **Validation-First**: Comprehensive SHACL validation prevents architectural degradation
 
 ---
 
 ## Version 0.0.7 - September 25, 2025
 
-### 🔧 serviceType → utilityServiceKind Rename + Design Governance
+### serviceType → utilityServiceKind Rename + Design Governance
 
 #### Geographic Property Standards Alignment
 - **Renamed**: `urpx-geo:serviceType` to `urpx-geo:utilityServiceKind` for CIM ServiceKind alignment
@@ -4217,16 +4513,16 @@ urpx:charge urpx:serviceTierNumber 1 .
 - **Created**: `design/urpx-documentation-update-log.md` - Batch update processing for environmental efficiency
 - **Impact**: Production-ready design governance process with comprehensive change tracking
 
-### 🏗️ Major Enumeration Conversion Project - Phase 1A Complete
+### Major Enumeration Conversion Project - Phase 1A Complete
 
 #### Standards-Aligned Enum Property Conversion (ObjectProperty Pattern)
 - **Converted**: 14 high-priority enum properties from DatatypeProperty (string) to ObjectProperty pattern
 - **Created**: 14 enum value classes with 150+ individual enum instances
 - **Standards**: Full alignment with CIM, CDS (Customer Data Specification), Green Button, ISO, and FERC standards
 - **Progress**: **26% complete** - Phase 1 FULLY COMPLETE with foundational enum conversions
-- **Reference**: [📋 Complete Enumeration Inventory](../urpx-enum-inventory.md) with detailed progress tracking
+- **Reference**: [Complete Enumeration Inventory](../urpx-enum-inventory.md) with detailed progress tracking
 
-##### Phase 1A Complete: CDS/Standards Critical Enums (6/6) ✅
+##### Phase 1A Complete: CDS/Standards Critical Enums (6/6)
 1. **`commodity`** → `CommodityValue` ObjectProperty (34 CIM-aligned instances)
 2. **`unitOfMeasure`** → `UnitOfMeasureValue` ObjectProperty (42 CIM-aligned instances)  
 3. **`measurementType`** → `MeasurementTypeValue` ObjectProperty (5 Green Button/CDS instances)
@@ -4234,7 +4530,7 @@ urpx:charge urpx:serviceTierNumber 1 .
 5. **`cycleType`** → `CycleTypeValue` ObjectProperty (4 CDS billing cycles)
 6. **`calculationMethod`** → `CalculationMethodValue` ObjectProperty (4 CDS calculation methods)
 
-##### Phase 1B Complete: Core Business Logic Enums (5/6) ✅ + Cleanup
+##### Phase 1B Complete: Core Business Logic Enums (5/6) + Cleanup
 7. **`touTierStandardName`** → `TOUTierStandardNameValue` ObjectProperty (7 industry standard TOU tiers)
    - *Renamed from `tierStandardName` to avoid ambiguity with service tier properties*
 8. **`dayType`** → `DayTypeValue` ObjectProperty (4 ISO 8601 day classifications)
@@ -4243,16 +4539,16 @@ urpx:charge urpx:serviceTierNumber 1 .
 11. ~~`customerCategory`~~ → **REMOVED** (redundant with existing `CustomerKind` class structure - cleaned up completely)
 12. **`territoryType`** → `TerritoryTypeValue` ObjectProperty (6 utility territory standards) - *Located in geography ontology*
 
-##### Phase 1C Complete: Market & Pricing Enums (3/3) ✅
+##### Phase 1C Complete: Market & Pricing Enums (3/3)
 13. **`dynamicPricingType`** → `DynamicPricingTypeValue` ObjectProperty (6 FERC market terminology instances)
 14. **`updateFrequency`** → `UpdateFrequencyValue` ObjectProperty (9 ISO 8601 interval instances)
 15. **`priceSource`** → `PriceSourceValue` ObjectProperty (7 FERC market source instances)
 
 ##### Critical Design Decision: Flexible vs Structured Properties
-- **✅ Preserved**: `serviceClass` as flexible DatatypeProperty (string) for descriptive text
-- **📝 Rationale**: Stores complex service class descriptions like "service class 1 Residential and Religious"
-- **⚖️ Balance**: Technical enumerations → ObjectProperty, descriptive text → flexible strings
-- **🔧 Separate**: Voltage levels handled by dedicated `voltageLevel` ObjectProperty
+- **Preserved**: `serviceClass` as flexible DatatypeProperty (string) for descriptive text
+- ** Rationale**: Stores complex service class descriptions like "service class 1 Residential and Religious"
+- **Balance**: Technical enumerations → ObjectProperty, descriptive text → flexible strings
+- ** Separate**: Voltage levels handled by dedicated `voltageLevel` ObjectProperty
 
 #### Production-Ready Semantic Structure
 - **Type Safety**: Prevents typos and enables validation of enum selections
@@ -4284,7 +4580,7 @@ urpx:electricity a urpx:CommodityValue ;
     skos:definition "Electric energy commodity" .
 ```
 
-### 📊 Remaining Work - Comprehensive Plan (45 of 54 properties remaining)
+### Remaining Work - Comprehensive Plan (45 of 54 properties remaining)
 
 #### Phase 1B: Complete Core Business Logic Enums (1 remaining)
 - **`territoryType`** (in urpx-geography.ttl) - Utility territory standards (exclusive, non-exclusive, wholesale, retail, transmission, distribution)
@@ -4346,7 +4642,7 @@ urpx:electricity a urpx:CommodityValue ;
 - **Property Naming**: Resolve conflicts (`serviceType` in multiple contexts, `status` vs `organizationStatus`, duplicate `authorityLevel`/`jurisdictionLevel`)
 - **Performance**: Optimization review for large-scale ontology with 200+ enum instances
 
-### 📁 Files Modified
+### Files Modified
 
 #### Core Ontology Updates
 - `ontology/urpx-ontology.ttl` - 9 enum properties converted with 85+ enum value instances
@@ -4358,28 +4654,28 @@ urpx:electricity a urpx:CommodityValue ;
   - Implementation priority matrix with phase-based approach
   - CDS integration requirements and validation criteria
 
-### 🎯 Success Metrics
+### Success Metrics
 
 #### Immediate Benefits
-- ✅ **Type Safety**: Prevents enum value typos and invalid selections
-- ✅ **Standards Integration**: Direct compatibility with CDS and CIM systems  
-- ✅ **Validation**: Structured SHACL validation replaces string pattern matching
-- ✅ **Documentation**: Comprehensive enum value definitions with standards references
+- **Type Safety**: Prevents enum value typos and invalid selections
+- **Standards Integration**: Direct compatibility with CDS and CIM systems  
+- **Validation**: Structured SHACL validation replaces string pattern matching
+- **Documentation**: Comprehensive enum value definitions with standards references
 
 #### Foundation for Production Deployment
-- 🚀 **17% Complete**: Solid foundation with highest-priority enums converted
-- 🚀 **Standards-First**: CIM/CDS alignment ensures enterprise system compatibility
-- 🚀 **Scalable Pattern**: Established conversion methodology for remaining 45 properties
-- 🚀 **Quality Assurance**: [Critical standards review protocol](../urpx-enum-inventory.md) implemented
+- **17% Complete**: Solid foundation with highest-priority enums converted
+- **Standards-First**: CIM/CDS alignment ensures enterprise system compatibility
+- **Scalable Pattern**: Established conversion methodology for remaining 45 properties
+- **Quality Assurance**: [Critical standards review protocol](../urpx-enum-inventory.md) implemented
 
-### 🔄 Next Steps (Tomorrow's Session)
+### Next Steps (Tomorrow's Session)
 
 1. **Complete Phase 1B**: Add enum value classes for `changeReason` (regulatory filing categories)
 2. **Phase 1C Implementation**: Convert market pricing enums (`dynamicPricingType`, `updateFrequency`, `priceSource`)
 3. **Geography Ontology**: Convert `territoryType` and other high-priority geographic enums
 4. **SHACL Updates**: Begin updating validation rules for converted properties
 
-**📋 Reference**: [Complete Enumeration Inventory & Remaining Work Plan](../urpx-enum-inventory.md)
+**Reference**: [Complete Enumeration Inventory & Remaining Work Plan](../urpx-enum-inventory.md)
 
 ---
 
@@ -4439,7 +4735,7 @@ urpx:electricity a urpx:CommodityValue ;
 
 ## Version 0.0.5 - September 18, 2025
 
-### 🔧 Unified Eligibility Model Implementation
+### Unified Eligibility Model Implementation
 
 #### Embedded CustomerProfile Eligibility Rules
 - **Enhanced**: Extended `urpx:hasEligibilityRule` domain to include `urpx:CustomerProfile` class
@@ -4459,7 +4755,7 @@ urpx:electricity a urpx:CommodityValue ;
   - `ex:large-industrial-customer` - Minimum demand and primary voltage requirements
   - `ex:municipal-street-lighting-customer` - Municipal authority and equipment requirements
 
-### 📅 Test Data Compliance Validation
+### Test Data Compliance Validation
 
 #### Comprehensive Structural Validation
 - **Created**: `validate_test_data.py` - Lightweight validation script bypassing pyshacl dependencies
@@ -4491,7 +4787,7 @@ urpx:electricity a urpx:CommodityValue ;
 - **Coverage**: `urpx:effectiveDateTime`, `urpx:expirationDateTime`, `urpx:publishedDate` fields
 - **Quality**: Automated validation ensuring no malformed timestamp values
 
-### 🏗️ Development Tooling Enhancement
+### Development Tooling Enhancement
 
 #### Structural Validation Script
 - **Created**: Production-ready validation tool handling nested JSON-LD document structures
@@ -4505,7 +4801,7 @@ urpx:electricity a urpx:CommodityValue ;
 - **Timestamp Checking**: Regex-based ISO 8601 format validation
 - **Reporting**: Clear pass/fail status with detailed issue descriptions
 
-### 📊 Test Dataset Quality Assurance
+### Test Dataset Quality Assurance
 
 #### Production-Ready Test Data
 - **Status**: Synthetic test dataset now fully compliant and production-ready
@@ -4519,7 +4815,7 @@ urpx:electricity a urpx:CommodityValue ;
 - **Customer Profiles**: 4 profiles with embedded eligibility rules demonstrating Unified Eligibility Model
 - **Modifiers**: 3 advanced rate plan modifiers (green energy, demand response, EV charging)
 
-### 📁 Files Changed
+### Files Changed
 
 #### Core Architecture
 - `ontology/urpx-ontology.ttl` - Extended hasEligibilityRule domain for Unified Eligibility Model
@@ -4531,7 +4827,7 @@ urpx:electricity a urpx:CommodityValue ;
 #### Development Tools
 - Validation tools now maintained in dedicated `utilipub-test-case-generator` repository
 
-### ✅ Quality Validation Results
+### Quality Validation Results
 
 #### Comprehensive Testing
 - **21 Entities Validated**: All major URPX entity types successfully processed
@@ -4540,17 +4836,17 @@ urpx:electricity a urpx:CommodityValue ;
 - **Semantic Compliance**: Unified Eligibility Model successfully implemented
 
 #### Production Readiness
-- ✅ JSON-LD document parsing without errors
-- ✅ All required properties present across entity types
-- ✅ ISO 8601 timestamp format compliance
-- ✅ Embedded eligibility rules properly structured
-- ✅ URPX ontology and SHACL constraint compatibility
+- JSON-LD document parsing without errors
+- All required properties present across entity types
+- ISO 8601 timestamp format compliance
+- Embedded eligibility rules properly structured
+- URPX ontology and SHACL constraint compatibility
 
 ---
 
 ## Version 0.0.4 - September 15, 2025
 
-###  Time-of-Use Schedule Enhancement
+### Time-of-Use Schedule Enhancement
 
 #### Complete TOU Schedule Implementation
 - **Added**: Comprehensive Time-of-Use schedules to all test cases (0003-0007)
@@ -4570,7 +4866,7 @@ urpx:electricity a urpx:CommodityValue ;
 - **ex-0005**: Complete Trip 2 time series with TOU structure
 - **ex-0006**: Minimal subset with full TOU schedule for testing
 
-### 📋 Structured Tariff Book References
+### Structured Tariff Book References
 
 #### Regulatory Compliance Enhancement
 - **Added**: `urpx:tariffBookReference` with structured leaf/page number references
@@ -4607,7 +4903,7 @@ urpx:electricity a urpx:CommodityValue ;
 - **References**: Structured tariff book references to Leaf 400-401
 - **Purpose**: Demonstrates demand-based commercial service modeling
 
-### ⚡ Property Consolidation Optimization
+### Property Consolidation Optimization
 
 #### ex-0004 Comprehensive Optimization
 - **Optimized**: 797 charges with automated property consolidation script
@@ -4621,7 +4917,7 @@ urpx:electricity a urpx:CommodityValue ;
 - **Validation**: Reports charge counts before/after optimization
 - **Reusable**: Generic script applicable to other large test cases
 
-### 📊 Test Data Index Updates
+### Test Data Index Updates
 
 #### Enhanced CSV Documentation
 - **Updated**: `UtiliPub-TestDataSets-URPX-RatePlans.csv` with test case 0007
@@ -4634,7 +4930,7 @@ urpx:electricity a urpx:CommodityValue ;
 - **0006**: Trip 2 Zone H Low Tension subset with complete TOU structure
 - **0007**: Rate III Standby Service with demand charges and structured tariff references
 
-### 📚 Documentation Enhancement
+### Documentation Enhancement
 
 #### Examples and Guidance Updates
 - **Added**: Enhanced test cases section in urpx-examples.md
@@ -4646,7 +4942,7 @@ urpx:electricity a urpx:CommodityValue ;
 
 ## Version 0.0.3 - September 12, 2025
 
-### 🔗 ChargeSetAlternatives Pattern Implementation
+### ChargeSetAlternatives Pattern Implementation
 
 #### Mutual Exclusivity Architecture
 - **Added**: `urpx:ChargeSetAlternatives` class for managing mutually exclusive charge variations
@@ -4678,7 +4974,7 @@ urpx:electricity a urpx:CommodityValue ;
 - **UI Generation**: Enables automatic radio button/dropdown interfaces
 - **Type Safety**: Compile-time validation in strongly-typed systems
 
-### 📁 Test Case Structure Reorganization
+### Test Case Structure Reorganization
 
 #### Clean Test Case Numbering Implementation
 - **Restructured**: ex-0004 file variants reorganized into clean 1:1 test case mapping
@@ -4701,7 +4997,7 @@ urpx:electricity a urpx:CommodityValue ;
 - **Added**: Test cases 0005 and 0006 with descriptive names and use case alignment
 - **Maintained**: Backward compatibility for existing test case references
 
-### 🔤 Enum Naming Convention Standardization
+### Enum Naming Convention Standardization
 
 #### Charge Classification Enum Lowercase Migration
 - **Changed**: All charge classification enum values converted from PascalCase to camelCase
@@ -4734,7 +5030,7 @@ urpx:electricity a urpx:CommodityValue ;
 
 ## Version 0.0.2 - September 2025
 
-### 🔧 Property Consolidation Optimization
+### Property Consolidation Optimization
 
 #### billingCycleCode Consolidation Enhancement
 - **Enhanced**: Added `urpx:billingCycleCode` to property consolidation optimization algorithm
@@ -4756,7 +5052,7 @@ urpx:electricity a urpx:CommodityValue ;
 - **Added**: Inheritance consistency checks for consolidated properties
 - **Documentation**: Added semantic inheritance pattern explanation
 
-### 🔧 Terminology and Repository Cleanup
+### Terminology and Repository Cleanup
 
 #### CustomerCharge→MinimumCharge Consistency Fix
 - **Fixed**: CustomerCharge terminology replaced with canonical MinimumCharge across all ontology files
@@ -4784,7 +5080,7 @@ urpx:electricity a urpx:CommodityValue ;
 - **Confirmed**: Charge combination matrix HTML correctly uses MinimumCharge terminology
 - **Validated**: All remaining CustomerCharge references are intentional (synonym mappings, migration tools)
 
-### 📁 Files Changed
+### Files Changed
 
 #### Core Ontology
 - `ontology/urpx-charge-classification.ttl` - Removed all skos:altLabel synonym references
@@ -4799,7 +5095,7 @@ urpx:electricity a urpx:CommodityValue ;
 - All specifications moved under `documentation/specifications/` hierarchy
 - Eliminated duplicate files: `charge-classification/ontology/urpx-charge-taxonomy-ontology.ttl`, `charge-classification/shacl/urpx-charge-tagging-shacl.ttl`
 
-### ✅ Quality Assurance
+### Quality Assurance
 - **Validated**: 71 charge types with CustomerCharge properly excluded from valid enumerations
 - **Confirmed**: All synonym references appear only in mapping/migration contexts
 - **Verified**: SHACL prevents CustomerCharge usage: "CustomerCharge is not a valid chargeType - use MinimumCharge instead"
@@ -4809,7 +5105,7 @@ urpx:electricity a urpx:CommodityValue ;
 
 ## Version 0.0.1 - September 2025
 
-### 🚀 Major Architectural Improvements
+### Major Architectural Improvements
 
 #### ISO 8601 Datetime Compliance
 - **Fixed**: All `xsd:dateTime` properties now require timezone information for legal compliance
@@ -4833,7 +5129,7 @@ urpx:electricity a urpx:CommodityValue ;
 - **Benefit**: Better organization of complex rate structures and more precise applicability rules
 - **Backward Compatible**: Existing ServiceClass structures continue to work
 
-### 🔧 Technical Improvements
+### Technical Improvements
 
 #### SHACL Constraint Updates
 - **Updated**: All SHACL shapes to validate new object property approach
@@ -4853,7 +5149,7 @@ urpx:electricity a urpx:CommodityValue ;
 - **Enhanced**: Clear migration examples for charge classification
 - **Improved**: Semantic precision in all code examples
 
-### 📁 Files Changed
+### Files Changed
 
 #### Core Ontology
 - `ontology/urpx-ontology.ttl` - Major architectural updates
@@ -4869,25 +5165,25 @@ urpx:electricity a urpx:CommodityValue ;
 - `documentation/pages/urpx-examples.md` - All examples modernized
 - `documentation/pages/urpx-changelog.md` - This changelog
 
-### 🔄 Migration Guide
+### Migration Guide
 
 #### For Datetime Properties
 ```turtle
-# Before (❌ Non-compliant)
+# Before (Non-compliant)
 urpx:effectiveDate "2025-01-01T00:00:00"^^xsd:dateTime ;
 
-# After (✅ ISO 8601 compliant)
+# After (ISO 8601 compliant)
 urpx:effectiveDate "2025-01-01T00:00:00-05:00"^^xsd:dateTime ;
 ```
 
 #### For Charge Classification
 ```turtle
-# Before (❌ String-based)
+# Before (String-based)
 urpx:chargeType "service" ;
 urpx:chargeCategory "fixed" ;
 urpx:billPortion "delivery" ;
 
-# After (✅ Object properties)
+# After (Object properties)
 urpx:chargeType urpx:serviceCharge ;
 urpx:chargeCategory urpx:fixedCharge ;
 urpx:billPortion urpx:deliveryCharge ;
@@ -4895,7 +5191,7 @@ urpx:billPortion urpx:deliveryCharge ;
 
 #### For RateGroup Structure
 ```turtle
-# New (✅ Hierarchical organization)
+# New (Hierarchical organization)
 urpx:service-class-sc2 a urpx:ServiceClass ;
     urpx:hasRateGroup urpx:rate-group-basic .
 
@@ -4904,13 +5200,13 @@ urpx:rate-group-basic a urpx:RateGroup ;
     urpx:hasChargeSet urpx:chargeset-basic .
 ```
 
-### ⚠️ Breaking Changes
+### Breaking Changes
 
 1. **Datetime Validation**: All datetime properties must include timezone information
 2. **Charge Classification**: String-based charge types/categories/portions no longer supported
 3. **SHACL Validation**: Updated constraints will reject non-compliant data
 
-### 🔮 Future Considerations
+### Future Considerations
 
 #### Transform Modules
 - **Status**: Identified for future update
@@ -4918,19 +5214,19 @@ urpx:rate-group-basic a urpx:RateGroup ;
 - **Action Needed**: Update to generate object property-based charge classification
 - **Priority**: Medium (affects data generation, not core ontology)
 
-### 📊 Impact Assessment
+### Impact Assessment
 
 #### Immediate Benefits
-- ✅ Legal compliance through ISO 8601 datetime formats
-- ✅ Enhanced semantic precision with object properties
-- ✅ Improved data validation through updated SHACL constraints
-- ✅ Better developer experience with modernized examples
+- Legal compliance through ISO 8601 datetime formats
+- Enhanced semantic precision with object properties
+- Improved data validation through updated SHACL constraints
+- Better developer experience with modernized examples
 
 #### Long-term Benefits
-- 🚀 Enhanced interoperability with semantic web tools
-- 🚀 Extensible rate structure modeling through RateGroup hierarchy
-- 🚀 Type-safe charge classification reduces integration errors
-- 🚀 Standards-compliant foundation for future enhancements
+- Enhanced interoperability with semantic web tools
+- Extensible rate structure modeling through RateGroup hierarchy
+- Type-safe charge classification reduces integration errors
+- Standards-compliant foundation for future enhancements
 
 ---
 

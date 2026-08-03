@@ -5,9 +5,8 @@
 
 # URPX API Specification
 
-**Version:** 0.2.0 (Pre-draft)
-**Status:** Requirements Phase  
-**Last Updated:** 2026-04-29
+**Status:** Non-normative sketch, illustrative only. Aligned to URPX v0.3.0; the normative access API is in development for a release after v0.3.0.
+**Last Updated:** 2026-07-24
 
 [← Back to Index](/docs/getting-started/overview) | [Overview](urpx-overview.md) | [URPX Interoperability & Standards Integration](urpx-interoperability.md)
 
@@ -15,63 +14,55 @@
 
 ## Status Notice
 
-The URPX API specification is currently in requirements gathering phase. A working group lead for API design will be identified to develop comprehensive REST and GraphQL specifications for consuming published rate plan data.
+This page is an **illustrative sketch**, not a normative interface. The sequence diagrams and API-call drafts below show the *shape* of how applications will read published rate plan data; they are for illustration and are **not final**. Endpoint paths, parameters, and response formats will be settled in the normative access-API specification, which is being developed for a release after v0.3.0.
 
-This document provides initial pre-draft requirements, use cases, and example API patterns to guide development.
-
-**Scope Note**: URPX APIs focus on consuming published rate plan data. Rate plan submission workflows are outside the standard's scope, but published URPX data MAY expose regulatory traceability metadata such as linked `RateCase` resources, filing references, and approval dates.
+**Scope**: URPX APIs are for **consuming** published rate plan data: discovery, version retrieval, and eligibility checks. Rate plan submission workflows are outside the standard's scope. Published URPX data may, however, expose regulatory traceability metadata such as linked `RateCase` resources, filing references, and approval dates.
 
 ---
 
 ## Table of Contents
 
-1. [Requirements Overview](#requirements-overview)
-2. [Use Cases](#use-cases)
-3. [Next Steps](#next-steps)
+1. [Access model](#access-model)
+2. [Use cases](#use-cases)
+3. [Query example (SPARQL)](#query-example-sparql)
+4. [Roadmap](#roadmap)
 
 ---
 
-## Requirements Overview
+## Access model
 
-### API Design Principles
+URPX standardizes one thing on the wire: the **JSON-LD representation** of a rate plan, governed by the published context and the SHACL shapes. Every access method returns or queries that same representation. Developers work with familiar JSON, and semantic interoperability comes from the JSON-LD context.
 
-**Standards-Based**
-- RESTful design following OpenAPI 3.1.0
-- GraphQL support for flexible querying
-- JSON-LD responses for semantic interoperability
-- SPARQL endpoint for advanced queries
+Access to published data is offered as **profiles** over that representation, rather than a single fixed interface:
 
-**Security**
-- OAuth 2.0 for authenticated access
-- API keys for public data
-- Rate limiting per consumer
-- No PII in responses
+- **Graph query (SPARQL)**: the native query profile for the RDF graph. A worked example is shown below.
+- **A query API and a REST/JSON profile**: a documented request/response access layer over the same JSON-LD representation. These are being designed for a release after v0.3.0; the REST profile in particular will be shaped by broader input from data consumers once the standard is public.
 
-**Performance**
-- Pagination for large result sets
-- Caching for public tariff data
-- Efficient SPARQL query patterns
-- Response time targets (< 500ms)
+No single protocol is "the API." Because the representation is the stable thing, a new property added to the model flows through to consumers without breaking the access layer.
 
 ---
 
 ## Use Cases
 
+The following use cases illustrate the read patterns the access API will support. The diagrams and call drafts are illustrative and not final.
+
 ### Use Case 1: Rate Plan Discovery
 
 **Actor**: Application Developer
 
-**Goal**: Find all rate plans available in a service territory
+**Goal**: Find the rate plans available in a service territory
 
 **Scenario**:
 ```
-GIVEN a service territory identifier
-WHEN I query available rate plans
-THEN I receive list of rate plans with basic information
-AND I can filter by customer type and service role
+GIVEN a service territory
+WHEN I query the available rate plans
+THEN I receive a list of rate plans with basic information
+AND I can narrow the list by customer and service characteristics
 ```
 
-**API Pattern**:
+Discovery by territory or customer characteristics is resolved by the access layer: a rate plan's identity carries no territory or customer field directly; those attach to service-point and customer profiles and are evaluated by the plan's eligibility rules. The access layer offers them as filters over that logic.
+
+**Illustrative call draft**:
 ```http
 GET /api/v1/rate-plans?territory=nyiso-zone-j&customerKind=residentialKind
 ```
@@ -82,15 +73,14 @@ GET /api/v1/rate-plans?territory=nyiso-zone-j&customerKind=residentialKind
 
 **Actor**: Billing System
 
-**Goal**: Get all rate plan version data for a rate plan within a date range
+**Goal**: Get the rate plan versions effective within a date range, with their resolved pricing
 
 **Scenario**:
 ```
-GIVEN a rate plan unique identifier and date range
-WHEN I request version data
-THEN I receive all versions effective within that period
-AND each version includes complete price structure
-AND temporal coverage is validated (no gaps)
+GIVEN a rate plan unique identifier and a date range
+WHEN I request the version data
+THEN I receive the versions whose coverage falls within that period
+AND each version carries its resolved price structure
 ```
 
 **Sequence Diagram**:
@@ -100,57 +90,26 @@ sequenceDiagram
     participant API as URPX API
     participant Cache as Rate Plan Cache
     participant Store as Data Store
-    
+
     Client->>API: GET /rate-plans/{id}/versions?<br/>start=2025-01-01&end=2025-12-31
     API->>Cache: Check cached data
-    
+
     alt Cache Hit
         Cache->>API: Return cached versions
     else Cache Miss
-        API->>Store: Query versions by date range
+        API->>Store: Query versions by coverage window
         Store->>API: Return matching versions
         API->>Cache: Update cache
     end
-    
-    API->>Client: 200 OK with version array
-    
-    Note over Client,API: Includes: prices, TOU schedules,<br/>seasons, eligibility rules
+
+    API->>Client: 200 OK with version list
+
+    Note over Client,API: Each version carries its prices,<br/>plan elements, and coverage claim
 ```
 
-**API Pattern**:
+**Illustrative call draft**:
 ```http
 GET /api/v1/rate-plans/{ratePlanId}/versions?startDate=2025-01-01&endDate=2025-12-31
-```
-
-**Response Example**:
-```json
-{
-  "data": [
-    {
-      "id": "ex:version-2025-summer",
-      "type": "RatePlanVersion",
-      "version": "1.0",
-      "effectiveDateTime": "2025-06-01T00:00:00-04:00",
-      "expirationDateTime": "2025-09-30T23:59:59-04:00",
-      "changeReason": "seasonalChange",
-      "hasPrices": {
-              "hasPriceSet": [
-                {
-                  "name": "Summer Prices",
-                  "hasPrice": [...]
-          }
-        ]
-      }
-    }
-  ],
-  "meta": {
-    "totalVersions": 2,
-    "dateRangeRequested": {
-      "start": "2025-01-01",
-      "end": "2025-12-31"
-    }
-  }
-}
 ```
 
 ---
@@ -159,14 +118,14 @@ GET /api/v1/rate-plans/{ratePlanId}/versions?startDate=2025-01-01&endDate=2025-1
 
 **Actor**: Customer Portal
 
-**Goal**: Determine rate plan eligibility for customer with specific profile characteristics
+**Goal**: Find which rate plans a customer with a given profile qualifies for
 
 **Scenario**:
 ```
-GIVEN customer profile inputs (service point + customer characteristics)
-WHEN I check eligibility against available rate plans
-THEN I receive list of qualifying rate plans
-AND each includes matched eligibility criteria
+GIVEN a customer and service-point profile
+WHEN I check eligibility against the available rate plans
+THEN I receive the qualifying rate plans
+AND each names the criteria that matched
 ```
 
 **Sequence Diagram**:
@@ -177,10 +136,10 @@ sequenceDiagram
     participant API as URPX API
     participant Engine as Eligibility Engine
     participant Store as Rate Plan Store
-    
+
     Customer->>Portal: Enter profile characteristics
     Portal->>API: POST /eligibility/check
-    Note over Portal,API: Includes: scenario.hasCustomerProfile<br/>and scenario.hasServicePointProfile
+    Note over Portal,API: Includes the customer<br/>and service-point profile
     API->>Engine: Evaluate eligibility rules
     Engine->>Store: Query rate plans
     Store->>Engine: Return candidates
@@ -190,260 +149,567 @@ sequenceDiagram
     Portal->>Customer: Display qualified options
 ```
 
-**API Pattern**:
+**Illustrative call draft**:
 ```http
 POST /api/v1/eligibility/check
-Content-Type: application/json
-
-{
-  "scenario": {
-    "hasCustomerProfile": {
-      "hasCustomerKind": "residentialKind",
-      "hasCustomerSubKind": "residentialStandard"
-    },
-    "hasServicePointProfile": {
-      "endUse": "residentialService",
-      "voltageLevel": "secondaryVoltage",
-      "hasMeteringConfiguration": "ami",
-      "geographicZone": "urbanZone"
-    }
-  }
-}
 ```
+with the customer and service-point profile in the request body.
 
 **Implementation Note:** Eligibility evaluation in URPX is based on structured `ConditionExpression` trees. API responses should surface matched rule names or stable identifiers rather than serialized internal expression graphs unless explicitly requested.
 
-**Response Example**:
-```json
-{
-  "data": {
-    "eligibleRatePlans": [
-      {
-        "ratePlanUniqueIdentifier": "RES-TOU-001",
-        "name": "Residential Time-of-Use Rate Plan",
-        "serviceRole": "bundledServiceRole",
-        "matchedCriteria": [
-          "customerKind",
-          "serviceTerritory",
-          "voltageLevel"
-        ]
-      }
-    ],
-    "ineligibleRatePlans": [
-      {
-        "ratePlanUniqueIdentifier": "COMM-DEMAND-001",
-        "reason": "Requires commercialKind customer classification"
-      }
-    ]
-  }
-}
-```
-
 ---
 
-## Write Operations
+## Read operations (illustrative calls)
 
-### Create New Rate Plan
-
-**Request**:
-```http
-POST /api/v1/rate-plans
-Content-Type: application/ld+json
-Authorization: Bearer {token}
-
-{
-  "@context": "https://schema.urpx.org/context.jsonld",
-  "@type": "RatePlan",
-  "ratePlanUniqueIdentifier": "NEW-RES-PLAN-001",
-  "name": "New Residential Rate Plan",
-  "initialEffectiveDate": "2025-01-01"
-}
-```
-
-**Response**:
-```http
-HTTP/1.1 201 Created
-Location: /api/v1/rate-plans/NEW-RES-PLAN-001
-
-{
-  "@context": "https://schema.urpx.org/context.jsonld",
-  "@id": "ex:rateplan-new-001",
-  "@type": "RatePlan",
-  "ratePlanUniqueIdentifier": "NEW-RES-PLAN-001",
-  "name": "New Residential Rate Plan",
-  "initialEffectiveDate": "2025-01-01"
-}
-```
-
----
-
-### Add New Version to Existing Rate Plan
-
-**Request**:
-```http
-POST /api/v1/rate-plans/{ratePlanId}/versions
-Content-Type: application/ld+json
-Authorization: Bearer {token}
-
-{
-  "@context": "https://schema.urpx.org/context.jsonld",
-  "@type": "RatePlanVersion",
-  "version": "2.0",
-  "effectiveDateTime": "2025-07-01T00:00:00-04:00",
-  "changeReason": {"@id": "urpx:rateCase"},
-  "publishedBy": {"@id": "ex:utility-example"},
-  "serviceRole": {"@id": "urpx:bundledServiceRole"},
-  "hasPlanElements": {
-    "@type": "PlanElements"
-  },
-  "hasPrices": {
-    "@type": "Prices",
-    "hasPriceSet": [...]
-  }
-}
-```
-
-**Response**:
-```http
-HTTP/1.1 201 Created
-Location: /api/v1/rate-plans/RES-TOU-001/versions/2.0
-
-{
-  "@id": "ex:version-2025-v2",
-  "@type": "RatePlanVersion",
-  "version": "2.0",
-  "effectiveDateTime": "2025-07-01T00:00:00-04:00",
-  "changeReason": {"@id": "urpx:rateCase"}
-}
-```
-
----
-
-## Read Operations
-
-### Get Rate Plan Basic Information
+Read access follows ordinary resource patterns over the JSON-LD representation. These call drafts are illustrative and not final.
 
 ```http
 GET /api/v1/rate-plans/RES-TOU-001
 Accept: application/ld+json
 ```
 
-**Response**:
-```json
-{
-  "@context": "https://schema.urpx.org/context.jsonld",
-  "@id": "ex:rateplan-res-tou-001",
-  "@type": "RatePlan",
-  "ratePlanUniqueIdentifier": "RES-TOU-001",
-  "name": "Residential Time-of-Use Rate Plan",
-  "initialEffectiveDate": "2025-01-01"
-}
-```
-
----
-
-### Get Current Effective Version
-
 ```http
 GET /api/v1/rate-plans/RES-TOU-001/versions/current
 Accept: application/ld+json
 ```
 
-**Response**:
-```json
-{
-  "@context": "https://schema.urpx.org/context.jsonld",
-  "@id": "ex:version-current",
-  "@type": "RatePlanVersion",
-  "version": "1.0",
-  "effectiveDateTime": "2025-06-01T00:00:00-04:00",
-  "hasPrices": {
-      "@type": "Prices",
-      "hasPriceSet": [...]
-  },
-  "hasPlanElements": {
-    "@type": "PlanElements",
-    "hasSeasons": [...],
-    "hasMetricInput": [...]
-  }
-}
-```
-
 ---
 
-## SPARQL Endpoint
+## Query example (SPARQL)
 
-### Public SPARQL Queries
+SPARQL is the native query profile for the URPX graph. The example below orders a rate plan's versions by the start of their coverage window and takes the most recent.
 
-**Endpoint**: `https://sparql.urpx.org/query`
-
-**Example: Find All Peak Period Prices**
+A rate plan version is a derived snapshot with no authored effective date, so recency is read from the start of the version's coverage window (its temporal scope). The version links back to its rate plan through `forRatePlan`; there is no navigation property in the other direction. This query assumes each version carries a coverage-kind temporal scope with a start date. That is a modelling convention for published snapshots, not a field the v0.3.0 shapes yet require.
 
 ```sparql
-PREFIX urpx: <https://schema.urpx.org/>
+PREFIX urpx: <https://urpx-org.github.io/urpx/ontology/>
 
-SELECT ?price ?name ?unitPrice ?periodName
+SELECT ?version ?coverageStart
 WHERE {
-  ?ratePlan urpx:ratePlanUniqueIdentifier "RES-TOU-001" ;
-           urpx:hasRatePlanVersion ?version .
-  
-  ?version urpx:hasPrices/urpx:hasPriceSet/urpx:hasPrice ?price .
-  
-  ?price urpx:name ?name ;
-         urpx:unitPrice ?unitPrice ;
-         urpx:touPeriodNumber ?periodNum .
-  
-  ?version urpx:hasPlanElements/urpx:hasBillingModel/urpx:hasTOUSchedule/
-           urpx:hasTOUTier/urpx:hasTOUPeriod ?period .
-  
-  ?period urpx:touPeriodNumber ?periodNum ;
-         urpx:periodName ?periodName .
-  
-  FILTER(CONTAINS(?periodName, "Peak"))
+  ?plan  a urpx:RatePlan ;
+         urpx:ratePlanUniqueIdentifier "RES-TOU-001" .
+
+  ?version a urpx:RatePlanVersion ;
+           urpx:forRatePlan ?plan ;
+           urpx:hasTemporalScope ?scope .
+
+  ?scope urpx:scopeKind urpx:coverage ;
+         urpx:startDate  ?coverageStart .
+}
+ORDER BY DESC(?coverageStart)
+LIMIT 1
+```
+
+**Expected output.** The query returns the latest version's identifier and its coverage start date. Retrieving that version returns its full JSON-LD representation. The worked example below shows a resolved `RatePlanVersion` in its entirety: the parent rate plan identity, the version metadata, the complete `hasPlanElements` (seasons, metric inputs, ledgers, the time-of-use schedule, and price definitions), and the complete `hasPrices` (dated price sets). It is a fictional utility (Cascade Power and Light) and is illustrative, pending a SHACL validation pass before publication.
+
+Three things this example is built to show:
+
+- **One resolved version spanning several pricing inputs.** The snapshot consolidates three distinct pricing models, each authored in its own publication: delivery and rate structure from the 2026 rate-case tariff book, seasonal generation energy from an advice-letter supplement, and market supply energy from a monthly price feed. On the version there is no property that points at a `PricingModel`; the tie to each source is provenance. Every price set and price carries a `hasDataSourceReference` back to the `SourcePublication` it was read from, and the authoring models are made explicit alongside as a `ModelCollection` of `PricingModel` nodes.
+- **Prices change over time, at two cadences.** The seasonal generation prices apply by season (summer and winter price sets, selected by `appliesInSeason`, each with its own validity window), while the market supply prices refresh monthly on 2026-07-01 and 2026-08-01. Season here is applicability, expressed through `appliesInSeason` on the plan-element definitions, not a validity window; the definitions themselves are stable structure. A validity window on a plan-element definition is reserved for when the structure itself is authored to change, which is not what a season boundary is.
+- **Dated blocks with their own reason.** Each market-supply block is a `Price` valid for a non-overlapping window, and each carries its own `SourcePublication` stating why it changed (a scheduled reconciliation, then a summer fuel-cost adjustment). Note a modelling reality: a reason code (`changeReason`) is a property of the whole `RatePlanVersion`, not of a block inside it, so per-block reasons are expressed through each block's source publication. To model three genuinely reason-tagged changes as first-class, the model-faithful form is three effective-dated `RatePlanVersion` records on the same rate plan.
+
+```json
+{
+  "@context": [
+    "https://urpx-org.github.io/urpx/ontology/context.jsonld",
+    {
+      "cpl": "https://urpx-org.github.io/urpx/fixtures/cpl/",
+      "org": "https://urpx-org.github.io/urpx/fixtures/org/",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "urpx:effectiveDate": { "@type": "xsd:date" },
+      "urpx:expirationDate": { "@type": "xsd:date" },
+      "urpx:initialEffectiveDate": { "@type": "xsd:date" },
+      "urpx:startDate": { "@type": "xsd:date" },
+      "urpx:endDate": { "@type": "xsd:date" },
+      "urpx:dateRetrieved": { "@type": "xsd:date" },
+      "urpx:amount": { "@type": "xsd:decimal" },
+      "urpx:unitPrice": { "@type": "xsd:decimal" },
+      "urpx:baseQuantity": { "@type": "xsd:decimal" },
+      "urpx:startTime": { "@type": "xsd:time" },
+      "urpx:endTime": { "@type": "xsd:time" },
+      "urpx:month": { "@type": "xsd:gMonth" },
+      "urpx:intervalDuration": { "@type": "xsd:duration" },
+      "urpx:accessURL": { "@type": "xsd:anyURI" }
+    }
+  ],
+  "@graph": [
+    {
+      "@id": "cpl:res-tou-1-v20260601",
+      "@type": "urpx:RatePlanVersion",
+      "urpx:name": "Residential TOU-1: resolved snapshot, rate year effective 2026-06-01",
+      "urpx:description": "Fully resolved, self-contained snapshot for Cascade Power and Light Residential Time-of-Use Schedule TOU-1. It consolidates three pricing inputs, each authored as its own PricingModel: delivery and rate structure from the 2026 rate-case tariff book, seasonal time-of-use generation energy from a generation advice-letter supplement, and market supply energy from a monthly market price feed. Every price carries its own valid dates and source citation, so the snapshot is readable without the source pricing models.",
+      "urpx:version": "2026-06-01",
+      "urpx:effectiveDate": "2026-06-01",
+      "urpx:expirationDate": "2027-06-01",
+      "urpx:changeReason": { "@id": "urpx:rateCase" },
+      "urpx:priceCurrency": "USD",
+      "urpx:commodity": { "@id": "urpx:electricity" },
+      "urpx:serviceRole": { "@id": "urpx:bundledServiceRole" },
+      "urpx:customerChoice": { "@id": "urpx:voluntaryChoice" },
+      "urpx:isDefault": false,
+      "urpx:timezoneIdentifier": "America/Los_Angeles",
+      "urpx:selfContained": true,
+      "urpx:offeredBy": {
+        "@id": "org:cascade-pl",
+        "@type": "urpx:UtilityOperator",
+        "urpx:legalName": "Cascade Power and Light Company",
+        "urpx:organizationType": { "@id": "urpx:utilityOrganization" }
+      },
+      "urpx:forRatePlan": {
+        "@id": "cpl:res-tou-1",
+        "@type": "urpx:RatePlan",
+        "urpx:name": "Residential Time-of-Use Service, Schedule TOU-1 (Peak 5 to 9 p.m.)",
+        "urpx:description": "Cascade Power and Light residential time-of-use rate plan: stable identity record. No pricing content; priced content lives in its dated RatePlanVersions.",
+        "urpx:ratePlanUniqueIdentifier": "CPL-RES-TOU-1",
+        "urpx:initialEffectiveDate": "2019-06-01",
+        "urpx:priceCurrency": "USD",
+        "urpx:timezoneIdentifier": "America/Los_Angeles",
+        "urpx:commodity": { "@id": "urpx:electricity" },
+        "urpx:serviceRole": { "@id": "urpx:bundledServiceRole" },
+        "urpx:offeredBy": { "@id": "org:cascade-pl" },
+        "urpx:hasServiceClass": {
+          "@id": "cpl:sc-residential",
+          "@type": "urpx:ServiceClass",
+          "urpx:serviceClassName": "Residential Service",
+          "urpx:serviceClassRaw": "RES"
+        }
+      },
+      "urpx:hasDataSourceReference": {
+        "@id": "cpl:sr-tariffbook-2026",
+        "@type": "urpx:DataSourceReference",
+        "urpx:name": "Cascade P&L 2026 Rate Case: Schedule TOU-1 tariff sheets",
+        "urpx:sourcePublication": { "@id": "cpl:sp-tariffbook-2026" },
+        "urpx:fileName": "cpl_tou1_2026-06-01.pdf",
+        "urpx:mediaType": { "@id": "urpx:applicationPdf" },
+        "urpx:effectiveDate": "2026-06-01"
+      },
+      "urpx:hasCoverageClaim": {
+        "@id": "cpl:cc-res-tou-1-v20260601",
+        "@type": "urpx:CoverageClaim",
+        "urpx:completenessResult": { "@id": "urpx:complete" },
+        "urpx:confidence": { "@id": "urpx:estimated" },
+        "urpx:selfContained": true,
+        "urpx:hasTemporalScope": {
+          "@id": "cpl:ts-coverage-v20260601",
+          "@type": "urpx:TemporalScope",
+          "urpx:scopeKind": { "@id": "urpx:coverage" },
+          "urpx:startDate": "2026-06-01",
+          "urpx:endDate": "2027-06-01"
+        }
+      },
+      "urpx:hasPlanElements": {
+        "@id": "cpl:pe-res-tou-1-v20260601",
+        "@type": "urpx:PlanElements",
+        "urpx:hasSeasons": [
+          {
+            "@id": "cpl:season-summer",
+            "@type": "urpx:Season",
+            "urpx:seasonName": "Summer",
+            "urpx:month": ["--06", "--07", "--08", "--09"]
+          },
+          {
+            "@id": "cpl:season-winter",
+            "@type": "urpx:Season",
+            "urpx:seasonName": "Winter",
+            "urpx:month": ["--10", "--11", "--12", "--01", "--02", "--03", "--04", "--05"]
+          }
+        ],
+        "urpx:hasMetricInput": [
+          {
+            "@id": "cpl:mi-energy-kwh",
+            "@type": "urpx:MetricInput",
+            "urpx:name": "Electricity consumption (kWh)",
+            "urpx:metricInputType": { "@id": "urpx:measuredMetricInput" },
+            "urpx:hasMetricSpecification": {
+              "@id": "cpl:ms-energy-kwh",
+              "@type": "urpx:MetricSpecification",
+              "urpx:measurementKind": { "@id": "urpx:energy" },
+              "urpx:unitOfMeasure": { "@id": "urpx:kWh" },
+              "urpx:flowDirection": { "@id": "urpx:forward" },
+              "urpx:commodity": { "@id": "urpx:electricity" }
+            }
+          },
+          {
+            "@id": "cpl:mi-meter-count",
+            "@type": "urpx:MetricInput",
+            "urpx:name": "Per-meter charges",
+            "urpx:metricInputType": { "@id": "urpx:profileMetricInput" },
+            "urpx:profileMetricProperty": { "@id": "urpx:meterCount" }
+          }
+        ],
+        "urpx:hasBillingModel": {
+          "@id": "cpl:bm-res-tou-1-v20260601",
+          "@type": "urpx:BillingModel",
+          "urpx:hasLedger": [
+            {
+              "@id": "cpl:ledger-supply",
+              "@type": "urpx:Ledger",
+              "urpx:name": "Supply",
+              "urpx:ledgerType": { "@id": "urpx:supplyLedger" },
+              "urpx:referencesMetricInput": { "@id": "cpl:mi-energy-kwh" }
+            },
+            {
+              "@id": "cpl:ledger-delivery",
+              "@type": "urpx:Ledger",
+              "urpx:name": "Delivery",
+              "urpx:ledgerType": { "@id": "urpx:deliveryLedger" },
+              "urpx:referencesMetricInput": { "@id": "cpl:mi-energy-kwh" }
+            }
+          ],
+          "urpx:hasTOUSchedule": {
+            "@id": "cpl:tou-res-tou-1",
+            "@type": "urpx:TOUSchedule",
+            "urpx:referencesMetricInput": { "@id": "cpl:mi-energy-kwh" },
+            "urpx:hasTOUTier": [
+              {
+                "@id": "cpl:tou-tier-peak",
+                "@type": "urpx:TOUTier",
+                "urpx:tierSourceName": "Peak",
+                "urpx:touTierStandardName": { "@id": "urpx:peakTier" },
+                "urpx:touTierNumber": 1,
+                "urpx:hasTOUPeriod": [
+                  {
+                    "@id": "cpl:tou-period-summer-peak",
+                    "@type": "urpx:TOUPeriod",
+                    "urpx:name": "Summer Peak",
+                    "urpx:touPeriodNumber": 1,
+                    "urpx:hasTimeBracket": [
+                      {
+                        "@id": "cpl:tb-summer-peak",
+                        "@type": "urpx:TimeBracket",
+                        "urpx:startTime": "17:00:00",
+                        "urpx:endTime": "21:00:00",
+                        "urpx:appliesInSeason": { "@id": "cpl:season-summer" },
+                        "urpx:dayType": { "@id": "urpx:allDays" }
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "cpl:tou-period-winter-peak",
+                    "@type": "urpx:TOUPeriod",
+                    "urpx:name": "Winter Peak",
+                    "urpx:touPeriodNumber": 2,
+                    "urpx:hasTimeBracket": [
+                      {
+                        "@id": "cpl:tb-winter-peak",
+                        "@type": "urpx:TimeBracket",
+                        "urpx:startTime": "17:00:00",
+                        "urpx:endTime": "21:00:00",
+                        "urpx:appliesInSeason": { "@id": "cpl:season-winter" },
+                        "urpx:dayType": { "@id": "urpx:allDays" }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "@id": "cpl:tou-tier-off-peak",
+                "@type": "urpx:TOUTier",
+                "urpx:tierSourceName": "Off-Peak",
+                "urpx:touTierStandardName": { "@id": "urpx:offPeakTier" },
+                "urpx:touTierNumber": 2,
+                "urpx:hasTOUPeriod": [
+                  {
+                    "@id": "cpl:tou-period-summer-off-peak",
+                    "@type": "urpx:TOUPeriod",
+                    "urpx:name": "Summer Off-Peak",
+                    "urpx:touPeriodNumber": 3,
+                    "urpx:hasTimeBracket": [
+                      {
+                        "@id": "cpl:tb-summer-off-peak-am",
+                        "@type": "urpx:TimeBracket",
+                        "urpx:startTime": "00:00:00",
+                        "urpx:endTime": "17:00:00",
+                        "urpx:appliesInSeason": { "@id": "cpl:season-summer" },
+                        "urpx:dayType": { "@id": "urpx:allDays" }
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "cpl:tou-period-winter-off-peak",
+                    "@type": "urpx:TOUPeriod",
+                    "urpx:name": "Winter Off-Peak",
+                    "urpx:touPeriodNumber": 4,
+                    "urpx:hasTimeBracket": [
+                      {
+                        "@id": "cpl:tb-winter-off-peak-am",
+                        "@type": "urpx:TimeBracket",
+                        "urpx:startTime": "00:00:00",
+                        "urpx:endTime": "17:00:00",
+                        "urpx:appliesInSeason": { "@id": "cpl:season-winter" },
+                        "urpx:dayType": { "@id": "urpx:allDays" }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "urpx:hasPriceDefinition": [
+            {
+              "@id": "cpl:pd-customer-charge",
+              "@type": "urpx:PriceDefinition",
+              "urpx:name": "Customer Charge",
+              "urpx:chargeType": { "@id": "urpx:minimumBill" },
+              "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+              "urpx:priceCurrency": "USD",
+              "urpx:baseQuantity": "1",
+              "urpx:referencesLedger": { "@id": "cpl:ledger-delivery" }
+            },
+            {
+              "@id": "cpl:pd-gen-summer-peak",
+              "@type": "urpx:PriceDefinition",
+              "urpx:name": "Generation Energy: Summer Peak",
+              "urpx:chargeType": { "@id": "urpx:usageCharge" },
+              "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+              "urpx:touPeriodNumber": 1,
+              "urpx:appliesInSeason": { "@id": "cpl:season-summer" },
+              "urpx:referencesLedger": { "@id": "cpl:ledger-supply" },
+              "urpx:referencesMetricInput": { "@id": "cpl:mi-energy-kwh" }
+            },
+            {
+              "@id": "cpl:pd-gen-winter-peak",
+              "@type": "urpx:PriceDefinition",
+              "urpx:name": "Generation Energy: Winter Peak",
+              "urpx:chargeType": { "@id": "urpx:usageCharge" },
+              "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+              "urpx:touPeriodNumber": 2,
+              "urpx:appliesInSeason": { "@id": "cpl:season-winter" },
+              "urpx:referencesLedger": { "@id": "cpl:ledger-supply" },
+              "urpx:referencesMetricInput": { "@id": "cpl:mi-energy-kwh" }
+            },
+            {
+              "@id": "cpl:pd-supply-energy",
+              "@type": "urpx:PriceDefinition",
+              "urpx:name": "Market Supply Energy: All Hours",
+              "urpx:chargeType": { "@id": "urpx:usageCharge" },
+              "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+              "urpx:referencesLedger": { "@id": "cpl:ledger-supply" },
+              "urpx:referencesMetricInput": { "@id": "cpl:mi-energy-kwh" }
+            }
+          ]
+        }
+      },
+      "urpx:hasPrices": {
+        "@id": "cpl:prices-res-tou-1-v20260601",
+        "@type": "urpx:Prices",
+        "urpx:hasPriceSet": [
+          {
+            "@id": "cpl:ps-customer-charge",
+            "@type": "urpx:PriceSet",
+            "urpx:name": "Customer Charge",
+            "urpx:priceCurrency": "USD",
+            "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+            "urpx:referencesPriceDefinition": { "@id": "cpl:pd-customer-charge" },
+            "urpx:hasDataSourceReference": { "@id": "cpl:sr-tariffbook-2026" },
+            "urpx:hasPrice": {
+              "@id": "cpl:p-customer-charge",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.42740",
+              "urpx:startDate": "2026-06-01",
+              "urpx:endDate": "2027-06-01"
+            }
+          },
+          {
+            "@id": "cpl:ps-generation-summer",
+            "@type": "urpx:PriceSet",
+            "urpx:name": "Generation Energy: Summer (TOU)",
+            "urpx:priceCurrency": "USD",
+            "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+            "urpx:appliesInSeason": { "@id": "cpl:season-summer" },
+            "urpx:startDate": "2026-06-01",
+            "urpx:endDate": "2026-10-01",
+            "urpx:hasDataSourceReference": { "@id": "cpl:sr-al-gen-2026" },
+            "urpx:hasPrice": [
+              {
+                "@id": "cpl:p-gen-summer-peak",
+                "@type": "urpx:Price",
+                "urpx:name": "Generation Summer Peak",
+                "urpx:referencesPriceDefinition": { "@id": "cpl:pd-gen-summer-peak" },
+                "urpx:touPeriodNumber": 1,
+                "urpx:unitPrice": "0.28410"
+              }
+            ]
+          },
+          {
+            "@id": "cpl:ps-generation-winter",
+            "@type": "urpx:PriceSet",
+            "urpx:name": "Generation Energy: Winter (TOU)",
+            "urpx:priceCurrency": "USD",
+            "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+            "urpx:appliesInSeason": { "@id": "cpl:season-winter" },
+            "urpx:startDate": "2026-10-01",
+            "urpx:hasDataSourceReference": { "@id": "cpl:sr-al-gen-2026" },
+            "urpx:hasPrice": [
+              {
+                "@id": "cpl:p-gen-winter-peak",
+                "@type": "urpx:Price",
+                "urpx:name": "Generation Winter Peak",
+                "urpx:referencesPriceDefinition": { "@id": "cpl:pd-gen-winter-peak" },
+                "urpx:touPeriodNumber": 2,
+                "urpx:unitPrice": "0.19880"
+              }
+            ]
+          },
+          {
+            "@id": "cpl:ps-supply-energy",
+            "@type": "urpx:PriceSet",
+            "urpx:name": "Market Supply Energy: monthly reconciled",
+            "urpx:priceCurrency": "USD",
+            "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+            "urpx:referencesPriceDefinition": { "@id": "cpl:pd-supply-energy" },
+            "urpx:hasMetricSpecification": { "@id": "cpl:ms-energy-kwh" },
+            "urpx:hasPrice": [
+              {
+                "@id": "cpl:p-supply-202606",
+                "@type": "urpx:Price",
+                "urpx:unitPrice": "0.06840",
+                "urpx:startDate": "2026-06-01",
+                "urpx:endDate": "2026-07-01",
+                "urpx:hasDataSourceReference": {
+                  "@id": "cpl:sr-market-202606",
+                  "@type": "urpx:DataSourceReference",
+                  "urpx:name": "Cascade P&L Market Supply Notice: June 2026 cycle",
+                  "urpx:sourcePublication": {
+                    "@id": "cpl:sp-market-202606",
+                    "@type": "urpx:SourcePublication",
+                    "urpx:name": "Cascade P&L Market Supply Rate: June 2026 (scheduled monthly reconciliation)",
+                    "urpx:publicationType": { "@id": "urpx:marketPriceFeed" },
+                    "urpx:issuingAuthority": "Cascade Power and Light Company",
+                    "urpx:effectiveDate": "2026-06-01"
+                  },
+                  "urpx:accessURL": "https://www.example-cpl.com/rates/market-supply",
+                  "urpx:dateRetrieved": "2026-05-20"
+                }
+              },
+              {
+                "@id": "cpl:p-supply-202607",
+                "@type": "urpx:Price",
+                "urpx:unitPrice": "0.07520",
+                "urpx:startDate": "2026-07-01",
+                "urpx:endDate": "2026-08-01",
+                "urpx:hasDataSourceReference": {
+                  "@id": "cpl:sr-market-202607",
+                  "@type": "urpx:DataSourceReference",
+                  "urpx:name": "Cascade P&L Market Supply Notice: July 2026 cycle",
+                  "urpx:sourcePublication": {
+                    "@id": "cpl:sp-market-202607",
+                    "@type": "urpx:SourcePublication",
+                    "urpx:name": "Cascade P&L Market Supply Rate: July 2026 (summer fuel-cost adjustment)",
+                    "urpx:publicationType": { "@id": "urpx:marketPriceFeed" },
+                    "urpx:issuingAuthority": "Cascade Power and Light Company",
+                    "urpx:effectiveDate": "2026-07-01"
+                  },
+                  "urpx:accessURL": "https://www.example-cpl.com/rates/market-supply",
+                  "urpx:dateRetrieved": "2026-06-19"
+                }
+              },
+              {
+                "@id": "cpl:p-supply-202608",
+                "@type": "urpx:Price",
+                "urpx:unitPrice": "0.07185",
+                "urpx:startDate": "2026-08-01",
+                "urpx:hasDataSourceReference": {
+                  "@id": "cpl:sr-market-202608",
+                  "@type": "urpx:DataSourceReference",
+                  "urpx:name": "Cascade P&L Market Supply Notice: August 2026 cycle",
+                  "urpx:sourcePublication": {
+                    "@id": "cpl:sp-market-202608",
+                    "@type": "urpx:SourcePublication",
+                    "urpx:name": "Cascade P&L Market Supply Rate: August 2026 (summer fuel-cost adjustment)",
+                    "urpx:publicationType": { "@id": "urpx:marketPriceFeed" },
+                    "urpx:issuingAuthority": "Cascade Power and Light Company",
+                    "urpx:effectiveDate": "2026-08-01"
+                  },
+                  "urpx:accessURL": "https://www.example-cpl.com/rates/market-supply",
+                  "urpx:dateRetrieved": "2026-07-21"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+
+    {
+      "@id": "cpl:sp-tariffbook-2026",
+      "@type": "urpx:SourcePublication",
+      "urpx:name": "Cascade P&L 2026 General Rate Case: Electric Tariff Book",
+      "urpx:publicationType": { "@id": "urpx:tariffBook" },
+      "urpx:issuingAuthority": "State Public Utilities Commission",
+      "urpx:effectiveDate": "2026-06-01"
+    },
+    {
+      "@id": "cpl:sp-al-gen-2026",
+      "@type": "urpx:SourcePublication",
+      "urpx:name": "Cascade P&L Advice Letter 512-E: Seasonal Generation Energy Rates",
+      "urpx:publicationType": { "@id": "urpx:tariffSupplement" },
+      "urpx:issuingAuthority": "State Public Utilities Commission",
+      "urpx:effectiveDate": "2026-06-01"
+    },
+    {
+      "@id": "cpl:sr-al-gen-2026",
+      "@type": "urpx:DataSourceReference",
+      "urpx:name": "Advice Letter 512-E: generation energy schedule",
+      "urpx:sourcePublication": { "@id": "cpl:sp-al-gen-2026" },
+      "urpx:fileName": "cpl_al_512e_gen_2026.pdf",
+      "urpx:mediaType": { "@id": "urpx:applicationPdf" },
+      "urpx:effectiveDate": "2026-06-01"
+    },
+    {
+      "@id": "cpl:mc-res-tou-1",
+      "@type": "urpx:ModelCollection",
+      "urpx:name": "Contributing pricing models: Residential TOU-1, rate year 2026-06-01",
+      "urpx:collectsPricingModel": [
+        { "@id": "cpl:pm-delivery-structure" },
+        { "@id": "cpl:pm-generation-seasonal" },
+        { "@id": "cpl:pm-market-supply" }
+      ]
+    },
+    {
+      "@id": "cpl:pm-delivery-structure",
+      "@type": "urpx:PricingModel",
+      "urpx:confidence": { "@id": "urpx:verified" },
+      "urpx:referencesRatePlan": { "@id": "cpl:res-tou-1" },
+      "urpx:documentedBy": { "@id": "cpl:sr-tariffbook-2026" },
+      "urpx:effectiveDate": "2026-06-01",
+      "urpx:expirationDate": "2027-06-01"
+    },
+    {
+      "@id": "cpl:pm-generation-seasonal",
+      "@type": "urpx:PricingModel",
+      "urpx:confidence": { "@id": "urpx:verified" },
+      "urpx:referencesRatePlan": { "@id": "cpl:res-tou-1" },
+      "urpx:documentedBy": { "@id": "cpl:sr-al-gen-2026" },
+      "urpx:effectiveDate": "2026-06-01"
+    },
+    {
+      "@id": "cpl:pm-market-supply",
+      "@type": "urpx:PricingModel",
+      "urpx:confidence": { "@id": "urpx:estimated" },
+      "urpx:referencesRatePlan": { "@id": "cpl:res-tou-1" },
+      "urpx:documentedBy": { "@id": "cpl:sr-market-202608" },
+      "urpx:effectiveDate": "2026-06-01"
+    }
+  ]
 }
 ```
 
+*The public query endpoint is part of the access API in development; the query itself uses the published ontology namespace shown in the `PREFIX` line.*
+
+*The public query endpoint is part of the access API in development; the query itself uses the published ontology namespace shown in the `PREFIX` line.*
+
 ---
 
-## Next Steps
+## Roadmap
 
-### API Development Roadmap
+The URPX v0.3.0 model (the ontology, the SHACL shapes, and the JSON-LD representation) is the stable foundation the access API is built on. The access API itself develops after v0.3.0:
 
-**Phase 1: Requirements Gathering (Current)**
-- Define core use cases
-- Establish API patterns
-- Document query requirements
-- Create initial examples
+- **Query API**: a documented request/response query interface over the JSON-LD representation, taking the graph-query profile shown above as its starting point.
+- **REST / JSON profile**: a resource-oriented access layer, shaped by broader input from data consumers once the standard is public.
+- **Reference material**: worked request/response examples, validated against the shipped shapes, added once the interface is settled so that nothing on this page can drift from the model.
 
-**Phase 2: Specification Development**
-- OpenAPI 3.1 complete specification
-- GraphQL schema definition
-- SPARQL query templates
-- Authentication framework
-
-**Phase 3: Reference Implementation**
-- API server implementation
-- SDK development (Python, JavaScript)
-- Integration testing
-- Performance benchmarking
-
-**Phase 4: Community Adoption**
-- Production deployment
-- Documentation completion
-- Developer outreach
-- Feedback integration
-
-### Working Group
-
-**Seeking**: API Working Group Lead
-
-**Responsibilities**:
-- Define comprehensive API specification aligned with the v0.2.0 ontology and SHACL model
-- Coordinate with semantic web and integration teams
-- Develop reference implementation
-- Lead community adoption
-
-**Contact**: Visit [urpx-org on GitHub](https://github.com/urpx-org) for working group information
+Input on scope and priorities is welcome through the working group. Visit [urpx-org on GitHub](https://github.com/urpx-org) for working group information.
 
 ---
 
@@ -454,6 +720,6 @@ WHERE {
 
 ---
 
-*API specification under development for URPX v0.2.0. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
+*API specification under development and planned for URPX v0.4.0 release. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
 
 [← Back to Index](/docs/getting-started/overview)

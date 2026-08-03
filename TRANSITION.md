@@ -5,7 +5,7 @@
 
 **Status:** Active — applies while URPX is in pre-Draft stage.
 **Trigger event:** Working Group formal acceptance of URPX as a Draft.
-**Last reviewed:** 2026-04-19
+**Last reviewed:** 2026-07-14
 
 This document explains how the URPX repository will transition license
 identifiers when the URPX Working Group (under LFESS) formally accepts
@@ -110,6 +110,13 @@ paths = [
     ".gitignore",
     ".gitattributes",
     "urpx-changelog.md",
+    "AGENTS.md",
+    "CODE_OF_CONDUCT.md",
+    "GOVERNANCE.md",
+    "MAINTAINERS.md",
+    "CITATION.cff",
+    ".github/**",
+    "dev-docs/**/*.md",
 ]
 
 # -----------------------------------------------------------------------------
@@ -121,6 +128,15 @@ current_license = "governed by REUSE.toml"
 future_license = "governed by REUSE.toml"
 paths = [
     "test-cases/pge-e-elec/assets/PGE_E-ELEC_2026-01-01.pdf",
+    "test-cases/pge-e-tou-c-2026-03-01/assets/PGE_E-TOU-C_2026-03-01.pdf",
+    "test-cases/coned-sc1-rate-i/assets/coned_sc1_rate1_2026-02-01.pdf",
+    "test-cases/coned-sc1-rate-i/assets/conedtariffbook2025_general_rule_26.pdf",
+    "test-cases/coned-sc1-rate-i/assets/mac-202601.pdf",
+    "test-cases/coned-sc1-rate-i/assets/mac-202602.pdf",
+    "test-cases/coned-sc1-rate-i/assets/mac-202603.pdf",
+    "test-cases/coned-sc1-rate-i/assets/mac-202604.pdf",
+    "test-cases/coned-sc1-rate-i/assets/mac-202605.pdf",
+    "test-cases/coned-sc1-rate-i/assets/lds-appnd-2025.csv",
 ]
 ```
 
@@ -149,15 +165,17 @@ When the Working Group accepts URPX to Draft:
    ```
    python3 scripts/transition-license.py --apply
    ```
+   <!-- REUSE-IgnoreStart -->
    The script rewrites `SPDX-License-Identifier:` lines in inline
    headers (.ttl), updates companion `.license` sidecars, and adjusts
    REUSE.toml entries as needed.
+   <!-- REUSE-IgnoreEnd -->
 5. **Verify.** Run `reuse lint` — must exit 0. Run a fresh ScanCode
    scan and compare metrics against the pre-transition snapshot.
 6. **Update this document.** Change section 1 from "Active" to
    "Completed on YYYY-MM-DD". Move the manifest to historical reference
    status.
-7. **Update CHANGELOG.md** with the transition entry.
+7. **Update `urpx-changelog.md`** with the transition entry.
 8. **Operator commits the changes.** (The script never commits.)
 
 ## 5. Rollback

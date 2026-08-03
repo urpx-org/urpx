@@ -1,3 +1,6 @@
+<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
 # AGENTS.md
 
 This file provides instructions for automated agents, coding assistants, and other AI-assisted tools working in this repository.
@@ -63,6 +66,18 @@ Test data may be submitted with a pull request when it is clearly scoped and doe
 
 If the test data implies changes to the ontology, SHACL constraints, or repository structure, seek working group discussion before generating or submitting the PR.
 
+## Development documents (dev-docs/)
+
+`dev-docs/` holds working group development documents: backlog tasks, specifications, working reports, and review materials.
+
+Follow `dev-docs/README.md` for file naming, frontmatter, lifecycle prefixes, and the public-ready bar.
+
+The sanctioned subfolders are `tasks/`, `specs/`, `reports/`, `review/`, `roadmaps/`, and `samples/` (worked JSON-LD instances that accompany a specification; see `dev-docs/README.md`).
+
+Do not add new subfolders without prior working group discussion, per the New directories rule above.
+
+A `specs/` document that proposes an ontology or SHACL change is delivered with its implementation task in `tasks/` (complete before/after Turtle code blocks) and worked sample instances in `samples/`. See "What a specification carries" in `dev-docs/README.md`.
+
 ## Editing guidance
 
 When making changes in this repository:
@@ -70,6 +85,7 @@ When making changes in this repository:
 - prefer small, focused diffs;
 - avoid reformatting unrelated files;
 - keep explanations concise;
-- do not add generated prose unless it has been reduced to concise, reviewable text.
+- do not add generated prose unless it has been reduced to concise, reviewable text;
+- write prose for human review — no hard-wrapping mid-sentence, short paragraphs, short sentences (see [`dev-docs/README.md`](dev-docs/README.md) → Prose formatting).
 
 The goal is to support working group review, not to maximize generated output.

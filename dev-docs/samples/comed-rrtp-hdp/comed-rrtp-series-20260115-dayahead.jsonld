@@ -1,0 +1,232 @@
+{
+  "@context": {
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "org": "https://urpx-org.github.io/urpx/fixtures/org/",
+    "comed": "https://urpx-org.github.io/urpx/fixtures/comed/",
+    "urpx:intervalStart": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:intervalEnd": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:effectiveDateTime": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:expirationDateTime": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:unitPrice": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:priceFloor": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:priceCeiling": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:decimalValue": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:effectiveDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:startDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:initialEffectiveDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:dateRetrieved": {
+      "@type": "xsd:date"
+    },
+    "urpx:url": {
+      "@type": "xsd:anyURI"
+    },
+    "urpx:accessURL": {
+      "@type": "xsd:anyURI"
+    },
+    "urpx:touPeriodNumber": {
+      "@type": "xsd:integer"
+    },
+    "urpx:requiresAuthentication": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:booleanValue": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:selfContained": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:intervalDuration": {
+      "@type": "xsd:duration"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "comed:pub-comed-hourly-prices",
+      "@type": "urpx:SourcePublication",
+      "urpx:publicationType": {
+        "@id": "urpx:highlyDynamicPrices"
+      },
+      "urpx:name": "ComEd hourly pricing feed",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Published stream of resolved hourly supply prices for participants, in the extrapolated form of a highly dynamic price series.",
+      "urpx:url": "https://hourlypricing.comed.com/live-prices/"
+    },
+    {
+      "@id": "comed:ts-rrtp-supply-20260115-da",
+      "@type": "urpx:PriceTimeSeries",
+      "urpx:name": "RRTP hourly supply price, 2026-01-15, day-ahead",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Expected output series: resolved hourly supply prices for 2026-01-15, each equal to the day-ahead wholesale price plus the 0.00735 retail adder. Conformance vector expected output.",
+      "urpx:referencesPriceDefinition": {
+        "@id": "comed:pd-hourly-energy-supply"
+      },
+      "urpx:producedByRule": {
+        "@id": "comed:pur-day-ahead-lmp"
+      },
+      "urpx:intervalType": {
+        "@id": "urpx:hourlyInterval"
+      },
+      "urpx:effectiveDateTime": "2026-01-15T06:00:00Z",
+      "urpx:expirationDateTime": "2026-01-16T06:00:00Z",
+      "urpx:priceCurrency": "USD",
+      "urpx:priceSource": {
+        "@id": "urpx:wholesaleMarketSource"
+      },
+      "urpx:priceStatus": {
+        "@id": "urpx:projectedPriceStatus"
+      },
+      "urpx:documentedBy": {
+        "@id": "comed:sr-hourly-da",
+        "@type": "urpx:DataSourceReference",
+        "urpx:name": "ComEd hourly pricing feed",
+        "urpx:sourcePublication": {
+          "@id": "comed:pub-comed-hourly-prices"
+        }
+      },
+      "urpx:hasPriceObservation": [
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-15T06:00:00Z",
+          "urpx:unitPrice": "0.03135"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-15T07:00:00Z",
+          "urpx:unitPrice": "0.02935"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-15T08:00:00Z",
+          "urpx:unitPrice": "0.02835"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-15T09:00:00Z",
+          "urpx:unitPrice": "0.02735"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-15T10:00:00Z",
+          "urpx:unitPrice": "0.02835"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-15T11:00:00Z",
+          "urpx:unitPrice": "0.03035"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-15T12:00:00Z",
+          "urpx:unitPrice": "0.03535"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-15T13:00:00Z",
+          "urpx:unitPrice": "0.03935"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-15T14:00:00Z",
+          "urpx:unitPrice": "0.03835"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-15T15:00:00Z",
+          "urpx:unitPrice": "0.03635"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-15T16:00:00Z",
+          "urpx:unitPrice": "0.03435"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-15T17:00:00Z",
+          "urpx:unitPrice": "0.03335"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-15T18:00:00Z",
+          "urpx:unitPrice": "0.03235"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-15T19:00:00Z",
+          "urpx:unitPrice": "0.03235"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-15T20:00:00Z",
+          "urpx:unitPrice": "0.03335"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-15T21:00:00Z",
+          "urpx:unitPrice": "0.03535"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-15T22:00:00Z",
+          "urpx:unitPrice": "0.04035"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-15T23:00:00Z",
+          "urpx:unitPrice": "0.04835"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-16T00:00:00Z",
+          "urpx:unitPrice": "0.04535"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-16T01:00:00Z",
+          "urpx:unitPrice": "0.04135"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-16T02:00:00Z",
+          "urpx:unitPrice": "0.03835"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-16T03:00:00Z",
+          "urpx:unitPrice": "0.03535"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-16T04:00:00Z",
+          "urpx:unitPrice": "0.03335"
+        },
+        {
+          "@type": "urpx:PriceObservation",
+          "urpx:intervalStart": "2026-01-16T05:00:00Z",
+          "urpx:unitPrice": "0.03135"
+        }
+      ]
+    }
+  ]
+}

@@ -5,7 +5,7 @@ digraph "Geographic Entities" {
     nodesep=0.7;
     ranksep=0.9;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="Geographic Entities (URPX v0.2.0)";
+    label="Geographic Entities (URPX v0.3.0)";
     labelloc="t";
     fontsize=14;
     fontcolor="#1a365d";

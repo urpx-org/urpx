@@ -1,8 +1,12 @@
+<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
+
 # URPX Condition Model
 
-**Version:** 0.2.0  
+**Version:** 0.3.0
 **Last Updated:** 2026-05-01  
-**Status:** Adopted for URPX 0.2.0  
+**Status:** Adopted for URPX 0.3.0  
 **Scope:** Structured condition-expression modeling in eligibility, applicability, and related contexts  
 **Ontology Source:** [`urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)  
 **SHACL Source:** [`urpx-shacl.ttl`](/ontology/urpx-shacl.ttl)
@@ -318,7 +322,7 @@ In the literal form, `urpx:referencesMetricInput` may also be present when the l
 
 #### `urpx:CustomOperandNode`
 
-**Description:** Fallback operand node for concepts not yet captured by a URPX-native property.
+**Description:** Fallback operand node for concepts not yet captured by an URPX-native property.
 
 **Semantic Context:** `CustomOperandNode` has two structural forms:
 
@@ -488,7 +492,7 @@ Datatype-specific value properties allow compact JSON-LD authoring by declaring 
 ```json
 {
   "@context": {
-    "urpx": "https://schema.urpx.org/",
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "urpx:booleanValue": { "@id": "urpx:booleanValue", "@type": "xsd:boolean" },
     "urpx:dateValue": { "@id": "urpx:dateValue", "@type": "xsd:date" },
@@ -713,7 +717,7 @@ graph TD
 ```json
 {
   "@context": {
-    "urpx": "https://schema.urpx.org/",
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "urpx:booleanValue": { "@id": "urpx:booleanValue", "@type": "xsd:boolean" },
     "urpx:dateValue": { "@id": "urpx:dateValue", "@type": "xsd:date" },

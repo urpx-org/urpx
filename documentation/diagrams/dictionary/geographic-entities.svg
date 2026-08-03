@@ -9,7 +9,7 @@
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(28.8 229.95)">
 <title>Geographic Entities</title>
 <polygon fill="white" stroke="transparent" points="-28.8,28.8 -28.8,-229.95 254.8,-229.95 254.8,28.8 -28.8,28.8"/>
-<text text-anchor="middle" x="113" y="-185.95" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">Geographic Entities (URPX v0.2.0)</text>
+<text text-anchor="middle" x="113" y="-185.95" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">Geographic Entities (URPX v0.3.0)</text>
 <g id="clust1" class="cluster">
 <title>cluster_legend</title>
 <path fill="#f8f8f8" stroke="#cccccc" d="M36,-8C36,-8 190,-8 190,-8 196,-8 202,-14 202,-20 202,-20 202,-158.15 202,-158.15 202,-164.15 196,-170.15 190,-170.15 190,-170.15 36,-170.15 36,-170.15 30,-170.15 24,-164.15 24,-158.15 24,-158.15 24,-20 24,-20 24,-14 30,-8 36,-8"/>

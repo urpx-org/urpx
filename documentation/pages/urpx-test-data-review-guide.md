@@ -5,11 +5,11 @@
 
 # URPX Test Data Review Guide
 
-**Version**: 0.2.0 (Pre-draft)
-**Last Updated**: 2026-05-01
+**Version**: 0.3.0 (Pre-draft)
+**Last Updated**: 2026-07-07
 **Status**: Active
 
-**How to review a URPX JSON-LD test case against its source tariff book**
+**How to review an URPX JSON-LD test case against its source tariff book**
 
 [← Back to Index](/docs/getting-started/overview)
 
@@ -94,12 +94,14 @@ Common mistakes:
 
 At this stage, also check:
 
-- `urpx:targetURPXVersion`
+- `urpx:targetURPXVersion` (on the `URPXPackage`)
 - `urpx:ratePlanUniqueIdentifier`
 - `urpx:initialEffectiveDate`
 - `urpx:effectiveDate` or `urpx:effectiveDateTime`
 - `urpx:changeReason`
 - `urpx:priceCurrency`
+- `urpx:forRatePlan` on every `RatePlanVersion`: the version must point at the right plan identity
+- `urpx:hasCoverageClaim` on every version, and whether the claimed `completenessResult` and `selfContained` value are actually true of the file: a version claiming `complete` while a component is only referenced externally is a review finding
 - `urpx:hasRateCase`, if the tariff book references a rate case or docket
 
 ---
@@ -148,7 +150,7 @@ This is the part most likely to pass a superficial review while still being wron
 
 ### Eligibility
 
-If the tariff book says who may take service under the rate, review `urpx:hasEligibilityRule` first.
+If the tariff book says who may take service under the rate plan, review `urpx:hasEligibilityRule` first.
 
 Check:
 
@@ -163,7 +165,7 @@ Examples of details to verify:
 - customer kind or subkind
 - DER requirements such as EV charging, storage, or heat pump participation
 - program enrollment requirements
-- prior-rate-plan or enrollment-history conditions
+- prior rate plan or enrollment-history conditions
 
 For the condition-expression model, see [`urpx-condition-modeling.md`](urpx-condition-modeling.md).
 
@@ -186,7 +188,7 @@ Common mistakes:
 
 - month-based credits modeled only in the price name instead of an applicability rule
 - geographic or service-voltage filters described in prose instead of structured applicability
-- tariff-book-wide eligibility being attached to an individual price
+- eligibility that applies across the whole tariff book being attached to an individual price
 
 ### Profile Alternatives and Customer Choice
 
@@ -342,16 +344,16 @@ Check:
 
 Every review should end with a provenance pass.
 
-Check `urpx:hasDataSourceReference` and related tariff book references for:
+Check every `DataSourceReference` (attached via `urpx:hasDataSourceReference` or `urpx:documentedBy`) for:
 
 - correct local file or source URL
 - `urpx:accessURL` when applicable
 - `urpx:mediaType`
 - `urpx:dataSourceType`
 - `urpx:dateRetrieved`
-- `urpx:hasTariffBookReference`
+- `urpx:sourcePublication`: the `SourcePublication` node with the correct `urpx:publicationType` (tariff book vs. statement vs. supplement vs. market price feed) and its own effective date
 
-For `TariffBookReference`, verify:
+For a tariff book or statement citation, the page and leaf locators sit directly on the `DataSourceReference`; verify:
 
 - `urpx:pageStart`
 - `urpx:pageEnd`

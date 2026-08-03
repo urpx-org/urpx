@@ -5,7 +5,7 @@
 
 # URPX Design Principles
 
-**Version**: 0.2.0 (Pre-draft)
+**Version**: 0.3.0 (Pre-draft)
 **Last Updated**: 2026-03-02  
 **Status**: Active
 

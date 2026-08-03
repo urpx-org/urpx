@@ -1,0 +1,647 @@
+{
+  "@context": {
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "org": "https://urpx-org.github.io/urpx/fixtures/org/",
+    "comed": "https://urpx-org.github.io/urpx/fixtures/comed/",
+    "urpx:intervalStart": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:intervalEnd": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:effectiveDateTime": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:expirationDateTime": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:unitPrice": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:priceFloor": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:priceCeiling": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:decimalValue": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:effectiveDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:startDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:initialEffectiveDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:dateRetrieved": {
+      "@type": "xsd:date"
+    },
+    "urpx:url": {
+      "@type": "xsd:anyURI"
+    },
+    "urpx:accessURL": {
+      "@type": "xsd:anyURI"
+    },
+    "urpx:touPeriodNumber": {
+      "@type": "xsd:integer"
+    },
+    "urpx:requiresAuthentication": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:booleanValue": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:selfContained": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:intervalDuration": {
+      "@type": "xsd:duration"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "comed:rrtp",
+      "@type": "urpx:RatePlan",
+      "urpx:name": "Residential Real-Time Pricing",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. ComEd Residential Real-Time Pricing (RRTP): residential customers pay hourly supply prices set from the PJM day-ahead wholesale market price for the ComEd zone plus a fixed retail adder; delivery charges are fixed. Real-Time Pricing is the utility's name for this rate plan type.",
+      "urpx:initialEffectiveDate": "2007-01-01",
+      "urpx:timezoneIdentifier": "America/Chicago",
+      "urpx:commodity": {
+        "@id": "urpx:electricity"
+      },
+      "urpx:url": "https://hourlypricing.comed.com/",
+      "urpx:hasIdentifier": {
+        "@id": "comed:rrtp-id-tariff-code",
+        "@type": "urpx:RatePlanIdentifier",
+        "urpx:scheme": {
+          "@id": "urpx:utility-tariff-code"
+        },
+        "skos:notation": "RRTP"
+      }
+    },
+    {
+      "@id": "org:utility-comed",
+      "@type": "urpx:Organization",
+      "urpx:legalName": "Commonwealth Edison Company",
+      "urpx:eiaId": "4110",
+      "urpx:organizationType": {
+        "@id": "urpx:utilityOrganization"
+      },
+      "urpx:participatesInMarket": {
+        "@id": "org:iso-pjm",
+        "@type": "urpx:SystemOperator",
+        "urpx:legalName": "PJM Interconnection LLC",
+        "urpx:organizationType": {
+          "@id": "urpx:isoRtoOrganization"
+        }
+      }
+    },
+    {
+      "@id": "comed:pub-pjm-da-feed",
+      "@type": "urpx:SourcePublication",
+      "urpx:publicationType": {
+        "@id": "urpx:marketPriceFeed"
+      },
+      "urpx:name": "PJM day-ahead LMP feed, ComEd zone",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Externally published stream of PJM day-ahead locational marginal prices for the ComEd pricing zone, used as the wholesale driver of the hourly supply price.",
+      "urpx:url": "https://dataminer2.pjm.com/feed/da_hrl_lmps"
+    },
+    {
+      "@id": "comed:pub-comed-hourly-prices",
+      "@type": "urpx:SourcePublication",
+      "urpx:publicationType": {
+        "@id": "urpx:highlyDynamicPrices"
+      },
+      "urpx:name": "ComEd hourly pricing feed",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Published stream of resolved hourly supply prices for participants, in the extrapolated form of a highly dynamic price series.",
+      "urpx:url": "https://hourlypricing.comed.com/live-prices/"
+    },
+    {
+      "@id": "comed:pm-pjm-da-lmp",
+      "@type": "urpx:PricingModel",
+      "urpx:name": "PJM day-ahead LMP market package",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Generic market price package for the PJM day-ahead LMP driver. A generic market package does not reference a rate plan; consumers reach it through a resolved reference.",
+      "urpx:confidence": {
+        "@id": "urpx:estimated"
+      },
+      "urpx:documentedBy": {
+        "@id": "comed:sr-pjm-da"
+      },
+      "urpx:hasPriceDefinition": {
+        "@id": "comed:pd-pjm-da-lmp"
+      }
+    },
+    {
+      "@id": "comed:pd-pjm-da-lmp",
+      "@type": "urpx:PriceDefinition",
+      "urpx:name": "PJM day-ahead LMP, ComEd zone",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. The wholesale locational marginal price component; resolved from the PJM day-ahead market feed, not carried inline.",
+      "urpx:chargeType": {
+        "@id": "urpx:generation"
+      },
+      "urpx:chargeCategory": {
+        "@id": "urpx:auxiliaryCharge"
+      },
+      "urpx:billPortion": {
+        "@id": "urpx:supplyPortion"
+      },
+      "urpx:documentedBy": {
+        "@id": "comed:sr-pjm-da",
+        "@type": "urpx:DataSourceReference",
+        "urpx:name": "PJM day-ahead LMP feed",
+        "urpx:sourcePublication": {
+          "@id": "comed:pub-pjm-da-feed"
+        }
+      }
+    },
+    {
+      "@id": "comed:ms-energy-kwh",
+      "@type": "urpx:MetricSpecification",
+      "urpx:name": "Energy (kWh)",
+      "urpx:unit": {
+        "@id": "urpx:kWh"
+      }
+    },
+    {
+      "@id": "comed:mi-hourly-wholesale-price",
+      "@type": "urpx:MetricInput",
+      "urpx:name": "Hourly wholesale price (PJM day-ahead LMP)",
+      "urpx:metricInputType": {
+        "@id": "urpx:measuredMetricInput"
+      },
+      "urpx:hasMetricSpecification": {
+        "@id": "comed:ms-energy-kwh"
+      }
+    },
+    {
+      "@id": "comed:pm-rrtp-supply-2026",
+      "@type": "urpx:PricingModel",
+      "urpx:name": "RRTP authored supply and delivery content 2026",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Authored pricing content for the RRTP rate plan effective 2026-01-01: the hourly supply mechanism, fixed delivery and service charges, and the metric and billing structure.",
+      "urpx:confidence": {
+        "@id": "urpx:estimated"
+      },
+      "urpx:referencesRatePlan": {
+        "@id": "comed:rrtp"
+      },
+      "urpx:hasPlanElements": {
+        "@id": "comed:pe-rrtp"
+      },
+      "urpx:hasPriceDefinition": [
+        {
+          "@id": "comed:pd-hourly-energy-supply"
+        },
+        {
+          "@id": "comed:pd-customer-charge"
+        },
+        {
+          "@id": "comed:pd-capacity"
+        },
+        {
+          "@id": "comed:pd-transmission"
+        },
+        {
+          "@id": "comed:pd-distribution"
+        }
+      ]
+    },
+    {
+      "@id": "comed:pe-rrtp",
+      "@type": "urpx:PlanElements",
+      "urpx:name": "RRTP plan elements",
+      "urpx:hasMetricInput": [
+        {
+          "@id": "comed:mi-hourly-wholesale-price"
+        }
+      ],
+      "urpx:hasBillingModel": {
+        "@id": "comed:bm-rrtp"
+      },
+      "urpx:hasLedger": [
+        {
+          "@id": "comed:ledger-supply"
+        },
+        {
+          "@id": "comed:ledger-delivery"
+        },
+        {
+          "@id": "comed:ledger-service"
+        },
+        {
+          "@id": "comed:ledger-adjustments"
+        }
+      ]
+    },
+    {
+      "@id": "comed:bm-rrtp",
+      "@type": "urpx:BillingModel",
+      "urpx:name": "RRTP billing model",
+      "urpx:hasLedger": [
+        {
+          "@id": "comed:ledger-supply"
+        },
+        {
+          "@id": "comed:ledger-delivery"
+        },
+        {
+          "@id": "comed:ledger-service"
+        },
+        {
+          "@id": "comed:ledger-adjustments"
+        }
+      ],
+      "urpx:hasPriceDefinition": [
+        {
+          "@id": "comed:pd-hourly-energy-supply"
+        },
+        {
+          "@id": "comed:pd-customer-charge"
+        },
+        {
+          "@id": "comed:pd-capacity"
+        },
+        {
+          "@id": "comed:pd-transmission"
+        },
+        {
+          "@id": "comed:pd-distribution"
+        }
+      ]
+    },
+    {
+      "@id": "comed:ledger-supply",
+      "@type": "urpx:Ledger",
+      "urpx:name": "Supply",
+      "urpx:referencesMetricInput": {
+        "@id": "comed:mi-hourly-wholesale-price"
+      }
+    },
+    {
+      "@id": "comed:ledger-delivery",
+      "@type": "urpx:Ledger",
+      "urpx:name": "Delivery"
+    },
+    {
+      "@id": "comed:ledger-service",
+      "@type": "urpx:Ledger",
+      "urpx:name": "Service"
+    },
+    {
+      "@id": "comed:ledger-adjustments",
+      "@type": "urpx:Ledger",
+      "urpx:name": "Adjustments"
+    },
+    {
+      "@id": "comed:pd-hourly-energy-supply",
+      "@type": "urpx:PriceDefinition",
+      "urpx:name": "Hourly energy supply price",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Hourly supply charge; the unit price carried is the fixed retail adder, with the hourly wholesale component resolved from the market feed.",
+      "urpx:chargeType": {
+        "@id": "urpx:usageCharge"
+      },
+      "urpx:chargeCategory": {
+        "@id": "urpx:serviceCharge"
+      },
+      "urpx:billPortion": {
+        "@id": "urpx:supplyPortion"
+      },
+      "urpx:referencesLedger": {
+        "@id": "comed:ledger-supply"
+      },
+      "urpx:hasCalculationMethod": {
+        "@id": "comed:cm-hourly-supply",
+        "@type": "urpx:CalculationMethod",
+        "urpx:name": "Hourly supply calculation",
+        "urpx:intervalType": {
+          "@id": "urpx:hourlyInterval"
+        },
+        "urpx:intervalDuration": "PT1H",
+        "urpx:calculationFormula": "hourlyLMP + retailAdder"
+      }
+    },
+    {
+      "@id": "comed:pd-customer-charge",
+      "@type": "urpx:PriceDefinition",
+      "urpx:name": "Customer charge",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Fixed monthly customer charge.",
+      "urpx:chargeType": {
+        "@id": "urpx:customerCharge"
+      },
+      "urpx:chargeCategory": {
+        "@id": "urpx:serviceCharge"
+      },
+      "urpx:billPortion": {
+        "@id": "urpx:deliveryPortion"
+      },
+      "urpx:referencesLedger": {
+        "@id": "comed:ledger-delivery"
+      }
+    },
+    {
+      "@id": "comed:pd-capacity",
+      "@type": "urpx:PriceDefinition",
+      "urpx:name": "Capacity charge",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. PJM capacity cost recovery.",
+      "urpx:chargeType": {
+        "@id": "urpx:capacityCharge"
+      },
+      "urpx:chargeCategory": {
+        "@id": "urpx:auxiliaryCharge"
+      },
+      "urpx:billPortion": {
+        "@id": "urpx:supplyPortion"
+      },
+      "urpx:referencesLedger": {
+        "@id": "comed:ledger-supply"
+      }
+    },
+    {
+      "@id": "comed:pd-transmission",
+      "@type": "urpx:PriceDefinition",
+      "urpx:name": "Transmission charge",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Transmission service charge.",
+      "urpx:chargeType": {
+        "@id": "urpx:transmission"
+      },
+      "urpx:chargeCategory": {
+        "@id": "urpx:infrastructure"
+      },
+      "urpx:billPortion": {
+        "@id": "urpx:deliveryPortion"
+      },
+      "urpx:referencesLedger": {
+        "@id": "comed:ledger-delivery"
+      }
+    },
+    {
+      "@id": "comed:pd-distribution",
+      "@type": "urpx:PriceDefinition",
+      "urpx:name": "Distribution charge",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Distribution delivery charge.",
+      "urpx:chargeType": {
+        "@id": "urpx:distributionCharge"
+      },
+      "urpx:chargeCategory": {
+        "@id": "urpx:infrastructure"
+      },
+      "urpx:billPortion": {
+        "@id": "urpx:deliveryPortion"
+      },
+      "urpx:referencesLedger": {
+        "@id": "comed:ledger-delivery"
+      }
+    },
+    {
+      "@id": "comed:price-hourly-energy-supply-v2026-01-01",
+      "@type": "urpx:Price",
+      "urpx:referencesPriceDefinition": {
+        "@id": "comed:pd-hourly-energy-supply"
+      },
+      "urpx:startDate": "2026-01-01",
+      "urpx:name": "Hourly energy supply price (day-ahead LMP + retail adder)",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. The unit price shown is the fixed retail adder; the hourly wholesale component is externally sourced and added per the price update rule.",
+      "urpx:unitPrice": "0.00735",
+      "urpx:hasDynamicPricing": {
+        "@id": "comed:dp-hourly-lmp",
+        "@type": "urpx:DynamicPricing",
+        "urpx:dynamicPricingType": {
+          "@id": "urpx:realTimePricing"
+        },
+        "urpx:priceSource": {
+          "@id": "urpx:wholesaleMarketSource"
+        },
+        "urpx:updateFrequency": {
+          "@id": "urpx:hourlyUpdates"
+        },
+        "urpx:priceFloor": "0.00000",
+        "urpx:priceCeiling": "2.00000",
+        "urpx:hasPriceUpdateRule": {
+          "@id": "comed:pur-day-ahead-lmp",
+          "@type": "urpx:PriceUpdateRule",
+          "urpx:name": "PJM day-ahead LMP plus retail adder",
+          "urpx:description": "Synthetic test data supporting specification review; not for production use. Hourly supply price equals the PJM day-ahead LMP for the ComEd zone plus a fixed retail adder. The structured value expression is authoritative.",
+          "urpx:hasValueExpression": {
+            "@type": "urpx:ValueExpression",
+            "urpx:name": "Hourly supply = wholesale price + retail adder",
+            "urpx:rootNode": {
+              "@type": "urpx:OperationNode",
+              "urpx:operator": {
+                "@id": "urpx:addOperator"
+              },
+              "urpx:leftOperand": {
+                "@type": "urpx:ObjectOperandNode",
+                "urpx:referencesMetricInput": {
+                  "@id": "comed:mi-hourly-wholesale-price"
+                }
+              },
+              "urpx:rightOperand": {
+                "@type": "urpx:DatatypeOperandNode",
+                "urpx:decimalValue": "0.00735"
+              }
+            }
+          }
+        },
+        "urpx:hasDynamicPriceEndpoint": [
+          {
+            "@type": "urpx:DynamicPriceEndpoint",
+            "urpx:name": "ComEd hourly pricing API",
+            "urpx:url": "https://hourlypricing.comed.com/api?type=5minutefeed",
+            "urpx:endpointProtocol": {
+              "@id": "urpx:restProtocol"
+            },
+            "urpx:mediaType": {
+              "@id": "urpx:applicationJson"
+            },
+            "urpx:requiresAuthentication": false,
+            "urpx:description": "REST endpoint returning interval prices; the payload maps to the highly dynamic price series shape."
+          }
+        ]
+      }
+    },
+    {
+      "@id": "comed:price-customer-charge",
+      "@type": "urpx:Price",
+      "urpx:referencesPriceDefinition": {
+        "@id": "comed:pd-customer-charge"
+      },
+      "urpx:startDate": "2026-01-01",
+      "urpx:name": "Customer charge",
+      "urpx:unitPrice": "12.34000"
+    },
+    {
+      "@id": "comed:price-capacity",
+      "@type": "urpx:Price",
+      "urpx:referencesPriceDefinition": {
+        "@id": "comed:pd-capacity"
+      },
+      "urpx:startDate": "2026-01-01",
+      "urpx:name": "Capacity charge",
+      "urpx:unitPrice": "0.02418"
+    },
+    {
+      "@id": "comed:price-transmission",
+      "@type": "urpx:Price",
+      "urpx:referencesPriceDefinition": {
+        "@id": "comed:pd-transmission"
+      },
+      "urpx:startDate": "2026-01-01",
+      "urpx:name": "Transmission charge",
+      "urpx:unitPrice": "0.01892"
+    },
+    {
+      "@id": "comed:price-distribution",
+      "@type": "urpx:Price",
+      "urpx:referencesPriceDefinition": {
+        "@id": "comed:pd-distribution"
+      },
+      "urpx:startDate": "2026-01-01",
+      "urpx:name": "Distribution charge",
+      "urpx:unitPrice": "0.03124"
+    },
+    {
+      "@id": "comed:prices-rrtp",
+      "@type": "urpx:Prices",
+      "urpx:hasPrice": [
+        {
+          "@id": "comed:price-hourly-energy-supply-v2026-01-01"
+        },
+        {
+          "@id": "comed:price-customer-charge"
+        },
+        {
+          "@id": "comed:price-capacity"
+        },
+        {
+          "@id": "comed:price-transmission"
+        },
+        {
+          "@id": "comed:price-distribution"
+        }
+      ]
+    },
+    {
+      "@id": "comed:rrtp-2026-01-01",
+      "@type": "urpx:RatePlanVersion",
+      "urpx:name": "RRTP resolved snapshot effective 2026-01-01",
+      "urpx:description": "Synthetic test data supporting specification review; not for production use. Fully resolved snapshot of the RRTP rate plan for the window opening 2026-01-01, consolidating the authored supply and delivery content and referencing the PJM day-ahead market feed for the hourly wholesale driver.",
+      "urpx:forRatePlan": {
+        "@id": "comed:rrtp"
+      },
+      "urpx:offeredBy": {
+        "@id": "org:utility-comed"
+      },
+      "urpx:changeReason": {
+        "@id": "urpx:rateCase"
+      },
+      "urpx:serviceRole": {
+        "@id": "urpx:bundledServiceRole"
+      },
+      "urpx:priceCurrency": "USD",
+      "urpx:commodity": {
+        "@id": "urpx:electricity"
+      },
+      "urpx:effectiveDateTime": "2026-01-01T06:00:00Z",
+      "urpx:hasPlanElements": {
+        "@id": "comed:pe-rrtp"
+      },
+      "urpx:hasPrices": {
+        "@id": "comed:prices-rrtp"
+      },
+      "urpx:selfContained": false,
+      "urpx:hasPriceDefinitionReference": [
+        {
+          "@id": "comed:pdr-supply",
+          "@type": "urpx:PriceDefinitionReference",
+          "urpx:referenceInclusion": {
+            "@id": "urpx:includedHere"
+          },
+          "urpx:referencesPriceDefinition": {
+            "@id": "comed:pd-hourly-energy-supply"
+          }
+        },
+        {
+          "@id": "comed:pdr-customer",
+          "@type": "urpx:PriceDefinitionReference",
+          "urpx:referenceInclusion": {
+            "@id": "urpx:includedHere"
+          },
+          "urpx:referencesPriceDefinition": {
+            "@id": "comed:pd-customer-charge"
+          }
+        },
+        {
+          "@id": "comed:pdr-capacity",
+          "@type": "urpx:PriceDefinitionReference",
+          "urpx:referenceInclusion": {
+            "@id": "urpx:includedHere"
+          },
+          "urpx:referencesPriceDefinition": {
+            "@id": "comed:pd-capacity"
+          }
+        },
+        {
+          "@id": "comed:pdr-transmission",
+          "@type": "urpx:PriceDefinitionReference",
+          "urpx:referenceInclusion": {
+            "@id": "urpx:includedHere"
+          },
+          "urpx:referencesPriceDefinition": {
+            "@id": "comed:pd-transmission"
+          }
+        },
+        {
+          "@id": "comed:pdr-distribution",
+          "@type": "urpx:PriceDefinitionReference",
+          "urpx:referenceInclusion": {
+            "@id": "urpx:includedHere"
+          },
+          "urpx:referencesPriceDefinition": {
+            "@id": "comed:pd-distribution"
+          }
+        },
+        {
+          "@id": "comed:pdr-lmp",
+          "@type": "urpx:PriceDefinitionReference",
+          "urpx:referenceInclusion": {
+            "@id": "urpx:retrievedElsewhere"
+          },
+          "urpx:referencesPriceDefinition": {
+            "@id": "comed:pd-pjm-da-lmp"
+          },
+          "urpx:documentedBy": {
+            "@id": "comed:sr-lmp-resolved",
+            "@type": "urpx:DataSourceReference",
+            "urpx:name": "PJM day-ahead LMP feed",
+            "urpx:sourcePublication": {
+              "@id": "comed:pub-pjm-da-feed"
+            }
+          }
+        }
+      ],
+      "urpx:hasCoverageClaim": {
+        "@id": "comed:cc-rrtp-2026-01-01",
+        "@type": "urpx:CoverageClaim",
+        "urpx:completenessResult": {
+          "@id": "urpx:complete"
+        },
+        "urpx:selfContained": false,
+        "urpx:confidence": {
+          "@id": "urpx:estimated"
+        },
+        "urpx:explainedBy": {
+          "@id": "comed:eval-rrtp-2026-01-01",
+          "@type": "urpx:Evaluation",
+          "urpx:evaluationKind": {
+            "@id": "urpx:coverageEvaluation"
+          },
+          "urpx:description": "Synthetic test data supporting specification review; not for production use. The delivery, service, and adder values are carried inline, so the plan structure is complete. The hourly wholesale driver resolves from the PJM day-ahead market price feed and the published highly dynamic price series, so the snapshot is complete but not self contained."
+        }
+      }
+    }
+  ]
+}

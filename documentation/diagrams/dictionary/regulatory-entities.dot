@@ -5,7 +5,7 @@ digraph "Regulatory Entities" {
     nodesep=0.5;
     ranksep=0.7;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="Regulatory Entities (URPX v0.2.0)";
+    label="Regulatory Entities (URPX v0.3.0)";
     labelloc="t";
     fontsize=14;
     fontcolor="#1a365d";

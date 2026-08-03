@@ -5,11 +5,11 @@
 
 # URPX Quality Assurance Guidelines
 
-**Version**: 0.2.0 (Pre-draft)
-**Last Updated**: 2026-04-29
+**Version**: 0.3.0 (Pre-draft)
+**Last Updated**: 2026-07-07
 **Status**: Active
 
-**Validation and quality standards for URPX v0.2.0 rate plan data**
+**Validation and quality standards for URPX v0.3.0 rate plan data**
 
 [← Back to Index](/docs/getting-started/overview)
 
@@ -28,11 +28,11 @@
 
 ## Overview
 
-URPX v0.2.0 maintains quality standards for ontology alignment, SHACL conformance, and semantic consistency. This guide summarizes the current validation expectations for rate plans, versions, prices, and structured rule logic.
+URPX v0.3.0 maintains quality standards for ontology alignment, SHACL conformance, and semantic consistency. This guide summarizes the current validation expectations for rate plans, versions, prices, and structured rule logic.
 
 ### Quality Principles
 
-1. **Ontology Compliance** - Data must use current v0.2.0 classes and properties
+1. **Ontology Compliance** - Data must use current v0.3.0 classes and properties
 2. **SHACL Validation** - Business rules are enforced through the unified SHACL file
 3. **Semantic Consistency** - Property usage, enumerations, and cross-references must align with the ontology
 4. **Data Completeness** - Required identifiers, version metadata, and pricing structure must be present
@@ -43,7 +43,7 @@ URPX v0.2.0 maintains quality standards for ontology alignment, SHACL conformanc
 
 ### Required Ontology Files
 
-URPX v0.2.0 uses a core ontology file:
+URPX v0.3.0 uses a core ontology file:
 
 - `../../ontology/urpx-ontology.ttl` - Complete URPX ontology with classes, properties, enumerations, and notes
 
@@ -51,7 +51,7 @@ URPX v0.2.0 uses a core ontology file:
 
 | Error | Cause | Solution |
 |-------|-------|----------|
-| Undefined property | Using a property no longer present in v0.2.0 | Check the ontology and rename to the current property |
+| Undefined property | Using a property no longer present in v0.3.0 | Check the ontology and rename to the current property |
 | Wrong enum value | Incorrect or invented enumeration instance | Use the exact URPX enumeration IRI |
 | Missing required property | Omitted mandatory identifier, version field, or container | Add the required property before SHACL validation |
 | Type mismatch | Literal used where an object reference is required, or vice versa | Correct to the ontology range |
@@ -66,24 +66,30 @@ URPX v0.2.0 uses a core ontology file:
 
 ### Critical SHACL Constraints
 
-**URPXDocument Requirements:**
+**URPXPackage Requirements:**
 - Must include `targetURPXVersion` exactly once
 - May include `timezoneIdentifier`
 - `targetURPXVersion` should point to the ontology version IRI used for authoring and validation
 
 **RatePlan Requirements:**
-- Must have at least one `hasRatePlanVersion`
 - Must have `name`
 - Must have `initialEffectiveDate`
 - Must have `ratePlanUniqueIdentifier`
+- Carries no pricing content and no list of versions: versions point back to the plan
 
 **RatePlanVersion Requirements:**
+- Must have `forRatePlan` (the link back to the plan identity)
+- Must have `hasCoverageClaim`
 - Must have `changeReason`
-- Must have `publishedBy`
 - Must have `serviceRole`
 - Must have `hasPlanElements`
 - Must have `hasPrices`
 - Must have `effectiveDate` or `effectiveDateTime`
+- May have `offeredBy` naming the organization that offers the plan
+
+**CoverageClaim Requirements:**
+- Must have `completenessResult` (`complete`, `incomplete`, or `pending`)
+- Should state `selfContained` and carry an explaining `Evaluation` via `explainedBy`
 
 **Price Requirements:**
 - Must have exactly one pricing field: `amount`, `unitPrice`, `basedOnPrice`, `currentPrice`, or `basePrice`
@@ -121,22 +127,25 @@ URPX v0.2.0 uses a core ontology file:
 
 ### Required Properties
 
-**Every URPXDocument must have:**
+**Every URPXPackage must have:**
 - `targetURPXVersion`
 
 **Every RatePlan must have:**
 - `ratePlanUniqueIdentifier`
 - `name`
 - `initialEffectiveDate`
-- `hasRatePlanVersion` (at least one)
 
 **Every RatePlanVersion must have:**
+- `forRatePlan`
+- `hasCoverageClaim`
 - `effectiveDate` or `effectiveDateTime`
 - `changeReason`
-- `publishedBy`
 - `serviceRole`
 - `hasPlanElements`
 - `hasPrices`
+
+**Every CoverageClaim must have:**
+- `completenessResult`
 
 **Every RatePlanVersion should include when version labeling is used:**
 - `version`
@@ -267,11 +276,11 @@ URPX v0.2.0 uses a core ontology file:
 ### Code Example Requirements
 
 **All examples must:**
-- Use current v0.2.0 property names
+- Use current v0.3.0 property names
 - Use `ratePlanUniqueIdentifier`, not `ratePlanIdentifier`
 - Use `timezoneIdentifier`, not `timeZoneIdentifier`
 - Use `hasConditionExpression`, not `hasCondition` / `hasConditionLogic`
-- Include `targetURPXVersion` when the example includes a `URPXDocument`
+- Include `targetURPXVersion` when the example includes a `URPXPackage`
 - Include proper `@context` in JSON-LD examples
 - Validate against the current SHACL file
 
@@ -281,19 +290,31 @@ URPX v0.2.0 uses a core ontology file:
 
 ### Rate Plan Terminology
 
-**CRITICAL REQUIREMENT**: Use "rate plan" for the full pricing structure. Do not use "rate" alone when the meaning is the complete plan.
+**CRITICAL REQUIREMENT**: Never use the bare word "rate" in URPX data, annotations, or documentation. Pick the unambiguous term for what is meant:
+
+- **"rate plan"** for the complete package (`RatePlan`)
+- **"price"** for a single value (`Price`): "the summer energy price", not "the summer rate"
+- **"rate group"** for a utility's named grouping within a service class (`RateGroup`): e.g. *Rate I* within *SC 1*
 
 **Correct Usage:**
 - "rate plan data"
 - "rate plan structure"
 - "residential rate plan"
 - "rate plan information"
+- "price calculations", "rate plan eligibility"
 
 **Incorrect Usage:**
 - "rate data"
 - "rate structure"
 - "residential rate"
 - "rate information"
+- "rate calculations", "rate eligibility"
+
+**Exceptions**: established terms of art and published names are kept as-is: "rate case" (`RateCase`), "rate-setting", "rate regulation", "flat-rate billing", and utilities' own published names such as "Rate I". Quoted utility source material is never rewritten. See the [FAQ Terminology section](urpx-faq.md#terminology) for the full explanation.
+
+### Article Before "URPX"
+
+URPX documentation, annotations, and data write **"an URPX"**, never "a URPX": "an URPX package", "an URPX rate plan", "an URPX fact", "an URPX-native property".
 
 ### Validation Workflow
 
@@ -302,20 +323,25 @@ URPX v0.2.0 uses a core ontology file:
 3. **Validate with SHACL** - Use `shacl/urpx-shacl.ttl`
 4. **Check business logic** - Verify price structure, time coverage, and rule intent against the source tariff
 
+### Edge-Case Coverage
+
+The repository maintains an edge-case register at [`test-cases/urpx-edge-cases.csv`](../../test-cases/urpx-edge-cases.csv): a catalog of difficult real-world tariff features, each with the publishing utility, a source link, and the exact source language. Use it to steer test-case coverage, and add a row when a published tariff shows a hard pattern the register does not yet contain.
+
 ### Common Pitfalls to Avoid
 
 **Property Name Errors:**
 - Using `ratePlanIdentifier` instead of `ratePlanUniqueIdentifier`
 - Using `timeZoneIdentifier` instead of `timezoneIdentifier`
-- Using legacy condition-model properties from pre-v0.2.0 drafts
+- Using retired condition-model properties from earlier drafts
 
 **Enum Value Errors:**
 - Using string literals instead of `@id` references where IRIs are required
 - Inventing values not defined in the ontology
 
 **Structural Errors:**
-- Omitting `targetURPXVersion` on `URPXDocument`
-- Putting `serviceRole` on `RatePlan` instead of `RatePlanVersion`
+- Omitting `targetURPXVersion` on `URPXPackage`
+- Omitting `forRatePlan` or `hasCoverageClaim` on `RatePlanVersion`
+- Nesting versions under the plan instead of linking top-level version nodes back via `forRatePlan`
 - Omitting `hasConditionExpression` on `EligibilityRule`
 - Omitting `hasConditionExpression` on `ProfileAlternative`
 - Modeling eligibility inputs outside a `Scenario`
@@ -330,6 +356,6 @@ URPX v0.2.0 uses a core ontology file:
 
 ---
 
-*Quality assurance guidelines for URPX v0.2.0. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
+*Quality assurance guidelines for URPX v0.3.0. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
 
 [← Back to Index](/docs/getting-started/overview)

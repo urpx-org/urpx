@@ -1,0 +1,158 @@
+{
+  "@context": {
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "coned": "https://urpx-org.github.io/urpx/fixtures/coned/",
+    "urpx:effectiveDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:startDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:amount": {
+      "@type": "xsd:decimal"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "coned:tf-gr26-mac-2026-01-01",
+      "@type": "urpx:TariffFiling",
+      "urpx:name": "ConEd GR26 — MAC Energy Charge statement No. 168, effective 2026-01-01",
+      "urpx:effectiveDate": "2026-01-01",
+      "urpx:description": "TariffFiling for the Consolidated Edison PSC No. 10 Statement of Monthly Adjustment Clause No. 168, effective 2026-01-01: a single delivery-side charge of 0.00014 USD/kWh (published as 0.014 cents per kWh), applicable to billing under every Service Classification except SC 11, pursuant to General Rule 26.1. The MAC is estimated monthly and each statement supersedes the previous one, so the price carries a start date only. The 'except SC 11' applicability is expressed as a ConditionExpression whose root BooleanOperationNode applies the NOT operator to a ComparisonNode testing hasServiceClass equals SC 11. The nodes gr26, ledger-delivery, mi-energy-kwh, and ms-energy-kwh are defined in the companion delivery filing (coned-sc1-delivery-tariffbook-filing.jsonld) and referenced here by identifier. Source document: mac-202601.pdf in this test case's assets folder.",
+      "urpx:documentedBy": {
+        "@id": "coned:sr-gr26-mac-202601",
+        "@type": "urpx:DataSourceReference",
+        "urpx:name": "PSC No. 10 — Statement of Monthly Adjustment Clause No. 168",
+        "urpx:sourcePublication": {
+          "@id": "coned:sp-gr26-mac-202601",
+          "@type": "urpx:SourcePublication",
+          "urpx:name": "ConEd PSC No. 10 — Statement of Monthly Adjustment Clause No. 168, effective 2026-01-01",
+          "urpx:publicationType": {
+            "@id": "urpx:tariffStatement"
+          },
+          "urpx:effectiveDate": "2026-01-01"
+        },
+        "urpx:fileName": "mac-202601.pdf",
+        "urpx:mediaType": {
+          "@id": "urpx:applicationPdf"
+        }
+      },
+      "urpx:containsPricingModel": {
+        "@id": "coned:pm-gr26-mac-2026-01-01",
+        "@type": "urpx:PricingModel",
+        "urpx:pursuantTo": {
+          "@id": "coned:gr26"
+        },
+        "urpx:confidence": {
+          "@id": "urpx:verified"
+        },
+        "urpx:hasPlanElements": {
+          "@id": "coned:pe-gr26-mac-2026-01-01",
+          "@type": "urpx:PlanElements",
+          "urpx:hasMetricInput": {
+            "@id": "coned:mi-energy-kwh"
+          },
+          "urpx:hasBillingModel": {
+            "@id": "coned:bm-gr26-mac-2026-01-01",
+            "@type": "urpx:BillingModel",
+            "urpx:hasLedger": {
+              "@id": "coned:ledger-delivery"
+            },
+            "urpx:hasPriceDefinition": {
+              "@id": "coned:pd-mac-energy-charge",
+              "@type": "urpx:PriceDefinition",
+              "urpx:name": "MAC Energy Charge",
+              "urpx:chargeType": {
+                "@id": "urpx:deliveryCharge"
+              },
+              "urpx:chargeCategory": {
+                "@id": "urpx:infrastructure"
+              },
+              "urpx:billPortion": {
+                "@id": "urpx:deliveryPortion"
+              },
+              "urpx:referencesLedger": {
+                "@id": "coned:ledger-delivery"
+              },
+              "urpx:referencesMetricInput": {
+                "@id": "coned:mi-energy-kwh"
+              },
+              "urpx:pursuantTo": {
+                "@id": "coned:gr26"
+              },
+              "urpx:hasApplicabilityGroup": {
+                "@id": "coned:ag-mac-except-sc11",
+                "@type": "urpx:ApplicabilityGroup",
+                "urpx:name": "All Service Classifications except SC 11",
+                "urpx:hasConditionExpression": {
+                  "@id": "coned:ce-not-sc11",
+                  "@type": "urpx:ConditionExpression",
+                  "urpx:rootNode": {
+                    "@id": "coned:bon-not-sc11",
+                    "@type": "urpx:BooleanOperationNode",
+                    "urpx:operator": {
+                      "@id": "urpx:notOperator"
+                    },
+                    "urpx:operandNodes": {
+                      "@id": "coned:cn-sc-eq-sc11",
+                      "@type": "urpx:ComparisonNode",
+                      "urpx:operator": {
+                        "@id": "urpx:equalsOperator"
+                      },
+                      "urpx:leftOperand": {
+                        "@id": "coned:oon-has-service-class",
+                        "@type": "urpx:ObjectOperandNode",
+                        "urpx:conditionProperty": {
+                          "@id": "urpx:hasServiceClass"
+                        }
+                      },
+                      "urpx:rightOperand": {
+                        "@id": "coned:oon-sc11-value",
+                        "@type": "urpx:ObjectOperandNode",
+                        "urpx:referencesValue": {
+                          "@id": "coned:sc11",
+                          "@type": "urpx:ServiceClass",
+                          "urpx:serviceClassName": "Service Classification No. 11",
+                          "urpx:serviceClassRaw": "SC11"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "urpx:hasPrices": {
+          "@id": "coned:prices-gr26-mac-2026-01-01",
+          "@type": "urpx:Prices",
+          "urpx:hasPriceSet": {
+            "@id": "coned:ps-mac-energy-202601",
+            "@type": "urpx:PriceSet",
+            "urpx:name": "MAC Energy Charge",
+            "urpx:priceCurrency": "USD",
+            "urpx:chargeType": {
+              "@id": "urpx:deliveryCharge"
+            },
+            "urpx:billPortion": {
+              "@id": "urpx:deliveryPortion"
+            },
+            "urpx:hasMetricSpecification": {
+              "@id": "coned:ms-energy-kwh"
+            },
+            "urpx:referencesPriceDefinition": {
+              "@id": "coned:pd-mac-energy-charge"
+            },
+            "urpx:hasPrice": {
+              "@id": "coned:p-mac-energy-202601",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.00014",
+              "urpx:startDate": "2026-01-01"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

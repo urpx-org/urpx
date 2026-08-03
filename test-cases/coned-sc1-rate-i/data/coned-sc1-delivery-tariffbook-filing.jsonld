@@ -1,0 +1,169 @@
+{
+  "@context": {
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "coned": "https://urpx-org.github.io/urpx/fixtures/coned/",
+    "urpx:effectiveDate": { "@type": "xsd:date" },
+    "urpx:startDate": { "@type": "xsd:date" },
+    "urpx:amount": { "@type": "xsd:decimal" }
+  },
+  "@graph": [
+    {
+      "@id": "coned:tf-sc1-delivery-2026-02-01",
+      "@type": "urpx:TariffFiling",
+      "urpx:name": "SC1 Rate I Delivery Charges — PSC No. 10, Leaf 388, effective 2026-02-01",
+      "urpx:effectiveDate": "2026-02-01",
+      "urpx:containsPricingModel": {
+        "@id": "coned:pm-sc1-delivery-2026-02-01",
+        "@type": "urpx:PricingModel",
+        "urpx:referencesRatePlan": { "@id": "coned:coned-sc1-rate-i" },
+        "urpx:confidence": { "@id": "urpx:verified" },
+        "urpx:documentedBy": {
+          "@id": "coned:sr-psc10-sc1-leaf388-2026-02-01",
+          "@type": "urpx:DataSourceReference",
+          "urpx:name": "PSC No. 10 Electricity — SC1 Rate I, Leaf 388, Revision 23",
+          "urpx:sourcePublication": {
+            "@id": "coned:sp-psc10-elec-2026-02-01",
+            "@type": "urpx:SourcePublication",
+            "urpx:name": "Consolidated Edison PSC No. 10 — Electricity (effective 2026-02-01)",
+            "urpx:publicationType": { "@id": "urpx:tariffBook" },
+            "urpx:effectiveDate": "2026-02-01"
+          },
+          "urpx:fileName": "coned_sc1_rate1_2026-02-01.pdf",
+          "urpx:mediaType": { "@id": "urpx:applicationPdf" },
+          "urpx:effectiveDate": "2026-02-01"
+        },
+        "urpx:pursuantTo": {
+          "@id": "coned:gr26",
+          "@type": "urpx:GeneralRule",
+          "urpx:generalRuleID": "GR26",
+          "urpx:name": "General Rule 26 — Additional Delivery Charges and Adjustments",
+          "urpx:hasDataSourceReference": {
+            "@id": "coned:sr-psc10-gr26",
+            "@type": "urpx:DataSourceReference",
+            "urpx:name": "PSC No. 10 — General Rule 26",
+            "urpx:sourcePublication": { "@id": "coned:sp-psc10-elec-2026-02-01" },
+            "urpx:fileName": "conedtariffbook2025_general_rule_26.pdf",
+            "urpx:mediaType": { "@id": "urpx:applicationPdf" }
+          }
+        },
+        "urpx:hasPlanElements": {
+          "@id": "coned:pe-sc1-delivery-2026-02-01",
+          "@type": "urpx:PlanElements",
+          "urpx:hasMetricInput": {
+            "@id": "coned:mi-energy-kwh",
+            "@type": "urpx:MetricInput",
+            "urpx:name": "Electricity consumption (kWh)",
+            "urpx:metricInputType": { "@id": "urpx:measuredMetricInput" },
+            "urpx:hasMetricSpecification": {
+              "@id": "coned:ms-energy-kwh",
+              "@type": "urpx:MetricSpecification",
+              "urpx:measurementKind": { "@id": "urpx:energy" },
+              "urpx:unitOfMeasure": { "@id": "urpx:kWh" },
+              "urpx:flowDirection": { "@id": "urpx:forward" },
+              "urpx:commodity": { "@id": "urpx:electricity" }
+            }
+          },
+          "urpx:hasBillingModel": {
+            "@id": "coned:bm-sc1-delivery-2026-02-01",
+            "@type": "urpx:BillingModel",
+            "urpx:hasLedger": {
+              "@id": "coned:ledger-delivery",
+              "@type": "urpx:Ledger",
+              "urpx:name": "Delivery",
+              "urpx:ledgerType": { "@id": "urpx:deliveryLedger" }
+            },
+            "urpx:hasPriceDefinition": [
+              {
+                "@id": "coned:pd-customer-charge",
+                "@type": "urpx:PriceDefinition",
+                "urpx:name": "Customer Charge",
+                "urpx:chargeType": { "@id": "urpx:deliveryCharge" },
+                "urpx:chargeCategory": { "@id": "urpx:infrastructure" },
+                "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+                "urpx:priceCurrency": "USD",
+                "urpx:referencesLedger": { "@id": "coned:ledger-delivery" }
+              },
+              {
+                "@id": "coned:pd-energy-first-250",
+                "@type": "urpx:PriceDefinition",
+                "urpx:name": "Energy Delivery — First 250 kWh",
+                "urpx:chargeType": { "@id": "urpx:deliveryCharge" },
+                "urpx:chargeCategory": { "@id": "urpx:infrastructure" },
+                "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+                "urpx:referencesLedger": { "@id": "coned:ledger-delivery" },
+                "urpx:referencesMetricInput": { "@id": "coned:mi-energy-kwh" }
+              },
+              {
+                "@id": "coned:pd-energy-over-250",
+                "@type": "urpx:PriceDefinition",
+                "urpx:name": "Energy Delivery — Over 250 kWh (Summer)",
+                "urpx:chargeType": { "@id": "urpx:deliveryCharge" },
+                "urpx:chargeCategory": { "@id": "urpx:infrastructure" },
+                "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+                "urpx:referencesLedger": { "@id": "coned:ledger-delivery" },
+                "urpx:referencesMetricInput": { "@id": "coned:mi-energy-kwh" }
+              }
+            ]
+          }
+        },
+        "urpx:hasPrices": {
+          "@id": "coned:prices-sc1-delivery-2026-02-01",
+          "@type": "urpx:Prices",
+          "urpx:hasPriceSet": [
+            {
+              "@id": "coned:ps-customer-charge",
+              "@type": "urpx:PriceSet",
+              "urpx:name": "Customer Charge",
+              "urpx:priceCurrency": "USD",
+              "urpx:chargeType": { "@id": "urpx:deliveryCharge" },
+              "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+              "urpx:referencesPriceDefinition": { "@id": "coned:pd-customer-charge" },
+              "urpx:hasDataSourceReference": { "@id": "coned:sr-psc10-sc1-leaf388-2026-02-01" },
+              "urpx:hasPrice": {
+                "@id": "coned:p-customer-charge-20260201",
+                "@type": "urpx:Price",
+                "urpx:amount": "21.00",
+                "urpx:startDate": "2026-02-01"
+              }
+            },
+            {
+              "@id": "coned:ps-energy-first-250",
+              "@type": "urpx:PriceSet",
+              "urpx:name": "Energy Delivery — First 250 kWh",
+              "urpx:priceCurrency": "USD",
+              "urpx:chargeType": { "@id": "urpx:deliveryCharge" },
+              "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+              "urpx:hasMetricSpecification": { "@id": "coned:ms-energy-kwh" },
+              "urpx:referencesPriceDefinition": { "@id": "coned:pd-energy-first-250" },
+              "urpx:hasDataSourceReference": { "@id": "coned:sr-psc10-sc1-leaf388-2026-02-01" },
+              "urpx:hasPrice": {
+                "@id": "coned:p-energy-first-250-20260201",
+                "@type": "urpx:Price",
+                "urpx:amount": "0.16402",
+                "urpx:startDate": "2026-02-01"
+              }
+            },
+            {
+              "@id": "coned:ps-energy-over-250",
+              "@type": "urpx:PriceSet",
+              "urpx:name": "Energy Delivery — Over 250 kWh (Summer)",
+              "urpx:priceCurrency": "USD",
+              "urpx:chargeType": { "@id": "urpx:deliveryCharge" },
+              "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+              "urpx:hasMetricSpecification": { "@id": "coned:ms-energy-kwh" },
+              "urpx:referencesPriceDefinition": { "@id": "coned:pd-energy-over-250" },
+              "urpx:hasDataSourceReference": { "@id": "coned:sr-psc10-sc1-leaf388-2026-02-01" },
+              "urpx:hasPrice": {
+                "@id": "coned:p-energy-over-250-20260201",
+                "@type": "urpx:Price",
+                "urpx:amount": "0.18858",
+                "urpx:startDate": "2026-02-01"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

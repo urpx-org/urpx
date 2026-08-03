@@ -6,7 +6,7 @@
 %%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#77AADD', 'primaryTextColor':'#000', 'primaryBorderColor':'#000', 'lineColor':'#000', 'secondaryColor':'#EEDD88', 'tertiaryColor':'#FFAABB', 'background':'transparent'}}}%%
 graph LR
     subgraph "SPARQL Query"
-        Q["SELECT ?price ?name ?unitPrice<br/>WHERE {<br/>  ?ratePlan urpx:ratePlanUniqueIdentifier 'RES-TOU-2025' ;<br/>    urpx:hasRatePlanVersion/urpx:hasPrices/<br/>    urpx:hasPriceSet/urpx:hasPrice ?price .<br/>  ?price urpx:name ?name ;<br/>    urpx:unitPrice ?unitPrice .<br/>}"]
+        Q["SELECT ?price ?name ?unitPrice<br/>WHERE {<br/>  ?ratePlan urpx:ratePlanUniqueIdentifier 'RES-TOU-2025' .<br/>  ?version urpx:forRatePlan ?ratePlan ;<br/>    urpx:hasPrices/urpx:hasPriceSet/<br/>    urpx:hasPrice ?price .<br/>  ?price urpx:name ?name ;<br/>    urpx:unitPrice ?unitPrice .<br/>}"]
     end
     
     subgraph "Graph Traversal"
@@ -18,7 +18,7 @@ graph LR
         P2[Price 2]
         P3[Price 3]
         
-        RP -->|hasRatePlanVersion| RPV
+        RPV -->|forRatePlan| RP
         RPV -->|hasPrices| PRC
         PRC -->|hasPriceSet| PS
         PS -->|hasPrice| P1

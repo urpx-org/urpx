@@ -9,7 +9,7 @@
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(28.8 213.95)">
 <title>Regulatory Entities</title>
 <polygon fill="white" stroke="transparent" points="-28.8,28.8 -28.8,-213.95 249.8,-213.95 249.8,28.8 -28.8,28.8"/>
-<text text-anchor="middle" x="110.5" y="-169.95" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">Regulatory Entities (URPX v0.2.0)</text>
+<text text-anchor="middle" x="110.5" y="-169.95" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">Regulatory Entities (URPX v0.3.0)</text>
 <g id="clust1" class="cluster">
 <title>cluster_legend</title>
 <path fill="#f8f8f8" stroke="#cccccc" d="M40.5,-8C40.5,-8 180.5,-8 180.5,-8 186.5,-8 192.5,-14 192.5,-20 192.5,-20 192.5,-142.15 192.5,-142.15 192.5,-148.15 186.5,-154.15 180.5,-154.15 180.5,-154.15 40.5,-154.15 40.5,-154.15 34.5,-154.15 28.5,-148.15 28.5,-142.15 28.5,-142.15 28.5,-20 28.5,-20 28.5,-14 34.5,-8 40.5,-8"/>

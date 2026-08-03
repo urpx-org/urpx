@@ -1,0 +1,73 @@
+digraph "Coverage & Evaluation Entities" {
+    rankdir=TB;
+    bgcolor="white";
+    pad=0.4;
+    nodesep=0.7;
+    ranksep=0.9;
+    fontname="Inter, Helvetica, Arial, sans-serif";
+    label="Coverage & Evaluation Entities (URPX v0.3.0)";
+    labelloc="t";
+    fontsize=14;
+    fontcolor="#1a365d";
+    node [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=10, style=filled, fontcolor="#1a365d"];
+    edge [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=8, fontcolor="#1a365d"];
+
+    // Section classes
+    CoverageClaim [
+        label="CoverageClaim"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    Evaluation [
+        label="Evaluation"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    ModelExclusion [
+        label="ModelExclusion"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+
+    // Cross-section references
+    Organization [
+        label="Organization"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    PricingModel [
+        label="PricingModel"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+
+    // Object property edges
+    CoverageClaim -> Evaluation [
+        label="explainedBy\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Evaluation -> Organization [
+        label="evaluatedBy\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Evaluation -> ModelExclusion [
+        label="hasModelExclusion\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ModelExclusion -> PricingModel [
+        label="excludedModel\n1..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+
+    // Auto-computed rank hints
+
+    subgraph cluster_legend {
+        label="Legend";
+        fontname="Inter, Helvetica, Arial, sans-serif";
+        fontsize=11;
+        fontcolor="#1a365d";
+        style=rounded;
+        color="#cccccc";
+        bgcolor="#f8f8f8";
+        margin=12;
+
+        leg_class [label="OWL Class\n(this section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
+        leg_xref [label="OWL Class\n(other section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"];
+        leg_src [label=" ", shape=point, width=0.01];
+        leg_tgt1 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+        leg_tgt2 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt2 [label="cross-section ref", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+    }
+}

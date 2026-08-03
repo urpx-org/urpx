@@ -32,7 +32,7 @@ All human-readable text fields MUST support language tags:
   "@context": {
     "@base": "https://utility.example.com/",
     "@language": "en-US",  // Default language with region
-    "urpx": "https://schema.urpx.org/"
+    "urpx": "https://urpx-org.github.io/urpx/ontology/"
   },
   "urpx:name": [
     {"@value": "Time-of-Use Rate", "@language": "en"},
@@ -236,7 +236,7 @@ Requested: pt-BR → Try: pt-BR → pt → en → any available
 ```json
 {
   "@context": {
-    "urpx": "https://schema.urpx.org/",
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
     "skos": "http://www.w3.org/2004/02/skos/core#"
   },
   "urpx:chargeType": {

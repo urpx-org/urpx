@@ -72,7 +72,7 @@ jobs:
           GH_TOKEN: ${{ secrets.URPX_AUTOMATION_TOKEN || github.token }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          files="$(gh api "repos/$GITHUB_REPOSITORY/commits/$HEAD_SHA" --jq '.files[].filename')"
+          files="$(gh api "repos/$GITHUB_REPOSITORY/commits/$HEAD_SHA" --jq '.files[].filename' 2>/dev/null || true)"
           generated_only="true"
 
           if [ -z "$files" ]; then
@@ -160,7 +160,7 @@ jobs:
         with:
           name: dictionary-config-pending
           path: urpx-website-staging/scripts/codegen/config/dictionary-config-pending.yaml
-          no-files-found: ignore
+          if-no-files-found: ignore
 
       - name: Capture generated diff
         id: diff

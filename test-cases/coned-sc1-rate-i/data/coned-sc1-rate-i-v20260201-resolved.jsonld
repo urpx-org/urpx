@@ -1,0 +1,539 @@
+{
+  "@context": {
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "coned": "https://urpx-org.github.io/urpx/fixtures/coned/",
+    "org": "https://urpx-org.github.io/urpx/fixtures/org/",
+    "urpx:effectiveDate": { "@type": "xsd:date" },
+    "urpx:initialEffectiveDate": { "@type": "xsd:date" },
+    "urpx:startDate": { "@type": "xsd:date" },
+    "urpx:endDate": { "@type": "xsd:date" },
+    "urpx:amount": { "@type": "xsd:decimal" },
+    "urpx:dateRetrieved": { "@type": "xsd:date" },
+    "urpx:accessURL": { "@type": "xsd:anyURI" }
+  },
+  "@graph": [
+    {
+      "@id": "coned:coned-sc1-rate-i-v20260201",
+      "@type": "urpx:RatePlanVersion",
+      "urpx:name": "SC1 Rate I — Full Service, resolved snapshot effective 2026-02-01",
+      "urpx:description": "Fully resolved, self-contained RatePlanVersion for Consolidated Edison SC1 Rate I Full Service, consolidating three pricing inputs: delivery charges from a tariff book filing, the MAC energy charge from the monthly Statements of Monthly Adjustment Clause (applicable to SC1 because SC1 passes the charge's NOT(SC11) applicability condition), and the Market Supply Charge from a market price feed. The snapshot is readable without access to any source data: every referenced node — price definitions, ledgers, metric inputs, general rules, applicability conditions, and source citations — is carried in full, keeping the URI it was published under so provenance remains a graph walk. Prices are version-scoped copies carrying their own valid dates; the version envelope does not clip them.",
+      "urpx:version": "2026-02-01",
+      "urpx:effectiveDate": "2026-02-01",
+      "urpx:changeReason": { "@id": "urpx:initial" },
+      "urpx:priceCurrency": "USD",
+      "urpx:offeredBy": {
+        "@id": "org:consolidated-edison",
+        "@type": "urpx:UtilityOperator",
+        "urpx:legalName": "Consolidated Edison Company of New York, Inc.",
+        "urpx:organizationType": { "@id": "urpx:utilityOrganization" }
+      },
+      "urpx:serviceRole": { "@id": "urpx:distributionServiceRole" },
+      "urpx:consolidatedFrom": [
+        {
+          "@id": "coned:pm-sc1-delivery-2026-02-01",
+          "@type": "urpx:PricingModel",
+          "urpx:confidence": { "@id": "urpx:verified" },
+          "urpx:documentedBy": { "@id": "coned:sr-psc10-sc1-leaf388-2026-02-01" }
+        },
+        {
+          "@id": "coned:pm-gr26-mac-2026-01-01",
+          "@type": "urpx:PricingModel",
+          "urpx:confidence": { "@id": "urpx:verified" },
+          "urpx:documentedBy": {
+            "@id": "coned:sr-gr26-mac-202601",
+            "@type": "urpx:DataSourceReference",
+            "urpx:name": "PSC No. 10 — Statement of Monthly Adjustment Clause No. 168",
+            "urpx:sourcePublication": {
+              "@id": "coned:sp-gr26-mac-202601",
+              "@type": "urpx:SourcePublication",
+              "urpx:name": "ConEd PSC No. 10 — Statement of Monthly Adjustment Clause No. 168, effective 2026-01-01",
+              "urpx:publicationType": { "@id": "urpx:tariffStatement" },
+              "urpx:effectiveDate": "2026-01-01"
+            },
+            "urpx:fileName": "mac-202601.pdf",
+            "urpx:mediaType": { "@id": "urpx:applicationPdf" }
+          }
+        },
+        {
+          "@id": "coned:pm-gr26-mac-2026-02-01",
+          "@type": "urpx:PricingModel",
+          "urpx:confidence": { "@id": "urpx:verified" },
+          "urpx:documentedBy": { "@id": "coned:sr-gr26-mac-202602" }
+        },
+        {
+          "@id": "coned:pm-gr26-mac-2026-03-01",
+          "@type": "urpx:PricingModel",
+          "urpx:confidence": { "@id": "urpx:verified" },
+          "urpx:documentedBy": { "@id": "coned:sr-gr26-mac-202603" }
+        },
+        {
+          "@id": "coned:pm-gr26-mac-2026-04-01",
+          "@type": "urpx:PricingModel",
+          "urpx:confidence": { "@id": "urpx:verified" },
+          "urpx:documentedBy": { "@id": "coned:sr-gr26-mac-202604" }
+        },
+        {
+          "@id": "coned:pm-gr26-mac-2026-05-01",
+          "@type": "urpx:PricingModel",
+          "urpx:confidence": { "@id": "urpx:verified" },
+          "urpx:documentedBy": { "@id": "coned:sr-gr26-mac-202605" }
+        },
+        {
+          "@id": "coned:pm-msc-rate1-trip1-zj-lt",
+          "@type": "urpx:PricingModel",
+          "urpx:confidence": { "@id": "urpx:verified" },
+          "urpx:documentedBy": { "@id": "coned:sr-lds-appnd-csv" }
+        }
+      ],
+      "urpx:forRatePlan": {
+        "@id": "coned:coned-sc1-rate-i",
+        "@type": "urpx:RatePlan",
+        "urpx:name": "SC1 Rate I — Residential and Religious",
+        "urpx:description": "Consolidated Edison Service Classification No. 1 (Residential and Religious), Rate I — stable identity record. No pricing content. Delivery plan.",
+        "urpx:ratePlanUniqueIdentifier": "CONED-SC1-RATE-I",
+        "urpx:initialEffectiveDate": "2018-01-01",
+        "urpx:priceCurrency": "USD",
+        "urpx:timezoneIdentifier": "America/New_York",
+        "urpx:commodity": { "@id": "urpx:electricity" },
+        "urpx:serviceRole": { "@id": "urpx:distributionServiceRole" },
+        "urpx:offeredBy": { "@id": "org:consolidated-edison" },
+        "urpx:hasIdentifier": {
+          "@id": "coned:coned-sc1-rate-i-id-utility-code",
+          "@type": "urpx:RatePlanIdentifier",
+          "skos:notation": "SC1-RATE-I",
+          "urpx:scheme": { "@id": "https://urpx-org.github.io/urpx/ontology/utility-tariff-code" }
+        },
+        "urpx:hasServiceClass": {
+          "@id": "coned:sc1",
+          "@type": "urpx:ServiceClass",
+          "urpx:serviceClassName": "Service Classification No. 1",
+          "urpx:serviceClassRaw": "SC1",
+          "urpx:hasRateGroup": {
+            "@id": "coned:sc1-rate-i-rategroup",
+            "@type": "urpx:RateGroup",
+            "urpx:rateGroupIdentifier": "RATE-I",
+            "urpx:rateGroupName": "Rate I — Residential and Religious",
+            "urpx:parentServiceClass": { "@id": "coned:sc1" }
+          }
+        },
+        "urpx:hasRateGroup": { "@id": "coned:sc1-rate-i-rategroup" }
+      },
+      "urpx:hasCoverageClaim": {
+        "@id": "coned:cc-sc1-rate-i-v20260201",
+        "@type": "urpx:CoverageClaim",
+        "urpx:completenessResult": { "@id": "urpx:partial" },
+        "urpx:confidence": { "@id": "urpx:verified" },
+        "urpx:selfContained": true,
+        "urpx:hasTemporalScope": {
+          "@id": "coned:ts-cc-sc1-rate-i-v20260201-coverage",
+          "@type": "urpx:TemporalScope",
+          "urpx:scopeKind": { "@id": "urpx:coverage" },
+          "urpx:startDate": "2026-02-01",
+          "urpx:endDate": "2026-06-02"
+        },
+        "urpx:explainedBy": {
+          "@id": "coned:eval-sc1-rate-i-v20260201",
+          "@type": "urpx:Evaluation",
+          "urpx:evaluatedBy": { "@id": "org:consolidated-edison" },
+          "urpx:evaluatedOn": { "@value": "2026-05-01T16:00:00Z", "@type": "xsd:dateTime" },
+          "urpx:description": "All contributing pricing models carry confidence urpx:verified. Delivery charges are effective-dated 2026-02-01 with no announced end. The MAC energy charge is re-estimated monthly, each Statement of Monthly Adjustment Clause superseding the previous one: the statements from the version effective date through the most recent published one (Nos. 169–172, effective 2026-02-01 through 2026-05-01) are materialised, each price ending when its successor takes effect and the latest left open; later statements re-reconcile into successor versions. The January statement (No. 168) is listed as a contributing source but is fully superseded before the version effective date; its exclusion is recorded machine-readably on this evaluation. MSC is a rolling monthly market feed: the published cycle prices covering the coverage window continuously (2025-12-31 through 2026-06-02, five cycles) are materialised; later cycles publish monthly and re-reconcile into successor versions. Coverage is partial: applicable PSC No. 10 statement charges beyond the MAC are not yet modeled for this plan; the modeled delivery, MAC, and market supply slots are continuous for the coverage window. No component is priced externally (no retrievedElsewhere references), hence selfContained true.",
+          "urpx:hasModelExclusion": {
+            "@id": "coned:excl-pm-gr26-mac-2026-01-01",
+            "@type": "urpx:ModelExclusion",
+            "urpx:excludedModel": { "@id": "coned:pm-gr26-mac-2026-01-01" },
+            "urpx:exclusionReason": { "@id": "urpx:fullySuperseded" },
+            "urpx:description": "Statement No. 168 (effective 2026-01-01) is superseded by Statement No. 169 before this version's effective date, so it contributes no element to the snapshot."
+          }
+        }
+      },
+      "urpx:hasPlanElements": {
+        "@id": "coned:pe-sc1-rate-i-v20260201",
+        "@type": "urpx:PlanElements",
+        "urpx:hasMetricInput": {
+          "@id": "coned:mi-energy-kwh",
+          "@type": "urpx:MetricInput",
+          "urpx:name": "Electricity consumption (kWh)",
+          "urpx:metricInputType": { "@id": "urpx:measuredMetricInput" },
+          "urpx:hasMetricSpecification": {
+            "@id": "coned:ms-energy-kwh",
+            "@type": "urpx:MetricSpecification",
+            "urpx:measurementKind": { "@id": "urpx:energy" },
+            "urpx:unitOfMeasure": { "@id": "urpx:kWh" },
+            "urpx:flowDirection": { "@id": "urpx:forward" },
+            "urpx:commodity": { "@id": "urpx:electricity" }
+          }
+        },
+        "urpx:hasBillingModel": {
+          "@id": "coned:bm-sc1-rate-i-v20260201",
+          "@type": "urpx:BillingModel",
+          "urpx:hasLedger": [
+            {
+              "@id": "coned:ledger-delivery",
+              "@type": "urpx:Ledger",
+              "urpx:name": "Delivery",
+              "urpx:ledgerType": { "@id": "urpx:deliveryLedger" }
+            },
+            {
+              "@id": "coned:ledger-supply",
+              "@type": "urpx:Ledger",
+              "urpx:name": "Supply",
+              "urpx:ledgerType": { "@id": "urpx:supplyLedger" }
+            }
+          ],
+          "urpx:hasPriceDefinition": [
+            {
+              "@id": "coned:pd-customer-charge",
+              "@type": "urpx:PriceDefinition",
+              "urpx:contributedBy": { "@id": "coned:pm-sc1-delivery-2026-02-01" },
+              "urpx:name": "Customer Charge",
+              "urpx:chargeType": { "@id": "urpx:deliveryCharge" },
+              "urpx:chargeCategory": { "@id": "urpx:infrastructure" },
+              "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+              "urpx:priceCurrency": "USD",
+              "urpx:referencesLedger": { "@id": "coned:ledger-delivery" }
+            },
+            {
+              "@id": "coned:pd-energy-first-250",
+              "@type": "urpx:PriceDefinition",
+              "urpx:contributedBy": { "@id": "coned:pm-sc1-delivery-2026-02-01" },
+              "urpx:name": "Energy Delivery — First 250 kWh",
+              "urpx:chargeType": { "@id": "urpx:deliveryCharge" },
+              "urpx:chargeCategory": { "@id": "urpx:infrastructure" },
+              "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+              "urpx:referencesLedger": { "@id": "coned:ledger-delivery" },
+              "urpx:referencesMetricInput": { "@id": "coned:mi-energy-kwh" }
+            },
+            {
+              "@id": "coned:pd-energy-over-250",
+              "@type": "urpx:PriceDefinition",
+              "urpx:contributedBy": { "@id": "coned:pm-sc1-delivery-2026-02-01" },
+              "urpx:name": "Energy Delivery — Over 250 kWh (Summer)",
+              "urpx:chargeType": { "@id": "urpx:deliveryCharge" },
+              "urpx:chargeCategory": { "@id": "urpx:infrastructure" },
+              "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+              "urpx:referencesLedger": { "@id": "coned:ledger-delivery" },
+              "urpx:referencesMetricInput": { "@id": "coned:mi-energy-kwh" }
+            },
+            {
+              "@id": "coned:pd-mac-energy-charge",
+              "@type": "urpx:PriceDefinition",
+              "urpx:contributedBy": { "@id": "coned:pm-gr26-mac-2026-02-01" },
+              "urpx:name": "MAC Energy Charge",
+              "urpx:chargeType": { "@id": "urpx:deliveryCharge" },
+              "urpx:chargeCategory": { "@id": "urpx:infrastructure" },
+              "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+              "urpx:referencesLedger": { "@id": "coned:ledger-delivery" },
+              "urpx:referencesMetricInput": { "@id": "coned:mi-energy-kwh" },
+              "urpx:pursuantTo": {
+                "@id": "coned:gr26",
+                "@type": "urpx:GeneralRule",
+                "urpx:generalRuleID": "GR26",
+                "urpx:name": "General Rule 26 — Additional Delivery Charges and Adjustments",
+                "urpx:hasDataSourceReference": {
+                  "@id": "coned:sr-psc10-gr26",
+                  "@type": "urpx:DataSourceReference",
+                  "urpx:name": "PSC No. 10 — General Rule 26",
+                  "urpx:sourcePublication": {
+                    "@id": "coned:sp-psc10-elec-2026-02-01",
+                    "@type": "urpx:SourcePublication",
+                    "urpx:name": "Consolidated Edison PSC No. 10 — Electricity (effective 2026-02-01)",
+                    "urpx:publicationType": { "@id": "urpx:tariffBook" },
+                    "urpx:effectiveDate": "2026-02-01"
+                  },
+                  "urpx:fileName": "conedtariffbook2025_general_rule_26.pdf",
+                  "urpx:mediaType": { "@id": "urpx:applicationPdf" }
+                }
+              },
+              "urpx:hasApplicabilityGroup": {
+                "@id": "coned:ag-mac-except-sc11",
+                "@type": "urpx:ApplicabilityGroup",
+                "urpx:name": "All Service Classifications except SC 11",
+                "urpx:hasConditionExpression": {
+                  "@id": "coned:ce-not-sc11",
+                  "@type": "urpx:ConditionExpression",
+                  "urpx:rootNode": {
+                    "@id": "coned:bon-not-sc11",
+                    "@type": "urpx:BooleanOperationNode",
+                    "urpx:operator": { "@id": "urpx:notOperator" },
+                    "urpx:operandNodes": {
+                      "@id": "coned:cn-sc-eq-sc11",
+                      "@type": "urpx:ComparisonNode",
+                      "urpx:operator": { "@id": "urpx:equalsOperator" },
+                      "urpx:leftOperand": {
+                        "@id": "coned:oon-has-service-class",
+                        "@type": "urpx:ObjectOperandNode",
+                        "urpx:conditionProperty": { "@id": "urpx:hasServiceClass" }
+                      },
+                      "urpx:rightOperand": {
+                        "@id": "coned:oon-sc11-value",
+                        "@type": "urpx:ObjectOperandNode",
+                        "urpx:referencesValue": {
+                          "@id": "coned:sc11",
+                          "@type": "urpx:ServiceClass",
+                          "urpx:serviceClassName": "Service Classification No. 11",
+                          "urpx:serviceClassRaw": "SC11"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "@id": "coned:pd-msc-energy",
+              "@type": "urpx:PriceDefinition",
+              "urpx:contributedBy": { "@id": "coned:pm-msc-rate1-trip1-zj-lt" },
+              "urpx:name": "MSC Energy Charge — All Hours",
+              "urpx:chargeType": { "@id": "urpx:usageCharge" },
+              "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
+              "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+              "urpx:referencesLedger": { "@id": "coned:ledger-supply" },
+              "urpx:referencesMetricInput": { "@id": "coned:mi-energy-kwh" },
+              "urpx:pursuantTo": {
+                "@id": "coned:gr-25-msc",
+                "@type": "urpx:GeneralRule",
+                "urpx:generalRuleID": "GR25",
+                "urpx:name": "General Rule 25 — Market Supply Charge",
+                "urpx:hasDataSourceReference": {
+                  "@id": "coned:sr-msc-calculator",
+                  "@type": "urpx:DataSourceReference",
+                  "urpx:name": "ConEd Market Supply Charge Rate Calculator",
+                  "urpx:accessURL": "https://www.coned.com/en/accounts-billing/your-bill/rate-calculators/market-supply-charge"
+                }
+              },
+              "urpx:hasApplicabilityGroup": {
+                "@id": "coned:ag-msc-rate1-zj-lt",
+                "@type": "urpx:ApplicabilityGroup",
+                "urpx:name": "Full Service customers, Rate I, Zone J, low tension"
+              }
+            }
+          ]
+        }
+      },
+      "urpx:hasPrices": {
+        "@id": "coned:prices-sc1-rate-i-v20260201",
+        "@type": "urpx:Prices",
+        "urpx:hasPriceSet": [
+          {
+            "@id": "coned:ps-v20260201-customer-charge",
+            "@type": "urpx:PriceSet",
+            "urpx:name": "Customer Charge",
+            "urpx:priceCurrency": "USD",
+            "urpx:chargeType": { "@id": "urpx:deliveryCharge" },
+            "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+            "urpx:referencesPriceDefinition": { "@id": "coned:pd-customer-charge" },
+            "urpx:hasDataSourceReference": {
+              "@id": "coned:sr-psc10-sc1-leaf388-2026-02-01",
+              "@type": "urpx:DataSourceReference",
+              "urpx:name": "PSC No. 10 Electricity — SC1 Rate I, Leaf 388, Revision 23",
+              "urpx:sourcePublication": { "@id": "coned:sp-psc10-elec-2026-02-01" },
+              "urpx:fileName": "coned_sc1_rate1_2026-02-01.pdf",
+              "urpx:mediaType": { "@id": "urpx:applicationPdf" },
+              "urpx:effectiveDate": "2026-02-01"
+            },
+            "urpx:hasPrice": {
+              "@id": "coned:p-v20260201-customer-charge",
+              "@type": "urpx:Price",
+              "urpx:amount": "21.00",
+              "urpx:startDate": "2026-02-01"
+            }
+          },
+          {
+            "@id": "coned:ps-v20260201-energy-first-250",
+            "@type": "urpx:PriceSet",
+            "urpx:name": "Energy Delivery — First 250 kWh",
+            "urpx:priceCurrency": "USD",
+            "urpx:chargeType": { "@id": "urpx:deliveryCharge" },
+            "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+            "urpx:referencesPriceDefinition": { "@id": "coned:pd-energy-first-250" },
+            "urpx:hasDataSourceReference": { "@id": "coned:sr-psc10-sc1-leaf388-2026-02-01" },
+            "urpx:hasPrice": {
+              "@id": "coned:p-v20260201-energy-first-250",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.16402",
+              "urpx:startDate": "2026-02-01"
+            }
+          },
+          {
+            "@id": "coned:ps-v20260201-energy-over-250",
+            "@type": "urpx:PriceSet",
+            "urpx:name": "Energy Delivery — Over 250 kWh (Summer)",
+            "urpx:priceCurrency": "USD",
+            "urpx:chargeType": { "@id": "urpx:deliveryCharge" },
+            "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+            "urpx:referencesPriceDefinition": { "@id": "coned:pd-energy-over-250" },
+            "urpx:hasDataSourceReference": { "@id": "coned:sr-psc10-sc1-leaf388-2026-02-01" },
+            "urpx:hasPrice": {
+              "@id": "coned:p-v20260201-energy-over-250",
+              "@type": "urpx:Price",
+              "urpx:amount": "0.18858",
+              "urpx:startDate": "2026-02-01"
+            }
+          },
+          {
+            "@id": "coned:ps-v20260201-mac-energy",
+            "@type": "urpx:PriceSet",
+            "urpx:name": "MAC Energy Charge",
+            "urpx:priceCurrency": "USD",
+            "urpx:chargeType": { "@id": "urpx:deliveryCharge" },
+            "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
+            "urpx:hasMetricSpecification": { "@id": "coned:ms-energy-kwh" },
+            "urpx:referencesPriceDefinition": { "@id": "coned:pd-mac-energy-charge" },
+            "urpx:hasPrice": [
+              {
+                "@id": "coned:p-v20260201-mac-202602",
+                "@type": "urpx:Price",
+                "urpx:contributedBy": { "@id": "coned:pm-gr26-mac-2026-02-01" },
+                "urpx:amount": "0.00420",
+                "urpx:startDate": "2026-02-01",
+                "urpx:endDate": "2026-03-01",
+                "urpx:hasDataSourceReference": {
+                  "@id": "coned:sr-gr26-mac-202602",
+                  "@type": "urpx:DataSourceReference",
+                  "urpx:name": "PSC No. 10 — Statement of Monthly Adjustment Clause No. 169",
+                  "urpx:sourcePublication": {
+                    "@id": "coned:sp-gr26-mac-202602",
+                    "@type": "urpx:SourcePublication",
+                    "urpx:name": "ConEd PSC No. 10 — Statement of Monthly Adjustment Clause No. 169, effective 2026-02-01",
+                    "urpx:publicationType": { "@id": "urpx:tariffStatement" },
+                    "urpx:effectiveDate": "2026-02-01"
+                  },
+                  "urpx:fileName": "mac-202602.pdf",
+                  "urpx:mediaType": { "@id": "urpx:applicationPdf" }
+                }
+              },
+              {
+                "@id": "coned:p-v20260201-mac-202603",
+                "@type": "urpx:Price",
+                "urpx:contributedBy": { "@id": "coned:pm-gr26-mac-2026-03-01" },
+                "urpx:amount": "0.00813",
+                "urpx:startDate": "2026-03-01",
+                "urpx:endDate": "2026-04-01",
+                "urpx:hasDataSourceReference": {
+                  "@id": "coned:sr-gr26-mac-202603",
+                  "@type": "urpx:DataSourceReference",
+                  "urpx:name": "PSC No. 10 — Statement of Monthly Adjustment Clause No. 170",
+                  "urpx:sourcePublication": {
+                    "@id": "coned:sp-gr26-mac-202603",
+                    "@type": "urpx:SourcePublication",
+                    "urpx:name": "ConEd PSC No. 10 — Statement of Monthly Adjustment Clause No. 170, effective 2026-03-01",
+                    "urpx:publicationType": { "@id": "urpx:tariffStatement" },
+                    "urpx:effectiveDate": "2026-03-01"
+                  },
+                  "urpx:fileName": "mac-202603.pdf",
+                  "urpx:mediaType": { "@id": "urpx:applicationPdf" }
+                }
+              },
+              {
+                "@id": "coned:p-v20260201-mac-202604",
+                "@type": "urpx:Price",
+                "urpx:contributedBy": { "@id": "coned:pm-gr26-mac-2026-04-01" },
+                "urpx:amount": "0.01104",
+                "urpx:startDate": "2026-04-01",
+                "urpx:endDate": "2026-05-01",
+                "urpx:hasDataSourceReference": {
+                  "@id": "coned:sr-gr26-mac-202604",
+                  "@type": "urpx:DataSourceReference",
+                  "urpx:name": "PSC No. 10 — Statement of Monthly Adjustment Clause No. 171",
+                  "urpx:sourcePublication": {
+                    "@id": "coned:sp-gr26-mac-202604",
+                    "@type": "urpx:SourcePublication",
+                    "urpx:name": "ConEd PSC No. 10 — Statement of Monthly Adjustment Clause No. 171, effective 2026-04-01",
+                    "urpx:publicationType": { "@id": "urpx:tariffStatement" },
+                    "urpx:effectiveDate": "2026-04-01"
+                  },
+                  "urpx:fileName": "mac-202604.pdf",
+                  "urpx:mediaType": { "@id": "urpx:applicationPdf" }
+                }
+              },
+              {
+                "@id": "coned:p-v20260201-mac-202605",
+                "@type": "urpx:Price",
+                "urpx:contributedBy": { "@id": "coned:pm-gr26-mac-2026-05-01" },
+                "urpx:amount": "0.00459",
+                "urpx:startDate": "2026-05-01",
+                "urpx:hasDataSourceReference": {
+                  "@id": "coned:sr-gr26-mac-202605",
+                  "@type": "urpx:DataSourceReference",
+                  "urpx:name": "PSC No. 10 — Statement of Monthly Adjustment Clause No. 172",
+                  "urpx:sourcePublication": {
+                    "@id": "coned:sp-gr26-mac-202605",
+                    "@type": "urpx:SourcePublication",
+                    "urpx:name": "ConEd PSC No. 10 — Statement of Monthly Adjustment Clause No. 172, effective 2026-05-01",
+                    "urpx:publicationType": { "@id": "urpx:tariffStatement" },
+                    "urpx:effectiveDate": "2026-05-01"
+                  },
+                  "urpx:fileName": "mac-202605.pdf",
+                  "urpx:mediaType": { "@id": "urpx:applicationPdf" }
+                }
+              }
+            ]
+          },
+          {
+            "@id": "coned:ps-v20260201-msc-energy",
+            "@type": "urpx:PriceSet",
+            "urpx:name": "MSC Energy Charge — All Hours",
+            "urpx:priceCurrency": "USD",
+            "urpx:chargeType": { "@id": "urpx:usageCharge" },
+            "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+            "urpx:referencesPriceDefinition": { "@id": "coned:pd-msc-energy" },
+            "urpx:hasDataSourceReference": {
+              "@id": "coned:sr-lds-appnd-csv",
+              "@type": "urpx:DataSourceReference",
+              "urpx:name": "ConEd LDS_APPND Market Supply Charges CSV",
+              "urpx:sourcePublication": {
+                "@id": "coned:sp-msc-lds-appnd",
+                "@type": "urpx:SourcePublication",
+                "urpx:publicationType": { "@id": "urpx:marketPriceFeed" },
+                "urpx:name": "ConEd LDS_APPND CSV"
+              },
+              "urpx:fileName": "lds-appnd-2025.csv",
+              "urpx:mediaType": { "@id": "urpx:textCsv" },
+              "urpx:accessURL": "https://www.coned.com/en/accounts-billing/your-bill/rate-calculators/market-supply-charge",
+              "urpx:dateRetrieved": "2025-10-16"
+            },
+            "urpx:hasPrice": [
+              {
+                "@id": "coned:p-v20260201-msc-20251231",
+                "@type": "urpx:Price",
+                "urpx:amount": "0.129362",
+                "urpx:startDate": "2025-12-31",
+                "urpx:endDate": "2026-02-02"
+              },
+              {
+                "@id": "coned:p-v20260201-msc-20260202",
+                "@type": "urpx:Price",
+                "urpx:amount": "0.124850",
+                "urpx:startDate": "2026-02-02",
+                "urpx:endDate": "2026-03-04"
+              },
+              {
+                "@id": "coned:p-v20260201-msc-20260304",
+                "@type": "urpx:Price",
+                "urpx:amount": "0.100885",
+                "urpx:startDate": "2026-03-04",
+                "urpx:endDate": "2026-04-02"
+              },
+              {
+                "@id": "coned:p-v20260201-msc-20260402",
+                "@type": "urpx:Price",
+                "urpx:amount": "0.097202",
+                "urpx:startDate": "2026-04-02",
+                "urpx:endDate": "2026-05-01"
+              },
+              {
+                "@id": "coned:p-v20260201-msc-20260501",
+                "@type": "urpx:Price",
+                "urpx:amount": "0.130838",
+                "urpx:startDate": "2026-05-01",
+                "urpx:endDate": "2026-06-02"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

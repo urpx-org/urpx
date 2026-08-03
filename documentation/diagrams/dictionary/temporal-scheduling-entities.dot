@@ -6,7 +6,7 @@ digraph "Temporal & Scheduling Entities" {
     ranksep=1.0;
     start=42;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="Temporal & Scheduling Entities (URPX v0.2.0)";
+    label="Temporal & Scheduling Entities (URPX v0.3.0)";
     labelloc="t";
     fontsize=14;
     fontcolor="#1a365d";
@@ -48,6 +48,14 @@ digraph "Temporal & Scheduling Entities" {
     ];
     DynamicPricing [
         label="DynamicPricing"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    TemporalScope [
+        label="TemporalScope"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    TemporalPeriod [
+        label="TemporalPeriod"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
 
@@ -95,6 +103,9 @@ digraph "Temporal & Scheduling Entities" {
     ];
     DynamicPricing -> PriceUpdateRule [
         label="hasPriceUpdateRule\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TemporalScope -> TemporalPeriod [
+        label="hasTemporalPeriod\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
 
     subgraph cluster_legend {

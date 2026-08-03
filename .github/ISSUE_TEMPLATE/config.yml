@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: Flux Tailor LLC
+# SPDX-License-Identifier: Apache-2.0
+
+blank_issues_enabled: true
+contact_links:
+  - name: URPX Working Group mailing list
+    url: https://lists.lfenergy.org/g/urpx-wg
+    about: For discussion, questions, and working group matters.

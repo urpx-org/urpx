@@ -1,0 +1,169 @@
+{
+  "@context": {
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "coned": "https://urpx-org.github.io/urpx/fixtures/coned/",
+    "org": "https://urpx-org.github.io/urpx/fixtures/org/",
+    "urpx:effectiveDate": { "@type": "xsd:date" },
+    "urpx:initialEffectiveDate": { "@type": "xsd:date" },
+    "urpx:startDate": { "@type": "xsd:date" },
+    "urpx:endDate": { "@type": "xsd:date" },
+    "urpx:amount": { "@type": "xsd:decimal" },
+    "urpx:dateRetrieved": { "@type": "xsd:date" },
+    "urpx:accessURL": { "@type": "xsd:anyURI" }
+  },
+  "@graph": [
+    {
+      "@id": "coned:coned-sc1-rate-i-v20260201-supply-referenced",
+      "@type": "urpx:RatePlanVersion",
+      "urpx:name": "SC1 Rate I — Supply, resolved snapshot with an externally referenced price definition (effective 2026-02-01)",
+      "urpx:description": "Resolved RatePlanVersion snapshot for Consolidated Edison SC1 Rate I supply that exercises the reference and collection machinery. The Market Supply Charge is not carried inline: it appears as a PriceDefinitionReference marked retrievedElsewhere, whose price definition is resolved against a ModelCollection thread of the published market price feed models rather than materialised into the snapshot. Because a component is priced from an external feed, the coverage claim is not self-contained and is fallback-sourced. One supply service charge is carried inline so the billing model has authored content; its lineage is recorded with contributedBy, and the version lists its contributing model with consolidatedFrom. The feed models appear only in the reference's resolution thread: content resolved through a reference is not consolidated into the snapshot.",
+      "urpx:version": "2026-02-01-supply-ref",
+      "urpx:effectiveDate": "2026-02-01",
+      "urpx:changeReason": { "@id": "urpx:fuelAdjustment" },
+      "urpx:priceCurrency": "USD",
+      "urpx:offeredBy": {
+        "@id": "org:consolidated-edison",
+        "@type": "urpx:UtilityOperator",
+        "urpx:legalName": "Consolidated Edison Company of New York, Inc.",
+        "urpx:organizationType": { "@id": "urpx:utilityOrganization" }
+      },
+      "urpx:serviceRole": { "@id": "urpx:retailSupplyRole" },
+      "urpx:consolidatedFrom": [
+        {
+          "@id": "coned:pm-sc1-supply-service-2026-02-01",
+          "@type": "urpx:PricingModel",
+          "urpx:confidence": { "@id": "urpx:verified" }
+        }
+      ],
+      "urpx:forRatePlan": {
+        "@id": "coned:coned-sc1-rate-i",
+        "@type": "urpx:RatePlan",
+        "urpx:name": "SC1 Rate I — Residential and Religious",
+        "urpx:ratePlanUniqueIdentifier": "CONED-SC1-RATE-I",
+        "urpx:initialEffectiveDate": "2018-01-01",
+        "urpx:offeredBy": { "@id": "org:consolidated-edison" }
+      },
+      "urpx:hasCoverageClaim": {
+        "@id": "coned:cc-sc1-rate-i-v20260201-supply-ref",
+        "@type": "urpx:CoverageClaim",
+        "urpx:completenessResult": { "@id": "urpx:complete" },
+        "urpx:confidence": { "@id": "urpx:estimated" },
+        "urpx:selfContained": false,
+        "urpx:stale": false,
+        "urpx:fallbackSourced": true,
+        "urpx:explainedBy": {
+          "@id": "coned:eval-sc1-rate-i-v20260201-supply-ref",
+          "@type": "urpx:Evaluation",
+          "urpx:description": "Coverage is complete for the claimed supply scope. The Market Supply Charge is priced from ConEd's published market price feed rather than a filed value, so it is carried as a retrievedElsewhere PriceDefinitionReference resolved against the feed model thread; the snapshot is therefore not self-contained (selfContained false) and its Market Supply value was obtained through fallback resolution (fallbackSourced true). The supply service charge is authored content, carried inline. The feed models are not listed in consolidatedFrom: their content reaches the snapshot through the reference's resolution thread. Derived confidence is estimated, the minimum across the filed model and the feed models the reference resolves against."
+        }
+      },
+      "urpx:hasPriceDefinitionReference": {
+        "@id": "coned:pdref-msc-energy-2026-02-01",
+        "@type": "urpx:PriceDefinitionReference",
+        "urpx:referenceInclusion": { "@id": "urpx:retrievedElsewhere" },
+        "urpx:hasTemporalScope": {
+          "@id": "coned:ts-pdref-msc-energy-applicability",
+          "@type": "urpx:TemporalScope",
+          "urpx:scopeKind": { "@id": "urpx:applicability" },
+          "urpx:startDate": "2026-02-01",
+          "urpx:endDate": "2026-03-01"
+        },
+        "urpx:documentedBy": {
+          "@id": "coned:sr-lds-appnd-csv-supply-ref",
+          "@type": "urpx:DataSourceReference",
+          "urpx:name": "ConEd LDS_APPND Market Supply Charges CSV",
+          "urpx:sourcePublication": {
+            "@id": "coned:sp-msc-lds-appnd",
+            "@type": "urpx:SourcePublication",
+            "urpx:name": "ConEd LDS_APPND CSV",
+            "urpx:publicationType": { "@id": "urpx:marketPriceFeed" }
+          },
+          "urpx:fileName": "lds-appnd-2025.csv",
+          "urpx:mediaType": { "@id": "urpx:textCsv" },
+          "urpx:accessURL": "https://www.coned.com/en/accounts-billing/your-bill/rate-calculators/market-supply-charge",
+          "urpx:dateRetrieved": "2025-10-16"
+        },
+        "urpx:resolvedFrom": {
+          "@id": "coned:mc-msc-feed-thread",
+          "@type": "urpx:ModelCollection",
+          "urpx:name": "ConEd Market Supply Charge feed model thread",
+          "urpx:collectionRole": { "@id": "urpx:modelThread" },
+          "urpx:collectsPricingModel": [
+            {
+              "@id": "coned:pm-msc-feed-rate1-2026-02",
+              "@type": "urpx:PricingModel",
+              "urpx:confidence": { "@id": "urpx:estimated" },
+              "urpx:supersedes": { "@id": "coned:pm-msc-feed-rate1-2026-01" }
+            },
+            {
+              "@id": "coned:pm-msc-feed-rate1-2026-01",
+              "@type": "urpx:PricingModel",
+              "urpx:confidence": { "@id": "urpx:estimated" }
+            }
+          ]
+        }
+      },
+      "urpx:hasPlanElements": {
+        "@id": "coned:pe-sc1-rate-i-v20260201-supply-ref",
+        "@type": "urpx:PlanElements",
+        "urpx:hasMetricInput": {
+          "@id": "coned:mi-energy-kwh",
+          "@type": "urpx:MetricInput",
+          "urpx:name": "Electricity consumption (kWh)",
+          "urpx:metricInputType": { "@id": "urpx:measuredMetricInput" },
+          "urpx:hasMetricSpecification": {
+            "@id": "coned:ms-energy-kwh",
+            "@type": "urpx:MetricSpecification",
+            "urpx:measurementKind": { "@id": "urpx:energy" },
+            "urpx:unitOfMeasure": { "@id": "urpx:kWh" },
+            "urpx:flowDirection": { "@id": "urpx:forward" },
+            "urpx:commodity": { "@id": "urpx:electricity" }
+          }
+        },
+        "urpx:hasBillingModel": {
+          "@id": "coned:bm-sc1-rate-i-v20260201-supply-ref",
+          "@type": "urpx:BillingModel",
+          "urpx:hasLedger": {
+            "@id": "coned:ledger-supply",
+            "@type": "urpx:Ledger",
+            "urpx:name": "Supply",
+            "urpx:ledgerType": { "@id": "urpx:supplyLedger" }
+          },
+          "urpx:hasPriceDefinition": {
+            "@id": "coned:pd-supply-service-charge",
+            "@type": "urpx:PriceDefinition",
+            "urpx:contributedBy": { "@id": "coned:pm-sc1-supply-service-2026-02-01" },
+            "urpx:name": "Supply Service Charge",
+            "urpx:chargeType": { "@id": "urpx:usageCharge" },
+            "urpx:chargeCategory": { "@id": "urpx:auxiliaryCharge" },
+            "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+            "urpx:priceCurrency": "USD",
+            "urpx:referencesLedger": { "@id": "coned:ledger-supply" },
+            "urpx:referencesMetricInput": { "@id": "coned:mi-energy-kwh" }
+          }
+        }
+      },
+      "urpx:hasPrices": {
+        "@id": "coned:prices-sc1-rate-i-v20260201-supply-ref",
+        "@type": "urpx:Prices",
+        "urpx:hasPriceSet": {
+          "@id": "coned:ps-v20260201-supply-service-charge",
+          "@type": "urpx:PriceSet",
+          "urpx:name": "Supply Service Charge",
+          "urpx:priceCurrency": "USD",
+          "urpx:chargeType": { "@id": "urpx:usageCharge" },
+          "urpx:billPortion": { "@id": "urpx:supplyPortion" },
+          "urpx:referencesPriceDefinition": { "@id": "coned:pd-supply-service-charge" },
+          "urpx:hasPrice": {
+            "@id": "coned:p-v20260201-supply-service-charge",
+            "@type": "urpx:Price",
+            "urpx:amount": "0.00230",
+            "urpx:startDate": "2026-02-01"
+          }
+        }
+      }
+    }
+  ]
+}
