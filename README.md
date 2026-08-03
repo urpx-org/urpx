@@ -53,6 +53,20 @@ URPX uses Semantic Versioning: `MAJOR.MINOR.PATCH`.
 | **MINOR** | Additive changes: new classes, new properties, new enumeration values. Backward compatible. |
 | **PATCH** | Non-breaking corrections: annotation fixes, label typos, SHACL constraint corrections. No structural change. |
 
+### Before 1.0
+
+URPX is pre-1.0, and the table above describes the scheme from 1.0 onward. Until then the version digits shift down one place:
+
+| Level | Pre-1.0 meaning |
+|-------|-----------------|
+| **MAJOR** (`0`) | Stays `0`. The move to `1.0.0` is a deliberate statement that the vocabulary is stable and that breaking changes will carry a major bump from then on. It is not reached by accumulating releases. |
+| **MINOR** (`0.x`) | Breaking changes, as described for MAJOR above. A consumer should expect to migrate between minor versions. |
+| **PATCH** (`0.x.y`) | Additive and non-breaking changes, as described for MINOR and PATCH above. |
+
+So `v0.2.x` to `v0.3.0` was a breaking release, and a change of the term namespace is a minor bump while the vocabulary is pre-1.0.
+
+Every release states its own compatibility in its release notes. Where a release is breaking, the notes carry a Breaking Changes section and a Migration section.
+
 ---
 
 ## License

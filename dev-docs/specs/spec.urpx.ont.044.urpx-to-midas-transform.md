@@ -14,7 +14,7 @@ created: 1784419200000
 | **Author** | Flux Tailor |
 | **Assignee** | Unassigned — open for any working-group member |
 | **Delivered against** | URPX v0.3.0 candidate, branch `v0.3.0-wg-review`, commit `3d474cbd`; MIDAS v2.0 (June 2026), `https://github.com/california-energy-commission/MIDAS` |
-| **Target release** | v0.4.0 documentation/tooling; **no ontology or SHACL changes** |
+| **Target release** | v0.5.0 documentation/tooling; **no ontology or SHACL changes** |
 | **Targets** | documentation pages (interoperability), `scripts/` (reference transform, follow-up) |
 | **Implementation task** | [backlog.task.urpx.ont.2026-07-19.urpx-to-midas-transform.md](../tasks/backlog.task.urpx.ont.2026-07-19.urpx-to-midas-transform.md) |
 | **Samples** | [dev-docs/samples/midas-transform/](../samples/midas-transform/) |

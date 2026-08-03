@@ -1,7 +1,7 @@
 ---
 id: specurpxdocs045printableontologyposter
 title: "Printable URPX ontology poster for conferences"
-desc: "A human-designed, print-ready poster of the URPX vocabulary for conferences and outreach. An auto-generated v0.2.0 draft exists as a starting reference but is not human-readable; this spec asks for a curated, current-vocabulary poster. Unassigned — open for a working-group contributor. Targets v0.4.0 (not launch-gating)."
+desc: "A human-designed, print-ready poster of the URPX vocabulary for conferences and outreach. An auto-generated v0.2.0 draft exists as a starting reference but is not human-readable; this spec asks for a curated, current-vocabulary poster. Unassigned — open for a working-group contributor. Targets v0.5.0 (not launch-gating)."
 updated: 1784505600000
 created: 1784505600000
 ---
@@ -13,7 +13,7 @@ created: 1784505600000
 | **Status** | Draft — open for a working-group contributor |
 | **Author** | Flux Tailor |
 | **Assignee** | **Unassigned — open for any working-group member to pick up** |
-| **Target** | v0.4.0 (post-launch; not launch-gating) |
+| **Target** | v0.5.0 (post-launch; not launch-gating) |
 | **Deliverable** | A print-ready poster file (PDF at A0 and A1) plus its editable source |
 
 ## Why

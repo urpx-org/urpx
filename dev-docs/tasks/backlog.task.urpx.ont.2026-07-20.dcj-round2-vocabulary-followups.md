@@ -1,18 +1,18 @@
 ---
 id: taskurpxont20260720dcjround2vocabularyfollowups
-title: "v0.4.0 follow-ups from the round-2 v0.3.0 review (identifier-on-version, computed-quantity confidence, California example conventions)"
+title: "v0.5.0 follow-ups from the round-2 v0.3.0 review (identifier-on-version, computed-quantity confidence, California example conventions)"
 desc: "Backlog stubs for the non-gating items raised in the round-2 v0.3.0 review: carrying the customer-facing identifier on a resolved version, a confidence value for an exactly-computed quantity, and agreeing identifier + source-citation conventions for the California worked-example set. Each is left as a stub for the reviewer to confirm whether the v0.3.0 changes already resolve it. Two related vocabulary gaps are already tracked separately (GH #32, GH #25)."
 updated: 1784505600000
 created: 1784505600000
 ---
 
-# v0.4.0 follow-ups from the round-2 v0.3.0 review
+# v0.5.0 follow-ups from the round-2 v0.3.0 review
 
 | Field | Value |
 |-------|-------|
 | **Status** | Backlog — stubs for the reviewer to confirm |
 | **Assignment** | **Unassigned — open for a working-group member** |
-| **Target** | v0.4.0 (none gate the v0.3.0 tag) |
+| **Target** | v0.5.0 (none gate the v0.3.0 tag) |
 
 The round-2 review noted two items that were accepted in the response to the first review but are not in the candidate at its current tip, and one collaboration item. None gate publication; they are recorded here so they are not lost and so the reviewer can confirm whether the v0.3.0 model already covers them.
 
@@ -20,7 +20,7 @@ The round-2 review noted two items that were accepted in the response to the fir
 
 **Raised:** carrying the customer-facing identifier (the California MIDAS RIN) on a resolved version, so a consumer reading only the snapshot has it.
 
-**Resolution (v0.3.0):** the identifier is now available on the version by two paths. It still has its authoritative home on the plan *identity* — a `RatePlan` carries one or more `RatePlanIdentifier`s via `hasIdentifier` (`scheme` + `skos:notation`), reachable from a version through `forRatePlan` — and, for standalone-snapshot consumption, `hasIdentifier` was widened onto `RatePlanVersion` / `RatePlanModifierVersion` so a snapshot can carry the identifier directly (alongside `timezoneIdentifier` and `hasLocationDataSet`). The plan identity remains authoritative; a version-level copy MUST agree. The reuse call was reuse-by-widening (no new property minted). Recorded as Decision #127. No longer a v0.4.0 item.
+**Resolution (v0.3.0):** the identifier is now available on the version by two paths. It still has its authoritative home on the plan *identity* — a `RatePlan` carries one or more `RatePlanIdentifier`s via `hasIdentifier` (`scheme` + `skos:notation`), reachable from a version through `forRatePlan` — and, for standalone-snapshot consumption, `hasIdentifier` was widened onto `RatePlanVersion` / `RatePlanModifierVersion` so a snapshot can carry the identifier directly (alongside `timezoneIdentifier` and `hasLocationDataSet`). The plan identity remains authoritative; a version-level copy MUST agree. The reuse call was reuse-by-widening (no new property minted). Recorded as Decision #127. No longer a v0.5.0 item.
 
 ## 2. Confidence value for an exactly-computed quantity
 

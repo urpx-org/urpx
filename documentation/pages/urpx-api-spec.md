@@ -720,6 +720,6 @@ Input on scope and priorities is welcome through the working group. Visit [urpx-
 
 ---
 
-*API specification under development and planned for URPX v0.4.0 release. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
+*API specification under development and planned for URPX v0.5.0 release. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
 
 [← Back to Index](/docs/getting-started/overview)
