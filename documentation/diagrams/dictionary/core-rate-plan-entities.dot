@@ -52,6 +52,9 @@ digraph "Core Rate Plan Entities" {
     RatePlan -> RatePlanIdentifier [
         label="hasIdentifier\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=8
     ];
+    RatePlan -> RatePlanVersion [
+        label="hasRatePlanVersion\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
     RatePlanVersion -> RatePlan [
         label="applicableToRatePlan\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=10
     ];
@@ -69,6 +72,9 @@ digraph "Core Rate Plan Entities" {
     ];
     RatePlanModifier -> RatePlanModifierIdentifier [
         label="hasIdentifier\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifier -> RatePlanModifierVersion [
+        label="hasRatePlanModifierVersion\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     RatePlanModifierVersion -> RatePlan [
         label="applicableToRatePlan\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5

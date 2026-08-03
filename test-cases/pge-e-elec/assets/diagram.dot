@@ -846,7 +846,7 @@ digraph "urpx-rate-plan_pge_e-elec" {
         penwidth=1.5
     ];
     n_pge_e_elec_2026_01_01 -> n_org_utility_pge [
-        label="publishedBy"
+        label="offeredBy"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5

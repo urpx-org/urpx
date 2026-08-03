@@ -38,9 +38,9 @@
 <!-- n_coned_coned_sc1_rate_i_v20260201_supply_referenced&#45;&gt;n_org_consolidated_edison -->
 <g id="edge1" class="edge">
 <title>n_coned_coned_sc1_rate_i_v20260201_supply_referenced&#45;&gt;n_org_consolidated_edison</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M567.36,-1773.55C512.22,-1762.17 445.68,-1748.19 386,-1735 324.48,-1721.41 255.11,-1705.21 202.92,-1692.85"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="203.59,-1689.42 193.05,-1690.51 201.97,-1696.23 203.59,-1689.42"/>
-<text text-anchor="middle" x="407.5" y="-1728.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">publishedBy</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M567.42,-1772.55C514.4,-1761.22 451.02,-1747.57 394,-1735 331.02,-1721.12 259.94,-1705.03 206.23,-1692.79"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="206.94,-1689.36 196.41,-1690.55 205.39,-1696.19 206.94,-1689.36"/>
+<text text-anchor="middle" x="411.5" y="-1728.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">offeredBy</text>
 </g>
 <!-- n_coned_pm_sc1_supply_service_2026_02_01 -->
 <g id="node3" class="node">

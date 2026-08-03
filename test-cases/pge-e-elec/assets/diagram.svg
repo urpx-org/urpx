@@ -64,7 +64,7 @@
 <title>n_pge_e_elec_2026_01_01&#45;&gt;n_org_utility_pge</title>
 <path fill="none" stroke="#1a5276" stroke-width="1.5" d="M3029.26,-2747.36C2910.25,-2737.57 2716.95,-2715.47 2556.5,-2668 2530.83,-2660.41 2503.52,-2648.13 2481.96,-2637.36"/>
 <polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="2483.29,-2634.11 2472.79,-2632.7 2480.12,-2640.35 2483.29,-2634.11"/>
-<text text-anchor="middle" x="2704" y="-2695.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">publishedBy</text>
+<text text-anchor="middle" x="2700" y="-2695.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">offeredBy</text>
 </g>
 <!-- n_pge_rate_case_2025 -->
 <g id="node5" class="node">

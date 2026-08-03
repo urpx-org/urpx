@@ -32,6 +32,10 @@ digraph "Source & Publication Entities" {
         label="GeneralRule"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
     ];
+    Organization [
+        label="Organization"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
     PriceDefinition [
         label="PriceDefinition"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
@@ -42,6 +46,9 @@ digraph "Source & Publication Entities" {
     ];
 
     // Object property edges
+    SourcePublication -> Organization [
+        label="publishedBy\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
     TariffFiling -> PriceDefinition [
         label="cancelsPriceDefinition\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
@@ -53,6 +60,9 @@ digraph "Source & Publication Entities" {
     ];
     TariffFiling -> GeneralRule [
         label="hasGeneralRule\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TariffFiling -> Organization [
+        label="publishedBy\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     DataSourceReference -> SourcePublication [
         label="sourcePublication\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5

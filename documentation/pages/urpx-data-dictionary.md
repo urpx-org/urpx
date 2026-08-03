@@ -160,6 +160,7 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 | `urpx:hasTariffPublication` | Object | 0..* | [`SourcePublication`](#sourcepublication) | References to formal tariff publications |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
 | `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
+| `urpx:publishedBy` | Object | 0..1 | [`Organization`](#organization) | Organization that published this pricing model, tariff filing, source publication, or URPX exchange package. |
 | `urpx:targetURPXVersion` | Datatype | 1..1 | `xsd:anyURI` | The URPX ontology version this document was authored against. |
 | `urpx:timezoneIdentifier` | Datatype | 0..1 | `xsd:string` | IANA timezone identifier for this location dataset |
 | `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
@@ -201,11 +202,13 @@ derived RatePlanVersion snapshot.
 | `urpx:hasIdentifier` | Object | 0..* | [`RatePlanIdentifier`](#rateplanidentifier) | Links an organization identity, rate plan, or rate plan modifier to a typed external identifier. |
 | `urpx:hasLocationDataSet` | Object | 0..* | [`LocationDataSet`](#locationdataset) | Links organization to versioned location auxiliary data |
 | `urpx:hasRateGroup` | Object | 0..* | [`RateGroup`](#rategroup) | Links rate plan to specific rate group |
+| `urpx:hasRatePlanVersion` | Object | 0..* | [`RatePlanVersion`](#rateplanversion) | Links a rate plan to a resolved version snapshot built for it. |
 | `urpx:hasServiceClass` | Object | 0..* | [`ServiceClass`](#serviceclass) | Service classes applicable to this rate plan |
 | `urpx:initialEffectiveDate` | Datatype | 1..1 | `xsd:date` | Date when this rate plan was first introduced |
+| `urpx:isReferencedByPricingModel` | Object | 0..* | [`PricingModel`](#pricingmodel) | Links a rate plan or rate plan modifier to a pricing model that declares content for it. |
 | `urpx:name` | Datatype | 1..1 | `xsd:string` | The name of the item |
+| `urpx:offeredBy` | Object | 0..1 | [`Organization`](#organization) | Organization that offers this pricing model, rate plan, rate plan modifier, rate plan version, or rate plan modifier version to customers. |
 | `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
-| `urpx:publishedBy` | Object | 0..1 | [`Organization`](#organization) | Organization that publishes this rate plan, rate plan modifier, rate plan version, or rate plan modifier version |
 | `urpx:ratePlanUniqueIdentifier` | Datatype | 1..1 | `xsd:string` | Unique rate plan identifier using alphanumeric and hyphen only |
 | `urpx:serviceRole` | Datatype | 0..1 | — | Service role for rate plan (distribution/retail/bundled) |
 | `urpx:timezoneIdentifier` | Datatype | 0..1 | `xsd:string` | IANA timezone identifier for this location dataset |
@@ -282,8 +285,8 @@ continuous pricing coverage.
 | `urpx:minimumTenure` | Datatype | 0..1 | `xsd:duration` | The minimum duration a customer must remain enrolled in a rate plan, program, or service offering. |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
 | `urpx:observesHoliday` | Object | 0..* | [`Holiday`](#holiday) | Specific holidays observed by this rate plan version |
+| `urpx:offeredBy` | Object | 0..1 | [`Organization`](#organization) | Organization that offers this pricing model, rate plan, rate plan modifier, rate plan version, or rate plan modifier version to customers. |
 | `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
-| `urpx:publishedBy` | Object | 1..1 | [`Organization`](#organization) | Organization that publishes this rate plan, rate plan modifier, rate plan version, or rate plan modifier version |
 | `urpx:referencesGeneralRule` | Object | 0..* | [`GeneralRule`](#generalrule) | References a general rule applicable to this rate plan version or modifier version |
 | `urpx:selfContained` | Datatype | 0..1 | `xsd:boolean` | Derived: false iff any PriceDefinitionReference is referenceInclusion retrievedElsewhere. |
 | `urpx:serviceRole` | Datatype | 1..1 | — | Service role for rate plan (distribution/retail/bundled) |
@@ -324,12 +327,14 @@ demand response programs, and renewable energy riders.
 | `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
 | `urpx:hasIdentifier` | Object | 0..* | [`RatePlanModifierIdentifier`](#rateplanmodifieridentifier) | Links an organization identity, rate plan, or rate plan modifier to a typed external identifier. |
 | `urpx:hasLocationDataSet` | Object | 0..* | [`LocationDataSet`](#locationdataset) | Links organization to versioned location auxiliary data |
+| `urpx:hasRatePlanModifierVersion` | Object | 0..* | [`RatePlanModifierVersion`](#rateplanmodifierversion) | Links a rate plan modifier to a resolved version snapshot built for it. |
 | `urpx:hasServiceClass` | Object | 0..* | [`ServiceClass`](#serviceclass) | Service classes applicable to this rate plan |
 | `urpx:initialEffectiveDate` | Datatype | 1..1 | `xsd:date` | Date when this rate plan was first introduced |
+| `urpx:isReferencedByPricingModel` | Object | 0..* | [`PricingModel`](#pricingmodel) | Links a rate plan or rate plan modifier to a pricing model that declares content for it. |
 | `urpx:modifierUniqueIdentifier` | Datatype | 1..1 | `xsd:string` | Unique modifier identifier using alphanumeric and hyphen only |
 | `urpx:name` | Datatype | 1..1 | `xsd:string` | The name of the item |
+| `urpx:offeredBy` | Object | 0..1 | [`Organization`](#organization) | Organization that offers this pricing model, rate plan, rate plan modifier, rate plan version, or rate plan modifier version to customers. |
 | `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
-| `urpx:publishedBy` | Object | 0..1 | [`Organization`](#organization) | Organization that publishes this rate plan, rate plan modifier, rate plan version, or rate plan modifier version |
 | `urpx:serviceRole` | Datatype | 0..1 | — | Service role for rate plan (distribution/retail/bundled) |
 | `urpx:timezoneIdentifier` | Datatype | 0..1 | `xsd:string` | IANA timezone identifier for this location dataset |
 | `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
@@ -402,8 +407,8 @@ Modifier versions track changes to rider rates and conditions over time.
 | `urpx:modifierType` | Datatype | 0..1 | — | Type of rate plan modifier (utility rate plan modifiers) |
 | `urpx:modifierVersionNumber` | Datatype | 1..1 | `xsd:string` | Modifier version number |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
+| `urpx:offeredBy` | Object | 0..1 | [`Organization`](#organization) | Organization that offers this pricing model, rate plan, rate plan modifier, rate plan version, or rate plan modifier version to customers. |
 | `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
-| `urpx:publishedBy` | Object | 1..1 | [`Organization`](#organization) | Organization that publishes this rate plan, rate plan modifier, rate plan version, or rate plan modifier version |
 | `urpx:referencesGeneralRule` | Object | 0..* | [`GeneralRule`](#generalrule) | References a general rule applicable to this rate plan version or modifier version |
 | `urpx:selfContained` | Datatype | 0..1 | `xsd:boolean` | Derived: false iff any PriceDefinitionReference is referenceInclusion retrievedElsewhere. |
 | `urpx:serviceRole` | Datatype | 1..1 | — | Service role for rate plan (distribution/retail/bundled) |
@@ -460,6 +465,8 @@ Modifier versions track changes to rider rates and conditions over time.
 | `urpx:hasGeneralRule` | Object | 0..* | [`GeneralRule`](#generalrule) | Links a TariffFiling or PricingModel to general rules that apply across rate plans. |
 | `urpx:hasPlanElements` | Object | 0..1 | [`PlanElements`](#planelements) | Centralized temporal and pricing elements for rate plan or modifier versions |
 | `urpx:hasPrices` | Object | 0..1 | [`Prices`](#prices) | Links a rate plan version or authored pricing model to actual price instances with amounts or unit prices |
+| `urpx:offeredBy` | Object | 0..1 | [`Organization`](#organization) | The organization that offers the pricing this model states. |
+| `urpx:publishedBy` | Object | 0..1 | [`Organization`](#organization) | The organization that published this pricing model as a unit. Present on a standalone model; a model published within a filing may leave it to the filing. |
 | `urpx:pursuantTo` | Object | 0..* | [`GeneralRule`](#generalrule) | The general rule that legally grounds this PricingModel or PriceDefinition. |
 | `urpx:referencesRatePlan` | Object | 0..* | [`RatePlan`](#rateplan) | Plan-specific content link (PricingModel → RatePlan); or links a PriorRatePlan record to the actual rate plan. |
 | `urpx:referencesRatePlanModifier` | Object | 0..* | [`RatePlanModifier`](#rateplanmodifier) | Plan-specific content link: this PricingModel applies to this RatePlanModifier. |
@@ -896,6 +903,7 @@ specifications.
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
 | `urpx:pageReference` | Datatype | 0..1 | `xsd:string` | Page numbers or sections where rate plan information appears |
 | `urpx:publicationType` | Datatype | 0..1 | — | The kind of external source publication. |
+| `urpx:publishedBy` | Object | 0..1 | [`Organization`](#organization) | Organization that published this pricing model, tariff filing, source publication, or URPX exchange package. |
 | `urpx:url` | Datatype | 0..1 | `xsd:anyURI` | URL of the item |
 | `urpx:version` | Datatype | 0..1 | `xsd:string` | The version of the CreativeWork embodied by a specified resource |
 
@@ -927,6 +935,7 @@ specifications.
 | `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
 | `urpx:hasGeneralRule` | Object | 0..* | [`GeneralRule`](#generalrule) | Links a TariffFiling or PricingModel to general rules that apply across rate plans. |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
+| `urpx:publishedBy` | Object | 0..1 | [`Organization`](#organization) | The organization that published this filing. |
 | `urpx:replacedBy` | Object | 0..1 | [`TariffFiling`](#tarifffiling) | Inverse of urpx:replaces: the successor publication unit (tariff filing, or standalone pricing model) that corrects and voids this one for the same effective period. |
 | `urpx:replaces` | Object | 0..1 | [`TariffFiling`](#tarifffiling) | Links a corrected publication unit — a tariff filing, or a standalone pricing model with no enclosing filing — to the prior one it replaces for the SAME effective period. The replaced subject is voided; the replacing one occupies the same effective window with corrected content. A filing replaces a filing; a pricing model replaces a pricing model. Use urpx:supersedes for a forward-in-time change of effective period; use urpx:replaces for an in-place correction of an existing period. |
 | `urpx:supersedes` | Object | 0..1 | [`TariffFiling`](#tarifffiling) | Links a publication unit to the prior one it supersedes: a tariff filing to the prior filing, or an authored pricing model to the prior model in the same thread. The superseded subject's effective span ends when the superseding one begins; it remains valid history. Supersession is a forward-in-time change of effective period — it is NOT a same-period correction (urpx:replaces) nor a cancellation/withdrawal (urpx:cancelledBy). |
@@ -938,7 +947,7 @@ specifications.
 **URI:** `https://urpx-org.github.io/urpx/ontology/DataSourceReference`  
 **Parent:** `owl:Thing`
 
-**Description:** Structured reference from a URPX fact to the external source it was interpreted from (publication, API, database, manual entry) — filename/URL, media type, and an optional sub-document selector.
+**Description:** Structured reference from an URPX fact to the external source it was interpreted from (publication, API, database, manual entry) — filename/URL, media type, and an optional sub-document selector.
 
 **Properties:**
 
@@ -2073,9 +2082,9 @@ energy service providers.
 | `urpx:hasIdentity` | Object | 0..* | [`OrganizationIdentity`](#organizationidentity) | Links organization to temporal identity records |
 | `urpx:hasLocationDataSet` | Object | 0..* | [`LocationDataSet`](#locationdataset) | Links organization to versioned location auxiliary data |
 | `urpx:legalName` | Datatype | 0..1 | `xsd:string` | Official legal name of the organization |
+| `urpx:offers` | Datatype | 0..* | — | Links an organization to the pricing models, rate plans, rate plan modifiers, and version snapshots it offers to customers. |
 | `urpx:operatesIn` | Object | 0..* | [`SystemOperator`](#systemoperator) | Links organization to ISO/RTO markets |
 | `urpx:organizationType` | Datatype | 1..1 | — | Classification of organization type (organization types) |
-| `urpx:publishes` | Object | 0..* | [`RatePlan`](#rateplan) | Links organization to rate plans it publishes |
 
 ---
 
@@ -2097,9 +2106,9 @@ energy service providers.
 | `urpx:hasJurisdictionOver` | Object | 0..* | [`Organization`](#organization) | Links regulator to regulated entities |
 | `urpx:hasLocationDataSet` | Object | 0..* | [`LocationDataSet`](#locationdataset) | Links organization to versioned location auxiliary data |
 | `urpx:legalName` | Datatype | 0..1 | `xsd:string` | Official legal name of the organization |
+| `urpx:offers` | Datatype | 0..* | — | Links an organization to the pricing models, rate plans, rate plan modifiers, and version snapshots it offers to customers. |
 | `urpx:operatesIn` | Object | 0..* | [`SystemOperator`](#systemoperator) | Links organization to ISO/RTO markets |
 | `urpx:organizationType` | Datatype | 1..1 | — | Classification of organization type (organization types) |
-| `urpx:publishes` | Object | 0..* | [`RatePlan`](#rateplan) | Links organization to rate plans it publishes |
 | `urpx:regulatoryScope` | Datatype | 1..1 | — | Scope of regulatory oversight (regulatory functions) |
 
 ---
@@ -2120,8 +2129,8 @@ energy service providers.
 | `urpx:hasIdentity` | Object | 0..* | [`OrganizationIdentity`](#organizationidentity) | Links organization to temporal identity records |
 | `urpx:hasLocationDataSet` | Object | 0..* | [`LocationDataSet`](#locationdataset) | Links organization to versioned location auxiliary data |
 | `urpx:legalName` | Datatype | 0..1 | `xsd:string` | Official legal name of the organization |
+| `urpx:offers` | Datatype | 0..* | — | Links an organization to the pricing models, rate plans, rate plan modifiers, and version snapshots it offers to customers. |
 | `urpx:organizationType` | Datatype | 1..1 | — | Classification of organization type (organization types) |
-| `urpx:publishes` | Object | 0..* | [`RatePlan`](#rateplan) | Links organization to rate plans it publishes |
 
 ---
 
@@ -2141,10 +2150,10 @@ energy service providers.
 | `urpx:hasIdentity` | Object | 0..* | [`OrganizationIdentity`](#organizationidentity) | Links organization to temporal identity records |
 | `urpx:hasLocationDataSet` | Object | 0..* | [`LocationDataSet`](#locationdataset) | Links organization to versioned location auxiliary data |
 | `urpx:legalName` | Datatype | 0..1 | `xsd:string` | Official legal name of the organization |
+| `urpx:offers` | Datatype | 0..* | — | Links an organization to the pricing models, rate plans, rate plan modifiers, and version snapshots it offers to customers. |
 | `urpx:operatesIn` | Object | 0..* | [`SystemOperator`](#systemoperator) | Links organization to ISO/RTO markets |
 | `urpx:organizationType` | Datatype | 1..1 | — | Classification of organization type (organization types) |
 | `urpx:ownershipType` | Datatype | 0..1 | — | Ownership structure of utility (EIA ownership categories) |
-| `urpx:publishes` | Object | 0..* | [`RatePlan`](#rateplan) | Links organization to rate plans it publishes |
 
 ---
 
@@ -2164,9 +2173,9 @@ energy service providers.
 | `urpx:hasIdentity` | Object | 0..* | [`OrganizationIdentity`](#organizationidentity) | Links organization to temporal identity records |
 | `urpx:hasLocationDataSet` | Object | 0..* | [`LocationDataSet`](#locationdataset) | Links organization to versioned location auxiliary data |
 | `urpx:legalName` | Datatype | 0..1 | `xsd:string` | Official legal name of the organization |
+| `urpx:offers` | Datatype | 0..* | — | Links an organization to the pricing models, rate plans, rate plan modifiers, and version snapshots it offers to customers. |
 | `urpx:operatesIn` | Object | 0..* | [`SystemOperator`](#systemoperator) | Links organization to ISO/RTO markets |
 | `urpx:organizationType` | Datatype | 1..1 | — | Classification of organization type (organization types) |
-| `urpx:publishes` | Object | 0..* | [`RatePlan`](#rateplan) | Links organization to rate plans it publishes |
 | `urpx:serviceRole` | Datatype | 1..1 | — | Service role for rate plan (distribution/retail/bundled) |
 
 ---

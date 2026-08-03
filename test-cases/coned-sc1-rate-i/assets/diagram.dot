@@ -525,7 +525,7 @@ digraph "coned-sc1-rate-i-v20260201-resolved" {
     ];
 
     n_coned_coned_sc1_rate_i_v20260201 -> n_org_consolidated_edison [
-        label="publishedBy"
+        label="offeredBy"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5

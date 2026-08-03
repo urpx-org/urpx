@@ -98,18 +98,18 @@
 <!-- n_org_utility_pge -->
 <g id="node10" class="node">
 <title>n_org_utility_pge</title>
-<path fill="#bbcc33" stroke="#99aa11" stroke-width="2" d="M30380.5,-3823.5C30380.5,-3823.5 30550.5,-3823.5 30550.5,-3823.5 30556.5,-3823.5 30562.5,-3829.5 30562.5,-3835.5 30562.5,-3835.5 30562.5,-3857.5 30562.5,-3857.5 30562.5,-3863.5 30556.5,-3869.5 30550.5,-3869.5 30550.5,-3869.5 30380.5,-3869.5 30380.5,-3869.5 30374.5,-3869.5 30368.5,-3863.5 30368.5,-3857.5 30368.5,-3857.5 30368.5,-3835.5 30368.5,-3835.5 30368.5,-3829.5 30374.5,-3823.5 30380.5,-3823.5"/>
-<text text-anchor="middle" x="30465.5" y="-3858.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#333333">Organization</text>
-<polyline fill="none" stroke="#99aa11" stroke-width="2" points="30368.5,-3851.5 30562.5,-3851.5 "/>
-<text text-anchor="start" x="30376.5" y="-3840.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#333333">legalName: Pacific Gas &amp; Electric Company</text>
-<text text-anchor="start" x="30376.5" y="-3830.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#333333">eiaId: 14328</text>
+<path fill="#bbcc33" stroke="#99aa11" stroke-width="2" d="M30379.5,-3823.5C30379.5,-3823.5 30549.5,-3823.5 30549.5,-3823.5 30555.5,-3823.5 30561.5,-3829.5 30561.5,-3835.5 30561.5,-3835.5 30561.5,-3857.5 30561.5,-3857.5 30561.5,-3863.5 30555.5,-3869.5 30549.5,-3869.5 30549.5,-3869.5 30379.5,-3869.5 30379.5,-3869.5 30373.5,-3869.5 30367.5,-3863.5 30367.5,-3857.5 30367.5,-3857.5 30367.5,-3835.5 30367.5,-3835.5 30367.5,-3829.5 30373.5,-3823.5 30379.5,-3823.5"/>
+<text text-anchor="middle" x="30464.5" y="-3858.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#333333">Organization</text>
+<polyline fill="none" stroke="#99aa11" stroke-width="2" points="30367.5,-3851.5 30561.5,-3851.5 "/>
+<text text-anchor="start" x="30375.5" y="-3840.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#333333">legalName: Pacific Gas &amp; Electric Company</text>
+<text text-anchor="start" x="30375.5" y="-3830.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#333333">eiaId: 14328</text>
 </g>
 <!-- n_pge_e_tou_c_2026_03_01&#45;&gt;n_org_utility_pge -->
 <g id="edge1" class="edge">
 <title>n_pge_e_tou_c_2026_03_01&#45;&gt;n_org_utility_pge</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M43002.06,-3991.23C41764.66,-3988.24 30902.35,-3960.14 30580.5,-3895 30559.03,-3890.65 30536.52,-3882.3 30517.17,-3873.79"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30518.5,-3870.55 30507.95,-3869.62 30515.62,-3876.93 30518.5,-3870.55"/>
-<text text-anchor="middle" x="31799" y="-3922.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">publishedBy</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M43002.06,-3991.23C41764.55,-3988.24 30901.38,-3960.15 30579.5,-3895 30558.03,-3890.65 30535.52,-3882.3 30516.17,-3873.79"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30517.5,-3870.55 30506.95,-3869.62 30514.62,-3876.93 30517.5,-3870.55"/>
+<text text-anchor="middle" x="31794" y="-3922.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">offeredBy</text>
 </g>
 <!-- n__anon_10 -->
 <g id="node11" class="node">
@@ -151,16 +151,16 @@
 <!-- n_pge_cc_e_tou_c_2026_03_01 -->
 <g id="node17" class="node">
 <title>n_pge_cc_e_tou_c_2026_03_01</title>
-<path fill="#aaccff" stroke="#1a5276" stroke-width="2" d="M38165,-3828.5C38165,-3828.5 38238,-3828.5 38238,-3828.5 38244,-3828.5 38250,-3834.5 38250,-3840.5 38250,-3840.5 38250,-3852.5 38250,-3852.5 38250,-3858.5 38244,-3864.5 38238,-3864.5 38238,-3864.5 38165,-3864.5 38165,-3864.5 38159,-3864.5 38153,-3858.5 38153,-3852.5 38153,-3852.5 38153,-3840.5 38153,-3840.5 38153,-3834.5 38159,-3828.5 38165,-3828.5"/>
-<text text-anchor="middle" x="38201.5" y="-3853.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">CoverageClaim</text>
-<polyline fill="none" stroke="#1a5276" stroke-width="2" points="38153,-3846.5 38250,-3846.5 "/>
-<text text-anchor="start" x="38161" y="-3835.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">selfContained: True</text>
+<path fill="#aaccff" stroke="#1a5276" stroke-width="2" d="M38163,-3828.5C38163,-3828.5 38236,-3828.5 38236,-3828.5 38242,-3828.5 38248,-3834.5 38248,-3840.5 38248,-3840.5 38248,-3852.5 38248,-3852.5 38248,-3858.5 38242,-3864.5 38236,-3864.5 38236,-3864.5 38163,-3864.5 38163,-3864.5 38157,-3864.5 38151,-3858.5 38151,-3852.5 38151,-3852.5 38151,-3840.5 38151,-3840.5 38151,-3834.5 38157,-3828.5 38163,-3828.5"/>
+<text text-anchor="middle" x="38199.5" y="-3853.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">CoverageClaim</text>
+<polyline fill="none" stroke="#1a5276" stroke-width="2" points="38151,-3846.5 38248,-3846.5 "/>
+<text text-anchor="start" x="38159" y="-3835.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">selfContained: True</text>
 </g>
 <!-- n_pge_e_tou_c_2026_03_01&#45;&gt;n_pge_cc_e_tou_c_2026_03_01 -->
 <g id="edge8" class="edge">
 <title>n_pge_e_tou_c_2026_03_01&#45;&gt;n_pge_cc_e_tou_c_2026_03_01</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M43002.14,-3988.47C42568.25,-3976.92 40982.22,-3934.38 39675.5,-3895 39125.2,-3878.42 38459.42,-3856.18 38260.4,-3849.49"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="38260.28,-3845.98 38250.17,-3849.14 38260.04,-3852.98 38260.28,-3845.98"/>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M43002.14,-3988.46C42568.25,-3976.91 40982.22,-3934.35 39675.5,-3895 39124.46,-3878.41 38457.77,-3856.18 38258.48,-3849.49"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="38258.34,-3845.98 38248.23,-3849.14 38258.11,-3852.98 38258.34,-3845.98"/>
 <text text-anchor="middle" x="40846" y="-3922.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasCoverageClaim</text>
 </g>
 <!-- n__anon_18 -->
@@ -252,8 +252,8 @@
 <!-- n_pge_cc_e_tou_c_2026_03_01&#45;&gt;n_pge_eval_e_tou_c_2026_03_01 -->
 <g id="edge9" class="edge">
 <title>n_pge_cc_e_tou_c_2026_03_01&#45;&gt;n_pge_eval_e_tou_c_2026_03_01</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M38152.78,-3835.4C38061.76,-3816.52 37859.69,-3774.56 37689.5,-3739 37676.63,-3736.31 37663.05,-3733.47 37649.7,-3730.67"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="37650.06,-3727.17 37639.56,-3728.54 37648.63,-3734.02 37650.06,-3727.17"/>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M38150.98,-3835.38C38060.31,-3816.48 37859.04,-3774.5 37689.5,-3739 37676.63,-3736.31 37663.05,-3733.46 37649.7,-3730.66"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="37650.06,-3727.16 37639.56,-3728.53 37648.63,-3734.01 37650.06,-3727.16"/>
 <text text-anchor="middle" x="37866" y="-3766.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">explainedBy</text>
 </g>
 <!-- n_pge_season_summer -->
@@ -1814,9 +1814,9 @@
 <!-- n_pge_e_tou_c_vintage_pcia_2026_03_01&#45;&gt;n_org_utility_pge -->
 <g id="edge116" class="edge">
 <title>n_pge_e_tou_c_vintage_pcia_2026_03_01&#45;&gt;n_org_utility_pge</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M9442.21,-3991.36C11092.35,-3989.39 29546.59,-3966.47 30096.5,-3929 30210.13,-3921.26 30240.5,-3924.54 30350.5,-3895 30370.58,-3889.61 30391.81,-3881.56 30410.5,-3873.61"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30411.95,-3876.79 30419.73,-3869.6 30409.16,-3870.37 30411.95,-3876.79"/>
-<text text-anchor="middle" x="30247" y="-3922.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">publishedBy</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M9442.24,-3991.37C11092.78,-3989.46 29551.51,-3967.36 30101.5,-3929 30212.48,-3921.26 30242.1,-3924.03 30349.5,-3895 30369.57,-3889.58 30390.8,-3881.52 30409.49,-3873.57"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30410.94,-3876.76 30418.72,-3869.57 30408.15,-3870.33 30410.94,-3876.76"/>
+<text text-anchor="middle" x="30241" y="-3922.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">offeredBy</text>
 </g>
 <!-- n_pge_cc_e_tou_c_vintage_pcia_2026_03_01 -->
 <g id="node125" class="node">
@@ -4369,53 +4369,53 @@
 <!-- n_pge_e_tou_c_baseline_tier_2026_03_01 -->
 <g id="node302" class="node">
 <title>n_pge_e_tou_c_baseline_tier_2026_03_01</title>
-<path fill="#aaccff" stroke="#1a5276" stroke-width="2" d="M30362.5,-3954.5C30362.5,-3954.5 30568.5,-3954.5 30568.5,-3954.5 30574.5,-3954.5 30580.5,-3960.5 30580.5,-3966.5 30580.5,-3966.5 30580.5,-4018.5 30580.5,-4018.5 30580.5,-4024.5 30574.5,-4030.5 30568.5,-4030.5 30568.5,-4030.5 30362.5,-4030.5 30362.5,-4030.5 30356.5,-4030.5 30350.5,-4024.5 30350.5,-4018.5 30350.5,-4018.5 30350.5,-3966.5 30350.5,-3966.5 30350.5,-3960.5 30356.5,-3954.5 30362.5,-3954.5"/>
-<text text-anchor="middle" x="30465.5" y="-4019.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">RatePlanModifierVersion</text>
-<polyline fill="none" stroke="#1a5276" stroke-width="2" points="30350.5,-4012.5 30580.5,-4012.5 "/>
-<text text-anchor="start" x="30358.5" y="-4001.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">version: 2026&#45;03&#45;01</text>
-<text text-anchor="start" x="30358.5" y="-3991.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">modifierVersionNumber: 2026&#45;03&#45;01</text>
-<text text-anchor="start" x="30358.5" y="-3981.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">description: Baseline Credit and Conservation Ince...</text>
-<text text-anchor="start" x="30358.5" y="-3971.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">effectiveDateTime: 2026&#45;03&#45;01T00:00:00</text>
-<text text-anchor="start" x="30358.5" y="-3961.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">priceCurrency: USD</text>
+<path fill="#aaccff" stroke="#1a5276" stroke-width="2" d="M30361.5,-3954.5C30361.5,-3954.5 30567.5,-3954.5 30567.5,-3954.5 30573.5,-3954.5 30579.5,-3960.5 30579.5,-3966.5 30579.5,-3966.5 30579.5,-4018.5 30579.5,-4018.5 30579.5,-4024.5 30573.5,-4030.5 30567.5,-4030.5 30567.5,-4030.5 30361.5,-4030.5 30361.5,-4030.5 30355.5,-4030.5 30349.5,-4024.5 30349.5,-4018.5 30349.5,-4018.5 30349.5,-3966.5 30349.5,-3966.5 30349.5,-3960.5 30355.5,-3954.5 30361.5,-3954.5"/>
+<text text-anchor="middle" x="30464.5" y="-4019.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">RatePlanModifierVersion</text>
+<polyline fill="none" stroke="#1a5276" stroke-width="2" points="30349.5,-4012.5 30579.5,-4012.5 "/>
+<text text-anchor="start" x="30357.5" y="-4001.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">version: 2026&#45;03&#45;01</text>
+<text text-anchor="start" x="30357.5" y="-3991.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">modifierVersionNumber: 2026&#45;03&#45;01</text>
+<text text-anchor="start" x="30357.5" y="-3981.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">description: Baseline Credit and Conservation Ince...</text>
+<text text-anchor="start" x="30357.5" y="-3971.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">effectiveDateTime: 2026&#45;03&#45;01T00:00:00</text>
+<text text-anchor="start" x="30357.5" y="-3961.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">priceCurrency: USD</text>
 </g>
 <!-- n_pge_e_tou_c_baseline_tier_2026_03_01&#45;&gt;n_org_utility_pge -->
 <g id="edge293" class="edge">
 <title>n_pge_e_tou_c_baseline_tier_2026_03_01&#45;&gt;n_org_utility_pge</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30465.5,-3954.42C30465.5,-3931.36 30465.5,-3901.99 30465.5,-3879.87"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30469,-3879.66 30465.5,-3869.66 30462,-3879.66 30469,-3879.66"/>
-<text text-anchor="middle" x="30487" y="-3922.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">publishedBy</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30464.5,-3954.42C30464.5,-3931.36 30464.5,-3901.99 30464.5,-3879.87"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30468,-3879.66 30464.5,-3869.66 30461,-3879.66 30468,-3879.66"/>
+<text text-anchor="middle" x="30482" y="-3922.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">offeredBy</text>
 </g>
 <!-- n_pge_cc_e_tou_c_baseline_tier_2026_03_01 -->
 <g id="node303" class="node">
 <title>n_pge_cc_e_tou_c_baseline_tier_2026_03_01</title>
-<path fill="#aaccff" stroke="#1a5276" stroke-width="2" d="M30611,-3828.5C30611,-3828.5 30684,-3828.5 30684,-3828.5 30690,-3828.5 30696,-3834.5 30696,-3840.5 30696,-3840.5 30696,-3852.5 30696,-3852.5 30696,-3858.5 30690,-3864.5 30684,-3864.5 30684,-3864.5 30611,-3864.5 30611,-3864.5 30605,-3864.5 30599,-3858.5 30599,-3852.5 30599,-3852.5 30599,-3840.5 30599,-3840.5 30599,-3834.5 30605,-3828.5 30611,-3828.5"/>
-<text text-anchor="middle" x="30647.5" y="-3853.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">CoverageClaim</text>
-<polyline fill="none" stroke="#1a5276" stroke-width="2" points="30599,-3846.5 30696,-3846.5 "/>
-<text text-anchor="start" x="30607" y="-3835.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">selfContained: True</text>
+<path fill="#aaccff" stroke="#1a5276" stroke-width="2" d="M30610,-3828.5C30610,-3828.5 30683,-3828.5 30683,-3828.5 30689,-3828.5 30695,-3834.5 30695,-3840.5 30695,-3840.5 30695,-3852.5 30695,-3852.5 30695,-3858.5 30689,-3864.5 30683,-3864.5 30683,-3864.5 30610,-3864.5 30610,-3864.5 30604,-3864.5 30598,-3858.5 30598,-3852.5 30598,-3852.5 30598,-3840.5 30598,-3840.5 30598,-3834.5 30604,-3828.5 30610,-3828.5"/>
+<text text-anchor="middle" x="30646.5" y="-3853.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">CoverageClaim</text>
+<polyline fill="none" stroke="#1a5276" stroke-width="2" points="30598,-3846.5 30695,-3846.5 "/>
+<text text-anchor="start" x="30606" y="-3835.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#1a365d">selfContained: True</text>
 </g>
 <!-- n_pge_e_tou_c_baseline_tier_2026_03_01&#45;&gt;n_pge_cc_e_tou_c_baseline_tier_2026_03_01 -->
 <g id="edge291" class="edge">
 <title>n_pge_e_tou_c_baseline_tier_2026_03_01&#45;&gt;n_pge_cc_e_tou_c_baseline_tier_2026_03_01</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30512.37,-3954.42C30545.54,-3928.17 30589.02,-3893.77 30617.59,-3871.16"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30619.92,-3873.79 30625.59,-3864.84 30615.58,-3868.3 30619.92,-3873.79"/>
-<text text-anchor="middle" x="30586" y="-3922.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasCoverageClaim</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30511.37,-3954.42C30544.54,-3928.17 30588.02,-3893.77 30616.59,-3871.16"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30618.92,-3873.79 30624.59,-3864.84 30614.58,-3868.3 30618.92,-3873.79"/>
+<text text-anchor="middle" x="30585" y="-3922.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasCoverageClaim</text>
 </g>
 <!-- n__anon_304 -->
 <g id="node305" class="node">
 <title>n__anon_304</title>
-<path fill="#a8d8cf" stroke="#86b6ad" stroke-width="2" d="M30744.5,-3818.5C30744.5,-3818.5 30944.5,-3818.5 30944.5,-3818.5 30950.5,-3818.5 30956.5,-3824.5 30956.5,-3830.5 30956.5,-3830.5 30956.5,-3862.5 30956.5,-3862.5 30956.5,-3868.5 30950.5,-3874.5 30944.5,-3874.5 30944.5,-3874.5 30744.5,-3874.5 30744.5,-3874.5 30738.5,-3874.5 30732.5,-3868.5 30732.5,-3862.5 30732.5,-3862.5 30732.5,-3830.5 30732.5,-3830.5 30732.5,-3824.5 30738.5,-3818.5 30744.5,-3818.5"/>
-<text text-anchor="middle" x="30844.5" y="-3863.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#333333">DataSourceReference</text>
-<polyline fill="none" stroke="#86b6ad" stroke-width="2" points="30732.5,-3856.5 30956.5,-3856.5 "/>
-<text text-anchor="start" x="30740.5" y="-3845.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#333333">fileName: ELEC_SCHEDS_E&#45;TOU&#45;C.pdf</text>
-<text text-anchor="start" x="30740.5" y="-3835.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#333333">accessURL: https://www.pge.com/tariffs/assets/pd...</text>
-<text text-anchor="start" x="30740.5" y="-3825.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#333333">dateRetrieved: 2026&#45;04&#45;28</text>
+<path fill="#a8d8cf" stroke="#86b6ad" stroke-width="2" d="M30743.5,-3818.5C30743.5,-3818.5 30943.5,-3818.5 30943.5,-3818.5 30949.5,-3818.5 30955.5,-3824.5 30955.5,-3830.5 30955.5,-3830.5 30955.5,-3862.5 30955.5,-3862.5 30955.5,-3868.5 30949.5,-3874.5 30943.5,-3874.5 30943.5,-3874.5 30743.5,-3874.5 30743.5,-3874.5 30737.5,-3874.5 30731.5,-3868.5 30731.5,-3862.5 30731.5,-3862.5 30731.5,-3830.5 30731.5,-3830.5 30731.5,-3824.5 30737.5,-3818.5 30743.5,-3818.5"/>
+<text text-anchor="middle" x="30843.5" y="-3863.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#333333">DataSourceReference</text>
+<polyline fill="none" stroke="#86b6ad" stroke-width="2" points="30731.5,-3856.5 30955.5,-3856.5 "/>
+<text text-anchor="start" x="30739.5" y="-3845.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#333333">fileName: ELEC_SCHEDS_E&#45;TOU&#45;C.pdf</text>
+<text text-anchor="start" x="30739.5" y="-3835.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#333333">accessURL: https://www.pge.com/tariffs/assets/pd...</text>
+<text text-anchor="start" x="30739.5" y="-3825.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#333333">dateRetrieved: 2026&#45;04&#45;28</text>
 </g>
 <!-- n_pge_e_tou_c_baseline_tier_2026_03_01&#45;&gt;n__anon_304 -->
 <g id="edge294" class="edge">
 <title>n_pge_e_tou_c_baseline_tier_2026_03_01&#45;&gt;n__anon_304</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30563.1,-3954.42C30625.33,-3930.77 30704.99,-3900.51 30763.67,-3878.21"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30765.16,-3881.39 30773.26,-3874.57 30762.67,-3874.85 30765.16,-3881.39"/>
-<text text-anchor="middle" x="30691.5" y="-3922.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasDataSourceReference</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30562.1,-3954.42C30624.33,-3930.77 30703.99,-3900.51 30762.67,-3878.21"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30764.16,-3881.39 30772.26,-3874.57 30761.67,-3874.85 30764.16,-3881.39"/>
+<text text-anchor="middle" x="30690.5" y="-3922.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasDataSourceReference</text>
 </g>
 <!-- n__anon_305 -->
 <g id="node306" class="node">
@@ -4426,22 +4426,22 @@
 <!-- n_pge_e_tou_c_baseline_tier_2026_03_01&#45;&gt;n__anon_305 -->
 <g id="edge295" class="edge">
 <title>n_pge_e_tou_c_baseline_tier_2026_03_01&#45;&gt;n__anon_305</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30350.17,-3975.82C30262.21,-3963.65 30138.09,-3946.04 30029.5,-3929 29871.26,-3904.17 29684.2,-3871.23 29598.56,-3855.95"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="29599.09,-3852.49 29588.63,-3854.18 29597.86,-3859.38 29599.09,-3852.49"/>
-<text text-anchor="middle" x="30060.5" y="-3922.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasPlanElements</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30349.41,-3975.5C30262.75,-3963.27 30141.07,-3945.73 30034.5,-3929 29874.46,-3903.87 29685.13,-3871.01 29598.74,-3855.84"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="29599.18,-3852.36 29588.72,-3854.08 29597.97,-3859.26 29599.18,-3852.36"/>
+<text text-anchor="middle" x="30065.5" y="-3922.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasPlanElements</text>
 </g>
 <!-- n_pge_prices_baseline_tier -->
 <g id="node634" class="node">
 <title>n_pge_prices_baseline_tier</title>
-<path fill="#00bd7e" stroke="#009966" stroke-width="2" d="M30290.5,-3828.5C30290.5,-3828.5 30320.5,-3828.5 30320.5,-3828.5 30326.5,-3828.5 30332.5,-3834.5 30332.5,-3840.5 30332.5,-3840.5 30332.5,-3852.5 30332.5,-3852.5 30332.5,-3858.5 30326.5,-3864.5 30320.5,-3864.5 30320.5,-3864.5 30290.5,-3864.5 30290.5,-3864.5 30284.5,-3864.5 30278.5,-3858.5 30278.5,-3852.5 30278.5,-3852.5 30278.5,-3840.5 30278.5,-3840.5 30278.5,-3834.5 30284.5,-3828.5 30290.5,-3828.5"/>
-<text text-anchor="middle" x="30305.5" y="-3844.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#ffffff">Prices</text>
+<path fill="#00bd7e" stroke="#009966" stroke-width="2" d="M30289.5,-3828.5C30289.5,-3828.5 30319.5,-3828.5 30319.5,-3828.5 30325.5,-3828.5 30331.5,-3834.5 30331.5,-3840.5 30331.5,-3840.5 30331.5,-3852.5 30331.5,-3852.5 30331.5,-3858.5 30325.5,-3864.5 30319.5,-3864.5 30319.5,-3864.5 30289.5,-3864.5 30289.5,-3864.5 30283.5,-3864.5 30277.5,-3858.5 30277.5,-3852.5 30277.5,-3852.5 30277.5,-3840.5 30277.5,-3840.5 30277.5,-3834.5 30283.5,-3828.5 30289.5,-3828.5"/>
+<text text-anchor="middle" x="30304.5" y="-3844.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.00" fill="#ffffff">Prices</text>
 </g>
 <!-- n_pge_e_tou_c_baseline_tier_2026_03_01&#45;&gt;n_pge_prices_baseline_tier -->
 <g id="edge623" class="edge">
 <title>n_pge_e_tou_c_baseline_tier_2026_03_01&#45;&gt;n_pge_prices_baseline_tier</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30418.85,-3954.39C30397.52,-3936.92 30372.23,-3915.46 30350.5,-3895 30342.97,-3887.91 30335.1,-3879.85 30328.09,-3872.41"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30330.25,-3869.6 30320.87,-3864.66 30325.13,-3874.37 30330.25,-3869.6"/>
-<text text-anchor="middle" x="30405" y="-3922.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasPrices</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30417.85,-3954.39C30396.52,-3936.92 30371.23,-3915.46 30349.5,-3895 30341.97,-3887.91 30334.1,-3879.85 30327.09,-3872.41"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30329.25,-3869.6 30319.87,-3864.66 30324.13,-3874.37 30329.25,-3869.6"/>
+<text text-anchor="middle" x="30404" y="-3922.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasPrices</text>
 </g>
 <!-- n_pge_eval_e_tou_c_baseline_tier_2026_03_01 -->
 <g id="node304" class="node">
@@ -4454,9 +4454,9 @@
 <!-- n_pge_cc_e_tou_c_baseline_tier_2026_03_01&#45;&gt;n_pge_eval_e_tou_c_baseline_tier_2026_03_01 -->
 <g id="edge292" class="edge">
 <title>n_pge_cc_e_tou_c_baseline_tier_2026_03_01&#45;&gt;n_pge_eval_e_tou_c_baseline_tier_2026_03_01</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30669.48,-3828.42C30682.25,-3818.89 30698.86,-3807.12 30714.5,-3798 30757.93,-3772.67 30809.99,-3748.75 30847.63,-3732.51"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30849.06,-3735.71 30856.88,-3728.55 30846.31,-3729.27 30849.06,-3735.71"/>
-<text text-anchor="middle" x="30801" y="-3766.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">explainedBy</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30668.47,-3828.41C30681.24,-3818.87 30697.85,-3807.11 30713.5,-3798 30757.15,-3772.6 30809.49,-3748.69 30847.35,-3732.47"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30848.81,-3735.65 30856.64,-3728.52 30846.07,-3729.21 30848.81,-3735.65"/>
+<text text-anchor="middle" x="30795" y="-3766.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">explainedBy</text>
 </g>
 <!-- n_pge_mi_energy_baseline -->
 <g id="node307" class="node">
@@ -9293,8 +9293,8 @@
 <!-- n_pge_prices_baseline_tier&#45;&gt;n_pge_price_baseline_credit -->
 <g id="edge624" class="edge">
 <title>n_pge_prices_baseline_tier&#45;&gt;n_pge_price_baseline_credit</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30317.94,-3828.37C30326.14,-3818.21 30337.71,-3805.82 30350.5,-3798 30381.76,-3778.89 30464.33,-3755.4 30534.2,-3737.72"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30535.12,-3741.1 30543.96,-3735.26 30533.41,-3734.31 30535.12,-3741.1"/>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30316.94,-3828.36C30325.14,-3818.2 30336.7,-3805.82 30349.5,-3798 30380.92,-3778.81 30464.01,-3755.27 30534.19,-3737.6"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30535.14,-3740.97 30543.99,-3735.14 30533.44,-3734.18 30535.14,-3740.97"/>
 <text text-anchor="middle" x="30448" y="-3766.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasPrice</text>
 </g>
 <!-- n_pge_price_cia_t1 -->
@@ -9310,9 +9310,9 @@
 <!-- n_pge_prices_baseline_tier&#45;&gt;n_pge_price_cia_t1 -->
 <g id="edge625" class="edge">
 <title>n_pge_prices_baseline_tier&#45;&gt;n_pge_price_cia_t1</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30278.22,-3835.65C30224.32,-3816.18 30102.21,-3772.08 30019.04,-3742.04"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30020.2,-3738.73 30009.61,-3738.63 30017.82,-3745.32 30020.2,-3738.73"/>
-<text text-anchor="middle" x="30114" y="-3766.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasPrice</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30277.29,-3835.65C30223.54,-3816.18 30101.76,-3772.08 30018.81,-3742.04"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30020,-3738.74 30009.4,-3738.63 30017.61,-3745.32 30020,-3738.74"/>
+<text text-anchor="middle" x="30113" y="-3766.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasPrice</text>
 </g>
 <!-- n_pge_price_cia_t2 -->
 <g id="node637" class="node">
@@ -9327,8 +9327,8 @@
 <!-- n_pge_prices_baseline_tier&#45;&gt;n_pge_price_cia_t2 -->
 <g id="edge626" class="edge">
 <title>n_pge_prices_baseline_tier&#45;&gt;n_pge_price_cia_t2</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30286.33,-3828.26C30263.17,-3807.43 30223.66,-3771.9 30194.3,-3745.49"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30196.46,-3742.73 30186.69,-3738.65 30191.78,-3747.94 30196.46,-3742.73"/>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30285.45,-3828.26C30262.45,-3807.43 30223.21,-3771.9 30194.04,-3745.49"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30196.25,-3742.77 30186.49,-3738.65 30191.55,-3747.96 30196.25,-3742.77"/>
 <text text-anchor="middle" x="30238" y="-3766.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasPrice</text>
 </g>
 <!-- n_pge_price_cia_t2c -->
@@ -9344,9 +9344,9 @@
 <!-- n_pge_prices_baseline_tier&#45;&gt;n_pge_price_cia_t2c -->
 <g id="edge627" class="edge">
 <title>n_pge_prices_baseline_tier&#45;&gt;n_pge_price_cia_t2c</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30317.73,-3828.26C30332.2,-3807.85 30356.67,-3773.32 30375.26,-3747.09"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30378.15,-3749.08 30381.07,-3738.9 30372.44,-3745.03 30378.15,-3749.08"/>
-<text text-anchor="middle" x="30378" y="-3766.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasPrice</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M30316.85,-3828.26C30331.48,-3807.85 30356.21,-3773.32 30375,-3747.09"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="30377.89,-3749.07 30380.87,-3738.9 30372.2,-3744.99 30377.89,-3749.07"/>
+<text text-anchor="middle" x="30377" y="-3766.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasPrice</text>
 </g>
 <!-- leg_0 -->
 <g id="node639" class="node">

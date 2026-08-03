@@ -4480,7 +4480,7 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
     ];
 
     n_pge_e_tou_c_2026_03_01 -> n_org_utility_pge [
-        label="publishedBy"
+        label="offeredBy"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
@@ -5170,7 +5170,7 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         penwidth=1.5
     ];
     n_pge_e_tou_c_vintage_pcia_2026_03_01 -> n_org_utility_pge [
-        label="publishedBy"
+        label="offeredBy"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
@@ -6232,7 +6232,7 @@ digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
         penwidth=1.5
     ];
     n_pge_e_tou_c_baseline_tier_2026_03_01 -> n_org_utility_pge [
-        label="publishedBy"
+        label="offeredBy"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
