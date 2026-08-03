@@ -1,7 +1,7 @@
 ---
 id: specurpxapi047consumingapi
 title: "SPEC-URPX-API-047 — API for consuming published rate plans"
-desc: "Stub spec for the URPX read/query API that lets applications discover published rate plans, retrieve rate plan versions, and check eligibility against the model. Design in progress — no endpoint or payload examples yet. Targets v0.4.0; does not gate the v0.3.0 launch."
+desc: "Stub spec for the URPX read/query API that lets applications discover published rate plans, retrieve rate plan versions, and check eligibility against the model. Design in progress — no endpoint or payload examples yet. Targets v0.5.0; does not gate the v0.3.0 launch."
 updated: 1784937600000
 created: 1784678400000
 ---
@@ -14,7 +14,7 @@ created: 1784678400000
 | **Author** | Flux Tailor |
 | **Assignee** | @klaardeschepper (Flux Tailor lead) |
 | **Delivered against** | URPX v0.3.0 candidate, branch `v0.3.0-wg-review` |
-| **Target release** | v0.4.0 (additive; does not gate the v0.3.0 tag) |
+| **Target release** | v0.5.0 (additive; does not gate the v0.3.0 tag) |
 | **Targets** | Documentation pages; no ontology or SHACL change anticipated for the read path |
 | **Implementation task** | [task.urpx.api.2026-07-22.consuming-api-design.md](../tasks/task.urpx.api.2026-07-22.consuming-api-design.md) |
 | **Related** | SPEC-URPX-ONT-042 (highly dynamic price series payload), SPEC-URPX-ONT-043 (dynamic price discovery and conformance) — the real-time price surface; this spec covers the general read/query surface for published plans |

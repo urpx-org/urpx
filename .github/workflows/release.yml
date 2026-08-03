@@ -131,7 +131,6 @@ jobs:
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ steps.release.outputs.tag }}
-          target_commitish: ${{ steps.release.outputs.checkout_ref }}
           name: ${{ steps.release.outputs.tag }}
           body_path: release-body.md
           files: |

@@ -1,7 +1,7 @@
 ---
 id: specurpxont046geographicapplicabilityentities
 title: "Geographic applicability entities — a coherent, worked idiom for scoping prices to named areas"
-desc: "Backlog stub. The in-tree geographic vocabulary (ServiceTerritory, ServicePointProfile/geographicScope, GeographicScopeValue) lacks a settled, worked idiom for 'a price or plan applies within a named geographic area'. Settle the applicability idiom, provide a validating worked example, and restore a correct Overview illustration. Unassigned; targets v0.4.0; not launch-gating."
+desc: "Backlog stub. The in-tree geographic vocabulary (ServiceTerritory, ServicePointProfile/geographicScope, GeographicScopeValue) lacks a settled, worked idiom for 'a price or plan applies within a named geographic area'. Settle the applicability idiom, provide a validating worked example, and restore a correct Overview illustration. Unassigned; targets v0.5.0; not launch-gating."
 updated: 1784505600000
 created: 1784505600000
 ---
@@ -13,7 +13,7 @@ created: 1784505600000
 | **Status** | Backlog — stub for a working-group contributor |
 | **Author** | Flux Tailor |
 | **Assignee** | **Unassigned — open for any working-group member to pick up** |
-| **Target** | v0.4.0 (post-launch; not launch-gating) |
+| **Target** | v0.5.0 (post-launch; not launch-gating) |
 
 ## Why
 

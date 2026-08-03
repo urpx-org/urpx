@@ -14,7 +14,7 @@ created: 1784419200000
 | **Author** | Flux Tailor |
 | **Assignee** | Unassigned — open for any working-group member |
 | **Delivered against** | URPX v0.3.0 candidate, branch `v0.3.0-wg-review`, commit `3d474cbd` |
-| **Target release** | v0.4.0 (fully additive; no change required to the v0.3.0 candidate before its tag) |
+| **Target release** | v0.5.0 (fully additive; no change required to the v0.3.0 candidate before its tag) |
 | **Targets** | `ontology/urpx-ontology.ttl`, `shacl/urpx-shacl.ttl`, `test-cases/`, documentation pages |
 | **Implementation task** | [backlog.task.urpx.ont.2026-07-19.dynamic-price-discovery-and-conformance-implementation.md](../tasks/backlog.task.urpx.ont.2026-07-19.dynamic-price-discovery-and-conformance-implementation.md) |
 | **Samples** | [dev-docs/samples/comed-rrtp-hdp/](../samples/comed-rrtp-hdp/) (endpoint + conformance vector) · [dev-docs/samples/pge-b6-pdp-event/](../samples/pge-b6-pdp-event/) (event-day vector) |

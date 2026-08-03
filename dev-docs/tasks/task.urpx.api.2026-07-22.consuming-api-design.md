@@ -1,7 +1,7 @@
 ---
 id: taskurpxapiconsumingapidesign
 title: "Consuming API design (read/query interface for published rate plans)"
-desc: "Design the URPX read/query API — discovery, version retrieval, eligibility — against the v0.3.0 model, reconciling the earlier requirements-phase API page. Assigned to Flux Tailor; in progress. Produces SPEC-URPX-API-047. Targets v0.4.0; does not gate the v0.3.0 launch."
+desc: "Design the URPX read/query API — discovery, version retrieval, eligibility — against the v0.3.0 model, reconciling the earlier requirements-phase API page. Assigned to Flux Tailor; in progress. Produces SPEC-URPX-API-047. Targets v0.5.0; does not gate the v0.3.0 launch."
 updated: 1784851200000
 created: 1784678400000
 ---
@@ -13,7 +13,7 @@ created: 1784678400000
 | **Status** | In progress |
 | **Assignment** | Flux Tailor |
 | **Surface** | [spec.urpx.api.047.consuming-api.md](../specs/spec.urpx.api.047.consuming-api.md); documentation API page |
-| **Target release** | v0.4.0 (additive; does not gate the v0.3.0 tag) |
+| **Target release** | v0.5.0 (additive; does not gate the v0.3.0 tag) |
 | **Source** | Chair direction, 2026-07-22 — API named as a prominent work item; the design needs to be re-derived against the v0.3.0 model rather than carried from the earlier requirements-phase page |
 
 ## Problem / opportunity

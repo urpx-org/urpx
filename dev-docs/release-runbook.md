@@ -13,14 +13,16 @@ The v0.3 series ships as three tags, each carrying one kind of change, so that e
 |-----|---------|
 | `v0.3.0` | The vocabulary and shapes as reviewed, on the current namespace |
 | `v0.3.1` | The licence transition described in `TRANSITION.md`: specifications to the W3C Document Licence, datasets to CDLA-Permissive-2.0, source and metadata remaining Apache-2.0 |
-| `v0.3.2` | The move to the `urpx.org` namespace, the dereferencing that goes with it, and the published JSON-LD context |
+| `v0.4.0` | The move to the `urpx.org` namespace, the dereferencing that goes with it, and the published JSON-LD context |
+
+The namespace move is a minor bump rather than a patch because changing the term namespace is a breaking change, and pre-1.0 the minor digit carries breaking changes. See the Versioning Scheme section of the README.
 
 Run `deno task release:validate` and the full Turtle and SHACL checks at each tag, not only the last one.
 
 Two consequences for anyone following this runbook:
 
-- **The namespace changes at `v0.3.2`.** Every `urpx:` IRI takes a new base. A consumer binding to URPX IRIs should bind to the `v0.3.2` namespace; the earlier published mesh remains resolvable as an archive of the `v0.2.x` state.
-- **Local names are settled before `v0.3.0`.** The `v0.3.2` change is a base-IRI substitution and nothing else, so a term whose local name is wrong at `v0.3.0` stays wrong through the substitution.
+- **The namespace changes at `v0.4.0`.** Every `urpx:` IRI takes a new base. A consumer binding to URPX IRIs should bind to the `v0.4.0` namespace; the earlier published mesh remains resolvable as an archive of the `v0.2.x` state.
+- **Local names are settled before `v0.3.0`.** The `v0.4.0` change is a base-IRI substitution and nothing else, so a term whose local name is wrong at `v0.3.0` stays wrong through the substitution.
 
 ## Release Surfaces
 
