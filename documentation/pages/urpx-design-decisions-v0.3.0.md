@@ -7,15 +7,11 @@
 
 **Version:** 0.3.0 (unreleased, pre-Draft)
 
-This page records design decisions for v0.3.0. Starting with v0.3.0, each
-major and minor version has its own design-decision log page. The prior,
-dated record (decisions #001 through #111) remains in
-[`urpx-design-decisions-001-040.md`](urpx-design-decisions-001-040.md),
-[`urpx-design-decisions-041-080.md`](urpx-design-decisions-041-080.md), and
-[`urpx-design-decisions-081-120.md`](urpx-design-decisions-081-120.md), which
-are organized in blocks of forty. Decision numbering continues across pages;
-this page begins at Decision #121, at the start of the next block after the
-081–120 range.
+This page records design decisions for v0.3.0. Starting with v0.3.0, each major and minor version has its own design-decision log page.
+
+The prior, dated record (decisions #001 through #111) remains in [`urpx-design-decisions-001-040.md`](urpx-design-decisions-001-040.md), [`urpx-design-decisions-041-080.md`](urpx-design-decisions-041-080.md), and [`urpx-design-decisions-081-120.md`](urpx-design-decisions-081-120.md), which are organized in blocks of forty.
+
+Decision numbering continues across pages; this page begins at Decision #121, at the start of the next block after the 081–120 range.
 
 ---
 
@@ -31,6 +27,7 @@ this page begins at Decision #121, at the start of the next block after the
 - Decision #128: Collapse Nested Tariff Reference Classes into DataSourceReference
 - Decision #129: Element-Level Consolidation Lineage and Temporal Completeness
 - Decision #130: Publication Type Enumeration Consolidation
+- Decision #131: Offering and Publication Separated on the Plan-to-Organization Link
 
 ---
 
@@ -447,3 +444,59 @@ Consolidate on one enumeration class, renamed `SourcePublicationTypeValue` to ma
 - Ontology (`ontology/urpx-ontology.ttl`): `urpx:SourcePublicationTypeValue` and its eight typed member individuals; the removed `urpx:PublicationTypeValue` and its members.
 - SHACL (`shacl/urpx-shacl.ttl`): `SourcePublicationTypeValueShape` (renamed, with `sh:targetClass` and `sh:nodeKind`); the removed `PublicationTypeValueShape`.
 - Related: Decision #128 (the distinction rides `publicationType`); Decision #121 (the document class family retired in favor of `publicationType`).
+
+---
+
+<a id="decision-131"></a>
+<a id="offering-publication-separated"></a>
+### Decision #131: Offering and Publication Separated on the Plan-to-Organization Link
+
+- **Status:** Accepted (pre-Draft)
+- **Date:** 2026-08-02
+- **Issue:** `publishedBy` was the only organization link on `RatePlan`, `RatePlanModifier`, `RatePlanVersion`, and `RatePlanModifierVersion`, and it named the utility or supplier whose plan it is. Its name and definition asserted publication instead. A URPX rate plan derived from a utility's tariff PDF is not itself a published artifact: the PDF is what the utility published.
+- **Category:** Naming, Architecture, Validation
+
+**Context:**
+Every fixture asserting `publishedBy` on a plan or snapshot named the offering utility — `org:consolidated-edison` on the ConEd service classifications, `org:utility-pge` on the PG&E schedules. The definition read "Organization that publishes this rate plan, rate plan modifier, rate plan version, or rate plan modifier version," so the vocabulary asserted publication about the one thing in the chain that is not published.
+
+Publication had no home on the artifacts that are published. `URPXPackage` and `TariffFiling` carried no organization link at all. `SourcePublication` named its publisher only through `issuingAuthority`, an `xsd:string`, so the publisher of a tariff book could not be referenced as an `Organization` IRI while the plan it states could.
+
+An undeclared, narrower twin of the link already existed on the organization side: `publishes`, with domain `Organization` and range `RatePlan`, admitted by five organization-family shapes and asserted by no data.
+
+**Decision:**
+Rename `publishedBy` to `offeredBy`, with domain `PricingModel ∪ RatePlan ∪ RatePlanModifier ∪ RatePlanVersion ∪ RatePlanModifierVersion`, an `Organization` range, and at-most-one cardinality. Rename `publishes` to `offers`, widen its range to match that domain, and declare the two `owl:inverseOf` each other. Make the link optional in both directions. Re-home `publishedBy` onto the artifacts that are published: `PricingModel ∪ TariffFiling ∪ SourcePublication ∪ URPXPackage`.
+
+**Options Considered (reuse ladder):**
+
+1. **Reuse the existing property under a corrected name (Selected).** The relationship the vocabulary needs was already modelled at the right cardinality on the right four classes; only the name and definition were wrong. Renaming mints no term, changes no domain or range, and adds no shape block.
+   - Pro: The name states what every shipping fixture already means.
+   - Pro: Frees `publishedBy` for the artifacts that are published, which had no typed organization link, rather than retiring a term the model needs.
+   - Pro: Free before the initial public tag and never again.
+   - Con: A breaking key rename for any producer already emitting `publishedBy` on a plan.
+
+2. **Keep `publishedBy` on the plan and mint a second `offeredBy` alongside it.** Rejected. Two organization links on the same four classes, with no rule for which to assert, is the redundant-twin outcome the reuse ladder exists to prevent; the publication reading would remain available on a subject that is not published.
+
+3. **Keep `publishedBy` and correct only its definition.** Rejected. The label and local name are what an implementer reads first; a comment that contradicts them relocates the confusion rather than removing it.
+
+4. **Retire `publishedBy` rather than re-home it.** Rejected. The pricing model, the filing, the source publication, and the exchange package all genuinely need a typed publisher, and widening the domain of a term already in the vocabulary is a lower rung than minting one later.
+
+**Rationale:**
+- The reuse ladder's correct rung is reuse-as-is under a corrected name for the offering link, and reuse-by-widening (rung 3) for the publication link. No term is minted; the vocabulary's term count is unchanged.
+- The widened range on `offers` is load-bearing, not cosmetic. `RatePlan` is `owl:disjointWith` `RatePlanVersion`. Had `offers` kept its `RatePlan` range while being declared inverse, asserting `offeredBy` on a snapshot would have entailed that the snapshot is a `RatePlan`, contradicting the disjointness. This is the unsound-entailment pattern removed from `isReferencedByPricingModel` in the 2026-07-29 entry.
+- `offeredBy` and `offers` align with schema.org `offeredBy` and `offers` by reference. The existing `EnergyServiceProvider` note already described these organizations as offering rate plans.
+- The link is optional in both directions because URPX is used for teaching, sandbox, and research data that models no real utility. Requiring an organization would make a synthetic plan invalid for want of a party that does not exist.
+- "Offering" previously named an out-of-scope concept in the FAQ and tutorial. That section now states the scope directly: URPX represents rate plan data, not the event-based adds, drops, and updates applied to customer profiles as enrollments start, change, and end. "Offer" does one job in the documentation as a result.
+
+**Consequences / Impact:**
+- **Positive:** The plan names its utility without claiming to be a publication, and the publication chain gains a typed publisher on every class that is published.
+- **Positive:** The organization-side link is sound as an inverse for the first time; previously it was a narrower, undeclared twin.
+- **Breaking Change:** Yes, twice over. The `publishedBy` key on plans and snapshots becomes `offeredBy`, and `publishes` on organizations becomes `offers`. Folded into the unreleased v0.3.0 before the initial public tag, so no released vocabulary is affected.
+- **Loosening:** The version shapes previously required the organization link. They now admit it optionally. Data that validated before still validates.
+- **Requirements:** Producers assert `offeredBy` on the pricing model, plan, modifier, or snapshot, and `publishedBy` on the pricing model, filing, source publication, or exchange package. A `PricingModel` carries both, being an authored unit that is itself published; where a model sits inside a filing, the filing carries the publisher. Where a source's publisher differs from its approving body, `issuingAuthority` continues to name the latter.
+
+**References:**
+- Changelog: `urpx-changelog.md`, 2026-08-02 entry ("offering and publication separated").
+- Task: `dev-docs/tasks/completed.task.urpx.ont.2026-08-02.offering-vs-publication-link.md`.
+- Ontology (`ontology/urpx-ontology.ttl`): `urpx:offeredBy`, `urpx:offers`, and the re-homed `urpx:publishedBy`; the removed `urpx:publishes`.
+- SHACL (`shacl/urpx-shacl.ttl`): `PricingModelShape`, `RatePlanShape`, `RatePlanModifierShape`, `RatePlanVersionShape`, and `RatePlanModifierVersionShape` take `offeredBy` at `minCount 0`; `OrganizationShape`, `EnergyServiceProviderShape`, `RegulatoryAuthorityShape`, `SystemOperatorShape`, and `UtilityOperatorShape` take `offers` over the widened union; `PricingModelShape`, `TariffFilingShape`, `SourcePublicationShape`, and `URPXPackageShape` take `publishedBy`.
+- Related: Decision #125 (the plan-to-version link inversion, whose both-directions-assertable pattern `offers` follows); Decision #121 (the pricing model architecture that owns the publication chain).

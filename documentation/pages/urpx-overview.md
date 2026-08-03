@@ -134,7 +134,7 @@ Utilities rarely publish a complete rate plan in one place. A tariff book states
 
 - A `SourcePublication` is the external published artifact (its kind given by `publicationType`)
 - A `TariffFiling` is the regulatory publication unit within a source publication, holding pricing models via `containsPricingModel`
-- A `DataSourceReference` records exactly where a URPX fact was interpreted from: file name or URL, media type, and an optional selector into a page or region
+- A `DataSourceReference` records exactly where an URPX fact was interpreted from: file name or URL, media type, and an optional selector into a page or region
 - Each `PricingModel` carries a `confidence` value (`verified`, `estimated`, or `projected`) stating how its content relates to the published source
 
 #### Rate Plan Versions and Coverage

@@ -19,7 +19,7 @@
       "urpx:timezoneIdentifier": "America/New_York",
       "urpx:commodity": { "@id": "urpx:electricity" },
       "urpx:serviceRole": { "@id": "urpx:distributionServiceRole" },
-      "urpx:publishedBy": { "@id": "org:consolidated-edison" },
+      "urpx:offeredBy": { "@id": "org:consolidated-edison" },
       "urpx:hasIdentifier": { "@id": "coned:coned-sc1-rate-i-id-utility-code" },
       "urpx:hasServiceClass": { "@id": "coned:sc1" },
       "urpx:hasRateGroup": { "@id": "coned:sc1-rate-i-rategroup" }

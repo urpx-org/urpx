@@ -22,7 +22,7 @@ MIDAS is the operating machine-to-machine rate channel in California, and URPX a
 
 ## Approach
 
-1. Implement the transform in the repository's existing script tooling (Deno/TypeScript under `scripts/`), reading a URPX package plus its price time series and emitting a MIDAS v2.0 upload payload.
+1. Implement the transform in the repository's existing script tooling (Deno/TypeScript under `scripts/`), reading an URPX package plus its price time series and emitting a MIDAS v2.0 upload payload.
 2. Enforce the spec's §4 constraints (allowed resolutions, gap-free equal-count unit streams, USD-only) and fail loudly on ambiguous `RateType` derivation (§3) — no guessing.
 3. Report the documented information losses (§5: price status, supersession chains, expressions, provenance) on every run.
 4. Honor the known MIDAS schema quirks recorded in the spec (§6: `RIN` vs `RateID` upload key; all nine value fields treated as required).

@@ -23,7 +23,7 @@
       "urpx:effectiveDate": "2026-02-01",
       "urpx:changeReason": { "@id": "urpx:initial" },
       "urpx:priceCurrency": "USD",
-      "urpx:publishedBy": {
+      "urpx:offeredBy": {
         "@id": "org:consolidated-edison",
         "@type": "urpx:UtilityOperator",
         "urpx:legalName": "Consolidated Edison Company of New York, Inc.",
@@ -98,7 +98,7 @@
         "urpx:timezoneIdentifier": "America/New_York",
         "urpx:commodity": { "@id": "urpx:electricity" },
         "urpx:serviceRole": { "@id": "urpx:distributionServiceRole" },
-        "urpx:publishedBy": { "@id": "org:consolidated-edison" },
+        "urpx:offeredBy": { "@id": "org:consolidated-edison" },
         "urpx:hasIdentifier": {
           "@id": "coned:coned-sc1-rate-i-id-utility-code",
           "@type": "urpx:RatePlanIdentifier",

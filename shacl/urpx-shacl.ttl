@@ -1290,8 +1290,14 @@ urpx-shacl:EnergyServiceProviderShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:publishes ;
-        sh:class urpx:RatePlan ;
+        sh:path urpx:offers ;
+        sh:or (
+            [ sh:class urpx:PricingModel ]
+            [ sh:class urpx:RatePlan ]
+            [ sh:class urpx:RatePlanModifier ]
+            [ sh:class urpx:RatePlanVersion ]
+            [ sh:class urpx:RatePlanModifierVersion ]
+        ) ;
         sh:minCount 0 ;
     ] ;
     sh:property [
@@ -1951,8 +1957,14 @@ urpx-shacl:OrganizationShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:publishes ;
-        sh:class urpx:RatePlan ;
+        sh:path urpx:offers ;
+        sh:or (
+            [ sh:class urpx:PricingModel ]
+            [ sh:class urpx:RatePlan ]
+            [ sh:class urpx:RatePlanModifier ]
+            [ sh:class urpx:RatePlanVersion ]
+            [ sh:class urpx:RatePlanModifierVersion ]
+        ) ;
         sh:minCount 0 ;
     ] .
 
@@ -3252,6 +3264,20 @@ urpx-shacl:PricingModelShape
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:description "Forecast end with dateTime precision: provisional end subject to change, as with pricing effective until further notice. Distinct from the validity-window end carried by expirationDateTime."@en ;
+    ] ;
+    sh:property [
+        sh:path urpx:offeredBy ;
+        sh:class urpx:Organization ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "The organization that offers the pricing this model states."@en ;
+    ] ;
+    sh:property [
+        sh:path urpx:publishedBy ;
+        sh:class urpx:Organization ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "The organization that published this pricing model as a unit. Present on a standalone model; a model published within a filing may leave it to the filing."@en ;
     ] .
 
 urpx-shacl:PriorRatePlanShape
@@ -3602,6 +3628,11 @@ urpx-shacl:RatePlanModifierShape
         sh:minCount 0 ;
     ] ;
     sh:property [
+        sh:path urpx:isReferencedByPricingModel ;
+        sh:class urpx:PricingModel ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
@@ -3644,7 +3675,7 @@ urpx-shacl:RatePlanModifierShape
         sh:minCount 0 ;
     ] ;
     sh:property [
-        sh:path urpx:publishedBy ;
+        sh:path urpx:offeredBy ;
         sh:class urpx:Organization ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
@@ -3832,9 +3863,9 @@ urpx-shacl:RatePlanModifierVersionShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:publishedBy ;
+        sh:path urpx:offeredBy ;
         sh:class urpx:Organization ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -4034,6 +4065,11 @@ urpx-shacl:RatePlanShape
         sh:minCount 0 ;
     ] ;
     sh:property [
+        sh:path urpx:isReferencedByPricingModel ;
+        sh:class urpx:PricingModel ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
         sh:path urpx:timezoneIdentifier ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
@@ -4063,7 +4099,7 @@ urpx-shacl:RatePlanShape
         sh:minCount 0 ;
     ] ;
     sh:property [
-        sh:path urpx:publishedBy ;
+        sh:path urpx:offeredBy ;
         sh:class urpx:Organization ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
@@ -4248,9 +4284,9 @@ urpx-shacl:RatePlanVersionShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:publishedBy ;
+        sh:path urpx:offeredBy ;
         sh:class urpx:Organization ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -4391,8 +4427,14 @@ urpx-shacl:RegulatoryAuthorityShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:publishes ;
-        sh:class urpx:RatePlan ;
+        sh:path urpx:offers ;
+        sh:or (
+            [ sh:class urpx:PricingModel ]
+            [ sh:class urpx:RatePlan ]
+            [ sh:class urpx:RatePlanModifier ]
+            [ sh:class urpx:RatePlanVersion ]
+            [ sh:class urpx:RatePlanModifierVersion ]
+        ) ;
         sh:minCount 0 ;
     ] ;
     sh:property [
@@ -5034,6 +5076,12 @@ urpx-shacl:SourcePublicationShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:publishedBy ;
+        sh:class urpx:Organization ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:pageReference ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
@@ -5286,8 +5334,14 @@ urpx-shacl:SystemOperatorShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:publishes ;
-        sh:class urpx:RatePlan ;
+        sh:path urpx:offers ;
+        sh:or (
+            [ sh:class urpx:PricingModel ]
+            [ sh:class urpx:RatePlan ]
+            [ sh:class urpx:RatePlanModifier ]
+            [ sh:class urpx:RatePlanVersion ]
+            [ sh:class urpx:RatePlanModifierVersion ]
+        ) ;
         sh:minCount 0 ;
     ] .
 
@@ -5380,6 +5434,13 @@ urpx-shacl:TariffFilingShape
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:publishedBy ;
+        sh:class urpx:Organization ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description "The organization that published this filing."@en ;
     ] ;
     sh:property [
         sh:path urpx:replacedBy ;
@@ -5772,6 +5833,12 @@ urpx-shacl:URPXPackageShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:publishedBy ;
+        sh:class urpx:Organization ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:targetURPXVersion ;
         sh:datatype xsd:anyURI ;
         sh:minCount 1 ;
@@ -5848,8 +5915,14 @@ urpx-shacl:UtilityOperatorShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:publishes ;
-        sh:class urpx:RatePlan ;
+        sh:path urpx:offers ;
+        sh:or (
+            [ sh:class urpx:PricingModel ]
+            [ sh:class urpx:RatePlan ]
+            [ sh:class urpx:RatePlanModifier ]
+            [ sh:class urpx:RatePlanVersion ]
+            [ sh:class urpx:RatePlanModifierVersion ]
+        ) ;
         sh:minCount 0 ;
     ] .
 

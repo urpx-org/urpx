@@ -81,11 +81,11 @@ URPX v0.3.0 uses a core ontology file:
 - Must have `forRatePlan` (the link back to the plan identity)
 - Must have `hasCoverageClaim`
 - Must have `changeReason`
-- Must have `publishedBy`
 - Must have `serviceRole`
 - Must have `hasPlanElements`
 - Must have `hasPrices`
 - Must have `effectiveDate` or `effectiveDateTime`
+- May have `offeredBy` naming the organization that offers the plan
 
 **CoverageClaim Requirements:**
 - Must have `completenessResult` (`complete`, `incomplete`, or `pending`)
@@ -140,7 +140,6 @@ URPX v0.3.0 uses a core ontology file:
 - `hasCoverageClaim`
 - `effectiveDate` or `effectiveDateTime`
 - `changeReason`
-- `publishedBy`
 - `serviceRole`
 - `hasPlanElements`
 - `hasPrices`
@@ -312,6 +311,10 @@ URPX v0.3.0 uses a core ontology file:
 - "rate calculations", "rate eligibility"
 
 **Exceptions**: established terms of art and published names are kept as-is: "rate case" (`RateCase`), "rate-setting", "rate regulation", "flat-rate billing", and utilities' own published names such as "Rate I". Quoted utility source material is never rewritten. See the [FAQ Terminology section](urpx-faq.md#terminology) for the full explanation.
+
+### Article Before "URPX"
+
+URPX documentation, annotations, and data write **"an URPX"**, never "a URPX": "an URPX package", "an URPX rate plan", "an URPX fact", "an URPX-native property".
 
 ### Validation Workflow
 

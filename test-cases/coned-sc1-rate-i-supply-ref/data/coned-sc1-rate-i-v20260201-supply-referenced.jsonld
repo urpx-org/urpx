@@ -23,7 +23,7 @@
       "urpx:effectiveDate": "2026-02-01",
       "urpx:changeReason": { "@id": "urpx:fuelAdjustment" },
       "urpx:priceCurrency": "USD",
-      "urpx:publishedBy": {
+      "urpx:offeredBy": {
         "@id": "org:consolidated-edison",
         "@type": "urpx:UtilityOperator",
         "urpx:legalName": "Consolidated Edison Company of New York, Inc.",
@@ -42,7 +42,8 @@
         "@type": "urpx:RatePlan",
         "urpx:name": "SC1 Rate I — Residential and Religious",
         "urpx:ratePlanUniqueIdentifier": "CONED-SC1-RATE-I",
-        "urpx:initialEffectiveDate": "2018-01-01"
+        "urpx:initialEffectiveDate": "2018-01-01",
+        "urpx:offeredBy": { "@id": "org:consolidated-edison" }
       },
       "urpx:hasCoverageClaim": {
         "@id": "coned:cc-sc1-rate-i-v20260201-supply-ref",

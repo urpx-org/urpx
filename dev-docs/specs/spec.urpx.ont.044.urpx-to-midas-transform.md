@@ -103,7 +103,7 @@ Nothing in MIDAS is unrepresentable in URPX, so a future reverse transform (MIDA
 ## 6. Deliverables
 
 1. **This mapping** (normative once adopted), summarized on the interoperability documentation page.
-2. **A reference transform** (companion task): reads a URPX package plus its price time series, emits a MIDAS v2.0 upload payload (JSON, per the published upload schema), validates the constraints in §4, and reports the §5 losses. Known schema quirks to honor: the upload examples key the RIN as `"RIN"` while the XSD and responses use `RateID`; the data dictionary marks `Value`/`Unit` optional but the XSD requires them — the transform treats all nine value fields as required.
+2. **A reference transform** (companion task): reads an URPX package plus its price time series, emits a MIDAS v2.0 upload payload (JSON, per the published upload schema), validates the constraints in §4, and reports the §5 losses. Known schema quirks to honor: the upload examples key the RIN as `"RIN"` while the XSD and responses use `RateID`; the data dictionary marks `Value`/`Unit` optional but the XSD requires them — the transform treats all nine value fields as required.
 3. **A worked example**: the PG&E Net Billing Tariff hourly export compensation series transformed to a MIDAS upload payload — [dev-docs/samples/midas-transform/](../samples/midas-transform/). The export case is the better demonstration because it exercises the credit sign flip (§4) and the modifier-component header mapping (§3).
 
 ## 7. Proposed design-decision log entry

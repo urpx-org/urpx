@@ -4,14 +4,37 @@
 # URPX Changelog
 
 **Version:** 0.3.0 (Pre-draft)
-**Last Updated:** 2026-07-29
+**Last Updated:** 2026-08-02
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-08-02 — v0.3.0 (offering and publication separated)
+---
+
+### Changed
+- The link naming the organization behind a plan is renamed from `publishedBy` to `offeredBy`, and its domain is `PricingModel ∪ RatePlan ∪ RatePlanModifier ∪ RatePlanVersion ∪ RatePlanModifierVersion`. The property names the organization that offers the pricing for service, whether as a regulated tariff or a competitive supply product. Range and cardinality are unchanged.
+- The organization-side link is renamed from `publishes` to `offers`, its range is widened from `RatePlan` to the same five-class union, and it is declared `owl:inverseOf offeredBy`. The widened range matches the domain of `offeredBy` exactly, so the entailed direction asserts no class membership its subject does not hold. `OrganizationShape`, `EnergyServiceProviderShape`, `RegulatoryAuthorityShape`, `SystemOperatorShape`, and `UtilityOperatorShape` admit `offers` in place of `publishes`. Both terms align with schema.org `offeredBy` and `offers` by reference; URPX does not import schema.org.
+- `offeredBy` is optional in both directions, on the plan identity and on the version snapshot alike. The version shapes previously required the organization link (`minCount 1`); they now admit it at `minCount 0`. Teaching, sandbox, and research data that models no real utility validates without naming one.
+- `publishedBy` is re-homed onto the artifacts that are published: its domain is now `PricingModel ∪ TariffFiling ∪ SourcePublication ∪ URPXPackage`, and all four shapes admit it (optional, at most one). Publication is a property of the artifact rather than of the rate plan whose terms that artifact states. A `PricingModel` carries both properties, being an authored unit that is itself published; where a model sits inside a filing, the filing carries the publisher. On a `SourcePublication`, `issuingAuthority` continues to name the issuing or approving body where that differs from the publisher.
+
+### Migration
+- Rename the `publishedBy` key to `offeredBy` on pricing models, rate plans, rate plan modifiers, and both version snapshots. On pricing models, filings, sources, and packages, `publishedBy` keeps its name and now has a shape that admits it.
+- Rename `publishes` to `offers` on organizations.
+- No data becomes invalid for want of an organization: the link is optional everywhere it appears.
+
+2026-07-31 — v0.3.0 (external alignment annotations)
+---
+
+### Removed
+- The Semantic Flow alignment annotations on `PriceDefinitionReference` and `resolvedFrom`: the `compatibleWith` assertion on the class and the `rdfs:seeAlso` pointers into that vocabulary from both terms. The relator model is unchanged, and every role the class holds is expressed in URPX terms: inclusion on `referenceInclusion`, the charge identity on `referencesPriceDefinition`, source evidence on `documentedBy`, temporal scope on `hasTemporalScope`, and the resolution thread on `resolvedFrom`, whose domain and range are unchanged.
+- The `prov:` and `geosparql:` prefix declarations. Neither bound a term. The `Evaluation` class note and the attribution notes name PROV in prose, which needs no binding; URPX aligns with PROV by reference and does not import it.
 
 2026-07-29 — v0.3.0 (plan-to-version links assertable)
 ---
 
 ### Changed
+- `isReferencedByPricingModel` may now be asserted in instance data, and applies to `RatePlanModifier` as well as `RatePlan`. `RatePlanShape` and `RatePlanModifierShape` both admit it (optional, unbounded), so a data set can carry the link from a rate plan or modifier to the pricing models that declare content for it rather than requiring a consumer to search every model.
+- Removed the `owl:inverseOf referencesRatePlan` declaration on `isReferencedByPricingModel`. The two are not inverses: `referencesRatePlan` admits `PriorRatePlan` as a subject while `isReferencedByPricingModel` ranges on `PricingModel` alone, so the pairing entailed that a `PriorRatePlan` is a `PricingModel`. Dropping it also lets the property serve rate plan modifiers, and further subjects later, without carrying an unsound entailment.
 - `hasRatePlanVersion` and `hasRatePlanModifierVersion` may now be asserted in instance data. `RatePlanShape` and `RatePlanModifierShape` admit the plan-side property (optional, unbounded), so a data set can carry the plan-to-version link directly instead of requiring a consumer to scan every version for a matching `forRatePlan`. Each pair stays declared `owl:inverseOf`, so where only one direction is asserted the other is entailed; where both are asserted they must agree. Revises design decision #125, which had restricted the relationship to the version side.
 
 2026-07-29 — v0.3.0 (pre-tag referential integrity and enumeration documentation)
@@ -615,8 +638,7 @@ Release 0.3.0 reframes how published pricing material relates to the rate plan: 
 - **Design Decision:** [#095](documentation/pages/urpx-design-decisions-081-120.md#decision-095)
 
 #### Added: Datetime Provenance Properties
-- Added `xsd:dateTime` companions for all existing `xsd:date` provenance properties:
-  `urpx:dateTimeApproved`, `urpx:dateTimeCreated`, `urpx:dateTimeModified`, `urpx:dateTimePublished`, `urpx:dateTimeReceived`, `urpx:dateTimeRetrieved`.
+- Added `xsd:dateTime` companions for all existing `xsd:date` provenance properties: `urpx:dateTimeApproved`, `urpx:dateTimeCreated`, `urpx:dateTimeModified`, `urpx:dateTimePublished`, `urpx:dateTimeReceived`, `urpx:dateTimeRetrieved`.
 - Domains mirror the corresponding `xsd:date` properties; existing date-only fields are preserved.
 - **Rationale:** Enables full timestamp-level provenance for sources that report at sub-day precision, without overloading the `xsd:date` fields used where only date precision is available or intended.
 - **Design Decision:** [#096](documentation/pages/urpx-design-decisions-081-120.md#decision-096)
@@ -1259,7 +1281,8 @@ Update to urpx/documentation/index.md to remove broken links.
 2026-01-27
 ---
 Added for accounting purposes:
-```urpx:isCredit a owl:DatatypeProperty ;
+```turtle
+urpx:isCredit a owl:DatatypeProperty ;
     rdfs:label "Is Credit"@en ;
     rdfs:comment "Indicates if the charge is a credit to the customer account."@en ;
     rdfs:domain [ a owl:Class ;
@@ -1272,13 +1295,15 @@ Added for accounting purposes:
 
 Updated domain to allow for season price tagging:
 
-```urpx:appliesInSeason a owl:ObjectProperty ;
+```turtle
+urpx:appliesInSeason a owl:ObjectProperty ;
     rdfs:label "Applies In Season"@en ;
     rdfs:comment "Season(s) this time bracket applies to" ;
     rdfs:domain [ a owl:Class ;
         owl:unionOf ( urpx:TimeBracket urpx:Price urpx:PriceSet urpx:PriceSetAlternative uprx:PriceSetAlternatives ) ] ;
     rdfs:range urpx:Season ;
-    skos:note "URI references to seasons defined in PlanElements. Enables TimeBrackets to reference seasons without nesting. Multiple seasons can be referenced for brackets that apply across seasonal boundaries. Part of flat version architecture (Decision #018)." .```
+    skos:note "URI references to seasons defined in PlanElements. Enables TimeBrackets to reference seasons without nesting. Multiple seasons can be referenced for brackets that apply across seasonal boundaries. Part of flat version architecture (Decision #018)." .
+```
 
 ---
 

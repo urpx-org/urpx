@@ -71,13 +71,14 @@
         "urpx:ratePlanUniqueIdentifier": "E-ELEC",
         "urpx:name": "Residential Time-of-Use (Electric Home) Service",
         "urpx:initialEffectiveDate": "2022-12-01",
-        "urpx:timezoneIdentifier": "America/Los_Angeles"
+        "urpx:timezoneIdentifier": "America/Los_Angeles",
+        "urpx:offeredBy": { "@id": "org:utility-pge" }
       }
     },
     {
       "@type": "urpx:RatePlanVersion",
       "@id": "pge:e-elec-2026-01-01",
-      "urpx:publishedBy": {
+      "urpx:offeredBy": {
         "@type": "urpx:UtilityOperator",
         "@id": "org:utility-pge",
         "urpx:legalName": "Pacific Gas & Electric Company",

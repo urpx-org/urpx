@@ -9,7 +9,7 @@
 **Last Updated**: 2026-07-07
 **Status**: Active
 
-**How to review a URPX JSON-LD test case against its source tariff book**
+**How to review an URPX JSON-LD test case against its source tariff book**
 
 [← Back to Index](/docs/getting-started/overview)
 

@@ -35,9 +35,9 @@ Rate plan data comes from many kinds of published sources: tariff books (primary
 
 A rate plan (`RatePlan`) is the base service a customer is on. A rate plan modifier (`RatePlanModifier`) is a separately published layer (a rider, discount, credit, or adjustment) that modifies a base rate plan rather than standing alone. Each is independently identified, versioned, and sourced: a `RatePlanModifierVersion` links back to its modifier identity via `forRatePlanModifier`, the same way a `RatePlanVersion` links back to its rate plan via `forRatePlan`. See the tutorial's [Rate Plan vs Rate Plan Modifier](urpx-tutorial.md#rate-plan-vs-rate-plan-modifier) section for the full rationale, including why URPX composes plans and modifiers instead of modeling every combination as its own plan.
 
-**Q: Is a rate plan the same as a customer offering?**
+**Q: Does URPX cover customer enrollment in a rate plan?**
 
-No. A rate plan and its available modifiers describe what a utility or supplier publishes. A customer-facing offering (a marketing bundle, comparison listing, or enrollment product) may present a rate plan and a selection of its modifiers together, but assembling that presentation is a concern of consuming applications, not something URPX models. See the tutorial's [Rate Plan Modifiers vs Customer Offerings](urpx-tutorial.md#rate-plan-modifiers-vs-customer-offerings) section for more detail.
+No. URPX represents rate plan data: the plan, its modifiers, the pricing that applies, and the conditions under which it applies. It does not represent the event-based data that moves customers between plans, the adds, drops, and updates applied to customer profiles as enrollments start, change, and end. `CustomerProfile` and `ProgramEnrollment` carry the characteristics and enrollment state that eligibility is evaluated against, not a transaction feed. See the tutorial's [Scope: Rate Plan Data, Not Enrollment Events](urpx-tutorial.md#scope-rate-plan-data-not-enrollment-events) section for more detail.
 
 **Q: Can URPX work with my existing systems?**
 

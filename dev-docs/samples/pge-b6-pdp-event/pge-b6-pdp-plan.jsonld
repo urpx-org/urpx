@@ -939,7 +939,7 @@
       "urpx:forRatePlan": {
         "@id": "pge:b6-pdp"
       },
-      "urpx:publishedBy": {
+      "urpx:offeredBy": {
         "@id": "org:utility-pge"
       },
       "urpx:changeReason": {

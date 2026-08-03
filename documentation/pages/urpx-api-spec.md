@@ -249,7 +249,7 @@ Three things this example is built to show:
       "urpx:isDefault": false,
       "urpx:timezoneIdentifier": "America/Los_Angeles",
       "urpx:selfContained": true,
-      "urpx:publishedBy": {
+      "urpx:offeredBy": {
         "@id": "org:cascade-pl",
         "@type": "urpx:UtilityOperator",
         "urpx:legalName": "Cascade Power and Light Company",
@@ -266,7 +266,7 @@ Three things this example is built to show:
         "urpx:timezoneIdentifier": "America/Los_Angeles",
         "urpx:commodity": { "@id": "urpx:electricity" },
         "urpx:serviceRole": { "@id": "urpx:bundledServiceRole" },
-        "urpx:publishedBy": { "@id": "org:cascade-pl" },
+        "urpx:offeredBy": { "@id": "org:cascade-pl" },
         "urpx:hasServiceClass": {
           "@id": "cpl:sc-residential",
           "@type": "urpx:ServiceClass",

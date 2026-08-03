@@ -73,14 +73,18 @@ The [Terminology](#terminology) section above covers the base service and how it
 
 A short comparison, if it helps: a condiment modifies a dish without becoming a new dish. A rate plan modifier works the same way: it changes what is on the bill without becoming a new rate plan.
 
-#### Rate Plan Modifiers vs Customer Offerings
+#### Scope: Rate Plan Data, Not Enrollment Events
 
-A rate plan together with its available modifiers describes what a utility or supplier publishes. A customer-facing offering (a marketing bundle, comparison listing, or enrollment product) is a different kind of thing: it may present a rate plan and a selection of its modifiers together, but deciding which modifiers to bundle, badge, or default into a signup flow is a concern of consuming applications. URPX models what is published; assembling that content into something a customer chooses is out of scope for the vocabulary.
+URPX represents rate plan data: the plan, its modifiers, the pricing that applies, and the conditions under which it applies. `offeredBy` names the organization that offers it.
+
+It does not represent the event-based data that moves customers between plans, the adds, drops, and updates applied to customer profiles as enrollments start, change, and end. `CustomerProfile` and `ProgramEnrollment` carry the characteristics and the enrollment state that eligibility is evaluated against. They are not a transaction feed, and URPX defines no vocabulary for exchanging one.
+
+Deciding which modifiers to bundle, badge, or default into a signup flow is likewise a consuming-application concern.
 
 ### Core Concepts
 
 **Rate Plan**: The stable identity of a plan offered by a utility
-- A durable record: name, unique identifier, publisher, service class and rate group links
+- A durable record: name, unique identifier, offering organization, service class and rate group links
 - Carries no pricing content itself: pricing lives in versions (this tutorial) and in the pricing models publications carry (see the [Overview](urpx-overview.md))
 
 **Rate Plan Version**: The complete, resolved snapshot of a rate plan for a temporal window
@@ -220,7 +224,7 @@ The version is its own top-level node in the graph. It points back to the plan i
     "@value": "2025-01-01T00:00:00-05:00"
   },
   "changeReason": {"@id": "urpx:initial"},
-  "publishedBy": {
+  "offeredBy": {
     "@id": "ex:tutorial-utility",
     "@type": "UtilityOperator",
     "legalName": "Tutorial Electric Company",
@@ -847,7 +851,9 @@ Every RatePlanVersion must have:
 
 1. **forRatePlan** - The link back to the plan identity the snapshot was built for
 2. **hasCoverageClaim** - A `CoverageClaim` with a `completenessResult` (required); a `selfContained` flag and an explaining `Evaluation` are optional
-3. **changeReason**, **publishedBy**, **serviceRole**, **hasPlanElements**, and **hasPrices**
+3. **changeReason**, **serviceRole**, **hasPlanElements**, and **hasPrices**
+
+**offeredBy** is optional on both the plan and the snapshot. Name the organization that offers the plan whenever it is known; leave it out for teaching, sandbox, and research data that models no real utility.
 
 Every Price must have:
 
@@ -1009,7 +1015,7 @@ Extracted from the full list of possible values in `urpx-ontology.ttl`:
 
 1. **Multi-Alternative Rate Plans** - Geographic or service variations
 2. **Customer Profiles** - Complex eligibility rules
-3. **Rate Plan Modifiers** - See [Rate Plan vs Rate Plan Modifier](#rate-plan-vs-rate-plan-modifier) for the composition rationale, and [Rate Plan Modifiers vs Customer Offerings](#rate-plan-modifiers-vs-customer-offerings) for how modifiers relate to customer-facing offerings
+3. **Rate Plan Modifiers** - See [Rate Plan vs Rate Plan Modifier](#rate-plan-vs-rate-plan-modifier) for the composition rationale, and [Scope: Rate Plan Data, Not Enrollment Events](#scope-rate-plan-data-not-enrollment-events) for what sits outside the vocabulary
 4. **Dynamic Pricing** - Real-time and event-based pricing
 5. **Pricing Models and Publications** - How tariff filings, statements, and market feeds carry authored (possibly partial) pricing content that resolves into version snapshots; see the [Overview](urpx-overview.md) and the `test-cases/` directory
 

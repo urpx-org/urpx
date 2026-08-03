@@ -19,10 +19,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix oa: <http://www.w3.org/ns/oa#> .
-@prefix sflo: <https://semantic-flow.github.io/sflo/ontology/> .
 
 <https://urpx-org.github.io/urpx/ontology>
     a owl:Ontology ;
@@ -281,9 +278,7 @@ urpx:PriceDefinition a owl:Class ;
 urpx:PriceDefinitionReference a owl:Class ;
     rdfs:label "Price Definition Reference"@en ;
     rdfs:comment "Addressable relationship between a model or snapshot and a PriceDefinition: the place inclusion, resolution mode, source evidence, temporal scope, and resolution provenance live." ;
-    sflo:compatibleWith sflo:ArtifactResolutionTarget ;
-    rdfs:seeAlso <https://semantic-flow.github.io/sflo/ontology> ;
-    skos:note "Relator node. Keeps PriceDefinition as the stable charge identity while making the relationship itself addressable, so inclusion, resolution mode, source evidence, temporal scope, and provenance compose on the relationship rather than on PricingModel or PriceDefinition. Aligned to sflo:ArtifactResolutionTarget by reference (no owl:imports). Application/applicability (service class, geography) is not a relator property — it rides on the existing hasApplicabilityGroup on the Price or PriceDefinition." .
+    skos:note "Relator node. Keeps PriceDefinition as the stable charge identity while making the relationship itself addressable, so inclusion, resolution mode, source evidence, temporal scope, and provenance compose on the relationship rather than on PricingModel or PriceDefinition. Application/applicability (service class, geography) is not a relator property — it rides on the existing hasApplicabilityGroup on the Price or PriceDefinition." .
 
 urpx:Prices a owl:Class ;
     rdfs:label "Prices"@en ;
@@ -365,7 +360,7 @@ urpx:RatePlan a owl:Class ;
 urpx:RatePlanIdentifier a owl:Class ;
     rdfs:label "Rate Plan Identifier"@en ;
     rdfs:comment "A typed, URI-addressable identifier for a RatePlan (e.g., CA MIDAS RIN, utility tariff code)." ;
-    skos:note "Aligned to adms:Identifier by reference (no owl:imports). scheme is a free URI — documented conventions: urpx:ca-midas-rin, urpx:utility-tariff-code. Value via skos:notation. Modifier identities use the parallel RatePlanModifierIdentifier." .
+    skos:note "Aligned to adms:Identifier by reference. scheme is a free URI — documented conventions: urpx:ca-midas-rin, urpx:utility-tariff-code. Value via skos:notation. Modifier identities use the parallel RatePlanModifierIdentifier." .
 
 urpx:RatePlanModifier a owl:Class ;
     rdfs:label "Rate Plan Modifier"@en ;
@@ -376,7 +371,7 @@ urpx:RatePlanModifier a owl:Class ;
 urpx:RatePlanModifierIdentifier a owl:Class ;
     rdfs:label "Rate Plan Modifier Identifier"@en ;
     rdfs:comment "A typed, URI-addressable identifier for a RatePlanModifier (e.g., CA MIDAS RIN, utility tariff code)." ;
-    skos:note "Parallel to RatePlanIdentifier. Aligned to adms:Identifier by reference (no owl:imports). scheme is a free URI — documented conventions: urpx:ca-midas-rin, urpx:utility-tariff-code. Value via skos:notation." .
+    skos:note "Parallel to RatePlanIdentifier. Aligned to adms:Identifier by reference. scheme is a free URI — documented conventions: urpx:ca-midas-rin, urpx:utility-tariff-code. Value via skos:notation." .
 
 urpx:RatePlanModifierVersion a owl:Class ;
     rdfs:label "Rate Plan Modifier Version"@en ;
@@ -437,7 +432,7 @@ urpx:SourcePublication a owl:Class ;
 
 urpx:DataSourceReference a owl:Class ;
     rdfs:label "Data Source Reference"@en ;
-    rdfs:comment "Structured reference from a URPX fact to the external source it was interpreted from (publication, API, database, manual entry) — filename/URL, media type, and an optional sub-document selector." ;
+    rdfs:comment "Structured reference from an URPX fact to the external source it was interpreted from (publication, API, database, manual entry) — filename/URL, media type, and an optional sub-document selector." ;
     skos:note "URPX references the source; it does not define it. Direction-neutral: the source may predate URPX or be generated from it. Optional urpx:hasSelector points into a region using Web Annotation selector flavors (FragmentSelector / Media Fragments for page/region, TextQuoteSelector for resilient text), validated by SHACL and not imported. urpx:sourcePublication links to a SourcePublication when the source is one." .
 
 urpx:State a owl:Class ;
@@ -461,7 +456,7 @@ urpx:TemporalPeriod a owl:Class ;
     rdfs:label "Temporal Period"@en ;
     rdfs:comment "A reusable named time interval (e.g. 'Q1 2026')." ;
     rdfs:seeAlso <http://www.w3.org/2006/time#Interval> ;
-    skos:note "URPX class; aligns to OWL-Time time:Interval by SHACL shape and documentation. URPX does not owl:imports OWL-Time. Referenced by TemporalScope." .
+    skos:note "URPX class; aligns to OWL-Time time:Interval by SHACL shape and documentation. Referenced by TemporalScope." .
 
 urpx:TemporalScope a owl:Class ;
     rdfs:label "Temporal Scope"@en ;
@@ -1627,7 +1622,7 @@ urpx:evaluatedBy a owl:ObjectProperty ;
     rdfs:comment "The organization that performed this evaluation and attests its content."@en ;
     rdfs:domain urpx:Evaluation ;
     rdfs:range urpx:Organization ;
-    skos:note "Interchange attribution: when a receiving party resolves or re-evaluates a claim, it attaches its own Evaluation carrying evaluatedBy and evaluatedOn, so the attestation travels with the claim rather than living in a private system. Corresponds to prov:wasAttributedTo by alignment; URPX does not import PROV. The producing software and scoring method remain implementation-specific (see the Evaluation class note) — the attributed party is the accountable organization, not its tooling."@en .
+    skos:note "Interchange attribution: when a receiving party resolves or re-evaluates a claim, it attaches its own Evaluation carrying evaluatedBy and evaluatedOn, so the attestation travels with the claim rather than living in a private system. Corresponds to prov:wasAttributedTo by alignment. The producing software and scoring method remain implementation-specific (see the Evaluation class note) — the attributed party is the accountable organization, not its tooling."@en .
 
 urpx:evaluatedOn a owl:DatatypeProperty ;
     rdfs:label "Evaluated On"@en ;
@@ -2199,7 +2194,7 @@ urpx:hasRatePlanModifierVersion a owl:ObjectProperty ;
     owl:inverseOf urpx:forRatePlanModifier ;
     rdfs:domain urpx:RatePlanModifier ;
     rdfs:range urpx:RatePlanModifierVersion ;
-    skos:note "Links a rate plan modifier to each resolved version snapshot built for it. Inverse of forRatePlanModifier; a data set may assert either direction or both." .
+    skos:note "Inverse of forRatePlanModifier. A data set may assert either direction or both; where only one is asserted, the other is entailed." .
 
 urpx:hasRatePlanVersion a owl:ObjectProperty ;
     rdfs:label "Has Rate Plan Version"@en ;
@@ -2207,7 +2202,7 @@ urpx:hasRatePlanVersion a owl:ObjectProperty ;
     owl:inverseOf urpx:forRatePlan ;
     rdfs:domain urpx:RatePlan ;
     rdfs:range urpx:RatePlanVersion ;
-    skos:note "Links a rate plan to each resolved version snapshot built for it, so a consumer holding the plan reaches its versions directly rather than searching every version for a matching forRatePlan. Inverse of forRatePlan: a data set may assert either direction or both, and where only one is asserted the other is entailed." .
+    skos:note "Inverse of forRatePlan. A data set may assert either direction or both; where only one is asserted, the other is entailed." .
 
 urpx:hasSeasons a owl:ObjectProperty ;
     rdfs:label "Has Seasons"@en ;
@@ -2504,11 +2499,11 @@ urpx:isPreferred a owl:DatatypeProperty ;
 
 urpx:isReferencedByPricingModel a owl:ObjectProperty ;
     rdfs:label "Is Referenced By Pricing Model"@en ;
-    rdfs:comment "Links a rate plan to a pricing model that declares plan-specific content for it." ;
-    owl:inverseOf urpx:referencesRatePlan ;
-    rdfs:domain urpx:RatePlan ;
+    rdfs:comment "Links a rate plan or rate plan modifier to a pricing model that declares content for it." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:RatePlan urpx:RatePlanModifier ) ] ;
     rdfs:range urpx:PricingModel ;
-    skos:note "OWL-entailed from referencesRatePlan; not asserted in instance data. Enables plan-centric traversal without a stored reciprocal triple." .
+    skos:note "The model-side links are referencesRatePlan and referencesRatePlanModifier. This property is not declared as their inverse, so neither direction is entailed from the other; assert it alongside the model-side link." .
 
 urpx:issuingAuthority a owl:DatatypeProperty ;
     rdfs:label "Issuing Authority"@en ;
@@ -2706,6 +2701,24 @@ urpx:occupancyCount a owl:DatatypeProperty ;
     rdfs:domain urpx:CustomerProfile ;
     rdfs:range xsd:integer ;
     skos:note "Count of people residing or working at premises. Profile characteristic (not meter measurement). Used for per-capita cost calculations and assistance program eligibility. Can change as occupancy changes. Privacy-preserving alternative to detailed household composition." .
+
+urpx:offeredBy a owl:ObjectProperty ;
+    rdfs:label "Offered By"@en ;
+    rdfs:comment "Organization that offers this pricing model, rate plan, rate plan modifier, rate plan version, or rate plan modifier version to customers." ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:PricingModel urpx:RatePlan urpx:RatePlanModifier urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
+    rdfs:range urpx:Organization ;
+    owl:inverseOf urpx:offers ;
+    skos:note "The utility or supplier whose pricing this is: the party that makes it available for service, whether as a regulated tariff or a competitive supply product. Distinct from publication, which rides urpx:publishedBy on the artifacts that are published. A rate plan, a modifier, and their version snapshots are offered but never published; a PricingModel is both, so it carries offeredBy for the party whose pricing it states and publishedBy for the party that published it as a unit. Aligns with schema.org offeredBy by reference; URPX does not import schema.org. Referencing the organization by IRI lets organization-level properties (legal name, alternate name, identifiers) be reached rather than duplicated on the subject; organizations may be published as separate URPXPackage instances for modularity. Inverse of urpx:offers: a data set may assert either direction or both, and where only one is asserted the other is entailed." .
+
+urpx:offers a owl:ObjectProperty ;
+    rdfs:label "Offers"@en ;
+    rdfs:comment "Links an organization to the pricing models, rate plans, rate plan modifiers, and version snapshots it offers to customers." ;
+    rdfs:domain urpx:Organization ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( urpx:PricingModel urpx:RatePlan urpx:RatePlanModifier urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
+    owl:inverseOf urpx:offeredBy ;
+    skos:note "Aligns with schema.org offers by reference; URPX does not import schema.org. Inverse of urpx:offeredBy: a data set may assert either direction or both, and where only one is asserted the other is entailed. The range spans the authored pricing model, the plan and modifier identities, and both version snapshots, matching the domain of urpx:offeredBy exactly, so the entailed direction asserts no class membership its subject does not hold." .
 
 urpx:operandNodes a owl:ObjectProperty ;
     rdfs:label "Operand Nodes"@en ;
@@ -2916,18 +2929,11 @@ urpx:publicationType a owl:ObjectProperty ;
 
 urpx:publishedBy a owl:ObjectProperty ;
     rdfs:label "Published By"@en ;
-    rdfs:comment "Organization that publishes this rate plan, rate plan modifier, rate plan version, or rate plan modifier version" ;
+    rdfs:comment "Organization that published this pricing model, tariff filing, source publication, or URPX exchange package." ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:RatePlan urpx:RatePlanModifier urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
+            owl:unionOf ( urpx:PricingModel urpx:SourcePublication urpx:TariffFiling urpx:URPXPackage ) ] ;
     rdfs:range urpx:Organization ;
-    skos:note "Links rate plan version and rate plan modifier version to publishing organization. Enables organization-level properties (utilityId, officialName, displayName) to be referenced rather than duplicated. Organizations may be published as separate URPXPackage instances for modularity." .
-
-urpx:publishes a owl:ObjectProperty ;
-    rdfs:label "Publishes"@en ;
-    rdfs:comment "Links organization to rate plans it publishes" ;
-    rdfs:domain urpx:Organization ;
-    rdfs:range urpx:RatePlan ;
-    skos:note "Rate plans published by organization." .
+    skos:note "The publisher of the artifact: the utility whose tariff book states a plan's terms, the party that filed or authored a publication unit, or the party that assembled an URPX exchange package. Publication is a property of the artifact, not of the rate plan whose terms it carries; the organization that offers a plan is named by urpx:offeredBy on the plan. A PricingModel carries both, being an authored unit that is itself published. Where a model is published within a filing, the filing carries the publisher and the model may leave it unstated. On a SourcePublication, urpx:issuingAuthority names the issuing or approving body where that differs from the publisher — a commission order approving a utility's tariff is published by the commission and issued under its own authority, while the utility's tariff book is published by the utility and also issued as part of public utility commission documentation." .
 
 urpx:pursuantTo a owl:ObjectProperty ;
     rdfs:label "Pursuant To"@en ;
@@ -3100,8 +3106,7 @@ urpx:resolvedFrom a owl:ObjectProperty ;
     rdfs:label "Resolved From"@en ;
     rdfs:comment "The ModelCollection thread a reference resolves against." ;
     rdfs:domain urpx:PriceDefinitionReference ;
-    rdfs:range urpx:ModelCollection ;
-    rdfs:seeAlso sflo:hasRequestedTargetHistory .
+    rdfs:range urpx:ModelCollection .
 
 urpx:rightOperand a owl:ObjectProperty ;
     rdfs:label "Right Operand"@en ;

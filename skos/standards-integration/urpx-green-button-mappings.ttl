@@ -64,7 +64,7 @@ gb:ServiceCategory_Heat a skos:Concept ;
 # ============================================
 # Line Item Alignment — ESPI V4 ItemKind to URPX charge category
 # (LineItem/itemKind; espi_v4.xsd ItemKind simple type)
-# A Green Button bill line item is a summarized unit; it lines up with a URPX
+# A Green Button bill line item is a summarized unit; it lines up with an URPX
 # charge category rather than a single fine-grained charge type. Payment (9) and
 # Information (10) carry no charge and are outside this alignment.
 # ============================================

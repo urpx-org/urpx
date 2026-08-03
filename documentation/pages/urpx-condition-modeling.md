@@ -322,7 +322,7 @@ In the literal form, `urpx:referencesMetricInput` may also be present when the l
 
 #### `urpx:CustomOperandNode`
 
-**Description:** Fallback operand node for concepts not yet captured by a URPX-native property.
+**Description:** Fallback operand node for concepts not yet captured by an URPX-native property.
 
 **Semantic Context:** `CustomOperandNode` has two structural forms:
 

@@ -532,7 +532,7 @@
       "urpx:forRatePlan": {
         "@id": "comed:rrtp"
       },
-      "urpx:publishedBy": {
+      "urpx:offeredBy": {
         "@id": "org:utility-comed"
       },
       "urpx:changeReason": {

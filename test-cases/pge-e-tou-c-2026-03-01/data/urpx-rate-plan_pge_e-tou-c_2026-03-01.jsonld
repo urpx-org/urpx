@@ -142,12 +142,13 @@
           "urpx:name": "Residential Time-Of-Use (Peak Pricing 4-9 p.m. Every Day)",
           "urpx:initialEffectiveDate": "2019-03-01",
           "urpx:timezoneIdentifier": "America/Los_Angeles",
-          "urpx:ratePlanUniqueIdentifier": "E-TOU-C"
+          "urpx:ratePlanUniqueIdentifier": "E-TOU-C",
+          "urpx:offeredBy": { "@id": "org:utility-pge" }
         },
         {
           "@type": "urpx:RatePlanVersion",
           "@id": "pge:e-tou-c-2026-03-01",
-          "urpx:publishedBy": {
+          "urpx:offeredBy": {
             "@type": "urpx:Organization",
             "@id": "org:utility-pge",
             "urpx:legalName": "Pacific Gas & Electric Company",
@@ -1337,7 +1338,8 @@
           "urpx:name": "Vintaged Power Charge Indifference Adjustment (E-TOU-C)",
           "urpx:initialEffectiveDate": "2009-01-01",
           "urpx:timezoneIdentifier": "America/Los_Angeles",
-          "urpx:modifierUniqueIdentifier": "E-TOU-C-VPCIA"
+          "urpx:modifierUniqueIdentifier": "E-TOU-C-VPCIA",
+          "urpx:offeredBy": { "@id": "org:utility-pge" }
         },
         {
           "@type": "urpx:RatePlanModifierVersion",
@@ -1374,7 +1376,7 @@
           "urpx:serviceRole": {
             "@id": "urpx:bundledServiceRole"
           },
-          "urpx:publishedBy": {
+          "urpx:offeredBy": {
             "@type": "urpx:Organization",
             "@id": "org:utility-pge",
             "urpx:legalName": "Pacific Gas & Electric Company",
@@ -2460,7 +2462,8 @@
         "urpx:name": "E-TOU-C Baseline Credit + Conservation Incentive Adjustment",
         "urpx:modifierUniqueIdentifier": "E-TOU-C-BASELINE-TIER",
         "urpx:initialEffectiveDate": "2026-03-01",
-        "urpx:timezoneIdentifier": "America/Los_Angeles"
+        "urpx:timezoneIdentifier": "America/Los_Angeles",
+        "urpx:offeredBy": { "@id": "org:utility-pge" }
       }
     },
     {
@@ -2496,7 +2499,7 @@
       "urpx:serviceRole": {
         "@id": "urpx:bundledServiceRole"
       },
-      "urpx:publishedBy": {
+      "urpx:offeredBy": {
         "@type": "urpx:Organization",
         "@id": "org:utility-pge",
         "urpx:legalName": "Pacific Gas & Electric Company",
