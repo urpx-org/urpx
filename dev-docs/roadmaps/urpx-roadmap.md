@@ -55,6 +55,7 @@ tracked as tasks under [`dev-docs/tasks/`](../tasks/).
   published statement is the primary source.
 - **Customer pricing-structure enrollment** and **profile-alternative eligibility
   unification** — consolidating how customer choice and eligibility are expressed.
+- **Container naming** — a human-readable name on holiday calendars and location data sets, which are referenced by identifier alone today while their peer containers each carry one.
 
 ## Tooling and quality themes
 

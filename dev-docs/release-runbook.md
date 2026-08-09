@@ -12,7 +12,7 @@ The v0.3 series ships as three tags, each carrying one kind of change, so that e
 | Tag | Carries |
 |-----|---------|
 | `v0.3.0` | The vocabulary and shapes as reviewed, on the current namespace |
-| `v0.3.1` | The licence transition described in `TRANSITION.md`: specifications to the W3C Document Licence, datasets to CDLA-Permissive-2.0, source and metadata remaining Apache-2.0 |
+| `v0.3.1` | The license transition described in `TRANSITION.md`: specifications to the W3C Document License, datasets to CDLA-Permissive-2.0, source and metadata remaining Apache-2.0 |
 | `v0.4.0` | The move to the `urpx.org` namespace, the dereferencing that goes with it, and the published JSON-LD context |
 
 The namespace move is a minor bump rather than a patch because changing the term namespace is a breaking change, and pre-1.0 the minor digit carries breaking changes. See the Versioning Scheme section of the README.
