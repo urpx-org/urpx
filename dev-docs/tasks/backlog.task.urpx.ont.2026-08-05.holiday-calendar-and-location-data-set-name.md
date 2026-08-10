@@ -145,12 +145,11 @@ The remaining four constraints are unchanged.
 
 ### 4. Validation evidence
 
-Neither class has an instance in `test-cases/` today, so this edit needs one written for it. Two paths, and the lighter one is enough:
+Neither class has an instance in `test-cases/` today, so this edit carries its own. **Write a fresh worked sample under `dev-docs/samples/`** as part of executing this task, sized to verify the acceptance criteria below and nothing more: a named `LocationDataSet` holding a named `HolidayCalendar`, the calendar holding at least one `Holiday`.
 
-- A worked instance under `dev-docs/samples/`, carrying a named location data set with a named calendar inside it. This is the lighter path and does not require sourcing holiday dates for a published rate plan.
-- An addition to an existing test case, attaching a named calendar to a `TOUSchedule` through `hasCalendar`. This is the heavier path: test cases carry per-price citations to their source documents, so the holiday dates would need the same sourcing.
+A development sample is the right home rather than an addition to `test-cases/`. Test cases carry per-price citations to their source documents, so attaching holidays to a published rate plan's schedule would mean sourcing real holiday observances for that utility — work this vocabulary change does not need and should not be gated on.
 
-Whichever path is taken, the run must assert both outcomes on both classes — an instance with a name validates, and an instance without one still validates, since the property is optional.
+The sample must exercise every acceptance criterion, including the negative ones: an instance of each class with a name, an instance of each without, and an instance of each carrying two names to prove the cardinality bound fires.
 
 ### 5. Data dictionary
 
