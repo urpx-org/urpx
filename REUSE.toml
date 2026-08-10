@@ -32,7 +32,7 @@ SPDX-FileCopyrightText = "Pacific Gas and Electric Company"
 SPDX-License-Identifier = "LicenseRef-PublicRecord"
 
 [[annotations]]
-path = "test-cases/pge-e-tou-c-2026-03-01/assets/PGE_E-TOU-C_2026-03-01.pdf"
+path = "test-cases/pge-e-tou-c/assets/PGE_E-TOU-C_2026-03-01.pdf"
 precedence = "override"
 SPDX-FileCopyrightText = "Pacific Gas and Electric Company"
 SPDX-License-Identifier = "LicenseRef-PublicRecord"

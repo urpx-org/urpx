@@ -1,11 +1,11 @@
-digraph "urpx-rate-plan_pge_e-tou-c_2026-03-01" {
+digraph "urpx-rate-plan_pge_e-tou-c" {
     rankdir=TB;
     bgcolor="white";
     pad=0.5;
     nodesep=0.5;
     ranksep=0.7;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="urpx-rate-plan_pge_e-tou-c_2026-03-01";
+    label="urpx-rate-plan_pge_e-tou-c";
     labelloc="t";
     fontsize=16;
     fontcolor="#1a365d";

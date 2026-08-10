@@ -34,7 +34,7 @@ condition-expression redesign:
 ## Approach
 
 Work from real test cases (the vintage-cohort case in
-`test-cases/pge-e-tou-c-2026-03-01/` is the sharpest existing example —
+`test-cases/pge-e-tou-c/` is the sharpest existing example —
 see `task.urpx.ont.2026-07-12.vintage-selection-via-agreement-dates.md`).
 Draft the smallest vocabulary change that resolves 1–2 (possibly none), and
 a documentation section for 3. Any unification must keep eligibility

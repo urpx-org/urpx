@@ -128,7 +128,7 @@ current_license = "governed by REUSE.toml"
 future_license = "governed by REUSE.toml"
 paths = [
     "test-cases/pge-e-elec/assets/PGE_E-ELEC_2026-01-01.pdf",
-    "test-cases/pge-e-tou-c-2026-03-01/assets/PGE_E-TOU-C_2026-03-01.pdf",
+    "test-cases/pge-e-tou-c/assets/PGE_E-TOU-C_2026-03-01.pdf",
     "test-cases/coned-sc1-rate-i/assets/coned_sc1_rate1_2026-02-01.pdf",
     "test-cases/coned-sc1-rate-i/assets/conedtariffbook2025_general_rule_26.pdf",
     "test-cases/coned-sc1-rate-i/assets/mac-202601.pdf",
