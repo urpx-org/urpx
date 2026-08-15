@@ -3,10 +3,10 @@
 <!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
 <!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
 
-# URPX v0.3.0 Release Notes (Draft)
+# URPX v0.3.0 Release Notes
 
-**Status:** Draft, pending Working Group review. Dates and version metadata are finalized when this draft is tagged.
-**Type:** Pre-draft minor release
+**Released:** 2026-08-03.
+**Type:** Pre-draft minor release.
 **Previous release:** [`v0.2.1`](urpx-release-notes-v0.2.1.md)
 
 [← Back to Release Notes](/release-notes)
