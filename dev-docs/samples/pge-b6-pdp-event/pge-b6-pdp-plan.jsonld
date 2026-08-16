@@ -73,7 +73,7 @@
         "@id": "pge:b6-id-tariff-code",
         "@type": "urpx:RatePlanIdentifier",
         "urpx:scheme": {
-          "@id": "urpx:utility-tariff-code"
+          "@id": "urpx:utilityTariffCodeScheme"
         },
         "skos:notation": "B-6-PDP"
       }

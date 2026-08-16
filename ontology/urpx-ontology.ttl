@@ -360,7 +360,7 @@ urpx:RatePlan a owl:Class ;
 urpx:RatePlanIdentifier a owl:Class ;
     rdfs:label "Rate Plan Identifier"@en ;
     rdfs:comment "A typed, URI-addressable identifier for a RatePlan (e.g., CA MIDAS RIN, utility tariff code)." ;
-    skos:note "Aligned to adms:Identifier by reference. scheme is a free URI — documented conventions: urpx:ca-midas-rin, urpx:utility-tariff-code. Value via skos:notation. Modifier identities use the parallel RatePlanModifierIdentifier." .
+    skos:note "Aligned to adms:Identifier by reference. scheme is any IRI naming an IdentifierScheme, such as urpx:caMidasRinScheme or urpx:utilityTariffCodeScheme. Value via skos:notation. Modifier identities use the parallel RatePlanModifierIdentifier." .
 
 urpx:RatePlanModifier a owl:Class ;
     rdfs:label "Rate Plan Modifier"@en ;
@@ -371,7 +371,7 @@ urpx:RatePlanModifier a owl:Class ;
 urpx:RatePlanModifierIdentifier a owl:Class ;
     rdfs:label "Rate Plan Modifier Identifier"@en ;
     rdfs:comment "A typed, URI-addressable identifier for a RatePlanModifier (e.g., CA MIDAS RIN, utility tariff code)." ;
-    skos:note "Parallel to RatePlanIdentifier. Aligned to adms:Identifier by reference. scheme is a free URI — documented conventions: urpx:ca-midas-rin, urpx:utility-tariff-code. Value via skos:notation." .
+    skos:note "Parallel to RatePlanIdentifier. Aligned to adms:Identifier by reference. scheme is any IRI naming an IdentifierScheme, such as urpx:caMidasRinScheme or urpx:utilityTariffCodeScheme. Value via skos:notation." .
 
 urpx:RatePlanModifierVersion a owl:Class ;
     rdfs:label "Rate Plan Modifier Version"@en ;
@@ -682,11 +682,10 @@ urpx:HVACKindValue a owl:Class ;
     owl:equivalentClass [ owl:oneOf ( urpx:airConditioner urpx:airSourceHeatPump urpx:groundSourceHeatPump urpx:spaceHeater urpx:districtHeatingConnection ) ] ;
     skos:note "Enumeration class for HVAC equipment categorization including heat pumps and district heating." .
 
-urpx:IdentifierSchemeValue a owl:Class ;
-    rdfs:label "Identifier Scheme Value"@en ;
-    rdfs:comment "Standard ID systems enumeration values" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:companyNumberScheme urpx:dunsScheme urpx:eiaScheme urpx:gleifScheme urpx:gridScheme urpx:isinScheme urpx:leiScheme urpx:localRegulatorScheme urpx:vatScheme ) ] ;
-    skos:note "Enumeration class for organization identifier classification with standardized identifier scheme definitions for external identifier categorization for international systems" .
+urpx:IdentifierScheme a owl:Class ;
+    rdfs:label "Identifier Scheme"@en ;
+    rdfs:comment "A register or naming authority that issues identifiers." ;
+    skos:note "An open class, not a closed enumeration: the members published with this vocabulary cover the common registers, and an implementer operating a scheme that is not among them mints its own IRI as an IdentifierScheme instance." .
 
 urpx:InterconnectionStatusValue a owl:Class ;
     rdfs:label "Interconnection Status Value"@en ;
@@ -2354,16 +2353,10 @@ urpx:householdSize a owl:DatatypeProperty ;
 urpx:identifierJurisdiction a owl:DatatypeProperty ;
     rdfs:label "Identifier Jurisdiction"@en ;
     rdfs:comment "Jurisdiction where identifier is valid" ;
-    rdfs:domain urpx:OrganizationIdentifier ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:OrganizationIdentifier urpx:RatePlanIdentifier urpx:RatePlanModifierIdentifier ) ] ;
     rdfs:range xsd:string ;
     skos:note "Jurisdiction where identifier is valid. Country or region code." .
-
-urpx:identifierScheme a owl:ObjectProperty ;
-    rdfs:label "Identifier Scheme"@en ;
-    rdfs:comment "Identification scheme or system (Standard ID systems)" ;
-    rdfs:domain urpx:OrganizationIdentifier ;
-    rdfs:range urpx:IdentifierSchemeValue ;
-    skos:note "Standard ID systems enumeration. Standardized identifier scheme definitions for international systems." .
 
 urpx:identityValidFrom a owl:DatatypeProperty ;
     rdfs:label "Identity Valid From"@en ;
@@ -3138,10 +3131,11 @@ urpx:roundTripEfficiency a owl:DatatypeProperty ;
 
 urpx:scheme a owl:ObjectProperty ;
     rdfs:label "Scheme"@en ;
-    rdfs:comment "URI identifying the identifier scheme or naming authority for a RatePlanIdentifier or RatePlanModifierIdentifier." ;
+    rdfs:comment "IRI identifying the identifier scheme or naming authority." ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:RatePlanIdentifier urpx:RatePlanModifierIdentifier ) ] ;
-    skos:note "Free URI — documented conventions: urpx:ca-midas-rin (CA MIDAS RIN), urpx:utility-tariff-code (utility-assigned tariff code). No closed enum. Value via skos:notation on the identifier." .
+            owl:unionOf ( urpx:OrganizationIdentifier urpx:RatePlanIdentifier urpx:RatePlanModifierIdentifier ) ] ;
+    rdfs:range urpx:IdentifierScheme ;
+    skos:note "Any IRI. The IdentifierScheme members published with this vocabulary cover the common registers; an implementer operating a scheme that is not among them mints its own IRI. The identifier's value rides skos:notation." .
 
 urpx:scopeKind a owl:ObjectProperty ;
     rdfs:label "Scope Kind"@en ;
@@ -3432,14 +3426,6 @@ urpx:url a owl:DatatypeProperty ;
             owl:unionOf ( urpx:SourcePublication urpx:URPXPackage urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:DataSourceReference urpx:ProgramEnrollment urpx:RateCase ) ] ;
     rdfs:range xsd:anyURI ;
     skos:note "Direct link to PDF, HTML, or other document format." .
-
-urpx:utilityId a owl:DatatypeProperty ;
-    rdfs:label "Utility ID"@en ;
-    rdfs:comment "Utility identifier as defined by the implementing jurisdiction" ;
-    rdfs:domain urpx:OrganizationIdentifier ;
-    rdfs:range xsd:string ;
-    skos:note "Generic utility identifier property. Each URPX implementation specifies the identifier system used (e.g., US EIA ID, UK MPAN, EU EIC code). For standard identifier types, use identifierScheme to specify the system." ;
-    skos:example "US: EIA-12345, UK: S12345678901, EU: 12X-UTILITY-A" .
 
 urpx:version a owl:DatatypeProperty ;
     rdfs:label "Version"@en ;
@@ -4983,49 +4969,59 @@ urpx:spaceHeater rdf:type urpx:HVACKindValue ;
     skos:definition "Individual space heating unit"@en ;
     skos:prefLabel "Space Heater"@en .
 
-# --- Identifier Scheme Property (IdentifierSchemeValue) ---
+# --- Identifier Scheme Property (IdentifierScheme) ---
 
-urpx:companyNumberScheme rdf:type urpx:IdentifierSchemeValue ;
+urpx:caMidasRinScheme rdf:type urpx:IdentifierScheme ;
+    rdfs:label "CA MIDAS RIN"@en ;
+    skos:definition "California Market Informed Demand Automation Server rate identification number."@en ;
+    skos:prefLabel "CA MIDAS RIN"@en .
+
+urpx:companyNumberScheme rdf:type urpx:IdentifierScheme ;
     rdfs:label "Company Number Scheme"@en ;
     skos:definition "Company number identifier scheme - government-issued company registration number"@en ;
     skos:prefLabel "Company Number"@en .
 
-urpx:dunsScheme rdf:type urpx:IdentifierSchemeValue ;
+urpx:dunsScheme rdf:type urpx:IdentifierScheme ;
     rdfs:label "DUNS Scheme"@en ;
     skos:definition "DUNS identifier scheme - Dun & Bradstreet Universal Numbering System"@en ;
     skos:prefLabel "DUNS"@en .
 
-urpx:eiaScheme rdf:type urpx:IdentifierSchemeValue ;
+urpx:eiaScheme rdf:type urpx:IdentifierScheme ;
     rdfs:label "EIA Scheme"@en ;
     skos:definition "EIA identifier scheme - US Energy Information Administration utility identifier"@en ;
     skos:prefLabel "EIA"@en .
 
-urpx:gleifScheme rdf:type urpx:IdentifierSchemeValue ;
+urpx:gleifScheme rdf:type urpx:IdentifierScheme ;
     rdfs:label "GLEIF Scheme"@en ;
     skos:definition "GLEIF identifier scheme - Global Legal Entity Identifier Foundation system"@en ;
     skos:prefLabel "GLEIF"@en .
 
-urpx:gridScheme rdf:type urpx:IdentifierSchemeValue ;
+urpx:gridScheme rdf:type urpx:IdentifierScheme ;
     rdfs:label "GRID Scheme"@en ;
     skos:definition "GRID identifier scheme - Global Research Identifier Database for organizations"@en ;
     skos:prefLabel "GRID"@en .
 
-urpx:isinScheme rdf:type urpx:IdentifierSchemeValue ;
+urpx:isinScheme rdf:type urpx:IdentifierScheme ;
     rdfs:label "ISIN Scheme"@en ;
     skos:definition "ISIN identifier scheme - International Securities Identification Number"@en ;
     skos:prefLabel "ISIN"@en .
 
-urpx:leiScheme rdf:type urpx:IdentifierSchemeValue ;
+urpx:leiScheme rdf:type urpx:IdentifierScheme ;
     rdfs:label "LEI Scheme"@en ;
     skos:definition "LEI identifier scheme - Legal Entity Identifier for financial market participants"@en ;
     skos:prefLabel "LEI"@en .
 
-urpx:localRegulatorScheme rdf:type urpx:IdentifierSchemeValue ;
+urpx:localRegulatorScheme rdf:type urpx:IdentifierScheme ;
     rdfs:label "Local Regulator Scheme"@en ;
     skos:definition "Local regulator identifier scheme - jurisdiction-specific regulatory identifier"@en ;
     skos:prefLabel "Local Regulator"@en .
 
-urpx:vatScheme rdf:type urpx:IdentifierSchemeValue ;
+urpx:utilityTariffCodeScheme rdf:type urpx:IdentifierScheme ;
+    rdfs:label "Utility Tariff Code"@en ;
+    skos:definition "Tariff code assigned by the utility that publishes the rate plan."@en ;
+    skos:prefLabel "Utility Tariff Code"@en .
+
+urpx:vatScheme rdf:type urpx:IdentifierScheme ;
     rdfs:label "VAT Scheme"@en ;
     skos:definition "VAT identifier scheme - Value Added Tax registration number"@en ;
     skos:prefLabel "VAT"@en .

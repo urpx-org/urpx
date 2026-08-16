@@ -4,9 +4,31 @@
 # URPX Changelog
 
 **Version:** 0.3.0 (Pre-draft)
-**Last Updated:** 2026-08-02
+**Last Updated:** 2026-08-14
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-08-14 — v0.4.0 (one identifier pattern)
+---
+
+### Added
+- `IdentifierScheme`, the class of registers and naming authorities that issue identifiers. It is an open class: the members published with this vocabulary cover the common registers, and an implementer operating a scheme that is not among them mints its own IRI as an `IdentifierScheme` instance.
+- `caMidasRinScheme` and `utilityTariffCodeScheme`, the two rate plan registers, as defined members beside the nine organization registers. Both carry a label, a definition and a preferred label.
+
+### Changed
+- `scheme` carries the register for every identifier. Its domain is `OrganizationIdentifier ∪ RatePlanIdentifier ∪ RatePlanModifierIdentifier`, and it ranges on `IdentifierScheme`. Ranging on an open class gives the property a documented value space while keeping an implementer-minted IRI legal.
+- `identifierJurisdiction` applies to all three identifier classes, optional and at most one on each. A CA MIDAS RIN has a jurisdiction as much as an EIA ID does.
+- `IdentifierSchemeValue` is `IdentifierScheme`, a class rather than an enumeration. The nine members keep their IRIs, labels and definitions, and are typed to it.
+- `OrganizationIdentifierShape`, `RatePlanIdentifierShape` and `RatePlanModifierIdentifierShape` take one surface: `scheme` required, `skos:notation` required, `identifierJurisdiction` optional. An organization identifier carries a register and a value.
+
+### Removed
+- `identifierScheme`. `scheme` carries the register for all three identifier classes.
+- `utilityId`. `skos:notation` carries the literal for every identifier, including the EIA, DUNS and LEI values that property held.
+- `IdentifierSchemeValueShape`. `sh:nodeKind sh:IRI` on `scheme` is the constraint the register takes, which is what makes a scheme outside the published members legal.
+
+### Migration
+- On organization identifiers, `identifierScheme` becomes `scheme` and `utilityId` becomes `skos:notation`. Both are required, so an organization identifier states the register it comes from and the value it carries.
+- The utility tariff code register is `urpx:utilityTariffCodeScheme` and the CA MIDAS RIN register is `urpx:caMidasRinScheme`. Rewrite `scheme` object IRIs that carry the hyphenated forms of either name.
 
 2026-08-02 — v0.3.0 (offering and publication separated)
 ---

@@ -28,7 +28,7 @@
       "@id": "coned:coned-sc1-rate-i-id-utility-code",
       "@type": "urpx:RatePlanIdentifier",
       "skos:notation": "SC1-RATE-I",
-      "urpx:scheme": { "@id": "https://urpx-org.github.io/urpx/ontology/utility-tariff-code" }
+      "urpx:scheme": { "@id": "https://urpx-org.github.io/urpx/ontology/utilityTariffCodeScheme" }
     },
     {
       "@id": "org:consolidated-edison",

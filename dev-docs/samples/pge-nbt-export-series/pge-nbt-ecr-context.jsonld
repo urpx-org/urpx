@@ -47,7 +47,7 @@
         "@id": "pge:nbt-id-tariff-code",
         "@type": "urpx:RatePlanModifierIdentifier",
         "urpx:scheme": {
-          "@id": "urpx:utility-tariff-code"
+          "@id": "urpx:utilityTariffCodeScheme"
         },
         "skos:notation": "NBT"
       }

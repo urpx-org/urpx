@@ -24,7 +24,7 @@ created: 1784419200000
 
 MIDAS — the California Energy Commission's Market Informed Demand Automation Server — is the operating machine-to-machine channel for time-varying electricity rates in California: under the CEC's Load Management Standards, the largest utilities and CCAs must keep it populated with all time-varying rate values, and since 2024 every customer bill carries a Rate Identification Number (RIN) pointing into it. MIDAS serves each rate as a streaming series of UTC intervals — exactly what URPX calls the extrapolated form of a highly dynamic price.
 
-URPX already anchors to MIDAS on the identity side: a `RatePlanIdentifier` with scheme `urpx:ca-midas-rin` carries the RIN. This spec completes the bridge on the values side: a normative mapping from URPX rate plans and price time series to the MIDAS v2.0 upload schema, so that a rate plan maintained in URPX can populate MIDAS mechanically. The transform direction URPX → MIDAS comes first; it lets URPX act as the richer authoring and interchange layer while MIDAS remains the serving channel.
+URPX already anchors to MIDAS on the identity side: a `RatePlanIdentifier` with scheme `urpx:caMidasRinScheme` carries the RIN. This spec completes the bridge on the values side: a normative mapping from URPX rate plans and price time series to the MIDAS v2.0 upload schema, so that a rate plan maintained in URPX can populate MIDAS mechanically. The transform direction URPX → MIDAS comes first; it lets URPX act as the richer authoring and interchange layer while MIDAS remains the serving channel.
 
 ```mermaid
 flowchart LR
@@ -39,13 +39,13 @@ flowchart LR
 
 | MIDAS field | URPX source | Notes |
 |---|---|---|
-| `RateID` (RIN) | `RatePlanIdentifier` with `urpx:scheme urpx:ca-midas-rin`, `skos:notation` | Already the standard URPX carriage of the RIN. Format `CCSS-DDEE-RRRR-LLLL…`. |
+| `RateID` (RIN) | `RatePlanIdentifier` with `urpx:scheme urpx:caMidasRinScheme`, `skos:notation` | Already the standard URPX carriage of the RIN. Format `CCSS-DDEE-RRRR-LLLL…`. |
 | `RateName` | `RatePlan` `urpx:name` | Must stay consistent with the CEC Interval Meter Database naming (CCR Title 20 § 1344). |
 | `RateType` | derived; see §3 | Ten-code enumeration. |
 | `Sector` | derived from `EligibilityRule` customer-class conditions | `Res`, `Com`, `Ind`, `Agr`, `All`, EV variants; default `All` when underdetermined (open question 2). |
 | `RatePlan_Url` | `RatePlan` `urpx:url` | Tariff document link. |
 | `API_Url` | `DynamicPriceEndpoint` `urpx:url` (SPEC-URPX-ONT-043) | The publisher's own live endpoint, when one exists. |
-| `AltRateName1/2` | additional plan identifiers (`utility-tariff-code` notation) | Optional. |
+| `AltRateName1/2` | additional plan identifiers (`utilityTariffCodeScheme` notation) | Optional. |
 | `SignupCloseDate` | — | No URPX equivalent today; emit null (open question 3). |
 | `EndUse` | — | Emit null unless the plan is scoped to an end use by eligibility (EV, battery, solar). |
 
