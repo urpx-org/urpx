@@ -88,7 +88,6 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 - [GeographicScopeValue](#geographicscopevalue)
 - [GeographicZoneValue](#geographiczonevalue)
 - [HVACKindValue](#hvackindvalue)
-- [IdentifierSchemeValue](#identifierschemevalue)
 - [InterconnectionStatusValue](#interconnectionstatusvalue)
 - [IntervalAlignmentValue](#intervalalignmentvalue)
 - [IntervalSelectionValue](#intervalselectionvalue)
@@ -228,8 +227,9 @@ derived RatePlanVersion snapshot.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
+| `urpx:identifierJurisdiction` | Datatype | 0..1 | `xsd:string` | Jurisdiction where identifier is valid |
 | `urpx:notation` | Datatype | 1..1 | `xsd:string` | — |
-| `urpx:scheme` | Datatype | 1..1 | — | URI identifying the identifier scheme or naming authority for a RatePlanIdentifier or RatePlanModifierIdentifier. |
+| `urpx:scheme` | Datatype | 1..1 | — | IRI identifying the identifier scheme or naming authority. |
 
 ---
 
@@ -353,8 +353,9 @@ demand response programs, and renewable energy riders.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
+| `urpx:identifierJurisdiction` | Datatype | 0..1 | `xsd:string` | Jurisdiction where identifier is valid |
 | `urpx:notation` | Datatype | 1..1 | `xsd:string` | — |
-| `urpx:scheme` | Datatype | 1..1 | — | URI identifying the identifier scheme or naming authority for a RatePlanIdentifier or RatePlanModifierIdentifier. |
+| `urpx:scheme` | Datatype | 1..1 | — | IRI identifying the identifier scheme or naming authority. |
 
 ---
 
@@ -2225,8 +2226,17 @@ energy service providers.
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
 | `urpx:identifierJurisdiction` | Datatype | 0..1 | `xsd:string` | Jurisdiction where identifier is valid |
-| `urpx:identifierScheme` | Datatype | 0..1 | — | Identification scheme or system (Standard ID systems) |
-| `urpx:utilityId` | Datatype | 0..1 | `xsd:string` | Utility identifier as defined by the implementing jurisdiction |
+| `urpx:notation` | Datatype | 1..1 | `xsd:string` | — |
+| `urpx:scheme` | Datatype | 1..1 | — | IRI identifying the identifier scheme or naming authority. |
+
+---
+
+### IdentifierScheme
+
+**URI:** `https://urpx-org.github.io/urpx/ontology/IdentifierScheme`  
+**Parent:** `owl:Thing`
+
+**Description:** A register or naming authority that issues identifiers.
 
 ---
 
@@ -2750,20 +2760,6 @@ potentially spanning multiple administrative boundaries.
 | `urpx:districtHeatingConnection` | Connection to a district heating network |
 | `urpx:groundSourceHeatPump` | Ground source (geothermal) heat pump system |
 | `urpx:spaceHeater` | Individual space heating unit |
-
-### IdentifierSchemeValue
-
-| Value | Description |
-|-------|-------------|
-| `urpx:companyNumberScheme` | Company number identifier scheme - government-issued company registration number |
-| `urpx:dunsScheme` | DUNS identifier scheme - Dun & Bradstreet Universal Numbering System |
-| `urpx:eiaScheme` | EIA identifier scheme - US Energy Information Administration utility identifier |
-| `urpx:gleifScheme` | GLEIF identifier scheme - Global Legal Entity Identifier Foundation system |
-| `urpx:gridScheme` | GRID identifier scheme - Global Research Identifier Database for organizations |
-| `urpx:isinScheme` | ISIN identifier scheme - International Securities Identification Number |
-| `urpx:leiScheme` | LEI identifier scheme - Legal Entity Identifier for financial market participants |
-| `urpx:localRegulatorScheme` | Local regulator identifier scheme - jurisdiction-specific regulatory identifier |
-| `urpx:vatScheme` | VAT identifier scheme - Value Added Tax registration number |
 
 ### InterconnectionStatusValue
 
