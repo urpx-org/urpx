@@ -10,6 +10,16 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
+      - name: Require App credentials configured
+        env:
+          URPX_REGEN_APP_ID: ${{ secrets.URPX_REGEN_APP_ID }}
+          URPX_REGEN_APP_PRIVATE_KEY: ${{ secrets.URPX_REGEN_APP_PRIVATE_KEY }}
+        run: |
+          if [ -z "$URPX_REGEN_APP_ID" ] || [ -z "$URPX_REGEN_APP_PRIVATE_KEY" ]; then
+            echo "::error::URPX_REGEN_APP_ID and/or URPX_REGEN_APP_PRIVATE_KEY is empty on $GITHUB_REPOSITORY; add both secrets (or extend their organization-level scope) to this repository before this workflow can mint the urpx-regen-bot App token."
+            exit 1
+          fi
+
       - name: Mint automation token
         id: app-token
         uses: actions/create-github-app-token@v2

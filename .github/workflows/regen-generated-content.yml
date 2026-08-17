@@ -16,14 +16,14 @@ on:
         description: Branch or ref in the URPX standard repository to regenerate
         required: false
       commit_changes:
-        description: Commit generated changes back to the target branch
+        description: Commit generated changes and open a pull request against the target branch
         required: false
         type: boolean
         default: true
 
 permissions:
   contents: write
-  pull-requests: read
+  pull-requests: write
 
 concurrency:
   group: regen-generated-content-${{ github.event.pull_request.number || inputs.target_ref || github.ref_name }}
@@ -33,6 +33,16 @@ jobs:
   regen:
     runs-on: ubuntu-latest
     steps:
+      - name: Require App credentials configured
+        env:
+          URPX_REGEN_APP_ID: ${{ secrets.URPX_REGEN_APP_ID }}
+          URPX_REGEN_APP_PRIVATE_KEY: ${{ secrets.URPX_REGEN_APP_PRIVATE_KEY }}
+        run: |
+          if [ -z "$URPX_REGEN_APP_ID" ] || [ -z "$URPX_REGEN_APP_PRIVATE_KEY" ]; then
+            echo "::error::URPX_REGEN_APP_ID and/or URPX_REGEN_APP_PRIVATE_KEY is empty on $GITHUB_REPOSITORY; add both secrets (or extend their organization-level scope) to this repository before this workflow can mint the urpx-regen-bot App token."
+            exit 1
+          fi
+
       - name: Mint automation token
         id: app-token
         uses: actions/create-github-app-token@v2
@@ -67,12 +77,14 @@ jobs:
             ref="${INPUT_TARGET_REF:-$GITHUB_REF_NAME}"
             commit_changes="${INPUT_COMMIT_CHANGES:-true}"
             writable="true"
+            branch="regen-generated-content/${ref//\//-}"
           fi
 
           echo "repo=$repo" >> "$GITHUB_OUTPUT"
           echo "ref=$ref" >> "$GITHUB_OUTPUT"
           echo "commit_changes=$commit_changes" >> "$GITHUB_OUTPUT"
           echo "writable=$writable" >> "$GITHUB_OUTPUT"
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
           echo "Target: $repo@$ref (writable=$writable commit_changes=$commit_changes)"
 
       - name: Detect generated-only PR head commit
@@ -200,7 +212,7 @@ jobs:
           path: generated-content.diff
 
       - name: Commit generated artifacts to branch
-        if: steps.diff.outputs.changed == 'true' && steps.target.outputs.writable == 'true' && steps.target.outputs.commit_changes == 'true'
+        if: steps.diff.outputs.changed == 'true' && steps.target.outputs.writable == 'true' && steps.target.outputs.commit_changes == 'true' && github.event_name == 'pull_request'
         working-directory: urpx
         run: |
           git config user.name "urpx-regen-bot[bot]"
@@ -210,6 +222,34 @@ jobs:
                   test-cases
           git commit -s -m "chore: refresh generated URPX artifacts"
           git push origin "HEAD:${{ steps.target.outputs.ref }}"
+
+      - name: Commit generated artifacts to a regeneration branch
+        if: steps.diff.outputs.changed == 'true' && steps.target.outputs.writable == 'true' && steps.target.outputs.commit_changes == 'true' && github.event_name == 'workflow_dispatch'
+        working-directory: urpx
+        run: |
+          git config user.name "urpx-regen-bot[bot]"
+          git config user.email "${{ vars.URPX_REGEN_APP_UID }}+urpx-regen-bot[bot]@users.noreply.github.com"
+          git add documentation/pages/urpx-data-dictionary.md \
+                  documentation/diagrams/dictionary \
+                  test-cases
+          git commit -s -m "chore: refresh generated URPX artifacts"
+          git push origin "HEAD:refs/heads/${{ steps.target.outputs.branch }}" --force
+
+      - name: Open pull request for generated artifacts
+        if: steps.diff.outputs.changed == 'true' && steps.target.outputs.writable == 'true' && steps.target.outputs.commit_changes == 'true' && github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          BRANCH: ${{ steps.target.outputs.branch }}
+          TARGET_REF: ${{ steps.target.outputs.ref }}
+        run: |
+          existing="$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$BRANCH" --base "$TARGET_REF" --state open --json number --jq '.[0].number // empty')"
+          if [ -n "$existing" ]; then
+            echo "Regenerated artifacts pushed to $BRANCH; pull request #$existing already proposes them into $TARGET_REF."
+          else
+            gh pr create --repo "$GITHUB_REPOSITORY" --head "$BRANCH" --base "$TARGET_REF" \
+              --title "chore: refresh generated URPX artifacts ($TARGET_REF)" \
+              --body "Regenerated documentation, diagrams and test-case artifacts for \`$TARGET_REF\`."
+          fi
 
       - name: Fail when generated changes could not be committed
         if: steps.diff.outputs.changed == 'true' && (steps.target.outputs.writable != 'true' || steps.target.outputs.commit_changes != 'true')
