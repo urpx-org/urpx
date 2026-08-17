@@ -191,6 +191,14 @@ jobs:
           path: urpx-website-staging/scripts/codegen/config/dictionary-config-pending.yaml
           if-no-files-found: ignore
 
+      - name: Check generated content for internal process language
+        if: steps.head-change.outputs.generated_only != 'true'
+        run: |
+          python3 urpx-website-staging/scripts/build/check-no-internal-process-language.py \
+            urpx/documentation/pages/urpx-data-dictionary.md \
+            urpx/documentation/diagrams/dictionary \
+            urpx/test-cases
+
       - name: Capture generated diff
         id: diff
         if: steps.head-change.outputs.generated_only != 'true'
