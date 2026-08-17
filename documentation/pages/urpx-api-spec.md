@@ -3,6 +3,14 @@
 <!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
 <!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
 
+---
+site_category: technical-reference
+site_id: api-spec
+site_title: "API Specification"
+site_label: "API Spec"
+site_position: 3
+---
+
 # URPX API Specification
 
 **Status:** Non-normative sketch, illustrative only. Aligned to URPX v0.3.0; the normative access API is in development for a release after v0.3.0.

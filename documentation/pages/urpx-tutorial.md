@@ -3,6 +3,13 @@
 <!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
 <!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
 
+---
+site_category: getting-started
+site_id: tutorial
+site_title: "Tutorial"
+site_position: 2
+---
+
 # URPX Tutorial: Building Your First Rate Plan
 
 **Version**: 0.3.0 (Pre-draft)

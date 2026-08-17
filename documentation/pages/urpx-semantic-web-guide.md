@@ -3,6 +3,13 @@
 <!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
 <!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
 
+---
+site_category: learning
+site_id: semantic-web-guide
+site_title: "Semantic Web Guide"
+site_position: 1
+---
+
 # Semantic Web Guide for URPX
 
 **Version:** 0.3.0 (Pre-draft) 

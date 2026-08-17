@@ -2,6 +2,14 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 <!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
 
+---
+site_category: advanced-topics
+site_id: complex-conditions
+site_title: "Complex Condition Modeling"
+site_label: "Complex Conditions"
+site_position: 1
+---
+
 # URPX Condition Model
 
 **Version:** 0.3.0

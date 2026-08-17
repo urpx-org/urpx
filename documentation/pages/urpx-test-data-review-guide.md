@@ -3,6 +3,13 @@
 <!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
 <!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
 
+---
+site_category: getting-started
+site_id: test-cases
+site_title: "Test Data Review Guide"
+site_position: 5
+---
+
 # URPX Test Data Review Guide
 
 **Version**: 0.3.0 (Pre-draft)

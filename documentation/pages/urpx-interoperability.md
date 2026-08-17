@@ -3,6 +3,14 @@
 <!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
 <!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
 
+---
+site_category: integration
+site_id: interoperability
+site_title: "Interoperability & Integration"
+site_label: "Interoperability"
+site_position: 1
+---
+
 # URPX Interoperability & Standards Integration
 
 > **PRE-DRAFT DOCUMENT - WORKING GROUP REVIEW ONLY**

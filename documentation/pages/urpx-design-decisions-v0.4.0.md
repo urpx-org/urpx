@@ -3,6 +3,14 @@
 <!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
 <!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
 
+---
+site_category: advanced-topics
+site_id: design-decisions-v0.4.0
+site_title: "Design Decisions v0.4.0"
+site_label: "Decisions v0.4.0"
+site_position: 7
+---
+
 # URPX (Utility Rate Plan Exchange) Design Decisions Log — v0.4.0
 
 **Version:** 0.4.0 (unreleased, pre-Draft)
