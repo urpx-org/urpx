@@ -4,9 +4,23 @@
 # URPX Changelog
 
 **Version:** 0.3.0 (Pre-draft)
-**Last Updated:** 2026-08-14
+**Last Updated:** 2026-08-17
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-08-17 — v0.4.0 (the exchange package carries every unit)
+---
+
+### Added
+- `packages`, the containment property of the exchange envelope. Its domain is `URPXPackage` and its range is the union of `RatePlan`, `RatePlanModifier`, `RatePlanVersion`, `RatePlanModifierVersion`, `PricingModel`, `TariffFiling` and `SourcePublication`. Every exchangeable unit can therefore be packaged, and a package declares the URPX version its contents were authored against through `targetURPXVersion`.
+- `URPXPackageShape` admits `packages` at `minCount 0` through `sh:or` over single-class shapes. `sh:class` takes one class, so `sh:or` is how SHACL core states a union-class constraint.
+
+### Removed
+- `hasTariffPublication`. `packages` carries a source publication, as it carries every other unit a package holds.
+
+### Migration
+- On a `URPXPackage`, `hasTariffPublication` becomes `packages`.
+- `hasRatePlan` and `hasRatePlanModifier` remain valid on a `URPXPackage`. A package may carry a rate plan or a modifier through either those properties or `packages`.
 
 2026-08-14 — v0.4.0 (one identifier pattern)
 ---

@@ -5827,15 +5827,23 @@ urpx-shacl:URPXPackageShape
         sh:minCount 0 ;
     ] ;
     sh:property [
-        sh:path urpx:hasTariffPublication ;
-        sh:class urpx:SourcePublication ;
-        sh:minCount 0 ;
-    ] ;
-    sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:packages ;
+        sh:or (
+            [ sh:class urpx:RatePlan ]
+            [ sh:class urpx:RatePlanModifier ]
+            [ sh:class urpx:RatePlanVersion ]
+            [ sh:class urpx:RatePlanModifierVersion ]
+            [ sh:class urpx:PricingModel ]
+            [ sh:class urpx:TariffFiling ]
+            [ sh:class urpx:SourcePublication ]
+        ) ;
+        sh:minCount 0 ;
     ] ;
     sh:property [
         sh:path urpx:priceCurrency ;

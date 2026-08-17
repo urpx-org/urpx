@@ -2267,13 +2267,6 @@ urpx:hasState a owl:ObjectProperty ;
     rdfs:range urpx:State ;
     skos:note "Defines state-level eligibility and applicability through use in service point profile and within ConditionExpression." .
 
-urpx:hasTariffPublication a owl:ObjectProperty ;
-    rdfs:label "Has Tariff Publication"@en ;
-    rdfs:comment "References to formal tariff publications" ;
-    rdfs:domain urpx:URPXPackage ;
-    rdfs:range urpx:SourcePublication ;
-    skos:note "Links to official tariff documents, PDFs, or regulatory filings." .
-
 urpx:hasTemporalPeriod a owl:ObjectProperty ;
     rdfs:label "Has Temporal Period"@en ;
     rdfs:comment "Links a temporal scope to the reusable named time interval its span denotes." ;
@@ -2762,6 +2755,14 @@ urpx:ownershipType a owl:ObjectProperty ;
     rdfs:domain urpx:UtilityOperator ;
     rdfs:range urpx:OwnershipTypeValue ;
     skos:note "EIA ownership categories enumeration. Standardized utility business structure categorization aligned with EIA Form 861 reporting standards." .
+
+urpx:packages a owl:ObjectProperty ;
+    rdfs:label "Packages"@en ;
+    rdfs:comment "A unit of URPX content carried by this exchange package." ;
+    rdfs:domain urpx:URPXPackage ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( urpx:RatePlan urpx:RatePlanModifier urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:PricingModel urpx:TariffFiling urpx:SourcePublication ) ] ;
+    skos:note "A package may carry several units, and a unit may be exchanged in a package of its own. The package declares the URPX version its contents were authored against through targetURPXVersion." .
 
 urpx:pageEnd a owl:DatatypeProperty ;
     rdfs:label "Page End"@en ;
