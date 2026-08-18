@@ -15,12 +15,19 @@
 - `packages`, the containment property of the exchange envelope. Its domain is `URPXPackage` and its range is the union of `RatePlan`, `RatePlanModifier`, `RatePlanVersion`, `RatePlanModifierVersion`, `PricingModel`, `TariffFiling` and `SourcePublication`. Every exchangeable unit can therefore be packaged, and a package declares the URPX version its contents were authored against through `targetURPXVersion`.
 - `URPXPackageShape` admits `packages` at `minCount 0` through `sh:or` over single-class shapes. `sh:class` takes one class, so `sh:or` is how SHACL core states a union-class constraint.
 
+### Changed
+- The ontology and the shapes identify themselves as version 0.4.0. `owl:versionIRI`, `dcterms:hasVersion`, `owl:versionInfo`, the release node, its distribution and both download URLs name v0.4.0, so a consumer resolving a package's `targetURPXVersion` reaches a document that identifies itself as the version the package declares.
+- `URPXPackageShape` requires at least one of `packages`, `hasRatePlan` or `hasRatePlanModifier` on every `URPXPackage`. The envelope's job is to carry content and declare a version, and the shape now states the carrying half. Each of the three paths stays optional on its own: the requirement is that a package uses one of them, not that it uses any particular one.
+- `hasRatePlan` and `hasRatePlanModifier` describe the exchange package they link from and name `packages` as the containment property that reaches every exchangeable unit. A consumer reading package contents reads both paths.
+
 ### Removed
 - `hasTariffPublication`. `packages` carries a source publication, as it carries every other unit a package holds.
 
 ### Migration
 - On a `URPXPackage`, `hasTariffPublication` becomes `packages`.
 - `hasRatePlan` and `hasRatePlanModifier` remain valid on a `URPXPackage`. A package may carry a rate plan or a modifier through either those properties or `packages`.
+- A `URPXPackage` states at least one content unit. A package carrying only metadata and a version declaration does not validate.
+- An organization's EIA, DUNS or LEI value rides the identity chain: `Organization` → `hasIdentity` → `OrganizationIdentity` → `hasIdentifier` → `OrganizationIdentifier`, with `scheme` naming the register and `skos:notation` carrying the value. The PG&E E-TOU-C test case carries the worked example.
 
 2026-08-14 — v0.4.0 (one identifier pattern)
 ---
