@@ -3,6 +3,10 @@ id: data-dictionary
 title: "Data Dictionary"
 sidebar_label: "Data Dictionary"
 sidebar_position: 1
+site_category: technical-reference
+site_id: data-dictionary
+site_title: "Data Dictionary"
+site_position: 1
 ---
 
 import DictTopNav from '@site/src/components/DictTopNav';

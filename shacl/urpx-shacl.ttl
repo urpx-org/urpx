@@ -27,22 +27,22 @@
     dcterms:creator "Una Smithsimon, Klaar De Schepper, Flux Tailor LLC" ;
     dcterms:description "SHACL shapes for validating URPX data against the URPX Ontology." ;
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
-    dcterms:modified "2026-07-12"^^xsd:date ;
+    dcterms:modified "2026-08-18"^^xsd:date ;
     dcterms:title "URPX SHACL Shapes" ;
-    dcterms:hasVersion <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.3.0> ;
-    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.3.0/shacl/urpx-shacl.ttl> .
+    dcterms:hasVersion <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.4.0> ;
+    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.4.0/shacl/urpx-shacl.ttl> .
 
-<https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.3.0>
+<https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.4.0>
     a owl:Ontology, sh:ShapesGraph ;
     dcterms:isVersionOf <https://urpx-org.github.io/urpx/ontology/shacl> ;
-    dcterms:issued "2026-07-07"^^xsd:date ;
-    dcat:version "0.3.0" ;
-    dcat:distribution <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.3.0/ttl> .
+    dcterms:issued "2026-08-18"^^xsd:date ;
+    dcat:version "0.4.0" ;
+    dcat:distribution <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.4.0/ttl> .
 
-<https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.3.0/ttl>
+<https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.4.0/ttl>
     a dcat:Distribution ;
-    dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.3.0/shacl/urpx-shacl.ttl> ;
-    dcat:downloadURL <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.3.0/ttl/urpx-shacl.ttl> ;
+    dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.4.0/shacl/urpx-shacl.ttl> ;
+    dcat:downloadURL <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.4.0/ttl/urpx-shacl.ttl> ;
     dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> .
 
 # ============================================================================

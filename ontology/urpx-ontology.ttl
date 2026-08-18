@@ -3324,7 +3324,7 @@ urpx:targetURPXVersion a owl:DatatypeProperty ;
     rdfs:domain urpx:URPXPackage ;
     rdfs:range xsd:anyURI ;
     rdfs:comment "The URPX ontology version this document was authored against." ;
-    skos:note "Required on all URPXPackage instances. Enables version-aware parsing and validation. Value should be the ontology version IRI, e.g. 'https://github.com/urpx-org/urpx/raw/v0.3.0/ontology/urpx-ontology.ttl'." .
+    skos:note "Required on all URPXPackage instances. Enables version-aware parsing and validation. Value should be the ontology version IRI, e.g. 'https://github.com/urpx-org/urpx/raw/v0.4.0/ontology/urpx-ontology.ttl'." .
 
 urpx:tariffStatementType a owl:ObjectProperty ;
     rdfs:label "Tariff Statement Type"@en ;
