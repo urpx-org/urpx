@@ -158,10 +158,10 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 | `urpx:expectedEndDateTime` | Datatype | 0..1 | `xsd:dateTime` | Provisional end date/time subject to change |
 | `urpx:expirationDate` | Datatype | 0..1 | `xsd:date` | Date when entity becomes inactive |
 | `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
-| `urpx:hasRatePlan` | Object | 0..* | [`RatePlan`](#rateplan) | Links document to rate plans |
-| `urpx:hasRatePlanModifier` | Object | 0..* | [`RatePlanModifier`](#rateplanmodifier) | Rate plan modifiers available in this document |
-| `urpx:hasTariffPublication` | Object | 0..* | [`SourcePublication`](#sourcepublication) | References to formal tariff publications |
+| `urpx:hasRatePlan` | Object | 0..* | [`RatePlan`](#rateplan) | Links an exchange package to a rate plan it carries. |
+| `urpx:hasRatePlanModifier` | Object | 0..* | [`RatePlanModifier`](#rateplanmodifier) | Links an exchange package to a rate plan modifier it carries. |
 | `urpx:name` | Datatype | 0..1 | `xsd:string` | The name of the item |
+| `urpx:packages` | Datatype | 0..* | — | A unit of URPX content carried by this exchange package. |
 | `urpx:priceCurrency` | Datatype | 0..1 | `xsd:string` | ISO 4217 three-letter currency code |
 | `urpx:publishedBy` | Object | 0..1 | [`Organization`](#organization) | Organization that published this pricing model, tariff filing, source publication, or URPX exchange package. |
 | `urpx:targetURPXVersion` | Datatype | 1..1 | `xsd:anyURI` | The URPX ontology version this document was authored against. |
