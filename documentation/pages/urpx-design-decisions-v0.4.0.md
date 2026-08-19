@@ -13,7 +13,7 @@ site_position: 7
 
 # URPX (Utility Rate Plan Exchange) Design Decisions Log — v0.4.0
 
-**Version:** 0.4.0 (unreleased, pre-Draft)
+**Version:** 0.4.0 (pre-Draft)
 
 This page records design decisions for v0.4.0. Starting with v0.3.0, each major and minor version has its own design-decision log page.
 
@@ -133,12 +133,13 @@ Mint `urpx:packages`, with domain `URPXPackage` and a range that is the union of
 - **Positive:** `targetURPXVersion` is declarable on every exchangeable unit, each through a package that carries it.
 - **Positive:** The nine-file ConEd set can be wrapped, and a filing, a snapshot, or a pricing model can be exchanged as a package of its own.
 - **Breaking Change:** Yes, for `hasTariffPublication`. On a `URPXPackage` it becomes `packages`. Folded into the unreleased line before the initial public tag, so no released vocabulary is affected.
+- **Tightening:** `URPXPackageShape` previously admitted a package carrying no content unit. It now requires at least one of `packages`, `hasRatePlan` or `hasRatePlanModifier` through a node-level `sh:or`; each of the three paths stays optional on its own. Data relying on the earlier admission no longer validates.
 - **Residual redundancy:** A rate plan or a modifier can be carried by either `packages` or the retained property, so a consumer reading package contents checks both paths.
 - **Requirements:** No class is minted or renamed, so the website codegen dictionary configuration needs no `sections:` change and the regeneration does not halt. The retired property and the new one both appear in the generated data dictionary and diagrams, so those artifacts regenerate.
 
 **References:**
 - Changelog: `urpx-changelog.md`, 2026-08-17 entry ("the exchange package carries every unit").
 - Ontology (`ontology/urpx-ontology.ttl`): `urpx:packages` and its union range; the removed `urpx:hasTariffPublication`.
-- SHACL (`shacl/urpx-shacl.ttl`): `URPXPackageShape` admits `urpx:packages` through `sh:or`; the removed `hasTariffPublication` property block.
+- SHACL (`shacl/urpx-shacl.ttl`): `URPXPackageShape` admits `urpx:packages` through a `sh:or` over single-class shapes, and requires at least one content unit through a node-level `sh:or`; the removed `hasTariffPublication` property block.
 - Test cases: `test-cases/pge-e-tou-c/data/urpx-rate-plan_pge_e-tou-c.jsonld` carries the source publication on `urpx:packages`.
 - Related: Decision #121 (the `PricingModel`, `TariffFiling`, and `SourcePublication` architecture, which is why an authored filing is not reached through the external document path); Decision #131 (the widened inverse range, the prior case of the entailment that rules out widening an inverse-declared property's domain).

@@ -13,7 +13,7 @@ site_position: 6
 
 # URPX (Utility Rate Plan Exchange) Design Decisions Log — v0.3.0
 
-**Version:** 0.3.0 (unreleased, pre-Draft)
+**Version:** 0.3.0 (pre-Draft)
 
 This page records design decisions for v0.3.0. Starting with v0.3.0, each major and minor version has its own design-decision log page.
 

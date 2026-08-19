@@ -12,11 +12,11 @@ site_position: 2
 
 # URPX Tutorial: Building Your First Rate Plan
 
-**Version**: 0.3.0 (Pre-draft)
+**Version**: 0.4.0 (Pre-draft)
 **Last Updated**: 2026-07-07
 **Status**: Active
 
-**Learn the basics of creating and validating utility rate plan data using the URPX v0.3.0 ontology**
+**Learn the basics of creating and validating utility rate plan data using the URPX v0.4.0 ontology**
 
 ---
 
@@ -183,8 +183,8 @@ Let's build a basic residential rate plan step by step using JSON-LD.
   },
   "@id": "ex:doc-tutorial-basic",
   "@type": "URPXPackage",
-  "version": "0.3.0",
-  "targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.3.0/ontology/urpx-ontology.ttl",
+  "version": "0.4.0",
+  "targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.4.0/ontology/urpx-ontology.ttl",
   "name": "Tutorial Basic Residential Rate Plan",
   "description": "Simple residential rate plan with minimum price and energy price",
   "effectiveDateTime": {
@@ -195,7 +195,7 @@ Let's build a basic residential rate plan step by step using JSON-LD.
 }
 ```
 
-The `URPXPackage` is URPX's exchange container: the unit a system hands to another system. `targetURPXVersion` is required and names the exact ontology version the data was authored and validated against.
+The `URPXPackage` is URPX's exchange container: the unit a system hands to another system. `targetURPXVersion` is required and names the exact ontology version the data was authored and validated against. A package also states at least one content unit, so this document validates once Step 2 adds the rate plan.
 
 ### Step 2: Rate Plan Identity and Version
 
@@ -1041,4 +1041,4 @@ For complete current examples with tariff-linked test data:
 
 ---
 
-*Tutorial based on URPX v0.3.0 ontology. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
+*Tutorial based on URPX v0.4.0 ontology. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*

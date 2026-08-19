@@ -5,7 +5,7 @@
 
 # URPX v0.4.0 Release Notes
 
-**Released:** 2026-08-18.
+**Released:** 2026-08-19.
 **Type:** Pre-draft minor release.
 **Previous release:** [`v0.3.0`](urpx-release-notes-v0.3.0.md)
 
@@ -35,9 +35,9 @@ This release is not backward-compatible with v0.3.0. Organization identifiers, p
 - `identifierJurisdiction` applies to all three identifier classes. It is optional and at most one on each.
 - `OrganizationIdentifierShape`, `RatePlanIdentifierShape` and `RatePlanModifierIdentifierShape` take one surface: `scheme` required, `skos:notation` required, `identifierJurisdiction` optional. All three are closed.
 - `packages` is the containment property of the exchange envelope. Its domain is `URPXPackage`. Its range is the union of `RatePlan`, `RatePlanModifier`, `RatePlanVersion`, `RatePlanModifierVersion`, `PricingModel`, `TariffFiling` and `SourcePublication`.
-- `URPXPackageShape` requires at least one of `packages`, `hasRatePlan` or `hasRatePlanModifier` on every package. Each of the three paths stays optional on its own. `hasRatePlan` and `hasRatePlanModifier` remain valid, and a consumer reading package contents reads both paths.
-- All twelve shipped test-case data files carry a `URPXPackage` with `targetURPXVersion`, which `URPXPackageShape` requires. The version a file was written for is a fact in the file rather than a property of where it is stored.
-- The ontology and the shapes identify themselves as version 0.4.0. `owl:versionIRI`, `dcterms:hasVersion`, `owl:versionInfo`, `dcat:version`, the release nodes, their distributions and both download URLs name v0.4.0 in each document. A consumer resolving a package's `targetURPXVersion` reaches a document that names the same version.
+- `URPXPackageShape` requires at least one of `packages`, `hasRatePlan` or `hasRatePlanModifier` on every package. Each of the three paths stays optional on its own. `hasRatePlan` and `hasRatePlanModifier` remain valid, so a consumer reading package contents reads all three paths.
+- All twelve shipped test-case data files carry a `URPXPackage` with `targetURPXVersion`, which `URPXPackageShape` requires; eleven declare v0.4.0 and `pge-e-elec` declares v0.3.0, which is the version it validates against. The version a file was written for is a fact in the file rather than a property of where it is stored.
+- The ontology and the shapes identify themselves as version 0.4.0. In each document, `owl:versionIRI`, `dcterms:hasVersion`, the release node, its distribution and both download URLs name v0.4.0. The ontology states the version literal on `owl:versionInfo` and the shapes file states it on `dcat:version`. A consumer resolving a package's `targetURPXVersion` reaches a document that names the same version.
 - The PG&E E-TOU-C test case carries a worked organization identifier: `Organization` to `hasIdentity` to `OrganizationIdentity` to `hasIdentifier` to `OrganizationIdentifier`, with `scheme` naming `eiaScheme`, `skos:notation` carrying the EIA value and `identifierJurisdiction` naming the jurisdiction.
 
 ---
@@ -58,13 +58,10 @@ If you maintain datasets or downstream tooling, pay particular attention to thes
 4. **The identifier shapes require a register and a value.**
    `scheme` and `skos:notation` are each required on `OrganizationIdentifierShape`. The two properties they replace were both optional, so an organization identifier that named neither register nor value validated before and does not now. `RatePlanIdentifierShape` and `RatePlanModifierIdentifierShape` already required both. They gain optional `identifierJurisdiction` and are otherwise unchanged.
 
-5. **An organization's registry identifier belongs on an `OrganizationIdentifier`.**
-   `OrganizationShape` is open by design, so a registry value asserted directly on the organization node keeps validating while carrying no identifier a consumer can read. `urpx:eiaId`, which the v0.3.0 test data used this way, is not a defined term in the vocabulary. Route the value through `hasIdentity` and `hasIdentifier` instead. `OrganizationIdentityShape` is closed and requires `hasName`, so the identity node states a name alongside the identifier.
-
-6. **`hasTariffPublication` is removed.**
+5. **`hasTariffPublication` is removed.**
    `packages` carries a source publication, as it carries every other unit a package holds. `URPXPackageShape` is closed, so a package still asserting `hasTariffPublication` fails validation.
 
-7. **A `URPXPackage` states at least one content unit.**
+6. **A `URPXPackage` states at least one content unit.**
    `URPXPackageShape` requires at least one of `packages`, `hasRatePlan` or `hasRatePlanModifier`. A package carrying only metadata and a version declaration no longer conforms.
 
 ---
@@ -74,6 +71,7 @@ If you maintain datasets or downstream tooling, pay particular attention to thes
 Datasets built against v0.3.0 need term-level rework, not a version bump alone:
 
 - On organization identifiers, rename `identifierScheme` to `scheme` and `utilityId` to `skos:notation`. Both are required.
+- An organization's registry identifier belongs on an `OrganizationIdentifier`, not on the organization node. `OrganizationShape` is open by design, so a value asserted directly on the organization keeps validating while carrying no identifier a consumer can read; `urpx:eiaId` is not a defined term in the vocabulary at any version. `OrganizationIdentityShape` is closed and requires `hasName`, so the identity node names the organization alongside the identifier.
 - Move an organization's EIA, DUNS or LEI value onto an `OrganizationIdentifier` reached through the identity chain:
 
   ```json

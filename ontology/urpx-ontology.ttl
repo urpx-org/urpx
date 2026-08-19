@@ -27,7 +27,7 @@
     dcterms:creator "Klaar De Schepper, Una Smithsimon, Flux Tailor LLC" ;
     dcterms:description "URPX ontology for utility rate plan exchange" ;
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
-    dcterms:modified "2026-08-18"^^xsd:date ;
+    dcterms:modified "2026-08-19"^^xsd:date ;
     dcterms:title "URPX Ontology" ;
     dcterms:hasVersion <https://urpx-org.github.io/urpx/ontology/releases/v0.4.0> ;
     owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.4.0/ontology/urpx-ontology.ttl> .
@@ -35,7 +35,7 @@
 <https://urpx-org.github.io/urpx/ontology/releases/v0.4.0>
     a owl:Ontology ;
     dcterms:isVersionOf <https://urpx-org.github.io/urpx/ontology> ;
-    dcterms:issued "2026-08-18"^^xsd:date ;
+    dcterms:issued "2026-08-19"^^xsd:date ;
     owl:versionInfo "0.4.0" ;
     dcat:distribution <https://urpx-org.github.io/urpx/ontology/releases/v0.4.0/ttl> .
 

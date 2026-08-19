@@ -180,6 +180,7 @@ jobs:
         env:
           URPX_REPO: ${{ github.workspace }}/urpx
         run: |
+          URPX_CODEGEN_DATE="$(date -u +%F)" \
           python urpx-website-staging/scripts/codegen/generate-all.py \
             --urpx-repo "$URPX_REPO"
 

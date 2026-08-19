@@ -12,7 +12,7 @@ site_position: 1
 
 # URPX Condition Model
 
-**Version:** 0.3.0
+**Version:** 0.4.0
 **Last Updated:** 2026-05-01  
 **Status:** Adopted for URPX 0.3.0  
 **Scope:** Structured condition-expression modeling in eligibility, applicability, and related contexts  

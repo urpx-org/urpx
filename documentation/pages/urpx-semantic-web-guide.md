@@ -12,7 +12,7 @@ site_position: 1
 
 # Semantic Web Guide for URPX
 
-**Version:** 0.3.0 (Pre-draft) 
+**Version:** 0.4.0 (Pre-draft) 
 **Last Updated:** 2026-07-07
 
 **A beginner-friendly introduction to semantic web technologies for the URPX working group**
