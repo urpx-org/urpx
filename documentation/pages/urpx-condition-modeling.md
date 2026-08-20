@@ -13,11 +13,11 @@ site_position: 1
 # URPX Condition Model
 
 **Version:** 0.4.0
-**Last Updated:** 2026-05-01  
-**Status:** Adopted for URPX 0.3.0  
+**Last Updated:** 2026-08-20  
+**Status:** Adopted for URPX 0.4.0  
 **Scope:** Structured condition-expression modeling in eligibility, applicability, and related contexts  
 **Ontology Source:** [`urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)  
-**SHACL Source:** [`urpx-shacl.ttl`](/ontology/urpx-shacl.ttl)
+**SHACL Source:** [`urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
 
 ---
 
@@ -34,7 +34,7 @@ The model is designed to express rule logic in a way that is:
 
 URPX uses the same condition-expression architecture for:
 
-- `urpx:EligibilityRule`, which must carry one structured condition expression and determines qualification for a rate or modifier,
+- `urpx:EligibilityRule`, which must carry one structured condition expression and determines qualification for a rate plan or a modifier,
 - `urpx:ApplicabilityRule`, which determines when a price, price set, or price definition applies,
 - `urpx:ApplicabilityGroup`, where it may be used for additional structured applicability logic, and
 - `urpx:ProfileAlternative`, which carries exactly one structured condition expression that defines the alternative.
@@ -501,6 +501,7 @@ Datatype-specific value properties allow compact JSON-LD authoring by declaring 
 {
   "@context": {
     "urpx": "https://urpx-org.github.io/urpx/ontology/",
+    "ex": "https://example.org/conditions/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "urpx:booleanValue": { "@id": "urpx:booleanValue", "@type": "xsd:boolean" },
     "urpx:dateValue": { "@id": "urpx:dateValue", "@type": "xsd:date" },
@@ -530,14 +531,14 @@ If exact decimal fidelity matters in a specific toolchain, implementations shoul
 {
   "@type": "urpx:ConditionExpression",
   "urpx:rootNode": {
-    "@id": "urpx:condition-customer-kind"
+    "@id": "ex:condition-customer-kind"
   }
 }
 ```
 
 ```json
 {
-  "@id": "urpx:condition-customer-kind",
+  "@id": "ex:condition-customer-kind",
   "@type": "urpx:ComparisonNode",
   "urpx:logicExpression": "hasCustomerKind = residentialKind",
   "urpx:operator": { "@id": "urpx:equalsOperator" },
@@ -556,15 +557,15 @@ If exact decimal fidelity matters in a specific toolchain, implementations shoul
 
 ```json
 {
-  "@id": "urpx:eligibility-expression-1",
+  "@id": "ex:eligibility-expression-1",
   "@type": "urpx:ConditionExpression",
   "urpx:rootNode": {
     "@type": "urpx:BooleanOperationNode",
     "urpx:logicExpression": "customer kind is residential AND usage exceeds threshold",
     "urpx:operator": { "@id": "urpx:andOperator" },
     "urpx:operandNodes": [
-      { "@id": "urpx:condition-customer-kind" },
-      { "@id": "urpx:condition-usage-threshold" }
+      { "@id": "ex:condition-customer-kind" },
+      { "@id": "ex:condition-usage-threshold" }
     ]
   }
 }
@@ -574,17 +575,17 @@ If exact decimal fidelity matters in a specific toolchain, implementations shoul
 
 ```json
 {
-  "@id": "urpx:condition-usage-threshold",
+  "@id": "ex:condition-usage-threshold",
   "@type": "urpx:ComparisonNode",
   "urpx:operator": { "@id": "urpx:greaterThanOperator" },
   "urpx:leftOperand": {
-    "@type": "urpx:DatatypeOperandNode",
-    "urpx:conditionProperty": { "@id": "urpx:averageMonthlyUsage" }
+    "@type": "urpx:ObjectOperandNode",
+    "urpx:referencesMetricInput": { "@id": "ex:mi-average-monthly-usage" }
   },
   "urpx:rightOperand": {
     "@type": "urpx:DatatypeOperandNode",
     "urpx:integerValue": 500,
-    "urpx:referencesMetricInput": { "@id": "urpx:mi-average-monthly-usage" }
+    "urpx:referencesMetricInput": { "@id": "ex:mi-average-monthly-usage" }
   }
 }
 ```
@@ -593,7 +594,7 @@ If exact decimal fidelity matters in a specific toolchain, implementations shoul
 
 ```json
 {
-  "@id": "urpx:condition-load-factor",
+  "@id": "ex:condition-load-factor",
   "@type": "urpx:ComparisonNode",
   "urpx:operator": { "@id": "urpx:greaterThanOperator" },
   "urpx:leftOperand": {
@@ -601,16 +602,16 @@ If exact decimal fidelity matters in a specific toolchain, implementations shoul
     "urpx:operator": { "@id": "urpx:divideOperator" },
     "urpx:leftOperand": {
       "@type": "urpx:ObjectOperandNode",
-      "urpx:referencesMetricInput": { "@id": "urpx:mi-energy" }
+      "urpx:referencesMetricInput": { "@id": "ex:mi-energy" }
     },
     "urpx:rightOperand": {
       "@type": "urpx:ObjectOperandNode",
-      "urpx:referencesMetricInput": { "@id": "urpx:mi-demand" }
+      "urpx:referencesMetricInput": { "@id": "ex:mi-demand" }
     }
   },
   "urpx:rightOperand": {
     "@type": "urpx:DatatypeOperandNode",
-    "urpx:decimalValue": 0.4
+    "urpx:decimalValue": "0.4"
   }
 }
 ```
@@ -619,7 +620,7 @@ If exact decimal fidelity matters in a specific toolchain, implementations shoul
 
 ```json
 {
-  "@id": "urpx:condition-legacy-segment",
+  "@id": "ex:condition-legacy-segment",
   "@type": "urpx:ComparisonNode",
   "urpx:operator": { "@id": "urpx:equalsOperator" },
   "urpx:leftOperand": {
@@ -642,7 +643,7 @@ If exact decimal fidelity matters in a specific toolchain, implementations shoul
     "@type": "urpx:BooleanOperationNode",
     "urpx:operator": { "@id": "urpx:notOperator" },
     "urpx:operandNodes": [
-      { "@id": "urpx:condition-is-cca-customer" }
+      { "@id": "ex:condition-is-cca-customer" }
     ]
   }
 }
@@ -650,7 +651,7 @@ If exact decimal fidelity matters in a specific toolchain, implementations shoul
 
 ```json
 {
-  "@id": "urpx:condition-is-cca-customer",
+  "@id": "ex:condition-is-cca-customer",
   "@type": "urpx:ComparisonNode",
   "urpx:operator": { "@id": "urpx:equalsOperator" },
   "urpx:leftOperand": {
@@ -668,7 +669,7 @@ If exact decimal fidelity matters in a specific toolchain, implementations shoul
 
 ```json
 {
-  "@id": "urpx:eligibility-rule-1",
+  "@id": "ex:eligibility-rule-1",
   "@type": "urpx:EligibilityRule",
   "urpx:hasConditionExpression": {
     "@type": "urpx:ConditionExpression",
@@ -676,29 +677,17 @@ If exact decimal fidelity matters in a specific toolchain, implementations shoul
       "@type": "urpx:BooleanOperationNode",
       "urpx:operator": { "@id": "urpx:andOperator" },
       "urpx:operandNodes": [
-        { "@id": "urpx:condition-customer-kind" },
-        { "@id": "urpx:condition-usage-threshold" }
+        { "@id": "ex:condition-customer-kind" },
+        { "@id": "ex:condition-usage-threshold" }
       ]
     }
   }
 }
 ```
 
-### Full End-to-End ConditionExpression Graph
-
-The examples above show individual parts of the model. The following
-JSON-LD example shows one complete `ConditionExpression` graph in a
-single document, including the owning `EligibilityRule`, the
-`ConditionExpression`, the boolean root node, and the comparison nodes
-embedded directly in `urpx:operandNodes`.
-
-The same graph pattern can also be attached to `ApplicabilityRule`,
-`ApplicabilityGroup`, or `ProfileAlternative`.
-
 ### Expanded ConditionExpression Tree
 
-The following Mermaid diagram shows the same full structure at a glance
-before the complete JSON-LD serialization.
+The following Mermaid diagram shows the same full structure at a glance before the complete JSON-LD serialization.
 
 ```mermaid
 graph TD
@@ -706,10 +695,10 @@ graph TD
     CE["ConditionExpression"]
     ROOT["BooleanOperationNode<br/>operator = andOperator"]
     C1["ComparisonNode<br/>hasCustomerKind = residentialKind"]
-    C2["ComparisonNode<br/>averageMonthlyUsage > 500"]
+    C2["ComparisonNode<br/>mi-average-monthly-usage > 500"]
     C1L["ObjectOperandNode<br/>conditionProperty = hasCustomerKind"]
     C1R["ObjectOperandNode<br/>referencesValue = residentialKind"]
-    C2L["DatatypeOperandNode<br/>conditionProperty = averageMonthlyUsage"]
+    C2L["ObjectOperandNode<br/>referencesMetricInput = mi-average-monthly-usage"]
     C2R["DatatypeOperandNode<br/>integerValue = 500<br/>referencesMetricInput = mi-average-monthly-usage"]
 
     ER -- "hasConditionExpression" --> CE
@@ -722,10 +711,17 @@ graph TD
     C2 -- "rightOperand" --> C2R
 ```
 
+### Full End-to-End ConditionExpression Graph
+
+The examples above show individual parts of the model. The following JSON-LD example shows one complete `ConditionExpression` graph in a single document, including the owning `EligibilityRule`, the `ConditionExpression`, the boolean root node, and the comparison nodes embedded directly in `urpx:operandNodes`.
+
+The same graph pattern can also be attached to `ApplicabilityRule`, `ApplicabilityGroup`, or `ProfileAlternative`.
+
 ```json
 {
   "@context": {
     "urpx": "https://urpx-org.github.io/urpx/ontology/",
+    "ex": "https://example.org/conditions/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "urpx:booleanValue": { "@id": "urpx:booleanValue", "@type": "xsd:boolean" },
     "urpx:dateValue": { "@id": "urpx:dateValue", "@type": "xsd:date" },
@@ -740,22 +736,22 @@ graph TD
   },
   "@graph": [
     {
-      "@id": "urpx:eligibility-rule-1",
+      "@id": "ex:eligibility-rule-1",
       "@type": "urpx:EligibilityRule",
       "urpx:name": "Residential usage threshold eligibility",
-      "urpx:hasConditionExpression": { "@id": "urpx:eligibility-expression-1" }
+      "urpx:hasConditionExpression": { "@id": "ex:eligibility-expression-1" }
     },
     {
-      "@id": "urpx:eligibility-expression-1",
+      "@id": "ex:eligibility-expression-1",
       "@type": "urpx:ConditionExpression",
       "urpx:rootNode": {
-        "@id": "urpx:eligibility-root-1",
+        "@id": "ex:eligibility-root-1",
         "@type": "urpx:BooleanOperationNode",
         "urpx:logicExpression": "customer kind is residential AND average monthly usage exceeds 500",
         "urpx:operator": { "@id": "urpx:andOperator" },
         "urpx:operandNodes": [
           {
-            "@id": "urpx:condition-customer-kind-1",
+            "@id": "ex:condition-customer-kind-1",
             "@type": "urpx:ComparisonNode",
             "urpx:logicExpression": "hasCustomerKind = residentialKind",
             "urpx:operator": { "@id": "urpx:equalsOperator" },
@@ -769,18 +765,18 @@ graph TD
             }
           },
           {
-            "@id": "urpx:condition-usage-threshold-1",
+            "@id": "ex:condition-usage-threshold-1",
             "@type": "urpx:ComparisonNode",
-            "urpx:logicExpression": "averageMonthlyUsage > 500",
+            "urpx:logicExpression": "mi-average-monthly-usage > 500",
             "urpx:operator": { "@id": "urpx:greaterThanOperator" },
             "urpx:leftOperand": {
-              "@type": "urpx:DatatypeOperandNode",
-              "urpx:conditionProperty": { "@id": "urpx:averageMonthlyUsage" }
+              "@type": "urpx:ObjectOperandNode",
+              "urpx:referencesMetricInput": { "@id": "ex:mi-average-monthly-usage" }
             },
             "urpx:rightOperand": {
               "@type": "urpx:DatatypeOperandNode",
               "urpx:integerValue": 500,
-              "urpx:referencesMetricInput": { "@id": "urpx:mi-average-monthly-usage" }
+              "urpx:referencesMetricInput": { "@id": "ex:mi-average-monthly-usage" }
             }
           }
         ]

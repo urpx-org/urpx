@@ -13,7 +13,7 @@ site_position: 1
 # Semantic Web Guide for URPX
 
 **Version:** 0.4.0 (Pre-draft) 
-**Last Updated:** 2026-07-07
+**Last Updated:** 2026-08-20
 
 **A beginner-friendly introduction to semantic web technologies for the URPX working group**
 
@@ -27,6 +27,7 @@ site_position: 1
 2. [Semantic Web 101](#semantic-web-101)
 3. [Core Technologies](#core-technologies)
 4. [Learning Resources](#learning-resources)
+5. [Next Steps](#next-steps)
 
 ---
 
@@ -94,14 +95,17 @@ The semantic web represents data as **interconnected graphs** of meaning, not ju
 {
   "@context": {
     "urpx": "https://urpx-org.github.io/urpx/ontology/",
-    "ex": "https://example.com/"
+    "ex": "https://example.com/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "urpx:unitPrice": { "@id": "urpx:unitPrice", "@type": "xsd:decimal" }
   },
   "@id": "ex:PRC-001",
   "@type": "urpx:Price",
   "urpx:chargeType": {"@id": "urpx:usageCharge"},
   "urpx:chargeCategory": {"@id": "urpx:auxiliaryCharge"},
-  "urpx:unitPrice": 0.12,
+  "urpx:unitPrice": "0.12",
   "urpx:hasMetricSpecification": {
+    "@type": "urpx:MetricSpecification",
     "urpx:commodity": {"@id": "urpx:electricity"},
     "urpx:measurementKind": {"@id": "urpx:energy"},
     "urpx:unitOfMeasure": {"@id": "urpx:kWh"}
@@ -201,8 +205,8 @@ An ontology is a **formal specification** of a domain's concepts and relationshi
 **Example OWL Definition:**
 ```turtle
 urpx:Price a owl:Class ;
-    rdfs:label "Price" ;
-    skos:definition "An individual pricing component within a rate plan".
+    rdfs:label "Price"@en ;
+    rdfs:comment "Individual pricing component with an amount and applicability rules" .
 
 urpx:chargeType a owl:ObjectProperty ;
     rdfs:label "Charge Type"@en ;
@@ -224,16 +228,19 @@ JSON-LD is **JSON with a semantic layer**. Developers work with familiar JSON sy
 {
   "@context": {
     "urpx": "https://urpx-org.github.io/urpx/ontology/",
-    "ex": "https://example.com/"
+    "ex": "https://example.com/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "urpx:unitPrice": { "@id": "urpx:unitPrice", "@type": "xsd:decimal" }
   },
   "@id": "ex:PRC-001",
   "@type": "urpx:Price",
   "urpx:name": "Summer Energy Price",
   "urpx:chargeType": {"@id": "urpx:usageCharge"},
   "urpx:chargeCategory": {"@id": "urpx:auxiliaryCharge"},
-  "urpx:unitPrice": 0.12,
+  "urpx:unitPrice": "0.12",
   "urpx:priceCurrency": "USD",
   "urpx:hasMetricSpecification": {
+    "@type": "urpx:MetricSpecification",
     "urpx:commodity": {"@id": "urpx:electricity"},
     "urpx:measurementKind": {"@id": "urpx:energy"},
     "urpx:unitOfMeasure": {"@id": "urpx:kWh"}
@@ -249,9 +256,46 @@ This example demonstrates the current URPX pattern in which a `PriceSetAlternati
 {
   "@context": {
     "urpx": "https://urpx-org.github.io/urpx/ontology/",
-    "ex": "https://example.com/"
+    "ex": "https://example.com/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "urpx:unitPrice": { "@id": "urpx:unitPrice", "@type": "xsd:decimal" }
   },
   "@graph": [
+    {
+      "@id": "ex:condition-expression-zone-h-secondary",
+      "@type": "urpx:ConditionExpression",
+      "urpx:name": "Zone H secondary voltage",
+      "urpx:rootNode": {
+        "@id": "ex:condition-zone-h-secondary",
+        "@type": "urpx:ComparisonNode",
+        "urpx:logicExpression": "service zone and voltage class = ZONE-H-SECONDARY",
+        "urpx:operator": {"@id": "urpx:equalsOperator"},
+        "urpx:leftOperand": {
+          "@type": "urpx:CustomOperandNode",
+          "urpx:customConditionProperty": "Service Zone And Voltage Class"
+        },
+        "urpx:rightOperand": {
+          "@type": "urpx:CustomOperandNode",
+          "urpx:stringValue": "ZONE-H-SECONDARY"
+        }
+      }
+    },
+    {
+      "@id": "ex:energy-charge-zone-h-secondary",
+      "@type": "urpx:Price",
+      "urpx:name": "Zone H Secondary Energy Price",
+      "urpx:chargeType": {"@id": "urpx:usageCharge"},
+      "urpx:chargeCategory": {"@id": "urpx:auxiliaryCharge"},
+      "urpx:unitPrice": "0.09"
+    },
+    {
+      "@id": "ex:demand-charge-zone-h-secondary",
+      "@type": "urpx:Price",
+      "urpx:name": "Zone H Secondary Demand Price",
+      "urpx:chargeType": {"@id": "urpx:demandDirect"},
+      "urpx:chargeCategory": {"@id": "urpx:auxiliaryCharge"},
+      "urpx:unitPrice": "12.50"
+    },
     {
       "@id": "ex:zone-h-secondary",
       "@type": "urpx:ProfileAlternative",
@@ -350,7 +394,7 @@ WHERE {
 Note the query starts from the version snapshot: versions point at their plan via `forRatePlan`, so the plan is found by identifier and the versions are found by their link back to it.
 
 **SPARQL Use Cases:**
-- **Rate Comparison**: Find best rate plans for specific usage patterns
+- **Rate Plan Comparison**: Find best rate plans for specific usage patterns
 - **Trend Analysis**: Track price changes over time
 - **Compliance Checking**: Verify regulatory requirements
 - **Data Discovery**: Explore available rate plans

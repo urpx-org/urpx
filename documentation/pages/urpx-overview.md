@@ -13,7 +13,7 @@ site_position: 1
 
 # URPX Overview
 
-**Version**: 0.3.0 (Pre-draft)
+**Version**: 0.4.0 (Pre-draft)
 **Last Updated**: 2026-07-07  
 **Status**: Active
 

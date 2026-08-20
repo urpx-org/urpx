@@ -12,9 +12,9 @@ site_position: 2
 
 # URPX Tutorial: Building Your First Rate Plan
 
-**Version**: 0.4.0 (Pre-draft)
-**Last Updated**: 2026-07-07
-**Status**: Active
+**Version:** 0.4.0 (Pre-draft)
+**Last Updated:** 2026-08-20
+**Status:** Active
 
 **Learn the basics of creating and validating utility rate plan data using the URPX v0.4.0 ontology**
 
@@ -43,7 +43,7 @@ Before starting this tutorial, ensure you have:
 ### Required Files
 - `../../ontology/urpx-ontology.ttl` - URPX ontology file.
 
-> **Note:** Draft SHACL validation shapes are available at [`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl). A reference validation script is under development for inclusion in the repository.
+> **Note:** Draft SHACL validation shapes are available at [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl).
 
 ---
 
@@ -179,7 +179,17 @@ Let's build a basic residential rate plan step by step using JSON-LD.
     "@vocab": "https://urpx-org.github.io/urpx/ontology/",
     "urpx": "https://urpx-org.github.io/urpx/ontology/",
     "ex": "https://example.org/tutorial/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#"
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "targetURPXVersion": { "@type": "xsd:anyURI" },
+    "url": { "@type": "xsd:anyURI" },
+    "amount": { "@type": "xsd:decimal" },
+    "unitPrice": { "@type": "xsd:decimal" },
+    "multiplier": { "@type": "xsd:decimal" },
+    "touTierNumber": { "@type": "xsd:integer" },
+    "touPeriodNumber": { "@type": "xsd:integer" },
+    "intervalDuration": { "@type": "xsd:duration" },
+    "startTime": { "@type": "xsd:time" },
+    "endTime": { "@type": "xsd:time" }
   },
   "@id": "ex:doc-tutorial-basic",
   "@type": "URPXPackage",
@@ -195,7 +205,11 @@ Let's build a basic residential rate plan step by step using JSON-LD.
 }
 ```
 
-The `URPXPackage` is URPX's exchange container: the unit a system hands to another system. `targetURPXVersion` is required and names the exact ontology version the data was authored and validated against. A package also states at least one content unit, so this document validates once Step 2 adds the rate plan.
+The `URPXPackage` is URPX's exchange container: the unit a system hands to another system. `targetURPXVersion` is required and names the exact ontology version the data was authored and validated against, and the `@context` types it as `xsd:anyURI` so it validates as one. A package also states at least one content unit, so this document validates once Step 2 adds the rate plan.
+
+The `@context` above also declares a datatype for every literal property the tutorial uses. That declaration is required, not decorative: without it `targetURPXVersion` lands as a plain string and the shapes reject it.
+
+Decimal money is written as a quoted string throughout this tutorial. `amount`, `unitPrice` and `multiplier` are `xsd:decimal` properties, and a JSON number lands as a floating-point literal that the shapes reject even under an `xsd:decimal` coercion. Write `"18.75"`, not `18.75`. Every test case in the repository does the same.
 
 ### Step 2: Rate Plan Identity and Version
 
@@ -264,10 +278,28 @@ The version is its own top-level node in the graph. It points back to the plan i
         "measurementKind": {"@id": "urpx:energy"},
         "unitOfMeasure": {"@id": "urpx:kWh"}
       }
+    },
+    "hasBillingModel": {
+      "@id": "ex:billing-model-basic",
+      "@type": "BillingModel",
+      "hasLedger": {
+        "@id": "ex:ledger-basic",
+        "@type": "Ledger",
+        "name": "Basic Residential Ledger",
+        "referencesMetricInput": {"@id": "ex:metric-input-energy"}
+      },
+      "hasPriceDefinition": {
+        "@id": "ex:price-definition-energy",
+        "@type": "PriceDefinition",
+        "name": "Energy Price Definition",
+        "referencesLedger": {"@id": "ex:ledger-basic"}
+      }
     }
   }
 }
 ```
+
+`PlanElements` carries two required properties: at least one `hasMetricInput` and exactly one `hasBillingModel`. The billing model in turn requires at least one `hasPriceDefinition`, and each price definition exactly one `referencesLedger`. So a snapshot that prices anything reaches a price definition through its billing model, whether or not it uses time-of-use.
 
 ### Step 3: Prices Container and PriceSet
 
@@ -333,7 +365,7 @@ The minimum price below uses `amount` (fixed). The energy price in Step 5 uses `
       "description": "Fixed monthly service price",
       "chargeType": {"@id": "urpx:minimumCharge"},
       "chargeCategory": {"@id": "urpx:serviceCharge"},
-      "amount": 18.75,
+      "amount": "18.75",
       "hasMetricSpecification": {
         "@type": "MetricSpecification",
         "intervalDuration": "P1M"
@@ -353,7 +385,7 @@ The minimum price below uses `amount` (fixed). The energy price in Step 5 uses `
   "description": "Per-kWh energy consumption price",
   "chargeType": {"@id": "urpx:usageCharge"},
   "chargeCategory": {"@id": "urpx:auxiliaryCharge"},
-  "unitPrice": 0.12,
+  "unitPrice": "0.12",
   "referencesMetricInput": { "@id": "ex:metric-input-energy" }
 }
 ```
@@ -368,7 +400,7 @@ The minimum price below uses `amount` (fixed). The energy price in Step 5 uses `
   "description": "8.25% state sales tax on energy prices",
   "chargeType": {"@id": "urpx:taxState"},
   "chargeCategory": {"@id": "urpx:taxes"},
-  "multiplier": 0.0825,
+  "multiplier": "0.0825",
   "basedOnPrice": { "@id": "ex:price-energy" }
 }
 ```
@@ -389,10 +421,10 @@ graph TB
     MI2["<b>MetricInput</b><br/>Peak Demand<br/><i>type: measured</i>"]
 
     MS1["<b>MetricSpecification</b><br/>commodity: electricity<br/>kind: energy<br/>unit: kWh"]
-    MS2["<b>MetricSpecification</b><br/>commodity: electricity<br/>kind: demand<br/>unit: kW<br/>aggregation: maximum"]
+    MS2["<b>MetricSpecification</b><br/>commodity: electricity<br/>kind: demand<br/>unit: kW"]
 
     P1["Price<br/>Energy: $0.12/kWh"]
-    P2["Price<br/>Demand: $8.50/kW"]
+    P2["Price<br/>Demand: $8.50/kW<br/><i>aggregation: maximum</i>"]
     P3["Price<br/>Power Cost Adj: $0.025/kWh"]
 
     PE -->|"hasMetricInput"| MI1
@@ -452,8 +484,7 @@ Before adding complex prices, define the MetricInputs they will reference. These
           "commodity": {"@id": "urpx:electricity"},
           "measurementKind": {"@id": "urpx:demand"},
           "unitOfMeasure": {"@id": "urpx:kW"},
-          "intervalDuration": "PT15M",
-          "aggregationMethod": {"@id": "urpx:maximum"}
+          "intervalDuration": "PT15M"
         }
       }
     ]
@@ -482,9 +513,15 @@ Commercial and industrial rate plans often include demand prices based on peak p
     "@type": "xsd:date",
     "@value": "2026-01-01"
   },
-  "unitPrice": 8.50,
+  "unitPrice": "8.50",
   "priceCurrency": "USD",
-  "referencesMetricInput": {"@id": "ex:metric-input-demand"}
+  "referencesMetricInput": {"@id": "ex:metric-input-demand"},
+  "hasCalculationMethod": {
+    "@type": "CalculationMethod",
+    "name": "Monthly peak of the 15-minute demand intervals",
+    "aggregationMethod": {"@id": "urpx:maximum"},
+    "intervalDuration": "PT15M"
+  }
 }
 ```
 
@@ -509,7 +546,7 @@ Fuel adjustment mechanisms that vary monthly based on generation costs.
     "@type": "xsd:date",
     "@value": "2026-01-01"
   },
-  "unitPrice": 0.025,
+  "unitPrice": "0.025",
   "priceCurrency": "USD",
   "referencesMetricInput": {"@id": "ex:metric-input-energy"}
 }
@@ -536,7 +573,7 @@ Delivery system prices separated from generation costs.
     "@type": "xsd:date",
     "@value": "2026-01-01"
   },
-  "unitPrice": 0.058,
+  "unitPrice": "0.058",
   "priceCurrency": "USD",
   "referencesMetricInput": {"@id": "ex:metric-input-energy"}
 }
@@ -623,6 +660,18 @@ Time-of-use rate plans vary pricing based on time of day, day of week, and seaso
   },
   "hasPlanElements": {
     "@type": "PlanElements",
+    "hasMetricInput": {
+      "@id": "ex:metric-input-energy",
+      "@type": "MetricInput",
+      "name": "Energy Consumption",
+      "metricInputType": {"@id": "urpx:measuredMetricInput"},
+      "hasMetricSpecification": {
+        "@type": "MetricSpecification",
+        "commodity": {"@id": "urpx:electricity"},
+        "measurementKind": {"@id": "urpx:energy"},
+        "unitOfMeasure": {"@id": "urpx:kWh"}
+      }
+    },
     "hasSeasons": {
       "@id": "ex:season-summer",
       "@type": "Season",
@@ -640,8 +689,6 @@ Time-of-use rate plans vary pricing based on time of day, day of week, and seaso
     "hasHolidayCalendar": {
       "@id": "ex:calendar-federal",
       "@type": "HolidayCalendar",
-      "name": "US Federal Holidays",
-      "timezoneIdentifier": "America/New_York",
       "hasHoliday": [
         {
           "@type": "Holiday",
@@ -657,11 +704,21 @@ Time-of-use rate plans vary pricing based on time of day, day of week, and seaso
     "hasBillingModel": {
       "@id": "ex:example-billing-model",
       "@type": "BillingModel",
+      "hasPriceDefinition": {
+        "@id": "ex:price-definition-tou-energy",
+        "@type": "PriceDefinition",
+        "name": "TOU Energy Price Definition",
+        "referencesLedger": {
+          "@id": "ex:ledger-tou",
+          "@type": "Ledger",
+          "name": "TOU Energy Ledger",
+          "referencesMetricInput": {"@id": "ex:metric-input-energy"}
+        }
+      },
       "hasTOUSchedule": {
         "@id": "ex:tou-schedule-summer",
         "@type": "TOUSchedule",
         "name": "Summer TOU Schedule",
-        "timezoneIdentifier": "America/New_York",
         "referencesMetricInput": { "@id": "ex:metric-input-energy" },
         "hasTOUTier": [
           {
@@ -674,7 +731,7 @@ Time-of-use rate plans vary pricing based on time of day, day of week, and seaso
               "@id": "ex:period-peak",
               "@type": "TOUPeriod",
               "touPeriodNumber": 1,
-              "periodName": "Summer Peak",
+              "name": "Summer Peak",
               "hasTimeBracket": {
                 "@type": "TimeBracket",
                 "startTime": {
@@ -702,7 +759,7 @@ Time-of-use rate plans vary pricing based on time of day, day of week, and seaso
               "@id": "ex:period-offpeak",
               "@type": "TOUPeriod",
               "touPeriodNumber": 2,
-              "periodName": "Summer Off-Peak",
+              "name": "Summer Off-Peak",
               "hasTimeBracket": {
                 "@type": "TimeBracket",
                 "startTime": {
@@ -716,8 +773,7 @@ Time-of-use rate plans vary pricing based on time of day, day of week, and seaso
                 "dayType": {"@id": "urpx:weekdayDays"},
                 "appliesInSeason": {"@id": "ex:season-summer"},
                 "includeHolidays": true,
-                "includeNonHolidays": true,
-                "description": "All non-peak hours including weekends and holidays"
+                "includeNonHolidays": true
               }
             }
           }
@@ -753,7 +809,7 @@ Time-of-use rate plans vary pricing based on time of day, day of week, and seaso
             "@type": "xsd:date",
             "@value": "2026-01-01"
           },
-          "unitPrice": 0.285,
+          "unitPrice": "0.285",
           "touPeriodNumber": 1,
           "referencesMetricInput": { "@id": "ex:metric-input-energy" }
         },
@@ -771,7 +827,7 @@ Time-of-use rate plans vary pricing based on time of day, day of week, and seaso
             "@type": "xsd:date",
             "@value": "2026-01-01"
           },
-          "unitPrice": 0.075,
+          "unitPrice": "0.075",
           "touPeriodNumber": 2,
           "referencesMetricInput": { "@id": "ex:metric-input-energy" }
         }
@@ -860,6 +916,8 @@ Every RatePlanVersion must have:
 2. **hasCoverageClaim** - A `CoverageClaim` with a `completenessResult` (required); a `selfContained` flag and an explaining `Evaluation` are optional
 3. **changeReason**, **serviceRole**, **hasPlanElements**, and **hasPrices**
 
+Every PlanElements must carry at least one **hasMetricInput** and one **hasBillingModel**, and every BillingModel at least one **hasPriceDefinition**. A snapshot that prices anything therefore reaches a price definition, whether or not it uses time-of-use.
+
 **offeredBy** is optional on both the plan and the snapshot. Name the organization that offers the plan whenever it is known; leave it out for teaching, sandbox, and research data that models no real utility.
 
 Every Price must have:
@@ -885,8 +943,8 @@ URPX models rule logic with `ConditionExpression`. Every `EligibilityRule` carri
       "@type": "urpx:ComparisonNode",
       "urpx:operator": { "@id": "urpx:greaterThanOperator" },
       "urpx:leftOperand": {
-        "@type": "urpx:DatatypeOperandNode",
-        "urpx:conditionProperty": { "@id": "urpx:averageMonthlyUsage" }
+        "@type": "urpx:ObjectOperandNode",
+        "urpx:referencesMetricInput": { "@id": "ex:metric-input-energy" }
       },
       "urpx:rightOperand": {
         "@type": "urpx:DatatypeOperandNode",
@@ -909,7 +967,10 @@ Use `changeReason` to classify why a version changed, and use `hasRateCase` to i
   "@id": "ex:version-basic-res-v2",
   "@type": "urpx:RatePlanVersion",
   "urpx:version": "2.0",
-  "urpx:effectiveDateTime": "2026-01-01T00:00:00-05:00",
+  "urpx:effectiveDateTime": {
+    "@type": "xsd:dateTime",
+    "@value": "2026-01-01T00:00:00-05:00"
+  },
   "urpx:changeReason": { "@id": "urpx:rateCase" },
   "urpx:hasRateCase": [
     {
@@ -917,7 +978,10 @@ Use `changeReason` to classify why a version changed, and use `hasRateCase` to i
       "@type": "urpx:RateCase",
       "urpx:caseNumber": "2026-001-E",
       "urpx:name": "Residential rate adjustment proceeding",
-      "urpx:url": "https://example.org/regulator/dockets/2026-001-e"
+      "urpx:url": {
+        "@type": "xsd:anyURI",
+        "@value": "https://example.org/regulator/dockets/2026-001-e"
+      }
     }
   ]
 }
@@ -976,7 +1040,7 @@ Extracted from the full list of possible values in `urpx-ontology.ttl`:
 {
   "chargeType": {"@id": "urpx:minimumCharge"},
   "chargeCategory": {"@id": "urpx:serviceCharge"},
-  "amount": 18.75
+  "amount": "18.75"
 }
 ```
 
@@ -985,7 +1049,7 @@ Extracted from the full list of possible values in `urpx-ontology.ttl`:
 {
   "chargeType": {"@id": "urpx:usageCharge"},
   "chargeCategory": {"@id": "urpx:auxiliaryCharge"},
-  "unitPrice": 0.12,
+  "unitPrice": "0.12",
   "referencesMetricInput": { "@id": "ex:metric-input-energy" }
 }
 ```
@@ -995,7 +1059,7 @@ Extracted from the full list of possible values in `urpx-ontology.ttl`:
 {
   "chargeType": {"@id": "urpx:demandDirect"},
   "chargeCategory": {"@id": "urpx:auxiliaryCharge"},
-  "unitPrice": 8.50,
+  "unitPrice": "8.50",
   "referencesMetricInput": { "@id": "ex:metric-input-demand" }
 }
 ```
@@ -1005,7 +1069,7 @@ Extracted from the full list of possible values in `urpx-ontology.ttl`:
 1. **Validate JSON-LD syntax** - Ensure well-formed JSON
 2. **Check property existence** - All properties must exist in ontology
 3. **Validate enum values** - All enum instances must exist in ontology
-4. **SHACL validation** - Validate against draft SHACL shapes at [`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl). A reference validation script is under development.
+4. **SHACL validation** - Validate against draft SHACL shapes at [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl).
 5. **Verify business logic** - Price combinations make sense
 
 ---
