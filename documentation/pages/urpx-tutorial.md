@@ -421,10 +421,10 @@ graph TB
     MI2["<b>MetricInput</b><br/>Peak Demand<br/><i>type: measured</i>"]
 
     MS1["<b>MetricSpecification</b><br/>commodity: electricity<br/>kind: energy<br/>unit: kWh"]
-    MS2["<b>MetricSpecification</b><br/>commodity: electricity<br/>kind: demand<br/>unit: kW"]
+    MS2["<b>MetricSpecification</b><br/>commodity: electricity<br/>kind: demand<br/>unit: kW<br/>aggregation: maximum"]
 
     P1["Price<br/>Energy: $0.12/kWh"]
-    P2["Price<br/>Demand: $8.50/kW<br/><i>aggregation: maximum</i>"]
+    P2["Price<br/>Demand: $8.50/kW"]
     P3["Price<br/>Power Cost Adj: $0.025/kWh"]
 
     PE -->|"hasMetricInput"| MI1
@@ -484,7 +484,8 @@ Before adding complex prices, define the MetricInputs they will reference. These
           "commodity": {"@id": "urpx:electricity"},
           "measurementKind": {"@id": "urpx:demand"},
           "unitOfMeasure": {"@id": "urpx:kW"},
-          "intervalDuration": "PT15M"
+          "intervalDuration": "PT15M",
+          "aggregationMethod": {"@id": "urpx:maximum"}
         }
       }
     ]
@@ -515,13 +516,7 @@ Commercial and industrial rate plans often include demand prices based on peak p
   },
   "unitPrice": "8.50",
   "priceCurrency": "USD",
-  "referencesMetricInput": {"@id": "ex:metric-input-demand"},
-  "hasCalculationMethod": {
-    "@type": "CalculationMethod",
-    "name": "Monthly peak of the 15-minute demand intervals",
-    "aggregationMethod": {"@id": "urpx:maximum"},
-    "intervalDuration": "PT15M"
-  }
+  "referencesMetricInput": {"@id": "ex:metric-input-demand"}
 }
 ```
 
