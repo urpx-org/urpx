@@ -6,7 +6,7 @@ digraph "Condition Modeling" {
     ranksep=1.1;
     start=42;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="Condition Modeling (URPX v0.3.0)";
+    label="Condition Modeling (URPX v0.4.0)";
     labelloc="t";
     fontsize=14;
     fontcolor="#1a365d";
@@ -30,6 +30,34 @@ digraph "Condition Modeling" {
         label="Condition\nExpression"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
+    ConditionNode [
+        label="ConditionNode"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    BooleanOperationNode [
+        label="BooleanOperation\nNode"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    ComparisonNode [
+        label="ComparisonNode"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    OperationNode [
+        label="OperationNode"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    CustomOperandNode [
+        label="CustomOperandNode"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    DatatypeOperandNode [
+        label="DatatypeOperand\nNode"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    ObjectOperandNode [
+        label="ObjectOperandNode"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
     GeneralRule [
         label="GeneralRule"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
@@ -38,6 +66,10 @@ digraph "Condition Modeling" {
     // Cross-section references
     DataSourceReference [
         label="DataSource\nReference"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    MetricInput [
+        label="MetricInput"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
     ];
     PricingModel [
@@ -63,6 +95,72 @@ digraph "Condition Modeling" {
     ];
     ApplicabilityGroup -> ConditionExpression [
         label="hasConditionExpression\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ConditionExpression -> ConditionNode [
+        label="rootNode\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ConditionExpression -> ComparisonNode [
+        label="rootNode\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ConditionExpression -> BooleanOperationNode [
+        label="rootNode\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    BooleanOperationNode -> ConditionNode [
+        label="operandNodes\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    BooleanOperationNode -> ComparisonNode [
+        label="operandNodes\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ComparisonNode -> DatatypeOperandNode [
+        label="leftOperand\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ComparisonNode -> ObjectOperandNode [
+        label="leftOperand\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ComparisonNode -> CustomOperandNode [
+        label="leftOperand\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ComparisonNode -> OperationNode [
+        label="leftOperand\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ComparisonNode -> DatatypeOperandNode [
+        label="rightOperand\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ComparisonNode -> ObjectOperandNode [
+        label="rightOperand\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ComparisonNode -> CustomOperandNode [
+        label="rightOperand\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ComparisonNode -> OperationNode [
+        label="rightOperand\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    OperationNode -> DatatypeOperandNode [
+        label="leftOperand\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    OperationNode -> ObjectOperandNode [
+        label="leftOperand\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    OperationNode -> CustomOperandNode [
+        label="leftOperand\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    OperationNode -> DatatypeOperandNode [
+        label="rightOperand\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    OperationNode -> ObjectOperandNode [
+        label="rightOperand\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    OperationNode -> CustomOperandNode [
+        label="rightOperand\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    CustomOperandNode -> MetricInput [
+        label="referencesMetricInput\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    DatatypeOperandNode -> MetricInput [
+        label="referencesMetricInput\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ObjectOperandNode -> MetricInput [
+        label="referencesMetricInput\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     GeneralRule -> PricingModel [
         label="contributedBy\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5

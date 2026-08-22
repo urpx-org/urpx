@@ -6,7 +6,7 @@ digraph "Source & Publication Entities" {
     ranksep=1.0;
     start=42;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="Source & Publication Entities (URPX v0.3.0)";
+    label="Source & Publication Entities (URPX v0.4.0)";
     labelloc="t";
     fontsize=14;
     fontcolor="#1a365d";
@@ -48,6 +48,12 @@ digraph "Source & Publication Entities" {
     // Object property edges
     SourcePublication -> Organization [
         label="publishedBy\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TariffFiling -> PricingModel [
+        label="cancelledBy\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    TariffFiling -> SourcePublication [
+        label="cancelledBy\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     TariffFiling -> PriceDefinition [
         label="cancelsPriceDefinition\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
