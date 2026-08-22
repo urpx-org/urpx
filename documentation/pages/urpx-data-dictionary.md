@@ -2787,7 +2787,7 @@ potentially spanning multiple administrative boundaries.
 
 | Value | Description |
 |-------|-------------|
-| `urpx:consecutivePeriodsSelection` | Selection based on a contiguous sequence of discrete periods meeting a criteria (e.g., 3 consecutive months of peak demand > X). |
+| `urpx:consecutivePeriodsSelection` | Selection based on a contiguous sequence of discrete periods meeting a criteria (e.g., 3 consecutive months of peak demand &gt; X). |
 | `urpx:fixedWindowSelection` | Selection based on a fixed time window defined by specific start/end dates (e.g., calendar year 2024). |
 | `urpx:rollingWindowSelection` | Selection using a continuous time window of fixed duration that moves forward in time relative to a defined alignment (e.g., rolling 12 months). |
 
@@ -2959,13 +2959,13 @@ potentially spanning multiple administrative boundaries.
 | `urpx:containsOperator` | String contains comparison operator (LIKE, CONTAINS) |
 | `urpx:divideOperator` | Represents division in condition expressions |
 | `urpx:equalsOperator` | Equality comparison operator (==, =) |
-| `urpx:greaterThanOperator` | Greater than comparison operator (>) |
-| `urpx:greaterThanOrEqualOperator` | Greater than or equal comparison operator (>=) |
+| `urpx:greaterThanOperator` | Greater than comparison operator (&gt;) |
+| `urpx:greaterThanOrEqualOperator` | Greater than or equal comparison operator (&gt;=) |
 | `urpx:inOperator` | Set membership operator (IN) |
-| `urpx:lessThanOperator` | Less than comparison operator (<) |
-| `urpx:lessThanOrEqualOperator` | Less than or equal comparison operator (<=) |
+| `urpx:lessThanOperator` | Less than comparison operator (&lt;) |
+| `urpx:lessThanOrEqualOperator` | Less than or equal comparison operator (&lt;=) |
 | `urpx:multiplyOperator` | Represents multiplication in condition expressions |
-| `urpx:notEqualsOperator` | Inequality comparison operator (!=, <>) |
+| `urpx:notEqualsOperator` | Inequality comparison operator (!=, &lt;&gt;) |
 | `urpx:notInOperator` | Set exclusion operator (NOT IN) |
 | `urpx:notOperator` | Represents logical negation in condition-expression boolean composition |
 | `urpx:orOperator` | Represents logical disjunction in condition-expression boolean composition |
