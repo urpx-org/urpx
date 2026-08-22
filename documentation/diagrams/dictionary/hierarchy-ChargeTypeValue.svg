@@ -9,7 +9,7 @@
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(28.8 231.8)">
 <title>hierarchy_ChargeTypeValue</title>
 <polygon fill="white" stroke="transparent" points="-28.8,28.8 -28.8,-231.8 6959.8,-231.8 6959.8,28.8 -28.8,28.8"/>
-<text text-anchor="middle" x="3465.5" y="-187.8" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">ChargeTypeValue Hierarchy (URPX v0.3.0)</text>
+<text text-anchor="middle" x="3465.5" y="-187.8" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">ChargeTypeValue Hierarchy (URPX v0.4.0)</text>
 <!-- ChargeTypeValue -->
 <g id="node1" class="node">
 <title>ChargeTypeValue</title>

@@ -9,7 +9,7 @@
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(28.8 380.65)">
 <title>Scenario &amp; Cost Entities</title>
 <polygon fill="white" stroke="transparent" points="-28.8,28.8 -28.8,-380.65 1110.01,-380.65 1110.01,28.8 -28.8,28.8"/>
-<text text-anchor="middle" x="540.61" y="-336.65" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">Scenario &amp; Cost Entities (URPX v0.3.0)</text>
+<text text-anchor="middle" x="540.61" y="-336.65" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">Scenario &amp; Cost Entities (URPX v0.4.0)</text>
 <g id="clust2" class="cluster">
 <title>cluster_legend</title>
 <path fill="#f8f8f8" stroke="#cccccc" d="M746.21,-132.07C746.21,-132.07 1061.21,-132.07 1061.21,-132.07 1067.21,-132.07 1073.21,-138.07 1073.21,-144.07 1073.21,-144.07 1073.21,-308.85 1073.21,-308.85 1073.21,-314.85 1067.21,-320.85 1061.21,-320.85 1061.21,-320.85 746.21,-320.85 746.21,-320.85 740.21,-320.85 734.21,-314.85 734.21,-308.85 734.21,-308.85 734.21,-144.07 734.21,-144.07 734.21,-138.07 740.21,-132.07 746.21,-132.07"/>
