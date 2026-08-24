@@ -1,7 +1,7 @@
 ---
 id: taskurpxontgh25conditionalderivedquantity
 title: "GH #25 — Gating a derived quantity on a condition (standby demand credit)"
-desc: "Backlog (unassigned): decide whether and where a condition may attach to a derived quantity so a derivation fires only when the condition holds (sketch: hasConditionExpression on a derived MetricInput or a scoping ApplicabilityRule, reusing ConditionExpression). Keep the closed calculationRule node untouched and guard the boundary against a general rule engine. GitHub issue #25."
+desc: "Backlog (unassigned): decide whether and where a condition may attach to a derived quantity so a derivation fires only when the condition holds (sketch: hasConditionExpression on a derived MetricInput or a scoping ApplicabilityRule, reusing ConditionExpression). A derivation now lives on the named CalculationMethod class, so the Approach section needs re-deriving; guard the boundary against a general rule engine. GitHub issue #25."
 updated: 1783900800000
 created: 1783900800000
 ---
@@ -13,7 +13,7 @@ created: 1783900800000
 | **Status** | Backlog — post-v0.3.0 vocabulary-gap candidate; the conditional derivation currently has no structured home |
 | **Assignment** | **Unassigned — open for any WG member to pick up** |
 | **GitHub issue** | [#25](https://github.com/urpx-org/urpx/issues/25) (WG members have access) |
-| **Surface** | `ontology/urpx-ontology.ttl` + `shacl/urpx-shacl.ttl` (`MetricInput` / `calculationRule` / `ApplicabilityRule` / `ConditionExpression`), condition-modeling documentation, one fixture |
+| **Surface** | `ontology/urpx-ontology.ttl` + `shacl/urpx-shacl.ttl` (`MetricInput` / `CalculationMethod` / `ApplicabilityRule` / `ConditionExpression`), condition-modeling documentation, one fixture |
 | **Source** | WG v0.3.0 review, gap 2 — `dev-docs/reports/report.urpx.ont.2026-07-13.dcj-v0.3.0-review-notes.md`; our response `report.urpx.ont.2026-07-13.dcj-v0.3.0-review-response.md` |
 
 ## Problem
@@ -26,12 +26,13 @@ non-operational" is a *condition on it*.
 The two surrounding facts are already expressible after the v0.3.0 condition-expression
 work: eligibility-without-enrollment as an `EligibilityRule` + `ConditionExpression`, and
 "non-operational" as `interconnectionStatus` equals `disconnectedStatus`. What is missing is
-a place to **attach a condition to a derived quantity**: the `calculationRule` node is closed
-to `formula` and `calculatedBasedOn`, so there is nowhere to say "apply this derivation only
-when the condition holds." `CalculationMethod.calculationFormula` (an `xsd:string`) is the
-only current escape hatch, and it is prose, not structure.
+a place to **attach a condition to a derived quantity**.
+
+**The obstacle this task was written around is gone.** A calculated `MetricInput` states its derivation on a `urpx:CalculationMethod` reached through `urpx:hasCalculationMethod`, using `urpx:calculatedBasedOn` for the source metric inputs and `urpx:calculationFormula` for the formula text. That is a named class with its own SHACL shape, so a condition can attach there directly and the shape can gain the path. The anonymous node this task describes could not carry one. `CalculationMethod.calculationFormula` (an `xsd:string`) remains prose rather than structure.
 
 ## Approach
+
+**Needs re-deriving before anyone picks this up.** Every option below was designed around keeping an anonymous derivation node untouched, and that node no longer exists. Whoever opens this task re-derives the options against the named `CalculationMethod` attachment point first; the list is kept as written rather than silently rewritten.
 
 Decide among (including "no change"):
 

@@ -398,6 +398,11 @@ urpx-shacl:CalculationMethodShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:calculatedBasedOn ;
+        sh:class urpx:MetricInput ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
         sh:path urpx:calculationFormula ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
@@ -1469,6 +1474,12 @@ urpx-shacl:LedgerShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:hasCalculationMethod ;
+        sh:class urpx:CalculationMethod ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:ledgerType ;
         sh:node urpx-shacl:LedgerTypeValueShape ;
         sh:minCount 0 ;
@@ -1553,29 +1564,14 @@ urpx-shacl:MetricInputShape
     sh:closed true ;
     sh:ignoredProperties ( rdf:type urpx:hasTemporalScope ) ;
     sh:property [
-        sh:path urpx:calculationRule ;
-        sh:node [
-            a sh:NodeShape ;
-            sh:closed true ;
-            sh:ignoredProperties ( rdf:type urpx:hasTemporalScope ) ;
-            sh:property [
-                sh:path urpx:formula ;
-                sh:datatype xsd:string ;
-                sh:minCount 0 ;
-                sh:maxCount 1 ;
-            ] ;
-            sh:property [
-                sh:path urpx:calculatedBasedOn ;
-                sh:class urpx:MetricInput ;
-                sh:minCount 0 ;
-            ] ;
-        ] ;
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:description ;
-        sh:datatype xsd:string ;
+        sh:path urpx:hasCalculationMethod ;
+        sh:class urpx:CalculationMethod ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
@@ -1624,6 +1620,12 @@ urpx-shacl:MetricSpecificationShape
     sh:property [
         sh:path urpx:flowDirection ;
         sh:node urpx-shacl:FlowDirectionValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasCalculationMethod ;
+        sh:class urpx:CalculationMethod ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;

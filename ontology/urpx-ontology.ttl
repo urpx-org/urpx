@@ -97,8 +97,8 @@ urpx:BooleanOperationNode a owl:Class ;
 
 urpx:CalculationMethod a owl:Class ;
     rdfs:label "Calculation Method"@en ;
-    rdfs:comment "Defines how prices are calculated over billing intervals" ;
-    skos:note "Specifies the method for calculating prices associated with a ledger based on billing intervals. Supports complex billing scenarios by allowing combinations of calculation methods." .
+    rdfs:comment "Defines how a measured or derived quantity is calculated or reduced over a stated interval" ;
+    skos:note "Carries the aggregation, the interval window it applies over, and, for a calculated metric input, the sources it derives from. Attaches to a ledger, a metric input, a measurement specification, or a price." .
 
 urpx:ComparisonNode a owl:Class ;
     rdfs:label "Comparison Node"@en ;
@@ -1116,8 +1116,9 @@ urpx:buildingSquareFootage a owl:DatatypeProperty ;
 urpx:calculatedBasedOn a owl:ObjectProperty ;
     rdfs:label "Input Metric"@en ;
     rdfs:comment "Source MetricInputs for calculated MetricInput derivation" ;
+    rdfs:domain urpx:CalculationMethod ;
     rdfs:range urpx:MetricInput ;
-    skos:note "References to source MetricInputs used in calculation. Multiple input MetricInputs can be specified. Used within calculationRule blank node." .
+    skos:note "Names the source MetricInputs used by a calculation method to derive a calculated MetricInput. Multiple sources may be given." .
 
 urpx:calculationFormula a owl:DatatypeProperty ;
     rdfs:label "Calculation Formula"@en ;
@@ -1125,12 +1126,6 @@ urpx:calculationFormula a owl:DatatypeProperty ;
     rdfs:domain urpx:CalculationMethod ;
     rdfs:range xsd:string ;
     skos:note "Optional formula when simple multiplication isn't sufficient. Example: '(basePrice * usage) + (demandCharge * peakDemand)'." .
-
-urpx:calculationRule a owl:ObjectProperty ;
-    rdfs:label "Calculation Rule"@en ;
-    rdfs:comment "Calculation rule for derived MetricInputs" ;
-    rdfs:domain urpx:MetricInput ;
-    skos:note "Defines how calculated MetricInputs derive their values from input MetricInputs. Used for net export, aggregation, and time-shifted metrics." .
 
 urpx:cancelledBy a owl:ObjectProperty ;
     rdfs:label "Cancelled By"@en ;
@@ -1720,12 +1715,6 @@ urpx:flowDirection a owl:ObjectProperty ;
     rdfs:range urpx:FlowDirectionValue ;
     skos:note "Defines flow direction: forward (consumption/import), reverse (generation/export), net (net metering), or bidirectional. Critical for DER and net metering scenarios." .
 
-urpx:formula a owl:DatatypeProperty ;
-    rdfs:label "Formula"@en ;
-    rdfs:comment "Formula expression for calculated MetricInputs" ;
-    rdfs:range xsd:string ;
-    skos:note "String expression defining calculation logic. Example: 'generation - gridImport' for net export. Used within calculationRule blank node." .
-
 urpx:forRatePlan a owl:ObjectProperty ;
     rdfs:label "For Rate Plan"@en ;
     rdfs:comment "Links a derived RatePlanVersion snapshot back to the RatePlan identity it was built for." ;
@@ -1838,11 +1827,11 @@ urpx:hasBillingModel a owl:ObjectProperty ;
 
 urpx:hasCalculationMethod a owl:ObjectProperty ;
     rdfs:label "Has Calculation Method"@en ;
-    rdfs:comment "Links price to its calculation method" ;
+    rdfs:comment "Links a ledger, metric input, measurement specification or price to its calculation method" ;
     rdfs:domain [ a owl:Class ;
-    owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet ) ] ;
-    rdfs:range urpx:CalculationMethod;
-    skos:note "Defines how a price is calculated." .
+            owl:unionOf ( urpx:Ledger urpx:MetricInput urpx:MetricSpecification urpx:Price urpx:PriceDefinition urpx:PriceSet ) ] ;
+    rdfs:range urpx:CalculationMethod ;
+    skos:note "The authoritative declaration is the one nearest the measurement: MetricSpecification, then MetricInput, then Ledger, resolved per property. A calculation method on a Price, PriceDefinition or PriceSet is a denormalized copy carried for tabular serialization where a measurement altitude is reachable, directly or through a referenced ledger or metric input, and agrees with that declaration. Where no measurement altitude is reachable, the price-level declaration is complete on its own." .
 
 urpx:hasCalendar a owl:ObjectProperty ;
     rdfs:label "Has Calendar"@en ;

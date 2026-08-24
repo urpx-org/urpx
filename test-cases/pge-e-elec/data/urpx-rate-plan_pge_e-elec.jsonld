@@ -563,6 +563,10 @@
               },
               "urpx:referencesMetricInput": {
                 "@id": "pge:mi-meter-count"
+              },
+              "urpx:hasCalculationMethod": {
+                "@type": "urpx:CalculationMethod",
+                "urpx:intervalDuration": "P1D"
               }
             },
             {
@@ -1029,10 +1033,6 @@
                 "@id": "urpx:bundledPortion"
               },
               "urpx:baseQuantity": "1",
-              "urpx:hasCalculationMethod": {
-                "@type": "urpx:CalculationMethod",
-                "urpx:intervalDuration": "P1D"
-              },
               "urpx:referencesLedger": {
                 "@id": "pge:ledger-service"
               }

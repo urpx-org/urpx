@@ -4,9 +4,32 @@
 # URPX Changelog
 
 **Version:** 0.4.0 (Pre-draft)
-**Last Updated:** 2026-08-20
+**Last Updated:** 2026-08-23
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-08-23 — v0.4.0 (calculation attaches where the quantity is measured)
+---
+
+### Added
+- `hasCalculationMethod` reaches `Ledger`, `MetricInput` and `MetricSpecification` alongside the three price classes. Its domain is the union of `Ledger`, `MetricInput`, `MetricSpecification`, `Price`, `PriceDefinition` and `PriceSet`, so one property carries the whole calculation bundle to the level the calculation describes.
+- `LedgerShape`, `MetricInputShape` and `MetricSpecificationShape` each admit `hasCalculationMethod`, optional and at most one.
+- `CalculationMethodShape` admits `calculatedBasedOn`, optional and unbounded. A calculated metric input names its sources there.
+
+### Changed
+- A calculated `MetricInput` states its derivation on a `CalculationMethod` reached through `hasCalculationMethod`, using `calculatedBasedOn` for the source metric inputs and `calculationFormula` for the formula text.
+- `CalculationMethod` defines how a measured or derived quantity is calculated or reduced over a stated interval. It carries the aggregation, the interval window that aggregation applies over, and, for a calculated metric input, the sources it derives from. It attaches to a ledger, a metric input, a measurement specification or a price.
+- `hasCalculationMethod` states which declaration governs where more than one is present: the one nearest the measurement, `MetricSpecification` before `MetricInput` before `Ledger`, resolved per property. An occurrence on a `Price`, `PriceDefinition` or `PriceSet` is a denormalized copy carried for tabular serialization where a measurement is reachable through the node's own references, directly or through a referenced ledger or metric input, and it agrees with that declaration. Where no measurement is reachable, the price-level declaration is complete on its own. A copy that disagrees with its source is a data-quality matter for the implementation holding both: no shape reads across a reference to check it.
+- `calculatedBasedOn` declares `rdfs:domain CalculationMethod`. Validation with inferencing off is unaffected. A consumer validating with RDFS inferencing on sees a tighter result, because the domain then types the property's subject as a `CalculationMethod` and the closed `CalculationMethodShape` judges it.
+
+### Removed
+- `calculationRule`, together with the inline node shape inside `MetricInputShape` that carried it. This removal breaks in two ways. A document stating `calculationRule` on a `MetricInput` no longer validates, because the shape is closed and admits no such path. The property is also gone from the vocabulary itself, independently of whether any document used it.
+- `formula`. `calculationFormula` on `CalculationMethod` carries formula text. This property likewise leaves the vocabulary outright.
+
+### Migration
+- A `MetricInput` carrying `calculationRule` carries `hasCalculationMethod` to a `CalculationMethod` instead. `formula` inside the old structure becomes `calculationFormula` on that calculation method, and `calculatedBasedOn` moves onto it unchanged.
+- Both PG&E test cases move the base service charge's daily calculation method off the price definition and onto the ledger that price definition references, `pge:ledger-service` and `pge:ledger-base-charge` respectively. Each of those ledgers reaches a metric input, so a measurement is reachable and the declaration belongs at the ledger rather than standing alone on the price.
+- The tutorial's demand example states the monthly maximum on a `CalculationMethod` nested under the measurement specification, which keeps its fifteen-minute observation interval. An `aggregationMethod` stated directly on a `MetricSpecification` does not validate.
 
 2026-08-17 — v0.4.0 (the exchange package carries every unit)
 ---

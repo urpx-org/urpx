@@ -421,7 +421,9 @@ graph TB
     MI2["<b>MetricInput</b><br/>Peak Demand<br/><i>type: measured</i>"]
 
     MS1["<b>MetricSpecification</b><br/>commodity: electricity<br/>kind: energy<br/>unit: kWh"]
-    MS2["<b>MetricSpecification</b><br/>commodity: electricity<br/>kind: demand<br/>unit: kW<br/>aggregation: maximum"]
+    MS2["<b>MetricSpecification</b><br/>commodity: electricity<br/>kind: demand<br/>unit: kW"]
+
+    CM1["<b>CalculationMethod</b><br/>aggregation: maximum<br/>interval: P1M"]
 
     P1["Price<br/>Energy: $0.12/kWh"]
     P2["Price<br/>Demand: $8.50/kW"]
@@ -431,6 +433,7 @@ graph TB
     PE -->|"hasMetricInput"| MI2
     MI1 -->|"hasMetricSpecification"| MS1
     MI2 -->|"hasMetricSpecification"| MS2
+    MS2 -->|"hasCalculationMethod"| CM1
 
     P1 -.->|"referencesMetricInput"| MI1
     P3 -.->|"referencesMetricInput"| MI1
@@ -440,10 +443,12 @@ graph TB
     classDef metricClass fill:#77AADD,stroke:#5588BB,stroke-width:2px,color:#fff
     classDef specClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#333
     classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#333
+    classDef calcClass fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#fff
 
     class PE elemClass
     class MI1,MI2 metricClass
     class MS1,MS2 specClass
+    class CM1 calcClass
     class P1,P2,P3 priceClass
 ```
 
@@ -485,7 +490,11 @@ Before adding complex prices, define the MetricInputs they will reference. These
           "measurementKind": {"@id": "urpx:demand"},
           "unitOfMeasure": {"@id": "urpx:kW"},
           "intervalDuration": "PT15M",
-          "aggregationMethod": {"@id": "urpx:maximum"}
+          "hasCalculationMethod": {
+            "@type": "CalculationMethod",
+            "aggregationMethod": {"@id": "urpx:maximum"},
+            "intervalDuration": "P1M"
+          }
         }
       }
     ]

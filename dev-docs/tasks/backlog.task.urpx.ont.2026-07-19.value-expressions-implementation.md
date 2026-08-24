@@ -18,7 +18,7 @@ created: 1784419200000
 
 ## Problem
 
-Price calculation semantics are free-text strings (`calculationFormula`, `formula`), and `PriceUpdateRule` promises formulas its closed shape cannot carry. The spec defines the structured replacement; this task applies it.
+Price calculation semantics are a free-text string (`calculationFormula` on `CalculationMethod`, which is also where a calculated `MetricInput` states its derivation), and `PriceUpdateRule` promises formulas its closed shape cannot carry. The spec defines the structured replacement; this task applies it.
 
 ## Approach
 
@@ -29,8 +29,8 @@ Apply the spec's edits in order, one commit-reviewable block at a time. The spec
 3. **E-03** — add `maxOperator`, `minOperator`, `roundOperator`; update the `OperatorValue` `owl:oneOf` and `OperatorValueShape` `sh:in`.
 4. **E-04** — add `urpx:ConditionalValueNode` + `guard`/`thenOperand`/`elseOperand` + shape.
 5. **E-05** — widen `leftOperand`/`rightOperand` ranges; extend `OperationNodeShape`'s operand `sh:or` lists only (leave `ComparisonNodeShape` untouched).
-6. **E-06** — add `urpx:hasValueExpression`; insert the property into `CalculationMethodShape`, `PriceUpdateRuleShape`, and the `calculationRule` inline shape in `MetricInputShape`.
-7. **E-07** — apply the three annotation demotions.
+6. **E-06** — add `urpx:hasValueExpression`; insert the property into `CalculationMethodShape` and `PriceUpdateRuleShape`. There is no third target: the inline shape inside `MetricInputShape` was retired with `calculationRule`, and a calculated `MetricInput` now reaches its calculation method through `hasCalculationMethod`.
+7. **E-07** — apply the two annotation demotions.
 8. Update the samples if review changed any term names; regenerate the data dictionary.
 
 ## Acceptance

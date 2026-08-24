@@ -27,6 +27,7 @@ Decision numbering continues across pages; this page begins at Decision #132.
 
 - Decision #132: One Identifier Pattern Across Organization, Rate Plan, and Rate Plan Modifier
 - Decision #133: The Exchange Package Carries Every Exchangeable Unit Through One Property
+- Decision #134: A Calculation Attaches Where The Quantity Is Measured
 
 ---
 
@@ -143,3 +144,68 @@ Mint `urpx:packages`, with domain `URPXPackage` and a range that is the union of
 - SHACL (`shacl/urpx-shacl.ttl`): `URPXPackageShape` admits `urpx:packages` through a `sh:or` over single-class shapes, and requires at least one content unit through a node-level `sh:or`; the removed `hasTariffPublication` property block.
 - Test cases: `test-cases/pge-e-tou-c/data/urpx-rate-plan_pge_e-tou-c.jsonld` carries the source publication on `urpx:packages`.
 - Related: Decision #121 (the `PricingModel`, `TariffFiling`, and `SourcePublication` architecture, which is why an authored filing is not reached through the external document path); Decision #131 (the widened inverse range, the prior case of the entailment that rules out widening an inverse-declared property's domain).
+
+---
+
+<a id="decision-134"></a>
+### Decision #134: A Calculation Attaches Where The Quantity Is Measured
+
+- **Status:** Accepted (pre-Draft)
+- **Date:** 2026-08-23
+- **Issue:** `hasCalculationMethod` had a three-class domain covering only `Price`, `PriceDefinition` and `PriceSet`, so a measured quantity had nowhere to state the aggregation and interval window it is reduced over. A calculated `MetricInput` stated its derivation on an anonymous `calculationRule` node reached by a separate property, with its own `formula` beside the `calculationFormula` already on `CalculationMethod`.
+- **Category:** Architecture, Validation, Naming
+
+**Context:**
+`CalculationMethod` carries the aggregation method, four interval properties and a formula. All of those describe a measurement, not a price: a monthly maximum of a fifteen-minute demand series is a fact about the demand series. `CalculationMethod`'s own `skos:note` has described attachment to a ledger since v0.1.x, while no shape or domain admitted it there.
+
+The tutorial's demand example is the case this blocked. It stated `aggregationMethod` directly on a `MetricSpecification`, which no shape admits, because `aggregationMethod` has a single domain and `MetricSpecificationShape` is closed. The example did not validate, and neither did the nine measurement fragments modeled on it.
+
+Derivation had a second, parallel surface. `calculationRule` was an object property with domain `MetricInput` and no declared range, pointing at an anonymous node whose closed shape admitted `formula` and `calculatedBasedOn`. Neither `calculationRule` nor `formula` nor `calculatedBasedOn` occurred in any shipped document.
+
+**Decision:**
+Widen `hasCalculationMethod` to the six-class union `Ledger`, `MetricInput`, `MetricSpecification`, `Price`, `PriceDefinition`, `PriceSet`, and admit the path on `LedgerShape`, `MetricInputShape` and `MetricSpecificationShape`. Retire `calculationRule` and `formula`. `CalculationMethod` absorbs derivation by admitting `calculatedBasedOn`, which gains `rdfs:domain CalculationMethod`; `calculationFormula` is the single formula property.
+
+Where more than one declaration is present, the one nearest the measurement governs, `MetricSpecification` before `MetricInput` before `Ledger`, resolved per property. A declaration on a price class is a denormalized copy for tabular serialization where a measurement is reachable through the node's own references, directly or through a referenced ledger or metric input. Where no measurement is reachable, the price-level declaration is complete on its own.
+
+**Options Considered (reuse ladder):**
+
+1. **One widening of `hasCalculationMethod` (Selected).** Reuse by widening. The property, the class and the class's shape all already exist; nothing is minted.
+   - Pro: The calculation bundle is a group of six properties on `CalculationMethod`. Carrying the node to a new level moves all six at once, where widening each property's own domain would take six domain edits and six shape entries per level, repeated for each of the three levels added.
+   - Pro: A node has an identity, so two measurements can reference the same `CalculationMethod`. A property value stated directly on a measurement cannot be shared, and a shared monthly-maximum definition is the ordinary case in a commercial rate plan.
+   - Pro: The precedence rule needs somewhere to live. A node gives one place to say which declaration governs; six independent properties give six.
+   - Con: A union domain is less self-documenting than a set of typed properties, which the property's `skos:note` carries instead.
+
+2. **Widen `aggregationMethod` and the interval properties individually.** Rejected. It is the shape the withdrawn two-edit proposal took, and it would have let the tutorial's original line validate untouched. It states the aggregation but not what it aggregates over, offers nothing to share between two measurements, and leaves the interval properties stated at one level with no rule about a second.
+
+3. **Keep both calculation surfaces, split by role: `calculationRule` for derivation, `hasCalculationMethod` for aggregation and interval.** Rejected. The split is representable, since one `MetricInput` can carry both child nodes and they compose through their common parent. What it leaves is two calculation surfaces whose composition order is undefined and two formula properties whose relative authority is unstated, both of which would need a further rule to settle. The standby demand credit is the case that decides it: a derivation that fires only when a customer's generators are non-operational needs a condition attached to the derivation, and an anonymous node closed to two properties cannot carry one, while a named class with its own shape can gain the path. With zero shipped uses of either retiring property, consolidating on the named class costs no data and removes the second rule rather than writing it.
+
+4. **Mint a class for measurement-level calculation, distinct from the price-level one.** Rejected. The properties would be identical to `CalculationMethod`'s, and the precedence rule requires the two to be comparable per property, which is simplest when they are the same class.
+
+5. **Add `PriceSetAlternative` to the domain union.** Rejected as redundant. `PriceSetAlternative` is `rdfs:subClassOf PriceSet`, and `PriceSet` is a member of the union, so an instance of the subclass is in the domain already. The containment is a consequence of the ontology's OWL semantics rather than of RDFS alone: RDFS entails that the instance is a `PriceSet`, and it takes OWL to interpret membership in `PriceSet` as membership in the anonymous union class. A probe over a typed `PriceSetAlternative` with no separately asserted `PriceSet` type confirms both halves, returning union membership under OWL-RL and not under RDFS. Thirty of the thirty-nine property paths on `PriceSetAlternativeShape` already rely on the same containment, so naming this one class explicitly would be inconsistent with the shape it validates against.
+
+**Rationale:**
+- The vocabulary states what a filed charge means. A monthly maximum applied to a fifteen-minute demand series is part of that meaning, and it belongs on the measurement whose series it reduces rather than on each price that happens to reference it.
+- One property carrying a node to three new levels is the cheapest rung the inventory offers. No class and no property is minted for the reach.
+- The precedence rule is stated, not validated. A shape sees one node and its immediate values, so it cannot compare a price-level copy against a declaration two references away. A copy that disagrees with its source is therefore a data-quality matter for the implementation holding both graphs, not a conformance rule. A forward path across the references is expressible, so this is a proportionality judgment about scope rather than a technical limit, and it stays consistent with the boundary already drawn around resolution as business logic.
+- The two retiring properties are removed rather than deprecated in place. Both are unused in shipped documents, and the tag this precedes is the point at which removing a term is cheapest.
+- Both interval properties can now be stated on adjacent nodes in one path, since `MetricSpecification` and `CalculationMethod` share four interval property names. The clean reading is that a measurement specification's interval is the granularity the quantity is recorded at and a calculation method's interval is the window the calculation applies over; the tutorial's demand example is written that way, with a fifteen-minute observation interval and a monthly reduction window.
+
+**Consequences / Impact:**
+- **Positive:** A measured quantity states its aggregation and window at the measurement. The tutorial's demand example validates, as do the measurement fragments modeled on it.
+- **Positive:** A calculated `MetricInput` has one derivation surface and one formula property.
+- **Breaking Change:** Yes, twice over for `calculationRule`. A document stating it on a `MetricInput` no longer validates, because `MetricInputShape` is closed and the path is gone. Separately, `calculationRule` and `formula` are removed from the vocabulary whether or not a document used them. No shipped document did.
+- **Restricting, conditional on inferencing:** `calculatedBasedOn` gains `rdfs:domain CalculationMethod`. Nothing loses conformance with inferencing off. A consumer validating with RDFS inferencing on sees a tighter result, because the domain types the property's subject as a `CalculationMethod` and the closed shape then judges it.
+- **Additive:** The domain widening and the four admitted paths each strictly enlarge what conforms.
+- **Data migration:** Both PG&E test cases carried the only two occurrences of `hasCalculationMethod` in shipped data, each on `pd-base-charge` with a daily interval. Each of those price definitions reaches a metric input through the ledger it references, so a measurement is reachable and the ruled rule places the declaration at the ledger. The method moves onto `pge:ledger-service` and `pge:ledger-base-charge` respectively. No price-level copy is added back: a copy is optional denormalization rather than a requirement, and a test case showing the ledger-level declaration alone illustrates the model better than one showing a redundant copy with nothing to disagree with.
+- **Documentation:** The tutorial's demand example and the diagram above it change to the form the shapes admit.
+- **Requirements:** No class is minted or renamed, and every surviving term keeps its object-or-datatype character and its declaring class, so the website codegen dictionary configuration needs no `sections:` change. The generated data dictionary regenerates: `hasCalculationMethod` gains rows under `Ledger`, `MetricInput` and `MetricSpecification`, and the `calculationRule` row leaves `MetricInput`.
+- **Generated-artifact note:** `calculationRule` appeared in the data dictionary typed as a datatype property, and `formula` and `calculatedBasedOn` did not appear at all. The generator places a property by the SHACL shape that admits it, so a property no shape admits is not published and a property with no declared range is not classified. That is generator behavior on these three terms, not a rule about how the vocabulary may declare a term; a property with no declared domain remains publishable.
+
+**References:**
+- Changelog: `urpx-changelog.md`, 2026-08-23 entry ("calculation attaches where the quantity is measured").
+- Ontology (`ontology/urpx-ontology.ttl`): `urpx:hasCalculationMethod`'s six-class union domain and its precedence note; `urpx:CalculationMethod`'s definition; `urpx:calculatedBasedOn`'s declared domain; the removed `urpx:calculationRule` and `urpx:formula`.
+- SHACL (`shacl/urpx-shacl.ttl`): `LedgerShape`, `MetricInputShape` and `MetricSpecificationShape` admit `urpx:hasCalculationMethod`; `CalculationMethodShape` admits `urpx:calculatedBasedOn`; the removed `calculationRule` property shape and its inline node shape in `MetricInputShape`.
+- Test cases: `test-cases/pge-e-elec/data/urpx-rate-plan_pge_e-elec.jsonld` and `test-cases/pge-e-tou-c/data/urpx-rate-plan_pge_e-tou-c.jsonld` carry the base service charge's calculation method on the ledger.
+- Documentation: `documentation/pages/urpx-tutorial.md`, the demand metric input and the diagram above it.
+- Accepted open residue, both annotation-level and neither blocking: the interval boundary between a measurement specification and a calculation method is described in this entry's rationale and not yet written into `MetricSpecification`'s own note, and `calculatedBasedOn` is admitted on a `CalculationMethod` reached from a ledger or a price, where enforcement would require reading across the inverse of `hasCalculationMethod`. Wording for the first is open to the working group; the second is revisited if the property gains occurrences.
+- Related: Decision #121 (the `PricingModel`, `TariffFiling` and `SourcePublication` architecture); Decision #133 (the `sh:or` encoding for a union-class constraint, and the same dictionary-configuration question).
