@@ -6,6 +6,7 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - .github/workflows/regen-generated-content.yml
+      - context/**
       - documentation/**
       - ontology/**
       - shacl/**
@@ -104,6 +105,7 @@ jobs:
           while IFS= read -r file; do
             [ -z "$file" ] && continue
             case "$file" in
+              context/urpx-context.jsonld|\
               documentation/pages/urpx-data-dictionary.md|\
               documentation/diagrams/dictionary/*|\
               test-cases/manifest-all.json|\
@@ -196,6 +198,7 @@ jobs:
         if: steps.head-change.outputs.generated_only != 'true'
         run: |
           python3 urpx-website-staging/scripts/build/check-no-internal-process-language.py \
+            urpx/context/urpx-context.jsonld \
             urpx/documentation/pages/urpx-data-dictionary.md \
             urpx/documentation/diagrams/dictionary \
             urpx/test-cases
@@ -226,7 +229,8 @@ jobs:
         run: |
           git config user.name "urpx-regen-bot[bot]"
           git config user.email "${{ vars.URPX_REGEN_APP_UID }}+urpx-regen-bot[bot]@users.noreply.github.com"
-          git add documentation/pages/urpx-data-dictionary.md \
+          git add context/urpx-context.jsonld \
+                  documentation/pages/urpx-data-dictionary.md \
                   documentation/diagrams/dictionary \
                   test-cases
           git commit -s -m "chore: refresh generated URPX artifacts"
@@ -238,7 +242,8 @@ jobs:
         run: |
           git config user.name "urpx-regen-bot[bot]"
           git config user.email "${{ vars.URPX_REGEN_APP_UID }}+urpx-regen-bot[bot]@users.noreply.github.com"
-          git add documentation/pages/urpx-data-dictionary.md \
+          git add context/urpx-context.jsonld \
+                  documentation/pages/urpx-data-dictionary.md \
                   documentation/diagrams/dictionary \
                   test-cases
           git commit -s -m "chore: refresh generated URPX artifacts"

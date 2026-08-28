@@ -1,0 +1,319 @@
+{
+  "_generator": "urpx-website-staging/scripts/codegen/generate-jsonld-context.py",
+  "_ontologyVersion": "0.4.0",
+  "_namespaceMigration": {
+    "namespace": "https://urpx.org/ns/urpx#",
+    "version": "v0.5.0"
+  },
+  "@context": {
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "oa": "http://www.w3.org/ns/oa#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "urpx": "https://urpx-org.github.io/urpx/ontology/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "urpx:accessURL": {
+      "@type": "xsd:anyURI"
+    },
+    "urpx:adder": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:amount": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:anchorLink": {
+      "@type": "xsd:anyURI"
+    },
+    "urpx:basePrice": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:baseQuantity": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:billedDemand": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:booleanValue": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:buildingSquareFootage": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:cancelledOn": {
+      "@type": "xsd:date"
+    },
+    "urpx:cancelledOnDateTime": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:contractEffectiveDate": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:contractExpirationDate": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:currentPrice": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:cycleStartDay": {
+      "@type": "xsd:integer"
+    },
+    "urpx:dateApproved": {
+      "@type": "xsd:date"
+    },
+    "urpx:dateCreated": {
+      "@type": "xsd:date"
+    },
+    "urpx:dateModified": {
+      "@type": "xsd:date"
+    },
+    "urpx:datePublished": {
+      "@type": "xsd:date"
+    },
+    "urpx:dateReceived": {
+      "@type": "xsd:date"
+    },
+    "urpx:dateRetrieved": {
+      "@type": "xsd:date"
+    },
+    "urpx:dateTimeApproved": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:dateTimeCreated": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:dateTimeModified": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:dateTimePublished": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:dateTimeReceived": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:dateTimeRetrieved": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:dateTimeValue": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:dateValue": {
+      "@type": "xsd:date"
+    },
+    "urpx:decimalValue": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:dimensionProperty": {
+      "@type": "xsd:anyURI"
+    },
+    "urpx:durationValue": {
+      "@type": "xsd:duration"
+    },
+    "urpx:effectiveDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:effectiveDateTime": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:endDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:endDateTime": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:endTime": {
+      "@type": "xsd:time"
+    },
+    "urpx:enrollmentEndDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:enrollmentStartDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:evChargingCapacity": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:evaluatedOn": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:expectedEndDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:expectedEndDateTime": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:expirationDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:expirationDateTime": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:fallbackSourced": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:gMonthValue": {
+      "@type": "xsd:gMonth"
+    },
+    "urpx:gYearValue": {
+      "@type": "xsd:gYear"
+    },
+    "urpx:holidayDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:householdCount": {
+      "@type": "xsd:integer"
+    },
+    "urpx:householdSize": {
+      "@type": "xsd:integer"
+    },
+    "urpx:identityValidFrom": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:identityValidTo": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:includeHolidays": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:includeNonHolidays": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:initialEffectiveDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:integerValue": {
+      "@type": "xsd:integer"
+    },
+    "urpx:intervalDuration": {
+      "@type": "xsd:duration"
+    },
+    "urpx:isCCACustomer": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:isCanonical": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:isCommunitySolarCustomer": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:isDefault": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:isPreferred": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:lowerBound": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:meterCount": {
+      "@type": "xsd:integer"
+    },
+    "urpx:minimumTenure": {
+      "@type": "xsd:duration"
+    },
+    "urpx:month": {
+      "@type": "xsd:gMonth"
+    },
+    "urpx:multiplier": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:nominalVoltage": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:occupancyCount": {
+      "@type": "xsd:integer"
+    },
+    "urpx:pageEnd": {
+      "@type": "xsd:integer"
+    },
+    "urpx:pageStart": {
+      "@type": "xsd:integer"
+    },
+    "urpx:powerRating": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:priceCeiling": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:priceFloor": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:priority": {
+      "@type": "xsd:integer"
+    },
+    "urpx:ratedPowerCapacity": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:roundTripEfficiency": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:selfContained": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:serviceTierNumber": {
+      "@type": "xsd:integer"
+    },
+    "urpx:settlementInterval": {
+      "@type": "xsd:duration"
+    },
+    "urpx:smartChargingEnabled": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:solarCapacity": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:stale": {
+      "@type": "xsd:boolean"
+    },
+    "urpx:startDate": {
+      "@type": "xsd:date"
+    },
+    "urpx:startDateTime": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:startTime": {
+      "@type": "xsd:time"
+    },
+    "urpx:storageCapacity": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:summaryAmount": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:sunsetOn": {
+      "@type": "xsd:date"
+    },
+    "urpx:sunsetOnDateTime": {
+      "@type": "xsd:dateTime"
+    },
+    "urpx:targetURPXVersion": {
+      "@type": "xsd:anyURI"
+    },
+    "urpx:timeValue": {
+      "@type": "xsd:time"
+    },
+    "urpx:touPeriodNumber": {
+      "@type": "xsd:integer"
+    },
+    "urpx:touTierNumber": {
+      "@type": "xsd:integer"
+    },
+    "urpx:unitPrice": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:upperBound": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:url": {
+      "@type": "xsd:anyURI"
+    },
+    "urpx:windCapacity": {
+      "@type": "xsd:decimal"
+    },
+    "urpx:yearlyRecurrence": {
+      "@type": "xsd:boolean"
+    }
+  }
+}

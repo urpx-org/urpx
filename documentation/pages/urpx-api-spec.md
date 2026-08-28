@@ -219,7 +219,7 @@ Three things this example is built to show:
 ```json
 {
   "@context": [
-    "https://urpx-org.github.io/urpx/ontology/context.jsonld",
+    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
     {
       "cpl": "https://urpx-org.github.io/urpx/fixtures/cpl/",
       "org": "https://urpx-org.github.io/urpx/fixtures/org/",
