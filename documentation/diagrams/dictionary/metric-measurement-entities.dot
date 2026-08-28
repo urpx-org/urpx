@@ -21,15 +21,22 @@ digraph "Metric & Measurement Entities" {
         label="MetricSpecification"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
+    CalculationMethod [
+        label="CalculationMethod"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
 
     // Object property edges
+    MetricInput -> CalculationMethod [
+        label="hasCalculationMethod\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
     MetricInput -> MetricSpecification [
         label="hasMetricSpecification\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
 
     // Layout-specified rank groups
     { rank=same; MetricInput; }
-    { rank=same; MetricSpecification; }
+    { rank=same; MetricSpecification; CalculationMethod; }
 
     subgraph cluster_legend {
         label="Legend";

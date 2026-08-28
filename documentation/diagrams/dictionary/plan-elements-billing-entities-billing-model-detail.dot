@@ -35,6 +35,10 @@ digraph "BillingModel — Pricing References" {
     ];
 
     // Cross-section references
+    CalculationMethod [
+        label="CalculationMethod"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
     MetricInput [
         label="MetricInput"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
@@ -82,6 +86,9 @@ digraph "BillingModel — Pricing References" {
     ];
     Ledger -> BillingCycle [
         label="hasBillingCycle\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Ledger -> CalculationMethod [
+        label="hasCalculationMethod\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     Ledger -> MetricInput [
         label="referencesMetricInput\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5

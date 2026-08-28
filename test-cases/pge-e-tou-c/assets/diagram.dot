@@ -334,6 +334,13 @@ digraph "urpx-rate-plan_pge_e-tou-c" {
         fontcolor="#1a365d"
         penwidth=2
     ];
+    n__anon_46 [
+        label="{CalculationMethod|intervalDuration: P1D\l}"
+        fillcolor="#aaccff"
+        color="#1a5276"
+        fontcolor="#1a365d"
+        penwidth=2
+    ];
     n_pge_ledger_climate_credit [
         label="{Ledger|name: California Climate Credit\l}"
         fillcolor="#aaccff"
@@ -483,13 +490,6 @@ digraph "urpx-rate-plan_pge_e-tou-c" {
     ];
     n_pge_pd_base_charge [
         label="{PriceDefinition|name: Base Services Charge\lbaseQuantity: 1\l}"
-        fillcolor="#aaccff"
-        color="#1a5276"
-        fontcolor="#1a365d"
-        penwidth=2
-    ];
-    n__anon_68 [
-        label="{CalculationMethod|intervalDuration: P1D\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
@@ -4722,6 +4722,12 @@ digraph "urpx-rate-plan_pge_e-tou-c" {
         fontcolor="#1a5276"
         penwidth=1.5
     ];
+    n_pge_ledger_base_charge -> n__anon_46 [
+        label="hasCalculationMethod"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
     n__anon_28 -> n_pge_ledger_climate_credit [
         label="hasLedger"
         color="#1a5276"
@@ -4850,12 +4856,6 @@ digraph "urpx-rate-plan_pge_e-tou-c" {
     ];
     n__anon_28 -> n_pge_pd_base_charge [
         label="hasPriceDefinition"
-        color="#1a5276"
-        fontcolor="#1a5276"
-        penwidth=1.5
-    ];
-    n_pge_pd_base_charge -> n__anon_68 [
-        label="hasCalculationMethod"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
@@ -8316,8 +8316,8 @@ digraph "urpx-rate-plan_pge_e-tou-c" {
         leg_23 [label="TOUPeriod", shape=box, fillcolor="#EEDD88", color="#ccbb66", fontcolor="#333333", fontsize=9, penwidth=1.5];
         leg_24 [label="TimeBracket", shape=box, fillcolor="#EE8866", color="#cc6644", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
         leg_25 [label="Ledger", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_26 [label="PriceDefinition", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_27 [label="CalculationMethod", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_26 [label="CalculationMethod", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_27 [label="PriceDefinition", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
         leg_28 [label="ApplicabilityRule", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
         leg_29 [label="ProfileAlternatives", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
         leg_30 [label="AlternativeDimensions", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];

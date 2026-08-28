@@ -16,11 +16,11 @@ import DiagramViewer from '@site/src/components/DiagramViewer';
 
 <DictTopNav />
 
-<!-- AUTO-GENERATED on 2026-08-22 from urpx-ontology.ttl and urpx-shacl.ttl -->
+<!-- AUTO-GENERATED on 2026-08-28 from urpx-ontology.ttl and urpx-shacl.ttl -->
 <!-- Do not edit directly. Regenerate with: generate-dictionary.sh -->
 
 **Version:** 0.4.0  
-**Last Updated:** 2026-08-22  
+**Last Updated:** 2026-08-28  
 **Ontology Source:** [`urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
 
 ---
@@ -549,7 +549,7 @@ presentation.
 | `urpx:hasAlternative` | Object | 0..* | [`ProfileAlternative`](#profilealternative) | Links alternatives container to specific price set options |
 | `urpx:hasApplicabilityGroup` | Object | 0..* | [`ApplicabilityGroup`](#applicabilitygroup) | Links price set to applicability rules |
 | `urpx:hasApplicabilityRule` | Object | 0..* | [`ApplicabilityRule`](#applicabilityrule) | Conditions for price application |
-| `urpx:hasCalculationMethod` | Object | 0..1 | [`CalculationMethod`](#calculationmethod) | Links price to its calculation method |
+| `urpx:hasCalculationMethod` | Object | 0..1 | [`CalculationMethod`](#calculationmethod) | Links a ledger, metric input, measurement specification or price to its calculation method |
 | `urpx:hasDataSourceReference` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an entity to a structured data source reference. |
 | `urpx:hasMetricSpecification` | Object | 0..1 | [`MetricSpecification`](#metricspecification) | Defines measurement specifications for prices or pricing model components |
 | `urpx:hasPrice` | Object | 1..* | [`Price`](#price) | Links price set to individual prices |
@@ -602,7 +602,7 @@ presentation.
 | `urpx:hasAlternative` | Object | 0..* | [`ProfileAlternative`](#profilealternative) | Links alternatives container to specific price set options |
 | `urpx:hasApplicabilityGroup` | Object | 0..* | [`ApplicabilityGroup`](#applicabilitygroup) | Links price set to applicability rules |
 | `urpx:hasApplicabilityRule` | Object | 0..* | [`ApplicabilityRule`](#applicabilityrule) | Conditions for price application |
-| `urpx:hasCalculationMethod` | Object | 0..1 | [`CalculationMethod`](#calculationmethod) | Links price to its calculation method |
+| `urpx:hasCalculationMethod` | Object | 0..1 | [`CalculationMethod`](#calculationmethod) | Links a ledger, metric input, measurement specification or price to its calculation method |
 | `urpx:hasDataSourceReference` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an entity to a structured data source reference. |
 | `urpx:hasMetricSpecification` | Object | 0..1 | [`MetricSpecification`](#metricspecification) | Defines measurement specifications for prices or pricing model components |
 | `urpx:hasPrice` | Object | 1..* | [`Price`](#price) | Links price set to individual prices |
@@ -681,7 +681,7 @@ rules, and pricing parameters.
 | `urpx:expectedEndDateTime` | Datatype | 0..1 | `xsd:dateTime` | Provisional end date/time subject to change |
 | `urpx:hasApplicabilityGroup` | Object | 0..* | [`ApplicabilityGroup`](#applicabilitygroup) | Links price set to applicability rules |
 | `urpx:hasApplicabilityRule` | Object | 0..* | [`ApplicabilityRule`](#applicabilityrule) | Conditions for price application |
-| `urpx:hasCalculationMethod` | Object | 0..1 | [`CalculationMethod`](#calculationmethod) | Links price to its calculation method |
+| `urpx:hasCalculationMethod` | Object | 0..1 | [`CalculationMethod`](#calculationmethod) | Links a ledger, metric input, measurement specification or price to its calculation method |
 | `urpx:hasDataSourceReference` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an entity to a structured data source reference. |
 | `urpx:hasDynamicPricing` | Object | 0..1 | [`DynamicPricing`](#dynamicpricing) | Links price to dynamic pricing configuration |
 | `urpx:hasMetricSpecification` | Object | 0..1 | [`MetricSpecification`](#metricspecification) | Defines measurement specifications for prices or pricing model components |
@@ -738,7 +738,7 @@ specifications.
 | `urpx:expirationDateTime` | Datatype | 0..1 | `xsd:dateTime` | Date/time when entity becomes inactive |
 | `urpx:hasApplicabilityGroup` | Object | 0..* | [`ApplicabilityGroup`](#applicabilitygroup) | Links price set to applicability rules |
 | `urpx:hasApplicabilityRule` | Object | 0..* | [`ApplicabilityRule`](#applicabilityrule) | Conditions for price application |
-| `urpx:hasCalculationMethod` | Object | 0..1 | [`CalculationMethod`](#calculationmethod) | Links price to its calculation method |
+| `urpx:hasCalculationMethod` | Object | 0..1 | [`CalculationMethod`](#calculationmethod) | Links a ledger, metric input, measurement specification or price to its calculation method |
 | `urpx:hasDataSourceReference` | Object | 0..* | [`DataSourceReference`](#datasourcereference) | Links an entity to a structured data source reference. |
 | `urpx:hasMetricSpecification` | Object | 0..1 | [`MetricSpecification`](#metricspecification) | Defines measurement specifications for prices or pricing model components |
 | `urpx:hasRateCase` | Object | 0..* | [`RateCase`](#ratecase) | Links a rate plan version or pricing artifact to one or more associated rate case proceedings |
@@ -1014,8 +1014,8 @@ MetricInputs rather than defining measurements inline.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
-| `urpx:calculationRule` | Datatype | 0..1 | — | Calculation rule for derived MetricInputs |
 | `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
+| `urpx:hasCalculationMethod` | Object | 0..1 | [`CalculationMethod`](#calculationmethod) | Links a ledger, metric input, measurement specification or price to its calculation method |
 | `urpx:hasMetricSpecification` | Object | 0..* | [`MetricSpecification`](#metricspecification) | Defines measurement specifications for prices or pricing model components |
 | `urpx:metricInputType` | Object | 1..1 | [`MetricInputTypeValue`](#metricinputtypevalue) | Type of MetricInput for measurement organization |
 | `urpx:name` | Datatype | 1..1 | `xsd:string` | The name of the item |
@@ -1042,6 +1042,7 @@ Multiple MetricSpecifications can compose a single MetricInput.
 | `urpx:accumulationMethod` | Object | 0..1 | [`AccumulationValue`](#accumulationvalue) | How measurement values accumulate over time |
 | `urpx:commodity` | Object | 0..1 | [`CommodityValue`](#commodityvalue) | Industry-standard commodity type specification |
 | `urpx:flowDirection` | Object | 0..1 | [`FlowDirectionValue`](#flowdirectionvalue) | Direction of energy flow for measurement |
+| `urpx:hasCalculationMethod` | Object | 0..1 | [`CalculationMethod`](#calculationmethod) | Links a ledger, metric input, measurement specification or price to its calculation method |
 | `urpx:intervalAlignment` | Object | 0..1 | [`IntervalAlignmentValue`](#intervalalignmentvalue) | Defines how the interval time window is anchored (e.g., rolling-to-date, billing-cycle-aligned, calendar-aligned). |
 | `urpx:intervalDuration` | Datatype | 0..1 | `xsd:duration` | ISO 8601 duration for the interval. Primary specification for the time window length. |
 | `urpx:intervalSelection` | Object | 0..1 | [`IntervalSelectionValue`](#intervalselectionvalue) | Defines how the time window data is selected or aggregated for the interval (e.g., rolling, consecutive periods, fixed period). |
@@ -1057,13 +1058,14 @@ Multiple MetricSpecifications can compose a single MetricInput.
 **URI:** `https://urpx-org.github.io/urpx/ontology/CalculationMethod`  
 **Parent:** `owl:Thing`
 
-**Description:** Defines how prices are calculated over billing intervals
+**Description:** Defines how a measured or derived quantity is calculated or reduced over a stated interval
 
 **Properties:**
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
 | `urpx:aggregationMethod` | Object | 0..1 | [`AggregationMethodValue`](#aggregationmethodvalue) | Statistical method for aggregating interval measurements |
+| `urpx:calculatedBasedOn` | Object | 0..* | [`MetricInput`](#metricinput) | Source MetricInputs for calculated MetricInput derivation |
 | `urpx:calculationFormula` | Datatype | 0..1 | `xsd:string` | Formula defining calculation logic for complex scenarios |
 | `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
 | `urpx:intervalAlignment` | Object | 0..1 | [`IntervalAlignmentValue`](#intervalalignmentvalue) | Defines how the interval time window is anchored (e.g., rolling-to-date, billing-cycle-aligned, calendar-aligned). |
@@ -1172,6 +1174,7 @@ apply to that measurement.
 | `urpx:contributedBy` | Object | 0..* | [`PricingModel`](#pricingmodel) | Links an element of a consolidated rate plan version snapshot to the pricing model via which it entered the snapshot. Asserted at the most parent-level element the model contributed wholly. |
 | `urpx:description` | Datatype | 0..1 | `xsd:string` | Detailed description of the item |
 | `urpx:hasBillingCycle` | Object | 0..1 | [`BillingCycle`](#billingcycle) | Links Ledger to billing cycle definitions |
+| `urpx:hasCalculationMethod` | Object | 0..1 | [`CalculationMethod`](#calculationmethod) | Links a ledger, metric input, measurement specification or price to its calculation method |
 | `urpx:ledgerType` | Object | 0..1 | [`LedgerTypeValue`](#ledgertypevalue) | Type of ledger for billing segregation |
 | `urpx:name` | Datatype | 1..1 | `xsd:string` | The name of the item |
 | `urpx:referencesMetricInput` | Object | 0..* | [`MetricInput`](#metricinput) | Links to metric inputs for measurement and profile metric input definitions |
@@ -3282,4 +3285,4 @@ potentially spanning multiple administrative boundaries.
 
 ---
 
-*Generated by `generate-data-dictionary.py` from URPX ontology v0.4.0 on 2026-08-22.*
+*Generated by `generate-data-dictionary.py` from URPX ontology v0.4.0 on 2026-08-28.*
