@@ -1,10 +1,4 @@
 {
-  "_generator": "urpx-website-staging/scripts/codegen/generate-jsonld-context.py",
-  "_ontologyVersion": "0.4.0",
-  "_namespaceMigration": {
-    "namespace": "https://urpx.org/ns/urpx#",
-    "version": "v0.5.0"
-  },
   "@context": {
     "dcat": "http://www.w3.org/ns/dcat#",
     "dcterms": "http://purl.org/dc/terms/",
