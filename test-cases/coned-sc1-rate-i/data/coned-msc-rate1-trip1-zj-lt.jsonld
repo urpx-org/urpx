@@ -1,15 +1,10 @@
 {
-  "@context": {
-    "urpx": "https://urpx-org.github.io/urpx/ontology/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "coned": "https://urpx-org.github.io/urpx/fixtures/coned/",
-    "urpx:startDate": { "@type": "xsd:date" },
-    "urpx:endDate": { "@type": "xsd:date" },
-    "urpx:amount": { "@type": "xsd:decimal" },
-    "urpx:dateRetrieved": { "@type": "xsd:date" },
-    "urpx:accessURL": { "@type": "xsd:anyURI" },
-    "urpx:targetURPXVersion": { "@type": "xsd:anyURI" }
-  },
+  "@context": [
+    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    {
+      "coned": "https://urpx-org.github.io/urpx/fixtures/coned/"
+    }
+  ],
   "@graph": [
     {
       "@id": "coned:pm-msc-rate1-trip1-zj-lt",

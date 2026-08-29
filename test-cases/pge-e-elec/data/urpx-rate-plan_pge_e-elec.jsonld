@@ -1,65 +1,11 @@
 {
-  "@context": {
-    "urpx": "https://urpx-org.github.io/urpx/ontology/",
-    "schema": "http://schema.org/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "org": "https://urpx-org.github.io/urpx/fixtures/org/",
-    "pge": "https://urpx-org.github.io/urpx/fixtures/pge/",
-    "urpx:unitPrice": {
-      "@type": "xsd:decimal"
-    },
-    "urpx:effectiveDate": {
-      "@type": "xsd:date"
-    },
-    "urpx:effectiveDateTime": {
-      "@type": "xsd:dateTime"
-    },
-    "urpx:baseQuantity": {
-      "@type": "xsd:decimal"
-    },
-    "urpx:startTime": {
-      "@type": "xsd:time"
-    },
-    "urpx:endTime": {
-      "@type": "xsd:time"
-    },
-    "urpx:initialEffectiveDate": {
-      "@type": "xsd:date"
-    },
-    "urpx:startDate": {
-      "@type": "xsd:date"
-    },
-    "urpx:url": {
-      "@type": "xsd:anyURI"
-    },
-    "urpx:month": {
-      "@type": "xsd:gMonth"
-    },
-    "urpx:intervalDuration": {
-      "@type": "xsd:duration"
-    },
-    "urpx:touTierNumber": {
-      "@type": "xsd:integer"
-    },
-    "urpx:touPeriodNumber": {
-      "@type": "xsd:integer"
-    },
-    "urpx:pageStart": {
-      "@type": "xsd:integer"
-    },
-    "urpx:pageEnd": {
-      "@type": "xsd:integer"
-    },
-    "urpx:accessURL": {
-      "@type": "xsd:anyURI"
-    },
-    "urpx:dateRetrieved": {
-      "@type": "xsd:date"
-    },
-    "urpx:targetURPXVersion": {
-      "@type": "xsd:anyURI"
+  "@context": [
+    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    {
+      "org": "https://urpx-org.github.io/urpx/fixtures/org/",
+      "pge": "https://urpx-org.github.io/urpx/fixtures/pge/"
     }
-  },
+  ],
   "@graph": [
     {
       "@type": "urpx:URPXPackage",

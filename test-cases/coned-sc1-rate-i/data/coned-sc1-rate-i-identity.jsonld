@@ -1,13 +1,11 @@
 {
-  "@context": {
-    "urpx": "https://urpx-org.github.io/urpx/ontology/",
-    "skos": "http://www.w3.org/2004/02/skos/core#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "coned": "https://urpx-org.github.io/urpx/fixtures/coned/",
-    "org": "https://urpx-org.github.io/urpx/fixtures/org/",
-    "urpx:initialEffectiveDate": { "@type": "xsd:date" },
-    "urpx:targetURPXVersion": { "@type": "xsd:anyURI" }
-  },
+  "@context": [
+    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    {
+      "coned": "https://urpx-org.github.io/urpx/fixtures/coned/",
+      "org": "https://urpx-org.github.io/urpx/fixtures/org/"
+    }
+  ],
   "@graph": [
     {
       "@id": "coned:coned-sc1-rate-i",
