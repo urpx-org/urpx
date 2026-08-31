@@ -4,9 +4,21 @@
 # URPX Changelog
 
 **Version:** 0.4.0 (Pre-draft)
-**Last Updated:** 2026-08-23
+**Last Updated:** 2026-08-28
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-08-28 — v0.4.0 (a published JSON-LD context)
+---
+
+### Added
+- A published JSON-LD context at `context/urpx-context.jsonld`, generated from the ontology. It binds the `urpx` prefix and its companion prefixes and gives every URPX property that carries a non-string XSD range an `@type` coercion read from the property's `rdfs:range`. All 100 such properties are covered, so a decimal, date, boolean or integer written against it is read as that datatype rather than as a plain string. The document declares no `@vocab` and binds no fixture-identity namespace.
+
+### Changed
+- The twelve shipped examples reference the published context by URL and carry no inline vocabulary bindings. Each example's `@context` is an array of the context URL and the identity prefixes the example defines for itself, so an implementer references one published document instead of hand-authoring a context for every package.
+
+### Migration
+- Reference the published context at its URL and keep only the identity prefixes a document defines for itself, rather than carrying an inline vocabulary context. The v0.4.0 context path retires at v0.5.0 rather than redirecting, so a consumer holding the v0.4.0 document moves to the v0.5.0 one when the namespace changes.
 
 2026-08-23 — v0.4.0 (calculation attaches where the quantity is measured)
 ---

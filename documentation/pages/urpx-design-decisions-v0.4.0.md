@@ -28,6 +28,8 @@ Decision numbering continues across pages; this page begins at Decision #132.
 - Decision #132: One Identifier Pattern Across Organization, Rate Plan, and Rate Plan Modifier
 - Decision #133: The Exchange Package Carries Every Exchangeable Unit Through One Property
 - Decision #134: A Calculation Attaches Where The Quantity Is Measured
+- Decision #135: One Published JSON-LD Context, Generated From The Ontology's Ranges
+- Decision #136: The Validation Unit Is The Declared Set
 
 ---
 
@@ -209,3 +211,87 @@ Where more than one declaration is present, the one nearest the measurement gove
 - Documentation: `documentation/pages/urpx-tutorial.md`, the demand metric input and the diagram above it.
 - Accepted open residue, both annotation-level and neither blocking: the interval boundary between a measurement specification and a calculation method is described in this entry's rationale and not yet written into `MetricSpecification`'s own note, and `calculatedBasedOn` is admitted on a `CalculationMethod` reached from a ledger or a price, where enforcement would require reading across the inverse of `hasCalculationMethod`. Wording for the first is open to the working group; the second is revisited if the property gains occurrences.
 - Related: Decision #121 (the `PricingModel`, `TariffFiling` and `SourcePublication` architecture); Decision #133 (the `sh:or` encoding for a union-class constraint, and the same dictionary-configuration question).
+
+---
+
+<a id="decision-135"></a>
+### Decision #135: One Published JSON-LD Context, Generated From The Ontology's Ranges
+
+- **Status:** Accepted (pre-Draft)
+- **Date:** 2026-08-28
+- **Issue:** Every shipped example carried a full inline `@context`, hand-maintained per file. Across the set, the examples coerced 25 typed properties between them, while the ontology declares a non-string XSD range on 100. So 75 typed properties were coerced in no shipped context, and an implementer copying an example's context and writing `"basePrice": "0.148"` got a plain string where a decimal was meant.
+- **Category:** Architecture, Documentation, Interoperability
+
+**Context:**
+A JSON-LD context binds the prefixes a document uses and coerces each typed property to its datatype, so a value written as a JSON string is read as the typed literal the vocabulary declares. Each example carried its own context, and a context covered only the terms its author happened to use. Nothing tied a context to the vocabulary, so a context could omit a coercion the ontology declares and no check would notice until a consumer read a decimal as a string.
+
+**Decision:**
+Publish one JSON-LD context at `context/urpx-context.jsonld`, generated from the ontology rather than hand-authored. The generator binds the `urpx` prefix and its companion prefixes, and emits one `@type` coercion for every URPX property whose `rdfs:range` is a non-string XSD datatype, reading the datatype from the range. All 100 such properties are covered by construction, and the context cannot drift from the vocabulary because the vocabulary is its input. The document is `@context` and nothing else: it declares no `@vocab`, and it binds no fixture-identity namespace. The twelve shipped examples reference this context by URL and carry no inline vocabulary bindings.
+
+**Options Considered:**
+
+1. **Generate one context from the ontology's ranges, and reference it (Selected).**
+   - Pro: Coverage is total by construction. Every typed property is coerced because the generator reads every range, closing the gap the per-file contexts left on 75 of the 100 typed properties.
+   - Pro: The context cannot fall behind the vocabulary. It regenerates from the ontology, so a property added or retyped is coerced or dropped without a hand edit.
+   - Pro: An implementer references one document rather than reproducing a context per package, which is the surface the coverage gap arose on.
+   - Con: An example's validity depends on the context resolving. This is handled by resolving the context locally in every gate rather than over the network.
+
+2. **Keep the inline contexts and check each against a published one.** Rejected. It keeps every example carrying a hand-maintained context, which is the surface the coverage gap lived on, and it makes the published context an auditor of the per-file ones rather than the single form an implementer references.
+
+3. **Publish a hand-authored context.** Rejected. A hand-authored context covers the terms its author thought of, which is the failure the per-file contexts already demonstrated. Only generation from the ranges covers all 100 typed properties.
+
+4. **Declare `@vocab` so unlisted terms resolve into the URPX namespace.** Rejected. A `@vocab` mapping silently absorbs a misspelled term into the URPX namespace, which is the opposite of what a standard's context should do. An unknown term stays unresolved.
+
+**Rationale:**
+- A context's job is to make a JSON document read as the typed graph the vocabulary declares. A generated context is the only form that does this for every typed property rather than for the ones an author listed.
+- Reading each coercion from `rdfs:range` means the context states what the ontology states, so the two cannot disagree.
+- Omitting `@vocab` and the fixture namespaces keeps the published context to vocabulary alone: it binds what an implementer needs and nothing that identifies test data.
+
+**Consequences / Impact:**
+- **Positive:** A value written against the published context carries its datatype. A decimal, date, boolean or integer is read as that datatype rather than as a string, for all 100 typed properties.
+- **Positive:** An implementer references one published document rather than hand-authoring a context per package.
+- **Address retirement:** The v0.4.0 context path retires at v0.5.0 rather than redirecting. A consumer holding the v0.4.0 document moves to the v0.5.0 one when the namespace changes.
+- **Requirements:** The context is a generated artifact. It regenerates on an ontology change alongside the data dictionary, so a vocabulary change that adds or retypes a typed property updates the context in the same regeneration.
+
+**References:**
+- Changelog: `urpx-changelog.md`, 2026-08-28 entry ("a published JSON-LD context").
+- Context artifact: `context/urpx-context.jsonld`, the generated document.
+- Examples: the twelve `test-cases/*/data/*.jsonld` reference the published context and keep only the identity prefixes each defines for itself.
+- Related: Decision #133 (`targetURPXVersion`, the version an example declares, which the context coerces to `xsd:anyURI` like every other typed property).
+
+---
+
+<a id="decision-136"></a>
+### Decision #136: The Validation Unit Is The Declared Set
+
+- **Status:** Accepted (pre-Draft)
+- **Date:** 2026-08-15
+- **Issue:** No shipped document stated what a conforming URPX document is. An implementer validating one file of a multi-file set against the shapes, and getting failures, had nothing telling them that a single file of a set is not the unit that validates.
+- **Category:** Validation, Conformance
+
+**Context:**
+URPX content is exchanged both as a single self-contained document and as a set of documents that reference one another. The ConEd example is nine files: an identity, a delivery filing, a resolved snapshot and a statement chain, each a document in its own right, together describing one rate as applied. A PG&E example is a single file. The shapes are the same in both cases; what differs is how much of the graph any one file holds.
+
+**Decision:**
+The validation unit is the declared set, not the file. A set an author declares as several files validates as the union of those files, read as one graph. A document that is genuinely one file validates alone. Conformance is judged over the unit an author declares, so the nine-file ConEd set conforms as one graph and a single-file PG&E rate plan conforms on its own.
+
+**Options Considered:**
+
+1. **Validate the declared set as one graph (Selected).**
+   - Pro: It matches how URPX data is exchanged. A referencing document is completed by the documents it references, and the set is what carries a whole rate as applied.
+   - Pro: A single document is the same rule with a declared set of one file, so one statement covers both shapes of data.
+
+2. **Require every file to conform on its own.** Rejected. A file holding part of a set is missing exactly the nodes the rest of the set supplies, so requiring per-file conformance would fail ordinary, correct data for referencing nodes that live in a sibling file.
+
+**Rationale:**
+- A closed shape reports the properties a node is missing. It cannot report that the reader brought the wrong unit, because a file holding part of a set is missing exactly the nodes the rest of the set supplies, and the shape has no way to say those nodes are elsewhere rather than absent. The unit therefore has to be stated, not inferred from a validation failure.
+- Cross-document references are the ordinary shape of URPX data: a snapshot references the filing it resolves, a statement references the rate it bills. Validating a referencing file alone would report every referenced node as missing, which is a statement about the unit, not about the data.
+- A single document validating alone is the same rule, not an exception: its declared set is one file.
+
+**Consequences / Impact:**
+- A consumer validates the declared set as one graph. Loading one file of a multi-file set and validating it in isolation is expected to report failures, and those failures are about the unit rather than the data.
+- The rule states what conformance is judged over. It adds no shape and changes no shape: the same shapes apply, over the union an author declares.
+
+**References:**
+- Test cases: the nine-file ConEd set under `test-cases/coned-sc1-rate-i/` validates as one graph, and the single-file PG&E rate plans validate alone.
+- Related: Decision #133 (`packages`, the containment property through which a package names the units it carries as one declared set).
