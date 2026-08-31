@@ -10,10 +10,16 @@ created: 1784419200000
 
 | Field | Value |
 |-------|-------|
-| **Status** | Backlog — post-v0.3.0 |
-| **Assignment** | **Unassigned — open for any WG member to pick up** |
+| **Status** | **Closed — executed 2026-07-26** (see Closure below) |
+| **Assignment** | N/A — closed |
 | **Surface** | `skos/standards-integration/urpx-green-button-mappings.ttl` |
 | **Source** | Verification of the mappings file against the NAESB ESPI V4 XML schemas (`espi_v4.xsd`, `customer_v4.xsd`) |
+
+## Closure (2026-08-28)
+
+The work this task describes — re-deriving the charge-side alignment against ESPI V4 `ItemKind` — was executed on 2026-07-26 under chair direction, committed at `2abfa2f5`. The `KindCategory_*` and non-matching `itemKind_*` concepts described below as the problem no longer exist in the canonical mapping file; the Line Item Alignment section now maps V4 `ItemKind` codes to URPX `ChargeCategory` values directly.
+
+This task was flagged as a loose end to close at execution time and is closed now.
 
 ## Problem
 
