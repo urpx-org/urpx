@@ -87,7 +87,7 @@ graph TB
     IEEE[IEEE 2030.5<br/>Smart Energy Profile]:::otherClass
     
     %% Connections
-    URPX <-->|Usage Data<br/>Integration| GB
+    URPX <-->|Rate Plan & Billing<br/>Structure Alignment| GB
     URPX <-->|Customer Account<br/>References| CDS
     URPX <-->|Property<br/>Alignment| CIM
     URPX -->|Rate Plan<br/>Enhancement| OpenEI
@@ -176,10 +176,11 @@ urpx:RatePlan skos:relatedMatch gb:PricingStructure ;
 urpx:Price skos:broadMatch gb:LineItem ;
     skos:note "URPX procedural prices map to static ESPI bill line items." .
 
-# Charge Category Mapping
-gb:KindCategory_Access a skos:Concept ;
-    skos:exactMatch urpx:minimumCharge ;
-    skos:note "Green Button Access charge maps to URPX minimumCharge." .
+# Line Item Alignment (ESPI V4 ItemKind)
+gb:ItemKind_AdministrativeFee a skos:Concept ;
+    skos:notation "4" ;
+    skos:closeMatch urpx:serviceCharge ;
+    skos:note "Green Button Administrative Fee line items map to URPX serviceCharge." .
 ```
 
 ### LF Energy CDS
@@ -317,10 +318,10 @@ sequenceDiagram
     System->>URPX: GET /rate-plans/{id}/versions/current
     URPX->>System: Rate plan version with charges
     
-    System->>GB: GET /customer/{id}/usage?period={month}
-    GB->>System: Interval usage data
+    System->>GB: GET /customer/{id}/usage-summary?period={month}
+    GB->>System: Usage summary with billing line items
     
-    System->>System: Map usage to TOU periods<br/>Apply charges<br/>Calculate total
+    System->>System: Align line items to<br/>rate plan charges<br/>Calculate total
     
     System->>CDS: POST /bills (bill record)
 ```
@@ -329,11 +330,11 @@ sequenceDiagram
 
 **Use When**: Mapping depends on context or additional properties. In SKOS, this is handled via `skos:closeMatch` or `skos:broadMatch` with explanatory notes, as SKOS does not natively support computational conditions.
 
-**Example**: Green Button KindCategory → URPX chargeCategory + chargeType
+**Example**: Green Button tariffProfile → URPX name, conditionally URPX RatePlanIdentifier
 ```turtle
-gb:KindCategory_Energy a skos:Concept ;
-    skos:exactMatch urpx:usageCharge ;
-    skos:note "Maps to usageCharge when unit is energy (kWh). May map to generation credits if flow direction is reverse." .
+gb:tariffProfile a skos:Concept ;
+    skos:closeMatch urpx:name ;
+    skos:note "Maps to urpx:name by default. If a producer profile or Green Button Alliance restriction declares tariffProfile a coded identifier, urpx:RatePlanIdentifier is the better fit; RatePlanIdentifierShape requires a skos:notation and scheme IRI that a free String256 cannot supply on its own, so no identifier alignment applies otherwise." .
 ```
 
 ---
