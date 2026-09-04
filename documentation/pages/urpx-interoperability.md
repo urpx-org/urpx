@@ -301,29 +301,31 @@ Each published mapping profile includes header metadata, vocabulary declarations
 
 ## Integration Patterns
 
-### Pattern 1: Bill Calculation
+### Pattern 1: Rate Plan Cost Modeling
 
-**Use Case**: Calculate monthly bill using rate plan + usage data
+**Use Case**: Retrieve a customer's meter and account data, determine eligible rate plans, and compute cost options for a scenario
 
 ```mermaid
 sequenceDiagram
-    participant System as Billing System
+    participant System as Cost Modeling System
+    participant CD as Customer Data API
     participant URPX as URPX API
-    participant GB as Green Button API
-    participant CDS as CDS API
     
-    System->>CDS: GET /customer/{id}/billing-period
-    CDS->>System: Billing period details
+    System->>CD: GET /customer/{id}/usage?period={period}
+    CD->>System: Meter / usage data
     
-    System->>URPX: GET /rate-plans/{id}/versions/current
-    URPX->>System: Rate plan version with charges
+    System->>CD: GET /customer/{id}/profile
+    CD->>System: Customer & service-point attributes
     
-    System->>GB: GET /customer/{id}/usage-summary?period={month}
-    GB->>System: Usage summary with billing line items
+    System->>System: Check eligibility<br/>(customer & service-point profiles<br/>vs. rate plan qualification)
     
-    System->>System: Align line items to<br/>rate plan charges<br/>Calculate total
+    System->>URPX: GET /rate-plans?eligible-for={profile}
+    URPX->>System: Available rate plan versions
     
-    System->>CDS: POST /bills (bill record)
+    System->>URPX: GET /rate-plans/{id}/options
+    URPX->>System: Scenario options<br/>(rate plan + modifier combinations)
+    
+    System->>System: Calculate options<br/>(ScenarioCostModel per option →<br/>ScenarioCostResult: line items + coverage claim)
 ```
 
 ### Pattern 2: Conditional Mapping

@@ -22,7 +22,6 @@
     dcterms:modified "2026-08-31"^^xsd:date ;
     dcterms:conformsTo <https://urpx-org.github.io/urpx/ontology/releases/v0.3.0> ;
     rdfs:seeAlso <https://urpx-org.github.io/urpx/ontology> ;
-    skos:note "Scope still being aligned is tracked in dev-docs/specs/spec.urpx.ont.048.green-button-programid-codebook.md (the ProgramIdMappings code-list design), dev-docs/specs/spec.urpx.ont.049.modifier-enrollment-identity-boundary.md (the modifier-enrollment identity boundary), and dev-docs/specs/spec.urpx.ont.050.service-point-pnode-reference.md (the service-point pricing-node reference)."@en ;
     owl:versionInfo "0.3.0" .
 
 # ============================================
@@ -139,7 +138,7 @@ gb:EnrollmentStatus_EnrolledPending a skos:Concept ;
 
 gb:ProgramIdMappings a skos:Concept ;
     skos:prefLabel "Program ID Mappings"@en ;
-    skos:note "code considered and rejected as a urpx:ProgramTypeValue alignment: the discriminator is a reading-code family, not a program type."@en .
+    skos:note "The ESPI code identifies a reading-code family, not a program type, so no urpx:ProgramTypeValue alignment applies. A code-list alignment for the reading-code discriminator is an open design question; see dev-docs/specs/spec.urpx.ont.048.green-button-programid-codebook.md."@en .
 
 # ============================================
 # tariffProfile (ESPI V4 UsageSummary / ServiceDeliveryPoint)
@@ -148,4 +147,4 @@ gb:ProgramIdMappings a skos:Concept ;
 gb:tariffProfile a skos:Concept ;
     skos:prefLabel "Tariff Profile"@en ;
     skos:closeMatch urpx:name ;
-    skos:note "tariffProfile is an unconstrained String256. Mapping by name requires disambiguation: urpx:name is not unique, so resolving a tariffProfile string to a specific RatePlan by name alone needs a disambiguating key such as utility, service territory, or effective window. urpx:RatePlanIdentifier is the better fit only if a producer profile or a Green Button Alliance restriction declares tariffProfile a coded identifier; RatePlanIdentifierShape requires exactly one skos:notation and one scheme IRI, which a free String256 cannot supply on its own, so no identifier alignment is recorded here absent that condition."@en .
+    skos:note "tariffProfile carries the name of a rate plan. The alignment to urpx:name holds where urpx:name is the name of a RatePlan; urpx:name is a general-purpose label across the vocabulary, so this mapping is scoped to its use on a RatePlan. tariffProfile is a String256 value, capped at 256 characters and carrying no identifier scheme or uniqueness constraint, so resolving a tariffProfile string to a specific rate plan by name alone needs a disambiguating key such as utility, service territory, or effective window. urpx:RatePlanIdentifier is the better fit only if a producer profile or a Green Button Alliance restriction declares tariffProfile a coded identifier; RatePlanIdentifierShape requires exactly one skos:notation and one scheme IRI, which a free String256 cannot supply on its own, so no identifier alignment is recorded here absent that condition."@en .
