@@ -493,27 +493,13 @@ URPX SHACL defines the condition model as a set of closed node shapes. In practi
 
 ## JSON-LD Context Pattern
 
-Datatype-specific value properties allow compact JSON-LD authoring by declaring datatype coercion once in the document context.
+Datatype-specific value properties are compact in JSON-LD because their coercion is declared once, in the published context, rather than per document.
 
 ### Example Context
 
 ```json
 {
-  "@context": {
-    "urpx": "https://urpx-org.github.io/urpx/ontology/",
-    "ex": "https://example.org/conditions/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "urpx:booleanValue": { "@id": "urpx:booleanValue", "@type": "xsd:boolean" },
-    "urpx:dateValue": { "@id": "urpx:dateValue", "@type": "xsd:date" },
-    "urpx:dateTimeValue": { "@id": "urpx:dateTimeValue", "@type": "xsd:dateTime" },
-    "urpx:decimalValue": { "@id": "urpx:decimalValue", "@type": "xsd:decimal" },
-    "urpx:durationValue": { "@id": "urpx:durationValue", "@type": "xsd:duration" },
-    "urpx:gMonthValue": { "@id": "urpx:gMonthValue", "@type": "xsd:gMonth" },
-    "urpx:gYearValue": { "@id": "urpx:gYearValue", "@type": "xsd:gYear" },
-    "urpx:integerValue": { "@id": "urpx:integerValue", "@type": "xsd:integer" },
-    "urpx:stringValue": { "@id": "urpx:stringValue", "@type": "xsd:string" },
-    "urpx:timeValue": { "@id": "urpx:timeValue", "@type": "xsd:time" }
-  }
+  "@context": "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld"
 }
 ```
 
@@ -719,21 +705,10 @@ The same graph pattern can also be attached to `ApplicabilityRule`, `Applicabili
 
 ```json
 {
-  "@context": {
-    "urpx": "https://urpx-org.github.io/urpx/ontology/",
-    "ex": "https://example.org/conditions/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "urpx:booleanValue": { "@id": "urpx:booleanValue", "@type": "xsd:boolean" },
-    "urpx:dateValue": { "@id": "urpx:dateValue", "@type": "xsd:date" },
-    "urpx:dateTimeValue": { "@id": "urpx:dateTimeValue", "@type": "xsd:dateTime" },
-    "urpx:decimalValue": { "@id": "urpx:decimalValue", "@type": "xsd:decimal" },
-    "urpx:durationValue": { "@id": "urpx:durationValue", "@type": "xsd:duration" },
-    "urpx:gMonthValue": { "@id": "urpx:gMonthValue", "@type": "xsd:gMonth" },
-    "urpx:gYearValue": { "@id": "urpx:gYearValue", "@type": "xsd:gYear" },
-    "urpx:integerValue": { "@id": "urpx:integerValue", "@type": "xsd:integer" },
-    "urpx:stringValue": { "@id": "urpx:stringValue", "@type": "xsd:string" },
-    "urpx:timeValue": { "@id": "urpx:timeValue", "@type": "xsd:time" }
-  },
+  "@context": [
+    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    { "ex": "https://example.org/conditions/" }
+  ],
   "@graph": [
     {
       "@id": "ex:eligibility-rule-1",

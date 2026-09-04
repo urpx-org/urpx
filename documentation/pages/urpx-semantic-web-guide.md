@@ -93,12 +93,10 @@ The semantic web represents data as **interconnected graphs** of meaning, not ju
 **Semantic Web Approach (Linked Data with JSON-LD):**
 ```json
 {
-  "@context": {
-    "urpx": "https://urpx-org.github.io/urpx/ontology/",
-    "ex": "https://example.com/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "urpx:unitPrice": { "@id": "urpx:unitPrice", "@type": "xsd:decimal" }
-  },
+  "@context": [
+    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    { "ex": "https://example.com/" }
+  ],
   "@id": "ex:PRC-001",
   "@type": "urpx:Price",
   "urpx:chargeType": {"@id": "urpx:usageCharge"},
@@ -221,17 +219,15 @@ urpx:chargeType a owl:ObjectProperty ;
 
 **JSON for Developers, RDF for Machines**
 
-JSON-LD is **JSON with a semantic layer**. Developers work with familiar JSON syntax, while the `@context` provides RDF semantics.
+JSON-LD is **JSON with a semantic layer**. Developers work with familiar JSON syntax, while the `@context` provides RDF semantics: URPX publishes one context at a stable URL, and a document references it rather than declaring its own.
 
 **Basic Charge Example:**
 ```json
 {
-  "@context": {
-    "urpx": "https://urpx-org.github.io/urpx/ontology/",
-    "ex": "https://example.com/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "urpx:unitPrice": { "@id": "urpx:unitPrice", "@type": "xsd:decimal" }
-  },
+  "@context": [
+    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    { "ex": "https://example.com/" }
+  ],
   "@id": "ex:PRC-001",
   "@type": "urpx:Price",
   "urpx:name": "Summer Energy Price",
@@ -254,12 +250,10 @@ This example demonstrates the current URPX pattern in which a `PriceSetAlternati
 
 ```json
 {
-  "@context": {
-    "urpx": "https://urpx-org.github.io/urpx/ontology/",
-    "ex": "https://example.com/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "urpx:unitPrice": { "@id": "urpx:unitPrice", "@type": "xsd:decimal" }
-  },
+  "@context": [
+    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    { "ex": "https://example.com/" }
+  ],
   "@graph": [
     {
       "@id": "ex:condition-expression-zone-h-secondary",
@@ -324,11 +318,13 @@ The `referencesProfileAlternative` property uses an **IRI reference** (`ex:zone-
 - Reusable alternative resources across multiple rate plans
 - Required attachment of `hasConditionExpression` on the referenced `ProfileAlternative`
 
-**The @context Explained:**
+**What the @context Does:**
 - Maps JSON keys to RDF predicates
 - Defines namespace prefixes
 - Specifies data types
 - Converts JSON to RDF triples automatically
+
+URPX publishes this context at a stable URL, generated from the ontology's own property ranges, so an implementer references it rather than authoring one per document.
 
 **Why JSON-LD:**
 - **Developer Friendly**: Looks like regular JSON
