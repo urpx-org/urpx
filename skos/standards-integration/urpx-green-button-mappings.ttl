@@ -133,14 +133,6 @@ gb:EnrollmentStatus_EnrolledPending a skos:Concept ;
     skos:closeMatch urpx:pendingStatus .
 
 # ============================================
-# Program ID Mappings (ESPI V4 ProgramIdMappings)
-# ============================================
-
-gb:ProgramIdMappings a skos:Concept ;
-    skos:prefLabel "Program ID Mappings"@en ;
-    skos:note "The ESPI code identifies a reading-code family, not a program type, so no urpx:ProgramTypeValue alignment applies. A code-list alignment for the reading-code discriminator is an open design question; see dev-docs/specs/spec.urpx.ont.048.green-button-programid-codebook.md."@en .
-
-# ============================================
 # tariffProfile (ESPI V4 UsageSummary / ServiceDeliveryPoint)
 # ============================================
 
