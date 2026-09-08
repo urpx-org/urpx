@@ -5,7 +5,7 @@
 
 # URPX v0.4.0 Release Notes
 
-**Released:** 2026-08-20.
+**Released:** 2026-09-08.
 **Type:** Pre-draft minor release.
 **Previous release:** [`v0.3.0`](urpx-release-notes-v0.3.0.md)
 

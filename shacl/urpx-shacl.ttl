@@ -27,7 +27,7 @@
     dcterms:creator "Una Smithsimon, Klaar De Schepper, Flux Tailor LLC" ;
     dcterms:description "SHACL shapes for validating URPX data against the URPX Ontology." ;
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
-    dcterms:modified "2026-08-20"^^xsd:date ;
+    dcterms:modified "2026-09-08"^^xsd:date ;
     dcterms:title "URPX SHACL Shapes" ;
     dcterms:hasVersion <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.4.0> ;
     owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.4.0/shacl/urpx-shacl.ttl> .
@@ -35,7 +35,7 @@
 <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.4.0>
     a owl:Ontology, sh:ShapesGraph ;
     dcterms:isVersionOf <https://urpx-org.github.io/urpx/ontology/shacl> ;
-    dcterms:issued "2026-08-20"^^xsd:date ;
+    dcterms:issued "2026-09-08"^^xsd:date ;
     dcat:version "0.4.0" ;
     dcat:distribution <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.4.0/ttl> .
 
