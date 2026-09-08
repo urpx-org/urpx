@@ -3,9 +3,16 @@
 <!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
 <!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
 
+---
+site_category: advanced-topics
+site_id: design-principles
+site_title: "Design Principles"
+site_position: 2
+---
+
 # URPX Design Principles
 
-**Version**: 0.3.0 (Pre-draft)
+**Version**: 0.4.0 (Pre-draft)
 **Last Updated**: 2026-03-02  
 **Status**: Active
 

@@ -5,7 +5,7 @@
 # Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md.
 
 # URPX SHACL Shapes - Unified File
-# Version: v0.3.0
+# Version: v0.4.0
 # Generated: 2026-07-07
 # Description: SHACL shapes for validating URPX data against the URPX Ontology.
 
@@ -27,22 +27,22 @@
     dcterms:creator "Una Smithsimon, Klaar De Schepper, Flux Tailor LLC" ;
     dcterms:description "SHACL shapes for validating URPX data against the URPX Ontology." ;
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
-    dcterms:modified "2026-07-12"^^xsd:date ;
+    dcterms:modified "2026-09-08"^^xsd:date ;
     dcterms:title "URPX SHACL Shapes" ;
-    dcterms:hasVersion <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.3.0> ;
-    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.3.0/shacl/urpx-shacl.ttl> .
+    dcterms:hasVersion <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.4.0> ;
+    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.4.0/shacl/urpx-shacl.ttl> .
 
-<https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.3.0>
+<https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.4.0>
     a owl:Ontology, sh:ShapesGraph ;
     dcterms:isVersionOf <https://urpx-org.github.io/urpx/ontology/shacl> ;
-    dcterms:issued "2026-07-07"^^xsd:date ;
-    dcat:version "0.3.0" ;
-    dcat:distribution <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.3.0/ttl> .
+    dcterms:issued "2026-09-08"^^xsd:date ;
+    dcat:version "0.4.0" ;
+    dcat:distribution <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.4.0/ttl> .
 
-<https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.3.0/ttl>
+<https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.4.0/ttl>
     a dcat:Distribution ;
-    dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.3.0/shacl/urpx-shacl.ttl> ;
-    dcat:downloadURL <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.3.0/ttl/urpx-shacl.ttl> ;
+    dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.4.0/shacl/urpx-shacl.ttl> ;
+    dcat:downloadURL <https://urpx-org.github.io/urpx/ontology/shacl/releases/v0.4.0/ttl/urpx-shacl.ttl> ;
     dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> .
 
 # ============================================================================
@@ -396,6 +396,11 @@ urpx-shacl:CalculationMethodShape
         sh:node urpx-shacl:AggregationMethodValueShape ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:calculatedBasedOn ;
+        sh:class urpx:MetricInput ;
+        sh:minCount 0 ;
     ] ;
     sh:property [
         sh:path urpx:calculationFormula ;
@@ -1469,6 +1474,12 @@ urpx-shacl:LedgerShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:hasCalculationMethod ;
+        sh:class urpx:CalculationMethod ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:ledgerType ;
         sh:node urpx-shacl:LedgerTypeValueShape ;
         sh:minCount 0 ;
@@ -1553,29 +1564,14 @@ urpx-shacl:MetricInputShape
     sh:closed true ;
     sh:ignoredProperties ( rdf:type urpx:hasTemporalScope ) ;
     sh:property [
-        sh:path urpx:calculationRule ;
-        sh:node [
-            a sh:NodeShape ;
-            sh:closed true ;
-            sh:ignoredProperties ( rdf:type urpx:hasTemporalScope ) ;
-            sh:property [
-                sh:path urpx:formula ;
-                sh:datatype xsd:string ;
-                sh:minCount 0 ;
-                sh:maxCount 1 ;
-            ] ;
-            sh:property [
-                sh:path urpx:calculatedBasedOn ;
-                sh:class urpx:MetricInput ;
-                sh:minCount 0 ;
-            ] ;
-        ] ;
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:description ;
-        sh:datatype xsd:string ;
+        sh:path urpx:hasCalculationMethod ;
+        sh:class urpx:CalculationMethod ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
@@ -1624,6 +1620,12 @@ urpx-shacl:MetricSpecificationShape
     sh:property [
         sh:path urpx:flowDirection ;
         sh:node urpx-shacl:FlowDirectionValueShape ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasCalculationMethod ;
+        sh:class urpx:CalculationMethod ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
@@ -1828,19 +1830,19 @@ urpx-shacl:OrganizationIdentifierShape
     sh:closed true ;
     sh:ignoredProperties ( rdf:type urpx:hasTemporalScope ) ;
     sh:property [
-        sh:path urpx:identifierJurisdiction ;
+        sh:path skos:notation ;
         sh:datatype xsd:string ;
-        sh:minCount 0 ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:identifierScheme ;
-        sh:node urpx-shacl:IdentifierSchemeValueShape ;
-        sh:minCount 0 ;
+        sh:path urpx:scheme ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path urpx:utilityId ;
+        sh:path urpx:identifierJurisdiction ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
@@ -3501,6 +3503,12 @@ urpx-shacl:RatePlanIdentifierShape
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:identifierJurisdiction ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
     ] .
 
 urpx-shacl:RatePlanModifierIdentifierShape
@@ -3519,6 +3527,12 @@ urpx-shacl:RatePlanModifierIdentifierShape
         sh:path urpx:scheme ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:identifierJurisdiction ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] .
 
@@ -5738,6 +5752,26 @@ urpx-shacl:URPXPackageShape
     sh:targetClass urpx:URPXPackage ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type urpx:hasTemporalScope ) ;
+    sh:or (
+        [
+            sh:property [
+                sh:path urpx:packages ;
+                sh:minCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:hasRatePlan ;
+                sh:minCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:hasRatePlanModifier ;
+                sh:minCount 1 ;
+            ]
+        ]
+    ) ;
     sh:property [
         sh:path urpx:dateCreated ;
         sh:datatype xsd:date ;
@@ -5815,15 +5849,23 @@ urpx-shacl:URPXPackageShape
         sh:minCount 0 ;
     ] ;
     sh:property [
-        sh:path urpx:hasTariffPublication ;
-        sh:class urpx:SourcePublication ;
-        sh:minCount 0 ;
-    ] ;
-    sh:property [
         sh:path urpx:name ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:packages ;
+        sh:or (
+            [ sh:class urpx:RatePlan ]
+            [ sh:class urpx:RatePlanModifier ]
+            [ sh:class urpx:RatePlanVersion ]
+            [ sh:class urpx:RatePlanModifierVersion ]
+            [ sh:class urpx:PricingModel ]
+            [ sh:class urpx:TariffFiling ]
+            [ sh:class urpx:SourcePublication ]
+        ) ;
+        sh:minCount 0 ;
     ] ;
     sh:property [
         sh:path urpx:priceCurrency ;
@@ -6137,13 +6179,6 @@ urpx-shacl:HVACKindValueShape
     sh:targetClass urpx:HVACKindValue ;
     sh:nodeKind sh:IRI ;
     sh:in ( urpx:airConditioner urpx:airSourceHeatPump urpx:groundSourceHeatPump urpx:spaceHeater urpx:districtHeatingConnection ) .
-
-urpx-shacl:IdentifierSchemeValueShape
-    a sh:NodeShape ;
-    rdfs:label "IdentifierSchemeValue Shape"@en ;
-    sh:targetClass urpx:IdentifierSchemeValue ;
-    sh:nodeKind sh:IRI ;
-    sh:in ( urpx:companyNumberScheme urpx:dunsScheme urpx:eiaScheme urpx:gleifScheme urpx:gridScheme urpx:isinScheme urpx:leiScheme urpx:localRegulatorScheme urpx:vatScheme ) .
 
 urpx-shacl:InterconnectionStatusValueShape
     a sh:NodeShape ;

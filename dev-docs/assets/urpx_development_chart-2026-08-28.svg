@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" width="1000" height="560" font-family="Inter, system-ui, sans-serif">
+<rect width="1000" height="560" fill="#FFFFFF"/>
+<text x="28" y="30" font-size="17" font-weight="700" fill="#111111">URPX Development</text>
+<text x="28" y="48" font-size="11.5" fill="#666666">Dates from v0.4.1 onward are planning dates, not commitments. The release ladder itself is ruled.</text>
+<line x1="210.0" y1="64" x2="210.0" y2="508.0" stroke="#DDDDDD" stroke-width="1"/>
+<text x="214.0" y="56" font-size="10.5" fill="#666666">2025 Q4</text>
+<line x1="295.3" y1="64" x2="295.3" y2="508.0" stroke="#DDDDDD" stroke-width="1"/>
+<text x="299.3" y="56" font-size="10.5" fill="#666666">2026 Q1</text>
+<line x1="378.7" y1="64" x2="378.7" y2="508.0" stroke="#DDDDDD" stroke-width="1"/>
+<text x="382.7" y="56" font-size="10.5" fill="#666666">2026 Q2</text>
+<line x1="463.1" y1="64" x2="463.1" y2="508.0" stroke="#DDDDDD" stroke-width="1"/>
+<text x="467.1" y="56" font-size="10.5" fill="#666666">2026 Q3</text>
+<line x1="548.4" y1="64" x2="548.4" y2="508.0" stroke="#DDDDDD" stroke-width="1"/>
+<text x="552.4" y="56" font-size="10.5" fill="#666666">2026 Q4</text>
+<line x1="633.6" y1="64" x2="633.6" y2="508.0" stroke="#DDDDDD" stroke-width="1"/>
+<text x="637.6" y="56" font-size="10.5" fill="#666666">2027 Q1</text>
+<line x1="717.1" y1="64" x2="717.1" y2="508.0" stroke="#DDDDDD" stroke-width="1"/>
+<text x="721.1" y="56" font-size="10.5" fill="#666666">2027 Q2</text>
+<line x1="801.4" y1="64" x2="801.4" y2="508.0" stroke="#DDDDDD" stroke-width="1"/>
+<text x="805.4" y="56" font-size="10.5" fill="#666666">2027 Q3</text>
+<line x1="886.7" y1="64" x2="886.7" y2="508.0" stroke="#DDDDDD" stroke-width="1"/>
+<text x="890.7" y="56" font-size="10.5" fill="#666666">2027 Q4</text>
+<line x1="516.8" y1="62" x2="516.8" y2="508.0" stroke="#111111" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="521.8" y="524.0" font-size="10.5" font-weight="600" fill="#111111">28 Aug 2026</text>
+<text x="28" y="85.3" font-size="12" font-weight="700" fill="#111111">Foundation</text>
+<rect x="210.0" y="72.3" width="224.3" height="14.9" rx="3" fill="#DDDDDD" fill-opacity="0.5" stroke="#DDDDDD" stroke-width="1.2"/>
+<text x="198" y="84.3" font-size="11.5" fill="#333333" font-weight="400" text-anchor="end">Core ontology and documentation</text>
+<rect x="295.3" y="96.3" width="139.1" height="14.9" rx="3" fill="#DDDDDD" fill-opacity="0.5" stroke="#DDDDDD" stroke-width="1.2"/>
+<text x="198" y="108.3" font-size="11.5" fill="#333333" font-weight="400" text-anchor="end">LF Energy setup and WG approval</text>
+<rect x="406.5" y="120.3" width="55.6" height="14.9" rx="3" fill="#DDDDDD" fill-opacity="0.5" stroke="#DDDDDD" stroke-width="1.2"/>
+<text x="198" y="132.3" font-size="11.5" fill="#333333" font-weight="400" text-anchor="end">Working group established</text>
+<text x="28" y="169.3" font-size="12" font-weight="700" fill="#111111">Pre-draft releases</text>
+<rect x="493.7" y="156.3" width="9.0" height="14.9" rx="3" fill="#44BB99" fill-opacity="0.5" stroke="#44BB99" stroke-width="1.2"/>
+<text x="198" y="168.3" font-size="11.5" fill="#333333" font-weight="400" text-anchor="end">v0.3.0 tagged</text>
+<rect x="493.7" y="180.3" width="30.6" height="14.9" rx="3" fill="#44BB99" fill-opacity="1" stroke="#44BB99" stroke-width="2"/>
+<text x="198" y="192.3" font-size="11.5" fill="#111111" font-weight="700" text-anchor="end">v0.4.0  breaking changes, content freeze</text>
+<rect x="524.3" y="204.3" width="9.0" height="14.9" rx="3" fill="#FFFFFF" fill-opacity="0.1" stroke="#44BB99" stroke-width="1.2"/>
+<text x="198" y="216.3" font-size="11.5" fill="#333333" font-weight="400" text-anchor="end">v0.4.1  licence conversion only</text>
+<rect x="530.7" y="228.3" width="32.4" height="14.9" rx="3" fill="#FFFFFF" fill-opacity="0.1" stroke="#44BB99" stroke-width="1.2"/>
+<text x="198" y="240.3" font-size="11.5" fill="#333333" font-weight="400" text-anchor="end">v0.5.0  namespace and publication path</text>
+<rect x="563.2" y="252.3" width="51.9" height="14.9" rx="3" fill="#FFFFFF" fill-opacity="0.1" stroke="#44BB99" stroke-width="1.2"/>
+<text x="198" y="264.3" font-size="11.5" fill="#333333" font-weight="400" text-anchor="end">v0.6.0  highly dynamic prices</text>
+<text x="28" y="301.3" font-size="12" font-weight="700" fill="#111111">Public</text>
+<rect x="548.4" y="288.3" width="14.8" height="14.9" rx="3" fill="#FFFFFF" fill-opacity="0.1" stroke="#2563EB" stroke-width="1.2"/>
+<text x="198" y="300.3" font-size="11.5" fill="#333333" font-weight="400" text-anchor="end">LF Energy IP scan</text>
+<polygon points="563.2,311.6 571.4,319.8 563.2,327.9 555.0,319.8" fill="#2563EB" stroke="#FFFFFF" stroke-width="1.5"/>
+<text x="198" y="324.3" font-size="11.5" fill="#333333" font-weight="400" text-anchor="end">Repository and urpx.org public</text>
+<rect x="563.2" y="336.3" width="69.5" height="14.9" rx="3" fill="#FFFFFF" fill-opacity="0.1" stroke="#2563EB" stroke-width="1.2"/>
+<text x="198" y="348.3" font-size="11.5" fill="#333333" font-weight="400" text-anchor="end">Community launch</text>
+<text x="28" y="385.3" font-size="12" font-weight="700" fill="#111111">Adoption</text>
+<rect x="577.1" y="372.3" width="166.9" height="14.9" rx="3" fill="#FFFFFF" fill-opacity="0.1" stroke="#EE8866" stroke-width="1.2"/>
+<text x="198" y="384.3" font-size="11.5" fill="#333333" font-weight="400" text-anchor="end">Reference implementations</text>
+<rect x="577.1" y="396.3" width="280.9" height="14.9" rx="3" fill="#FFFFFF" fill-opacity="0.1" stroke="#EE8866" stroke-width="1.2"/>
+<text x="198" y="408.3" font-size="11.5" fill="#333333" font-weight="400" text-anchor="end">Standards coordination</text>
+<rect x="633.6" y="420.3" width="224.3" height="14.9" rx="3" fill="#FFFFFF" fill-opacity="0.1" stroke="#EE8866" stroke-width="1.2"/>
+<text x="198" y="432.3" font-size="11.5" fill="#333333" font-weight="400" text-anchor="end">Pilot programmes</text>
+<text x="28" y="469.3" font-size="12" font-weight="700" fill="#111111">Maturity</text>
+<rect x="688.3" y="456.3" width="197.5" height="14.9" rx="3" fill="#FFFFFF" fill-opacity="0.1" stroke="#BBCC33" stroke-width="1.2"/>
+<text x="198" y="468.3" font-size="11.5" fill="#333333" font-weight="400" text-anchor="end">Conformance framework</text>
+<rect x="801.4" y="480.3" width="169.6" height="14.9" rx="3" fill="#FFFFFF" fill-opacity="0.1" stroke="#BBCC33" stroke-width="1.2"/>
+<text x="198" y="492.3" font-size="11.5" fill="#333333" font-weight="400" text-anchor="end">v1.0 finalization</text>
+<line x1="210" y1="64" x2="210" y2="508.0" stroke="#888888" stroke-width="1.5"/>
+</svg>

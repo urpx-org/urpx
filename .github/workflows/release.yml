@@ -23,6 +23,24 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      - name: Require App credentials configured
+        env:
+          URPX_REGEN_APP_ID: ${{ secrets.URPX_REGEN_APP_ID }}
+          URPX_REGEN_APP_PRIVATE_KEY: ${{ secrets.URPX_REGEN_APP_PRIVATE_KEY }}
+        run: |
+          if [ -z "$URPX_REGEN_APP_ID" ] || [ -z "$URPX_REGEN_APP_PRIVATE_KEY" ]; then
+            echo "::error::URPX_REGEN_APP_ID and/or URPX_REGEN_APP_PRIVATE_KEY is empty on $GITHUB_REPOSITORY; add both secrets (or extend their organization-level scope) to this repository before this workflow can mint the urpx-regen-bot App token."
+            exit 1
+          fi
+
+      - name: Mint automation token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.URPX_REGEN_APP_ID }}
+          private-key: ${{ secrets.URPX_REGEN_APP_PRIVATE_KEY }}
+          repositories: ${{ vars.URPX_STAGING_REPO }}
+
       - name: Resolve release inputs
         id: release
         env:
@@ -78,11 +96,17 @@ jobs:
       - name: Require automation token for private release helper
         if: steps.release.outputs.use_manual_body != 'true'
         env:
-          URPX_AUTOMATION_TOKEN: ${{ secrets.URPX_AUTOMATION_TOKEN }}
+          APP_TOKEN: ${{ steps.app-token.outputs.token }}
+          URPX_ORG: ${{ vars.URPX_ORG || github.repository_owner }}
+          URPX_STAGING_REPO: ${{ vars.URPX_STAGING_REPO }}
         run: |
-          if [ -z "$URPX_AUTOMATION_TOKEN" ]; then
-            echo "::error::URPX_AUTOMATION_TOKEN is required to checkout the private urpx-website-staging release helper repository."
-            echo "Create an organization or repository secret with read access to urpx-org/urpx-website-staging."
+          if [ -z "$APP_TOKEN" ]; then
+            echo "::error::The urpx-regen-bot GitHub App token could not be minted; check URPX_REGEN_APP_ID and URPX_REGEN_APP_PRIVATE_KEY, and that the App is installed on $URPX_STAGING_REPO."
+            exit 1
+          fi
+
+          if ! GH_TOKEN="$APP_TOKEN" gh api "repos/$URPX_ORG/$URPX_STAGING_REPO" --silent; then
+            echo "::error::The urpx-regen-bot GitHub App token cannot reach $URPX_ORG/$URPX_STAGING_REPO, required to checkout the private release helper repository; check the App's installation and repository access."
             exit 1
           fi
 
@@ -90,10 +114,10 @@ jobs:
         if: steps.release.outputs.use_manual_body != 'true'
         uses: actions/checkout@v6
         with:
-          repository: urpx-org/urpx-website-staging
+          repository: ${{ vars.URPX_ORG || github.repository_owner }}/${{ vars.URPX_STAGING_REPO }}
           path: .urpx-website
           ref: main
-          token: ${{ secrets.URPX_AUTOMATION_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Resolve release notes path
         if: steps.release.outputs.use_manual_body != 'true'
@@ -118,6 +142,10 @@ jobs:
             --ref "${{ steps.release.outputs.tag }}" \
             --base-path documentation/pages \
             > release-body.md
+
+      - name: Check release body for internal process language
+        if: steps.release.outputs.use_manual_body != 'true'
+        run: python3 .urpx-website/scripts/build/check-no-internal-process-language.py release-body.md
 
       - name: Prepare release assets
         run: |

@@ -3,6 +3,14 @@
 <!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
 <!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
 
+---
+site_category: integration
+site_id: interoperability
+site_title: "Interoperability & Integration"
+site_label: "Interoperability"
+site_position: 1
+---
+
 # URPX Interoperability & Standards Integration
 
 > **PRE-DRAFT DOCUMENT - WORKING GROUP REVIEW ONLY**
@@ -79,7 +87,7 @@ graph TB
     IEEE[IEEE 2030.5<br/>Smart Energy Profile]:::otherClass
     
     %% Connections
-    URPX <-->|Usage Data<br/>Integration| GB
+    URPX <-->|Rate Plan & Billing<br/>Structure Alignment| GB
     URPX <-->|Customer Account<br/>References| CDS
     URPX <-->|Property<br/>Alignment| CIM
     URPX -->|Rate Plan<br/>Enhancement| OpenEI
@@ -168,10 +176,11 @@ urpx:RatePlan skos:relatedMatch gb:PricingStructure ;
 urpx:Price skos:broadMatch gb:LineItem ;
     skos:note "URPX procedural prices map to static ESPI bill line items." .
 
-# Charge Category Mapping
-gb:KindCategory_Access a skos:Concept ;
-    skos:exactMatch urpx:minimumCharge ;
-    skos:note "Green Button Access charge maps to URPX minimumCharge." .
+# Line Item Alignment (ESPI V4 ItemKind)
+gb:ItemKind_AdministrativeFee a skos:Concept ;
+    skos:notation "4" ;
+    skos:closeMatch urpx:serviceCharge ;
+    skos:note "Green Button Administrative Fee line items map to URPX serviceCharge." .
 ```
 
 ### LF Energy CDS
@@ -292,40 +301,42 @@ Each published mapping profile includes header metadata, vocabulary declarations
 
 ## Integration Patterns
 
-### Pattern 1: Bill Calculation
+### Pattern 1: Rate Plan Cost Modeling
 
-**Use Case**: Calculate monthly bill using rate plan + usage data
+**Use Case**: Retrieve a customer's meter and account data, determine eligible rate plans, and compute cost options for a scenario
 
 ```mermaid
 sequenceDiagram
-    participant System as Billing System
+    participant System as Cost Modeling System
+    participant CD as Customer Data API
     participant URPX as URPX API
-    participant GB as Green Button API
-    participant CDS as CDS API
     
-    System->>CDS: GET /customer/{id}/billing-period
-    CDS->>System: Billing period details
+    System->>CD: GET /customer/{id}/usage?period={period}
+    CD->>System: Meter / usage data
     
-    System->>URPX: GET /rate-plans/{id}/versions/current
-    URPX->>System: Rate plan version with charges
+    System->>CD: GET /customer/{id}/profile
+    CD->>System: Customer & service-point attributes
     
-    System->>GB: GET /customer/{id}/usage?period={month}
-    GB->>System: Interval usage data
+    System->>System: Check eligibility<br/>(customer & service-point profiles<br/>vs. rate plan qualification)
     
-    System->>System: Map usage to TOU periods<br/>Apply charges<br/>Calculate total
+    System->>URPX: GET /rate-plans?eligible-for={profile}
+    URPX->>System: Available rate plan versions
     
-    System->>CDS: POST /bills (bill record)
+    System->>URPX: GET /rate-plans/{id}/options
+    URPX->>System: Scenario options<br/>(rate plan + modifier combinations)
+    
+    System->>System: Calculate options<br/>(ScenarioCostModel per option →<br/>ScenarioCostResult: line items + coverage claim)
 ```
 
 ### Pattern 2: Conditional Mapping
 
 **Use When**: Mapping depends on context or additional properties. In SKOS, this is handled via `skos:closeMatch` or `skos:broadMatch` with explanatory notes, as SKOS does not natively support computational conditions.
 
-**Example**: Green Button KindCategory → URPX chargeCategory + chargeType
+**Example**: Green Button tariffProfile → URPX name, conditionally URPX RatePlanIdentifier
 ```turtle
-gb:KindCategory_Energy a skos:Concept ;
-    skos:exactMatch urpx:usageCharge ;
-    skos:note "Maps to usageCharge when unit is energy (kWh). May map to generation credits if flow direction is reverse." .
+gb:tariffProfile a skos:Concept ;
+    skos:closeMatch urpx:name ;
+    skos:note "Maps to urpx:name by default. If a producer profile or Green Button Alliance restriction declares tariffProfile a coded identifier, urpx:RatePlanIdentifier is the better fit; RatePlanIdentifierShape requires a skos:notation and scheme IRI that a free String256 cannot supply on its own, so no identifier alignment applies otherwise." .
 ```
 
 ---

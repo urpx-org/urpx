@@ -3,6 +3,14 @@
 <!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
 <!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
 
+---
+site_category: integration
+site_id: i18n-guide
+site_title: "Internationalization Guide"
+site_label: "i18n Guide"
+site_position: 2
+---
+
 # URPX Internationalization (i18n) Implementation Guide
 
 ## Overview

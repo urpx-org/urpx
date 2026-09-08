@@ -5,7 +5,7 @@
 # Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md.
 
 # URPX Ontology
-# Version: v0.3.0
+# Version: v0.4.0
 # Generated: 2026-07-07
 
 # ============================================================================
@@ -27,22 +27,22 @@
     dcterms:creator "Klaar De Schepper, Una Smithsimon, Flux Tailor LLC" ;
     dcterms:description "URPX ontology for utility rate plan exchange" ;
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
-    dcterms:modified "2026-07-13"^^xsd:date ;
+    dcterms:modified "2026-09-08"^^xsd:date ;
     dcterms:title "URPX Ontology" ;
-    dcterms:hasVersion <https://urpx-org.github.io/urpx/ontology/releases/v0.3.0> ;
-    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.3.0/ontology/urpx-ontology.ttl> .
+    dcterms:hasVersion <https://urpx-org.github.io/urpx/ontology/releases/v0.4.0> ;
+    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.4.0/ontology/urpx-ontology.ttl> .
 
-<https://urpx-org.github.io/urpx/ontology/releases/v0.3.0>
+<https://urpx-org.github.io/urpx/ontology/releases/v0.4.0>
     a owl:Ontology ;
     dcterms:isVersionOf <https://urpx-org.github.io/urpx/ontology> ;
-    dcterms:issued "2026-07-07"^^xsd:date ;
-    owl:versionInfo "0.3.0" ;
-    dcat:distribution <https://urpx-org.github.io/urpx/ontology/releases/v0.3.0/ttl> .
+    dcterms:issued "2026-09-08"^^xsd:date ;
+    owl:versionInfo "0.4.0" ;
+    dcat:distribution <https://urpx-org.github.io/urpx/ontology/releases/v0.4.0/ttl> .
 
-<https://urpx-org.github.io/urpx/ontology/releases/v0.3.0/ttl>
+<https://urpx-org.github.io/urpx/ontology/releases/v0.4.0/ttl>
     a dcat:Distribution ;
-    dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.3.0/ontology/urpx-ontology.ttl> ;
-    dcat:downloadURL <https://urpx-org.github.io/urpx/ontology/releases/v0.3.0/ttl/urpx-ontology.ttl> ;
+    dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.4.0/ontology/urpx-ontology.ttl> ;
+    dcat:downloadURL <https://urpx-org.github.io/urpx/ontology/releases/v0.4.0/ttl/urpx-ontology.ttl> ;
     dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> .
 
 # ============================================================================
@@ -97,8 +97,8 @@ urpx:BooleanOperationNode a owl:Class ;
 
 urpx:CalculationMethod a owl:Class ;
     rdfs:label "Calculation Method"@en ;
-    rdfs:comment "Defines how prices are calculated over billing intervals" ;
-    skos:note "Specifies the method for calculating prices associated with a ledger based on billing intervals. Supports complex billing scenarios by allowing combinations of calculation methods." .
+    rdfs:comment "Defines how a measured or derived quantity is calculated or reduced over a stated interval" ;
+    skos:note "Carries the aggregation, the interval window it applies over, and, for a calculated metric input, the sources it derives from. Attaches to a ledger, a metric input, a measurement specification, or a price." .
 
 urpx:ComparisonNode a owl:Class ;
     rdfs:label "Comparison Node"@en ;
@@ -360,7 +360,7 @@ urpx:RatePlan a owl:Class ;
 urpx:RatePlanIdentifier a owl:Class ;
     rdfs:label "Rate Plan Identifier"@en ;
     rdfs:comment "A typed, URI-addressable identifier for a RatePlan (e.g., CA MIDAS RIN, utility tariff code)." ;
-    skos:note "Aligned to adms:Identifier by reference. scheme is a free URI — documented conventions: urpx:ca-midas-rin, urpx:utility-tariff-code. Value via skos:notation. Modifier identities use the parallel RatePlanModifierIdentifier." .
+    skos:note "Aligned to adms:Identifier by reference. scheme is any IRI naming an IdentifierScheme, such as urpx:caMidasRinScheme or urpx:utilityTariffCodeScheme. Value via skos:notation. Modifier identities use the parallel RatePlanModifierIdentifier." .
 
 urpx:RatePlanModifier a owl:Class ;
     rdfs:label "Rate Plan Modifier"@en ;
@@ -371,7 +371,7 @@ urpx:RatePlanModifier a owl:Class ;
 urpx:RatePlanModifierIdentifier a owl:Class ;
     rdfs:label "Rate Plan Modifier Identifier"@en ;
     rdfs:comment "A typed, URI-addressable identifier for a RatePlanModifier (e.g., CA MIDAS RIN, utility tariff code)." ;
-    skos:note "Parallel to RatePlanIdentifier. Aligned to adms:Identifier by reference. scheme is a free URI — documented conventions: urpx:ca-midas-rin, urpx:utility-tariff-code. Value via skos:notation." .
+    skos:note "Parallel to RatePlanIdentifier. Aligned to adms:Identifier by reference. scheme is any IRI naming an IdentifierScheme, such as urpx:caMidasRinScheme or urpx:utilityTariffCodeScheme. Value via skos:notation." .
 
 urpx:RatePlanModifierVersion a owl:Class ;
     rdfs:label "Rate Plan Modifier Version"@en ;
@@ -682,11 +682,10 @@ urpx:HVACKindValue a owl:Class ;
     owl:equivalentClass [ owl:oneOf ( urpx:airConditioner urpx:airSourceHeatPump urpx:groundSourceHeatPump urpx:spaceHeater urpx:districtHeatingConnection ) ] ;
     skos:note "Enumeration class for HVAC equipment categorization including heat pumps and district heating." .
 
-urpx:IdentifierSchemeValue a owl:Class ;
-    rdfs:label "Identifier Scheme Value"@en ;
-    rdfs:comment "Standard ID systems enumeration values" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:companyNumberScheme urpx:dunsScheme urpx:eiaScheme urpx:gleifScheme urpx:gridScheme urpx:isinScheme urpx:leiScheme urpx:localRegulatorScheme urpx:vatScheme ) ] ;
-    skos:note "Enumeration class for organization identifier classification with standardized identifier scheme definitions for external identifier categorization for international systems" .
+urpx:IdentifierScheme a owl:Class ;
+    rdfs:label "Identifier Scheme"@en ;
+    rdfs:comment "A register or naming authority that issues identifiers." ;
+    skos:note "An open class, not a closed enumeration: the members published with this vocabulary cover the common registers, and an implementer operating a scheme that is not among them mints its own IRI as an IdentifierScheme instance." .
 
 urpx:InterconnectionStatusValue a owl:Class ;
     rdfs:label "Interconnection Status Value"@en ;
@@ -1117,8 +1116,9 @@ urpx:buildingSquareFootage a owl:DatatypeProperty ;
 urpx:calculatedBasedOn a owl:ObjectProperty ;
     rdfs:label "Input Metric"@en ;
     rdfs:comment "Source MetricInputs for calculated MetricInput derivation" ;
+    rdfs:domain urpx:CalculationMethod ;
     rdfs:range urpx:MetricInput ;
-    skos:note "References to source MetricInputs used in calculation. Multiple input MetricInputs can be specified. Used within calculationRule blank node." .
+    skos:note "Names the source MetricInputs used by a calculation method to derive a calculated MetricInput. Multiple sources may be given." .
 
 urpx:calculationFormula a owl:DatatypeProperty ;
     rdfs:label "Calculation Formula"@en ;
@@ -1126,12 +1126,6 @@ urpx:calculationFormula a owl:DatatypeProperty ;
     rdfs:domain urpx:CalculationMethod ;
     rdfs:range xsd:string ;
     skos:note "Optional formula when simple multiplication isn't sufficient. Example: '(basePrice * usage) + (demandCharge * peakDemand)'." .
-
-urpx:calculationRule a owl:ObjectProperty ;
-    rdfs:label "Calculation Rule"@en ;
-    rdfs:comment "Calculation rule for derived MetricInputs" ;
-    rdfs:domain urpx:MetricInput ;
-    skos:note "Defines how calculated MetricInputs derive their values from input MetricInputs. Used for net export, aggregation, and time-shifted metrics." .
 
 urpx:cancelledBy a owl:ObjectProperty ;
     rdfs:label "Cancelled By"@en ;
@@ -1721,12 +1715,6 @@ urpx:flowDirection a owl:ObjectProperty ;
     rdfs:range urpx:FlowDirectionValue ;
     skos:note "Defines flow direction: forward (consumption/import), reverse (generation/export), net (net metering), or bidirectional. Critical for DER and net metering scenarios." .
 
-urpx:formula a owl:DatatypeProperty ;
-    rdfs:label "Formula"@en ;
-    rdfs:comment "Formula expression for calculated MetricInputs" ;
-    rdfs:range xsd:string ;
-    skos:note "String expression defining calculation logic. Example: 'generation - gridImport' for net export. Used within calculationRule blank node." .
-
 urpx:forRatePlan a owl:ObjectProperty ;
     rdfs:label "For Rate Plan"@en ;
     rdfs:comment "Links a derived RatePlanVersion snapshot back to the RatePlan identity it was built for." ;
@@ -1839,11 +1827,11 @@ urpx:hasBillingModel a owl:ObjectProperty ;
 
 urpx:hasCalculationMethod a owl:ObjectProperty ;
     rdfs:label "Has Calculation Method"@en ;
-    rdfs:comment "Links price to its calculation method" ;
+    rdfs:comment "Links a ledger, metric input, measurement specification or price to its calculation method" ;
     rdfs:domain [ a owl:Class ;
-    owl:unionOf ( urpx:Price urpx:PriceDefinition urpx:PriceSet ) ] ;
-    rdfs:range urpx:CalculationMethod;
-    skos:note "Defines how a price is calculated." .
+            owl:unionOf ( urpx:Ledger urpx:MetricInput urpx:MetricSpecification urpx:Price urpx:PriceDefinition urpx:PriceSet ) ] ;
+    rdfs:range urpx:CalculationMethod ;
+    skos:note "The authoritative declaration is the one nearest the measurement: MetricSpecification, then MetricInput, then Ledger, resolved per property. A calculation method on a Price, PriceDefinition or PriceSet is a denormalized copy carried for tabular serialization where a measurement altitude is reachable, directly or through a referenced ledger or metric input, and agrees with that declaration. Where no measurement altitude is reachable, the price-level declaration is complete on its own." .
 
 urpx:hasCalendar a owl:ObjectProperty ;
     rdfs:label "Has Calendar"@en ;
@@ -2176,17 +2164,17 @@ urpx:hasRateGroup a owl:ObjectProperty ;
 
 urpx:hasRatePlan a owl:ObjectProperty ;
     rdfs:label "Has Rate Plan"@en ;
-    rdfs:comment "Links document to rate plans" ;
+    rdfs:comment "Links an exchange package to a rate plan it carries." ;
     rdfs:domain urpx:URPXPackage ;
     rdfs:range urpx:RatePlan ;
-    skos:note "Can contain multiple rate plans in a single document." .
+    skos:note "A package may carry several rate plans. Package containment is stated with urpx:packages, which reaches every exchangeable unit; a consumer reading package contents reads both paths." .
 
 urpx:hasRatePlanModifier a owl:ObjectProperty ;
     rdfs:label "Has Rate Plan Modifier"@en ;
-    rdfs:comment "Rate plan modifiers available in this document" ;
+    rdfs:comment "Links an exchange package to a rate plan modifier it carries." ;
     rdfs:domain urpx:URPXPackage ;
     rdfs:range urpx:RatePlanModifier ;
-    skos:note "Optional add-ons or adjustments that can be applied across rate plans." .
+    skos:note "A modifier is an add-on or adjustment applicable across rate plans. Package containment is stated with urpx:packages, which reaches every exchangeable unit; a consumer reading package contents reads both paths." .
 
 urpx:hasRatePlanModifierVersion a owl:ObjectProperty ;
     rdfs:label "Has Rate Plan Modifier Version"@en ;
@@ -2268,13 +2256,6 @@ urpx:hasState a owl:ObjectProperty ;
     rdfs:range urpx:State ;
     skos:note "Defines state-level eligibility and applicability through use in service point profile and within ConditionExpression." .
 
-urpx:hasTariffPublication a owl:ObjectProperty ;
-    rdfs:label "Has Tariff Publication"@en ;
-    rdfs:comment "References to formal tariff publications" ;
-    rdfs:domain urpx:URPXPackage ;
-    rdfs:range urpx:SourcePublication ;
-    skos:note "Links to official tariff documents, PDFs, or regulatory filings." .
-
 urpx:hasTemporalPeriod a owl:ObjectProperty ;
     rdfs:label "Has Temporal Period"@en ;
     rdfs:comment "Links a temporal scope to the reusable named time interval its span denotes." ;
@@ -2354,16 +2335,10 @@ urpx:householdSize a owl:DatatypeProperty ;
 urpx:identifierJurisdiction a owl:DatatypeProperty ;
     rdfs:label "Identifier Jurisdiction"@en ;
     rdfs:comment "Jurisdiction where identifier is valid" ;
-    rdfs:domain urpx:OrganizationIdentifier ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:OrganizationIdentifier urpx:RatePlanIdentifier urpx:RatePlanModifierIdentifier ) ] ;
     rdfs:range xsd:string ;
     skos:note "Jurisdiction where identifier is valid. Country or region code." .
-
-urpx:identifierScheme a owl:ObjectProperty ;
-    rdfs:label "Identifier Scheme"@en ;
-    rdfs:comment "Identification scheme or system (Standard ID systems)" ;
-    rdfs:domain urpx:OrganizationIdentifier ;
-    rdfs:range urpx:IdentifierSchemeValue ;
-    skos:note "Standard ID systems enumeration. Standardized identifier scheme definitions for international systems." .
 
 urpx:identityValidFrom a owl:DatatypeProperty ;
     rdfs:label "Identity Valid From"@en ;
@@ -2770,6 +2745,14 @@ urpx:ownershipType a owl:ObjectProperty ;
     rdfs:range urpx:OwnershipTypeValue ;
     skos:note "EIA ownership categories enumeration. Standardized utility business structure categorization aligned with EIA Form 861 reporting standards." .
 
+urpx:packages a owl:ObjectProperty ;
+    rdfs:label "Packages"@en ;
+    rdfs:comment "A unit of URPX content carried by this exchange package." ;
+    rdfs:domain urpx:URPXPackage ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( urpx:RatePlan urpx:RatePlanModifier urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:PricingModel urpx:TariffFiling urpx:SourcePublication ) ] ;
+    skos:note "A package may carry several units, and a unit may be exchanged in a package of its own. The package declares the URPX version its contents were authored against through targetURPXVersion." .
+
 urpx:pageEnd a owl:DatatypeProperty ;
     rdfs:label "Page End"@en ;
     rdfs:comment "Ending page number in the source document" ;
@@ -3138,10 +3121,11 @@ urpx:roundTripEfficiency a owl:DatatypeProperty ;
 
 urpx:scheme a owl:ObjectProperty ;
     rdfs:label "Scheme"@en ;
-    rdfs:comment "URI identifying the identifier scheme or naming authority for a RatePlanIdentifier or RatePlanModifierIdentifier." ;
+    rdfs:comment "IRI identifying the identifier scheme or naming authority." ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:RatePlanIdentifier urpx:RatePlanModifierIdentifier ) ] ;
-    skos:note "Free URI — documented conventions: urpx:ca-midas-rin (CA MIDAS RIN), urpx:utility-tariff-code (utility-assigned tariff code). No closed enum. Value via skos:notation on the identifier." .
+            owl:unionOf ( urpx:OrganizationIdentifier urpx:RatePlanIdentifier urpx:RatePlanModifierIdentifier ) ] ;
+    rdfs:range urpx:IdentifierScheme ;
+    skos:note "Any IRI. The IdentifierScheme members published with this vocabulary cover the common registers; an implementer operating a scheme that is not among them mints its own IRI. The identifier's value rides skos:notation." .
 
 urpx:scopeKind a owl:ObjectProperty ;
     rdfs:label "Scope Kind"@en ;
@@ -3329,7 +3313,7 @@ urpx:targetURPXVersion a owl:DatatypeProperty ;
     rdfs:domain urpx:URPXPackage ;
     rdfs:range xsd:anyURI ;
     rdfs:comment "The URPX ontology version this document was authored against." ;
-    skos:note "Required on all URPXPackage instances. Enables version-aware parsing and validation. Value should be the ontology version IRI, e.g. 'https://github.com/urpx-org/urpx/raw/v0.3.0/ontology/urpx-ontology.ttl'." .
+    skos:note "Required on all URPXPackage instances. Enables version-aware parsing and validation. Value should be the ontology version IRI, e.g. 'https://github.com/urpx-org/urpx/raw/v0.4.0/ontology/urpx-ontology.ttl'." .
 
 urpx:tariffStatementType a owl:ObjectProperty ;
     rdfs:label "Tariff Statement Type"@en ;
@@ -3432,14 +3416,6 @@ urpx:url a owl:DatatypeProperty ;
             owl:unionOf ( urpx:SourcePublication urpx:URPXPackage urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:DataSourceReference urpx:ProgramEnrollment urpx:RateCase ) ] ;
     rdfs:range xsd:anyURI ;
     skos:note "Direct link to PDF, HTML, or other document format." .
-
-urpx:utilityId a owl:DatatypeProperty ;
-    rdfs:label "Utility ID"@en ;
-    rdfs:comment "Utility identifier as defined by the implementing jurisdiction" ;
-    rdfs:domain urpx:OrganizationIdentifier ;
-    rdfs:range xsd:string ;
-    skos:note "Generic utility identifier property. Each URPX implementation specifies the identifier system used (e.g., US EIA ID, UK MPAN, EU EIC code). For standard identifier types, use identifierScheme to specify the system." ;
-    skos:example "US: EIA-12345, UK: S12345678901, EU: 12X-UTILITY-A" .
 
 urpx:version a owl:DatatypeProperty ;
     rdfs:label "Version"@en ;
@@ -4983,49 +4959,59 @@ urpx:spaceHeater rdf:type urpx:HVACKindValue ;
     skos:definition "Individual space heating unit"@en ;
     skos:prefLabel "Space Heater"@en .
 
-# --- Identifier Scheme Property (IdentifierSchemeValue) ---
+# --- Identifier Scheme Property (IdentifierScheme) ---
 
-urpx:companyNumberScheme rdf:type urpx:IdentifierSchemeValue ;
+urpx:caMidasRinScheme rdf:type urpx:IdentifierScheme ;
+    rdfs:label "CA MIDAS RIN"@en ;
+    skos:definition "California Market Informed Demand Automation Server rate identification number."@en ;
+    skos:prefLabel "CA MIDAS RIN"@en .
+
+urpx:companyNumberScheme rdf:type urpx:IdentifierScheme ;
     rdfs:label "Company Number Scheme"@en ;
     skos:definition "Company number identifier scheme - government-issued company registration number"@en ;
     skos:prefLabel "Company Number"@en .
 
-urpx:dunsScheme rdf:type urpx:IdentifierSchemeValue ;
+urpx:dunsScheme rdf:type urpx:IdentifierScheme ;
     rdfs:label "DUNS Scheme"@en ;
     skos:definition "DUNS identifier scheme - Dun & Bradstreet Universal Numbering System"@en ;
     skos:prefLabel "DUNS"@en .
 
-urpx:eiaScheme rdf:type urpx:IdentifierSchemeValue ;
+urpx:eiaScheme rdf:type urpx:IdentifierScheme ;
     rdfs:label "EIA Scheme"@en ;
     skos:definition "EIA identifier scheme - US Energy Information Administration utility identifier"@en ;
     skos:prefLabel "EIA"@en .
 
-urpx:gleifScheme rdf:type urpx:IdentifierSchemeValue ;
+urpx:gleifScheme rdf:type urpx:IdentifierScheme ;
     rdfs:label "GLEIF Scheme"@en ;
     skos:definition "GLEIF identifier scheme - Global Legal Entity Identifier Foundation system"@en ;
     skos:prefLabel "GLEIF"@en .
 
-urpx:gridScheme rdf:type urpx:IdentifierSchemeValue ;
+urpx:gridScheme rdf:type urpx:IdentifierScheme ;
     rdfs:label "GRID Scheme"@en ;
     skos:definition "GRID identifier scheme - Global Research Identifier Database for organizations"@en ;
     skos:prefLabel "GRID"@en .
 
-urpx:isinScheme rdf:type urpx:IdentifierSchemeValue ;
+urpx:isinScheme rdf:type urpx:IdentifierScheme ;
     rdfs:label "ISIN Scheme"@en ;
     skos:definition "ISIN identifier scheme - International Securities Identification Number"@en ;
     skos:prefLabel "ISIN"@en .
 
-urpx:leiScheme rdf:type urpx:IdentifierSchemeValue ;
+urpx:leiScheme rdf:type urpx:IdentifierScheme ;
     rdfs:label "LEI Scheme"@en ;
     skos:definition "LEI identifier scheme - Legal Entity Identifier for financial market participants"@en ;
     skos:prefLabel "LEI"@en .
 
-urpx:localRegulatorScheme rdf:type urpx:IdentifierSchemeValue ;
+urpx:localRegulatorScheme rdf:type urpx:IdentifierScheme ;
     rdfs:label "Local Regulator Scheme"@en ;
     skos:definition "Local regulator identifier scheme - jurisdiction-specific regulatory identifier"@en ;
     skos:prefLabel "Local Regulator"@en .
 
-urpx:vatScheme rdf:type urpx:IdentifierSchemeValue ;
+urpx:utilityTariffCodeScheme rdf:type urpx:IdentifierScheme ;
+    rdfs:label "Utility Tariff Code"@en ;
+    skos:definition "Tariff code assigned by the utility that publishes the rate plan."@en ;
+    skos:prefLabel "Utility Tariff Code"@en .
+
+urpx:vatScheme rdf:type urpx:IdentifierScheme ;
     rdfs:label "VAT Scheme"@en ;
     skos:definition "VAT identifier scheme - Value Added Tax registration number"@en ;
     skos:prefLabel "VAT"@en .

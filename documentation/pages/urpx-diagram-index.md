@@ -3,10 +3,17 @@
 <!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
 <!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
 
+---
+site_category: learning
+site_id: diagram-index
+site_title: "Diagram Index"
+site_position: 2
+---
+
 # URPX Diagram Index
 
-**Version:** 0.3.0 (Pre-draft)
-**Last Updated:** 2026-04-29
+**Version:** 0.4.0 (Pre-draft)
+**Last Updated:** 2026-08-20
 
 [← Back to Index](/docs/getting-started/overview)
 
@@ -19,12 +26,6 @@ This index lists the diagram assets currently present in the repository and the 
 ---
 
 ## Published Documentation Diagrams
-
-### SPARQL Query Visual
-
-- **File:** `documentation/diagrams/urpx-sparql-query-visual.mmd`
-- **Used in:** [Semantic Web Guide](urpx-semantic-web-guide.md)
-- **Shows:** A graph traversal pattern for querying prices from a rate plan identified by `ratePlanUniqueIdentifier`
 
 ### Temporal Versioning Summary
 
@@ -41,6 +42,12 @@ This index lists the diagram assets currently present in the repository and the 
 - **File:** `documentation/diagrams/urpx-price-structure-diagram.mmd`
 - **Status:** Present in the repository but not currently embedded in a documentation page
 - **Shows:** `RatePlanVersion` -> `Prices` -> `PriceSet` -> `Price` with required pricing-field semantics and optional classification metadata
+
+### SPARQL Query Visual
+
+- **File:** `documentation/diagrams/urpx-sparql-query-visual.mmd`
+- **Status:** Present in the repository but not currently embedded in a documentation page
+- **Shows:** A graph traversal pattern for querying prices from a rate plan identified by `ratePlanUniqueIdentifier`
 
 ### TOU Structure Diagram
 

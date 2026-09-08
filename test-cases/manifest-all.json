@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "generator": "urpx-website-staging/scripts/codegen/generate-all.py",
-  "generatedAt": "2026-07-26T15:34:30Z",
+  "generatedAt": "2026-08-17T19:29:19Z",
   "examples": [
     {
       "id": "coned-sc1-rate-i",
@@ -22,9 +22,9 @@
       "tariffBookPdf": null
     },
     {
-      "id": "pge-e-tou-c-2026-03-01",
-      "instanceJsonld": "pge-e-tou-c-2026-03-01/data/urpx-rate-plan_pge_e-tou-c_2026-03-01.jsonld",
-      "diagramSvg": "pge-e-tou-c-2026-03-01/assets/diagram.svg",
+      "id": "pge-e-tou-c",
+      "instanceJsonld": "pge-e-tou-c/data/urpx-rate-plan_pge_e-tou-c.jsonld",
+      "diagramSvg": "pge-e-tou-c/assets/diagram.svg",
       "tariffBookPdf": null
     }
   ]

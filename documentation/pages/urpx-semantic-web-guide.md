@@ -3,10 +3,17 @@
 <!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
 <!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
 
+---
+site_category: learning
+site_id: semantic-web-guide
+site_title: "Semantic Web Guide"
+site_position: 1
+---
+
 # Semantic Web Guide for URPX
 
-**Version:** 0.3.0 (Pre-draft) 
-**Last Updated:** 2026-07-07
+**Version:** 0.4.0 (Pre-draft) 
+**Last Updated:** 2026-08-20
 
 **A beginner-friendly introduction to semantic web technologies for the URPX working group**
 
@@ -20,6 +27,7 @@
 2. [Semantic Web 101](#semantic-web-101)
 3. [Core Technologies](#core-technologies)
 4. [Learning Resources](#learning-resources)
+5. [Next Steps](#next-steps)
 
 ---
 
@@ -85,16 +93,17 @@ The semantic web represents data as **interconnected graphs** of meaning, not ju
 **Semantic Web Approach (Linked Data with JSON-LD):**
 ```json
 {
-  "@context": {
-    "urpx": "https://urpx-org.github.io/urpx/ontology/",
-    "ex": "https://example.com/"
-  },
+  "@context": [
+    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    { "ex": "https://example.com/" }
+  ],
   "@id": "ex:PRC-001",
   "@type": "urpx:Price",
   "urpx:chargeType": {"@id": "urpx:usageCharge"},
   "urpx:chargeCategory": {"@id": "urpx:auxiliaryCharge"},
-  "urpx:unitPrice": 0.12,
+  "urpx:unitPrice": "0.12",
   "urpx:hasMetricSpecification": {
+    "@type": "urpx:MetricSpecification",
     "urpx:commodity": {"@id": "urpx:electricity"},
     "urpx:measurementKind": {"@id": "urpx:energy"},
     "urpx:unitOfMeasure": {"@id": "urpx:kWh"}
@@ -194,8 +203,8 @@ An ontology is a **formal specification** of a domain's concepts and relationshi
 **Example OWL Definition:**
 ```turtle
 urpx:Price a owl:Class ;
-    rdfs:label "Price" ;
-    skos:definition "An individual pricing component within a rate plan".
+    rdfs:label "Price"@en ;
+    rdfs:comment "Individual pricing component with an amount and applicability rules" .
 
 urpx:chargeType a owl:ObjectProperty ;
     rdfs:label "Charge Type"@en ;
@@ -210,23 +219,24 @@ urpx:chargeType a owl:ObjectProperty ;
 
 **JSON for Developers, RDF for Machines**
 
-JSON-LD is **JSON with a semantic layer**. Developers work with familiar JSON syntax, while the `@context` provides RDF semantics.
+JSON-LD is **JSON with a semantic layer**. Developers work with familiar JSON syntax, while the `@context` provides RDF semantics: URPX publishes one context at a stable URL, and a document references it rather than declaring its own.
 
 **Basic Charge Example:**
 ```json
 {
-  "@context": {
-    "urpx": "https://urpx-org.github.io/urpx/ontology/",
-    "ex": "https://example.com/"
-  },
+  "@context": [
+    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    { "ex": "https://example.com/" }
+  ],
   "@id": "ex:PRC-001",
   "@type": "urpx:Price",
   "urpx:name": "Summer Energy Price",
   "urpx:chargeType": {"@id": "urpx:usageCharge"},
   "urpx:chargeCategory": {"@id": "urpx:auxiliaryCharge"},
-  "urpx:unitPrice": 0.12,
+  "urpx:unitPrice": "0.12",
   "urpx:priceCurrency": "USD",
   "urpx:hasMetricSpecification": {
+    "@type": "urpx:MetricSpecification",
     "urpx:commodity": {"@id": "urpx:electricity"},
     "urpx:measurementKind": {"@id": "urpx:energy"},
     "urpx:unitOfMeasure": {"@id": "urpx:kWh"}
@@ -240,11 +250,46 @@ This example demonstrates the current URPX pattern in which a `PriceSetAlternati
 
 ```json
 {
-  "@context": {
-    "urpx": "https://urpx-org.github.io/urpx/ontology/",
-    "ex": "https://example.com/"
-  },
+  "@context": [
+    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    { "ex": "https://example.com/" }
+  ],
   "@graph": [
+    {
+      "@id": "ex:condition-expression-zone-h-secondary",
+      "@type": "urpx:ConditionExpression",
+      "urpx:name": "Zone H secondary voltage",
+      "urpx:rootNode": {
+        "@id": "ex:condition-zone-h-secondary",
+        "@type": "urpx:ComparisonNode",
+        "urpx:logicExpression": "service zone and voltage class = ZONE-H-SECONDARY",
+        "urpx:operator": {"@id": "urpx:equalsOperator"},
+        "urpx:leftOperand": {
+          "@type": "urpx:CustomOperandNode",
+          "urpx:customConditionProperty": "Service Zone And Voltage Class"
+        },
+        "urpx:rightOperand": {
+          "@type": "urpx:CustomOperandNode",
+          "urpx:stringValue": "ZONE-H-SECONDARY"
+        }
+      }
+    },
+    {
+      "@id": "ex:energy-charge-zone-h-secondary",
+      "@type": "urpx:Price",
+      "urpx:name": "Zone H Secondary Energy Price",
+      "urpx:chargeType": {"@id": "urpx:usageCharge"},
+      "urpx:chargeCategory": {"@id": "urpx:auxiliaryCharge"},
+      "urpx:unitPrice": "0.09"
+    },
+    {
+      "@id": "ex:demand-charge-zone-h-secondary",
+      "@type": "urpx:Price",
+      "urpx:name": "Zone H Secondary Demand Price",
+      "urpx:chargeType": {"@id": "urpx:demandDirect"},
+      "urpx:chargeCategory": {"@id": "urpx:auxiliaryCharge"},
+      "urpx:unitPrice": "12.50"
+    },
     {
       "@id": "ex:zone-h-secondary",
       "@type": "urpx:ProfileAlternative",
@@ -273,11 +318,13 @@ The `referencesProfileAlternative` property uses an **IRI reference** (`ex:zone-
 - Reusable alternative resources across multiple rate plans
 - Required attachment of `hasConditionExpression` on the referenced `ProfileAlternative`
 
-**The @context Explained:**
+**What the @context Does:**
 - Maps JSON keys to RDF predicates
 - Defines namespace prefixes
 - Specifies data types
 - Converts JSON to RDF triples automatically
+
+URPX publishes this context at a stable URL, generated from the ontology's own property ranges, so an implementer references it rather than authoring one per document.
 
 **Why JSON-LD:**
 - **Developer Friendly**: Looks like regular JSON
@@ -343,7 +390,7 @@ WHERE {
 Note the query starts from the version snapshot: versions point at their plan via `forRatePlan`, so the plan is found by identifier and the versions are found by their link back to it.
 
 **SPARQL Use Cases:**
-- **Rate Comparison**: Find best rate plans for specific usage patterns
+- **Rate Plan Comparison**: Find best rate plans for specific usage patterns
 - **Trend Analysis**: Track price changes over time
 - **Compliance Checking**: Verify regulatory requirements
 - **Data Discovery**: Explore available rate plans

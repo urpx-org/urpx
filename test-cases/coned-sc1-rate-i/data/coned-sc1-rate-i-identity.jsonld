@@ -1,12 +1,11 @@
 {
-  "@context": {
-    "urpx": "https://urpx-org.github.io/urpx/ontology/",
-    "skos": "http://www.w3.org/2004/02/skos/core#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "coned": "https://urpx-org.github.io/urpx/fixtures/coned/",
-    "org": "https://urpx-org.github.io/urpx/fixtures/org/",
-    "urpx:initialEffectiveDate": { "@type": "xsd:date" }
-  },
+  "@context": [
+    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    {
+      "coned": "https://urpx-org.github.io/urpx/fixtures/coned/",
+      "org": "https://urpx-org.github.io/urpx/fixtures/org/"
+    }
+  ],
   "@graph": [
     {
       "@id": "coned:coned-sc1-rate-i",
@@ -28,7 +27,7 @@
       "@id": "coned:coned-sc1-rate-i-id-utility-code",
       "@type": "urpx:RatePlanIdentifier",
       "skos:notation": "SC1-RATE-I",
-      "urpx:scheme": { "@id": "https://urpx-org.github.io/urpx/ontology/utility-tariff-code" }
+      "urpx:scheme": { "@id": "https://urpx-org.github.io/urpx/ontology/utilityTariffCodeScheme" }
     },
     {
       "@id": "org:consolidated-edison",
@@ -49,6 +48,12 @@
       "urpx:rateGroupIdentifier": "RATE-I",
       "urpx:rateGroupName": "Rate I — Residential and Religious",
       "urpx:parentServiceClass": { "@id": "coned:sc1" }
+    },
+    {
+      "@id": "coned:doc-sc1-rate-i-identity",
+      "@type": "urpx:URPXPackage",
+      "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.4.0/ontology/urpx-ontology.ttl",
+      "urpx:packages": { "@id": "coned:coned-sc1-rate-i" }
     }
   ]
 }

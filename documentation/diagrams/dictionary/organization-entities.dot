@@ -6,7 +6,7 @@ digraph "Organization Entities" {
     ranksep=1.0;
     start=42;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="Organization Entities (URPX v0.3.0)";
+    label="Organization Entities (URPX v0.4.0)";
     labelloc="t";
     fontsize=14;
     fontcolor="#1a365d";
@@ -42,6 +42,10 @@ digraph "Organization Entities" {
         label="Organization\nIdentifier"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
+    IdentifierScheme [
+        label="IdentifierScheme"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
     OrganizationName [
         label="OrganizationName"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
@@ -52,8 +56,24 @@ digraph "Organization Entities" {
         label="LocationDataSet"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
     ];
+    PricingModel [
+        label="PricingModel"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
     RatePlan [
         label="RatePlan"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    RatePlanModifier [
+        label="RatePlanModifier"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    RatePlanModifierVersion [
+        label="RatePlanModifier\nVersion"
+        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+    ];
+    RatePlanVersion [
+        label="RatePlanVersion"
         shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
     ];
 
@@ -63,6 +83,21 @@ digraph "Organization Entities" {
     ];
     Organization -> LocationDataSet [
         label="hasLocationDataSet\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Organization -> PricingModel [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Organization -> RatePlan [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Organization -> RatePlanModifier [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Organization -> RatePlanVersion [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Organization -> RatePlanModifierVersion [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     Organization -> SystemOperator [
         label="operatesIn\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
@@ -79,6 +114,21 @@ digraph "Organization Entities" {
     RegulatoryAuthority -> LocationDataSet [
         label="hasLocationDataSet\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
+    RegulatoryAuthority -> PricingModel [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RegulatoryAuthority -> RatePlan [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RegulatoryAuthority -> RatePlanModifier [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RegulatoryAuthority -> RatePlanVersion [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RegulatoryAuthority -> RatePlanModifierVersion [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
     RegulatoryAuthority -> SystemOperator [
         label="operatesIn\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
@@ -88,11 +138,41 @@ digraph "Organization Entities" {
     SystemOperator -> LocationDataSet [
         label="hasLocationDataSet\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
+    SystemOperator -> PricingModel [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    SystemOperator -> RatePlan [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    SystemOperator -> RatePlanModifier [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    SystemOperator -> RatePlanVersion [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    SystemOperator -> RatePlanModifierVersion [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
     UtilityOperator -> OrganizationIdentity [
         label="hasIdentity\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     UtilityOperator -> LocationDataSet [
         label="hasLocationDataSet\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    UtilityOperator -> PricingModel [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    UtilityOperator -> RatePlan [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    UtilityOperator -> RatePlanModifier [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    UtilityOperator -> RatePlanVersion [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    UtilityOperator -> RatePlanModifierVersion [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     UtilityOperator -> SystemOperator [
         label="operatesIn\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
@@ -103,6 +183,21 @@ digraph "Organization Entities" {
     EnergyServiceProvider -> LocationDataSet [
         label="hasLocationDataSet\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
+    EnergyServiceProvider -> PricingModel [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    EnergyServiceProvider -> RatePlan [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    EnergyServiceProvider -> RatePlanModifier [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    EnergyServiceProvider -> RatePlanVersion [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    EnergyServiceProvider -> RatePlanModifierVersion [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
     EnergyServiceProvider -> SystemOperator [
         label="operatesIn\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
@@ -111,6 +206,9 @@ digraph "Organization Entities" {
     ];
     OrganizationIdentity -> OrganizationName [
         label="hasName\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    OrganizationIdentifier -> IdentifierScheme [
+        label="scheme\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
 
     subgraph cluster_legend {

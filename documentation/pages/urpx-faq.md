@@ -3,6 +3,13 @@
 <!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
 <!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
 
+---
+site_category: getting-started
+site_id: faq
+site_title: "FAQ"
+site_position: 4
+---
+
 ### Frequently Asked Questions
 
 **Q: What is a semantic web standard?**

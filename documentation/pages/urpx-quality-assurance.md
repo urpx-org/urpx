@@ -3,9 +3,16 @@
 <!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
 <!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
 
+---
+site_category: technical-reference
+site_id: quality-assurance
+site_title: "Quality Assurance"
+site_position: 4
+---
+
 # URPX Quality Assurance Guidelines
 
-**Version**: 0.3.0 (Pre-draft)
+**Version**: 0.4.0 (Pre-draft)
 **Last Updated**: 2026-07-07
 **Status**: Active
 

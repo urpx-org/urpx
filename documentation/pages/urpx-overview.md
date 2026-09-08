@@ -3,9 +3,17 @@
 <!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
 <!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
 
+---
+site_category: getting-started
+site_id: overview
+site_title: "URPX Overview"
+site_label: "Overview"
+site_position: 1
+---
+
 # URPX Overview
 
-**Version**: 0.3.0 (Pre-draft)
+**Version**: 0.4.0 (Pre-draft)
 **Last Updated**: 2026-07-07  
 **Status**: Active
 

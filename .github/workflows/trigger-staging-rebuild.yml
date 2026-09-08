@@ -10,17 +10,42 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: Dispatch staging rebuild
+      - name: Require App credentials configured
         env:
-          GH_TOKEN: ${{ secrets.URPX_AUTOMATION_TOKEN }}
-          URPX_SHA: ${{ github.sha }}
+          URPX_REGEN_APP_ID: ${{ secrets.URPX_REGEN_APP_ID }}
+          URPX_REGEN_APP_PRIVATE_KEY: ${{ secrets.URPX_REGEN_APP_PRIVATE_KEY }}
         run: |
-          if [ -z "$GH_TOKEN" ]; then
-            echo "::error::URPX_AUTOMATION_TOKEN is required to dispatch urpx-website-staging."
+          if [ -z "$URPX_REGEN_APP_ID" ] || [ -z "$URPX_REGEN_APP_PRIVATE_KEY" ]; then
+            echo "::error::URPX_REGEN_APP_ID and/or URPX_REGEN_APP_PRIVATE_KEY is empty on $GITHUB_REPOSITORY; add both secrets (or extend their organization-level scope) to this repository before this workflow can mint the urpx-regen-bot App token."
             exit 1
           fi
 
-          gh api repos/urpx-org/urpx-website-staging/dispatches \
+      - name: Mint automation token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.URPX_REGEN_APP_ID }}
+          private-key: ${{ secrets.URPX_REGEN_APP_PRIVATE_KEY }}
+          repositories: ${{ vars.URPX_STAGING_REPO }}
+
+      - name: Dispatch staging rebuild
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          URPX_SHA: ${{ github.sha }}
+          URPX_ORG: ${{ vars.URPX_ORG || github.repository_owner }}
+          URPX_STAGING_REPO: ${{ vars.URPX_STAGING_REPO }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::The urpx-regen-bot GitHub App token could not be minted; check URPX_REGEN_APP_ID and URPX_REGEN_APP_PRIVATE_KEY, and that the App is installed on $URPX_STAGING_REPO."
+            exit 1
+          fi
+
+          if ! gh api "repos/$URPX_ORG/$URPX_STAGING_REPO" --silent; then
+            echo "::error::The urpx-regen-bot GitHub App token cannot reach $URPX_ORG/$URPX_STAGING_REPO; check the App's installation and repository access."
+            exit 1
+          fi
+
+          gh api "repos/$URPX_ORG/$URPX_STAGING_REPO/dispatches" \
             --method POST \
             --field event_type=urpx-main-updated \
             --field client_payload[urpx_ref]=main \

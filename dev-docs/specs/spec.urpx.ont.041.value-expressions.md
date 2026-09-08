@@ -26,7 +26,7 @@ Each edit is a discrete block with copyable before/after Turtle. All edits are a
 
 URPX describes *that* a price component is calculated, but not *how*, in machine-readable form:
 
-- `urpx:calculationFormula` on `CalculationMethod` and `urpx:formula` inside a `MetricInput`'s `calculationRule` are free-text `xsd:string` values. Two implementations can parse `"hourlyLMP + retailAdder"` differently — or not at all — and both claim conformance.
+- `urpx:calculationFormula` on `CalculationMethod` is a free-text `xsd:string` value, and a calculated `MetricInput` states its derivation through that same `CalculationMethod`. Two implementations can parse `"hourlyLMP + retailAdder"` differently — or not at all — and both claim conformance.
 - `urpx:PriceUpdateRule`'s own `skos:note` says it "contains formulas and trigger conditions", but the class has **no formula-bearing property**, and its closed SHACL shape admits only `name`, `description`, and `priority`. The promise has been unkept since v0.1.x.
 - Eligibility and applicability conditions already solved this problem: the adopted condition model expresses rule logic as a structured, SHACL-validated node tree (`ConditionExpression` → `rootNode` → comparison/boolean nodes), with the free-text `logicExpression` demoted to a non-authoritative audit label.
 
@@ -34,13 +34,12 @@ URPX is the recipe: the vocabulary must state unambiguously what a filed charge 
 
 ## 2. Design in one paragraph
 
-Mint **`urpx:ValueExpression`** as the numeric sibling of `ConditionExpression`. It reuses the entire adopted expression machinery — `rootNode`, `OperationNode` with explicit `leftOperand`/`rightOperand`, the three operand-node classes, `referencesMetricInput` for live drivers — and adds only what numbers need: three binary operators (`maxOperator`, `minOperator`, `roundOperator`) and one node class (`ConditionalValueNode`) for piecewise calculations, guarded by the existing condition-node vocabulary. It attaches at exactly three points: `CalculationMethod`, `PriceUpdateRule`, and the `calculationRule` structure of a calculated `MetricInput`. The existing string formulas remain as non-authoritative audit labels.
+Mint **`urpx:ValueExpression`** as the numeric sibling of `ConditionExpression`. It reuses the entire adopted expression machinery — `rootNode`, `OperationNode` with explicit `leftOperand`/`rightOperand`, the three operand-node classes, `referencesMetricInput` for live drivers — and adds only what numbers need: three binary operators (`maxOperator`, `minOperator`, `roundOperator`) and one node class (`ConditionalValueNode`) for piecewise calculations, guarded by the existing condition-node vocabulary. It attaches at exactly two points: `CalculationMethod`, which is also where a calculated `MetricInput` states its derivation, and `PriceUpdateRule`. The existing string formula remains as a non-authoritative audit label.
 
 ```mermaid
 flowchart TD
     CM[CalculationMethod] -- hasValueExpression --> VE[ValueExpression]
     PUR[PriceUpdateRule] -- hasValueExpression --> VE
-    MI[MetricInput calculationRule] -- hasValueExpression --> VE
     VE -- rootNode --> ON[OperationNode]
     ON -- leftOperand --> OO[ObjectOperandNode<br/>referencesMetricInput]
     ON -- rightOperand --> DO[DatatypeOperandNode<br/>decimalValue]
@@ -326,7 +325,7 @@ urpx-shacl:ConditionalValueNodeShape
 
 `ComparisonNodeShape`'s operand lists are **not** widened: a condition tree may nest arithmetic (`OperationNode`, as today) but never a conditional value node. The RDFS range widening on `leftOperand`/`rightOperand` is global, so at the RDFS level a comparison operand could name a `ConditionalValueNode`; the closed, un-widened `ComparisonNodeShape` is what forbids it. This follows the ontology's established pattern that SHACL, not RDFS range, is the authoritative structural gate.
 
-### E-06 — New property `urpx:hasValueExpression` (three attachment points)
+### E-06 — New property `urpx:hasValueExpression` (two attachment points)
 
 - [ ] Applied to candidate TTL
 - [ ] Shapes updated
@@ -339,11 +338,13 @@ urpx-shacl:ConditionalValueNodeShape
 urpx:hasValueExpression a owl:ObjectProperty ;
     rdfs:label "Has Value Expression"@en ;
     rdfs:comment "Links a calculation surface to its authoritative structured value expression"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:CalculationMethod urpx:PriceUpdateRule ) ] ;
     rdfs:range urpx:ValueExpression ;
-    skos:note "Attachment points: CalculationMethod, PriceUpdateRule, and the calculationRule structure of a calculated MetricInput. No rdfs:domain is declared because the calculationRule attachment point is a blank node structure, following the same pattern as urpx:formula. When present, the value expression is the authoritative calculation semantics and any accompanying free-text formula is a non-authoritative label." .
+    skos:note "Attachment points: CalculationMethod, which is where a calculated MetricInput states its derivation, and PriceUpdateRule. Both are named classes, so the domain is declared. When present, the value expression is the authoritative calculation semantics and any accompanying free-text formula is a non-authoritative label." .
 ```
 
-**SHACL — three insert blocks:**
+**SHACL — two insert blocks:**
 
 Add to `urpx-shacl:CalculationMethodShape`:
 
@@ -367,17 +368,11 @@ Add to `urpx-shacl:PriceUpdateRuleShape`:
     ] ;
 ```
 
-Add to the inline `calculationRule` node shape inside `urpx-shacl:MetricInputShape` (alongside `formula` and `calculatedBasedOn`):
-
-```turtle
-            sh:property [ sh:path urpx:hasValueExpression ; sh:class urpx:ValueExpression ; sh:minCount 0 ; sh:maxCount 1 ; ] ;
-```
-
 ### E-07 — Demote the string formulas to audit labels (annotation-only edits)
 
 - [ ] Applied to candidate TTL
 
-Three `skos:note` rewrites; no structural change. This realizes the same authoritative-graph / audit-label split the condition model already uses for `logicExpression`.
+Two `skos:note` rewrites; no structural change. This realizes the same authoritative-graph / audit-label split the condition model already uses for `logicExpression`.
 
 **`urpx:calculationFormula` — before:**
 
@@ -389,18 +384,6 @@ Three `skos:note` rewrites; no structural change. This realizes the same authori
 
 ```turtle
     skos:note "Optional human-readable formula text. Example: '(basePrice * usage) + (demandCharge * peakDemand)'. Non-authoritative: when the calculation method carries hasValueExpression, the structured expression is the authoritative semantics and this text is an audit label." .
-```
-
-**`urpx:formula` — before:**
-
-```turtle
-    skos:note "String expression defining calculation logic. Example: 'generation - gridImport' for net export. Used within calculationRule blank node." .
-```
-
-**After:**
-
-```turtle
-    skos:note "Human-readable expression text. Example: 'generation - gridImport' for net export. Used within the calculationRule structure. Non-authoritative: when the calculation rule carries hasValueExpression, the structured expression is the authoritative semantics and this text is an audit label." .
 ```
 
 **`urpx:PriceUpdateRule` (class) — before:**

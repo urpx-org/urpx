@@ -19,7 +19,7 @@
     dcterms:title "URPX - Green Button ESPI Integration" ;
     dcterms:description "SKOS alignment between URPX and the Green Button (NAESB ESPI) standard, verified against the NAESB ESPI V4 schemas."@en ;
     dcterms:created "2026-01-27"^^xsd:date ;
-    dcterms:modified "2026-07-26"^^xsd:date ;
+    dcterms:modified "2026-08-31"^^xsd:date ;
     dcterms:conformsTo <https://urpx-org.github.io/urpx/ontology/releases/v0.3.0> ;
     rdfs:seeAlso <https://urpx-org.github.io/urpx/ontology> ;
     owl:versionInfo "0.3.0" .
@@ -64,9 +64,7 @@ gb:ServiceCategory_Heat a skos:Concept ;
 # ============================================
 # Line Item Alignment — ESPI V4 ItemKind to URPX charge category
 # (LineItem/itemKind; espi_v4.xsd ItemKind simple type)
-# A Green Button bill line item is a summarized unit; it lines up with an URPX
-# charge category rather than a single fine-grained charge type. Payment (9) and
-# Information (10) carry no charge and are outside this alignment.
+# A Green Button bill line item is a summarized unit; it lines up with an URPX charge category rather than a single fine-grained charge type. Payment (9) and Information (10) carry no charge and are outside this alignment.
 # ============================================
 
 gb:ItemKind_EnergyGenerationFee a skos:Concept ;
@@ -108,3 +106,37 @@ gb:ItemKind_AdministrativeCredit a skos:Concept ;
     skos:prefLabel "Administrative Credit"@en ;
     skos:notation "8" ;
     skos:closeMatch urpx:discount .
+
+# ============================================
+# Tariff riders (ESPI V4 TariffRiderRefs)
+# ============================================
+
+gb:TariffRiderRefs a skos:Concept ;
+    skos:prefLabel "Tariff Rider References"@en ;
+    skos:note "A retail structure: a list of TariffRiderRef entries (riderType, enrollmentStatus, effectiveDate) carried on a usage summary or service delivery point."@en .
+
+# TariffRiderRef's enrollmentStatus is a three-member enum; URPX's EnrollmentStatusValue carries six. The three pairings below are the ones with a direct counterpart, left as skos:closeMatch; URPX's remaining states (expired, suspended, terminated) are not forced onto this enum. Scoped to the rider EnrollmentStatus used inside TariffRiderRef — customer_v4.xsd defines a separate, same-named EnrollmentStatus for Demand Response program enrollment that is out of scope here.
+
+gb:EnrollmentStatus_Enrolled a skos:Concept ;
+    skos:prefLabel "Enrolled"@en ;
+    skos:notation "enrolled" ;
+    skos:closeMatch urpx:activeStatus .
+
+gb:EnrollmentStatus_Unenrolled a skos:Concept ;
+    skos:prefLabel "Unenrolled"@en ;
+    skos:notation "unenrolled" ;
+    skos:closeMatch urpx:inactiveStatus .
+
+gb:EnrollmentStatus_EnrolledPending a skos:Concept ;
+    skos:prefLabel "Enrolled Pending"@en ;
+    skos:notation "enrolledPending" ;
+    skos:closeMatch urpx:pendingStatus .
+
+# ============================================
+# tariffProfile (ESPI V4 UsageSummary / ServiceDeliveryPoint)
+# ============================================
+
+gb:tariffProfile a skos:Concept ;
+    skos:prefLabel "Tariff Profile"@en ;
+    skos:closeMatch urpx:name ;
+    skos:note "tariffProfile carries the name of a rate plan. The alignment to urpx:name holds where urpx:name is the name of a RatePlan; urpx:name is a general-purpose label across the vocabulary, so this mapping is scoped to its use on a RatePlan. tariffProfile is a String256 value, capped at 256 characters and carrying no identifier scheme or uniqueness constraint, so resolving a tariffProfile string to a specific rate plan by name alone needs a disambiguating key such as utility, service territory, or effective window. urpx:RatePlanIdentifier is the better fit only if a producer profile or a Green Button Alliance restriction declares tariffProfile a coded identifier; RatePlanIdentifierShape requires exactly one skos:notation and one scheme IRI, which a free String256 cannot supply on its own, so no identifier alignment is recorded here absent that condition."@en .

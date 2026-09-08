@@ -3,10 +3,88 @@
 
 # URPX Changelog
 
-**Version:** 0.3.0 (Pre-draft)
-**Last Updated:** 2026-08-02
+**Version:** 0.4.0 (Pre-draft)
+**Last Updated:** 2026-09-08
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-08-28 — v0.4.0 (a published JSON-LD context)
+---
+
+### Added
+- A published JSON-LD context at `context/urpx-context.jsonld`, generated from the ontology. It binds the `urpx` prefix and its companion prefixes and gives every URPX property that carries a non-string XSD range an `@type` coercion read from the property's `rdfs:range`. All 100 such properties are covered, so a decimal, date, boolean or integer written against it is read as that datatype rather than as a plain string. The document declares no `@vocab` and binds no fixture-identity namespace.
+
+### Changed
+- The twelve shipped examples reference the published context by URL and carry no inline vocabulary bindings. Each example's `@context` is an array of the context URL and the identity prefixes the example defines for itself, so an implementer references one published document instead of hand-authoring a context for every package.
+
+### Migration
+- Reference the published context at its URL and keep only the identity prefixes a document defines for itself, rather than carrying an inline vocabulary context. The v0.4.0 context path retires at v0.5.0 rather than redirecting, so a consumer holding the v0.4.0 document moves to the v0.5.0 one when the namespace changes.
+
+2026-08-23 — v0.4.0 (calculation attaches where the quantity is measured)
+---
+
+### Added
+- `hasCalculationMethod` reaches `Ledger`, `MetricInput` and `MetricSpecification` alongside the three price classes. Its domain is the union of `Ledger`, `MetricInput`, `MetricSpecification`, `Price`, `PriceDefinition` and `PriceSet`, so one property carries the whole calculation bundle to the level the calculation describes.
+- `LedgerShape`, `MetricInputShape` and `MetricSpecificationShape` each admit `hasCalculationMethod`, optional and at most one.
+- `CalculationMethodShape` admits `calculatedBasedOn`, optional and unbounded. A calculated metric input names its sources there.
+
+### Changed
+- A calculated `MetricInput` states its derivation on a `CalculationMethod` reached through `hasCalculationMethod`, using `calculatedBasedOn` for the source metric inputs and `calculationFormula` for the formula text.
+- `CalculationMethod` defines how a measured or derived quantity is calculated or reduced over a stated interval. It carries the aggregation, the interval window that aggregation applies over, and, for a calculated metric input, the sources it derives from. It attaches to a ledger, a metric input, a measurement specification or a price.
+- `hasCalculationMethod` states which declaration governs where more than one is present: the one nearest the measurement, `MetricSpecification` before `MetricInput` before `Ledger`, resolved per property. An occurrence on a `Price`, `PriceDefinition` or `PriceSet` is a denormalized copy carried for tabular serialization where a measurement is reachable through the node's own references, directly or through a referenced ledger or metric input, and it agrees with that declaration. Where no measurement is reachable, the price-level declaration is complete on its own. A copy that disagrees with its source is a data-quality matter for the implementation holding both: no shape reads across a reference to check it.
+- `calculatedBasedOn` declares `rdfs:domain CalculationMethod`. Validation with inferencing off is unaffected. A consumer validating with RDFS inferencing on sees a tighter result, because the domain then types the property's subject as a `CalculationMethod` and the closed `CalculationMethodShape` judges it.
+
+### Removed
+- `calculationRule`, together with the inline node shape inside `MetricInputShape` that carried it. This removal breaks in two ways. A document stating `calculationRule` on a `MetricInput` no longer validates, because the shape is closed and admits no such path. The property is also gone from the vocabulary itself, independently of whether any document used it.
+- `formula`. `calculationFormula` on `CalculationMethod` carries formula text. This property likewise leaves the vocabulary outright.
+
+### Migration
+- A `MetricInput` carrying `calculationRule` carries `hasCalculationMethod` to a `CalculationMethod` instead. `formula` inside the old structure becomes `calculationFormula` on that calculation method, and `calculatedBasedOn` moves onto it unchanged.
+- Both PG&E test cases move the base service charge's daily calculation method off the price definition and onto the ledger that price definition references, `pge:ledger-service` and `pge:ledger-base-charge` respectively. Each of those ledgers reaches a metric input, so a measurement is reachable and the declaration belongs at the ledger rather than standing alone on the price.
+- The tutorial's demand example states the monthly maximum on a `CalculationMethod` nested under the measurement specification, which keeps its fifteen-minute observation interval. An `aggregationMethod` stated directly on a `MetricSpecification` does not validate.
+
+2026-08-17 — v0.4.0 (the exchange package carries every unit)
+---
+
+### Added
+- `packages`, the containment property of the exchange envelope. Its domain is `URPXPackage` and its range is the union of `RatePlan`, `RatePlanModifier`, `RatePlanVersion`, `RatePlanModifierVersion`, `PricingModel`, `TariffFiling` and `SourcePublication`. Every exchangeable unit can therefore be packaged, and a package declares the URPX version its contents were authored against through `targetURPXVersion`.
+- `URPXPackageShape` admits `packages` at `minCount 0` through `sh:or` over single-class shapes. `sh:class` takes one class, so `sh:or` is how SHACL core states a union-class constraint.
+
+### Changed
+- The ontology and the shapes identify themselves as version 0.4.0. `owl:versionIRI`, `dcterms:hasVersion`, `owl:versionInfo`, the release node, its distribution and both download URLs name v0.4.0, so a consumer resolving a package's `targetURPXVersion` reaches a document that identifies itself as the version the package declares.
+- `URPXPackageShape` requires at least one of `packages`, `hasRatePlan` or `hasRatePlanModifier` on every `URPXPackage`. The envelope's job is to carry content and declare a version, and the shape now states the carrying half. Each of the three paths stays optional on its own: the requirement is that a package uses one of them, not that it uses any particular one.
+- `hasRatePlan` and `hasRatePlanModifier` describe the exchange package they link from and name `packages` as the containment property that reaches every exchangeable unit. A consumer reading package contents reads both paths.
+
+### Removed
+- `hasTariffPublication`. `packages` carries a source publication, as it carries every other unit a package holds.
+
+### Migration
+- On a `URPXPackage`, `hasTariffPublication` becomes `packages`.
+- `hasRatePlan` and `hasRatePlanModifier` remain valid on a `URPXPackage`. A package may carry a rate plan or a modifier through either those properties or `packages`.
+- A `URPXPackage` states at least one content unit. A package carrying only metadata and a version declaration does not validate.
+- An organization's EIA, DUNS or LEI value rides the identity chain: `Organization` → `hasIdentity` → `OrganizationIdentity` → `hasIdentifier` → `OrganizationIdentifier`, with `scheme` naming the register and `skos:notation` carrying the value. The PG&E E-TOU-C test case carries the worked example.
+
+2026-08-14 — v0.4.0 (one identifier pattern)
+---
+
+### Added
+- `IdentifierScheme`, the class of registers and naming authorities that issue identifiers. It is an open class: the members published with this vocabulary cover the common registers, and an implementer operating a scheme that is not among them mints its own IRI as an `IdentifierScheme` instance.
+- `caMidasRinScheme` and `utilityTariffCodeScheme`, the two rate plan registers, as defined members beside the nine organization registers. Both carry a label, a definition and a preferred label.
+
+### Changed
+- `scheme` carries the register for every identifier. Its domain is `OrganizationIdentifier ∪ RatePlanIdentifier ∪ RatePlanModifierIdentifier`, and it ranges on `IdentifierScheme`. Ranging on an open class gives the property a documented value space while keeping an implementer-minted IRI legal.
+- `identifierJurisdiction` applies to all three identifier classes, optional and at most one on each. A CA MIDAS RIN has a jurisdiction as much as an EIA ID does.
+- `IdentifierSchemeValue` is `IdentifierScheme`, a class rather than an enumeration. The nine members keep their IRIs, labels and definitions, and are typed to it.
+- `OrganizationIdentifierShape`, `RatePlanIdentifierShape` and `RatePlanModifierIdentifierShape` take one surface: `scheme` required, `skos:notation` required, `identifierJurisdiction` optional. An organization identifier carries a register and a value.
+
+### Removed
+- `identifierScheme`. `scheme` carries the register for all three identifier classes.
+- `utilityId`. `skos:notation` carries the literal for every identifier, including the EIA, DUNS and LEI values that property held.
+- `IdentifierSchemeValueShape`. `sh:nodeKind sh:IRI` on `scheme` is the constraint the register takes, which is what makes a scheme outside the published members legal.
+
+### Migration
+- On organization identifiers, `identifierScheme` becomes `scheme` and `utilityId` becomes `skos:notation`. Both are required, so an organization identifier states the register it comes from and the value it carries.
+- The utility tariff code register is `urpx:utilityTariffCodeScheme` and the CA MIDAS RIN register is `urpx:caMidasRinScheme`. Rewrite `scheme` object IRIs that carry the hyphenated forms of either name.
 
 2026-08-02 — v0.3.0 (offering and publication separated)
 ---

@@ -3,10 +3,17 @@
 <!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
 <!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
 
+---
+site_category: technical-reference
+site_id: syntax-guidelines
+site_title: "Syntax Guidelines"
+site_position: 2
+---
+
 # URPX Syntax Guidelines
 
-**Version:** 0.3.0 (Pre-draft)
-**Last Updated:** December 2, 2025
+**Version:** 0.4.0 (Pre-draft)
+**Last Updated:** 2026-08-20
 
 [← Back to Index](/docs/getting-started/overview) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
 
@@ -56,10 +63,10 @@ This document defines the standardized syntax and labeling conventions used in t
 Every enumeration instance should include all three label types:
 
 ```turtle
-urpx:electricService a urpx:AccountServiceTypeValue ;
-    rdfs:label "Electric Service"@en ;
-    skos:prefLabel "Electric"@en ;
-    skos:definition "Electric utility service account"@en .
+urpx:electricity a urpx:CommodityValue ;
+    rdfs:label "Electricity"@en ;
+    skos:prefLabel "Electricity"@en ;
+    skos:definition "Electric energy commodity"@en .
 ```
 
 ## Use Cases by Label Type

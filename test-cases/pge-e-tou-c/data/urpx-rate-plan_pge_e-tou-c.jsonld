@@ -1,80 +1,11 @@
 {
-  "@context": {
-    "urpx": "https://urpx-org.github.io/urpx/ontology/",
-    "schema": "http://schema.org/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "org": "https://urpx-org.github.io/urpx/fixtures/org/",
-    "pge": "https://urpx-org.github.io/urpx/fixtures/pge/",
-    "urpx:unitPrice": {
-      "@type": "xsd:decimal"
-    },
-    "urpx:effectiveDate": {
-      "@type": "xsd:date"
-    },
-    "urpx:effectiveDateTime": {
-      "@type": "xsd:dateTime"
-    },
-    "urpx:baseQuantity": {
-      "@type": "xsd:decimal"
-    },
-    "urpx:startTime": {
-      "@type": "xsd:time"
-    },
-    "urpx:endTime": {
-      "@type": "xsd:time"
-    },
-    "urpx:initialEffectiveDate": {
-      "@type": "xsd:date"
-    },
-    "urpx:startDate": {
-      "@type": "xsd:date"
-    },
-    "urpx:url": {
-      "@type": "xsd:anyURI"
-    },
-    "urpx:dimensionProperty": {
-      "@type": "xsd:anyURI"
-    },
-    "urpx:month": {
-      "@type": "xsd:gMonth"
-    },
-    "urpx:intervalDuration": {
-      "@type": "xsd:duration"
-    },
-    "urpx:touTierNumber": {
-      "@type": "xsd:integer"
-    },
-    "urpx:touPeriodNumber": {
-      "@type": "xsd:integer"
-    },
-    "urpx:pageStart": {
-      "@type": "xsd:integer"
-    },
-    "urpx:pageEnd": {
-      "@type": "xsd:integer"
-    },
-    "urpx:accessURL": {
-      "@type": "xsd:anyURI"
-    },
-    "urpx:dateRetrieved": {
-      "@type": "xsd:date"
-    },
-    "urpx:dateReceived": {
-      "@type": "xsd:date"
-    },
-    "urpx:gYearValue": {
-      "@type": "xsd:gYear"
-    },
-    "urpx:lowerBound": {
-      "@type": "xsd:decimal"
-    },
-    "urpx:upperBound": {
-      "@type": "xsd:decimal"
-    },
-    "urpx:targetURPXVersion": {
-      "@type": "xsd:anyURI"
+  "@context": [
+    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    {
+      "org": "https://urpx-org.github.io/urpx/fixtures/org/",
+      "pge": "https://urpx-org.github.io/urpx/fixtures/pge/"
     }
-  },
+  ],
   "@graph": [
     {
       "@graph": [
@@ -124,9 +55,9 @@
         {
           "@type": "urpx:URPXPackage",
           "@id": "pge:doc-e-tou-c-2026-03-01",
-          "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.3.0/ontology/urpx-ontology.ttl",
+          "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.4.0/ontology/urpx-ontology.ttl",
           "urpx:dateReceived": "2026-02-27",
-          "urpx:hasTariffPublication": {
+          "urpx:packages": {
             "@id": "pge:al-7846-e"
           },
           "urpx:hasRatePlan": {
@@ -152,9 +83,26 @@
             "@type": "urpx:Organization",
             "@id": "org:utility-pge",
             "urpx:legalName": "Pacific Gas & Electric Company",
-            "urpx:eiaId": "14328",
             "urpx:organizationType": {
               "@id": "urpx:utilityOrganization"
+            },
+            "urpx:hasIdentity": {
+              "@type": "urpx:OrganizationIdentity",
+              "@id": "org:utility-pge-identity",
+              "urpx:hasName": {
+                "@type": "urpx:OrganizationName",
+                "@id": "org:utility-pge-name",
+                "urpx:name": "Pacific Gas & Electric Company"
+              },
+              "urpx:hasIdentifier": {
+                "@type": "urpx:OrganizationIdentifier",
+                "@id": "org:utility-pge-eia-14328",
+                "urpx:scheme": {
+                  "@id": "urpx:eiaScheme"
+                },
+                "skos:notation": "14328",
+                "urpx:identifierJurisdiction": "US"
+              }
             }
           },
           "urpx:description": "Voluntary residential TOU schedule with summer/winter peak (4-9 p.m. all days) and off-peak periods. Customers pay a daily base services charge that varies by income tier (CARE / FERA / standard). Baseline credit and Conservation Incentive Adjustment apply per the 10-territory × 2-code × 2-season baseline-allowance matrix and are modeled in the sibling RatePlanModifier file `rate-plan-modifier_pge_e-tou-c-baseline-tier_2026-03-01.jsonld` (full 40-cell matrix, 20 ServiceTiers each referencing a per-cell ProfileAlternative). Vintage PCIA for CCA/DA/TBS customers is modeled as a sibling RatePlanModifier in this file.",
@@ -488,6 +436,10 @@
                   },
                   "urpx:referencesMetricInput": {
                     "@id": "pge:mi-meter-count"
+                  },
+                  "urpx:hasCalculationMethod": {
+                    "@type": "urpx:CalculationMethod",
+                    "urpx:intervalDuration": "P1D"
                   }
                 },
                 {
@@ -865,10 +817,6 @@
                     "@id": "urpx:bundledPortion"
                   },
                   "urpx:baseQuantity": "1",
-                  "urpx:hasCalculationMethod": {
-                    "@type": "urpx:CalculationMethod",
-                    "urpx:intervalDuration": "P1D"
-                  },
                   "urpx:referencesLedger": {
                     "@id": "pge:ledger-base-charge"
                   }
@@ -1380,9 +1328,26 @@
             "@type": "urpx:Organization",
             "@id": "org:utility-pge",
             "urpx:legalName": "Pacific Gas & Electric Company",
-            "urpx:eiaId": "14328",
             "urpx:organizationType": {
               "@id": "urpx:utilityOrganization"
+            },
+            "urpx:hasIdentity": {
+              "@type": "urpx:OrganizationIdentity",
+              "@id": "org:utility-pge-identity",
+              "urpx:hasName": {
+                "@type": "urpx:OrganizationName",
+                "@id": "org:utility-pge-name",
+                "urpx:name": "Pacific Gas & Electric Company"
+              },
+              "urpx:hasIdentifier": {
+                "@type": "urpx:OrganizationIdentifier",
+                "@id": "org:utility-pge-eia-14328",
+                "urpx:scheme": {
+                  "@id": "urpx:eiaScheme"
+                },
+                "skos:notation": "14328",
+                "urpx:identifierJurisdiction": "US"
+              }
             }
           },
           "urpx:hasDataSourceReference": {
@@ -2455,7 +2420,7 @@
     {
       "@type": "urpx:URPXPackage",
       "@id": "pge:doc-e-tou-c-baseline-tier-2026-03-01",
-      "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.3.0/ontology/urpx-ontology.ttl",
+      "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.4.0/ontology/urpx-ontology.ttl",
       "urpx:hasRatePlanModifier": {
         "@type": "urpx:RatePlanModifier",
         "@id": "pge:e-tou-c-baseline-tier",

@@ -11,12 +11,12 @@ created: 1783814400000
 | Field | Value |
 |-------|-------|
 | **Status** | Backlog — post-v0.3.0; the current modeling validates and is acceptable in the interim |
-| **Surface** | `ontology/urpx-ontology.ttl` (one domain extension + notes), `test-cases/pge-e-tou-c-2026-03-01/` (condition rewrite), SHACL follow-through |
+| **Surface** | `ontology/urpx-ontology.ttl` (one domain extension + notes), `test-cases/pge-e-tou-c/` (condition rewrite), SHACL follow-through |
 
 ## Current state
 
 The vintaged Power Charge Indifference Adjustment in
-`test-cases/pge-e-tou-c-2026-03-01/` is one `PriceDefinition` whose per-kWh
+`test-cases/pge-e-tou-c/` is one `PriceDefinition` whose per-kWh
 value varies by the customer's bundled-service departure vintage year. The
 test case models the eighteen vintage rows as `PriceSetAlternative`s selected
 through `ProfileAlternative`s, and each selection condition compares a
@@ -61,7 +61,7 @@ agreement, not on a custom string:
 ## Acceptance
 
 1. No `CustomOperandNode` remains in the vintage selection path of
-   `test-cases/pge-e-tou-c-2026-03-01/`; every condition references declared
+   `test-cases/pge-e-tou-c/`; every condition references declared
    vocabulary terms only.
 2. `urpx:serviceRole` domain includes `AccountServiceAgreement`; annotation
    notes updated; changelog entry under Ontology Changes.
