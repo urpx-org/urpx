@@ -7,7 +7,7 @@
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
-    "urpx": "https://urpx-org.github.io/urpx/ontology/",
+    "urpx": "https://urpx.org/ns/ontology/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "urpx:accessURL": {
       "@type": "xsd:anyURI"

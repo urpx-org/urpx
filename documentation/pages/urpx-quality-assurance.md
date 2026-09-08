@@ -12,7 +12,7 @@ site_position: 4
 
 # URPX Quality Assurance Guidelines
 
-**Version**: 0.4.0 (Pre-draft)
+**Version**: 0.5.0 (Pre-draft)
 **Last Updated**: 2026-07-07
 **Status**: Active
 

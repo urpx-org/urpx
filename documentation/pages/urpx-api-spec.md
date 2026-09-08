@@ -190,7 +190,7 @@ SPARQL is the native query profile for the URPX graph. The example below orders 
 A rate plan version is a derived snapshot with no authored effective date, so recency is read from the start of the version's coverage window (its temporal scope). The version links back to its rate plan through `forRatePlan`; there is no navigation property in the other direction. This query assumes each version carries a coverage-kind temporal scope with a start date. That is a modelling convention for published snapshots, not a field the v0.3.0 shapes yet require.
 
 ```sparql
-PREFIX urpx: <https://urpx-org.github.io/urpx/ontology/>
+PREFIX urpx: <https://urpx.org/ns/ontology/>
 
 SELECT ?version ?coverageStart
 WHERE {
@@ -219,7 +219,7 @@ Three things this example is built to show:
 ```json
 {
   "@context": [
-    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    "https://urpx.org/ns/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
     {
       "cpl": "https://urpx-org.github.io/urpx/fixtures/cpl/",
       "org": "https://urpx-org.github.io/urpx/fixtures/org/",

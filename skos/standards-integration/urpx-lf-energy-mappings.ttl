@@ -9,10 +9,10 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix urpx: <https://schema.urpx.org/> .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
 @prefix lfe: <https://lfenergy.org/cds/> .
 
-<https://schema.urpx.org/mapping/lf-energy> 
+<https://urpx.org/ns/ontology/mapping/lf-energy> 
     a owl:Ontology ;
     rdfs:label "URPX to LF Energy CDS Mappings"@en ;
     dcterms:title "URPX - LF Energy CDS Integration" ;

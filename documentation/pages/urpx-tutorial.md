@@ -12,7 +12,7 @@ site_position: 2
 
 # URPX Tutorial: Building Your First Rate Plan
 
-**Version:** 0.4.0 (Pre-draft)
+**Version:** 0.5.0 (Pre-draft)
 **Last Updated:** 2026-08-20
 **Status:** Active
 
@@ -176,7 +176,7 @@ Let's build a basic residential rate plan step by step using JSON-LD.
 ```json
 {
   "@context": [
-    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    "https://urpx.org/ns/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
     { "ex": "https://example.org/tutorial/" }
   ],
   "@id": "ex:doc-tutorial-basic",

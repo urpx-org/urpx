@@ -68,8 +68,7 @@ URPX mappings enable bidirectional data exchange while preserving meaning and en
 graph TB
     %% Define styles with Paul Tol 2.7 Light colors
     classDef urpxClass fill:#EEDD88,stroke:#000,color:#000
-    classDef gbClass fill:#77AADD,stroke:#000,color:#000
-    classDef cdsClass fill:#99DDFF,stroke:#000,color:#000
+    classDef cdClass fill:#77AADD,stroke:#000,color:#000
     classDef cimClass fill:#44BB99,stroke:#000,color:#000
     classDef otherClass fill:#DDDDDD,stroke:#000,color:#000
     
@@ -77,8 +76,7 @@ graph TB
     URPX[URPX<br/>Rate Plan Standard]:::urpxClass
     
     %% Direct Integrations
-    GB[Green Button<br/>Connect My Data]:::gbClass
-    CDS[LF Energy<br/>Customer Data Spec]:::cdsClass
+    CD[Customer Data]:::cdClass
     CIM[CIM<br/>IEC 61968/61970]:::cimClass
     
     %% Related Standards
@@ -87,16 +85,13 @@ graph TB
     IEEE[IEEE 2030.5<br/>Smart Energy Profile]:::otherClass
     
     %% Connections
-    URPX <-->|Rate Plan & Billing<br/>Structure Alignment| GB
-    URPX <-->|Customer Account<br/>References| CDS
+    URPX <-->|Rate Plan, Billing &<br/>Account Alignment| CD
     URPX <-->|Property<br/>Alignment| CIM
     URPX -->|Rate Plan<br/>Enhancement| OpenEI
     URPX -->|Dynamic Pricing<br/>Events| OpenADR
     URPX -->|DER Rate<br/>Signaling| IEEE
     
-    GB -->|Usage<br/>Measurements| CDS
-    CIM -->|Model<br/>Foundation| CDS
-    CIM -->|Measurement<br/>Definitions| GB
+    CIM -->|Model & Measurement<br/>Foundation| CD
 ```
 
 ### Integration Principles
@@ -166,7 +161,7 @@ Green Button provides interval usage measurements that align with URPX TOU perio
 #### Mapping Example
 ```turtle
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix urpx: <https://urpx-org.github.io/urpx/ontology/> .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
 @prefix gb: <http://naesb.org/espi#> .
 
 # Core Structural Alignment
@@ -202,7 +197,7 @@ URPX maintains privacy boundaries through reference-only integration. URPX billi
 #### Mapping Example
 ```turtle
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix urpx: <https://urpx-org.github.io/urpx/ontology/> .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
 @prefix lfe: <https://lfenergy.org/cds/> .
 
 # Charge Type Mapping
@@ -229,7 +224,7 @@ URPX reuses CIM properties for industry alignment, particularly for measurement 
 #### Mapping Example
 ```turtle
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix urpx: <https://urpx-org.github.io/urpx/ontology/> .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
 @prefix cim: <http://iec.ch/TC57/CIM-generic#> .
 
 # Class Alignment
@@ -250,7 +245,7 @@ urpx:Price skos:exactMatch cim:Price .
 #### Mapping Example
 ```turtle
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix urpx: <https://urpx-org.github.io/urpx/ontology/> .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
 @prefix oadr: <http://openadr.org/oadr#> .
 
 # Event Mapping

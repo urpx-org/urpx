@@ -12,7 +12,7 @@ site_position: 1
 
 # Semantic Web Guide for URPX
 
-**Version:** 0.4.0 (Pre-draft) 
+**Version:** 0.5.0 (Pre-draft) 
 **Last Updated:** 2026-08-20
 
 **A beginner-friendly introduction to semantic web technologies for the URPX working group**
@@ -94,7 +94,7 @@ The semantic web represents data as **interconnected graphs** of meaning, not ju
 ```json
 {
   "@context": [
-    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    "https://urpx.org/ns/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
     { "ex": "https://example.com/" }
   ],
   "@id": "ex:PRC-001",
@@ -225,7 +225,7 @@ JSON-LD is **JSON with a semantic layer**. Developers work with familiar JSON sy
 ```json
 {
   "@context": [
-    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    "https://urpx.org/ns/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
     { "ex": "https://example.com/" }
   ],
   "@id": "ex:PRC-001",
@@ -251,7 +251,7 @@ This example demonstrates the current URPX pattern in which a `PriceSetAlternati
 ```json
 {
   "@context": [
-    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    "https://urpx.org/ns/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
     { "ex": "https://example.com/" }
   ],
   "@graph": [
@@ -375,7 +375,7 @@ SPARQL is the "SQL for RDF" - a query language for semantic data.
 
 **Example 1: Find All Prices in a Rate Plan**
 ```sparql
-PREFIX urpx: <https://urpx-org.github.io/urpx/ontology/>
+PREFIX urpx: <https://urpx.org/ns/ontology/>
 
 SELECT ?price ?name ?unitPrice
 WHERE {

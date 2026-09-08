@@ -5,14 +5,14 @@
 # Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md.
 
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix urpx: <https://schema.urpx.org/> .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
 @prefix schema: <http://schema.org/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-<https://schema.urpx.org/skos-mapping> a owl:Ontology ;
+<https://urpx.org/ns/ontology/mapping/schema-org> a owl:Ontology ;
     rdfs:label "URPX to Schema.org SKOS Mapping"@en ;
-    owl:imports <https://schema.urpx.org/> .
+    owl:imports <https://urpx.org/ns/ontology> .
 
 # ============================================
 # PROPERTY MAPPINGS (URPX -> Schema.org)

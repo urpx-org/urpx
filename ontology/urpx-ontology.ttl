@@ -5,13 +5,13 @@
 # Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md.
 
 # URPX Ontology
-# Version: v0.4.0
+# Version: v0.5.0
 # Generated: 2026-07-07
 
 # ============================================================================
 # ****************    METADATA AND PREFIXES    *******************************
 # ============================================================================
-@prefix urpx: <https://urpx-org.github.io/urpx/ontology/> .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -21,7 +21,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix oa: <http://www.w3.org/ns/oa#> .
 
-<https://urpx-org.github.io/urpx/ontology>
+<https://urpx.org/ns/ontology>
     a owl:Ontology ;
     rdfs:label "URPX Ontology"@en ;
     dcterms:creator "Klaar De Schepper, Una Smithsimon, Flux Tailor LLC" ;
@@ -29,20 +29,20 @@
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
     dcterms:modified "2026-09-08"^^xsd:date ;
     dcterms:title "URPX Ontology" ;
-    dcterms:hasVersion <https://urpx-org.github.io/urpx/ontology/releases/v0.4.0> ;
-    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.4.0/ontology/urpx-ontology.ttl> .
+    dcterms:hasVersion <https://urpx.org/ns/ontology/releases/v0.5.0> ;
+    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.5.0/ontology/urpx-ontology.ttl> .
 
-<https://urpx-org.github.io/urpx/ontology/releases/v0.4.0>
+<https://urpx.org/ns/ontology/releases/v0.5.0>
     a owl:Ontology ;
-    dcterms:isVersionOf <https://urpx-org.github.io/urpx/ontology> ;
+    dcterms:isVersionOf <https://urpx.org/ns/ontology> ;
     dcterms:issued "2026-09-08"^^xsd:date ;
-    owl:versionInfo "0.4.0" ;
-    dcat:distribution <https://urpx-org.github.io/urpx/ontology/releases/v0.4.0/ttl> .
+    owl:versionInfo "0.5.0" ;
+    dcat:distribution <https://urpx.org/ns/ontology/releases/v0.5.0/ttl> .
 
-<https://urpx-org.github.io/urpx/ontology/releases/v0.4.0/ttl>
+<https://urpx.org/ns/ontology/releases/v0.5.0/ttl>
     a dcat:Distribution ;
-    dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.4.0/ontology/urpx-ontology.ttl> ;
-    dcat:downloadURL <https://urpx-org.github.io/urpx/ontology/releases/v0.4.0/ttl/urpx-ontology.ttl> ;
+    dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.5.0/ontology/urpx-ontology.ttl> ;
+    dcat:downloadURL <https://urpx.org/ns/ontology/releases/v0.5.0/ttl/urpx-ontology.ttl> ;
     dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> .
 
 # ============================================================================
@@ -3313,7 +3313,7 @@ urpx:targetURPXVersion a owl:DatatypeProperty ;
     rdfs:domain urpx:URPXPackage ;
     rdfs:range xsd:anyURI ;
     rdfs:comment "The URPX ontology version this document was authored against." ;
-    skos:note "Required on all URPXPackage instances. Enables version-aware parsing and validation. Value should be the ontology version IRI, e.g. 'https://github.com/urpx-org/urpx/raw/v0.4.0/ontology/urpx-ontology.ttl'." .
+    skos:note "Required on all URPXPackage instances. Enables version-aware parsing and validation. Value should be the ontology version IRI, e.g. 'https://github.com/urpx-org/urpx/raw/v0.5.0/ontology/urpx-ontology.ttl'." .
 
 urpx:tariffStatementType a owl:ObjectProperty ;
     rdfs:label "Tariff Statement Type"@en ;
