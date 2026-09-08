@@ -161,7 +161,7 @@ Green Button provides interval usage measurements that align with URPX TOU perio
 #### Mapping Example
 ```turtle
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix urpx: <https://urpx-org.github.io/urpx/ontology/> .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
 @prefix gb: <http://naesb.org/espi#> .
 
 # Core Structural Alignment
@@ -197,7 +197,7 @@ URPX maintains privacy boundaries through reference-only integration. URPX billi
 #### Mapping Example
 ```turtle
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix urpx: <https://urpx-org.github.io/urpx/ontology/> .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
 @prefix lfe: <https://lfenergy.org/cds/> .
 
 # Charge Type Mapping
@@ -224,7 +224,7 @@ URPX reuses CIM properties for industry alignment, particularly for measurement 
 #### Mapping Example
 ```turtle
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix urpx: <https://urpx-org.github.io/urpx/ontology/> .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
 @prefix cim: <http://iec.ch/TC57/CIM-generic#> .
 
 # Class Alignment
@@ -245,7 +245,7 @@ urpx:Price skos:exactMatch cim:Price .
 #### Mapping Example
 ```turtle
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix urpx: <https://urpx-org.github.io/urpx/ontology/> .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
 @prefix oadr: <http://openadr.org/oadr#> .
 
 # Event Mapping

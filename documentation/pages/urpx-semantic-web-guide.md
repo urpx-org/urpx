@@ -375,7 +375,7 @@ SPARQL is the "SQL for RDF" - a query language for semantic data.
 
 **Example 1: Find All Prices in a Rate Plan**
 ```sparql
-PREFIX urpx: <https://urpx-org.github.io/urpx/ontology/>
+PREFIX urpx: <https://urpx.org/ns/ontology/>
 
 SELECT ?price ?name ?unitPrice
 WHERE {

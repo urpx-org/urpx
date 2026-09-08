@@ -10,18 +10,18 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix urpx: <https://urpx-org.github.io/urpx/ontology/> .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
 @prefix gb: <http://naesb.org/espi#> .
 
-<https://urpx-org.github.io/urpx/ontology/mapping/green-button>
+<https://urpx.org/ns/ontology/mapping/green-button>
     a owl:Ontology ;
     rdfs:label "URPX to Green Button Mappings"@en ;
     dcterms:title "URPX - Green Button ESPI Integration" ;
     dcterms:description "SKOS alignment between URPX and the Green Button (NAESB ESPI) standard, verified against the NAESB ESPI V4 schemas."@en ;
     dcterms:created "2026-01-27"^^xsd:date ;
     dcterms:modified "2026-08-31"^^xsd:date ;
-    dcterms:conformsTo <https://urpx-org.github.io/urpx/ontology/releases/v0.3.0> ;
-    rdfs:seeAlso <https://urpx-org.github.io/urpx/ontology> ;
+    dcterms:conformsTo <https://urpx.org/ns/ontology/releases/v0.3.0> ;
+    rdfs:seeAlso <https://urpx.org/ns/ontology> ;
     owl:versionInfo "0.3.0" .
 
 # ============================================
