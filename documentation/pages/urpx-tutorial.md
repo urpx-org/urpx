@@ -176,7 +176,7 @@ Let's build a basic residential rate plan step by step using JSON-LD.
 ```json
 {
   "@context": [
-    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    "https://urpx.org/ns/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
     { "ex": "https://example.org/tutorial/" }
   ],
   "@id": "ex:doc-tutorial-basic",

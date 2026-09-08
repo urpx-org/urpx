@@ -1,6 +1,6 @@
 {
   "@context": [
-    "https://urpx-org.github.io/urpx/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    "https://urpx.org/ns/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
     {
       "org": "https://urpx-org.github.io/urpx/fixtures/org/",
       "pge": "https://urpx-org.github.io/urpx/fixtures/pge/"
