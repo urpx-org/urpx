@@ -12,7 +12,7 @@ site_position: 2
 
 # URPX Tutorial: Building Your First Rate Plan
 
-**Version:** 0.4.0 (Pre-draft)
+**Version:** 0.5.0 (Pre-draft)
 **Last Updated:** 2026-08-20
 **Status:** Active
 

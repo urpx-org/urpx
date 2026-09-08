@@ -3,10 +3,24 @@
 
 # URPX Changelog
 
-**Version:** 0.4.0 (Pre-draft)
+**Version:** 0.5.0 (Pre-draft)
 **Last Updated:** 2026-09-08
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
+
+2026-09-08 — v0.5.0 (the namespace moves to urpx.org)
+---
+
+### Changed
+- The vocabulary namespace moves from `https://urpx-org.github.io/urpx/ontology/` to `https://urpx.org/ns/ontology/`, and the shapes namespace to `https://urpx.org/ns/shacl/core/`. Every term IRI changes its host and path; the local names are unchanged. The ontology and the shapes identify themselves as version 0.5.0, and `owl:versionIRI`, `dcterms:hasVersion`, the release node, its distribution and both download URLs name v0.5.0.
+- The vocabulary terms, the shapes and the semantics are unchanged from v0.4.0. This release moves identifiers only.
+
+### Migration
+- Rebind the `urpx` prefix from `https://urpx-org.github.io/urpx/ontology/` to `https://urpx.org/ns/ontology/`, and `urpx-shacl` to `https://urpx.org/ns/shacl/core/`. A document that binds the old base resolves no term after the move.
+- Point `targetURPXVersion` at `https://github.com/urpx-org/urpx/raw/v0.5.0/ontology/urpx-ontology.ttl`.
+
+### Notes
+- The example data files under `test-cases/` and the published JSON-LD context still reference the previous host. They move to the new namespace in a following release.
 
 2026-08-28 — v0.4.0 (a published JSON-LD context)
 ---
