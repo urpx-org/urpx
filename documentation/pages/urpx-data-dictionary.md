@@ -138,7 +138,7 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 
 ### URPXPackage
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/URPXPackage`  
+**URI:** `https://urpx.org/ns/ontology/URPXPackage`  
 **Parent:** `owl:Thing`
 
 **Description:** URPX's exchange package: a package of URPX content for exchange between systems.
@@ -173,7 +173,7 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 
 ### RatePlan
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/RatePlan`  
+**URI:** `https://urpx.org/ns/ontology/RatePlan`  
 **Parent:** `owl:Thing`
 
 **Description:** Stable identity of a utility rate plan, independent of time.
@@ -222,7 +222,7 @@ derived RatePlanVersion snapshot.
 
 ### RatePlanIdentifier
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/RatePlanIdentifier`  
+**URI:** `https://urpx.org/ns/ontology/RatePlanIdentifier`  
 **Parent:** `owl:Thing`
 
 **Description:** A typed, URI-addressable identifier for a RatePlan (e.g., CA MIDAS RIN, utility tariff code).
@@ -239,7 +239,7 @@ derived RatePlanVersion snapshot.
 
 ### RatePlanVersion
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/RatePlanVersion`  
+**URI:** `https://urpx.org/ns/ontology/RatePlanVersion`  
 **Parent:** `owl:Thing`
 
 **Description:** Derived, materialized complete snapshot of the resolved rate plan facts for a temporal window — the read artifact.
@@ -302,7 +302,7 @@ continuous pricing coverage.
 
 ### RatePlanModifier
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/RatePlanModifier`  
+**URI:** `https://urpx.org/ns/ontology/RatePlanModifier`  
 **Parent:** `owl:Thing`
 
 **Description:** Stable identity of a rate plan modifier, independent of time.
@@ -348,7 +348,7 @@ demand response programs, and renewable energy riders.
 
 ### RatePlanModifierIdentifier
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/RatePlanModifierIdentifier`  
+**URI:** `https://urpx.org/ns/ontology/RatePlanModifierIdentifier`  
 **Parent:** `owl:Thing`
 
 **Description:** A typed, URI-addressable identifier for a RatePlanModifier (e.g., CA MIDAS RIN, utility tariff code).
@@ -365,7 +365,7 @@ demand response programs, and renewable energy riders.
 
 ### RatePlanModifierVersion
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/RatePlanModifierVersion`  
+**URI:** `https://urpx.org/ns/ontology/RatePlanModifierVersion`  
 **Parent:** `owl:Thing`
 
 **Description:** Derived, materialized snapshot of the resolved rate plan modifier facts for a temporal window.
@@ -425,7 +425,7 @@ Modifier versions track changes to rider rates and conditions over time.
 
 ### AccountServiceAgreement
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/AccountServiceAgreement`  
+**URI:** `https://urpx.org/ns/ontology/AccountServiceAgreement`  
 **Parent:** `owl:Thing`
 
 **Description:** Links rate plan contracts to service delivery terms
@@ -445,7 +445,7 @@ Modifier versions track changes to rider rates and conditions over time.
 
 ### PricingModel
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/PricingModel`  
+**URI:** `https://urpx.org/ns/ontology/PricingModel`  
 **Parent:** `owl:Thing`
 
 **Description:** Authored, citable, possibly-partial statement of pricing for a rate plan — the unit a publication actually carries.
@@ -484,7 +484,7 @@ Modifier versions track changes to rider rates and conditions over time.
 
 ### ModelCollection
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ModelCollection`  
+**URI:** `https://urpx.org/ns/ontology/ModelCollection`  
 **Parent:** `owl:Thing`
 
 **Description:** Authored grouping of PricingModels under a persisting, citable URI, with machine-readable role/kind.
@@ -501,7 +501,7 @@ Modifier versions track changes to rider rates and conditions over time.
 
 ### Prices
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/Prices`  
+**URI:** `https://urpx.org/ns/ontology/Prices`  
 **Parent:** `owl:Thing`
 
 **Description:** Centralized container for all price-related content within a rate plan version. Consolidates base price sets and alternative price sets, providing single point of access for all prices. Each RatePlanVersion has exactly one Prices container.
@@ -518,7 +518,7 @@ Modifier versions track changes to rider rates and conditions over time.
 
 ### PriceSet
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/PriceSet`  
+**URI:** `https://urpx.org/ns/ontology/PriceSet`  
 **Parent:** `owl:Thing`
 
 **Description:** Logical grouping of related prices for organization and calculation
@@ -576,7 +576,7 @@ presentation.
 
 ### PriceSetAlternative
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/PriceSetAlternative`  
+**URI:** `https://urpx.org/ns/ontology/PriceSetAlternative`  
 **Parent:** `PriceSet`
 
 **Description:** Price set that represents one alternative in a mutually exclusive set of options. Subclass of PriceSet with required reference to applicable ProfileAlternative. Lives in Prices container alongside base price sets, but distinguished by its connection to dimension-based alternatives.
@@ -629,7 +629,7 @@ presentation.
 
 ### PriceSetAlternatives
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/PriceSetAlternatives`  
+**URI:** `https://urpx.org/ns/ontology/PriceSetAlternatives`  
 **Parent:** `owl:Thing`
 
 **Description:** Set of price sets that represents a set of alternatives in a mutually exclusive set of options.
@@ -647,7 +647,7 @@ presentation.
 
 ### Price
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/Price`  
+**URI:** `https://urpx.org/ns/ontology/Price`  
 **Parent:** `owl:Thing`
 
 **Description:** Individual pricing component with an amount and applicability rules
@@ -708,7 +708,7 @@ rules, and pricing parameters.
 
 ### PriceDefinition
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/PriceDefinition`  
+**URI:** `https://urpx.org/ns/ontology/PriceDefinition`  
 **Parent:** `owl:Thing`
 
 **Description:** A structural definition of a price, excluding instance-specific details like start/end dates, amount, and unit price.
@@ -763,7 +763,7 @@ specifications.
 
 ### PriceDefinitionReference
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/PriceDefinitionReference`  
+**URI:** `https://urpx.org/ns/ontology/PriceDefinitionReference`  
 **Parent:** `owl:Thing`
 
 **Description:** Addressable relationship between a model or snapshot and a PriceDefinition: the place inclusion, resolution mode, source evidence, temporal scope, and resolution provenance live.
@@ -781,7 +781,7 @@ specifications.
 
 ### PriceSummary
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/PriceSummary`  
+**URI:** `https://urpx.org/ns/ontology/PriceSummary`  
 **Parent:** `owl:Thing`
 
 **Description:** Total or subtotal aggregating multiple price line items
@@ -798,7 +798,7 @@ specifications.
 
 ### PriceUpdateRule
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/PriceUpdateRule`  
+**URI:** `https://urpx.org/ns/ontology/PriceUpdateRule`  
 **Parent:** `owl:Thing`
 
 **Description:** Rule defining when and how dynamic prices are calculated
@@ -819,7 +819,7 @@ specifications.
 
 ### CoverageClaim
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/CoverageClaim`  
+**URI:** `https://urpx.org/ns/ontology/CoverageClaim`  
 **Parent:** `owl:Thing`
 
 **Description:** A scoped, computed verdict on what can be answered from a snapshot or cost model under stated conditions.
@@ -839,7 +839,7 @@ specifications.
 
 ### Evaluation
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/Evaluation`  
+**URI:** `https://urpx.org/ns/ontology/Evaluation`  
 **Parent:** `owl:Thing`
 
 **Description:** Portable rationale behind a snapshot or coverage verdict: which inputs were selected, excluded, or missing, and why.
@@ -858,7 +858,7 @@ specifications.
 
 ### ModelExclusion
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ModelExclusion`  
+**URI:** `https://urpx.org/ns/ontology/ModelExclusion`  
 **Parent:** `owl:Thing`
 
 **Description:** Records, on a coverage claim's evaluation, that a pricing model listed in the version's consolidatedFrom set contributed no element to the snapshot, and why.
@@ -879,7 +879,7 @@ specifications.
 
 ### SourcePublication
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/SourcePublication`  
+**URI:** `https://urpx.org/ns/ontology/SourcePublication`  
 **Parent:** `owl:Thing`
 
 **Description:** An external, third-party published artifact (regulatory filing, PSC statement, supplier price sheet, notice, contract) cited as source evidence by URPX facts.
@@ -916,7 +916,7 @@ specifications.
 
 ### TariffFiling
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/TariffFiling`  
+**URI:** `https://urpx.org/ns/ontology/TariffFiling`  
 **Parent:** `owl:Thing`
 
 **Description:** An excerpt of a SourcePublication that contains one or more PricingModels — the regulatory publication unit.
@@ -949,7 +949,7 @@ specifications.
 
 ### DataSourceReference
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/DataSourceReference`  
+**URI:** `https://urpx.org/ns/ontology/DataSourceReference`  
 **Parent:** `owl:Thing`
 
 **Description:** Structured reference from an URPX fact to the external source it was interpreted from (publication, API, database, manual entry) — filename/URL, media type, and an optional sub-document selector.
@@ -998,7 +998,7 @@ specifications.
 
 ### MetricInput
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/MetricInput`  
+**URI:** `https://urpx.org/ns/ontology/MetricInput`  
 **Parent:** `owl:Thing`
 
 **Description:** Organizational unit for pricing rules supporting measured MetricInputs (raw meter data), profile MetricInputs (profile properties), and calculated MetricInputs (derived metrics)
@@ -1025,7 +1025,7 @@ MetricInputs rather than defining measurements inline.
 
 ### MetricSpecification
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/MetricSpecification`  
+**URI:** `https://urpx.org/ns/ontology/MetricSpecification`  
 **Parent:** `owl:Thing`
 
 **Description:** Measurement specification for common billing scenarios
@@ -1055,7 +1055,7 @@ Multiple MetricSpecifications can compose a single MetricInput.
 
 ### CalculationMethod
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/CalculationMethod`  
+**URI:** `https://urpx.org/ns/ontology/CalculationMethod`  
 **Parent:** `owl:Thing`
 
 **Description:** Defines how a measured or derived quantity is calculated or reduced over a stated interval
@@ -1084,7 +1084,7 @@ Multiple MetricSpecifications can compose a single MetricInput.
 
 ### PlanElements
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/PlanElements`  
+**URI:** `https://urpx.org/ns/ontology/PlanElements`  
 **Parent:** `owl:Thing`
 
 **Description:** Centralized container for temporal and pricing elements of rate plan or modifier versions
@@ -1109,7 +1109,7 @@ container focused on pricing data alone.
 
 ### BillingModel
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/BillingModel`  
+**URI:** `https://urpx.org/ns/ontology/BillingModel`  
 **Parent:** `owl:Thing`
 
 **Description:** Billing-specific rules and calculation patterns for rate plan version with ledger-based organization
@@ -1132,7 +1132,7 @@ including TOU schedules, billing cycles, and ledger configuration.
 
 ### BillingCycle
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/BillingCycle`  
+**URI:** `https://urpx.org/ns/ontology/BillingCycle`  
 **Parent:** `owl:Thing`
 
 **Description:** Standardized billing period definitions
@@ -1157,7 +1157,7 @@ including TOU schedules, billing cycles, and ledger configuration.
 
 ### Ledger
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/Ledger`  
+**URI:** `https://urpx.org/ns/ontology/Ledger`  
 **Parent:** `owl:Thing`
 
 **Description:** Enables multiple ledgers for separation of supply vs delivery charges or other billing segregations
@@ -1186,7 +1186,7 @@ apply to that measurement.
 
 ### ServiceTier
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ServiceTier`  
+**URI:** `https://urpx.org/ns/ontology/ServiceTier`  
 **Parent:** `owl:Thing`
 
 **Description:** Logical tier identity for tiered pricing
@@ -1203,7 +1203,7 @@ apply to that measurement.
 
 ### ServiceTiers
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ServiceTiers`  
+**URI:** `https://urpx.org/ns/ontology/ServiceTiers`  
 **Parent:** `owl:Thing`
 
 **Description:** Container for multiple service tiers within a billing model
@@ -1227,7 +1227,7 @@ apply to that measurement.
 
 ### ServiceBracket
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ServiceBracket`  
+**URI:** `https://urpx.org/ns/ontology/ServiceBracket`  
 **Parent:** `owl:Thing`
 
 **Description:** Contextual boundary definition for a service tier
@@ -1251,7 +1251,7 @@ apply to that measurement.
 
 ### Season
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/Season`  
+**URI:** `https://urpx.org/ns/ontology/Season`  
 **Parent:** `owl:Thing`
 
 **Description:** Seasonal period definition with flexible date or month-based specifications
@@ -1281,7 +1281,7 @@ Seasons recur yearly and are referenced by TimeBrackets.
 
 ### TOUSchedule
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/TOUSchedule`  
+**URI:** `https://urpx.org/ns/ontology/TOUSchedule`  
 **Parent:** `owl:Thing`
 
 **Description:** Container for time-based pricing tiers and periods with optional holiday calendar
@@ -1309,7 +1309,7 @@ periods with specific time brackets.
 
 ### TOUTier
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/TOUTier`  
+**URI:** `https://urpx.org/ns/ontology/TOUTier`  
 **Parent:** `owl:Thing`
 
 **Description:** Price tier grouping TOU periods of similar pricing level (peak, mid-peak, off-peak)
@@ -1327,7 +1327,7 @@ periods with specific time brackets.
 
 ### TOUPeriod
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/TOUPeriod`  
+**URI:** `https://urpx.org/ns/ontology/TOUPeriod`  
 **Parent:** `owl:Thing`
 
 **Description:** Specific time period with unique ID for linking to prices
@@ -1351,7 +1351,7 @@ periods with specific time brackets.
 
 ### TimeBracket
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/TimeBracket`  
+**URI:** `https://urpx.org/ns/ontology/TimeBracket`  
 **Parent:** `owl:Thing`
 
 **Description:** Time window definition with day type and holiday handling
@@ -1371,7 +1371,7 @@ periods with specific time brackets.
 
 ### HolidayCalendar
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/HolidayCalendar`  
+**URI:** `https://urpx.org/ns/ontology/HolidayCalendar`  
 **Parent:** `owl:Thing`
 
 **Description:** Collection of holidays affecting TOU period application with versioning support
@@ -1390,7 +1390,7 @@ periods with specific time brackets.
 
 ### Holiday
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/Holiday`  
+**URI:** `https://urpx.org/ns/ontology/Holiday`  
 **Parent:** `owl:Thing`
 
 **Description:** Single holiday definition with date or calculation rule
@@ -1408,7 +1408,7 @@ periods with specific time brackets.
 
 ### LocationDataSet
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/LocationDataSet`  
+**URI:** `https://urpx.org/ns/ontology/LocationDataSet`  
 **Parent:** `owl:Thing`
 
 **Description:** Versioned auxiliary location data including holiday calendars, timezone, and DST rules
@@ -1427,7 +1427,7 @@ periods with specific time brackets.
 
 ### DynamicPricing
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/DynamicPricing`  
+**URI:** `https://urpx.org/ns/ontology/DynamicPricing`  
 **Parent:** `owl:Thing`
 
 **Description:** Configuration for real-time or event-based variable pricing
@@ -1447,7 +1447,7 @@ periods with specific time brackets.
 
 ### TemporalScope
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/TemporalScope`  
+**URI:** `https://urpx.org/ns/ontology/TemporalScope`  
 **Parent:** `owl:Thing`
 
 **Description:** A role-tagged time span: which clock a date range refers to.
@@ -1467,7 +1467,7 @@ periods with specific time brackets.
 
 ### TemporalPeriod
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/TemporalPeriod`  
+**URI:** `https://urpx.org/ns/ontology/TemporalPeriod`  
 **Parent:** `owl:Thing`
 
 **Description:** A reusable named time interval (e.g. 'Q1 2026').
@@ -1488,7 +1488,7 @@ periods with specific time brackets.
 
 ### EligibilityRule
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/EligibilityRule`  
+**URI:** `https://urpx.org/ns/ontology/EligibilityRule`  
 **Parent:** `owl:Thing`
 
 **Description:** Conditions determining customer and service point qualification
@@ -1514,7 +1514,7 @@ and proper rate application.
 
 ### ApplicabilityRule
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ApplicabilityRule`  
+**URI:** `https://urpx.org/ns/ontology/ApplicabilityRule`  
 **Parent:** `owl:Thing`
 
 **Description:** Conditions determining when a price applies to usage
@@ -1535,7 +1535,7 @@ and proper rate application.
 
 ### ApplicabilityGroup
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ApplicabilityGroup`  
+**URI:** `https://urpx.org/ns/ontology/ApplicabilityGroup`  
 **Parent:** `owl:Thing`
 
 **Description:** Geographic and service class applicability rules for statement prices
@@ -1557,7 +1557,7 @@ location, customer type, or usage patterns.
 
 ### ConditionExpression
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ConditionExpression`  
+**URI:** `https://urpx.org/ns/ontology/ConditionExpression`  
 **Parent:** `owl:Thing`
 
 **Description:** Rule-level wrapper for structured condition applicability used in EligibilityRule, ApplicabilityRule, ApplicabilityGroup, ProfileAlternative
@@ -1574,7 +1574,7 @@ location, customer type, or usage patterns.
 
 ### ConditionNode
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ConditionNode`  
+**URI:** `https://urpx.org/ns/ontology/ConditionNode`  
 **Parent:** `owl:Thing`
 
 **Description:** Abstract superclass for nodes that may appear in a ConditionExpression tree
@@ -1583,7 +1583,7 @@ location, customer type, or usage patterns.
 
 ### BooleanOperationNode
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/BooleanOperationNode`  
+**URI:** `https://urpx.org/ns/ontology/BooleanOperationNode`  
 **Parent:** `ConditionNode`
 
 **Description:** Boolean combinator node in a condition expression tree
@@ -1601,7 +1601,7 @@ location, customer type, or usage patterns.
 
 ### ComparisonNode
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ComparisonNode`  
+**URI:** `https://urpx.org/ns/ontology/ComparisonNode`  
 **Parent:** `ConditionNode`
 
 **Description:** Atomic comparison predicate in a condition expression
@@ -1621,7 +1621,7 @@ location, customer type, or usage patterns.
 
 ### OperationNode
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/OperationNode`  
+**URI:** `https://urpx.org/ns/ontology/OperationNode`  
 **Parent:** `owl:Thing`
 
 **Description:** Expression node for nested arithmetic or derived comparison preparation
@@ -1639,7 +1639,7 @@ location, customer type, or usage patterns.
 
 ### CustomOperandNode
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/CustomOperandNode`  
+**URI:** `https://urpx.org/ns/ontology/CustomOperandNode`  
 **Parent:** `owl:Thing`
 
 **Description:** Fallback operand node for custom condition properties and custom literal values
@@ -1665,7 +1665,7 @@ location, customer type, or usage patterns.
 
 ### DatatypeOperandNode
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/DatatypeOperandNode`  
+**URI:** `https://urpx.org/ns/ontology/DatatypeOperandNode`  
 **Parent:** `owl:Thing`
 
 **Description:** Operand node for datatype-valued condition properties and datatype literal values
@@ -1691,7 +1691,7 @@ location, customer type, or usage patterns.
 
 ### ObjectOperandNode
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ObjectOperandNode`  
+**URI:** `https://urpx.org/ns/ontology/ObjectOperandNode`  
 **Parent:** `owl:Thing`
 
 **Description:** Operand node for object-valued condition properties and object references
@@ -1708,7 +1708,7 @@ location, customer type, or usage patterns.
 
 ### GeneralRule
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/GeneralRule`  
+**URI:** `https://urpx.org/ns/ontology/GeneralRule`  
 **Parent:** `owl:Thing`
 
 **Description:** A rule or statement that applies across rate plans and rate plan versions, not tied to a single billing context
@@ -1732,7 +1732,7 @@ location, customer type, or usage patterns.
 
 ### Profile
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/Profile`  
+**URI:** `https://urpx.org/ns/ontology/Profile`  
 **Parent:** `owl:Thing`
 
 **Description:** Abstract parent for all profile types used in rate plan eligibility and service delivery evaluation
@@ -1741,7 +1741,7 @@ location, customer type, or usage patterns.
 
 ### CustomerProfile
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/CustomerProfile`  
+**URI:** `https://urpx.org/ns/ontology/CustomerProfile`  
 **Parent:** `Profile`
 
 **Description:** Customer business and social characteristics for rate plan eligibility and program participation evaluation
@@ -1776,7 +1776,7 @@ exposing individual customer data.
 
 ### ServicePointProfile
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ServicePointProfile`  
+**URI:** `https://urpx.org/ns/ontology/ServicePointProfile`  
 **Parent:** `Profile`
 
 **Description:** Service delivery point characteristics for rate plan eligibility and service configuration evaluation
@@ -1817,7 +1817,7 @@ installations, and connection type.
 
 ### ProfileAlternative
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ProfileAlternative`  
+**URI:** `https://urpx.org/ns/ontology/ProfileAlternative`  
 **Parent:** `owl:Thing`
 
 **Description:** One alternative configuration among mutually exclusive options, selected by evaluating its condition expression against customer or service point characteristics.
@@ -1834,7 +1834,7 @@ installations, and connection type.
 
 ### ProfileAlternatives
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ProfileAlternatives`  
+**URI:** `https://urpx.org/ns/ontology/ProfileAlternatives`  
 **Parent:** `owl:Thing`
 
 **Description:** Container for alternative dimension structures requiring user selection. Provides the bridge between customer profile characteristics and mutually exclusive alternative choices. Each ProfileAlternatives instance groups related alternative dimension sets that define the available options for a specific selection context.
@@ -1851,7 +1851,7 @@ installations, and connection type.
 
 ### AlternativeDimension
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/AlternativeDimension`  
+**URI:** `https://urpx.org/ns/ontology/AlternativeDimension`  
 **Parent:** `owl:Thing`
 
 **Description:** Dimension along which price set alternatives differ using ontology properties
@@ -1870,7 +1870,7 @@ installations, and connection type.
 
 ### AlternativeDimensions
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/AlternativeDimensions`  
+**URI:** `https://urpx.org/ns/ontology/AlternativeDimensions`  
 **Parent:** `owl:Thing`
 
 **Description:** Dimensions defining the set of profileAlternatives. 
@@ -1885,7 +1885,7 @@ installations, and connection type.
 
 ### ServiceClass
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ServiceClass`  
+**URI:** `https://urpx.org/ns/ontology/ServiceClass`  
 **Parent:** `owl:Thing`
 
 **Description:** Region-specific rate plan classification with raw and cleaned identifiers
@@ -1908,7 +1908,7 @@ while preserving original designations.
 
 ### RateGroup
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/RateGroup`  
+**URI:** `https://urpx.org/ns/ontology/RateGroup`  
 **Parent:** `owl:Thing`
 
 **Description:** Specific rate grouping within a service class (e.g., Rate I, Rate II)
@@ -1925,7 +1925,7 @@ while preserving original designations.
 
 ### ProgramEnrollment
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ProgramEnrollment`  
+**URI:** `https://urpx.org/ns/ontology/ProgramEnrollment`  
 **Parent:** `owl:Thing`
 
 **Description:** Customer enrollment in utility programs for eligibility determination
@@ -1946,7 +1946,7 @@ while preserving original designations.
 
 ### PriorRatePlan
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/PriorRatePlan`  
+**URI:** `https://urpx.org/ns/ontology/PriorRatePlan`  
 **Parent:** `owl:Thing`
 
 **Description:** Reference to customer's previous rate plan for eligibility determination
@@ -1966,7 +1966,7 @@ while preserving original designations.
 
 ### DistributedEnergyResource
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/DistributedEnergyResource`  
+**URI:** `https://urpx.org/ns/ontology/DistributedEnergyResource`  
 **Parent:** `owl:Thing`
 
 **Description:** On-site generation and storage capabilities
@@ -1996,7 +1996,7 @@ while preserving original designations.
 
 ### Scenario
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/Scenario`  
+**URI:** `https://urpx.org/ns/ontology/Scenario`  
 **Parent:** `owl:Thing`
 
 **Description:** Input container grouping customer and service point profiles for broad rate plan eligibility evaluation.
@@ -2012,7 +2012,7 @@ while preserving original designations.
 
 ### ScenarioCostModel
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ScenarioCostModel`  
+**URI:** `https://urpx.org/ns/ontology/ScenarioCostModel`  
 **Parent:** `owl:Thing`
 
 **Description:** The cost-computation contract for a scenario: the bound inputs (which agreements, plans, modifiers, usage, profile) and the output schema needed to compute and explain a cost.
@@ -2030,7 +2030,7 @@ while preserving original designations.
 
 ### ScenarioCostResult
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ScenarioCostResult`  
+**URI:** `https://urpx.org/ns/ontology/ScenarioCostResult`  
 **Parent:** `owl:Thing`
 
 **Description:** The computed output of a ScenarioCostModel for a scenario: the cost result, with line items and a CoverageClaim.
@@ -2048,7 +2048,7 @@ while preserving original designations.
 
 ### RateCase
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/RateCase`  
+**URI:** `https://urpx.org/ns/ontology/RateCase`  
 **Parent:** `owl:Thing`
 
 **Description:** Public service commission proceeding concerning rate plan or price changes for cost-of-service regulated utilities
@@ -2071,7 +2071,7 @@ while preserving original designations.
 
 ### Organization
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/Organization`  
+**URI:** `https://urpx.org/ns/ontology/Organization`  
 **Parent:** `owl:Thing`
 
 **Description:** Any entity participating in energy markets or rate regulation
@@ -2098,7 +2098,7 @@ energy service providers.
 
 ### RegulatoryAuthority
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/RegulatoryAuthority`  
+**URI:** `https://urpx.org/ns/ontology/RegulatoryAuthority`  
 **Parent:** `Organization`
 
 **Description:** Entity with jurisdiction to approve and regulate utility rates
@@ -2123,7 +2123,7 @@ energy service providers.
 
 ### SystemOperator
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/SystemOperator`  
+**URI:** `https://urpx.org/ns/ontology/SystemOperator`  
 **Parent:** `Organization`
 
 **Description:** ISO, RTO, or transmission system operator managing grid operations
@@ -2144,7 +2144,7 @@ energy service providers.
 
 ### UtilityOperator
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/UtilityOperator`  
+**URI:** `https://urpx.org/ns/ontology/UtilityOperator`  
 **Parent:** `Organization`
 
 **Description:** Entity providing utility services and publishing rate plans
@@ -2167,7 +2167,7 @@ energy service providers.
 
 ### EnergyServiceProvider
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/EnergyServiceProvider`  
+**URI:** `https://urpx.org/ns/ontology/EnergyServiceProvider`  
 **Parent:** `Organization`
 
 **Description:** Retail energy provider, aggregator, or energy service company
@@ -2190,7 +2190,7 @@ energy service providers.
 
 ### OrganizationEvent
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/OrganizationEvent`  
+**URI:** `https://urpx.org/ns/ontology/OrganizationEvent`  
 **Parent:** `owl:Thing`
 
 **Description:** Corporate transition event affecting organization structure or identity
@@ -2205,7 +2205,7 @@ energy service providers.
 
 ### OrganizationIdentity
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/OrganizationIdentity`  
+**URI:** `https://urpx.org/ns/ontology/OrganizationIdentity`  
 **Parent:** `owl:Thing`
 
 **Description:** Temporal identity record tracking names and identifiers over time
@@ -2223,7 +2223,7 @@ energy service providers.
 
 ### OrganizationIdentifier
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/OrganizationIdentifier`  
+**URI:** `https://urpx.org/ns/ontology/OrganizationIdentifier`  
 **Parent:** `owl:Thing`
 
 **Description:** External identifier from regulatory or financial systems
@@ -2240,7 +2240,7 @@ energy service providers.
 
 ### IdentifierScheme
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/IdentifierScheme`  
+**URI:** `https://urpx.org/ns/ontology/IdentifierScheme`  
 **Parent:** `owl:Thing`
 
 **Description:** A register or naming authority that issues identifiers.
@@ -2249,7 +2249,7 @@ energy service providers.
 
 ### OrganizationName
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/OrganizationName`  
+**URI:** `https://urpx.org/ns/ontology/OrganizationName`  
 **Parent:** `owl:Thing`
 
 **Description:** Name variant with type, language, and canonical/preferred status
@@ -2268,7 +2268,7 @@ energy service providers.
 
 ### OrganizationTransition
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/OrganizationTransition`  
+**URI:** `https://urpx.org/ns/ontology/OrganizationTransition`  
 **Parent:** `owl:Thing`
 
 **Description:** N-ary relator for complex organization transitions
@@ -2285,7 +2285,7 @@ energy service providers.
 
 ### AdministrativeBoundary
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/AdministrativeBoundary`  
+**URI:** `https://urpx.org/ns/ontology/AdministrativeBoundary`  
 **Parent:** `owl:Thing`
 
 **Description:** Government-defined geographic boundary for administrative purposes
@@ -2298,7 +2298,7 @@ relevant to utility regulation — states, counties, and municipalities.
 
 ### State
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/State`  
+**URI:** `https://urpx.org/ns/ontology/State`  
 **Parent:** `AdministrativeBoundary`
 
 **Description:** State, province, or equivalent first-level administrative division
@@ -2307,7 +2307,7 @@ relevant to utility regulation — states, counties, and municipalities.
 
 ### County
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/County`  
+**URI:** `https://urpx.org/ns/ontology/County`  
 **Parent:** `AdministrativeBoundary`
 
 **Description:** County or equivalent second-level administrative division
@@ -2316,7 +2316,7 @@ relevant to utility regulation — states, counties, and municipalities.
 
 ### Municipality
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/Municipality`  
+**URI:** `https://urpx.org/ns/ontology/Municipality`  
 **Parent:** `AdministrativeBoundary`
 
 **Description:** City, town, or incorporated municipal area
@@ -2325,7 +2325,7 @@ relevant to utility regulation — states, counties, and municipalities.
 
 ### ServiceTerritory
 
-**URI:** `https://urpx-org.github.io/urpx/ontology/ServiceTerritory`  
+**URI:** `https://urpx.org/ns/ontology/ServiceTerritory`  
 **Parent:** `owl:Thing`
 
 **Description:** Geographic area where a utility provides service to customers
