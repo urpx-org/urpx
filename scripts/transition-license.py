@@ -118,7 +118,7 @@ def transition_file(
 
 def download_licenses() -> None:
     """Invoke reuse to fetch W3C and CDLA-Permissive-2.0 texts."""
-    for lic in ("W3C-20231102", "CDLA-Permissive-2.0"):
+    for lic in ("W3C-20150513", "CDLA-Permissive-2.0"):
         print(f"  Fetching {lic} ...")
         subprocess.run(
             ["reuse", "download", lic], cwd=REPO_ROOT, check=False
@@ -205,7 +205,7 @@ def main() -> int:
     if not args.apply:
         print("Preview only. Run with --apply to actually modify files.")
         print("Also pass --download-licenses if LICENSES/ does not yet")
-        print("contain W3C-20231102.txt and CDLA-Permissive-2.0.txt.")
+        print("contain W3C-20150513.txt and CDLA-Permissive-2.0.txt.")
 
     return 0
 

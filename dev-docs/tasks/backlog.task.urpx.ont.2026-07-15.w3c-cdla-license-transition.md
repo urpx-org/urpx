@@ -31,7 +31,7 @@ Follow the procedure in [TRANSITION.md](../../TRANSITION.md) §4:
 
 1. Record the acceptance date and the working group decision reference.
 2. Preview the transition (`python3 scripts/transition-license.py`) and confirm
-   every specification file shows `Apache-2.0 -> W3C-20231102`, every dataset shows
+   every specification file shows `Apache-2.0 -> W3C-20150513`, every dataset shows
    `Apache-2.0 -> CDLA-Permissive-2.0`, and source and meta files are unchanged.
 3. Download the new license texts into `LICENSES/`
    (`python3 scripts/transition-license.py --download-licenses`).

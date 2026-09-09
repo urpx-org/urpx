@@ -3,9 +3,10 @@
 
 # URPX License Transition Plan
 
-**Status:** Active — applies while URPX is in pre-Draft stage.
+**Status:** Completed on 2026-09-09.
 **Trigger event:** Working Group formal acceptance of URPX as a Draft.
-**Last reviewed:** 2026-07-14
+Satisfied 2026-07-17.
+**Last reviewed:** 2026-09-09.
 
 This document explains how the URPX repository will transition license
 identifiers when the URPX Working Group (under LFESS) formally accepts
@@ -15,15 +16,9 @@ source of truth for the transition manifest consumed by
 
 ---
 
-## 1. Current state (pre-Draft)
+## 1. Current state (Draft, transitioned 2026-09-09)
 
-All files in this repository are currently licensed under **Apache
-License, Version 2.0**. This blanket licensing applies because URPX is
-still in pre-Draft stage. The Apache-2.0 license permits the Working
-Group and prospective implementers to review, fork, and evaluate the
-materials without IP friction.
-
-See [LICENSE](LICENSE) for the full Apache-2.0 text.
+Following Working Group Draft acceptance (2026-07-17), files transition by the categories in section 2: specification files carry `W3C-20150513`, datasets carry `CDLA-Permissive-2.0`, and source and meta files stay under **Apache License, Version 2.0**, unchanged. See [LICENSE](LICENSE) for the Apache-2.0 text and `LICENSES/` for the others.
 
 ## 2. Post-Draft target licenses
 
@@ -31,7 +26,7 @@ Upon Working Group Draft acceptance, files transition by category:
 
 | Category | Current | Post-Draft target | Rationale |
 |---|---|---|---|
-| **Specification documents** | Apache-2.0 | W3C Document License | Standard W3C-compatible license for specification text. Covers ontology, SHACL, SKOS mappings, and all document pages that define the URPX standard. |
+| **Specification documents** | Apache-2.0 | W3C-20150513 (W3C Software Notice and Document License) | Standard W3C-compatible license for specification text. Covers ontology, SHACL, SKOS mappings, and all document pages that define the URPX standard. |
 | **Datasets** | Apache-2.0 | CDLA-Permissive-2.0 | Community Data License Agreement Permissive 2.0 — industry standard for open datasets distributed alongside specifications. Covers test-case data and index files. |
 | **Source code / tooling** | Apache-2.0 | Apache-2.0 (no change) | Scripts and executable tooling remain under Apache-2.0 regardless of specification status. |
 | **Meta files** | Apache-2.0 | Apache-2.0 (no change) | LICENSE, NOTICE, CONTRIBUTING, SECURITY, README, REUSE.toml, .gitignore, .gitattributes remain under Apache-2.0 — they govern the project, they are not the specification. |
@@ -53,8 +48,8 @@ copyright_holder = "Flux Tailor LLC"
 [[category]]
 name = "specification"
 current_license = "Apache-2.0"
-future_license = "W3C-20231102"
-future_license_name = "W3C Document License"
+future_license = "W3C-20150513"
+future_license_name = "W3C Software Notice and Document License (2015-05-13)"
 paths = [
     "ontology/**/*.ttl",
     "shacl/**/*.ttl",
@@ -64,6 +59,7 @@ paths = [
     "documentation/diagrams/**/*.md",
     "documentation/diagrams/**/*.mmd",
     "documentation/diagrams/**/*.svg",
+    "context/**/*.jsonld",
 ]
 
 # -----------------------------------------------------------------------------
@@ -77,6 +73,7 @@ future_license_name = "Community Data License Agreement - Permissive 2.0"
 paths = [
     "test-cases/**/*.jsonld",
     "test-cases/**/*.csv",
+    "test-cases/index.md",
 ]
 
 # -----------------------------------------------------------------------------
@@ -140,6 +137,10 @@ paths = [
 ]
 ```
 
+**Note on the specification target identifier, resolved 2026-09-09.** The manifest originally named `W3C-20231102`, which does not resolve on the SPDX License List (`reuse download W3C-20231102` fails with "not a valid SPDX License Identifier", and `https://spdx.org/licenses/W3C-20231102.html` returns 404). The chair ruled `W3C-20150513` (W3C Software Notice and Document License, 2015-05-13): its own SPDX record lists `w3c.org/copyright/software-license-2023/` in `seeAlso`, so SPDX has already folded the 2023 W3C license update into that identifier rather than minting a new one. The bare `W3C` identifier (2002-12-31) was considered and set aside; it is an older, different license with no "Document" in its name and no connection to the 2023 text. The manifest above carries the resolved identifier and every specification file has been transitioned to it.
+
+`documentation/pages/urpx-data-dictionary.md` and `documentation/diagrams/**/*.svg` (seventeen files, including the ten `documentation/diagrams/dictionary/` pairs) match this section's globs conceptually but carry no inline header or sidecar; REUSE.toml annotations carry their license instead, since the script's rewrite cannot reach either. Both now carry `W3C-20150513` there.
+
 ## 4. Transition procedure
 
 When the Working Group accepts URPX to Draft:
@@ -152,13 +153,13 @@ When the Working Group accepts URPX to Draft:
    ```
    Default mode is preview. No files modified. Review the summary diff.
    Every specification file should appear as
-   `Apache-2.0 -> W3C-20231102`, every dataset as
+   `Apache-2.0 -> W3C-20150513`, every dataset as
    `Apache-2.0 -> CDLA-Permissive-2.0`, source/meta files unchanged.
 3. **Download the new license texts.** The script offers a flag:
    ```
    python3 scripts/transition-license.py --download-licenses
    ```
-   which invokes `reuse download` for `W3C-20231102` and
+   which invokes `reuse download` for `W3C-20150513` and
    `CDLA-Permissive-2.0` into `LICENSES/`.
 4. **Apply.** Once the preview is correct and license texts are in
    place:

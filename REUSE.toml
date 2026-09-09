@@ -59,8 +59,11 @@ precedence = "override"
 SPDX-FileCopyrightText = "Consolidated Edison Company of New York, Inc."
 SPDX-License-Identifier = "LicenseRef-PublicRecord"
 # -----------------------------------------------------------------------------
-# Test-case datasets and indexes — current pre-Draft project datasets remain
-# Apache-2.0 and transition to CDLA-Permissive-2.0 at Working Group Draft.
+# Test-case datasets and indexes — transitioned to CDLA-Permissive-2.0 at
+# Working Group Draft. These three carry no inline header or .license
+# sidecar (JSON-LD and CSV cannot hold one, and this pair predates the
+# sidecar convention), so REUSE.toml is the sole source of their license and
+# this entry is what TRANSITION.md's script-driven rewrite cannot reach.
 # -----------------------------------------------------------------------------
 [[annotations]]
 path = [
@@ -69,17 +72,16 @@ path = [
     "test-cases/urpx-edge-cases.csv",
 ]
 SPDX-FileCopyrightText = "Flux Tailor LLC"
-SPDX-License-Identifier = "Apache-2.0"
+SPDX-License-Identifier = "CDLA-Permissive-2.0"
 
 # -----------------------------------------------------------------------------
-# Working group development documents, the generated data dictionary, and JSON
-# manifests/schemas (JSON cannot carry comment headers) — Flux Tailor-authored,
-# Apache-2.0 alongside the rest of the pre-Draft project.
+# Working group development documents and JSON manifests/schemas (JSON cannot
+# carry comment headers) — Flux Tailor-authored, Apache-2.0 alongside the rest
+# of the pre-Draft project.
 # -----------------------------------------------------------------------------
 [[annotations]]
 path = [
     "dev-docs/**",
-    "documentation/pages/urpx-data-dictionary.md",
     "documentation/examples/examples-schema.json",
     "documentation/examples/manifest.json",
     "test-cases/manifest-all-schema.json",
@@ -88,3 +90,25 @@ path = [
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Flux Tailor LLC"
 SPDX-License-Identifier = "Apache-2.0"
+
+# -----------------------------------------------------------------------------
+# Generated data dictionary — matches TRANSITION.md's specification category
+# glob (documentation/pages/**/*.md) but carries no inline header, so this
+# entry is what that category's script-driven rewrite cannot reach.
+# -----------------------------------------------------------------------------
+[[annotations]]
+path = "documentation/pages/urpx-data-dictionary.md"
+SPDX-FileCopyrightText = "Flux Tailor LLC"
+SPDX-License-Identifier = "W3C-20150513"
+
+# -----------------------------------------------------------------------------
+# Diagram SVGs under documentation/diagrams — matches TRANSITION.md's
+# specification category glob but carries no inline header or sidecar, so
+# this override is what that category's script-driven rewrite cannot reach.
+# Takes precedence over the blanket **/*.svg rule above.
+# -----------------------------------------------------------------------------
+[[annotations]]
+path = "documentation/diagrams/**/*.svg"
+precedence = "override"
+SPDX-FileCopyrightText = "Flux Tailor LLC"
+SPDX-License-Identifier = "W3C-20150513"
