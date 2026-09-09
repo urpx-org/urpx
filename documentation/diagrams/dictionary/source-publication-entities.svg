@@ -5,11 +5,11 @@
  -->
 <!-- Title: Source &amp; Publication Entities Pages: 1 -->
 <svg width="547pt" height="525pt"
- viewBox="0.00 0.00 546.81 524.60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(33.01 495.8)">
+ viewBox="0.00 0.00 546.82 524.60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(33.02 495.8)">
 <title>Source &amp; Publication Entities</title>
-<polygon fill="white" stroke="transparent" points="-33.01,28.8 -33.01,-495.8 513.8,-495.8 513.8,28.8 -33.01,28.8"/>
-<text text-anchor="middle" x="240.4" y="-451.8" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">Source &amp; Publication Entities (URPX v0.4.0)</text>
+<polygon fill="white" stroke="transparent" points="-33.02,28.8 -33.02,-495.8 513.8,-495.8 513.8,28.8 -33.02,28.8"/>
+<text text-anchor="middle" x="240.39" y="-451.8" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">Source &amp; Publication Entities (URPX v0.5.0)</text>
 <g id="clust1" class="cluster">
 <title>cluster_legend</title>
 <path fill="#f8f8f8" stroke="#cccccc" d="M282.18,-269.85C282.18,-269.85 473.18,-269.85 473.18,-269.85 479.18,-269.85 485.18,-275.85 485.18,-281.85 485.18,-281.85 485.18,-431.85 485.18,-431.85 485.18,-437.85 479.18,-443.85 473.18,-443.85 473.18,-443.85 282.18,-443.85 282.18,-443.85 276.18,-443.85 270.18,-437.85 270.18,-431.85 270.18,-431.85 270.18,-281.85 270.18,-281.85 270.18,-275.85 276.18,-269.85 282.18,-269.85"/>
@@ -18,117 +18,117 @@
 <!-- SourcePublication -->
 <g id="node1" class="node">
 <title>SourcePublication</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="230.9" cy="-151.1" rx="55.85" ry="18"/>
-<text text-anchor="middle" x="230.9" y="-148.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">SourcePublication</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="230.91" cy="-151.1" rx="55.85" ry="18"/>
+<text text-anchor="middle" x="230.91" y="-148.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">SourcePublication</text>
 </g>
 <!-- Organization -->
 <g id="node5" class="node">
 <title>Organization</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-dasharray="5,2" cx="234.6" cy="-203.62" rx="41.59" ry="18"/>
-<text text-anchor="middle" x="234.6" y="-201.12" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Organization</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-dasharray="5,2" cx="234.59" cy="-203.62" rx="41.59" ry="18"/>
+<text text-anchor="middle" x="234.59" y="-201.12" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Organization</text>
 </g>
 <!-- SourcePublication&#45;&gt;Organization -->
 <g id="edge1" class="edge">
 <title>SourcePublication&#45;&gt;Organization</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M232.17,-169.17C232.31,-171.13 232.45,-173.16 232.6,-175.2"/>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M232.18,-169.17C232.31,-171.13 232.46,-173.16 232.6,-175.2"/>
 <polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="229.12,-175.6 233.31,-185.33 236.1,-175.11 229.12,-175.6"/>
-<text text-anchor="middle" x="210.88" y="-183.79" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">publishedBy</text>
-<text text-anchor="middle" x="210.88" y="-174.79" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..1</text>
+<text text-anchor="middle" x="210.89" y="-183.79" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">publishedBy</text>
+<text text-anchor="middle" x="210.89" y="-174.79" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..1</text>
 </g>
 <!-- TariffFiling -->
 <g id="node2" class="node">
 <title>TariffFiling</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="130.14" cy="-125.81" rx="35.82" ry="18"/>
-<text text-anchor="middle" x="130.14" y="-123.31" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">TariffFiling</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="130.13" cy="-125.82" rx="35.82" ry="18"/>
+<text text-anchor="middle" x="130.13" y="-123.32" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">TariffFiling</text>
 </g>
 <!-- TariffFiling&#45;&gt;SourcePublication -->
 <g id="edge3" class="edge">
 <title>TariffFiling&#45;&gt;SourcePublication</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M162.3,-133.88C166.88,-135.03 171.69,-136.24 176.56,-137.46"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="176,-140.93 186.55,-139.97 177.71,-134.14 176,-140.93"/>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M162.29,-133.89C166.88,-135.04 171.69,-136.24 176.56,-137.46"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="176,-140.93 186.56,-139.97 177.71,-134.14 176,-140.93"/>
 <text text-anchor="middle" x="190.93" y="-129.27" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">cancelledBy</text>
 <text text-anchor="middle" x="190.93" y="-120.27" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..1</text>
 </g>
 <!-- DataSourceReference -->
 <g id="node3" class="node">
 <title>DataSourceReference</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="77.88" cy="-176.8" rx="48.17" ry="21.43"/>
-<text text-anchor="middle" x="77.88" y="-179.8" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">DataSource</text>
-<text text-anchor="middle" x="77.88" y="-168.8" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Reference</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-width="2.5" cx="77.88" cy="-176.79" rx="48.17" ry="21.43"/>
+<text text-anchor="middle" x="77.88" y="-179.79" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">DataSource</text>
+<text text-anchor="middle" x="77.88" y="-168.79" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">Reference</text>
 </g>
 <!-- TariffFiling&#45;&gt;DataSourceReference -->
 <g id="edge6" class="edge">
 <title>TariffFiling&#45;&gt;DataSourceReference</title>
 <path fill="none" stroke="#1a5276" stroke-width="1.5" d="M113.6,-141.95C110.85,-144.63 107.94,-147.47 105.01,-150.32"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="102.5,-147.89 97.78,-157.38 107.39,-152.9 102.5,-147.89"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="102.5,-147.89 97.78,-157.37 107.39,-152.9 102.5,-147.89"/>
 <text text-anchor="middle" x="136.31" y="-157.73" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">documentedBy</text>
 <text text-anchor="middle" x="136.31" y="-148.73" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- GeneralRule -->
 <g id="node4" class="node">
 <title>GeneralRule</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-dasharray="5,2" cx="189.67" cy="-17.64" rx="41.59" ry="18"/>
-<text text-anchor="middle" x="189.67" y="-15.14" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">GeneralRule</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-dasharray="5,2" cx="189.66" cy="-17.65" rx="41.59" ry="18"/>
+<text text-anchor="middle" x="189.66" y="-15.15" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">GeneralRule</text>
 </g>
 <!-- TariffFiling&#45;&gt;GeneralRule -->
 <g id="edge7" class="edge">
 <title>TariffFiling&#45;&gt;GeneralRule</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M139.7,-108.43C149.24,-91.11 164,-64.28 175.02,-44.27"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="178.18,-45.79 179.93,-35.34 172.04,-42.41 178.18,-45.79"/>
-<text text-anchor="middle" x="128.36" y="-69.95" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasGeneralRule</text>
-<text text-anchor="middle" x="128.36" y="-60.95" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M139.69,-108.44C149.23,-91.12 164,-64.28 175.01,-44.27"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="178.17,-45.79 179.92,-35.34 172.04,-42.42 178.17,-45.79"/>
+<text text-anchor="middle" x="128.35" y="-69.96" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasGeneralRule</text>
+<text text-anchor="middle" x="128.35" y="-60.96" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- TariffFiling&#45;&gt;Organization -->
 <g id="edge8" class="edge">
 <title>TariffFiling&#45;&gt;Organization</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M150.28,-140.81C165.87,-152.43 187.69,-168.68 205.22,-181.74"/>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M150.27,-140.82C165.86,-152.43 187.68,-168.68 205.22,-181.74"/>
 <polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="203.33,-184.7 213.44,-187.86 207.51,-179.08 203.33,-184.7"/>
-<text text-anchor="middle" x="156.25" y="-172.88" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">publishedBy</text>
-<text text-anchor="middle" x="156.25" y="-163.88" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..1</text>
+<text text-anchor="middle" x="156.24" y="-172.88" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">publishedBy</text>
+<text text-anchor="middle" x="156.24" y="-163.88" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..1</text>
 </g>
 <!-- PriceDefinition -->
 <g id="node6" class="node">
 <title>PriceDefinition</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-dasharray="5,2" cx="102.87" cy="-260.33" rx="47.19" ry="18"/>
-<text text-anchor="middle" x="102.87" y="-257.83" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">PriceDefinition</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-dasharray="5,2" cx="102.85" cy="-260.34" rx="47.19" ry="18"/>
+<text text-anchor="middle" x="102.85" y="-257.84" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">PriceDefinition</text>
 </g>
 <!-- TariffFiling&#45;&gt;PriceDefinition -->
 <g id="edge4" class="edge">
 <title>TariffFiling&#45;&gt;PriceDefinition</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M126.46,-143.95C121.86,-166.62 113.95,-205.65 108.57,-232.2"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="105.13,-231.55 106.57,-242.05 111.99,-232.94 105.13,-231.55"/>
-<text text-anchor="middle" x="156.51" y="-199.68" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">cancelsPriceDefinition</text>
-<text text-anchor="middle" x="156.51" y="-190.68" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M126.45,-143.96C121.86,-166.62 113.94,-205.65 108.56,-232.2"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="105.12,-231.56 106.56,-242.05 111.98,-232.95 105.12,-231.56"/>
+<text text-anchor="middle" x="156.5" y="-199.68" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">cancelsPriceDefinition</text>
+<text text-anchor="middle" x="156.5" y="-190.68" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- PricingModel -->
 <g id="node7" class="node">
 <title>PricingModel</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-dasharray="5,2" cx="43.25" cy="-32.04" rx="42.94" ry="18"/>
-<text text-anchor="middle" x="43.25" y="-29.54" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">PricingModel</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-dasharray="5,2" cx="43.24" cy="-32.04" rx="42.94" ry="18"/>
+<text text-anchor="middle" x="43.24" y="-29.54" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">PricingModel</text>
 </g>
 <!-- TariffFiling&#45;&gt;PricingModel -->
 <g id="edge2" class="edge">
 <title>TariffFiling&#45;&gt;PricingModel</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M131.68,-107.67C125.81,-90.09 106.3,-65.57 86.66,-48.67"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="88.84,-45.93 78.86,-42.37 84.44,-51.38 88.84,-45.93"/>
-<text text-anchor="middle" x="130.67" y="-89.77" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">cancelledBy</text>
-<text text-anchor="middle" x="130.67" y="-80.77" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..1</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M131.68,-107.67C125.8,-90.1 106.3,-65.58 86.65,-48.67"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="88.83,-45.94 78.85,-42.38 84.44,-51.38 88.83,-45.94"/>
+<text text-anchor="middle" x="130.66" y="-89.77" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">cancelledBy</text>
+<text text-anchor="middle" x="130.66" y="-80.77" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..1</text>
 </g>
 <!-- TariffFiling&#45;&gt;PricingModel -->
 <g id="edge5" class="edge">
 <title>TariffFiling&#45;&gt;PricingModel</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M97.86,-117.9C78.2,-104.11 56,-79.44 45.72,-59.49"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="48.86,-57.95 41.69,-50.15 42.44,-60.72 48.86,-57.95"/>
-<text text-anchor="middle" x="33.79" y="-100.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">containsPricingModel</text>
-<text text-anchor="middle" x="33.79" y="-91.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">1..*</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M97.85,-117.9C78.2,-104.11 56,-79.44 45.71,-59.5"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="48.86,-57.95 41.69,-50.16 42.43,-60.72 48.86,-57.95"/>
+<text text-anchor="middle" x="33.78" y="-100.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">containsPricingModel</text>
+<text text-anchor="middle" x="33.78" y="-91.3" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">1..*</text>
 </g>
 <!-- DataSourceReference&#45;&gt;SourcePublication -->
 <g id="edge9" class="edge">
 <title>DataSourceReference&#45;&gt;SourcePublication</title>
-<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M122.96,-169.23C137.93,-166.71 154.84,-163.87 170.76,-161.2"/>
-<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="171.77,-164.58 181.05,-159.47 170.61,-157.67 171.77,-164.58"/>
-<text text-anchor="middle" x="178.36" y="-176.81" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">sourcePublication</text>
-<text text-anchor="middle" x="178.36" y="-167.81" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..1</text>
+<path fill="none" stroke="#1a5276" stroke-width="1.5" d="M122.97,-169.22C137.94,-166.71 154.85,-163.87 170.77,-161.19"/>
+<polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="171.78,-164.57 181.06,-159.47 170.62,-157.67 171.78,-164.57"/>
+<text text-anchor="middle" x="178.37" y="-176.81" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">sourcePublication</text>
+<text text-anchor="middle" x="178.37" y="-167.81" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..1</text>
 </g>
 <!-- leg_class -->
 <g id="node8" class="node">

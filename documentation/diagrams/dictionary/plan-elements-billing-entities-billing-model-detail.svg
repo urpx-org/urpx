@@ -9,7 +9,7 @@
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(28.8 494.23)">
 <title>BillingModel — Pricing References</title>
 <polygon fill="white" stroke="transparent" points="-28.8,28.8 -28.8,-494.23 1308.83,-494.23 1308.83,28.8 -28.8,28.8"/>
-<text text-anchor="middle" x="640.01" y="-450.23" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">BillingModel — Pricing References (URPX v0.4.0)</text>
+<text text-anchor="middle" x="640.01" y="-450.23" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">BillingModel — Pricing References (URPX v0.5.0)</text>
 <g id="clust4" class="cluster">
 <title>cluster_legend</title>
 <path fill="#f8f8f8" stroke="#cccccc" d="M973.03,-245.64C973.03,-245.64 1260.03,-245.64 1260.03,-245.64 1266.03,-245.64 1272.03,-251.64 1272.03,-257.64 1272.03,-257.64 1272.03,-422.43 1272.03,-422.43 1272.03,-428.43 1266.03,-434.43 1260.03,-434.43 1260.03,-434.43 973.03,-434.43 973.03,-434.43 967.03,-434.43 961.03,-428.43 961.03,-422.43 961.03,-422.43 961.03,-257.64 961.03,-257.64 961.03,-251.64 967.03,-245.64 973.03,-245.64"/>
