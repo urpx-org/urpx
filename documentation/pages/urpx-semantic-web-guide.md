@@ -94,7 +94,7 @@ The semantic web represents data as **interconnected graphs** of meaning, not ju
 ```json
 {
   "@context": [
-    "https://urpx.org/ns/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    "https://urpx.org/ns/context/releases/v0.5.0/jsonld/urpx-context.jsonld",
     { "ex": "https://example.com/" }
   ],
   "@id": "ex:PRC-001",
@@ -225,7 +225,7 @@ JSON-LD is **JSON with a semantic layer**. Developers work with familiar JSON sy
 ```json
 {
   "@context": [
-    "https://urpx.org/ns/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    "https://urpx.org/ns/context/releases/v0.5.0/jsonld/urpx-context.jsonld",
     { "ex": "https://example.com/" }
   ],
   "@id": "ex:PRC-001",
@@ -251,7 +251,7 @@ This example demonstrates the current URPX pattern in which a `PriceSetAlternati
 ```json
 {
   "@context": [
-    "https://urpx.org/ns/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    "https://urpx.org/ns/context/releases/v0.5.0/jsonld/urpx-context.jsonld",
     { "ex": "https://example.com/" }
   ],
   "@graph": [

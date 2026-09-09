@@ -32,6 +32,7 @@ const DCAT = {
   Distribution: "http://www.w3.org/ns/dcat#Distribution",
   distribution: "http://www.w3.org/ns/dcat#distribution",
   downloadURL: "http://www.w3.org/ns/dcat#downloadURL",
+  version: "http://www.w3.org/ns/dcat#version",
 } as const;
 
 const XSD = {
@@ -253,20 +254,42 @@ function validateReleaseFile(
     requireObjectPresent(quads, file, subject, RDF.type, type, errors);
   }
 
-  const versionInfo = requireSingleObject(
+  const declaredRelease = requireSingleObject(
     quads,
     file,
     subject,
-    OWL.versionInfo,
+    DCTERMS.hasVersion,
     errors,
-    expectedVersion
-      ? { expectedLiteralValue: expectedVersion }
-      : { expectedLiteral: true },
+    {
+      expectedNamedNode: expectedVersion
+        ? releaseIris(descriptor, expectedVersion).releaseIri
+        : undefined,
+    },
   );
+  const declaredReleaseIri = declaredRelease?.termType === "NamedNode"
+    ? declaredRelease.value
+    : undefined;
+  const versionPredicate = descriptor.versionPredicate === "dcat:version"
+    ? DCAT.version
+    : OWL.versionInfo;
+  const versionInfo = declaredReleaseIri
+    ? requireSingleObject(
+      quads,
+      file,
+      declaredReleaseIri,
+      versionPredicate,
+      errors,
+      expectedVersion
+        ? { expectedLiteralValue: expectedVersion }
+        : { expectedLiteral: true },
+    )
+    : undefined;
   const version = versionInfo?.value;
 
   if (!version || !isSemver(version)) {
-    errors.push(`${file}: ontology owl:versionInfo must be SemVer-shaped`);
+    errors.push(
+      `${file}: release ${descriptor.versionPredicate} must be SemVer-shaped`,
+    );
     return version;
   }
 
@@ -294,7 +317,7 @@ function validateReleaseFile(
   requireSingleObject(quads, file, releaseIri, DCTERMS.isVersionOf, errors, {
     expectedNamedNode: ontologyIri,
   });
-  requireSingleObject(quads, file, releaseIri, OWL.versionInfo, errors, {
+  requireSingleObject(quads, file, releaseIri, versionPredicate, errors, {
     expectedLiteralValue: validationVersion,
   });
   requireSingleObject(quads, file, releaseIri, DCAT.distribution, errors, {
@@ -473,8 +496,8 @@ function compactIri(value: string): string {
     .replace("http://purl.org/dc/terms/", "dcterms:")
     .replace("http://www.w3.org/ns/dcat#", "dcat:")
     .replace("http://www.w3.org/ns/shacl#", "sh:")
-    .replace("https://urpx-org.github.io/urpx/ontology/shacl/", "urpx-shacl:")
-    .replace("https://urpx-org.github.io/urpx/ontology/", "urpx:");
+    .replace("https://urpx.org/ns/shacl/core/", "urpx-shacl:")
+    .replace("https://urpx.org/ns/ontology/", "urpx:");
 }
 
 function formatTerm(term: Term): string {

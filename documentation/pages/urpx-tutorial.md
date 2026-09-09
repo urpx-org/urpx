@@ -16,7 +16,7 @@ site_position: 2
 **Last Updated:** 2026-08-20
 **Status:** Active
 
-**Learn the basics of creating and validating utility rate plan data using the URPX v0.4.0 ontology**
+**Learn the basics of creating and validating utility rate plan data using the URPX v0.5.0 ontology**
 
 ---
 
@@ -176,13 +176,13 @@ Let's build a basic residential rate plan step by step using JSON-LD.
 ```json
 {
   "@context": [
-    "https://urpx.org/ns/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    "https://urpx.org/ns/context/releases/v0.5.0/jsonld/urpx-context.jsonld",
     { "ex": "https://example.org/tutorial/" }
   ],
   "@id": "ex:doc-tutorial-basic",
   "@type": "urpx:URPXPackage",
   "urpx:version": "0.4.0",
-  "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.4.0/ontology/urpx-ontology.ttl",
+  "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.5.0/ontology/urpx-ontology.ttl",
   "urpx:name": "Tutorial Basic Residential Rate Plan",
   "urpx:description": "Simple residential rate plan with minimum price and energy price",
   "urpx:effectiveDateTime": {
@@ -1097,4 +1097,4 @@ For complete current examples with tariff-linked test data:
 
 ---
 
-*Tutorial based on URPX v0.4.0 ontology. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
+*Tutorial based on URPX v0.5.0 ontology. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*

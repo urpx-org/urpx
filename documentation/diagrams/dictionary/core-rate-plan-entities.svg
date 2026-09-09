@@ -9,7 +9,7 @@
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(28.8 527.08)">
 <title>Core Rate Plan Entities</title>
 <polygon fill="white" stroke="transparent" points="-28.8,28.8 -28.8,-527.08 1237.74,-527.08 1237.74,28.8 -28.8,28.8"/>
-<text text-anchor="middle" x="604.47" y="-483.08" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">Core Rate Plan Entities (URPX v0.4.0)</text>
+<text text-anchor="middle" x="604.47" y="-483.08" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">Core Rate Plan Entities (URPX v0.5.0)</text>
 <g id="clust4" class="cluster">
 <title>cluster_legend</title>
 <path fill="#f8f8f8" stroke="#cccccc" d="M771.94,-258.49C771.94,-258.49 918.94,-258.49 918.94,-258.49 924.94,-258.49 930.94,-264.49 930.94,-270.49 930.94,-270.49 930.94,-455.28 930.94,-455.28 930.94,-461.28 924.94,-467.28 918.94,-467.28 918.94,-467.28 771.94,-467.28 771.94,-467.28 765.94,-467.28 759.94,-461.28 759.94,-455.28 759.94,-455.28 759.94,-270.49 759.94,-270.49 759.94,-264.49 765.94,-258.49 771.94,-258.49"/>

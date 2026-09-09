@@ -9,7 +9,7 @@
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(28.8 256.59)">
 <title>Metric &amp; Measurement Entities</title>
 <polygon fill="white" stroke="transparent" points="-28.8,28.8 -28.8,-256.59 547.67,-256.59 547.67,28.8 -28.8,28.8"/>
-<text text-anchor="middle" x="259.43" y="-212.59" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">Metric &amp; Measurement Entities (URPX v0.4.0)</text>
+<text text-anchor="middle" x="259.43" y="-212.59" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">Metric &amp; Measurement Entities (URPX v0.5.0)</text>
 <g id="clust3" class="cluster">
 <title>cluster_legend</title>
 <path fill="#f8f8f8" stroke="#cccccc" d="M336.87,-8C336.87,-8 498.87,-8 498.87,-8 504.87,-8 510.87,-14 510.87,-20 510.87,-20 510.87,-184.79 510.87,-184.79 510.87,-190.79 504.87,-196.79 498.87,-196.79 498.87,-196.79 336.87,-196.79 336.87,-196.79 330.87,-196.79 324.87,-190.79 324.87,-184.79 324.87,-184.79 324.87,-20 324.87,-20 324.87,-14 330.87,-8 336.87,-8"/>

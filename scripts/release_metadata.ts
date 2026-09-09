@@ -4,21 +4,23 @@
 export const ACTIVE_RELEASE_FILES = [
   {
     file: "ontology/urpx-ontology.ttl",
-    ontologyIri: "https://urpx-org.github.io/urpx/ontology",
-    namespaceUri: "https://urpx-org.github.io/urpx/ontology/",
+    ontologyIri: "https://urpx.org/ns/ontology",
+    namespaceUri: "https://urpx.org/ns/ontology/",
     payloadFile: "urpx-ontology.ttl",
     pagesPublished: true,
     prefix: "urpx",
     requiredTypes: [],
+    versionPredicate: "owl:versionInfo",
   },
   {
     file: "shacl/urpx-shacl.ttl",
-    ontologyIri: "https://urpx-org.github.io/urpx/ontology/shacl",
-    namespaceUri: "https://urpx-org.github.io/urpx/ontology/shacl/",
+    ontologyIri: "https://urpx.org/ns/shacl/core",
+    namespaceUri: "https://urpx.org/ns/shacl/core/",
     payloadFile: "urpx-shacl.ttl",
     pagesPublished: true,
     prefix: "urpx-shacl",
     requiredTypes: ["http://www.w3.org/ns/shacl#ShapesGraph"],
+    versionPredicate: "dcat:version",
   },
 ] as const;
 

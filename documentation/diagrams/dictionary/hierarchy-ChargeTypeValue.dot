@@ -5,7 +5,7 @@ digraph "hierarchy_ChargeTypeValue" {
     nodesep=0.3;
     ranksep=0.5;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="ChargeTypeValue Hierarchy (URPX v0.4.0)";
+    label="ChargeTypeValue Hierarchy (URPX v0.5.0)";
     labelloc="t";
     fontsize=14;
     fontcolor="#1a365d";

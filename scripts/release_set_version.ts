@@ -109,9 +109,9 @@ export function updateReleaseMetadata(
   );
   next = replaceRequired(
     next,
-    new RegExp(`owl:versionInfo "${VERSION_PATTERN}"`, "g"),
-    `owl:versionInfo "${version}"`,
-    "owl:versionInfo literals",
+    new RegExp(`${descriptor.versionPredicate} "${VERSION_PATTERN}"`, "g"),
+    `${descriptor.versionPredicate} "${version}"`,
+    `${descriptor.versionPredicate} literals`,
   );
   next = replaceRequired(
     next,
