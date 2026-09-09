@@ -3,7 +3,7 @@
 
 # URPX: Utility Rate Plan Exchange Ontology
 
-**Version 0.3.0** | **W3C-Ready Semantic Standard**
+**Version 0.5.0** | **W3C-Ready Semantic Standard**
 
  [![Documentation](https://img.shields.io/badge/Documentation-Complete-green)](documentation/) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
@@ -25,6 +25,14 @@ The **Utility Rate Plan Exchange (URPX)** ontology is an open standard for excha
 - **[Data Dictionary](documentation/pages/urpx-data-dictionary.md)** - Complete reference
 - **[Test Cases](test-cases/index.md)** - Real-world example datasets
 - **[FAQ](documentation/pages/urpx-faq.md)** - Frequently asked questions
+
+## Published Namespaces
+
+- Core ontology: `https://urpx.org/ns/ontology/`
+- Core SHACL shapes: `https://urpx.org/ns/shacl/core/`
+- JSON-LD context artifact: `https://urpx.org/ns/context`
+
+URPX uses slash identifiers so every ontology term and SHACL shape has its own stable web identifier. The namespace site is generated with [Semantic Flow](https://github.com/semantic-flow/weave), which publishes human-readable identifier pages and immutable release-tagged snapshots of the ontology, shapes, and context.
 
 ---
 
