@@ -9,7 +9,7 @@
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(33.01 495.8)">
 <title>Source &amp; Publication Entities</title>
 <polygon fill="white" stroke="transparent" points="-33.01,28.8 -33.01,-495.8 513.8,-495.8 513.8,28.8 -33.01,28.8"/>
-<text text-anchor="middle" x="240.4" y="-451.8" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">Source &amp; Publication Entities (URPX v0.4.0)</text>
+<text text-anchor="middle" x="240.4" y="-451.8" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14.00" fill="#1a365d">Source &amp; Publication Entities (URPX v0.5.0)</text>
 <g id="clust1" class="cluster">
 <title>cluster_legend</title>
 <path fill="#f8f8f8" stroke="#cccccc" d="M282.18,-269.85C282.18,-269.85 473.18,-269.85 473.18,-269.85 479.18,-269.85 485.18,-275.85 485.18,-281.85 485.18,-281.85 485.18,-431.85 485.18,-431.85 485.18,-437.85 479.18,-443.85 473.18,-443.85 473.18,-443.85 282.18,-443.85 282.18,-443.85 276.18,-443.85 270.18,-437.85 270.18,-431.85 270.18,-431.85 270.18,-281.85 270.18,-281.85 270.18,-275.85 276.18,-269.85 282.18,-269.85"/>
@@ -89,8 +89,8 @@
 <!-- PriceDefinition -->
 <g id="node6" class="node">
 <title>PriceDefinition</title>
-<ellipse fill="#aaccff" stroke="#1a5276" stroke-dasharray="5,2" cx="102.87" cy="-260.33" rx="47.19" ry="18"/>
-<text text-anchor="middle" x="102.87" y="-257.83" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">PriceDefinition</text>
+<ellipse fill="#aaccff" stroke="#1a5276" stroke-dasharray="5,2" cx="102.86" cy="-260.33" rx="47.19" ry="18"/>
+<text text-anchor="middle" x="102.86" y="-257.83" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10.00" fill="#1a365d">PriceDefinition</text>
 </g>
 <!-- TariffFiling&#45;&gt;PriceDefinition -->
 <g id="edge4" class="edge">
