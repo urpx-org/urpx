@@ -5,7 +5,7 @@ digraph "Pricing & Alternatives Entities" {
     nodesep=0.6;
     ranksep=0.8;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="Pricing & Alternatives Entities (URPX v0.4.0)";
+    label="Pricing & Alternatives Entities (URPX v0.5.0)";
     labelloc="t";
     fontsize=14;
     fontcolor="#1a365d";

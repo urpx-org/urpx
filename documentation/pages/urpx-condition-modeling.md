@@ -499,7 +499,7 @@ Datatype-specific value properties are compact in JSON-LD because their coercion
 
 ```json
 {
-  "@context": "https://urpx.org/ns/context/releases/v0.4.0/jsonld/urpx-context.jsonld"
+  "@context": "https://urpx.org/ns/context/releases/v0.5.0/jsonld/urpx-context.jsonld"
 }
 ```
 
@@ -706,7 +706,7 @@ The same graph pattern can also be attached to `ApplicabilityRule`, `Applicabili
 ```json
 {
   "@context": [
-    "https://urpx.org/ns/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    "https://urpx.org/ns/context/releases/v0.5.0/jsonld/urpx-context.jsonld",
     { "ex": "https://example.org/conditions/" }
   ],
   "@graph": [

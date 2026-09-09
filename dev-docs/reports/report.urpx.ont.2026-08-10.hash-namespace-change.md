@@ -1,12 +1,16 @@
 ---
 id: reporturpxont20260810hashnamespacechange
-title: "Hash namespace for URPX term identifiers, at v0.4.0"
-desc: "Describes the identifier-form change planned for v0.4.0: URPX terms become fragments of a single vocabulary document (https://urpx.org/ns/urpx#RatePlan) rather than one web resource per term. States what changes and what does not, the case for hash, the case for slash, why the change belongs in v0.4.0 rather than after it, and what it means for anyone holding data. Shared for working group review."
+title: "Superseded proposal — hash namespace for URPX term identifiers"
+desc: "Historical proposal for a hash namespace. Superseded before v0.5.0 by the adopted urpx.org slash namespace and Semantic Flow directory-per-identifier publication."
 updated: 1786320000000
 created: 1786320000000
 ---
 
-# Hash namespace for URPX term identifiers, at v0.4.0
+# Superseded proposal — hash namespace for URPX term identifiers
+
+**Status: superseded.** This report preserves the hash-namespace proposal considered in August 2026; it is not current implementation guidance. URPX v0.5.0 instead adopted slash identifiers under `https://urpx.org/ns/ontology/` and `https://urpx.org/ns/shacl/core/`. The directory-per-identifier site is generated with [Semantic Flow](https://github.com/semantic-flow/weave), with GitHub Pages as the static host and `urpx.org` as the canonical domain. `Accept`-header content negotiation is not required.
+
+Current release and publication instructions are in [the release runbook](../release-runbook.md) and [the v0.5.0 release notes](../../documentation/pages/urpx-release-notes-v0.5.0.md). Everything below is the preserved superseded proposal.
 
 **The change.** URPX term identifiers become fragments of a single vocabulary document — `https://urpx.org/ns/urpx#RatePlan` — instead of one web resource per term, `https://urpx-org.github.io/urpx/ontology/RatePlan/`. It lands at v0.4.0, in the same release that moves the identifiers to urpx.org, so there is one identifier change rather than two. The model does not change: same classes, same properties, same local names.
 
