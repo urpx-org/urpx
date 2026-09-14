@@ -6,7 +6,7 @@ digraph "Organization Entities" {
     ranksep=1.0;
     start=42;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="Organization Entities (URPX v0.5.0)";
+    label="Organization Entities (URPX v0.5.1)";
     labelloc="t";
     fontsize=14;
     fontcolor="#1a365d";

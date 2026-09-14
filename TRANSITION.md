@@ -58,7 +58,9 @@ paths = [
     "documentation/pages/**/*.md",
     "documentation/diagrams/**/*.md",
     "documentation/diagrams/**/*.mmd",
+    "documentation/diagrams/**/*.dot",
     "documentation/diagrams/**/*.svg",
+    "documentation/examples/manifest.json",
     "context/**/*.jsonld",
 ]
 
@@ -74,6 +76,11 @@ paths = [
     "test-cases/**/*.jsonld",
     "test-cases/**/*.csv",
     "test-cases/index.md",
+    "test-cases/manifest-all.json",
+    "test-cases/**/assets/diagram.dot",
+    "test-cases/**/assets/diagram.svg",
+    "dev-docs/samples/**/*.json",
+    "dev-docs/samples/**/*.jsonld",
 ]
 
 # -----------------------------------------------------------------------------
@@ -134,12 +141,13 @@ paths = [
     "test-cases/coned-sc1-rate-i/assets/mac-202604.pdf",
     "test-cases/coned-sc1-rate-i/assets/mac-202605.pdf",
     "test-cases/coned-sc1-rate-i/assets/lds-appnd-2025.csv",
+    "test-cases/coned-sc1-rate-i-supply-ref/assets/lds-appnd-2025.csv",
 ]
 ```
 
-**Note on the specification target identifier, resolved 2026-09-09.** The manifest originally named `W3C-20231102`, which does not resolve on the SPDX License List (`reuse download W3C-20231102` fails with "not a valid SPDX License Identifier", and `https://spdx.org/licenses/W3C-20231102.html` returns 404). The chair ruled `W3C-20150513` (W3C Software Notice and Document License, 2015-05-13): its own SPDX record lists `w3c.org/copyright/software-license-2023/` in `seeAlso`, so SPDX has already folded the 2023 W3C license update into that identifier rather than minting a new one. The bare `W3C` identifier (2002-12-31) was considered and set aside; it is an older, different license with no "Document" in its name and no connection to the 2023 text. The manifest above carries the resolved identifier and every specification file has been transitioned to it.
+**Note on the specification target identifier.** `W3C-20150513` is the valid SPDX identifier used here for the W3C Software Notice and Document License. The SPDX record states that the 2023 minor modifications did not require a new identifier, so the same identifier applies. `W3C-20231102` is retained here only as the invalid identifier originally recorded in this transition plan.
 
-`documentation/pages/urpx-data-dictionary.md` and `documentation/diagrams/**/*.svg` (seventeen files, including the ten `documentation/diagrams/dictionary/` pairs) match this section's globs conceptually but carry no inline header or sidecar; REUSE.toml annotations carry their license instead, since the script's rewrite cannot reach either. Both now carry `W3C-20150513` there.
+`documentation/pages/urpx-data-dictionary.md` and `documentation/diagrams/**/*.svg` (seventeen files: sixteen dictionary SVGs plus `documentation/diagrams/urpx-temporal-versioning-summary.svg`) match this section's globs conceptually but carry no inline header or sidecar; REUSE.toml annotations carry their license instead, since the script's rewrite cannot reach either. Both now carry `W3C-20150513` there.
 
 ## 4. Transition procedure
 
@@ -190,16 +198,7 @@ If the Working Group requests changes during Draft acceptance review:
 
 ## 6. Notes on individual spec files
 
-Every specification file (.ttl inline header, .md/.mmd/.jsonld/.csv
-sidecar) carries an `SPDX-Transition-License-After-Draft` field that
-names the target license for its category. This field makes the
-intended transition visible file-by-file so any reader — including LF
-Energy TAC reviewers and future contributors — can trace the plan
-without reading only this document.
-
-The transition script treats those fields as advisory metadata; the
-authoritative source of truth for the transition remains the manifest
-in section 3 of this document.
+Specification and dataset files carry their current SPDX identifiers through inline headers, sidecars, or REUSE.toml as described above. The historical manifest in section 3 records the transition classification consumed by `scripts/transition-license.py`.
 
 ## 7. Relationship to LFESS governance
 

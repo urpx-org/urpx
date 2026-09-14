@@ -5,7 +5,7 @@ digraph "Scenario & Cost Entities" {
     nodesep=0.7;
     ranksep=0.9;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="Scenario & Cost Entities (URPX v0.5.0)";
+    label="Scenario & Cost Entities (URPX v0.5.1)";
     labelloc="t";
     fontsize=14;
     fontcolor="#1a365d";

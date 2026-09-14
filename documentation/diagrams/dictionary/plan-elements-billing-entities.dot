@@ -5,7 +5,7 @@ digraph "Plan Elements & Billing Entities" {
     nodesep=0.5;
     ranksep=0.9;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="Plan Elements & Billing Entities (URPX v0.5.0)";
+    label="Plan Elements & Billing Entities (URPX v0.5.1)";
     labelloc="t";
     fontsize=14;
     fontcolor="#1a365d";

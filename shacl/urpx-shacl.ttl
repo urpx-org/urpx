@@ -5,7 +5,7 @@
 # Transitioned to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md.
 
 # URPX SHACL Shapes - Unified File
-# Version: v0.5.0
+# Version: v0.5.1
 # Generated: 2026-07-07
 # Description: SHACL shapes for validating URPX data against the URPX Ontology.
 
@@ -29,20 +29,20 @@
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
     dcterms:modified "2026-09-08"^^xsd:date ;
     dcterms:title "URPX SHACL Shapes" ;
-    dcterms:hasVersion <https://urpx.org/ns/shacl/core/releases/v0.5.0> ;
-    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.5.0/shacl/urpx-shacl.ttl> .
+    dcterms:hasVersion <https://urpx.org/ns/shacl/core/releases/v0.5.1> ;
+    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.5.1/shacl/urpx-shacl.ttl> .
 
-<https://urpx.org/ns/shacl/core/releases/v0.5.0>
+<https://urpx.org/ns/shacl/core/releases/v0.5.1>
     a owl:Ontology, sh:ShapesGraph ;
     dcterms:isVersionOf <https://urpx.org/ns/shacl/core> ;
     dcterms:issued "2026-09-08"^^xsd:date ;
-    dcat:version "0.5.0" ;
-    dcat:distribution <https://urpx.org/ns/shacl/core/releases/v0.5.0/ttl> .
+    dcat:version "0.5.1" ;
+    dcat:distribution <https://urpx.org/ns/shacl/core/releases/v0.5.1/ttl> .
 
-<https://urpx.org/ns/shacl/core/releases/v0.5.0/ttl>
+<https://urpx.org/ns/shacl/core/releases/v0.5.1/ttl>
     a dcat:Distribution ;
-    dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.5.0/shacl/urpx-shacl.ttl> ;
-    dcat:downloadURL <https://urpx.org/ns/shacl/core/releases/v0.5.0/ttl/urpx-shacl.ttl> ;
+    dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.5.1/shacl/urpx-shacl.ttl> ;
+    dcat:downloadURL <https://urpx.org/ns/shacl/core/releases/v0.5.1/ttl/urpx-shacl.ttl> ;
     dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> .
 
 # ============================================================================

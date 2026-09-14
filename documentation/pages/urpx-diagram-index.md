@@ -12,7 +12,7 @@ site_position: 2
 
 # URPX Diagram Index
 
-**Version:** 0.5.0 (Pre-draft)
+**Version:** 0.5.1 (Pre-draft)
 **Last Updated:** 2026-08-20
 
 [← Back to Index](/docs/getting-started/overview)

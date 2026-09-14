@@ -4,10 +4,8 @@ version = 1
 # carry inline SPDX headers (binaries, third-party assets) or that need
 # compound license expressions.
 #
-# The URPX standard is currently under Apache-2.0 (pre-Draft stage). Upon
-# acceptance as a Working Group Draft, specification files will transition
-# to the W3C Document License and datasets to CDLA-Permissive-2.0.
-# See TRANSITION.md for the full transition plan and manifest.
+# Following Working Group Draft acceptance, specification files carry W3C-20150513, datasets carry CDLA-Permissive-2.0, and source and meta files remain Apache-2.0.
+# See TRANSITION.md for the completed transition record and manifest.
 
 # -----------------------------------------------------------------------------
 # Binary raster images (PNG, JPG), SVG diagrams, and their Graphviz DOT sources
@@ -70,7 +68,18 @@ path = [
     "test-cases/pge-e-elec/data/urpx-rate-plan_pge_e-elec.jsonld",
     "test-cases/test-cases-index.csv",
     "test-cases/urpx-edge-cases.csv",
+    "test-cases/manifest-all.json",
 ]
+SPDX-FileCopyrightText = "Flux Tailor LLC"
+SPDX-License-Identifier = "CDLA-Permissive-2.0"
+
+# -----------------------------------------------------------------------------
+# Generated per-test-case diagrams and their Graphviz DOT sources, which travel with the test-case data bundle they sit inside rather than with the specification's own diagram set.
+# Takes precedence over the blanket **/*.svg and **/*.dot rule above.
+# -----------------------------------------------------------------------------
+[[annotations]]
+path = ["test-cases/**/assets/diagram.dot", "test-cases/**/assets/diagram.svg"]
+precedence = "override"
 SPDX-FileCopyrightText = "Flux Tailor LLC"
 SPDX-License-Identifier = "CDLA-Permissive-2.0"
 
@@ -83,13 +92,30 @@ SPDX-License-Identifier = "CDLA-Permissive-2.0"
 path = [
     "dev-docs/**",
     "documentation/examples/examples-schema.json",
-    "documentation/examples/manifest.json",
     "test-cases/manifest-all-schema.json",
-    "test-cases/manifest-all.json",
 ]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Flux Tailor LLC"
 SPDX-License-Identifier = "Apache-2.0"
+
+# -----------------------------------------------------------------------------
+# Worked sample instances under dev-docs/samples, synthetic data accompanying development specifications, licensed as data like the shipped test-case datasets.
+# Entries below the dev-docs/** rule above win over it, so this one must stay after it.
+# -----------------------------------------------------------------------------
+[[annotations]]
+path = ["dev-docs/samples/**/*.json", "dev-docs/samples/**/*.jsonld"]
+precedence = "override"
+SPDX-FileCopyrightText = "Flux Tailor LLC"
+SPDX-License-Identifier = "CDLA-Permissive-2.0"
+
+# -----------------------------------------------------------------------------
+# Generated documentation-examples index, which indexes specification content and carries no inline header, so this entry is what the specification category's script-driven rewrite cannot reach.
+# Its schema stays Apache-2.0 above, as tooling.
+# -----------------------------------------------------------------------------
+[[annotations]]
+path = "documentation/examples/manifest.json"
+SPDX-FileCopyrightText = "Flux Tailor LLC"
+SPDX-License-Identifier = "W3C-20150513"
 
 # -----------------------------------------------------------------------------
 # Generated data dictionary — matches TRANSITION.md's specification category
@@ -102,13 +128,11 @@ SPDX-FileCopyrightText = "Flux Tailor LLC"
 SPDX-License-Identifier = "W3C-20150513"
 
 # -----------------------------------------------------------------------------
-# Diagram SVGs under documentation/diagrams — matches TRANSITION.md's
-# specification category glob but carries no inline header or sidecar, so
-# this override is what that category's script-driven rewrite cannot reach.
-# Takes precedence over the blanket **/*.svg rule above.
+# Diagram SVGs and their Graphviz DOT sources under documentation/diagrams, matching TRANSITION.md's specification category glob but carrying no inline header or sidecar, so this override is what that category's script-driven rewrite cannot reach.
+# Takes precedence over the blanket **/*.svg and **/*.dot rule above.
 # -----------------------------------------------------------------------------
 [[annotations]]
-path = "documentation/diagrams/**/*.svg"
+path = ["documentation/diagrams/**/*.dot", "documentation/diagrams/**/*.svg"]
 precedence = "override"
 SPDX-FileCopyrightText = "Flux Tailor LLC"
 SPDX-License-Identifier = "W3C-20150513"

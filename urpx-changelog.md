@@ -3,7 +3,7 @@
 
 # URPX Changelog
 
-**Version:** 0.5.0 (Pre-draft)
+**Version:** 0.5.1 (Pre-draft)
 **Last Updated:** 2026-09-08
 
 [← Back to Index](index.md) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)
@@ -12,18 +12,19 @@
 ---
 
 ### Changed
-- The ontology, SHACL shapes, SKOS mappings, documentation pages, the published JSON-LD context, and the diagram set move from Apache-2.0 to `W3C-20150513` (the W3C Software Notice and Document License), per the transition plan in `TRANSITION.md`. Source tooling and meta files (`scripts/`, `README.md`, `LICENSE`, and the like) are unchanged and remain Apache-2.0.
+- The ontology, SHACL shapes, SKOS mappings, documentation pages, the published JSON-LD context, the diagram set under `documentation/diagrams/` (the SVGs and their Graphviz `.dot` sources), and the generated documentation-examples index `documentation/examples/manifest.json` move from Apache-2.0 to `W3C-20150513` (the W3C Software Notice and Document License), per the transition plan in `TRANSITION.md`. Source tooling and meta files (`scripts/`, `README.md`, `LICENSE`, `documentation/examples/examples-schema.json`, and the like) are unchanged and remain Apache-2.0.
 - `LICENSES/W3C-20150513.txt` is added.
 - This closes the license transition `TRANSITION.md` describes; its status now reads Completed.
 
 ### Notes
-- `documentation/pages/urpx-data-dictionary.md` and the seventeen diagram SVGs under `documentation/diagrams/` carry no inline header, so their license moves through a `REUSE.toml` entry rather than a header rewrite.
+- `documentation/pages/urpx-data-dictionary.md`, the diagram set under `documentation/diagrams/`, and `documentation/examples/manifest.json` carry no inline header, so their license moves through `REUSE.toml` entries rather than a header rewrite.
 
 2026-09-09 — v0.5.1 (test-case datasets move to CDLA-Permissive-2.0)
 ---
 
 ### Changed
-- The `test-cases/` JSON-LD and CSV example data, and their generated catalog page `test-cases/index.md`, move from Apache-2.0 to CDLA-Permissive-2.0, per the transition plan in `TRANSITION.md`. The two ConEd tariff assets carrying `LicenseRef-PublicRecord` are unaffected; they were never Apache-2.0.
+- The `test-cases/` JSON-LD and CSV example data, their generated catalog page `test-cases/index.md`, the generated corpus index `test-cases/manifest-all.json`, and the per-test-case diagrams under `test-cases/*/assets/` move from Apache-2.0 to CDLA-Permissive-2.0, per the transition plan in `TRANSITION.md`. The ConEd tariff assets carrying `LicenseRef-PublicRecord` are unaffected; they were never Apache-2.0. `test-cases/manifest-all-schema.json` stays Apache-2.0 as tooling.
+- The worked sample instances under `dev-docs/samples/` carry CDLA-Permissive-2.0 on the same terms, as data accompanying development specifications. The prose around them stays Apache-2.0 with the rest of `dev-docs/`.
 - `LICENSES/CDLA-Permissive-2.0.txt` is added.
 
 2026-09-08 — v0.5.0 (the namespace moves to urpx.org)
