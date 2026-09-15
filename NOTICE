@@ -28,6 +28,6 @@ Consolidated Edison Company of New York, Inc.
             test-cases/coned-sc1-rate-i/assets/lds-appnd-2025.csv
             test-cases/coned-sc1-rate-i-supply-ref/assets/lds-appnd-2025.csv
   Source: Consolidated Edison Company of New York, Inc.
-  Status: Public-record documents and rate data included for test case purposes.
+  Status: Public-record documents and utility-published pricing data included for test case purposes.
   License: LicenseRef-PublicRecord (see LICENSES/LicenseRef-PublicRecord.txt).
-  Context: These are a published rate schedule, a tariff book general rule, five monthly market supply charge statements, and a locational delivery service rate appendix included in two test cases, all regulatory filings or utility-published rate data that are public record. Included so the URPX test suite can reference real-world tariff and rate documents. The URPX authors make no warranty regarding the accuracy, completeness, or currency of these documents.
+  Context: These are a published rate schedule, a tariff book general rule, five monthly market supply charge statements, and a locational delivery service rate appendix included in two test cases, all regulatory filings or utility-published pricing data that are public record. Included so the URPX test suite can reference real-world tariff documents and pricing-data publications. The URPX authors make no warranty regarding the accuracy, completeness, or currency of these documents.

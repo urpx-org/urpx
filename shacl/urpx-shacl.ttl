@@ -24,7 +24,7 @@
     rdfs:label "URPX Ontology SHACL Shapes"@en ;
     dcterms:creator "Una Smithsimon, Klaar De Schepper, Flux Tailor LLC" ;
     dcterms:description "SHACL shapes for validating URPX data against the URPX Ontology." ;
-    dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
+    dcterms:license <https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document> ;
     dcterms:modified "2026-09-08"^^xsd:date ;
     dcterms:title "URPX SHACL Shapes" ;
     dcterms:hasVersion <https://urpx.org/ns/shacl/core/releases/v0.5.1> ;
@@ -33,7 +33,7 @@
 <https://urpx.org/ns/shacl/core/releases/v0.5.1>
     a owl:Ontology, sh:ShapesGraph ;
     dcterms:isVersionOf <https://urpx.org/ns/shacl/core> ;
-    dcterms:issued "2026-09-08"^^xsd:date ;
+    dcterms:issued "2026-09-14"^^xsd:date ;
     dcat:version "0.5.1" ;
     dcat:distribution <https://urpx.org/ns/shacl/core/releases/v0.5.1/ttl> .
 

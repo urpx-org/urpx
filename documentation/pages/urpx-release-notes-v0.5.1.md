@@ -49,4 +49,4 @@ The full texts are in `LICENSES/`, and the per-category assignment is recorded i
 
 - [v0.5.0 Release Notes](urpx-release-notes-v0.5.0.md)
 - [Data Dictionary](urpx-data-dictionary.md)
-- [Changelog](https://github.com/urpx-org/urpx/blob/main/urpx-changelog.md)
+- [Changelog](../../urpx-changelog.md)
