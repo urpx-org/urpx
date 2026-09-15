@@ -1,6 +1,5 @@
 <!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
 <!-- SPDX-License-Identifier: W3C-20150513 -->
-<!-- SPDX-Transition-License-After-Draft: W3C-20150513 -->
 
 ---
 site_category: technical-reference

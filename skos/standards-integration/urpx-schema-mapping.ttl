@@ -1,7 +1,6 @@
 # SPDX-FileCopyrightText: 2026 Flux Tailor LLC
 #
 # SPDX-License-Identifier: W3C-20150513
-# SPDX-Transition-License-After-Draft: W3C-20150513
 
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix urpx: <https://urpx.org/ns/ontology/> .
