@@ -1,7 +1,6 @@
 <!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
 <!-- SPDX-License-Identifier: CDLA-Permissive-2.0 -->
 <!-- SPDX-Transition-License-After-Draft: CDLA-Permissive-2.0 -->
-<!-- Comment: Dataset. Transitioned to CDLA-Permissive-2.0 upon Working Group Draft acceptance. See TRANSITION.md. -->
 <!-- AUTO-GENERATED: do not hand-edit. Regenerate from test-cases-index.csv instead. -->
 
 # URPX Test Cases — Catalog

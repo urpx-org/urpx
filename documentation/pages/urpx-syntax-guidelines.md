@@ -1,7 +1,6 @@
 <!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
 <!-- SPDX-License-Identifier: W3C-20150513 -->
 <!-- SPDX-Transition-License-After-Draft: W3C-20150513 -->
-<!-- Comment: Transitioned to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
 
 ---
 site_category: technical-reference
