@@ -9,8 +9,11 @@ authors:
   - family-names: "De Schepper"
     given-names: "Klaartje"
   - name: "URPX Working Group"
-version: 0.3.0
-license: Apache-2.0
+version: 0.5.1
+license:
+  - Apache-2.0
+  - W3C-20150513
+  - CDLA-Permissive-2.0
 repository-code: "https://github.com/urpx-org/urpx"
 abstract: "An open standard for exchanging utility rate plan information using semantic web technologies (RDF, OWL, SHACL)."
 keywords:
