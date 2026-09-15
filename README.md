@@ -3,7 +3,7 @@
 
 # URPX: Utility Rate Plan Exchange Ontology
 
-**Version 0.5.0** | **W3C-Ready Semantic Standard**
+**Version 0.5.1** | **W3C-Ready Semantic Standard**
 
  [![Documentation](https://img.shields.io/badge/Documentation-Complete-green)](documentation/) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 

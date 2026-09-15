@@ -5,7 +5,7 @@
 
 # URPX v0.5.1 Release Notes
 
-**Released:** 2026-09-09.
+**Released:** 2026-09-14.
 **Type:** Pre-draft patch release.
 **Previous release:** [`v0.5.0`](urpx-release-notes-v0.5.0.md)
 
@@ -17,16 +17,16 @@
 
 URPX v0.5.1 completes the license transition. The specification files move from Apache-2.0 to the W3C Software Notice and Document License (`W3C-20150513`), the dataset files move to CDLA-Permissive-2.0, and source and metadata files stay under Apache-2.0.
 
-The vocabulary is byte-identical to v0.5.0. This release changes license terms only. No term, shape, identifier or namespace changes.
+No term, class, property, shape constraint or namespace changes in this release. The only vocabulary edits are the version metadata: `owl:versionInfo`, `owl:versionIRI`, `dcterms:hasVersion`, the release node and its download URLs now name 0.5.1.
 
 ---
 
 ## What changed
 
-- **Specification files carry `W3C-20150513`.** This covers the ontology, the shapes, the SKOS mappings, the published JSON-LD context, and the documentation pages that define the standard.
-- **Dataset files carry `CDLA-Permissive-2.0`.** This covers the test-case example data.
-- **Source and metadata files stay under Apache-2.0.** Tooling and repository metadata are unchanged.
-- **The repository is REUSE-compliant.** Every file's license is recorded in an SPDX header or in `REUSE.toml`, and `reuse lint` passes.
+- **Specification files carry `W3C-20150513`.** This covers the ontology, the shapes, the SKOS mappings, the published JSON-LD context, the documentation pages that define the standard, the diagram set and its Graphviz sources, and the generated documentation-examples index.
+- **Dataset files carry `CDLA-Permissive-2.0`.** This covers the test-case example data, the generated catalog and corpus indexes, the per-test-case diagrams, and the worked sample instances that accompany development specifications.
+- **Source and metadata files stay under Apache-2.0.** Tooling, schema files and repository metadata are unchanged.
+- **The repository is REUSE-compliant.** Every file's license is recorded in an SPDX header, a `.license` sidecar, or `REUSE.toml`, and `reuse lint` passes.
 
 ---
 
@@ -42,7 +42,7 @@ The full texts are in `LICENSES/`, and the per-category assignment is recorded i
 
 ## Impact
 
-- Consumers of the vocabulary see no change. The ontology and shapes are byte-identical to v0.5.0, and every term IRI is unchanged.
+- Consumers of the vocabulary see no semantic change. Every term IRI, class, property and shape constraint is unchanged from v0.5.0; only the version metadata moved.
 - Reuse of the specification text and the example data is governed by the licenses above rather than by Apache-2.0.
 
 ---
