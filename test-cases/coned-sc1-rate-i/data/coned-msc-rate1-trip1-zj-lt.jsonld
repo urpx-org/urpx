@@ -220,7 +220,7 @@
     {
       "@id": "coned:doc-msc-rate1-trip1-zj-lt",
       "@type": "urpx:URPXPackage",
-      "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.4.0/ontology/urpx-ontology.ttl",
+      "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.5.1/ontology/urpx-ontology.ttl",
       "urpx:packages": { "@id": "coned:pm-msc-rate1-trip1-zj-lt" }
     }
   ]

@@ -10,7 +10,7 @@
     {
       "@type": "urpx:URPXPackage",
       "@id": "pge:doc-e-elec-2026-01-01",
-      "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.3.0/ontology/urpx-ontology.ttl",
+      "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.5.1/ontology/urpx-ontology.ttl",
       "urpx:hasRatePlan": {
         "@type": "urpx:RatePlan",
         "@id": "pge:e-elec",

@@ -11,7 +11,7 @@ site_position: 1
 
 # URPX Interoperability & Standards Integration
 
-> **PRE-DRAFT DOCUMENT - WORKING GROUP REVIEW ONLY**
+> **DRAFT DOCUMENT - WORKING GROUP REVIEW ONLY**
 >
 > **Status**: Draft in Progress
 > **Audience**: URPX Working Group Members

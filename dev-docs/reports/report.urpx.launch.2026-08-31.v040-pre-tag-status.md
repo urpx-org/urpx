@@ -70,7 +70,7 @@ Each row is the change, not the process that produced it. Nineteen changes to th
 | A backlog task for the open Green Button pricing-node question | `ddfe3bc8` |
 | The published context and the validation unit recorded as v0.4.0 decisions | `dafe353a` |
 
-### The documentation site: `urpx-org/urpx-website-staging`
+### The documentation site
 
 | Work | Landed |
 |---|---|
@@ -95,7 +95,7 @@ Each row is the change, not the process that produced it. Nineteen changes to th
 | Independent read of the applied calculation change | Clean, to a residue already accepted |
 | A gate that stops a page's declared version drifting from the vocabulary's | Built and proved in both directions |
 | Reuse-ladder pass on the new Green Button mapping material | Four items dispositioned, nothing minted |
-| Two reviews of that pass, one per vendor, which diverged | Routed to the chair and ruled; the mapping ships the settled residue only |
+| Two reviews of that pass, one per vendor, which diverged | The chair ruled; the mapping ships the settled residue only |
 | The fixture matrix given the offline loader the context cutover requires | Runs offline, 42 local resolutions, twelfth fixture validated |
 
 **Two of those rows are worth reading twice.** The second-vendor pass and the first-vendor pass, run blind to each other, converged on the same finding both times they were run in parallel on the vocabulary. On the Green Button material they diverged instead, and the divergence is what sent the scope question to the chair before anything was applied.
@@ -106,7 +106,7 @@ The pre-tag review also found that the vocabulary itself was sound. What failed 
 
 ![Cumulative commits, 31 July to 31 August 2026](../assets/urpx-commit-cumulative-2026-08-31.svg)
 
-120 commits across the three repositories. The internal repository carries the most because review reports, decision records and session briefs all land there and none of them is a change to the standard.
+120 commits across the three repositories. The internal repository carries the most because review reports, decision records and working notes all land there and none of them is a change to the standard.
 
 The shape is the week of 14 to 20 August, which carries 59 of the 120. That is the week the two pre-tag reviews returned and everything they found was applied.
 

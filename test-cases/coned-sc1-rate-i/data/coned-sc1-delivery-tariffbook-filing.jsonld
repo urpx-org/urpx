@@ -166,7 +166,7 @@
     {
       "@id": "coned:doc-sc1-delivery-tariffbook-filing",
       "@type": "urpx:URPXPackage",
-      "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.4.0/ontology/urpx-ontology.ttl",
+      "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.5.1/ontology/urpx-ontology.ttl",
       "urpx:packages": { "@id": "coned:tf-sc1-delivery-2026-02-01" }
     }
   ]

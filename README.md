@@ -5,7 +5,7 @@
 
 **Version 0.5.1** | **W3C-Ready Semantic Standard**
 
- [![Documentation](https://img.shields.io/badge/Documentation-Complete-green)](documentation/) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+ [![Documentation](https://img.shields.io/badge/Documentation-Complete-green)](documentation/) [![License](https://img.shields.io/badge/License-Multiple-blue.svg)](NOTICE)
 
 ---
 
@@ -79,9 +79,9 @@ Every release states its own compatibility in its release notes. Where a release
 
 ## License
 
-This **pre-Draft** version is licensed under [Apache 2.0](LICENSE). Intended for working group review purposes only.
+Following Working Group Draft acceptance, three licenses apply by file category. Specification files (the ontology, SHACL shapes, SKOS mappings, and documentation pages) are licensed under the W3C Software Notice and Document License (W3C-20150513). Dataset files (test-case data and index files) are licensed under the Community Data License Agreement - Permissive 2.0 (CDLA-Permissive-2.0). Source code and meta files, including this README, are licensed under the Apache License, Version 2.0. See [NOTICE](NOTICE) for the full statement, [LICENSE](LICENSE) for the Apache-2.0 text, and `LICENSES/` for the other two.
 
-Upon acceptance as a Working Group Draft, specification files will transition to the **W3C Document License** and dataset files to **CDLA-Permissive-2.0**. Source code and meta files remain Apache-2.0. See [TRANSITION.md](TRANSITION.md) for the full license transition plan and file-classification manifest.
+See [TRANSITION.md](TRANSITION.md) for the completed transition record and file-classification manifest.
 
 Contributions are governed by the Developer Certificate of Origin v1.1. See [CONTRIBUTING.md](CONTRIBUTING.md).
 

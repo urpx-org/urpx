@@ -55,7 +55,7 @@
         {
           "@type": "urpx:URPXPackage",
           "@id": "pge:doc-e-tou-c-2026-03-01",
-          "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.4.0/ontology/urpx-ontology.ttl",
+          "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.5.1/ontology/urpx-ontology.ttl",
           "urpx:dateReceived": "2026-02-27",
           "urpx:packages": {
             "@id": "pge:al-7846-e"
@@ -2420,7 +2420,7 @@
     {
       "@type": "urpx:URPXPackage",
       "@id": "pge:doc-e-tou-c-baseline-tier-2026-03-01",
-      "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.4.0/ontology/urpx-ontology.ttl",
+      "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.5.1/ontology/urpx-ontology.ttl",
       "urpx:hasRatePlanModifier": {
         "@type": "urpx:RatePlanModifier",
         "@id": "pge:e-tou-c-baseline-tier",

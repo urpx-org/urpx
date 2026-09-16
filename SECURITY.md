@@ -9,7 +9,7 @@ If you believe you have found a security issue in URPX, please do
 **not** open a public GitHub issue. Instead, report it privately so
 maintainers can triage and coordinate disclosure responsibly.
 
-Report to: `security@fluxtailor.com`
+Report to: `security@urpx.org`
 
 When reporting, please include:
 

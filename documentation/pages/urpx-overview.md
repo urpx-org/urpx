@@ -11,8 +11,8 @@ site_position: 1
 
 # URPX Overview
 
-**Version**: 0.5.1 (Pre-draft)
-**Last Updated**: 2026-07-07  
+**Version**: 0.5.1 (Working Group Draft)
+**Last Updated**: 2026-07-07
 **Status**: Active
 
 ## Understanding the Utility Rate Plan Exchange Standard
@@ -304,7 +304,7 @@ ex:DemandResponseProgram a urpx:ProgramEnrollment ;
 
 ### Data Quality & Validation
 
-URPX includes SHACL (Shapes Constraint Language) validation shapes in a unified file ([`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl), pre-draft v0.3.0):
+URPX includes SHACL (Shapes Constraint Language) validation shapes in a unified file ([`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl)):
 
 **Core Validation**: Rate plan structure integrity, price consistency rules, temporal constraint validation
 

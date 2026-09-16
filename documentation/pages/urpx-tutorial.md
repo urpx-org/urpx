@@ -10,7 +10,7 @@ site_position: 2
 
 # URPX Tutorial: Building Your First Rate Plan
 
-**Version:** 0.5.1 (Pre-draft)
+**Version:** 0.5.1 (Working Group Draft)
 **Last Updated:** 2026-08-20
 **Status:** Active
 
@@ -136,7 +136,6 @@ Every price may belong to one billPortion:
 This tutorial builds a rate plan from the outside in. Here's the structure:
 
 ```mermaid
-%%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
 
 graph TB
     Doc["<b>URPXPackage</b><br/>Exchange container<br/><i>Step 1</i>"]
@@ -152,9 +151,9 @@ graph TB
     RPV -->|"hasPlanElements"| PE
     RPV -->|"hasPrices"| Prices
 
-    classDef docClass fill:#77AADD,stroke:#5588BB,stroke-width:3px,color:#fff
-    classDef planClass fill:#44BB99,stroke:#228877,stroke-width:2px,color:#fff
-    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#333
+    classDef docClass fill:#77AADD,stroke:#5588BB,stroke-width:3px,color:#000
+    classDef planClass fill:#44BB99,stroke:#228877,stroke-width:2px,color:#000
+    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#000
 
     class Doc docClass
     class RP,RPV planClass
@@ -307,7 +306,6 @@ The version is its own top-level node in the graph. It points back to the plan i
 Every Price in URPX has three classification dimensions plus a value:
 
 ```mermaid
-%%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
 
 graph LR
     Price["<b>Price</b>"]
@@ -328,9 +326,9 @@ graph LR
     Price --> Classification
     Price --> Value
 
-    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:3px,color:#333
-    classDef classifyClass fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#fff
-    classDef valueClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#333
+    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:3px,color:#000
+    classDef classifyClass fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#000
+    classDef valueClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#000
 
     class Price priceClass
     class CT,CC,BP classifyClass
@@ -398,7 +396,6 @@ The minimum price below uses `amount` (fixed). The energy price in Step 5 uses `
 Prices don't measure things directly. They reference a MetricInput that defines what's being measured. This keeps measurement definitions centralized and reusable:
 
 ```mermaid
-%%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
 
 graph TB
     PE["<b>PlanElements</b>"]
@@ -425,11 +422,11 @@ graph TB
     P3 -.->|"referencesMetricInput"| MI1
     P2 -.->|"referencesMetricInput"| MI2
 
-    classDef elemClass fill:#44BB99,stroke:#228877,stroke-width:2px,color:#fff
-    classDef metricClass fill:#77AADD,stroke:#5588BB,stroke-width:2px,color:#fff
-    classDef specClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#333
-    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#333
-    classDef calcClass fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#fff
+    classDef elemClass fill:#44BB99,stroke:#228877,stroke-width:2px,color:#000
+    classDef metricClass fill:#77AADD,stroke:#5588BB,stroke-width:2px,color:#000
+    classDef specClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#000
+    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#000
+    classDef calcClass fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#000
 
     class PE elemClass
     class MI1,MI2 metricClass
@@ -576,7 +573,6 @@ Delivery system prices separated from generation costs.
 Time-of-use pricing uses a hierarchy that connects scheduling rules to prices:
 
 ```mermaid
-%%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
 
 graph TB
     PE["<b>PlanElements</b>"]
@@ -610,13 +606,13 @@ graph TB
     Price1 -.->|"references"| P1
     Price2 -.->|"references"| P2
 
-    classDef elemClass fill:#44BB99,stroke:#228877,stroke-width:2px,color:#fff
-    classDef schedClass fill:#77AADD,stroke:#5588BB,stroke-width:3px,color:#fff
-    classDef tierClass fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#fff
-    classDef periodClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#333
-    classDef bracketClass fill:#FFAABB,stroke:#DD8899,stroke-width:2px,color:#333
-    classDef seasonClass fill:#BBCC33,stroke:#99AA11,stroke-width:2px,color:#333
-    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#333,stroke-dasharray: 5 5
+    classDef elemClass fill:#44BB99,stroke:#228877,stroke-width:2px,color:#000
+    classDef schedClass fill:#77AADD,stroke:#5588BB,stroke-width:3px,color:#000
+    classDef tierClass fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#000
+    classDef periodClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#000
+    classDef bracketClass fill:#FFAABB,stroke:#DD8899,stroke-width:2px,color:#000
+    classDef seasonClass fill:#BBCC33,stroke:#99AA11,stroke-width:2px,color:#000
+    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#000,stroke-dasharray: 5 5
 
     class PE elemClass
     class BM elemClass
@@ -834,7 +830,6 @@ Time-of-use rate plans vary pricing based on time of day, day of week, and seaso
 Here's the complete structure of the rate plan you've assembled across this tutorial:
 
 ```mermaid
-%%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
 
 graph TB
     Doc["<b>URPXPackage</b>"]
@@ -879,11 +874,11 @@ graph TB
     BM --> TOU
     PS --> P1 & P2 & P3 & P4 & P5 & P6 & P7 & P8
 
-    classDef docClass fill:#77AADD,stroke:#5588BB,stroke-width:3px,color:#fff
-    classDef planClass fill:#44BB99,stroke:#228877,stroke-width:2px,color:#fff
-    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#333
-    classDef touClass fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#fff
-    classDef elemClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#333
+    classDef docClass fill:#77AADD,stroke:#5588BB,stroke-width:3px,color:#000
+    classDef planClass fill:#44BB99,stroke:#228877,stroke-width:2px,color:#000
+    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#000
+    classDef touClass fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#000
+    classDef elemClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#000
 
     class Doc docClass
     class RP,RPV,CC planClass

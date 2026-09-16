@@ -9,8 +9,8 @@ version = 1
 
 # -----------------------------------------------------------------------------
 # Binary raster images (PNG, JPG), SVG diagrams, and their Graphviz DOT sources
-# — all Flux Tailor-authored, Apache-2.0 alongside the rest of the pre-Draft
-# project.
+# — all Flux Tailor-authored, Apache-2.0 alongside the rest of the
+# project's meta and tooling assets.
 # -----------------------------------------------------------------------------
 [[annotations]]
 path = ["**/*.png", "**/*.jpg", "**/*.jpeg", "**/*.svg", "**/*.dot"]
@@ -86,7 +86,7 @@ SPDX-License-Identifier = "CDLA-Permissive-2.0"
 # -----------------------------------------------------------------------------
 # Working group development documents and JSON manifests/schemas (JSON cannot
 # carry comment headers) — Flux Tailor-authored, Apache-2.0 alongside the rest
-# of the pre-Draft project.
+# of the project's meta and tooling assets.
 # -----------------------------------------------------------------------------
 [[annotations]]
 path = [

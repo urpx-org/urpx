@@ -10,11 +10,11 @@ site_position: 4
 
 # URPX Quality Assurance Guidelines
 
-**Version**: 0.5.1 (Pre-draft)
+**Version**: 0.5.1 (Working Group Draft)
 **Last Updated**: 2026-07-07
 **Status**: Active
 
-**Validation and quality standards for URPX v0.3.0 rate plan data**
+**Validation and quality standards for URPX v0.5.1 rate plan data**
 
 [← Back to Index](/docs/getting-started/overview)
 
@@ -33,11 +33,11 @@ site_position: 4
 
 ## Overview
 
-URPX v0.3.0 maintains quality standards for ontology alignment, SHACL conformance, and semantic consistency. This guide summarizes the current validation expectations for rate plans, versions, prices, and structured rule logic.
+URPX v0.5.1 maintains quality standards for ontology alignment, SHACL conformance, and semantic consistency. This guide summarizes the current validation expectations for rate plans, versions, prices, and structured rule logic.
 
 ### Quality Principles
 
-1. **Ontology Compliance** - Data must use current v0.3.0 classes and properties
+1. **Ontology Compliance** - Data must use current v0.5.1 classes and properties
 2. **SHACL Validation** - Business rules are enforced through the unified SHACL file
 3. **Semantic Consistency** - Property usage, enumerations, and cross-references must align with the ontology
 4. **Data Completeness** - Required identifiers, version metadata, and pricing structure must be present
@@ -48,7 +48,7 @@ URPX v0.3.0 maintains quality standards for ontology alignment, SHACL conformanc
 
 ### Required Ontology Files
 
-URPX v0.3.0 uses a core ontology file:
+URPX v0.5.1 uses a core ontology file:
 
 - `../../ontology/urpx-ontology.ttl` - Complete URPX ontology with classes, properties, enumerations, and notes
 
@@ -56,7 +56,7 @@ URPX v0.3.0 uses a core ontology file:
 
 | Error | Cause | Solution |
 |-------|-------|----------|
-| Undefined property | Using a property no longer present in v0.3.0 | Check the ontology and rename to the current property |
+| Undefined property | Using a property no longer present in v0.5.1 | Check the ontology and rename to the current property |
 | Wrong enum value | Incorrect or invented enumeration instance | Use the exact URPX enumeration IRI |
 | Missing required property | Omitted mandatory identifier, version field, or container | Add the required property before SHACL validation |
 | Type mismatch | Literal used where an object reference is required, or vice versa | Correct to the ontology range |
@@ -281,7 +281,7 @@ URPX v0.3.0 uses a core ontology file:
 ### Code Example Requirements
 
 **All examples must:**
-- Use current v0.3.0 property names
+- Use current v0.5.1 property names
 - Use `ratePlanUniqueIdentifier`, not `ratePlanIdentifier`
 - Use `timezoneIdentifier`, not `timeZoneIdentifier`
 - Use `hasConditionExpression`, not `hasCondition` / `hasConditionLogic`
@@ -330,7 +330,7 @@ URPX documentation, annotations, and data write **"an URPX"**, never "a URPX": "
 
 ### Edge-Case Coverage
 
-The repository maintains an edge-case register at [`test-cases/urpx-edge-cases.csv`](../../test-cases/urpx-edge-cases.csv): a catalog of difficult real-world tariff features, each with the publishing utility, a source link, and the exact source language. Use it to steer test-case coverage, and add a row when a published tariff shows a hard pattern the register does not yet contain.
+The repository maintains an edge-case register at [`test-cases/urpx-edge-cases.csv`](../../test-cases/urpx-edge-cases.csv): a catalog of difficult real-world  tariff and rate plan features, each with the publishing utility, a source link, and the exact source language. Use it to steer test-case coverage, and add a row when a tariff publishes a rate plan pattern the register does not yet contain.
 
 ### Common Pitfalls to Avoid
 
@@ -361,6 +361,6 @@ The repository maintains an edge-case register at [`test-cases/urpx-edge-cases.c
 
 ---
 
-*Quality assurance guidelines for URPX v0.3.0. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
+*Quality assurance guidelines for URPX v0.5.1. For latest updates, visit the [URPX GitHub repository](https://github.com/urpx-org/urpx).*
 
 [← Back to Index](/docs/getting-started/overview)

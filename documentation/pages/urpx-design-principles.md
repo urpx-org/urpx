@@ -10,8 +10,8 @@ site_position: 2
 
 # URPX Design Principles
 
-**Version**: 0.5.1 (Pre-draft)
-**Last Updated**: 2026-03-02  
+**Version**: 0.5.1 (Working Group Draft)
+**Last Updated**: 2026-03-02
 **Status**: Active
 
 ---
@@ -321,4 +321,4 @@ Reviewers should verify:
 
 ## License
 
-Copyright © 2025 Flux Tailor LLC. Licensed under Apache 2.0.
+Copyright © 2025 Flux Tailor LLC. Licensed under the W3C Software Notice and Document License (W3C-20150513). See [NOTICE](../../NOTICE) for the full statement.

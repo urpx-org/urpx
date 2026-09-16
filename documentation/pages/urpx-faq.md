@@ -57,7 +57,7 @@ Yes. URPX will provide mapping templates for major standards (Green Button, Open
 
 **Q: What is the current status of URPX?**
 
-URPX v0.3.0 is currently in pre-draft review stage. The working group is actively refining the ontology and validation rules. You can follow progress and contribute at the [urpx-org GitHub organization](https://github.com/urpx-org), where all repositories are publicly available:
+URPX v0.5.1 has completed the Working Group Draft transition. See [TRANSITION.md](../../TRANSITION.md) for the transition record. The working group continues to refine the ontology and validation rules. You can follow progress and contribute at the [urpx-org GitHub organization](https://github.com/urpx-org):
 - **urpx** - Core ontology and specifications
 - **urpx-wg-admin** - Working group administration
 - **urpx-tools** - Validation and transformation utilities
