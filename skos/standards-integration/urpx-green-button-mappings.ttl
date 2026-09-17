@@ -17,10 +17,11 @@
     dcterms:title "URPX - Green Button ESPI Integration" ;
     dcterms:description "SKOS alignment between URPX and the Green Button (NAESB ESPI) standard, verified against the NAESB ESPI V4 schemas."@en ;
     dcterms:created "2026-01-27"^^xsd:date ;
-    dcterms:modified "2026-08-31"^^xsd:date ;
+    dcterms:modified "2026-09-17"^^xsd:date ;
     dcterms:conformsTo <https://urpx.org/ns/ontology/releases/v0.3.0> ;
     rdfs:seeAlso <https://urpx.org/ns/ontology> ;
-    owl:versionInfo "0.3.0" .
+    owl:versionInfo "0.3.0" ;
+    rdfs:comment "Draft alignment, under working-group review. The matches below are a work in progress and are not a published mapping profile."@en .
 
 # ============================================
 # Structural anchors (confirmed in ESPI V4)

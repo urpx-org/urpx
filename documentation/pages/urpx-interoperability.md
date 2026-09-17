@@ -142,6 +142,8 @@ To map URPX to existing standards without creating hard technical dependencies o
 
 ## Supported Standards & Integrations
 
+Mapping work is in progress. The alignments in this section show the approach and the matches drafted so far; they are under working-group review and will change. Only the Schema.org mapping is published as a settled profile. See [Mapping Profile Publication](#mapping-profile-publication) for the status of each file.
+
 ### Green Button Alliance
 
 **Purpose**: Customer usage data exchange standard.
@@ -284,11 +286,21 @@ urpx:Price skos:relatedMatch zigbee:PriceCluster ;
 
 Each published mapping profile includes header metadata, vocabulary declarations, and bidirectional mapping rules.
 
-**Directory**: `skos/`
+**Directory**: `skos/standards-integration/`
 
 **Naming Convention**: `urpx-{standard-name}-mappings.ttl`
 
 **Versioning**: Mapping files are versioned independently from URPX core (Major.Minor.Patch).
+
+**Status**: Mapping is an active work stream, and the profiles are at different stages. Each file states its own status in its header.
+
+| Profile | File | Status |
+| --- | --- | --- |
+| Schema.org | `urpx-schema-mapping.ttl` | Published |
+| Green Button (NAESB ESPI) | `urpx-green-button-mappings.ttl` | Draft, under working-group review |
+| LF Energy CDS | `urpx-lf-energy-mappings.ttl` | Draft, under working-group review |
+
+A draft profile is readable and reviewable, and its matches are open to change. A profile becomes published once the working group has reviewed it.
 
 ---
 

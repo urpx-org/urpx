@@ -17,8 +17,9 @@
     dcterms:title "URPX - LF Energy CDS Integration" ;
     dcterms:description "SKOS alignment between URPX Ontology and LF Energy Customer Data Specification (CDS)."@en ;
     dcterms:created "2026-01-27"^^xsd:date ;
-    dcterms:modified "2026-01-27"^^xsd:date ;
-    owl:versionInfo "0.1.1" .
+    dcterms:modified "2026-09-17"^^xsd:date ;
+    owl:versionInfo "0.1.1" ;
+    rdfs:comment "Draft alignment, under working-group review. The matches below are a work in progress and are not a published mapping profile."@en .
 
 # ============================================
 # LF Energy LineItemKind Mappings
