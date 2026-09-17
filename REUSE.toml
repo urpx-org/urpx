@@ -91,7 +91,6 @@ SPDX-License-Identifier = "CDLA-Permissive-2.0"
 [[annotations]]
 path = [
     "dev-docs/**",
-    "documentation/examples/examples-schema.json",
     "test-cases/manifest-all-schema.json",
 ]
 precedence = "aggregate"
@@ -107,15 +106,6 @@ path = ["dev-docs/samples/**/*.json", "dev-docs/samples/**/*.jsonld"]
 precedence = "override"
 SPDX-FileCopyrightText = "Flux Tailor LLC"
 SPDX-License-Identifier = "CDLA-Permissive-2.0"
-
-# -----------------------------------------------------------------------------
-# Generated documentation-examples index, which indexes specification content and carries no inline header, so this entry is what the specification category's script-driven rewrite cannot reach.
-# Its schema stays Apache-2.0 above, as tooling.
-# -----------------------------------------------------------------------------
-[[annotations]]
-path = "documentation/examples/manifest.json"
-SPDX-FileCopyrightText = "Flux Tailor LLC"
-SPDX-License-Identifier = "W3C-20150513"
 
 # -----------------------------------------------------------------------------
 # Generated data dictionary — matches TRANSITION.md's specification category

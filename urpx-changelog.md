@@ -47,7 +47,7 @@
 ---
 
 ### Changed
-- The ontology, SHACL shapes, SKOS mappings, documentation pages, the published JSON-LD context, the diagram set under `documentation/diagrams/` (the SVGs and their Graphviz `.dot` sources), and the generated documentation-examples index `documentation/examples/manifest.json` move from Apache-2.0 to `W3C-20150513` (the W3C Software Notice and Document License), per the transition plan in `TRANSITION.md`. Source tooling and meta files (`scripts/`, `README.md`, `LICENSE`, `documentation/examples/examples-schema.json`, and the like) are unchanged and remain Apache-2.0.
+- The ontology, SHACL shapes, SKOS mappings, documentation pages, the published JSON-LD context, the diagram set under `documentation/diagrams/` (the SVGs and their Graphviz `.dot` sources), per the transition plan in `TRANSITION.md`. Source tooling and meta files (`scripts/`, `README.md`, `LICENSE`, `documentation/examples/examples-schema.json`, and the like) are unchanged and remain Apache-2.0.
 - `LICENSES/W3C-20150513.txt` is added.
 - This closes the license transition `TRANSITION.md` describes; its status now reads Completed.
 

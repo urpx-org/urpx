@@ -60,7 +60,6 @@ paths = [
     "documentation/diagrams/**/*.mmd",
     "documentation/diagrams/**/*.dot",
     "documentation/diagrams/**/*.svg",
-    "documentation/examples/manifest.json",
     "context/**/*.jsonld",
 ]
 
@@ -211,4 +210,4 @@ note (see README) that "subsequent versions will be published under a
 W3C license."
 
 Contact: `urpx-wg@lists.lfenergy.org` for Working Group matters;
-`security@fluxtailor.com` for security concerns (see [SECURITY.md](SECURITY.md)).
+`security@urpx.org` for security concerns (see [SECURITY.md](SECURITY.md)).
