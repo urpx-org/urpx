@@ -4,7 +4,7 @@
 
 # URPX Test Cases — Catalog
 
-Every URPX test case, with the utility and jurisdiction it models, the rate-plan features it exercises, and a link to its data. Use it to find an example of a particular pricing structure, or to check what the test corpus already covers before adding a case.
+Every URPX test case, with the utility and jurisdiction it models, the rate plan features it exercises, and a link to its data. Use it to find an example of a particular pricing structure, or to check what the test corpus already covers before adding a case.
 
 This page is generated from `test-cases-index.csv`, which is the canonical record and the machine-readable form.
 
