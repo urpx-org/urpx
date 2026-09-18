@@ -27,9 +27,9 @@ This index lists the diagram assets currently present in the repository and the 
 
 ### Temporal Versioning Summary
 
-- **File:** `documentation/diagrams/urpx-temporal-versioning-summary.svg`
+- **Source:** Mermaid diagram embedded in `documentation/pages/urpx-overview.md`
 - **Used in:** [Overview](urpx-overview.md)
-- **Shows:** The high-level temporal versioning pattern for `RatePlan` and `RatePlanVersion`
+- **Shows:** How a `TariffFiling` chain carries supersession, and how each `RatePlanVersion` snapshot is consolidated from the pricing models in force and bound to its `RatePlan`
 
 ---
 

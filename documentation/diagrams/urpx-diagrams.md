@@ -9,27 +9,18 @@
 
 ---
 
-## Documentation Diagrams
-
-1. **urpx-sparql-query-visual.mmd**
-   - **Used in:** `urpx-semantic-web-guide.md`
-   - **Shows:** SPARQL graph traversal using `ratePlanUniqueIdentifier`
-   - **Format:** Mermaid
-
-2. **urpx-temporal-versioning-summary.svg**
-   - **Used in:** `urpx-overview.md`
-   - **Shows:** High-level temporal versioning summary
-   - **Format:** SVG
-
----
-
 ## Unreferenced Diagram Assets
 
-3. **urpx-price-structure-diagram.mmd**
+1. **urpx-sparql-query-visual.mmd**
+   - **Purpose:** Available SPARQL graph-traversal reference diagram not currently embedded in a documentation page
+   - **Shows:** Graph traversal from a rate plan identified by `ratePlanUniqueIdentifier` to its prices
+   - **Format:** Mermaid
+
+2. **urpx-price-structure-diagram.mmd**
    - **Purpose:** Available price-structure reference diagram not currently embedded in a documentation page
    - **Format:** Mermaid
 
-4. **urpx-tou-structure-diagram.mmd**
+3. **urpx-tou-structure-diagram.mmd**
    - **Purpose:** Available TOU-structure reference diagram not currently embedded in a documentation page
    - **Format:** Mermaid
 
@@ -37,7 +28,7 @@
 
 ## Project Planning Assets
 
-5. **urpx-gantt.mmd**
+4. **urpx-gantt.mmd**
    - **Purpose:** Development roadmap, current through the tagged releases and the release in progress
    - **Format:** Mermaid
 
@@ -45,7 +36,7 @@
 
 ## Companion Documentation
 
-6. **urpx-diagram-index.md**
+5. **urpx-diagram-index.md**
    - **Purpose:** User-facing diagram index for the documentation set
 
 ---

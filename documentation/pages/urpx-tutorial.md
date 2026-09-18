@@ -1,4 +1,4 @@
-<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-FileCopyrightText: The URPX Authors -->
 <!-- SPDX-License-Identifier: W3C-20150513 -->
 
 ---
@@ -400,8 +400,8 @@ Prices don't measure things directly. They reference a MetricInput that defines 
 graph TB
     PE["<b>PlanElements</b>"]
 
-    MI1["<b>MetricInput</b><br/>Energy Consumption<br/><i>type: measured</i>"]
-    MI2["<b>MetricInput</b><br/>Peak Demand<br/><i>type: measured</i>"]
+    MI1["<b>MetricInput</b><br/>Energy Consumption<br/><i>metricInputType: measuredMetricInput</i>"]
+    MI2["<b>MetricInput</b><br/>Peak Demand<br/><i>metricInputType: measuredMetricInput</i>"]
 
     MS1["<b>MetricSpecification</b><br/>commodity: electricity<br/>kind: energy<br/>unit: kWh"]
     MS2["<b>MetricSpecification</b><br/>commodity: electricity<br/>kind: demand<br/>unit: kW"]

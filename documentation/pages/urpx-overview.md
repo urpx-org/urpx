@@ -1,4 +1,4 @@
-<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-FileCopyrightText: The URPX Authors -->
 <!-- SPDX-License-Identifier: W3C-20150513 -->
 
 ---
@@ -197,12 +197,41 @@ RatePlanVersion (derived snapshot — forRatePlan → RatePlan)
 
 #### Temporal Versioning
 
-Rate plans evolve over time. URPX captures this through versioning:
+Rate plans evolve over time. URPX separates the plan's permanent identity from the snapshots that describe it, and keeps the timeline on the publication chain:
 
-![Temporal Versioning](../diagrams/urpx-temporal-versioning-summary.svg)
+```mermaid
+
+graph TB
+    F1["<b>TariffFiling</b><br/>effective 2025-01-01<br/><i>remains valid history</i>"]
+    PM1["<b>PricingModel</b><br/>Authored pricing"]
+    V1["<b>RatePlanVersion</b><br/>window 2025-01-01 to 2026-01-01"]
+    RP["<b>RatePlan</b><br/>Stable identity<br/>independent of time"]
+    F2["<b>TariffFiling</b><br/>effective 2026-01-01"]
+    PM2["<b>PricingModel</b><br/>Authored pricing"]
+    V2["<b>RatePlanVersion</b><br/>window from 2026-01-01<br/><i>no lifecycle of its own</i>"]
+
+    F2 -->|supersedes| F1
+    F1 -->|containsPricingModel| PM1
+    V1 -->|consolidatedFrom| PM1
+    V1 -->|forRatePlan| RP
+    F2 -->|containsPricingModel| PM2
+    V2 -->|consolidatedFrom| PM2
+    V2 -->|forRatePlan| RP
+
+    classDef planClass fill:#77AADD,stroke:#5588BB,stroke-width:3px,color:#000
+    classDef filingClass fill:#44BB99,stroke:#228877,stroke-width:2px,color:#000
+    classDef modelClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#000
+    classDef versionClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#000
+
+    class RP planClass
+    class F1,F2 filingClass
+    class PM1,PM2 modelClass
+    class V1,V2 versionClass
+```
 
 - **RatePlan** - The permanent identity of a rate plan
-- **RatePlanVersion** - The resolved snapshot effective during a time period, linked back to its plan via `forRatePlan`
+- **RatePlanVersion** - The resolved snapshot for a temporal window, linked back to its plan via `forRatePlan` and consolidated from the pricing models in force via `consolidatedFrom`. A version carries no lifecycle of its own: its place in the timeline derives from the filing chain
+- **TariffFiling** - The regulatory publication unit, carrying its pricing models via `containsPricingModel` and the publication lifecycle. `supersedes` is a forward-in-time change of effective period and leaves the superseded filing as valid history; `replaces` is a same-period correction; `cancelledBy` with `cancelledOn` is a withdrawal
 - **Version Transitions** - Tracked with `changeReason` plus optional linked `RateCase` records
 
 When a rate plan version, rate plan modifier version, price definition, price set, price set alternative, or price is established or revised through a formal proceeding, URPX links the affected artifact to one or more `RateCase` resources via `hasRateCase`. Each `RateCase` carries the proceeding `caseNumber`, a source `url`, optional `name` and `description`, and optional `priority` when multiple proceedings overlap.
