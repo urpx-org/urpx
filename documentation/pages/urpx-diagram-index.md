@@ -1,4 +1,4 @@
-<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-FileCopyrightText: The URPX Authors -->
 <!-- SPDX-License-Identifier: W3C-20150513 -->
 
 ---
@@ -60,12 +60,7 @@ This index lists the diagram assets currently present in the repository and the 
 ### Development Gantt
 
 - **File:** `documentation/diagrams/urpx-gantt.mmd`
-- **Purpose:** Historical roadmap and project-planning view
-
-### Development Chart
-
-- **File:** `documentation/diagrams/urpx_development_chart.png`
-- **Purpose:** Historical development snapshot
+- **Purpose:** Development roadmap, current through the tagged releases and the release in progress
 
 ---
 

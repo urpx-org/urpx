@@ -1,35 +1,23 @@
-%% SPDX-FileCopyrightText: Flux Tailor LLC
+%% SPDX-FileCopyrightText: The URPX Authors
 %% SPDX-License-Identifier: W3C-20150513
 
 %% URPX Development Gantt Chart
-%% Updated: January 26, 2026
-%% Paul Tol 2.7 Light color scheme
+%% Updated: September 17, 2026
 
 gantt
     dateFormat YYYY-MM-DD
     todayMarker stroke-width:3px,stroke:#99DDFF,opacity:0.6
-    axisFormat %Y Q%q
-    
-    section Foundation
-        Core Ontology v0.1.1          :done,    onto,  2025-08-01, 2025-11-18
-        Initial Documentation         :done,    docs,  2025-09-01, 2025-11-30
-        WG Approval                   :done, milestone, wgappr, 2025-10-20, 1d
-        WG Presentation               :done, milestone, wgpres, 2025-11-19, 1d
-        LF Energy Setup               :done,  lfes,  2025-10-01, 2025-12-31
-        v0.1.1 Pre-Draft Release      :crit, milestone, predraft, 2026-01-26, 1d
-        v0.9-dev Specification        :active,  spec,  2026-01-27, 2026-03-31
-        
-    section Expansion
-        Community Launch              :         comm,  2026-01-01, 2026-03-31
-        Reference Implementations     :         ref,   2026-02-01, 2026-05-15
-        Standards Coordination        :         std,   2026-03-01, 2026-05-31
-        Pilot Programs                :         pilot, 2026-04-01, 2026-09-30
-        
-    section Refinement
-        Testing Programs              :         test,  2026-06-01, 2026-08-31
-        Conformance Framework         :         conf,  2026-07-01, 2026-09-30
-        Certification Process         :         cert,  2026-08-01, 2026-10-31
-        1.0 Finalization              :         final, 2026-10-01, 2026-12-31
-        
-    section Maturity
-        Production Deployments        :         prod,  2027-01-01, 2027-12-31
+    axisFormat %b %Y
+    tickInterval 1month
+
+    section Pre-draft
+        v0.1.1        :done, r011, 2026-01-28, 2026-03-03
+        v0.1.2        :done, r012, 2026-03-03, 2026-04-13
+        v0.2.0        :done, r020, 2026-04-13, 2026-05-08
+        v0.2.1        :done, r021, 2026-05-08, 2026-05-28
+        v0.3.0        :done, r030, 2026-05-28, 2026-08-03
+        v0.4.0        :done, r040, 2026-08-03, 2026-09-08
+        v0.5.0        :milestone, done, m050, 2026-09-08, 0d
+
+    section Working Group Draft
+        v0.5.1        :active, r051, 2026-09-09, 2026-09-17

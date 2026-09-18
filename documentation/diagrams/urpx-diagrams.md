@@ -1,4 +1,4 @@
-<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-FileCopyrightText: The URPX Authors -->
 <!-- SPDX-License-Identifier: W3C-20150513 -->
 
 # URPX Diagram Catalog
@@ -38,18 +38,14 @@
 ## Project Planning Assets
 
 5. **urpx-gantt.mmd**
-   - **Purpose:** Historical roadmap / planning view
+   - **Purpose:** Development roadmap, current through the tagged releases and the release in progress
    - **Format:** Mermaid
-
-6. **urpx_development_chart.png**
-   - **Purpose:** Historical development snapshot
-   - **Format:** PNG
 
 ---
 
 ## Companion Documentation
 
-7. **urpx-diagram-index.md**
+6. **urpx-diagram-index.md**
    - **Purpose:** User-facing diagram index for the documentation set
 
 ---
