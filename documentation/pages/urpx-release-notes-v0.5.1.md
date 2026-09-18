@@ -1,4 +1,4 @@
-<!-- SPDX-FileCopyrightText: 2026 Flux Tailor LLC -->
+<!-- SPDX-FileCopyrightText: The URPX Authors -->
 <!-- SPDX-License-Identifier: W3C-20150513 -->
 
 # URPX v0.5.1 Release Notes
@@ -13,40 +13,37 @@
 
 ## Overview
 
-URPX v0.5.1 completes the license transition. The specification files move from Apache-2.0 to the W3C Software Notice and Document License (`W3C-20150513`), the dataset files move to CDLA-Permissive-2.0, and source and metadata files stay under Apache-2.0. Alongside the license transition, this release also brings the release metadata, the generated documentation, and the entry points a first-time reader meets into agreement with that completed state.
-
-No term, class, property or shape constraint changes in this release. The vocabulary edits are the version metadata (`owl:versionInfo`, `owl:versionIRI`, `dcterms:hasVersion`, the release node and its download URLs, all naming 0.5.1) and the license triples, plus one illustrative annotation example (`targetURPXVersion`'s `skos:note`) that now cites this release instead of the last one.
+URPX (Utility Rate Plan Exchange) is an open vocabulary and SHACL shape set for exchanging utility rate plan data between utilities, regulators, vendors, and researchers, built on RDF, OWL, and SHACL. Version 0.5.1 is the first public release of the standard: the vocabulary and shapes are stable at their permanent `urpx.org` namespace, a published JSON-LD context ties instance data to one referenced document, a curated corpus of worked test cases validates against real utility rate plans, and the specification, dataset, and tooling licensing is complete.
 
 ---
 
-## What changed
+## What v0.5.1 offers
 
-- **Specification files carry `W3C-20150513`.** This covers the ontology, the shapes, the SKOS mappings, the published JSON-LD context, the documentation pages that define the standard, the diagram set and its Graphviz sources, and the generated documentation-examples index.
-- **Dataset files carry `CDLA-Permissive-2.0`.** This covers the test-case example data, the generated catalog and corpus indexes, the per-test-case diagrams, and the worked sample instances that accompany development specifications.
-- **Source and metadata files stay under Apache-2.0.** Tooling, schema files and repository metadata are unchanged.
-- **The repository is REUSE-compliant.** Every file's license is recorded in an SPDX header, a `.license` sidecar, or `REUSE.toml`, and `reuse lint` passes.
-- **The ontology and shapes graphs' own `dcterms:license` now agrees with their SPDX header**, and `dcterms:issued` names this release's date.
-- **The twelve shipped test-case packages, and the catalog's version column, now declare v0.5.1**, the ontology version their published context has selected since the earlier context migration.
-- **The generated data dictionary, corpus manifest and test-case catalog no longer carry pre-Draft wording, a nonexistent regeneration command, a private repository name, or stale v0.3.0 diagram output.**
-- **The entry points a first-time reader meets** (`README.md`, `CONTRIBUTING.md`, the documentation index, the FAQ, the hand-authored page headers, and the interoperability banner) **state the current release, Working Group Draft acceptance, and the three-license split**, replacing claims left over from before the transition.
+- A stable public vocabulary and SHACL shape set for utility rate plan data, at the permanent `urpx.org` namespace (`https://urpx.org/ns/ontology/`, `https://urpx.org/ns/shacl/core/`).
+- A published JSON-LD context (`https://urpx.org/ns/context`), so instance data validates and types correctly against one referenced document.
+- A curated corpus of twelve worked, validating test-case packages across two utilities (Pacific Gas & Electric, Consolidated Edison) and two jurisdictions (California, New York), covering time-of-use pricing, tariff filings, market-supply pricing, and resolved rate plan snapshots.
+- Clear licensing: specification text under the W3C Software Notice and Document License, example datasets under CDLA-Permissive-2.0, source and tooling under Apache-2.0.
+- Comprehensive documentation: a full data dictionary, per-section class diagrams, a tutorial, an FAQ, an API reference, and quality-assurance guidance.
 
 ---
 
-## License
+## This release
 
-- The specification text is available under the **W3C Software Notice and Document License**, the standard license for W3C specification text.
-- The example datasets are available under **CDLA-Permissive-2.0**, a permissive data license.
-- Tooling and metadata remain under **Apache-2.0**.
+- Version: 0.5.1.
+- Specification files (ontology, shapes, SKOS mappings, JSON-LD context, documentation pages, diagrams): W3C Software Notice and Document License (`W3C-20150513`).
+- Dataset files (test-case data, generated catalogs, per-test-case diagrams): CDLA-Permissive-2.0.
+- Source, tooling, and repository metadata: Apache-2.0.
+- All twelve shipped test-case packages, and the test-case catalog, declare v0.5.1.
+- No term, class, property, or shape constraint changes from v0.5.0.
+- The repository is REUSE-compliant: every file's license is recorded in an SPDX header, a `.license` sidecar, or `REUSE.toml`, and `reuse lint` passes.
 
-The full texts are in `LICENSES/`, and the per-category assignment is recorded in `TRANSITION.md`.
+The full license texts are in `LICENSES/`; the per-category assignment is recorded in `TRANSITION.md`.
 
 ---
 
-## Impact
+## Migration
 
-- Consumers of the vocabulary see no semantic change. Every term IRI, class, property and shape constraint is unchanged from v0.5.0; what moved is the license triples, the version metadata, one illustrative annotation example, and the generated and hand-authored documentation surfaces listed above.
-- A test-case package or catalog row that pinned `targetURPXVersion` or `urpx_version` to v0.3.0 or v0.4.0 now reads v0.5.1; nothing about how the packages validate changed underneath that literal.
-- Reuse of the specification text and the example data is governed by the licenses above rather than by Apache-2.0.
+None. This release makes no term, class, property, or shape constraint changes; existing bindings, queries, and validating instance data continue to work unchanged.
 
 ---
 

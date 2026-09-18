@@ -1,4 +1,4 @@
-<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-FileCopyrightText: The URPX Authors -->
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # URPX License Transition Plan
@@ -40,7 +40,7 @@ This TOML block is the **source of truth** consumed by
 [manifest]
 version = "1.0.0"
 trigger_event = "Working Group Draft acceptance"
-copyright_holder = "Flux Tailor LLC"
+copyright_holder = "The URPX Authors"
 
 # -----------------------------------------------------------------------------
 # Specification files -> W3C Document License at Draft

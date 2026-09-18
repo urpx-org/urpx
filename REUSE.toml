@@ -15,7 +15,7 @@ version = 1
 [[annotations]]
 path = ["**/*.png", "**/*.jpg", "**/*.jpeg", "**/*.svg", "**/*.dot"]
 precedence = "aggregate"
-SPDX-FileCopyrightText = "Flux Tailor LLC"
+SPDX-FileCopyrightText = "The URPX Authors"
 SPDX-License-Identifier = "Apache-2.0"
 
 # -----------------------------------------------------------------------------
@@ -70,7 +70,7 @@ path = [
     "test-cases/urpx-edge-cases.csv",
     "test-cases/manifest-all.json",
 ]
-SPDX-FileCopyrightText = "Flux Tailor LLC"
+SPDX-FileCopyrightText = "The URPX Authors"
 SPDX-License-Identifier = "CDLA-Permissive-2.0"
 
 # -----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ SPDX-License-Identifier = "CDLA-Permissive-2.0"
 [[annotations]]
 path = ["test-cases/**/assets/diagram.dot", "test-cases/**/assets/diagram.svg"]
 precedence = "override"
-SPDX-FileCopyrightText = "Flux Tailor LLC"
+SPDX-FileCopyrightText = "The URPX Authors"
 SPDX-License-Identifier = "CDLA-Permissive-2.0"
 
 # -----------------------------------------------------------------------------
@@ -94,7 +94,7 @@ path = [
     "test-cases/manifest-all-schema.json",
 ]
 precedence = "aggregate"
-SPDX-FileCopyrightText = "Flux Tailor LLC"
+SPDX-FileCopyrightText = "The URPX Authors"
 SPDX-License-Identifier = "Apache-2.0"
 
 # -----------------------------------------------------------------------------
@@ -104,7 +104,7 @@ SPDX-License-Identifier = "Apache-2.0"
 [[annotations]]
 path = ["dev-docs/samples/**/*.json", "dev-docs/samples/**/*.jsonld"]
 precedence = "override"
-SPDX-FileCopyrightText = "Flux Tailor LLC"
+SPDX-FileCopyrightText = "The URPX Authors"
 SPDX-License-Identifier = "CDLA-Permissive-2.0"
 
 # -----------------------------------------------------------------------------
@@ -114,7 +114,7 @@ SPDX-License-Identifier = "CDLA-Permissive-2.0"
 # -----------------------------------------------------------------------------
 [[annotations]]
 path = "documentation/pages/urpx-data-dictionary.md"
-SPDX-FileCopyrightText = "Flux Tailor LLC"
+SPDX-FileCopyrightText = "The URPX Authors"
 SPDX-License-Identifier = "W3C-20150513"
 
 # -----------------------------------------------------------------------------
@@ -124,5 +124,5 @@ SPDX-License-Identifier = "W3C-20150513"
 [[annotations]]
 path = ["documentation/diagrams/**/*.dot", "documentation/diagrams/**/*.svg"]
 precedence = "override"
-SPDX-FileCopyrightText = "Flux Tailor LLC"
+SPDX-FileCopyrightText = "The URPX Authors"
 SPDX-License-Identifier = "W3C-20150513"

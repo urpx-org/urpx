@@ -1,4 +1,4 @@
-<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-FileCopyrightText: The URPX Authors -->
 <!-- SPDX-License-Identifier: W3C-20150513 -->
 
 ---
@@ -321,4 +321,4 @@ Reviewers should verify:
 
 ## License
 
-Copyright © 2025 Flux Tailor LLC. Licensed under the W3C Software Notice and Document License (W3C-20150513). See [NOTICE](../../NOTICE) for the full statement.
+Copyright © The URPX Authors. Licensed under the W3C Software Notice and Document License (W3C-20150513). See [NOTICE](../../NOTICE) for the full statement.

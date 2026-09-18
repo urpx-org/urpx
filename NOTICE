@@ -1,5 +1,5 @@
 URPX — Utility Rate Plan Exchange
-Copyright (c) Flux Tailor LLC
+Copyright The URPX Authors
 
 Three licenses apply by file category. Specification files (the ontology, SHACL shapes, SKOS mappings, and documentation pages) are licensed under the W3C Software Notice and Document License (W3C-20150513). Dataset files (test-case data and index files) are licensed under the Community Data License Agreement - Permissive 2.0 (CDLA-Permissive-2.0). Source code and meta files, including this NOTICE, are licensed under the Apache License, Version 2.0. See the LICENSE file for the Apache-2.0 text and LICENSES/ for the other two.
 

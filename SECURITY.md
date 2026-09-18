@@ -1,4 +1,4 @@
-<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-FileCopyrightText: The URPX Authors -->
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # Security Policy
