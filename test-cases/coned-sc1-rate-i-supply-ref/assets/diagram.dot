@@ -166,8 +166,15 @@ digraph "coned-sc1-rate-i-v20260201-supply-referenced" {
         fontcolor="#ffffff"
         penwidth=2
     ];
+    n_org_utilipub [
+        label="{Organization|legalName: Flux Tailor LLC\l}"
+        fillcolor="#BBCC33"
+        color="#99aa11"
+        fontcolor="#333333"
+        penwidth=2
+    ];
     n_coned_doc_sc1_rate_i_v20260201_supply_referenced [
-        label="{URPXPackage|targetURPXVersion: https://github.com/urpx-org/urpx/raw/...\l}"
+        label="{URPXPackage|targetURPXVersion: https://github.com/urpx-org/urpx/raw/...\lpublicationPlatform: UtiliPub ™\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
@@ -330,7 +337,8 @@ digraph "coned-sc1-rate-i-v20260201-supply-referenced" {
         leg_17 [label="Prices", shape=box, fillcolor="#00bd7e", color="#009966", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
         leg_18 [label="PriceSet", shape=box, fillcolor="#00ADEF", color="#0088cc", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
         leg_19 [label="Price", shape=box, fillcolor="#44BB99", color="#339977", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_20 [label="URPXPackage", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_0 -> leg_1 -> leg_2 -> leg_3 -> leg_4 -> leg_5 -> leg_6 -> leg_7 -> leg_8 -> leg_9 -> leg_10 -> leg_11 -> leg_12 -> leg_13 -> leg_14 -> leg_15 -> leg_16 -> leg_17 -> leg_18 -> leg_19 -> leg_20 [style=invis];
+        leg_20 [label="Organization", shape=box, fillcolor="#BBCC33", color="#99aa11", fontcolor="#333333", fontsize=9, penwidth=1.5];
+        leg_21 [label="URPXPackage", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_0 -> leg_1 -> leg_2 -> leg_3 -> leg_4 -> leg_5 -> leg_6 -> leg_7 -> leg_8 -> leg_9 -> leg_10 -> leg_11 -> leg_12 -> leg_13 -> leg_14 -> leg_15 -> leg_16 -> leg_17 -> leg_18 -> leg_19 -> leg_20 -> leg_21 [style=invis];
     }
 }
