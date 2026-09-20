@@ -2,7 +2,8 @@
   "@context": [
     "https://urpx.org/ns/context/releases/v0.5.1/jsonld/urpx-context.jsonld",
     {
-      "coned": "https://urpx-org.github.io/urpx/fixtures/coned/"
+      "coned": "https://urpx-org.github.io/urpx/fixtures/coned/",
+      "org": "https://urpx-org.github.io/urpx/fixtures/org/"
     }
   ],
   "@graph": [
@@ -148,10 +149,18 @@
       }
     },
     {
+      "@id": "org:utilipub",
+      "@type": "urpx:Organization",
+      "urpx:legalName": "Flux Tailor LLC",
+      "urpx:organizationType": { "@id": "urpx:vendorOrganization" }
+    },
+    {
       "@id": "coned:doc-sc1-stmt-mac-202604",
       "@type": "urpx:URPXPackage",
       "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.5.1/ontology/urpx-ontology.ttl",
-      "urpx:packages": { "@id": "coned:tf-gr26-mac-2026-04-01" }
+      "urpx:packages": { "@id": "coned:tf-gr26-mac-2026-04-01" },
+      "urpx:publicationPlatform": "UtiliPub ™",
+      "urpx:publishedBy": { "@id": "org:utilipub" }
     }
   ]
 }

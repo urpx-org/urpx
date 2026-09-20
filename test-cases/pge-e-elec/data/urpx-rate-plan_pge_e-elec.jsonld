@@ -19,7 +19,15 @@
         "urpx:initialEffectiveDate": "2022-12-01",
         "urpx:timezoneIdentifier": "America/Los_Angeles",
         "urpx:offeredBy": { "@id": "org:utility-pge" }
-      }
+      },
+      "urpx:publicationPlatform": "UtiliPub ™",
+      "urpx:publishedBy": { "@id": "org:utilipub" }
+    },
+    {
+      "@id": "org:utilipub",
+      "@type": "urpx:Organization",
+      "urpx:legalName": "Flux Tailor LLC",
+      "urpx:organizationType": { "@id": "urpx:vendorOrganization" }
     },
     {
       "@type": "urpx:RatePlanVersion",

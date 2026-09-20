@@ -122,6 +122,8 @@ Test data may be submitted directly with a pull request when it is clearly scope
 
 If the test data implies a change to the ontology, SHACL constraints, or repository structure, discuss it with the working group before opening the pull request.
 
+Vendor-submitted test data is requested, not required, to name the submitting organization and, if a platform was used to produce it, the platform's name (`urpx:publicationPlatform`). An organization named this way is typed `urpx:vendorOrganization` via `urpx:organizationType` and referenced with `urpx:publishedBy`, the same required typing every `urpx:Organization` in the schema already carries.
+
 ### Reviews
 
 Contributions are reviewed by the URPX Working Group. Substantial changes to specification text require working group consensus.

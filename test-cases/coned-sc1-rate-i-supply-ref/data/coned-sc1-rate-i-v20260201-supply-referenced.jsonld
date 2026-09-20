@@ -159,10 +159,18 @@
       }
     },
     {
+      "@id": "org:utilipub",
+      "@type": "urpx:Organization",
+      "urpx:legalName": "Flux Tailor LLC",
+      "urpx:organizationType": { "@id": "urpx:vendorOrganization" }
+    },
+    {
       "@id": "coned:doc-sc1-rate-i-v20260201-supply-referenced",
       "@type": "urpx:URPXPackage",
       "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.5.1/ontology/urpx-ontology.ttl",
-      "urpx:packages": { "@id": "coned:coned-sc1-rate-i-v20260201-supply-referenced" }
+      "urpx:packages": { "@id": "coned:coned-sc1-rate-i-v20260201-supply-referenced" },
+      "urpx:publicationPlatform": "UtiliPub ™",
+      "urpx:publishedBy": { "@id": "org:utilipub" }
     }
   ]
 }

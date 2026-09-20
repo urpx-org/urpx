@@ -1919,6 +1919,12 @@ urpx-shacl:OrganizationShape
     rdfs:comment "Deliberately left open (no sh:closed). Organization is the base class for EnergyServiceProvider, RegulatoryAuthority, SystemOperator, and UtilityOperator; those four shapes are closed and each lists the full property set. Closing this base shape would make every subclass instance fail on its subclass-specific properties, so it serves as a shared property-documentation and soft-validation target only."@en ;
     sh:targetClass urpx:Organization ;
     sh:property [
+        sh:path urpx:url ;
+        sh:datatype xsd:anyURI ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:alternateName ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
@@ -5873,6 +5879,12 @@ urpx-shacl:URPXPackageShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:publicationPlatform ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:publishedBy ;
         sh:class urpx:Organization ;
         sh:minCount 0 ;
@@ -6295,7 +6307,7 @@ urpx-shacl:OrganizationTypeValueShape
     rdfs:label "OrganizationTypeValue Shape"@en ;
     sh:targetClass urpx:OrganizationTypeValue ;
     sh:nodeKind sh:IRI ;
-    sh:in ( urpx:aggregatorOrganization urpx:cooperativeOrganization urpx:espOrganization urpx:ippOrganization urpx:isoRtoOrganization urpx:municipalOrganization urpx:parentOrganization urpx:regulatorOrganization urpx:utilityOrganization ) .
+    sh:in ( urpx:aggregatorOrganization urpx:cooperativeOrganization urpx:espOrganization urpx:ippOrganization urpx:isoRtoOrganization urpx:municipalOrganization urpx:parentOrganization urpx:regulatorOrganization urpx:utilityOrganization urpx:vendorOrganization ) .
 
 urpx-shacl:OwnershipTypeValueShape
     a sh:NodeShape ;
