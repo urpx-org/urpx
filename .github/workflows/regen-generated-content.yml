@@ -194,10 +194,10 @@ jobs:
           path: urpx-website-staging/scripts/codegen/config/dictionary-config-pending.yaml
           if-no-files-found: ignore
 
-      - name: Check generated content for internal process language
+      - name: Check generated content for local machine paths
         if: steps.head-change.outputs.generated_only != 'true'
         run: |
-          python3 urpx-website-staging/scripts/build/check-no-internal-process-language.py \
+          python3 urpx-website-staging/scripts/build/check-no-local-paths.py \
             urpx/context/urpx-context.jsonld \
             urpx/documentation/pages/urpx-data-dictionary.md \
             urpx/documentation/diagrams/dictionary \
