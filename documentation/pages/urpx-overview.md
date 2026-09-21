@@ -323,10 +323,10 @@ ex:pge-e-tou-c a urpx:RatePlan ;
     urpx:initialEffectiveDate "2024-01-01"^^xsd:date ;
     urpx:hasIdentifier
         [ a urpx:RatePlanIdentifier ;
-          urpx:scheme urpx:ca-midas-rin ;
+          urpx:scheme urpx:caMidasRinScheme ;
           skos:notation "USCA-PGCE-TIME-0001" ] ,
         [ a urpx:RatePlanIdentifier ;
-          urpx:scheme urpx:utility-tariff-code ;
+          urpx:scheme urpx:utilityTariffCodeScheme ;
           skos:notation "E-TOU-C" ] .
 ```
 
