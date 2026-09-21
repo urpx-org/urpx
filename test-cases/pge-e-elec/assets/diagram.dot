@@ -1,9 +1,12 @@
 digraph "urpx-rate-plan_pge_e-elec" {
     rankdir=TB;
+    newrank=true;
+    splines=ortho;
+    concentrate=true;
     bgcolor="white";
     pad=0.5;
-    nodesep=0.5;
-    ranksep=0.7;
+    nodesep=0.4;
+    ranksep=0.6;
     fontname="Inter, Helvetica, Arial, sans-serif";
     label="urpx-rate-plan_pge_e-elec";
     labelloc="t";
@@ -677,22 +680,8 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#ffffff"
         penwidth=2
     ];
-    n_pge_price_gen_winter_peak [
-        label="{Price|name: Generation Winter Peak\lunitPrice: 0.10086\l}"
-        fillcolor="#44BB99"
-        color="#339977"
-        fontcolor="#ffffff"
-        penwidth=2
-    ];
     n_pge_price_gen_winter_part_peak [
         label="{Price|name: Generation Winter Part-Peak\lunitPrice: 0.08089\l}"
-        fillcolor="#44BB99"
-        color="#339977"
-        fontcolor="#ffffff"
-        penwidth=2
-    ];
-    n_pge_price_gen_winter_off_peak [
-        label="{Price|name: Generation Winter Off-Peak\lunitPrice: 0.06754\l}"
         fillcolor="#44BB99"
         color="#339977"
         fontcolor="#ffffff"
@@ -733,22 +722,8 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#ffffff"
         penwidth=2
     ];
-    n_pge_price_dist_winter_peak [
-        label="{Price|name: Distribution Winter Peak\lunitPrice: 0.16137\l}"
-        fillcolor="#44BB99"
-        color="#339977"
-        fontcolor="#ffffff"
-        penwidth=2
-    ];
     n_pge_price_dist_winter_part_peak [
         label="{Price|name: Distribution Winter Part-Peak\lunitPrice: 0.15925\l}"
-        fillcolor="#44BB99"
-        color="#339977"
-        fontcolor="#ffffff"
-        penwidth=2
-    ];
-    n_pge_price_dist_winter_off_peak [
-        label="{Price|name: Distribution Winter Off-Peak\lunitPrice: 0.15874\l}"
         fillcolor="#44BB99"
         color="#339977"
         fontcolor="#ffffff"
@@ -845,703 +820,764 @@ digraph "urpx-rate-plan_pge_e-elec" {
         fontcolor="#ffffff"
         penwidth=2
     ];
+    n_time_variants_0 [
+        label="2 further time variants"
+        shape=box
+        style="filled,dashed,rounded"
+        fillcolor="#44BB99"
+        color="#339977"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
+    n_time_variants_1 [
+        label="2 further time variants"
+        shape=box
+        style="filled,dashed,rounded"
+        fillcolor="#44BB99"
+        color="#339977"
+        fontcolor="#ffffff"
+        penwidth=2
+    ];
 
     n_pge_doc_e_elec_2026_01_01 -> n_pge_e_elec [
-        label="hasRatePlan"
+        xlabel="hasRatePlan"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_e_elec_2026_01_01 -> n_org_utility_pge [
-        label="offeredBy"
+        xlabel="offeredBy"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_e_elec_2026_01_01 -> n_pge_rate_case_2025 [
-        label="hasRateCase"
+        xlabel="hasRateCase"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_e_elec_2026_01_01 -> n__anon_6 [
-        label="hasDataSourceReference"
+        xlabel="hasDataSourceReference"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_e_elec_2026_01_01 -> n_pge_er_residential_service [
-        label="hasEligibilityRule"
+        xlabel="hasEligibilityRule"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_er_residential_service -> n_pge_ce_residential_service [
-        label="hasConditionExpression"
+        xlabel="hasConditionExpression"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ce_residential_service -> n_pge_eligibility_root_residential_service [
-        label="rootNode"
+        xlabel="rootNode"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_eligibility_root_residential_service -> n_pge_condition_customer_kind [
-        label="operandNodes"
+        xlabel="operandNodes"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_condition_customer_kind -> n__anon_11 [
-        label="leftOperand"
+        xlabel="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_condition_customer_kind -> n__anon_12 [
-        label="rightOperand"
+        xlabel="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_eligibility_root_residential_service -> n_pge_condition_qualifying_technology_or_program [
-        label="operandNodes"
+        xlabel="operandNodes"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_condition_qualifying_technology_or_program -> n_pge_condition_storage [
-        label="operandNodes"
+        xlabel="operandNodes"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_condition_storage -> n__anon_15 [
-        label="leftOperand"
+        xlabel="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_condition_storage -> n__anon_16 [
-        label="rightOperand"
+        xlabel="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_condition_qualifying_technology_or_program -> n_pge_condition_EVCharging [
-        label="operandNodes"
+        xlabel="operandNodes"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_condition_EVCharging -> n__anon_18 [
-        label="leftOperand"
+        xlabel="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_condition_EVCharging -> n__anon_19 [
-        label="rightOperand"
+        xlabel="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_condition_qualifying_technology_or_program -> n_pge_condition_heatpump [
-        label="operandNodes"
+        xlabel="operandNodes"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_condition_heatpump -> n__anon_21 [
-        label="leftOperand"
+        xlabel="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_condition_heatpump -> n__anon_22 [
-        label="rightOperand"
+        xlabel="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_condition_qualifying_technology_or_program -> n_pge_condition_NBT [
-        label="operandNodes"
+        xlabel="operandNodes"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_condition_NBT -> n__anon_24 [
-        label="leftOperand"
+        xlabel="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_condition_NBT -> n__anon_25 [
-        label="rightOperand"
+        xlabel="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_e_elec_2026_01_01 -> n_pge_cc_e_elec_2026_01_01 [
-        label="hasCoverageClaim"
+        xlabel="hasCoverageClaim"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_cc_e_elec_2026_01_01 -> n_pge_eval_e_elec_2026_01_01 [
-        label="explainedBy"
+        xlabel="explainedBy"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_e_elec_2026_01_01 -> n__anon_28 [
-        label="hasPlanElements"
+        xlabel="hasPlanElements"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_28 -> n_pge_season_summer [
-        label="hasSeasons"
+        xlabel="hasSeasons"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_28 -> n_pge_season_winter [
-        label="hasSeasons"
+        xlabel="hasSeasons"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_28 -> n_pge_mi_energy [
-        label="hasMetricInput"
+        xlabel="hasMetricInput"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_mi_energy -> n_pge_ms_energy [
-        label="hasMetricSpecification"
+        xlabel="hasMetricSpecification"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_28 -> n_pge_mi_meter_count [
-        label="hasMetricInput"
+        xlabel="hasMetricInput"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_28 -> n_pge_mi_household_count [
-        label="hasMetricInput"
+        xlabel="hasMetricInput"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_28 -> n__anon_35 [
-        label="hasBillingModel"
+        xlabel="hasBillingModel"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_tou_e_elec [
-        label="hasTOUSchedule"
+        xlabel="hasTOUSchedule"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_tou_e_elec -> n_pge_tou_tier_peak [
-        label="hasTOUTier"
+        xlabel="hasTOUTier"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_tou_tier_peak -> n_pge_tou_period_summer_peak [
-        label="hasTOUPeriod"
+        xlabel="hasTOUPeriod"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_tou_period_summer_peak -> n_pge_time_bracket_summer_peak [
-        label="hasTimeBracket"
+        xlabel="hasTimeBracket"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_tou_tier_peak -> n_pge_tou_period_winter_peak [
-        label="hasTOUPeriod"
+        xlabel="hasTOUPeriod"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_tou_period_winter_peak -> n_pge_time_bracket_winter_peak [
-        label="hasTimeBracket"
+        xlabel="hasTimeBracket"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_tou_e_elec -> n_pge_tou_tier_part_peak [
-        label="hasTOUTier"
+        xlabel="hasTOUTier"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_tou_tier_part_peak -> n_pge_tou_period_summer_part_peak [
-        label="hasTOUPeriod"
+        xlabel="hasTOUPeriod"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_tou_period_summer_part_peak -> n_pge_time_bracket_summer_part_peak_1 [
-        label="hasTimeBracket"
+        xlabel="hasTimeBracket"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_tou_period_summer_part_peak -> n_pge_time_bracket_summer_part_peak_2 [
-        label="hasTimeBracket"
+        xlabel="hasTimeBracket"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_tou_tier_part_peak -> n_pge_tou_period_winter_part_peak [
-        label="hasTOUPeriod"
+        xlabel="hasTOUPeriod"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_tou_period_winter_part_peak -> n_pge_time_bracket_winter_part_peak_1 [
-        label="hasTimeBracket"
+        xlabel="hasTimeBracket"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_tou_period_winter_part_peak -> n_pge_time_bracket_winter_part_peak_2 [
-        label="hasTimeBracket"
+        xlabel="hasTimeBracket"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_tou_e_elec -> n_pge_tou_tier_off_peak [
-        label="hasTOUTier"
+        xlabel="hasTOUTier"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_tou_tier_off_peak -> n_pge_tou_period_summer_off_peak [
-        label="hasTOUPeriod"
+        xlabel="hasTOUPeriod"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_tou_period_summer_off_peak -> n_pge_time_bracket_summer_off_peak [
-        label="hasTimeBracket"
+        xlabel="hasTimeBracket"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_tou_tier_off_peak -> n_pge_tou_period_winter_off_peak [
-        label="hasTOUPeriod"
+        xlabel="hasTOUPeriod"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_tou_period_winter_off_peak -> n_pge_time_bracket_winter_off_peak [
-        label="hasTimeBracket"
+        xlabel="hasTimeBracket"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_ledger_energy_supply [
-        label="hasLedger"
+        xlabel="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_ledger_energy_delivery [
-        label="hasLedger"
+        xlabel="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_ledger_adjustments [
-        label="hasLedger"
+        xlabel="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_ledger_service [
-        label="hasLedger"
+        xlabel="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ledger_service -> n__anon_58 [
-        label="hasCalculationMethod"
+        xlabel="hasCalculationMethod"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_ledger_climate_credit [
-        label="hasLedger"
+        xlabel="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_gen_summer_peak [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_gen_summer_part_peak [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_gen_summer_off_peak [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_gen_winter_peak [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_gen_winter_part_peak [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_gen_winter_off_peak [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_pcia [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_dist_summer_peak [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_dist_summer_part_peak [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_dist_summer_off_peak [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_dist_winter_peak [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_dist_winter_part_peak [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_dist_winter_off_peak [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_new_sys_gen [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_transmission [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_transmission_adj [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_reliability [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_public_purpose [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_nuclear [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_ctc [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_energy_cost_recovery [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_wildfire_fund [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_wildfire_hardening [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_recovery_bond [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_recovery_bond_credit [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_base_charge [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_35 -> n_pge_pd_climate_credit [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_pd_climate_credit -> n__anon_87 [
-        label="hasApplicabilityRule"
+        xlabel="hasApplicabilityRule"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_e_elec_2026_01_01 -> n__anon_88 [
-        label="hasPrices"
+        xlabel="hasPrices"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_88 -> n_pge_price_climate_credit [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_88 -> n_pge_price_base_charge [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_88 -> n_pge_ps_generation_charges [
-        label="hasPriceSet"
+        xlabel="hasPriceSet"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_generation_charges -> n_pge_price_gen_summer_peak [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_generation_charges -> n_pge_price_gen_summer_part_peak [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_generation_charges -> n_pge_price_gen_summer_off_peak [
-        label="hasPrice"
-        color="#1a5276"
-        fontcolor="#1a5276"
-        penwidth=1.5
-    ];
-    n_pge_ps_generation_charges -> n_pge_price_gen_winter_peak [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_generation_charges -> n_pge_price_gen_winter_part_peak [
-        label="hasPrice"
-        color="#1a5276"
-        fontcolor="#1a5276"
-        penwidth=1.5
-    ];
-    n_pge_ps_generation_charges -> n_pge_price_gen_winter_off_peak [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_generation_charges -> n_pge_price_pcia [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_88 -> n_pge_ps_distribution_charges [
-        label="hasPriceSet"
+        xlabel="hasPriceSet"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_distribution_charges -> n_pge_price_dist_summer_peak [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_distribution_charges -> n_pge_price_dist_summer_part_peak [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_distribution_charges -> n_pge_price_dist_summer_off_peak [
-        label="hasPrice"
-        color="#1a5276"
-        fontcolor="#1a5276"
-        penwidth=1.5
-    ];
-    n_pge_ps_distribution_charges -> n_pge_price_dist_winter_peak [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_distribution_charges -> n_pge_price_dist_winter_part_peak [
-        label="hasPrice"
-        color="#1a5276"
-        fontcolor="#1a5276"
-        penwidth=1.5
-    ];
-    n_pge_ps_distribution_charges -> n_pge_price_dist_winter_off_peak [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_distribution_charges -> n_pge_price_new_sys_gen [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_distribution_charges -> n_pge_price_transmission [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_distribution_charges -> n_pge_price_transmission_adj [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_distribution_charges -> n_pge_price_reliability [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n__anon_88 -> n_pge_ps_adjustment_charges [
-        label="hasPriceSet"
+        xlabel="hasPriceSet"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_adjustment_charges -> n_pge_price_public_purpose [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_adjustment_charges -> n_pge_price_nuclear [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_adjustment_charges -> n_pge_price_ctc [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_adjustment_charges -> n_pge_price_energy_cost_recovery [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_adjustment_charges -> n_pge_price_wildfire_fund [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_adjustment_charges -> n_pge_price_wildfire_hardening [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_adjustment_charges -> n_pge_price_recovery_bond [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_pge_ps_adjustment_charges -> n_pge_price_recovery_bond_credit [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
+    n_pge_ps_generation_charges -> n_time_variants_0 [
+        xlabel="hasPrice"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+    n_pge_ps_distribution_charges -> n_time_variants_1 [
+        xlabel="hasPrice"
+        color="#1a5276"
+        fontcolor="#1a5276"
+        penwidth=1.5
+    ];
+
+    n_pge_ledger_energy_supply -> n_pge_ledger_energy_delivery [style=invis, minlen=1];
+    n_pge_ledger_energy_delivery -> n_pge_ledger_adjustments [style=invis, minlen=1];
+    n_pge_ledger_adjustments -> n_pge_ledger_service [style=invis, minlen=1];
+    n_pge_ledger_service -> n_pge_ledger_climate_credit [style=invis, minlen=1];
+    n_pge_pd_gen_summer_peak -> n_pge_pd_gen_summer_part_peak [style=invis, minlen=1];
+    n_pge_pd_gen_summer_part_peak -> n_pge_pd_gen_summer_off_peak [style=invis, minlen=1];
+    n_pge_pd_gen_summer_off_peak -> n_pge_pd_gen_winter_peak [style=invis, minlen=1];
+    n_pge_pd_gen_winter_peak -> n_pge_pd_gen_winter_part_peak [style=invis, minlen=1];
+    n_pge_pd_gen_winter_part_peak -> n_pge_pd_gen_winter_off_peak [style=invis, minlen=1];
+    n_pge_pd_gen_winter_off_peak -> n_pge_pd_pcia [style=invis, minlen=1];
+    n_pge_pd_pcia -> n_pge_pd_dist_summer_peak [style=invis, minlen=1];
+    n_pge_pd_dist_summer_peak -> n_pge_pd_dist_summer_part_peak [style=invis, minlen=1];
+    n_pge_pd_dist_summer_part_peak -> n_pge_pd_dist_summer_off_peak [style=invis, minlen=1];
+    n_pge_pd_dist_summer_off_peak -> n_pge_pd_dist_winter_peak [style=invis, minlen=1];
+    n_pge_pd_dist_winter_peak -> n_pge_pd_dist_winter_part_peak [style=invis, minlen=1];
+    n_pge_pd_dist_winter_part_peak -> n_pge_pd_dist_winter_off_peak [style=invis, minlen=1];
+    n_pge_pd_dist_winter_off_peak -> n_pge_pd_new_sys_gen [style=invis, minlen=1];
+    n_pge_pd_new_sys_gen -> n_pge_pd_transmission [style=invis, minlen=1];
+    n_pge_pd_transmission -> n_pge_pd_transmission_adj [style=invis, minlen=1];
+    n_pge_pd_transmission_adj -> n_pge_pd_reliability [style=invis, minlen=1];
+    n_pge_pd_reliability -> n_pge_pd_public_purpose [style=invis, minlen=1];
+    n_pge_pd_public_purpose -> n_pge_pd_nuclear [style=invis, minlen=1];
+    n_pge_pd_nuclear -> n_pge_pd_ctc [style=invis, minlen=1];
+    n_pge_pd_ctc -> n_pge_pd_energy_cost_recovery [style=invis, minlen=1];
+    n_pge_pd_energy_cost_recovery -> n_pge_pd_wildfire_fund [style=invis, minlen=1];
+    n_pge_pd_wildfire_fund -> n_pge_pd_wildfire_hardening [style=invis, minlen=1];
+    n_pge_pd_wildfire_hardening -> n_pge_pd_recovery_bond [style=invis, minlen=1];
+    n_pge_pd_recovery_bond -> n_pge_pd_recovery_bond_credit [style=invis, minlen=1];
+    n_pge_pd_recovery_bond_credit -> n_pge_pd_base_charge [style=invis, minlen=1];
+    n_pge_pd_base_charge -> n_pge_pd_climate_credit [style=invis, minlen=1];
+    n_pge_condition_storage -> n_pge_condition_EVCharging [style=invis, minlen=1];
+    n_pge_condition_EVCharging -> n_pge_condition_heatpump [style=invis, minlen=1];
+    n_pge_condition_heatpump -> n_pge_condition_NBT [style=invis, minlen=1];
+    n_pge_price_public_purpose -> n_pge_price_nuclear [style=invis, minlen=1];
+    n_pge_price_nuclear -> n_pge_price_ctc [style=invis, minlen=1];
+    n_pge_price_ctc -> n_pge_price_energy_cost_recovery [style=invis, minlen=1];
+    n_pge_price_energy_cost_recovery -> n_pge_price_wildfire_fund [style=invis, minlen=1];
+    n_pge_price_wildfire_fund -> n_pge_price_wildfire_hardening [style=invis, minlen=1];
+    n_pge_price_wildfire_hardening -> n_pge_price_recovery_bond [style=invis, minlen=1];
+    n_pge_price_recovery_bond -> n_pge_price_recovery_bond_credit [style=invis, minlen=1];
+    n_pge_price_dist_summer_peak -> n_pge_price_dist_summer_part_peak [style=invis, minlen=1];
+    n_pge_price_dist_summer_part_peak -> n_pge_price_dist_summer_off_peak [style=invis, minlen=1];
+    n_pge_price_dist_summer_off_peak -> n_pge_price_dist_winter_part_peak [style=invis, minlen=1];
+    n_pge_price_dist_winter_part_peak -> n_pge_price_new_sys_gen [style=invis, minlen=1];
+    n_pge_price_new_sys_gen -> n_pge_price_transmission [style=invis, minlen=1];
+    n_pge_price_transmission -> n_pge_price_transmission_adj [style=invis, minlen=1];
+    n_pge_price_transmission_adj -> n_pge_price_reliability [style=invis, minlen=1];
+    n_pge_price_reliability -> n_time_variants_1 [style=invis, minlen=1];
+    n_pge_price_gen_summer_peak -> n_pge_price_gen_summer_part_peak [style=invis, minlen=1];
+    n_pge_price_gen_summer_part_peak -> n_pge_price_gen_summer_off_peak [style=invis, minlen=1];
+    n_pge_price_gen_summer_off_peak -> n_pge_price_gen_winter_part_peak [style=invis, minlen=1];
+    n_pge_price_gen_winter_part_peak -> n_pge_price_pcia [style=invis, minlen=1];
+    n_pge_price_pcia -> n_time_variants_0 [style=invis, minlen=1];
+    n__anon_28 -> n__anon_88 [style=invis, minlen=5];
 
     subgraph cluster_legend {
         label="Legend — Node Colors by @type";

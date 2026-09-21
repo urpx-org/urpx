@@ -1,0 +1,98 @@
+digraph "Condition operands — what a comparison or operation takes as its operands" {
+    rankdir=LR;
+    bgcolor="white";
+    pad=0.4;
+    nodesep=0.4;
+    ranksep=0.7;
+    fontname="Inter, Helvetica, Arial, sans-serif";
+    label="Condition operands — what a comparison or operation takes as its operands (URPX v0.5.1)";
+    labelloc="t";
+    fontsize=14;
+    fontcolor="#1a365d";
+    node [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=10, style=filled, fontcolor="#1a365d"];
+    edge [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=8, fontcolor="#1a365d"];
+
+    // Section classes
+    ComparisonNode [
+        label="ComparisonNode"
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    OperationNode [
+        label="OperationNode"
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    CustomOperandNode [
+        label="CustomOperandNode"
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    DatatypeOperandNode [
+        label="Datatype\nOperandNode"
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    ObjectOperandNode [
+        label="ObjectOperandNode"
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+
+    // Cross-section references
+    MetricInput [
+        label="MetricInput"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
+    ];
+
+    // Object property edges
+    ComparisonNode -> DatatypeOperandNode [
+        label="leftOperand 1..1\nrightOperand 1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ComparisonNode -> ObjectOperandNode [
+        label="leftOperand 1..1\nrightOperand 1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ComparisonNode -> CustomOperandNode [
+        label="leftOperand 1..1\nrightOperand 1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ComparisonNode -> OperationNode [
+        label="leftOperand 1..1\nrightOperand 1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    OperationNode -> DatatypeOperandNode [
+        label="leftOperand 1..1\nrightOperand 1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    OperationNode -> ObjectOperandNode [
+        label="leftOperand 1..1\nrightOperand 1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    OperationNode -> CustomOperandNode [
+        label="leftOperand 1..1\nrightOperand 1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    CustomOperandNode -> MetricInput [
+        label="referencesMetricInput\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    DatatypeOperandNode -> MetricInput [
+        label="referencesMetricInput\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    ObjectOperandNode -> MetricInput [
+        label="referencesMetricInput\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+
+    // Layout-specified rank groups
+    { rank=same; ComparisonNode; }
+    { rank=same; OperationNode; }
+    { rank=same; CustomOperandNode; DatatypeOperandNode; ObjectOperandNode; }
+
+    subgraph cluster_legend {
+        label="Legend";
+        fontname="Inter, Helvetica, Arial, sans-serif";
+        fontsize=11;
+        fontcolor="#1a365d";
+        style=rounded;
+        color="#cccccc";
+        bgcolor="#f8f8f8";
+        margin=12;
+
+        leg_class [label="OWL Class\n(this section)", shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
+        leg_xref [label="OWL Class\n(other section)", shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"];
+        leg_src [label=" ", shape=point, width=0.01];
+        leg_tgt1 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+        leg_tgt2 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt2 [label="cross-section ref", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+    }
+}

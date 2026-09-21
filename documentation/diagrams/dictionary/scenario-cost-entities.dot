@@ -1,5 +1,5 @@
 digraph "Scenario & Cost Entities" {
-    rankdir=TB;
+    rankdir=LR;
     bgcolor="white";
     pad=0.4;
     nodesep=0.7;
@@ -15,33 +15,33 @@ digraph "Scenario & Cost Entities" {
     // Section classes
     Scenario [
         label="Scenario"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     ScenarioCostModel [
         label="ScenarioCostModel"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     ScenarioCostResult [
         label="ScenarioCostResult"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
 
     // Cross-section references
     CoverageClaim [
         label="CoverageClaim"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
     ];
     CustomerProfile [
         label="CustomerProfile"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
     ];
     RatePlanVersion [
         label="RatePlanVersion"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
     ];
     ServicePointProfile [
-        label="ServicePoint\nProfile"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+        label="Service\nPointProfile"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
     ];
 
     // Object property edges
@@ -80,8 +80,8 @@ digraph "Scenario & Cost Entities" {
         bgcolor="#f8f8f8";
         margin=12;
 
-        leg_class [label="OWL Class\n(this section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
-        leg_xref [label="OWL Class\n(other section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"];
+        leg_class [label="OWL Class\n(this section)", shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
+        leg_xref [label="OWL Class\n(other section)", shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"];
         leg_src [label=" ", shape=point, width=0.01];
         leg_tgt1 [label=" ", shape=point, width=0.01];
         leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];

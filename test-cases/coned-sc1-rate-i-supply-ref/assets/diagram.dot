@@ -1,9 +1,12 @@
 digraph "coned-sc1-rate-i-v20260201-supply-referenced" {
     rankdir=TB;
+    newrank=true;
+    splines=ortho;
+    concentrate=true;
     bgcolor="white";
     pad=0.5;
-    nodesep=0.5;
-    ranksep=0.7;
+    nodesep=0.4;
+    ranksep=0.6;
     fontname="Inter, Helvetica, Arial, sans-serif";
     label="coned-sc1-rate-i-v20260201-supply-referenced";
     labelloc="t";
@@ -182,131 +185,133 @@ digraph "coned-sc1-rate-i-v20260201-supply-referenced" {
     ];
 
     n_coned_coned_sc1_rate_i_v20260201_supply_referenced -> n_org_consolidated_edison [
-        label="offeredBy"
+        xlabel="offeredBy"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i_v20260201_supply_referenced -> n_coned_pm_sc1_supply_service_2026_02_01 [
-        label="consolidatedFrom"
+        xlabel="consolidatedFrom"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i_v20260201_supply_referenced -> n_coned_coned_sc1_rate_i [
-        label="forRatePlan"
+        xlabel="forRatePlan"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i_v20260201_supply_referenced -> n_coned_cc_sc1_rate_i_v20260201_supply_ref [
-        label="hasCoverageClaim"
+        xlabel="hasCoverageClaim"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_cc_sc1_rate_i_v20260201_supply_ref -> n_coned_eval_sc1_rate_i_v20260201_supply_ref [
-        label="explainedBy"
+        xlabel="explainedBy"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i_v20260201_supply_referenced -> n_coned_pdref_msc_energy_2026_02_01 [
-        label="hasPriceDefinitionReference"
+        xlabel="hasPriceDefinitionReference"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_pdref_msc_energy_2026_02_01 -> n_coned_ts_pdref_msc_energy_applicability [
-        label="hasTemporalScope"
+        xlabel="hasTemporalScope"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_pdref_msc_energy_2026_02_01 -> n_coned_sr_lds_appnd_csv_supply_ref [
-        label="documentedBy"
+        xlabel="documentedBy"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_sr_lds_appnd_csv_supply_ref -> n_coned_sp_msc_lds_appnd [
-        label="sourcePublication"
+        xlabel="sourcePublication"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_pdref_msc_energy_2026_02_01 -> n_coned_mc_msc_feed_thread [
-        label="resolvedFrom"
+        xlabel="resolvedFrom"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_mc_msc_feed_thread -> n_coned_pm_msc_feed_rate1_2026_02 [
-        label="collectsPricingModel"
+        xlabel="collectsPricingModel"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_mc_msc_feed_thread -> n_coned_pm_msc_feed_rate1_2026_01 [
-        label="collectsPricingModel"
+        xlabel="collectsPricingModel"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i_v20260201_supply_referenced -> n_coned_pe_sc1_rate_i_v20260201_supply_ref [
-        label="hasPlanElements"
+        xlabel="hasPlanElements"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_pe_sc1_rate_i_v20260201_supply_ref -> n_coned_mi_energy_kwh [
-        label="hasMetricInput"
+        xlabel="hasMetricInput"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_mi_energy_kwh -> n_coned_ms_energy_kwh [
-        label="hasMetricSpecification"
+        xlabel="hasMetricSpecification"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_pe_sc1_rate_i_v20260201_supply_ref -> n_coned_bm_sc1_rate_i_v20260201_supply_ref [
-        label="hasBillingModel"
+        xlabel="hasBillingModel"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_bm_sc1_rate_i_v20260201_supply_ref -> n_coned_ledger_supply [
-        label="hasLedger"
+        xlabel="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_bm_sc1_rate_i_v20260201_supply_ref -> n_coned_pd_supply_service_charge [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i_v20260201_supply_referenced -> n_coned_prices_sc1_rate_i_v20260201_supply_ref [
-        label="hasPrices"
+        xlabel="hasPrices"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_prices_sc1_rate_i_v20260201_supply_ref -> n_coned_ps_v20260201_supply_service_charge [
-        label="hasPriceSet"
+        xlabel="hasPriceSet"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_ps_v20260201_supply_service_charge -> n_coned_p_v20260201_supply_service_charge [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
+
+    n_coned_pe_sc1_rate_i_v20260201_supply_ref -> n_coned_prices_sc1_rate_i_v20260201_supply_ref [style=invis, minlen=2];
 
     subgraph cluster_legend {
         label="Legend — Node Colors by @type";

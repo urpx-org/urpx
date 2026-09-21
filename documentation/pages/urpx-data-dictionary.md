@@ -136,6 +136,8 @@ The Utility Rate Plan Exchange (URPX) Data Dictionary provides comprehensive doc
 
 <DiagramViewer src="../diagrams/dictionary/core-rate-plan-entities.svg" alt="Core Rate Plan Entities diagram" />
 
+<DiagramViewer src="../diagrams/dictionary/core-rate-plan-entities-versioning.svg" alt="Rate plan versioning — versions, identifiers and the plans they reference" />
+
 ### URPXPackage {#URPXPackage}
 
 **URI:** `https://urpx.org/ns/ontology/URPXPackage`  
@@ -1487,6 +1489,8 @@ periods with specific time brackets.
 
 <DiagramViewer src="../diagrams/dictionary/condition-modeling.svg" alt="Condition Modeling diagram" />
 
+<DiagramViewer src="../diagrams/dictionary/condition-modeling-operands.svg" alt="Condition operands — what a comparison or operation takes as its operands" />
+
 ### EligibilityRule {#EligibilityRule}
 
 **URI:** `https://urpx.org/ns/ontology/EligibilityRule`  
@@ -2069,6 +2073,8 @@ while preserving original designations.
 ## Organization Entities
 
 <DiagramViewer src="../diagrams/dictionary/organization-entities.svg" alt="Organization Entities diagram" />
+
+<DiagramViewer src="../diagrams/dictionary/organization-entities-references.svg" alt="Organization — references carried by every organization type" />
 
 ### Organization {#Organization}
 

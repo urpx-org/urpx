@@ -16,77 +16,77 @@ digraph "Customer & Service Profile Entities" {
     // Section classes
     CustomerProfile [
         label="CustomerProfile"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     ServicePointProfile [
-        label="ServicePoint\nProfile"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        label="Service\nPointProfile"
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     ProfileAlternative [
         label="ProfileAlternative"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     ProfileAlternatives [
-        label="ProfileAlternatives"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        label="Profile\nAlternatives"
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     AlternativeDimension [
         label="Alternative\nDimension"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     AlternativeDimensions [
         label="Alternative\nDimensions"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     ServiceClass [
         label="ServiceClass"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     RateGroup [
         label="RateGroup"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     ProgramEnrollment [
         label="ProgramEnrollment"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     PriorRatePlan [
         label="PriorRatePlan"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     DistributedEnergyResource [
-        label="DistributedEnergy\nResource"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        label="Distributed\nEnergyResource"
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
 
     // Cross-section references
     ConditionExpression [
         label="Condition\nExpression"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
     ];
     County [
         label="County"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
     ];
     MetricInput [
         label="MetricInput"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
     ];
     Municipality [
         label="Municipality"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
     ];
     RatePlan [
         label="RatePlan"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
     ];
     ServiceTerritory [
         label="ServiceTerritory"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
     ];
     State [
         label="State"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
     ];
 
     // Object property edges
@@ -146,8 +146,8 @@ digraph "Customer & Service Profile Entities" {
         bgcolor="#f8f8f8";
         margin=12;
 
-        leg_class [label="OWL Class\n(this section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
-        leg_xref [label="OWL Class\n(other section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"];
+        leg_class [label="OWL Class\n(this section)", shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
+        leg_xref [label="OWL Class\n(other section)", shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"];
         leg_src [label=" ", shape=point, width=0.01];
         leg_tgt1 [label=" ", shape=point, width=0.01];
         leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];

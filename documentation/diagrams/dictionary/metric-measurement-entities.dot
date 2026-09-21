@@ -15,15 +15,15 @@ digraph "Metric & Measurement Entities" {
     // Section classes
     MetricInput [
         label="MetricInput"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     MetricSpecification [
-        label="MetricSpecification"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        label="Metric\nSpecification"
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     CalculationMethod [
         label="CalculationMethod"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
 
     // Object property edges
@@ -48,7 +48,7 @@ digraph "Metric & Measurement Entities" {
         bgcolor="#f8f8f8";
         margin=12;
 
-        leg_class [label="OWL Class\n(this section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
+        leg_class [label="OWL Class\n(this section)", shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
         leg_src [label=" ", shape=point, width=0.01];
         leg_tgt1 [label=" ", shape=point, width=0.01];
         leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
