@@ -3,6 +3,7 @@ name: Trigger Staging Rebuild
 on:
   push:
     branches: [main]
+    tags: ["v*"]
 
 permissions: {}
 
@@ -31,6 +32,7 @@ jobs:
       - name: Dispatch staging rebuild
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          URPX_REF: ${{ github.ref_type == 'tag' && github.ref_name || 'main' }}
           URPX_SHA: ${{ github.sha }}
           URPX_ORG: ${{ vars.URPX_ORG || github.repository_owner }}
           URPX_STAGING_REPO: ${{ vars.URPX_STAGING_REPO }}
@@ -47,6 +49,6 @@ jobs:
 
           gh api "repos/$URPX_ORG/$URPX_STAGING_REPO/dispatches" \
             --method POST \
-            --field event_type=urpx-main-updated \
-            --field client_payload[urpx_ref]=main \
+            --field event_type=urpx-content-updated \
+            --field client_payload[urpx_ref]="$URPX_REF" \
             --field client_payload[urpx_sha]="$URPX_SHA"
