@@ -24,4 +24,4 @@ The sets here exercise **proposed** vocabulary from specifications still under r
 - `@id` values use per-document prefixes (`comed:`, `pge:`, `org:`) under the fixtures namespace.
 - Unit prices are quoted decimal strings; credits are negative.
 - Interval times in price series are UTC; local-time interpretation (day types, time-of-use labels) is governed by each plan's timezone.
-- Licensing follows the repository: these files are covered by the `dev-docs/**` entry in `REUSE.toml` (Apache-2.0 during the pre-Draft stage), so they carry no per-file license header.
+- The sample data files here carry `CDLA-Permissive-2.0`, the same license as the shipped datasets under `test-cases/`, through a `REUSE.toml` entry rather than a per-file header. The prose around them follows the rest of `dev-docs/` at Apache-2.0.

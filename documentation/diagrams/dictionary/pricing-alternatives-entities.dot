@@ -2,10 +2,10 @@ digraph "Pricing & Alternatives Entities" {
     rankdir=TB;
     bgcolor="white";
     pad=0.4;
-    nodesep=0.6;
-    ranksep=0.8;
+    nodesep=0.3;
+    ranksep=1.1;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="Pricing & Alternatives Entities (URPX v0.5.0)";
+    label="Pricing & Alternatives Entities (URPX v0.5.1)";
     labelloc="t";
     fontsize=14;
     fontcolor="#1a365d";
@@ -15,48 +15,51 @@ digraph "Pricing & Alternatives Entities" {
     // Section classes
     PricingModel [
         label="PricingModel"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     ModelCollection [
         label="ModelCollection"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     Prices [
         label="Prices"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     PriceSet [
         label="PriceSet"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     PriceSetAlternative [
-        label="PriceSetAlternative"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        label="PriceSet\nAlternative"
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     PriceSetAlternatives [
-        label="PriceSetAlternatives"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        label="PriceSet\nAlternatives"
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     Price [
         label="Price"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     PriceDefinition [
         label="PriceDefinition"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     PriceDefinitionReference [
         label="PriceDefinition\nReference"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     PriceSummary [
         label="PriceSummary"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
 
     // Object property edges
+    PricingModel -> Prices [
+        label="hasPrices\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=10
+    ];
     ModelCollection -> PricingModel [
-        label="collectsPricingModel\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+        label="collectsPricingModel\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=10
     ];
     Prices -> Price [
         label="hasPrice\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
@@ -66,9 +69,6 @@ digraph "Pricing & Alternatives Entities" {
     ];
     Prices -> PriceSetAlternatives [
         label="hasPriceSetAlternatives\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=8
-    ];
-    PriceSet -> PricingModel [
-        label="contributedBy\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     PriceSet -> Price [
         label="hasPrice\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=8
@@ -91,25 +91,18 @@ digraph "Pricing & Alternatives Entities" {
     Price -> PriceSummary [
         label="basedOnPrice\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
-    Price -> PricingModel [
-        label="contributedBy\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
     Price -> PriceDefinition [
         label="referencesPriceDefinition\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-    PriceDefinition -> PricingModel [
-        label="contributedBy\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     PriceDefinitionReference -> PriceDefinition [
         label="referencesPriceDefinition\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
-    PriceDefinitionReference -> ModelCollection [
-        label="resolvedFrom\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
 
     // Layout-specified rank groups
+    { rank=same; ModelCollection; }
+    { rank=same; PricingModel; }
     { rank=same; Prices; }
-    { rank=same; PriceSet; PriceSetAlternatives; }
+    { rank=same; PriceSet; PriceSetAlternatives; PriceDefinitionReference; }
     { rank=same; PriceSetAlternative; Price; }
     { rank=same; PriceDefinition; PriceSummary; }
 
@@ -123,7 +116,7 @@ digraph "Pricing & Alternatives Entities" {
         bgcolor="#f8f8f8";
         margin=12;
 
-        leg_class [label="OWL Class\n(this section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
+        leg_class [label="OWL Class\n(this section)", shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
         leg_src [label=" ", shape=point, width=0.01];
         leg_tgt1 [label=" ", shape=point, width=0.01];
         leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];

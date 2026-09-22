@@ -1,11 +1,11 @@
 digraph "hierarchy_ChargeTypeValue" {
-    rankdir=TB;
+    rankdir=LR;
     bgcolor="white";
     pad=0.4;
     nodesep=0.3;
-    ranksep=0.5;
+    ranksep=0.6;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="ChargeTypeValue Hierarchy (URPX v0.5.0)";
+    label="ChargeTypeValue Hierarchy (URPX v0.5.1)";
     labelloc="t";
     fontsize=14;
     fontcolor="#1a365d";
@@ -135,7 +135,7 @@ digraph "hierarchy_ChargeTypeValue" {
     ];
     cat_auxiliaryCharge -> inst_generation [penwidth=1];
     inst_powerFactorCharge [
-        label="Power Factor \nCharge"
+        label="Power \nFactor Charge"
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
     ];
     cat_auxiliaryCharge -> inst_powerFactorCharge [penwidth=1];
@@ -160,7 +160,7 @@ digraph "hierarchy_ChargeTypeValue" {
     ];
     cat_discount -> inst_capitalCredit [penwidth=1];
     inst_creditAdministrative [
-        label="Credit Administrative"
+        label="Credit \nAdministrative"
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
     ];
     cat_discount -> inst_creditAdministrative [penwidth=1];
@@ -175,7 +175,7 @@ digraph "hierarchy_ChargeTypeValue" {
     ];
     cat_discount -> inst_creditGeneration [penwidth=1];
     inst_creditInfrastructure [
-        label="Credit Infrastructure"
+        label="Credit \nInfrastructure"
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
     ];
     cat_discount -> inst_creditInfrastructure [penwidth=1];
@@ -195,7 +195,7 @@ digraph "hierarchy_ChargeTypeValue" {
     ];
     cat_discount -> inst_creditRenewable [penwidth=1];
     inst_creditTariffRider [
-        label="Credit Tariff \nRider"
+        label="Credit \nTariff Rider"
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
     ];
     cat_discount -> inst_creditTariffRider [penwidth=1];
@@ -300,7 +300,7 @@ digraph "hierarchy_ChargeTypeValue" {
     ];
     cat_regulatory -> inst_publicBenefits [penwidth=1];
     inst_systemBenefitCharge [
-        label="System Benefit \nCharge"
+        label="System \nBenefit Charge"
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
     ];
     cat_regulatory -> inst_systemBenefitCharge [penwidth=1];
@@ -365,7 +365,7 @@ digraph "hierarchy_ChargeTypeValue" {
     ];
     cat_serviceCharge -> inst_serviceMetered [penwidth=1];
     inst_serviceNonMetered [
-        label="Service Non \nMetered"
+        label="Service \nNon Metered"
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
     ];
     cat_serviceCharge -> inst_serviceNonMetered [penwidth=1];

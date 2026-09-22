@@ -1,14 +1,10 @@
-%% SPDX-FileCopyrightText: Flux Tailor LLC
-%% SPDX-License-Identifier: Apache-2.0
-%% SPDX-Transition-License-After-Draft: W3C-20231102
-%% Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md.
+%% SPDX-FileCopyrightText: The URPX Authors
+%% SPDX-License-Identifier: W3C-20150513
 
 %% URPX Price Structure Diagram
 %% Shows: Prices → PriceSet → Price hierarchy
 %% Created: January 26, 2026
 %% Paul Tol 2.7 Light color scheme
-
-%%{init: {'theme':'dark', 'themeVariables': { 'darkMode':'true', 'background':'#000000', 'primaryColor':'#77AADD', 'primaryTextColor':'#ffffff', 'primaryBorderColor':'#5588BB', 'lineColor':'#ffffff', 'secondaryColor':'#44BB99', 'tertiaryColor':'#EE8866', 'textColor':'#ffffff', 'nodeTextColor':'#ffffff'}}}%%
 
 graph TB
     
@@ -49,7 +45,7 @@ graph TB
         
         ChargeCategory[chargeCategory<br/>Optional classification metadata<br/>serviceCharge, auxiliaryCharge,<br/>infrastructure, taxes, etc.]
         
-        BillPortion[billPortion<br/>Optional classification metadata<br/>delivery, supply, bundled]
+        BillPortion[billPortion<br/>Optional classification metadata<br/>deliveryPortion, supplyPortion, bundledPortion]
     end
     
     %% Price Types Examples
@@ -76,12 +72,12 @@ graph TB
     PriceProps -.->|examples| PriceExamples
     
     %% Styling - Paul Tol 2.7 Light colors
-    classDef versionClass fill:#77AADD,stroke:#5588BB,stroke-width:3px,color:#fff
-    classDef containerClass fill:#44BB99,stroke:#228877,stroke-width:3px,color:#fff
-    classDef priceSetClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#333
-    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#333
-    classDef propClass fill:#FFAABB,stroke:#DD8899,stroke-width:2px,color:#333
-    classDef exampleClass fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#fff
+    classDef versionClass fill:#77AADD,stroke:#5588BB,stroke-width:3px,color:#000
+    classDef containerClass fill:#44BB99,stroke:#228877,stroke-width:3px,color:#000
+    classDef priceSetClass fill:#99DDFF,stroke:#77BBDD,stroke-width:2px,color:#000
+    classDef priceClass fill:#EEDD88,stroke:#CCBB66,stroke-width:2px,color:#000
+    classDef propClass fill:#FFAABB,stroke:#DD8899,stroke-width:2px,color:#000
+    classDef exampleClass fill:#EE8866,stroke:#CC6644,stroke-width:2px,color:#000
     
     class RPVersion versionClass
     class Prices containerClass
@@ -89,3 +85,6 @@ graph TB
     class Price1,Price2,Price3 priceClass
     class PricingField,ChargeType,ChargeCategory,BillPortion propClass
     class Ex1,Ex2,Ex3,Ex4 exampleClass
+
+    %% Edge stroke width, matched to the documentation site
+    linkStyle default stroke-width:2.5px

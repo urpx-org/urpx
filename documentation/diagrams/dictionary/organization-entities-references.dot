@@ -1,0 +1,85 @@
+digraph "Organization — references carried by every organization type" {
+    rankdir=LR;
+    bgcolor="white";
+    pad=0.4;
+    nodesep=0.35;
+    ranksep=0.9;
+    fontname="Inter, Helvetica, Arial, sans-serif";
+    label="Organization — references carried by every organization type (URPX v0.5.1)";
+    labelloc="t";
+    fontsize=14;
+    fontcolor="#1a365d";
+    node [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=10, style=filled, fontcolor="#1a365d"];
+    edge [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=8, fontcolor="#1a365d"];
+
+    // Section classes
+    Organization [
+        label="Organization"
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+
+    // Cross-section references
+    LocationDataSet [
+        label="LocationDataSet"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
+    ];
+    PricingModel [
+        label="PricingModel"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
+    ];
+    RatePlan [
+        label="RatePlan"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
+    ];
+    RatePlanModifier [
+        label="RatePlanModifier"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
+    ];
+    RatePlanModifierVersion [
+        label="RatePlan\nModifierVersion"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
+    ];
+    RatePlanVersion [
+        label="RatePlanVersion"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
+    ];
+
+    // Object property edges
+    Organization -> LocationDataSet [
+        label="hasLocationDataSet\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Organization -> PricingModel [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Organization -> RatePlan [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Organization -> RatePlanModifier [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Organization -> RatePlanVersion [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    Organization -> RatePlanModifierVersion [
+        label="offers\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+
+    subgraph cluster_legend {
+        label="Legend";
+        fontname="Inter, Helvetica, Arial, sans-serif";
+        fontsize=11;
+        fontcolor="#1a365d";
+        style=rounded;
+        color="#cccccc";
+        bgcolor="#f8f8f8";
+        margin=12;
+
+        leg_class [label="OWL Class\n(this section)", shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
+        leg_xref [label="OWL Class\n(other section)", shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"];
+        leg_src [label=" ", shape=point, width=0.01];
+        leg_tgt1 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+        leg_tgt2 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt2 [label="cross-section ref", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+    }
+}

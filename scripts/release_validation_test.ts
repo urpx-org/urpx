@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Flux Tailor LLC
+// SPDX-FileCopyrightText: The URPX Authors
 // SPDX-License-Identifier: Apache-2.0
 
 import { assert, assertEquals } from "@std/assert";

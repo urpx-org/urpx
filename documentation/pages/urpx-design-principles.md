@@ -1,7 +1,5 @@
-<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
-<!-- SPDX-License-Identifier: Apache-2.0 -->
-<!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
-<!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
+<!-- SPDX-FileCopyrightText: The URPX Authors -->
+<!-- SPDX-License-Identifier: W3C-20150513 -->
 
 ---
 site_category: advanced-topics
@@ -12,8 +10,8 @@ site_position: 2
 
 # URPX Design Principles
 
-**Version**: 0.5.0 (Pre-draft)
-**Last Updated**: 2026-03-02  
+**Version**: 0.5.1 (Working Group Draft)
+**Last Updated**: 2026-03-02
 **Status**: Active
 
 ---
@@ -323,4 +321,4 @@ Reviewers should verify:
 
 ## License
 
-Copyright © 2025 Flux Tailor LLC. Licensed under Apache 2.0.
+Copyright © The URPX Authors. Licensed under the W3C Software Notice and Document License (W3C-20150513). See [NOTICE](../../NOTICE) for the full statement.

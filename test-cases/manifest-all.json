@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "generator": "urpx-website-staging/scripts/codegen/generate-all.py",
-  "generatedAt": "2026-08-17T19:29:19Z",
+  "generator": "URPX documentation codegen",
+  "generatedAt": "2026-09-17T18:46:58Z",
   "examples": [
     {
       "id": "coned-sc1-rate-i",

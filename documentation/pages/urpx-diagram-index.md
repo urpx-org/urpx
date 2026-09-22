@@ -1,7 +1,5 @@
-<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
-<!-- SPDX-License-Identifier: Apache-2.0 -->
-<!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
-<!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
+<!-- SPDX-FileCopyrightText: The URPX Authors -->
+<!-- SPDX-License-Identifier: W3C-20150513 -->
 
 ---
 site_category: learning
@@ -12,7 +10,7 @@ site_position: 2
 
 # URPX Diagram Index
 
-**Version:** 0.5.0 (Pre-draft)
+**Version:** 0.5.1 (Working Group Draft)
 **Last Updated:** 2026-08-20
 
 [← Back to Index](/docs/getting-started/overview)
@@ -29,9 +27,9 @@ This index lists the diagram assets currently present in the repository and the 
 
 ### Temporal Versioning Summary
 
-- **File:** `documentation/diagrams/urpx-temporal-versioning-summary.svg`
+- **Source:** Mermaid diagram embedded in `documentation/pages/urpx-overview.md`
 - **Used in:** [Overview](urpx-overview.md)
-- **Shows:** The high-level temporal versioning pattern for `RatePlan` and `RatePlanVersion`
+- **Shows:** How a `TariffFiling` chain carries supersession, and how each `RatePlanVersion` snapshot is consolidated from the pricing models in force and bound to its `RatePlan`
 
 ---
 
@@ -62,12 +60,7 @@ This index lists the diagram assets currently present in the repository and the 
 ### Development Gantt
 
 - **File:** `documentation/diagrams/urpx-gantt.mmd`
-- **Purpose:** Historical roadmap and project-planning view
-
-### Development Chart
-
-- **File:** `documentation/diagrams/urpx_development_chart.png`
-- **Purpose:** Historical development snapshot
+- **Purpose:** Development roadmap, current through the tagged releases and the release in progress
 
 ---
 

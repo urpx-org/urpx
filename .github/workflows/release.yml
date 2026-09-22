@@ -143,9 +143,9 @@ jobs:
             --base-path documentation/pages \
             > release-body.md
 
-      - name: Check release body for internal process language
+      - name: Check release body for local machine paths
         if: steps.release.outputs.use_manual_body != 'true'
-        run: python3 .urpx-website/scripts/build/check-no-internal-process-language.py release-body.md
+        run: python3 .urpx-website/scripts/build/check-no-local-paths.py release-body.md
 
       - name: Prepare release assets
         run: |

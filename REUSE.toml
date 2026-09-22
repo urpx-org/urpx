@@ -4,20 +4,18 @@ version = 1
 # carry inline SPDX headers (binaries, third-party assets) or that need
 # compound license expressions.
 #
-# The URPX standard is currently under Apache-2.0 (pre-Draft stage). Upon
-# acceptance as a Working Group Draft, specification files will transition
-# to the W3C Document License and datasets to CDLA-Permissive-2.0.
-# See TRANSITION.md for the full transition plan and manifest.
+# Following Working Group Draft acceptance, specification files carry W3C-20150513, datasets carry CDLA-Permissive-2.0, and source and meta files remain Apache-2.0.
+# See TRANSITION.md for the completed transition record and manifest.
 
 # -----------------------------------------------------------------------------
 # Binary raster images (PNG, JPG), SVG diagrams, and their Graphviz DOT sources
-# — all Flux Tailor-authored, Apache-2.0 alongside the rest of the pre-Draft
-# project.
+# — all Flux Tailor-authored, Apache-2.0 alongside the rest of the
+# project's meta and tooling assets.
 # -----------------------------------------------------------------------------
 [[annotations]]
 path = ["**/*.png", "**/*.jpg", "**/*.jpeg", "**/*.svg", "**/*.dot"]
 precedence = "aggregate"
-SPDX-FileCopyrightText = "Flux Tailor LLC"
+SPDX-FileCopyrightText = "The URPX Authors"
 SPDX-License-Identifier = "Apache-2.0"
 
 # -----------------------------------------------------------------------------
@@ -59,32 +57,72 @@ precedence = "override"
 SPDX-FileCopyrightText = "Consolidated Edison Company of New York, Inc."
 SPDX-License-Identifier = "LicenseRef-PublicRecord"
 # -----------------------------------------------------------------------------
-# Test-case datasets and indexes — current pre-Draft project datasets remain
-# Apache-2.0 and transition to CDLA-Permissive-2.0 at Working Group Draft.
+# Test-case datasets and indexes — transitioned to CDLA-Permissive-2.0 at
+# Working Group Draft. These three carry no inline header or .license
+# sidecar (JSON-LD and CSV cannot hold one, and this pair predates the
+# sidecar convention), so REUSE.toml is the sole source of their license and
+# this entry is what TRANSITION.md's script-driven rewrite cannot reach.
 # -----------------------------------------------------------------------------
 [[annotations]]
 path = [
     "test-cases/pge-e-elec/data/urpx-rate-plan_pge_e-elec.jsonld",
     "test-cases/test-cases-index.csv",
     "test-cases/urpx-edge-cases.csv",
+    "test-cases/manifest-all.json",
 ]
-SPDX-FileCopyrightText = "Flux Tailor LLC"
-SPDX-License-Identifier = "Apache-2.0"
+SPDX-FileCopyrightText = "The URPX Authors"
+SPDX-License-Identifier = "CDLA-Permissive-2.0"
 
 # -----------------------------------------------------------------------------
-# Working group development documents, the generated data dictionary, and JSON
-# manifests/schemas (JSON cannot carry comment headers) — Flux Tailor-authored,
-# Apache-2.0 alongside the rest of the pre-Draft project.
+# Generated per-test-case diagrams and their Graphviz DOT sources, which travel with the test-case data bundle they sit inside rather than with the specification's own diagram set.
+# Takes precedence over the blanket **/*.svg and **/*.dot rule above.
+# -----------------------------------------------------------------------------
+[[annotations]]
+path = ["test-cases/**/assets/diagram.dot", "test-cases/**/assets/diagram.svg"]
+precedence = "override"
+SPDX-FileCopyrightText = "The URPX Authors"
+SPDX-License-Identifier = "CDLA-Permissive-2.0"
+
+# -----------------------------------------------------------------------------
+# Working group development documents and JSON manifests/schemas (JSON cannot
+# carry comment headers) — Flux Tailor-authored, Apache-2.0 alongside the rest
+# of the project's meta and tooling assets.
 # -----------------------------------------------------------------------------
 [[annotations]]
 path = [
     "dev-docs/**",
-    "documentation/pages/urpx-data-dictionary.md",
-    "documentation/examples/examples-schema.json",
-    "documentation/examples/manifest.json",
     "test-cases/manifest-all-schema.json",
-    "test-cases/manifest-all.json",
 ]
 precedence = "aggregate"
-SPDX-FileCopyrightText = "Flux Tailor LLC"
+SPDX-FileCopyrightText = "The URPX Authors"
 SPDX-License-Identifier = "Apache-2.0"
+
+# -----------------------------------------------------------------------------
+# Worked sample instances under dev-docs/samples, synthetic data accompanying development specifications, licensed as data like the shipped test-case datasets.
+# Entries below the dev-docs/** rule above win over it, so this one must stay after it.
+# -----------------------------------------------------------------------------
+[[annotations]]
+path = ["dev-docs/samples/**/*.json", "dev-docs/samples/**/*.jsonld"]
+precedence = "override"
+SPDX-FileCopyrightText = "The URPX Authors"
+SPDX-License-Identifier = "CDLA-Permissive-2.0"
+
+# -----------------------------------------------------------------------------
+# Generated data dictionary — matches TRANSITION.md's specification category
+# glob (documentation/pages/**/*.md) but carries no inline header, so this
+# entry is what that category's script-driven rewrite cannot reach.
+# -----------------------------------------------------------------------------
+[[annotations]]
+path = "documentation/pages/urpx-data-dictionary.md"
+SPDX-FileCopyrightText = "The URPX Authors"
+SPDX-License-Identifier = "W3C-20150513"
+
+# -----------------------------------------------------------------------------
+# Diagram SVGs and their Graphviz DOT sources under documentation/diagrams, matching TRANSITION.md's specification category glob but carrying no inline header or sidecar, so this override is what that category's script-driven rewrite cannot reach.
+# Takes precedence over the blanket **/*.svg and **/*.dot rule above.
+# -----------------------------------------------------------------------------
+[[annotations]]
+path = ["documentation/diagrams/**/*.dot", "documentation/diagrams/**/*.svg"]
+precedence = "override"
+SPDX-FileCopyrightText = "The URPX Authors"
+SPDX-License-Identifier = "W3C-20150513"

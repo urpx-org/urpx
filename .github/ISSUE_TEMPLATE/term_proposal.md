@@ -3,7 +3,7 @@ name: Term proposal
 about: Propose a new class, property, or enumeration value
 labels: enhancement
 ---
-<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-FileCopyrightText: The URPX Authors -->
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 ## Problem statement

@@ -1,7 +1,5 @@
-<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
-<!-- SPDX-License-Identifier: Apache-2.0 -->
-<!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
-<!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
+<!-- SPDX-FileCopyrightText: The URPX Authors -->
+<!-- SPDX-License-Identifier: W3C-20150513 -->
 
 ---
 site_category: getting-started
@@ -59,10 +57,9 @@ Yes. URPX will provide mapping templates for major standards (Green Button, Open
 
 **Q: What is the current status of URPX?**
 
-URPX v0.3.0 is currently in pre-draft review stage. The working group is actively refining the ontology and validation rules. You can follow progress and contribute at the [urpx-org GitHub organization](https://github.com/urpx-org), where all repositories are publicly available:
+URPX v0.5.1 has completed the Working Group Draft transition. See [TRANSITION.md](../../TRANSITION.md) for the transition record. The working group continues to refine the ontology and validation rules. You can follow progress and contribute at the [urpx-org GitHub organization](https://github.com/urpx-org):
 - **urpx** - Core ontology and specifications
-- **urpx-wg-admin** - Working group administration
-- **urpx-tools** - Validation and transformation utilities
+- **urpx-wg** - Working group materials: meeting agendas, notes, and branding
 
 **Q: How can I participate in URPX development?**
 

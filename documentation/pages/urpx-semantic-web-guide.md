@@ -1,7 +1,5 @@
-<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
-<!-- SPDX-License-Identifier: Apache-2.0 -->
-<!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
-<!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
+<!-- SPDX-FileCopyrightText: The URPX Authors -->
+<!-- SPDX-License-Identifier: W3C-20150513 -->
 
 ---
 site_category: learning
@@ -12,7 +10,7 @@ site_position: 1
 
 # Semantic Web Guide for URPX
 
-**Version:** 0.5.0 (Pre-draft) 
+**Version:** 0.5.1 (Working Group Draft)
 **Last Updated:** 2026-08-20
 
 **A beginner-friendly introduction to semantic web technologies for the URPX working group**
@@ -94,7 +92,7 @@ The semantic web represents data as **interconnected graphs** of meaning, not ju
 ```json
 {
   "@context": [
-    "https://urpx.org/ns/context/releases/v0.5.0/jsonld/urpx-context.jsonld",
+    "https://urpx.org/ns/context/releases/v0.5.1/jsonld/urpx-context.jsonld",
     { "ex": "https://example.com/" }
   ],
   "@id": "ex:PRC-001",
@@ -225,7 +223,7 @@ JSON-LD is **JSON with a semantic layer**. Developers work with familiar JSON sy
 ```json
 {
   "@context": [
-    "https://urpx.org/ns/context/releases/v0.5.0/jsonld/urpx-context.jsonld",
+    "https://urpx.org/ns/context/releases/v0.5.1/jsonld/urpx-context.jsonld",
     { "ex": "https://example.com/" }
   ],
   "@id": "ex:PRC-001",
@@ -251,7 +249,7 @@ This example demonstrates the current URPX pattern in which a `PriceSetAlternati
 ```json
 {
   "@context": [
-    "https://urpx.org/ns/context/releases/v0.5.0/jsonld/urpx-context.jsonld",
+    "https://urpx.org/ns/context/releases/v0.5.1/jsonld/urpx-context.jsonld",
     { "ex": "https://example.com/" }
   ],
   "@graph": [

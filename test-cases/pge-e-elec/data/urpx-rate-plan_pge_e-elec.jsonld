@@ -1,6 +1,6 @@
 {
   "@context": [
-    "https://urpx.org/ns/context/releases/v0.4.0/jsonld/urpx-context.jsonld",
+    "https://urpx.org/ns/context/releases/v0.5.1/jsonld/urpx-context.jsonld",
     {
       "org": "https://urpx-org.github.io/urpx/fixtures/org/",
       "pge": "https://urpx-org.github.io/urpx/fixtures/pge/"
@@ -10,7 +10,7 @@
     {
       "@type": "urpx:URPXPackage",
       "@id": "pge:doc-e-elec-2026-01-01",
-      "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.3.0/ontology/urpx-ontology.ttl",
+      "urpx:targetURPXVersion": "https://github.com/urpx-org/urpx/raw/v0.5.1/ontology/urpx-ontology.ttl",
       "urpx:hasRatePlan": {
         "@type": "urpx:RatePlan",
         "@id": "pge:e-elec",
@@ -19,7 +19,15 @@
         "urpx:initialEffectiveDate": "2022-12-01",
         "urpx:timezoneIdentifier": "America/Los_Angeles",
         "urpx:offeredBy": { "@id": "org:utility-pge" }
-      }
+      },
+      "urpx:publicationPlatform": "UtiliPub ™",
+      "urpx:publishedBy": { "@id": "org:utilipub" }
+    },
+    {
+      "@id": "org:utilipub",
+      "@type": "urpx:Organization",
+      "urpx:legalName": "Flux Tailor LLC",
+      "urpx:organizationType": { "@id": "urpx:vendorOrganization" }
     },
     {
       "@type": "urpx:RatePlanVersion",

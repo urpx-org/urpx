@@ -1,11 +1,11 @@
 digraph "hierarchy_PhaseCodeKindValue" {
-    rankdir=TB;
+    rankdir=LR;
     bgcolor="white";
     pad=0.4;
     nodesep=0.3;
-    ranksep=0.5;
+    ranksep=0.6;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="PhaseCodeKindValue Hierarchy (URPX v0.5.0)";
+    label="PhaseCodeKindValue Hierarchy (URPX v0.5.1)";
     labelloc="t";
     fontsize=14;
     fontcolor="#1a365d";
@@ -45,7 +45,7 @@ digraph "hierarchy_PhaseCodeKindValue" {
 
     // Leaf instance nodes
     inst_AtoAv [
-        label="Phase A Current Relative to \nPhase A Voltage"
+        label="Phase A Current \nRelative to Phase A Voltage"
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
     ];
     cat_measurementCategory -> inst_AtoAv [penwidth=1];
@@ -110,12 +110,12 @@ digraph "hierarchy_PhaseCodeKindValue" {
     ];
     cat_splitPhaseCategory -> inst_S12 [penwidth=1];
     inst_S12N [
-        label="Phase S1, S2 to \nNeutral"
+        label="Phase S1, \nS2 to Neutral"
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
     ];
     cat_splitPhaseCategory -> inst_S12N [penwidth=1];
     inst_S1N [
-        label="Phase S1 to \nNeutral"
+        label="Phase \nS1 to Neutral"
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
     ];
     cat_splitPhaseCategory -> inst_S1N [penwidth=1];
@@ -125,7 +125,7 @@ digraph "hierarchy_PhaseCodeKindValue" {
     ];
     cat_splitPhaseCategory -> inst_S2 [penwidth=1];
     inst_S2N [
-        label="Phase S2 to \nNeutral"
+        label="Phase \nS2 to Neutral"
         fillcolor="#e8f4fd", color="#1a5276", penwidth=1
     ];
     cat_splitPhaseCategory -> inst_S2N [penwidth=1];

@@ -1,9 +1,12 @@
 digraph "coned-sc1-rate-i-v20260201-resolved" {
     rankdir=TB;
+    newrank=true;
+    splines=ortho;
+    concentrate=true;
     bgcolor="white";
     pad=0.5;
-    nodesep=0.5;
-    ranksep=0.7;
+    nodesep=0.4;
+    ranksep=0.6;
     fontname="Inter, Helvetica, Arial, sans-serif";
     label="coned-sc1-rate-i-v20260201-resolved";
     labelloc="t";
@@ -523,8 +526,15 @@ digraph "coned-sc1-rate-i-v20260201-resolved" {
         fontcolor="#ffffff"
         penwidth=2
     ];
+    n_org_utilipub [
+        label="{Organization|legalName: Flux Tailor LLC\l}"
+        fillcolor="#BBCC33"
+        color="#99aa11"
+        fontcolor="#333333"
+        penwidth=2
+    ];
     n_coned_doc_sc1_rate_i_v20260201_resolved [
-        label="{URPXPackage|targetURPXVersion: https://github.com/urpx-org/urpx/raw/...\l}"
+        label="{URPXPackage|targetURPXVersion: https://github.com/urpx-org/urpx/raw/...\lpublicationPlatform: UtiliPub ™\l}"
         fillcolor="#aaccff"
         color="#1a5276"
         fontcolor="#1a365d"
@@ -532,437 +542,460 @@ digraph "coned-sc1-rate-i-v20260201-resolved" {
     ];
 
     n_coned_coned_sc1_rate_i_v20260201 -> n_org_consolidated_edison [
-        label="offeredBy"
+        xlabel="offeredBy"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i_v20260201 -> n_coned_pm_sc1_delivery_2026_02_01 [
-        label="consolidatedFrom"
+        xlabel="consolidatedFrom"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i_v20260201 -> n_coned_pm_gr26_mac_2026_01_01 [
-        label="consolidatedFrom"
+        xlabel="consolidatedFrom"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_pm_gr26_mac_2026_01_01 -> n_coned_sr_gr26_mac_202601 [
-        label="documentedBy"
+        xlabel="documentedBy"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_sr_gr26_mac_202601 -> n_coned_sp_gr26_mac_202601 [
-        label="sourcePublication"
+        xlabel="sourcePublication"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i_v20260201 -> n_coned_pm_gr26_mac_2026_02_01 [
-        label="consolidatedFrom"
+        xlabel="consolidatedFrom"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i_v20260201 -> n_coned_pm_gr26_mac_2026_03_01 [
-        label="consolidatedFrom"
+        xlabel="consolidatedFrom"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i_v20260201 -> n_coned_pm_gr26_mac_2026_04_01 [
-        label="consolidatedFrom"
+        xlabel="consolidatedFrom"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i_v20260201 -> n_coned_pm_gr26_mac_2026_05_01 [
-        label="consolidatedFrom"
+        xlabel="consolidatedFrom"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i_v20260201 -> n_coned_pm_msc_rate1_trip1_zj_lt [
-        label="consolidatedFrom"
+        xlabel="consolidatedFrom"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i_v20260201 -> n_coned_coned_sc1_rate_i [
-        label="forRatePlan"
+        xlabel="forRatePlan"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i -> n_coned_coned_sc1_rate_i_id_utility_code [
-        label="hasIdentifier"
+        xlabel="hasIdentifier"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i -> n_coned_sc1 [
-        label="hasServiceClass"
+        xlabel="hasServiceClass"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_sc1 -> n_coned_sc1_rate_i_rategroup [
-        label="hasRateGroup"
+        xlabel="hasRateGroup"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i_v20260201 -> n_coned_cc_sc1_rate_i_v20260201 [
-        label="hasCoverageClaim"
+        xlabel="hasCoverageClaim"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_cc_sc1_rate_i_v20260201 -> n_coned_ts_cc_sc1_rate_i_v20260201_coverage [
-        label="hasTemporalScope"
+        xlabel="hasTemporalScope"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_cc_sc1_rate_i_v20260201 -> n_coned_eval_sc1_rate_i_v20260201 [
-        label="explainedBy"
+        xlabel="explainedBy"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_eval_sc1_rate_i_v20260201 -> n__anon_18 [
-        label="evaluatedOn"
+        xlabel="evaluatedOn"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_eval_sc1_rate_i_v20260201 -> n_coned_excl_pm_gr26_mac_2026_01_01 [
-        label="hasModelExclusion"
+        xlabel="hasModelExclusion"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i_v20260201 -> n_coned_pe_sc1_rate_i_v20260201 [
-        label="hasPlanElements"
+        xlabel="hasPlanElements"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_pe_sc1_rate_i_v20260201 -> n_coned_mi_energy_kwh [
-        label="hasMetricInput"
+        xlabel="hasMetricInput"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_mi_energy_kwh -> n_coned_ms_energy_kwh [
-        label="hasMetricSpecification"
+        xlabel="hasMetricSpecification"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_pe_sc1_rate_i_v20260201 -> n_coned_bm_sc1_rate_i_v20260201 [
-        label="hasBillingModel"
+        xlabel="hasBillingModel"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_bm_sc1_rate_i_v20260201 -> n_coned_ledger_delivery [
-        label="hasLedger"
+        xlabel="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_bm_sc1_rate_i_v20260201 -> n_coned_ledger_supply [
-        label="hasLedger"
+        xlabel="hasLedger"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_bm_sc1_rate_i_v20260201 -> n_coned_pd_customer_charge [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_bm_sc1_rate_i_v20260201 -> n_coned_pd_energy_first_250 [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_bm_sc1_rate_i_v20260201 -> n_coned_pd_energy_over_250 [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_bm_sc1_rate_i_v20260201 -> n_coned_pd_mac_energy_charge [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_pd_mac_energy_charge -> n_coned_gr26 [
-        label="pursuantTo"
+        xlabel="pursuantTo"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_gr26 -> n_coned_sr_psc10_gr26 [
-        label="hasDataSourceReference"
+        xlabel="hasDataSourceReference"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_sr_psc10_gr26 -> n_coned_sp_psc10_elec_2026_02_01 [
-        label="sourcePublication"
+        xlabel="sourcePublication"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_pd_mac_energy_charge -> n_coned_ag_mac_except_sc11 [
-        label="hasApplicabilityGroup"
+        xlabel="hasApplicabilityGroup"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_ag_mac_except_sc11 -> n_coned_ce_not_sc11 [
-        label="hasConditionExpression"
+        xlabel="hasConditionExpression"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_ce_not_sc11 -> n_coned_bon_not_sc11 [
-        label="rootNode"
+        xlabel="rootNode"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_bon_not_sc11 -> n_coned_cn_sc_eq_sc11 [
-        label="operandNodes"
+        xlabel="operandNodes"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_cn_sc_eq_sc11 -> n_coned_oon_has_service_class [
-        label="leftOperand"
+        xlabel="leftOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_cn_sc_eq_sc11 -> n_coned_oon_sc11_value [
-        label="rightOperand"
+        xlabel="rightOperand"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_oon_sc11_value -> n_coned_sc11 [
-        label="referencesValue"
+        xlabel="referencesValue"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_bm_sc1_rate_i_v20260201 -> n_coned_pd_msc_energy [
-        label="hasPriceDefinition"
+        xlabel="hasPriceDefinition"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_pd_msc_energy -> n_coned_gr_25_msc [
-        label="pursuantTo"
+        xlabel="pursuantTo"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_gr_25_msc -> n_coned_sr_msc_calculator [
-        label="hasDataSourceReference"
+        xlabel="hasDataSourceReference"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_pd_msc_energy -> n_coned_ag_msc_rate1_zj_lt [
-        label="hasApplicabilityGroup"
+        xlabel="hasApplicabilityGroup"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_coned_sc1_rate_i_v20260201 -> n_coned_prices_sc1_rate_i_v20260201 [
-        label="hasPrices"
+        xlabel="hasPrices"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_prices_sc1_rate_i_v20260201 -> n_coned_ps_v20260201_customer_charge [
-        label="hasPriceSet"
+        xlabel="hasPriceSet"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_ps_v20260201_customer_charge -> n_coned_sr_psc10_sc1_leaf388_2026_02_01 [
-        label="hasDataSourceReference"
+        xlabel="hasDataSourceReference"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_ps_v20260201_customer_charge -> n_coned_p_v20260201_customer_charge [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_prices_sc1_rate_i_v20260201 -> n_coned_ps_v20260201_energy_first_250 [
-        label="hasPriceSet"
+        xlabel="hasPriceSet"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_ps_v20260201_energy_first_250 -> n_coned_p_v20260201_energy_first_250 [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_prices_sc1_rate_i_v20260201 -> n_coned_ps_v20260201_energy_over_250 [
-        label="hasPriceSet"
+        xlabel="hasPriceSet"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_ps_v20260201_energy_over_250 -> n_coned_p_v20260201_energy_over_250 [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_prices_sc1_rate_i_v20260201 -> n_coned_ps_v20260201_mac_energy [
-        label="hasPriceSet"
+        xlabel="hasPriceSet"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_ps_v20260201_mac_energy -> n_coned_p_v20260201_mac_202602 [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_p_v20260201_mac_202602 -> n_coned_sr_gr26_mac_202602 [
-        label="hasDataSourceReference"
+        xlabel="hasDataSourceReference"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_sr_gr26_mac_202602 -> n_coned_sp_gr26_mac_202602 [
-        label="sourcePublication"
+        xlabel="sourcePublication"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_ps_v20260201_mac_energy -> n_coned_p_v20260201_mac_202603 [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_p_v20260201_mac_202603 -> n_coned_sr_gr26_mac_202603 [
-        label="hasDataSourceReference"
+        xlabel="hasDataSourceReference"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_sr_gr26_mac_202603 -> n_coned_sp_gr26_mac_202603 [
-        label="sourcePublication"
+        xlabel="sourcePublication"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_ps_v20260201_mac_energy -> n_coned_p_v20260201_mac_202604 [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_p_v20260201_mac_202604 -> n_coned_sr_gr26_mac_202604 [
-        label="hasDataSourceReference"
+        xlabel="hasDataSourceReference"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_sr_gr26_mac_202604 -> n_coned_sp_gr26_mac_202604 [
-        label="sourcePublication"
+        xlabel="sourcePublication"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_ps_v20260201_mac_energy -> n_coned_p_v20260201_mac_202605 [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_p_v20260201_mac_202605 -> n_coned_sr_gr26_mac_202605 [
-        label="hasDataSourceReference"
+        xlabel="hasDataSourceReference"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_sr_gr26_mac_202605 -> n_coned_sp_gr26_mac_202605 [
-        label="sourcePublication"
+        xlabel="sourcePublication"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_prices_sc1_rate_i_v20260201 -> n_coned_ps_v20260201_msc_energy [
-        label="hasPriceSet"
+        xlabel="hasPriceSet"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_ps_v20260201_msc_energy -> n_coned_sr_lds_appnd_csv [
-        label="hasDataSourceReference"
+        xlabel="hasDataSourceReference"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_sr_lds_appnd_csv -> n_coned_sp_msc_lds_appnd [
-        label="sourcePublication"
+        xlabel="sourcePublication"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_ps_v20260201_msc_energy -> n_coned_p_v20260201_msc_20251231 [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_ps_v20260201_msc_energy -> n_coned_p_v20260201_msc_20260202 [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_ps_v20260201_msc_energy -> n_coned_p_v20260201_msc_20260304 [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_ps_v20260201_msc_energy -> n_coned_p_v20260201_msc_20260402 [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
     n_coned_ps_v20260201_msc_energy -> n_coned_p_v20260201_msc_20260501 [
-        label="hasPrice"
+        xlabel="hasPrice"
         color="#1a5276"
         fontcolor="#1a5276"
         penwidth=1.5
     ];
+
+    n_coned_pd_customer_charge -> n_coned_pd_energy_first_250 [style=invis, minlen=1];
+    n_coned_pd_energy_first_250 -> n_coned_pd_energy_over_250 [style=invis, minlen=1];
+    n_coned_pd_energy_over_250 -> n_coned_pd_mac_energy_charge [style=invis, minlen=1];
+    n_coned_pd_mac_energy_charge -> n_coned_pd_msc_energy [style=invis, minlen=1];
+    n_coned_pm_sc1_delivery_2026_02_01 -> n_coned_pm_gr26_mac_2026_01_01 [style=invis, minlen=1];
+    n_coned_pm_gr26_mac_2026_01_01 -> n_coned_pm_gr26_mac_2026_02_01 [style=invis, minlen=1];
+    n_coned_pm_gr26_mac_2026_02_01 -> n_coned_pm_gr26_mac_2026_03_01 [style=invis, minlen=1];
+    n_coned_pm_gr26_mac_2026_03_01 -> n_coned_pm_gr26_mac_2026_04_01 [style=invis, minlen=1];
+    n_coned_pm_gr26_mac_2026_04_01 -> n_coned_pm_gr26_mac_2026_05_01 [style=invis, minlen=1];
+    n_coned_pm_gr26_mac_2026_05_01 -> n_coned_pm_msc_rate1_trip1_zj_lt [style=invis, minlen=1];
+    n_coned_ps_v20260201_customer_charge -> n_coned_ps_v20260201_energy_first_250 [style=invis, minlen=1];
+    n_coned_ps_v20260201_energy_first_250 -> n_coned_ps_v20260201_energy_over_250 [style=invis, minlen=1];
+    n_coned_ps_v20260201_energy_over_250 -> n_coned_ps_v20260201_mac_energy [style=invis, minlen=1];
+    n_coned_ps_v20260201_mac_energy -> n_coned_ps_v20260201_msc_energy [style=invis, minlen=1];
+    n_coned_p_v20260201_mac_202602 -> n_coned_p_v20260201_mac_202603 [style=invis, minlen=1];
+    n_coned_p_v20260201_mac_202603 -> n_coned_p_v20260201_mac_202604 [style=invis, minlen=1];
+    n_coned_p_v20260201_mac_202604 -> n_coned_p_v20260201_mac_202605 [style=invis, minlen=1];
+    n_coned_p_v20260201_msc_20251231 -> n_coned_p_v20260201_msc_20260202 [style=invis, minlen=1];
+    n_coned_p_v20260201_msc_20260202 -> n_coned_p_v20260201_msc_20260304 [style=invis, minlen=1];
+    n_coned_p_v20260201_msc_20260304 -> n_coned_p_v20260201_msc_20260402 [style=invis, minlen=1];
+    n_coned_p_v20260201_msc_20260402 -> n_coned_p_v20260201_msc_20260501 [style=invis, minlen=1];
+    n_coned_pe_sc1_rate_i_v20260201 -> n_coned_prices_sc1_rate_i_v20260201 [style=invis, minlen=8];
 
     subgraph cluster_legend {
         label="Legend — Node Colors by @type";
@@ -1002,7 +1035,8 @@ digraph "coned-sc1-rate-i-v20260201-resolved" {
         leg_26 [label="Prices", shape=box, fillcolor="#00bd7e", color="#009966", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
         leg_27 [label="PriceSet", shape=box, fillcolor="#00ADEF", color="#0088cc", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
         leg_28 [label="Price", shape=box, fillcolor="#44BB99", color="#339977", fontcolor="#ffffff", fontsize=9, penwidth=1.5];
-        leg_29 [label="URPXPackage", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
-        leg_0 -> leg_1 -> leg_2 -> leg_3 -> leg_4 -> leg_5 -> leg_6 -> leg_7 -> leg_8 -> leg_9 -> leg_10 -> leg_11 -> leg_12 -> leg_13 -> leg_14 -> leg_15 -> leg_16 -> leg_17 -> leg_18 -> leg_19 -> leg_20 -> leg_21 -> leg_22 -> leg_23 -> leg_24 -> leg_25 -> leg_26 -> leg_27 -> leg_28 -> leg_29 [style=invis];
+        leg_29 [label="Organization", shape=box, fillcolor="#BBCC33", color="#99aa11", fontcolor="#333333", fontsize=9, penwidth=1.5];
+        leg_30 [label="URPXPackage", shape=box, fillcolor="#aaccff", color="#1a5276", fontcolor="#1a365d", fontsize=9, penwidth=1.5];
+        leg_0 -> leg_1 -> leg_2 -> leg_3 -> leg_4 -> leg_5 -> leg_6 -> leg_7 -> leg_8 -> leg_9 -> leg_10 -> leg_11 -> leg_12 -> leg_13 -> leg_14 -> leg_15 -> leg_16 -> leg_17 -> leg_18 -> leg_19 -> leg_20 -> leg_21 -> leg_22 -> leg_23 -> leg_24 -> leg_25 -> leg_26 -> leg_27 -> leg_28 -> leg_29 -> leg_30 [style=invis];
     }
 }

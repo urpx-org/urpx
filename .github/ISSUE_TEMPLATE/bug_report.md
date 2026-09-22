@@ -3,7 +3,7 @@ name: Bug report
 about: Report a defect in the ontology, SHACL shapes, test data, or documentation
 labels: bug
 ---
-<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
+<!-- SPDX-FileCopyrightText: The URPX Authors -->
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 ## Problem statement

@@ -1,7 +1,5 @@
-<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
-<!-- SPDX-License-Identifier: Apache-2.0 -->
-<!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
-<!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
+<!-- SPDX-FileCopyrightText: The URPX Authors -->
+<!-- SPDX-License-Identifier: W3C-20150513 -->
 
 # URPX Diagram Catalog
 
@@ -11,27 +9,18 @@
 
 ---
 
-## Documentation Diagrams
-
-1. **urpx-sparql-query-visual.mmd**
-   - **Used in:** `urpx-semantic-web-guide.md`
-   - **Shows:** SPARQL graph traversal using `ratePlanUniqueIdentifier`
-   - **Format:** Mermaid
-
-2. **urpx-temporal-versioning-summary.svg**
-   - **Used in:** `urpx-overview.md`
-   - **Shows:** High-level temporal versioning summary
-   - **Format:** SVG
-
----
-
 ## Unreferenced Diagram Assets
 
-3. **urpx-price-structure-diagram.mmd**
+1. **urpx-sparql-query-visual.mmd**
+   - **Purpose:** Available SPARQL graph-traversal reference diagram not currently embedded in a documentation page
+   - **Shows:** Graph traversal from a rate plan identified by `ratePlanUniqueIdentifier` to its prices
+   - **Format:** Mermaid
+
+2. **urpx-price-structure-diagram.mmd**
    - **Purpose:** Available price-structure reference diagram not currently embedded in a documentation page
    - **Format:** Mermaid
 
-4. **urpx-tou-structure-diagram.mmd**
+3. **urpx-tou-structure-diagram.mmd**
    - **Purpose:** Available TOU-structure reference diagram not currently embedded in a documentation page
    - **Format:** Mermaid
 
@@ -39,19 +28,15 @@
 
 ## Project Planning Assets
 
-5. **urpx-gantt.mmd**
-   - **Purpose:** Historical roadmap / planning view
+4. **urpx-gantt.mmd**
+   - **Purpose:** Development roadmap, current through the tagged releases and the release in progress
    - **Format:** Mermaid
-
-6. **urpx_development_chart.png**
-   - **Purpose:** Historical development snapshot
-   - **Format:** PNG
 
 ---
 
 ## Companion Documentation
 
-7. **urpx-diagram-index.md**
+5. **urpx-diagram-index.md**
    - **Purpose:** User-facing diagram index for the documentation set
 
 ---

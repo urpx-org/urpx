@@ -13,7 +13,7 @@ created: 1783900800000
 | **Status** | Backlog — worked example; the mechanism exists but is unexercised |
 | **Assignment** | **Unassigned — open for any WG member to pick up** (pairs with the California worked-example set, `task.urpx.ont.2026-07-13.california-worked-example-set.md`) |
 | **Surface** | One worked `RatePlanVersion` fixture + validation wiring; possibly a data-dictionary clarification |
-| **Source** | WG v0.3.0 review, Q5 (chair: task approved) — `dev-docs/reports/report.urpx.ont.2026-07-13.dcj-v0.3.0-review-response.md`; walkthrough §6.5 |
+| **Source** | WG v0.3.0 review, Q5 — `dev-docs/reports/report.urpx.ont.2026-07-13.dcj-v0.3.0-review-response.md`; walkthrough §6.5 |
 
 ## Problem
 

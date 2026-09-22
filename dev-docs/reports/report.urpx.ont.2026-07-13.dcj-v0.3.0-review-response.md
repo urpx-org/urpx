@@ -50,25 +50,25 @@ This is squarely in scope — it *is* hardening the below-version schema.
       "urpx:rightOperand": { "@type": "urpx:ObjectOperandNode", "urpx:referencesValue": { "@id": "coned:sc1" } } } } }
 ```
 
-## Q3 — What a corpus should publish *(chair-answered)*
+## Q3 — What a corpus should publish
 
 **Ask.** Authored `PricingModel`s inside `TariffFiling`s, resolved `RatePlanVersion` snapshots directly, or both?
 
 → **Answer: both are supported, publisher's choice.** A utility may (a) publish authored `PricingModel`s (+ filings) and let reconciliation derive the `RatePlanVersion`, **or** (b) publish a fully-baked `RatePlan` + `RatePlanVersion` directly, with **no** underlying `PricingModel`. URPX carries whichever the publisher chooses and does not require the authored layer to exist when a resolved snapshot is published directly. (Consistent with Q1: who resolves, and whether resolution happens at all, is the publisher's/consumer's call.)
 
-## Q4 — Window-scoped prices vs successive filings *(chair-confirmed)*
+## Q4 — Window-scoped prices vs successive filings
 
 **Ask.** Monthly changes as a supersession thread of filings (the MAC) or one `PricingModel` with validity-dated windows (the MSC) — which when?
 
 → **Answer:** the two forms in the example *are* the guidance — **regulated statements → one `TariffFiling` per publication event** (supersession thread); **market/dynamic feeds → a single `PricingModel` with validity-dated windows.** Task (unassigned) to write it up: [window-vs-filing-authoring-guidance](../tasks/task.urpx.ont.2026-07-13.window-vs-filing-authoring-guidance.md). Refs: walkthrough §6.3–6.4.
 
-## Q5 — Partial (externally-priced) worked example *(chair: task approved)*
+## Q5 — Partial (externally-priced) worked example
 
 **Ask.** A partial snapshot (CCA/DA: delivery self-contained, generation priced by a third party) exercising `PriceDefinitionReference` + `retrievedElsewhere`; does `CoverageClaim` enumerate which components are external?
 
 → **Answer:** **yes, produce the partial example.** On the sub-question: `CoverageClaim` states the *verdict* (complete/partial, self-contained or not — `selfContained` derived from any `retrievedElsewhere`); *which* components are external is carried by the `PriceDefinitionReference` relators, not enumerated separately on the claim. Task (unassigned): [partial-externally-priced-snapshot-example](../tasks/task.urpx.ont.2026-07-13.partial-externally-priced-snapshot-example.md). Refs: walkthrough §6.5.
 
-## Q6 — RIN on the resolved snapshot *(chair-confirmed)*
+## Q6 — RIN on the resolved snapshot
 
 **Ask.** A RIN names a *resolved* rate plan version, but `hasIdentifier` attaches only to `RatePlan` / `RatePlanModifier`, not `RatePlanVersion`. Can a snapshot carry its RIN?
 
@@ -89,7 +89,7 @@ This is squarely in scope — it *is* hardening the below-version schema.
 
 → ✅ **Yes — one advice letter = one `TariffFiling` → one `PricingModel` per schedule**, each with its own `SourceReference` into that publication. This matches the physical publication and DCJ's read, and is consistent with the chair's principle below. (The alternative — one `TariffFiling` per schedule — would fragment a single regulatory document and misrepresent the publication.)
 
-**Chair's governing principle (recorded).** *A `TariffFiling` is one document each, with its own source reference; bundling unrelated models into one filing has no benefit and would not represent the actual publications. URPX represents publications; it does not model the publication event — that boundary is where representation ends and operations begin.* This principle also answers Q1 (resolution is operational), Q3 and Q4, and is queued as a standing decision (chair: to the **July 14 urpx-wg agenda with draft discussion notes**; candidate for `dev-docs/decisions/`).
+**Chair's governing principle.** *A `TariffFiling` is one document each, with its own source reference; bundling unrelated models into one filing has no benefit and would not represent the actual publications. URPX represents publications; it does not model the publication event — that boundary is where representation ends and operations begin.* This principle also answers Q1 (resolution is operational), Q3 and Q4, and is queued as a standing decision, to the **July 14 urpx-wg agenda** with draft discussion notes; candidate for `dev-docs/decisions/`.
 
 ## Gap #32 — Additive / relative tier bound
 

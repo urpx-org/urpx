@@ -1,11 +1,9 @@
-# SPDX-FileCopyrightText: 2026 Flux Tailor LLC
+# SPDX-FileCopyrightText: The URPX Authors
 #
-# SPDX-License-Identifier: Apache-2.0
-# SPDX-Transition-License-After-Draft: W3C-20231102
-# Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md.
+# SPDX-License-Identifier: W3C-20150513
 
 # URPX Ontology
-# Version: v0.5.0
+# Version: v0.5.1
 # Generated: 2026-07-07
 
 # ============================================================================
@@ -26,23 +24,23 @@
     rdfs:label "URPX Ontology"@en ;
     dcterms:creator "Klaar De Schepper, Una Smithsimon, Flux Tailor LLC" ;
     dcterms:description "URPX ontology for utility rate plan exchange" ;
-    dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
+    dcterms:license <https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document> ;
     dcterms:modified "2026-09-08"^^xsd:date ;
     dcterms:title "URPX Ontology" ;
-    dcterms:hasVersion <https://urpx.org/ns/ontology/releases/v0.5.0> ;
-    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.5.0/ontology/urpx-ontology.ttl> .
+    dcterms:hasVersion <https://urpx.org/ns/ontology/releases/v0.5.1> ;
+    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.5.1/ontology/urpx-ontology.ttl> .
 
-<https://urpx.org/ns/ontology/releases/v0.5.0>
+<https://urpx.org/ns/ontology/releases/v0.5.1>
     a owl:Ontology ;
     dcterms:isVersionOf <https://urpx.org/ns/ontology> ;
-    dcterms:issued "2026-09-08"^^xsd:date ;
-    owl:versionInfo "0.5.0" ;
-    dcat:distribution <https://urpx.org/ns/ontology/releases/v0.5.0/ttl> .
+    dcterms:issued "2026-09-14"^^xsd:date ;
+    owl:versionInfo "0.5.1" ;
+    dcat:distribution <https://urpx.org/ns/ontology/releases/v0.5.1/ttl> .
 
-<https://urpx.org/ns/ontology/releases/v0.5.0/ttl>
+<https://urpx.org/ns/ontology/releases/v0.5.1/ttl>
     a dcat:Distribution ;
-    dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.5.0/ontology/urpx-ontology.ttl> ;
-    dcat:downloadURL <https://urpx.org/ns/ontology/releases/v0.5.0/ttl/urpx-ontology.ttl> ;
+    dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.5.1/ontology/urpx-ontology.ttl> ;
+    dcat:downloadURL <https://urpx.org/ns/ontology/releases/v0.5.1/ttl/urpx-ontology.ttl> ;
     dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> .
 
 # ============================================================================
@@ -786,7 +784,7 @@ urpx:OperatorValue a owl:Class ;
 urpx:OrganizationTypeValue a owl:Class ;
     rdfs:label "Organization Type Value"@en ;
     rdfs:comment "Organization types enumeration values" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:aggregatorOrganization urpx:cooperativeOrganization urpx:espOrganization urpx:ippOrganization urpx:isoRtoOrganization urpx:municipalOrganization urpx:parentOrganization urpx:regulatorOrganization urpx:utilityOrganization ) ] ;
+    owl:equivalentClass [ owl:oneOf ( urpx:aggregatorOrganization urpx:cooperativeOrganization urpx:espOrganization urpx:ippOrganization urpx:isoRtoOrganization urpx:municipalOrganization urpx:parentOrganization urpx:regulatorOrganization urpx:utilityOrganization urpx:vendorOrganization ) ] ;
     skos:note "Enumeration class for organizational type classification with standardized organization type definitions for energy sector entity categorization" .
 
 urpx:OwnershipTypeValue a owl:Class ;
@@ -2904,6 +2902,13 @@ urpx:prorationMethod a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     skos:note "Defines how prices are prorated when service starts/ends mid-period. Aligned with schema.org billingDuration pattern for temporal billing allocation." .
 
+urpx:publicationPlatform a owl:DatatypeProperty ;
+    rdfs:label "Publication Platform"@en ;
+    rdfs:comment "Name of the software platform or tool used to produce or assemble this URPX exchange package, distinct from the organization that operates it and from the package's official publisher (urpx:publishedBy)." ;
+    rdfs:domain urpx:URPXPackage ;
+    rdfs:range xsd:string ;
+    skos:note "Platform attribution, separate from organizational attribution: a package may name both the vendor organization (a urpx:Organization typed vendorOrganization) and the platform that organization operates (this property), without conflating either with urpx:publishedBy's existing role as the package's official publisher." .
+
 urpx:publicationType a owl:ObjectProperty ;
     rdfs:label "Publication Type"@en ;
     rdfs:comment "The kind of external source publication." ;
@@ -3313,7 +3318,7 @@ urpx:targetURPXVersion a owl:DatatypeProperty ;
     rdfs:domain urpx:URPXPackage ;
     rdfs:range xsd:anyURI ;
     rdfs:comment "The URPX ontology version this document was authored against." ;
-    skos:note "Required on all URPXPackage instances. Enables version-aware parsing and validation. Value should be the ontology version IRI, e.g. 'https://github.com/urpx-org/urpx/raw/v0.5.0/ontology/urpx-ontology.ttl'." .
+    skos:note "Required on all URPXPackage instances. Enables version-aware parsing and validation. Value should be the ontology version IRI, e.g. 'https://github.com/urpx-org/urpx/raw/v0.5.1/ontology/urpx-ontology.ttl'." .
 
 urpx:tariffStatementType a owl:ObjectProperty ;
     rdfs:label "Tariff Statement Type"@en ;
@@ -3413,7 +3418,7 @@ urpx:url a owl:DatatypeProperty ;
     rdfs:label "URL"@en ;
     rdfs:comment "URL of the item" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:SourcePublication urpx:URPXPackage urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:DataSourceReference urpx:ProgramEnrollment urpx:RateCase ) ] ;
+            owl:unionOf ( urpx:SourcePublication urpx:URPXPackage urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:DataSourceReference urpx:ProgramEnrollment urpx:RateCase urpx:Organization ) ] ;
     rdfs:range xsd:anyURI ;
     skos:note "Direct link to PDF, HTML, or other document format." .
 
@@ -5737,6 +5742,11 @@ urpx:utilityOrganization rdf:type urpx:OrganizationTypeValue ;
     rdfs:label "Utility Organization"@en ;
     skos:definition "Utility organization - traditional regulated utility providing electric, gas, or water service"@en ;
     skos:prefLabel "Utility"@en .
+
+urpx:vendorOrganization rdf:type urpx:OrganizationTypeValue ;
+    rdfs:label "Vendor Organization"@en ;
+    skos:definition "Vendor organization - operates a software or data platform used to produce or assemble URPX content, without itself being an energy-market participant"@en ;
+    skos:prefLabel "Vendor"@en .
 
 # --- Ownership Type Property (OwnershipTypeValue) ---
 

@@ -1,11 +1,9 @@
-<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
-<!-- SPDX-License-Identifier: Apache-2.0 -->
-<!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
-<!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
+<!-- SPDX-FileCopyrightText: The URPX Authors -->
+<!-- SPDX-License-Identifier: W3C-20150513 -->
 
 # URPX Documentation
 
-## Utility Rate Plan Exchange Standard v0.3.0
+## Utility Rate Plan Exchange Standard v0.5.1
 
 Welcome to the URPX documentation. URPX is an open standard for exchanging utility rate plan information using semantic web technologies.
 
@@ -16,7 +14,7 @@ Welcome to the URPX documentation. URPX is an open standard for exchanging utili
 ### Getting Started
 - **[Overview](pages/urpx-overview.md)** - Understanding URPX and rate plan data exchange
 - **[Tutorial](pages/urpx-tutorial.md)** - Step-by-step guide to creating rate plan data
-- **[Release Notes v0.3.0](pages/urpx-release-notes-v0.3.0.md)** - Summary of v0.3.0 changes and migration impact (earlier: [v0.2.1](pages/urpx-release-notes-v0.2.1.md), [v0.2.0](pages/urpx-release-notes-v0.2.0.md))
+- **[Release Notes v0.5.1](pages/urpx-release-notes-v0.5.1.md)** - Summary of v0.5.1 changes and migration impact (earlier: [v0.5.0](pages/urpx-release-notes-v0.5.0.md), [v0.4.0](pages/urpx-release-notes-v0.4.0.md), [v0.3.0](pages/urpx-release-notes-v0.3.0.md), [v0.2.1](pages/urpx-release-notes-v0.2.1.md), [v0.2.0](pages/urpx-release-notes-v0.2.0.md))
 - **[FAQ](pages/urpx-faq.md)** - Frequently asked questions
 
 ### Technical Reference
@@ -64,7 +62,7 @@ URPX is an open standard developed collaboratively. Contributions welcome:
 
 ## License
 
-URPX is released under the Apache License 2.0.
+Three licenses apply by file category, following Working Group Draft acceptance. Specification files (the ontology, SHACL shapes, SKOS mappings, and documentation pages) are licensed under the W3C Software Notice and Document License (W3C-20150513). Dataset files (test-case data and index files) are licensed under the Community Data License Agreement - Permissive 2.0 (CDLA-Permissive-2.0). Source code and meta files are licensed under the Apache License, Version 2.0. See [NOTICE](../NOTICE) for the full statement.
 
 ---
 

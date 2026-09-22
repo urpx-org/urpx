@@ -1,11 +1,9 @@
-# SPDX-FileCopyrightText: 2026 Flux Tailor LLC
+# SPDX-FileCopyrightText: The URPX Authors
 #
-# SPDX-License-Identifier: Apache-2.0
-# SPDX-Transition-License-After-Draft: W3C-20231102
-# Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md.
+# SPDX-License-Identifier: W3C-20150513
 
 # URPX SHACL Shapes - Unified File
-# Version: v0.5.0
+# Version: v0.5.1
 # Generated: 2026-07-07
 # Description: SHACL shapes for validating URPX data against the URPX Ontology.
 
@@ -26,23 +24,23 @@
     rdfs:label "URPX Ontology SHACL Shapes"@en ;
     dcterms:creator "Una Smithsimon, Klaar De Schepper, Flux Tailor LLC" ;
     dcterms:description "SHACL shapes for validating URPX data against the URPX Ontology." ;
-    dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
+    dcterms:license <https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document> ;
     dcterms:modified "2026-09-08"^^xsd:date ;
     dcterms:title "URPX SHACL Shapes" ;
-    dcterms:hasVersion <https://urpx.org/ns/shacl/core/releases/v0.5.0> ;
-    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.5.0/shacl/urpx-shacl.ttl> .
+    dcterms:hasVersion <https://urpx.org/ns/shacl/core/releases/v0.5.1> ;
+    owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.5.1/shacl/urpx-shacl.ttl> .
 
-<https://urpx.org/ns/shacl/core/releases/v0.5.0>
+<https://urpx.org/ns/shacl/core/releases/v0.5.1>
     a owl:Ontology, sh:ShapesGraph ;
     dcterms:isVersionOf <https://urpx.org/ns/shacl/core> ;
-    dcterms:issued "2026-09-08"^^xsd:date ;
-    dcat:version "0.5.0" ;
-    dcat:distribution <https://urpx.org/ns/shacl/core/releases/v0.5.0/ttl> .
+    dcterms:issued "2026-09-14"^^xsd:date ;
+    dcat:version "0.5.1" ;
+    dcat:distribution <https://urpx.org/ns/shacl/core/releases/v0.5.1/ttl> .
 
-<https://urpx.org/ns/shacl/core/releases/v0.5.0/ttl>
+<https://urpx.org/ns/shacl/core/releases/v0.5.1/ttl>
     a dcat:Distribution ;
-    dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.5.0/shacl/urpx-shacl.ttl> ;
-    dcat:downloadURL <https://urpx.org/ns/shacl/core/releases/v0.5.0/ttl/urpx-shacl.ttl> ;
+    dcat:downloadURL <https://github.com/urpx-org/urpx/raw/v0.5.1/shacl/urpx-shacl.ttl> ;
+    dcat:downloadURL <https://urpx.org/ns/shacl/core/releases/v0.5.1/ttl/urpx-shacl.ttl> ;
     dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> .
 
 # ============================================================================
@@ -1920,6 +1918,12 @@ urpx-shacl:OrganizationShape
     rdfs:label "Organization Shape"@en ;
     rdfs:comment "Deliberately left open (no sh:closed). Organization is the base class for EnergyServiceProvider, RegulatoryAuthority, SystemOperator, and UtilityOperator; those four shapes are closed and each lists the full property set. Closing this base shape would make every subclass instance fail on its subclass-specific properties, so it serves as a shared property-documentation and soft-validation target only."@en ;
     sh:targetClass urpx:Organization ;
+    sh:property [
+        sh:path urpx:url ;
+        sh:datatype xsd:anyURI ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
     sh:property [
         sh:path urpx:alternateName ;
         sh:datatype xsd:string ;
@@ -5875,6 +5879,12 @@ urpx-shacl:URPXPackageShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:publicationPlatform ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:publishedBy ;
         sh:class urpx:Organization ;
         sh:minCount 0 ;
@@ -6297,7 +6307,7 @@ urpx-shacl:OrganizationTypeValueShape
     rdfs:label "OrganizationTypeValue Shape"@en ;
     sh:targetClass urpx:OrganizationTypeValue ;
     sh:nodeKind sh:IRI ;
-    sh:in ( urpx:aggregatorOrganization urpx:cooperativeOrganization urpx:espOrganization urpx:ippOrganization urpx:isoRtoOrganization urpx:municipalOrganization urpx:parentOrganization urpx:regulatorOrganization urpx:utilityOrganization ) .
+    sh:in ( urpx:aggregatorOrganization urpx:cooperativeOrganization urpx:espOrganization urpx:ippOrganization urpx:isoRtoOrganization urpx:municipalOrganization urpx:parentOrganization urpx:regulatorOrganization urpx:utilityOrganization urpx:vendorOrganization ) .
 
 urpx-shacl:OwnershipTypeValueShape
     a sh:NodeShape ;

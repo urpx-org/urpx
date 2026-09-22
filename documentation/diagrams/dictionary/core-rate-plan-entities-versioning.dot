@@ -1,0 +1,99 @@
+digraph "Rate plan versioning — versions, identifiers and the plans they reference" {
+    rankdir=LR;
+    bgcolor="white";
+    pad=0.4;
+    nodesep=0.4;
+    ranksep=1.0;
+    fontname="Inter, Helvetica, Arial, sans-serif";
+    label="Rate plan versioning — versions, identifiers and the plans they reference (URPX v0.5.1)";
+    labelloc="t";
+    fontsize=14;
+    fontcolor="#1a365d";
+    node [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=10, style=filled, fontcolor="#1a365d"];
+    edge [fontname="Inter, Helvetica, Arial, sans-serif", fontsize=8, fontcolor="#1a365d"];
+
+    // Section classes
+    RatePlan [
+        label="RatePlan"
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    RatePlanIdentifier [
+        label="RatePlanIdentifier"
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    RatePlanVersion [
+        label="RatePlanVersion"
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    RatePlanModifier [
+        label="RatePlanModifier"
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    RatePlanModifierIdentifier [
+        label="RatePlanModifier\nIdentifier"
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+    RatePlanModifierVersion [
+        label="RatePlan\nModifierVersion"
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+    ];
+
+    // Object property edges
+    RatePlan -> RatePlanIdentifier [
+        label="hasIdentifier\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlan -> RatePlanVersion [
+        label="hasRatePlanVersion\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanVersion -> RatePlan [
+        label="applicableToRatePlan 0..*\nforRatePlan 1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, constraint=false
+    ];
+    RatePlanVersion -> RatePlanIdentifier [
+        label="hasIdentifier\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanVersion -> RatePlanModifier [
+        label="hasModifierOptions\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, constraint=false
+    ];
+    RatePlanVersion -> RatePlanModifierVersion [
+        label="hasModifierVersionOptions\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, constraint=false
+    ];
+    RatePlanModifier -> RatePlanModifierIdentifier [
+        label="hasIdentifier\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifier -> RatePlanModifierVersion [
+        label="hasRatePlanModifierVersion\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanModifierVersion -> RatePlan [
+        label="applicableToRatePlan\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, constraint=false
+    ];
+    RatePlanModifierVersion -> RatePlanVersion [
+        label="applicableToRatePlanVersion\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, constraint=false
+    ];
+    RatePlanModifierVersion -> RatePlanModifier [
+        label="forRatePlanModifier\n1..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, constraint=false
+    ];
+    RatePlanModifierVersion -> RatePlanModifierIdentifier [
+        label="hasIdentifier\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+
+    // Layout-specified rank groups
+    { rank=same; RatePlan; RatePlanModifier; }
+    { rank=same; RatePlanVersion; RatePlanModifierVersion; }
+    { rank=same; RatePlanIdentifier; RatePlanModifierIdentifier; }
+
+    subgraph cluster_legend {
+        label="Legend";
+        fontname="Inter, Helvetica, Arial, sans-serif";
+        fontsize=11;
+        fontcolor="#1a365d";
+        style=rounded;
+        color="#cccccc";
+        bgcolor="#f8f8f8";
+        margin=12;
+
+        leg_class [label="OWL Class\n(this section)", shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
+        leg_src [label=" ", shape=point, width=0.01];
+        leg_tgt1 [label=" ", shape=point, width=0.01];
+        leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
+    }
+}

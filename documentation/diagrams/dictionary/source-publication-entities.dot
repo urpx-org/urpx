@@ -1,12 +1,11 @@
 digraph "Source & Publication Entities" {
-    rankdir=TB;
+    rankdir=LR;
     bgcolor="white";
     pad=0.4;
-    nodesep=0.8;
-    ranksep=1.0;
-    start=42;
+    nodesep=0.3;
+    ranksep=0.8;
     fontname="Inter, Helvetica, Arial, sans-serif";
-    label="Source & Publication Entities (URPX v0.5.0)";
+    label="Source & Publication Entities (URPX v0.5.1)";
     labelloc="t";
     fontsize=14;
     fontcolor="#1a365d";
@@ -16,33 +15,45 @@ digraph "Source & Publication Entities" {
     // Section classes
     SourcePublication [
         label="SourcePublication"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     TariffFiling [
         label="TariffFiling"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
     DataSourceReference [
         label="DataSource\nReference"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5
+        shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
 
     // Cross-section references
     GeneralRule [
         label="GeneralRule"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
     ];
     Organization [
         label="Organization"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
     ];
     PriceDefinition [
         label="PriceDefinition"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
     ];
     PricingModel [
         label="PricingModel"
-        shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
+    ];
+    RatePlan [
+        label="RatePlan"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
+    ];
+    RatePlanVersion [
+        label="RatePlanVersion"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
+    ];
+    URPXPackage [
+        label="URPXPackage"
+        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
     ];
 
     // Object property edges
@@ -50,16 +61,13 @@ digraph "Source & Publication Entities" {
         label="publishedBy\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     TariffFiling -> PricingModel [
-        label="cancelledBy\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+        label="cancelledBy 0..1\ncontainsPricingModel 1..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     TariffFiling -> SourcePublication [
         label="cancelledBy\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     TariffFiling -> PriceDefinition [
         label="cancelsPriceDefinition\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-    TariffFiling -> PricingModel [
-        label="containsPricingModel\n1..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     TariffFiling -> DataSourceReference [
         label="documentedBy\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
@@ -71,8 +79,32 @@ digraph "Source & Publication Entities" {
         label="publishedBy\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     DataSourceReference -> SourcePublication [
-        label="sourcePublication\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+        label="sourcePublication\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, constraint=false
     ];
+    URPXPackage -> RatePlan [
+        label="hasRatePlan 0..*\npackages 0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    URPXPackage -> TariffFiling [
+        label="packages\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    URPXPackage -> SourcePublication [
+        label="packages\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlan -> PricingModel [
+        label="isReferencedByPricingModel\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    PricingModel -> TariffFiling [
+        label="cancelledBy 0..1\nwithinPublication 0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanVersion -> RatePlan [
+        label="applicableToRatePlan 0..*\nforRatePlan 1..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+    RatePlanVersion -> PricingModel [
+        label="consolidatedFrom\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+    ];
+
+    // Auto-computed rank hints
+    { rank=same; SourcePublication; DataSourceReference; }
 
     subgraph cluster_legend {
         label="Legend";
@@ -84,8 +116,8 @@ digraph "Source & Publication Entities" {
         bgcolor="#f8f8f8";
         margin=12;
 
-        leg_class [label="OWL Class\n(this section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
-        leg_xref [label="OWL Class\n(other section)", shape=ellipse, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,dashed"];
+        leg_class [label="OWL Class\n(this section)", shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
+        leg_xref [label="OWL Class\n(other section)", shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"];
         leg_src [label=" ", shape=point, width=0.01];
         leg_tgt1 [label=" ", shape=point, width=0.01];
         leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];

@@ -1,10 +1,9 @@
-# SPDX-FileCopyrightText: 2026 Flux Tailor LLC
+# SPDX-FileCopyrightText: The URPX Authors
 #
-# SPDX-License-Identifier: Apache-2.0
-# SPDX-Transition-License-After-Draft: W3C-20231102
-# Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md.
+# SPDX-License-Identifier: W3C-20150513
 
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
@@ -18,8 +17,9 @@
     dcterms:title "URPX - LF Energy CDS Integration" ;
     dcterms:description "SKOS alignment between URPX Ontology and LF Energy Customer Data Specification (CDS)."@en ;
     dcterms:created "2026-01-27"^^xsd:date ;
-    dcterms:modified "2026-01-27"^^xsd:date ;
-    owl:versionInfo "0.1.1" .
+    dcterms:modified "2026-09-17"^^xsd:date ;
+    owl:versionInfo "0.1.1" ;
+    rdfs:comment "Draft alignment, under working-group review. The matches below are a work in progress and are not a published mapping profile."@en .
 
 # ============================================
 # LF Energy LineItemKind Mappings

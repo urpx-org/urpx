@@ -1,7 +1,5 @@
-<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
-<!-- SPDX-License-Identifier: Apache-2.0 -->
-<!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
-<!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
+<!-- SPDX-FileCopyrightText: The URPX Authors -->
+<!-- SPDX-License-Identifier: W3C-20150513 -->
 
 ---
 site_category: integration
@@ -13,7 +11,7 @@ site_position: 1
 
 # URPX Interoperability & Standards Integration
 
-> **PRE-DRAFT DOCUMENT - WORKING GROUP REVIEW ONLY**
+> **DRAFT DOCUMENT - WORKING GROUP REVIEW ONLY**
 >
 > **Status**: Draft in Progress
 > **Audience**: URPX Working Group Members
@@ -143,6 +141,8 @@ To map URPX to existing standards without creating hard technical dependencies o
 ---
 
 ## Supported Standards & Integrations
+
+Mapping work is in progress. The alignments in this section show the approach and the matches drafted so far; they are under working-group review and will change. Only the Schema.org mapping is published as a settled profile. See [Mapping Profile Publication](#mapping-profile-publication) for the status of each file.
 
 ### Green Button Alliance
 
@@ -286,11 +286,21 @@ urpx:Price skos:relatedMatch zigbee:PriceCluster ;
 
 Each published mapping profile includes header metadata, vocabulary declarations, and bidirectional mapping rules.
 
-**Directory**: `skos/`
+**Directory**: `skos/standards-integration/`
 
 **Naming Convention**: `urpx-{standard-name}-mappings.ttl`
 
 **Versioning**: Mapping files are versioned independently from URPX core (Major.Minor.Patch).
+
+**Status**: Mapping is an active work stream, and the profiles are at different stages. Each file states its own status in its header.
+
+| Profile | File | Status |
+| --- | --- | --- |
+| Schema.org | `urpx-schema-mapping.ttl` | Published |
+| Green Button (NAESB ESPI) | `urpx-green-button-mappings.ttl` | Draft, under working-group review |
+| LF Energy CDS | `urpx-lf-energy-mappings.ttl` | Draft, under working-group review |
+
+A draft profile is readable and reviewable, and its matches are open to change. A profile becomes published once the working group has reviewed it.
 
 ---
 

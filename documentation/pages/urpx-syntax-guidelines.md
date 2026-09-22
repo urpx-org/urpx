@@ -1,7 +1,5 @@
-<!-- SPDX-FileCopyrightText: Flux Tailor LLC -->
-<!-- SPDX-License-Identifier: Apache-2.0 -->
-<!-- SPDX-Transition-License-After-Draft: W3C-20231102 -->
-<!-- Comment: Will transition to W3C Document License upon Working Group Draft acceptance. See TRANSITION.md. -->
+<!-- SPDX-FileCopyrightText: The URPX Authors -->
+<!-- SPDX-License-Identifier: W3C-20150513 -->
 
 ---
 site_category: technical-reference
@@ -12,7 +10,7 @@ site_position: 2
 
 # URPX Syntax Guidelines
 
-**Version:** 0.5.0 (Pre-draft)
+**Version:** 0.5.1 (Working Group Draft)
 **Last Updated:** 2026-08-20
 
 [← Back to Index](/docs/getting-started/overview) | [Overview](urpx-overview.md) | [Data Dictionary](urpx-data-dictionary.md)

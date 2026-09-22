@@ -13,7 +13,7 @@ created: 1783900800000
 | **Status** | Backlog — documentation; the model already supports both forms, only the guidance is missing |
 | **Assignment** | **Unassigned — open for any WG member to pick up** |
 | **Surface** | Authoring / condition-modeling documentation (no vocabulary change expected) |
-| **Source** | WG v0.3.0 review, Q4 (chair-confirmed) — `dev-docs/reports/report.urpx.ont.2026-07-13.dcj-v0.3.0-review-response.md`; walkthrough §6.3–6.4 |
+| **Source** | WG v0.3.0 review, Q4 — `dev-docs/reports/report.urpx.ont.2026-07-13.dcj-v0.3.0-review-response.md`; walkthrough §6.3–6.4 |
 
 ## Problem
 
