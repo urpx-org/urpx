@@ -30,7 +30,7 @@ Each decision includes the alternatives we considered, the reasoning behind our 
 - Challenge our thinking - good design decisions should be defensible!
 
 **Previous Decisions:**
-- For decisions #001-#040, see [`urpx-design-decisions.md`](urpx-design-decisions.md)
+- For decisions #001-#040, see [`urpx-design-decisions-001-040.md`](urpx-design-decisions-001-040.md)
 
 ---
 
