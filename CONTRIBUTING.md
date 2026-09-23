@@ -51,7 +51,7 @@ Pull requests missing `Signed-off-by` on every commit will be asked to rebase an
 Understanding the following distinctions is important when working with URPX. For more detail, see the [URPX FAQ](documentation/pages/urpx-faq.md) and [URPX Overview](documentation/pages/urpx-overview.md).
 
 - **Tariff:** A regulatory document, such as a tariff book, containing one or more rate plans. It is published by utilities and approved by regulatory authorities.
-- **Rate plan:** A complete package with all parameters needed to calculate customer cost, including prices, TOU schedules, service tiers, seasonal variations, eligibility rules, and applicability conditions.
+- **Rate plan:** A complete package with all parameters needed to calculate customer cost, including prices, TOU schedules, service tiers, seasonal variations, eligibility rules, and applicability conditions. URPX models that package as more than one class: `urpx:RatePlan` carries the stable identity and no pricing, and `urpx:RatePlanVersion` is the priced snapshot for a window.
 - **Rate:** A single price value, such as `$0.12/kWh`, which is incomplete without the surrounding rate plan context.
 
 Language used by contributors should be polite, professional, and constructive. Prefer precise descriptions such as "verbose" or "redundant" instead of dismissive wording.

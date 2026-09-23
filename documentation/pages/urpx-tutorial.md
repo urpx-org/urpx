@@ -53,7 +53,7 @@ Before starting this tutorial, ensure you have:
 
 Understanding these distinctions is critical for working with URPX. For a more detailed explanation, please see the [URPX FAQ](urpx-faq.md).
 
-- **Rate Plan**: A complete package with all parameters needed to calculate customer cost: prices, TOU schedules, service tiers, seasonal variations, eligibility rules, and applicability conditions. The rate plan is the first-class thing URPX models.
+- **Rate Plan**: A complete package with all parameters needed to calculate customer cost: prices, TOU schedules, service tiers, seasonal variations, eligibility rules, and applicability conditions. That is the phrase as the industry uses it. Core Concepts below introduces the classes URPX models it with: `urpx:RatePlan` for the identity, `urpx:RatePlanVersion` for the priced snapshot.
 - **Tariff**: A regulatory document (tariff book) containing material from one or more rate plans. Published by utilities and approved by regulatory authorities. In URPX, tariffs are publication vehicles (places where parts of a rate plan appear), not the plan itself.
 - **Price**: A single value applied to something measured or counted (e.g., $0.12/kWh, an $18.75 monthly charge), incomplete without the full rate plan context.
 
@@ -88,7 +88,7 @@ Deciding which modifiers to bundle, badge, or default into a signup flow is like
 
 ### Core Concepts
 
-**Rate Plan**: The stable identity of a plan offered by a utility
+**Rate Plan** (`urpx:RatePlan`): The class holding the stable identity of a plan offered by a utility. Terminology above uses the phrase for the whole package; this is the part of it that does not change.
 - A durable record: name, unique identifier, offering organization, service class and rate group links
 - Carries no pricing content itself: pricing lives in versions (this tutorial) and in the pricing models publications carry (see the [Overview](urpx-overview.md))
 
