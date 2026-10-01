@@ -13,7 +13,7 @@ created: 1785628800000
 | **Status** | Completed — applied to the unreleased v0.3.0 before the initial public tag |
 | **Assignment** | Flux Tailor |
 | **Surface** | `ontology/urpx-ontology.ttl`, `shacl/urpx-shacl.ttl`, five documentation pages, five test-case fixtures, two development samples |
-| **Decision** | [Decision #131](../../documentation/pages/urpx-design-decisions-v0.3.0.md#decision-131) |
+| **Decision** | [Decision #131](../decisions/urpx-design-decisions-v0.3.0.md#decision-131) |
 | **Changelog** | `urpx-changelog.md`, 2026-08-02 entry |
 
 ## Problem
