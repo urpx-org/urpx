@@ -292,15 +292,13 @@ Each published mapping profile includes header metadata, vocabulary declarations
 
 **Versioning**: Mapping files are versioned independently from URPX core (Major.Minor.Patch).
 
-**Status**: Mapping is an active work stream, and the profiles are at different stages. Each file states its own status in its header.
+**Status**: Mapping is an active work stream, and the profiles are at different stages. Each published file states its own status in its header.
 
 | Profile | File | Status |
 | --- | --- | --- |
 | Schema.org | `urpx-schema-mapping.ttl` | Published |
-| Green Button (NAESB ESPI) | `urpx-green-button-mappings.ttl` | Draft, under working-group review |
-| LF Energy CDS | `urpx-lf-energy-mappings.ttl` | Draft, under working-group review |
 
-A draft profile is readable and reviewable, and its matches are open to change. A profile becomes published once the working group has reviewed it.
+Two further profiles, Green Button (NAESB ESPI) and LF Energy CDS, are work in progress under working group review. A draft profile's matches are open to change; a profile is published here once the working group has reviewed it.
 
 ---
 

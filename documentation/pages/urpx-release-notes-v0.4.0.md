@@ -103,5 +103,5 @@ Datasets built against v0.3.0 need term-level rework, not a version bump alone:
 
 - [v0.3.0 Release Notes](urpx-release-notes-v0.3.0.md)
 - [Data Dictionary](urpx-data-dictionary.md)
-- [Design Decisions (v0.4.0)](urpx-design-decisions-v0.4.0.md)
+- Design Decisions (v0.4.0)
 - [Changelog](https://github.com/urpx-org/urpx/blob/main/urpx-changelog.md)

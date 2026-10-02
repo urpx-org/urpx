@@ -84,28 +84,16 @@ SPDX-FileCopyrightText = "The URPX Authors"
 SPDX-License-Identifier = "CDLA-Permissive-2.0"
 
 # -----------------------------------------------------------------------------
-# Working group development documents and JSON manifests/schemas (JSON cannot
-# carry comment headers) — Flux Tailor-authored, Apache-2.0 alongside the rest
-# of the project's meta and tooling assets.
+# JSON manifests/schemas (JSON cannot carry comment headers) — Flux Tailor-authored,
+# Apache-2.0 alongside the rest of the project's meta and tooling assets.
 # -----------------------------------------------------------------------------
 [[annotations]]
 path = [
-    "dev-docs/**",
     "test-cases/manifest-all-schema.json",
 ]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "The URPX Authors"
 SPDX-License-Identifier = "Apache-2.0"
-
-# -----------------------------------------------------------------------------
-# Worked sample instances under dev-docs/samples, synthetic data accompanying development specifications, licensed as data like the shipped test-case datasets.
-# Entries below the dev-docs/** rule above win over it, so this one must stay after it.
-# -----------------------------------------------------------------------------
-[[annotations]]
-path = ["dev-docs/samples/**/*.json", "dev-docs/samples/**/*.jsonld"]
-precedence = "override"
-SPDX-FileCopyrightText = "The URPX Authors"
-SPDX-License-Identifier = "CDLA-Permissive-2.0"
 
 # -----------------------------------------------------------------------------
 # Generated data dictionary — matches TRANSITION.md's specification category

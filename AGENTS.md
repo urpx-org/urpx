@@ -66,17 +66,11 @@ Test data may be submitted with a pull request when it is clearly scoped and doe
 
 If the test data implies changes to the ontology, SHACL constraints, or repository structure, seek working group discussion before generating or submitting the PR.
 
-## Development documents (dev-docs/)
+## Development documents
 
-`dev-docs/` holds working group development documents: backlog tasks, specifications, working reports, and review materials.
+Working group development documents (backlog tasks, specifications, working reports, review materials, and the worked sample instances that accompany a specification) live in the `urpx-org/urpx-dev` repository, not here. Follow `urpx-dev/dev-docs/README.md` for file naming, frontmatter, lifecycle prefixes, and the public-ready bar.
 
-Follow `dev-docs/README.md` for file naming, frontmatter, lifecycle prefixes, and the public-ready bar.
-
-The sanctioned subfolders are `tasks/`, `specs/`, `reports/`, `review/`, `roadmaps/`, and `samples/` (worked JSON-LD instances that accompany a specification; see `dev-docs/README.md`).
-
-Do not add new subfolders without prior working group discussion, per the New directories rule above.
-
-A `specs/` document that proposes an ontology or SHACL change is delivered with its implementation task in `tasks/` (complete before/after Turtle code blocks) and worked sample instances in `samples/`. See "What a specification carries" in `dev-docs/README.md`.
+A specification that proposes an ontology or SHACL change is delivered in `urpx-org/urpx-dev` with its implementation task (complete before/after Turtle code blocks) and worked sample instances. The ontology or SHACL change itself is a pull request against this repository.
 
 ## Editing guidance
 
@@ -86,6 +80,6 @@ When making changes in this repository:
 - avoid reformatting unrelated files;
 - keep explanations concise;
 - do not add generated prose unless it has been reduced to concise, reviewable text;
-- write prose for human review — no hard-wrapping mid-sentence, short paragraphs, short sentences (see [`dev-docs/README.md`](dev-docs/README.md) → Prose formatting).
+- write prose for human review — no hard-wrapping mid-sentence, short paragraphs, short sentences (see Prose formatting in [`urpx-dev/dev-docs/README.md`](https://github.com/urpx-org/urpx-dev/blob/main/dev-docs/README.md)).
 
 The goal is to support working group review, not to maximize generated output.

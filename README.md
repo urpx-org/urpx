@@ -45,9 +45,10 @@ urpx/
 ├── shacl/             # SHACL validation constraints
 ├── skos/              # SKOS mappings to related standards
 ├── test-cases/        # Test datasets and examples
-├── dev-docs/          # Working group development documents
 ├── scripts/           # Project tooling
 ```
+
+Working group development documents (tasks, specifications, working reports, roadmaps, review materials, and the worked sample instances that accompany a specification) live in [`urpx-org/urpx-dev`](https://github.com/urpx-org/urpx-dev).
 
 ---
 

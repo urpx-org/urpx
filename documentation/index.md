@@ -27,10 +27,7 @@ Welcome to the URPX documentation. URPX is an open standard for exchanging utili
 
 ### Advanced Topics
 - **[Design Principles](pages/urpx-design-principles.md)** - Ontology development standards
-- **[Design Decisions 001-040](pages/urpx-design-decisions-001-040.md)** - Architectural decision log (Part 1)
-- **[Design Decisions 041-080](pages/urpx-design-decisions-041-080.md)** - Architectural decision log (Part 2)
-- **[Design Decisions 081-120](pages/urpx-design-decisions-081-120.md)** - Architectural decision log (Part 3)
-- **[Design Decisions v0.3.0](pages/urpx-design-decisions-v0.3.0.md)** - Architectural decision log for v0.3.0 and later versions
+- **[Design Decisions](https://github.com/urpx-org/urpx-dev/tree/main/dev-docs/decisions)** - Architectural decision logs, maintained with the development record in `urpx-org/urpx-dev`
 
 ### Learning & Education
 - **[Semantic Web Guide](pages/urpx-semantic-web-guide.md)** - Introduction to RDF, ontologies, and linked data

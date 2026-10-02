@@ -78,8 +78,6 @@ paths = [
     "test-cases/manifest-all.json",
     "test-cases/**/assets/diagram.dot",
     "test-cases/**/assets/diagram.svg",
-    "dev-docs/samples/**/*.json",
-    "dev-docs/samples/**/*.jsonld",
 ]
 
 # -----------------------------------------------------------------------------
@@ -119,7 +117,6 @@ paths = [
     "MAINTAINERS.md",
     "CITATION.cff",
     ".github/**",
-    "dev-docs/**/*.md",
 ]
 
 # -----------------------------------------------------------------------------
