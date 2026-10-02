@@ -130,7 +130,7 @@ These changes do not alter the URPX data model, but they do affect repository hy
 ## References
 
 - [`urpx-changelog.md`](https://github.com/urpx-org/urpx/blob/main/urpx-changelog.md)
-- [`urpx-design-decisions-081-120.md`](urpx-design-decisions-081-120.md)
+- `urpx-design-decisions-081-120.md`
 - [`urpx-condition-modeling.md`](urpx-condition-modeling.md)
 - [`urpx-quality-assurance.md`](urpx-quality-assurance.md)
 - [`urpx-test-data-review-guide.md`](urpx-test-data-review-guide.md)
