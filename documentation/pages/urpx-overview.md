@@ -314,7 +314,7 @@ Reading the chain top-down: the **statement** (`SourcePublication`) is the exter
 
 Not every rate plan version is self-contained, and a plan identity often carries more than one identifier. A California Community Choice Aggregation (CCA) or Direct Access customer takes delivery service priced by the utility while generation is priced by a third party, so the utility's version carries delivery in full but references generation externally.
 
-The plan identity carries the identifiers a customer and downstream systems key on. In California the MIDAS RIN (printed on the bill, and the key under which the utility uploads the rate's prices to the state MIDAS feed) rides alongside the utility's own tariff code:
+The plan identity carries the identifiers a customer and downstream systems key on. In California the MIDAS RIN (printed on the bill, and the key under which the utility uploads the rate plan's prices to the state MIDAS feed) rides alongside the utility's own tariff code:
 
 ```turtle
 ex:pge-e-tou-c a urpx:RatePlan ;
@@ -345,7 +345,7 @@ ex:pge-e-tou-c-cca-2026-03-01 a urpx:RatePlanVersion ;
             urpx:description "Delivery charges are carried in full from the PG&E tariff book. Generation is priced by the customer's Community Choice Aggregator and referenced externally, not restated here." ] ] .
 ```
 
-The externally-priced generation is attached through a `PriceDefinitionReference` whose `referenceInclusion` is `retrievedElsewhere`, which is what makes `selfContained` false and `completenessResult` `partial`.
+The externally-priced generation is attached through a `PriceDefinitionReference` whose `referenceInclusion` is `retrievedElsewhere`. That reference is what makes `selfContained` false. The `completenessResult` of `partial` is a separate judgment, returned by the coverage evaluation because the generation price is not resolved in this snapshot.
 
 ### Geographic Applicability
 
