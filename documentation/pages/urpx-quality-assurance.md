@@ -28,6 +28,7 @@ site_position: 4
 4. [Rate Plan Data Quality](#rate-plan-data-quality)
 5. [Documentation Quality](#documentation-quality)
 6. [Terminology Standards](#terminology-standards)
+7. [Walking the Test-Case Corpus](#walking-the-test-case-corpus)
 
 ---
 
@@ -350,6 +351,34 @@ The repository maintains an edge-case register at [`test-cases/urpx-edge-cases.c
 - Omitting `hasConditionExpression` on `EligibilityRule`
 - Omitting `hasConditionExpression` on `ProfileAlternative`
 - Modeling eligibility inputs outside a `Scenario`
+
+---
+
+## Walking the Test-Case Corpus
+
+[`corpus.json`](../../corpus.json) at the repository root declares which files make up the test-case corpus, so a script or a language model can list them without encoding the directory layout. Its schema is [`corpus-schema.json`](../../corpus-schema.json).
+
+| Field | Meaning |
+|-------|---------|
+| `corpus` | Name of the corpus. |
+| `roots` | Top-level directories the globs are evaluated under. |
+| `kinds` | Each kind of file, with `include` globs evaluated under every root, and an optional `description` and `media_type`. |
+| `documents` | The kinds a consumer loads as the corpus. Here, `instance`: every JSON-LD file under `test-cases/*/data/`. |
+| `walkers` | Implementations that read `corpus.json`: `language`, repo-relative `path`, in-language `api` entry point, and the `cli` command run from the repository root. |
+
+In an `include` glob, `*` matches any characters within one path segment, `**` as a whole segment matches zero or more segments, and every other character is literal.
+
+Every walker's CLI prints repo-relative POSIX paths, one per line, in C-locale byte order:
+
+```bash
+deno run --allow-read scripts/corpus.ts            # the documents
+deno run --allow-read scripts/corpus.ts source     # the files of the named kinds
+deno run --allow-read scripts/corpus.ts --all      # every kind, as kind<TAB>path
+```
+
+`scripts/corpus_test.ts` requires the TypeScript walker to agree with `git ls-files --cached --others --exclude-standard` for the same globs. A walker added in another language is listed under `walkers` and must print output identical to the existing walkers for the same arguments.
+
+`test-cases/manifest-all.json` names one instance per test case, with its diagram and tariff book; `corpus.json` lists every instance file, including the files of a multi-file test case such as `coned-sc1-rate-i`, and the walker test requires each manifest instance to be among its documents.
 
 ---
 

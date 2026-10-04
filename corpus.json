@@ -1,0 +1,25 @@
+{
+  "$schema": "./corpus-schema.json",
+  "corpus": "urpx-test-cases",
+  "roots": ["test-cases"],
+  "kinds": {
+    "instance": {
+      "description": "URPX JSON-LD instance data, one or more files per test case",
+      "media_type": "application/ld+json",
+      "include": ["*/data/*.jsonld"]
+    },
+    "source": {
+      "description": "Utility-published source documents a test case is modeled from",
+      "include": ["*/assets/*.pdf", "*/assets/*.csv"]
+    }
+  },
+  "documents": ["instance"],
+  "walkers": [
+    {
+      "language": "typescript",
+      "path": "scripts/corpus.ts",
+      "api": "corpusPaths(kinds)",
+      "cli": "deno run --allow-read scripts/corpus.ts"
+    }
+  ]
+}

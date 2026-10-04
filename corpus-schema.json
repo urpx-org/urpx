@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://urpx.org/schemas/corpus-1.0.0.json",
+  "title": "URPX Corpus Layout",
+  "description": "Schema for corpus.json, which declares how to walk a corpus of URPX documents. Each kind's include globs are evaluated under every root. A walker's CLI, run from the repository root, prints repo-relative POSIX paths one per line in C-locale byte order: with no arguments the files of the kinds listed in documents, with kind names as arguments the files of those kinds, and with --all every kind as kind<TAB>path.",
+  "type": "object",
+  "required": ["corpus", "roots", "kinds", "documents", "walkers"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "corpus": {
+      "type": "string",
+      "description": "Name of the corpus."
+    },
+    "roots": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[^/*]+$"
+      },
+      "description": "Top-level directories the include globs are evaluated under."
+    },
+    "kinds": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9-]*$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "required": ["include"],
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "media_type": {
+            "type": "string"
+          },
+          "include": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "description": "Globs relative to each root. * matches any characters within one path segment; ** as a whole segment matches zero or more segments; every other character is literal."
+          }
+        }
+      }
+    },
+    "documents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      },
+      "description": "The kinds that make up the corpus documents, i.e. what a consumer loads."
+    },
+    "walkers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["language", "path", "cli"],
+        "additionalProperties": false,
+        "properties": {
+          "language": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string",
+            "description": "Repo-relative path of the implementation."
+          },
+          "api": {
+            "type": "string",
+            "description": "In-language entry point."
+          },
+          "cli": {
+            "type": "string",
+            "description": "Command run from the repository root."
+          }
+        }
+      }
+    }
+  }
+}
