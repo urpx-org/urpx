@@ -4484,6 +4484,17 @@ urpx-shacl:ScenarioCostModelShape
         sh:path urpx:consumesVersion ;
         sh:class urpx:RatePlanVersion ;
         sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:consumesModifierVersion ;
+        sh:class urpx:RatePlanModifierVersion ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:selectsProfileAlternative ;
+        sh:class urpx:ProfileAlternative ;
+        sh:minCount 0 ;
     ] ;
     sh:property [
         sh:path urpx:producesResult ;
