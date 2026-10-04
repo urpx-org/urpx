@@ -608,6 +608,12 @@ urpx:DataSourceTypeValue a owl:Class ;
     owl:equivalentClass [ owl:oneOf ( urpx:apiSource urpx:databaseSource urpx:manualSource urpx:utilityWebsiteSource urpx:regulatoryWebsiteSource ) ] ;
     skos:note "Enumeration class for data source types enabling better traceability and validation of price information sources." .
 
+urpx:DayOfWeekValue a owl:Class ;
+    rdfs:label "Day Of Week Value"@en ;
+    rdfs:comment "ISO 8601 day of the week enumeration values" ;
+    owl:equivalentClass [ owl:oneOf ( urpx:monday urpx:tuesday urpx:wednesday urpx:thursday urpx:friday urpx:saturday urpx:sunday ) ] ;
+    skos:note "Enumeration class for the seven days of the week, numbered 1 (Monday) through 7 (Sunday) as in ISO 8601." .
+
 urpx:DayTypeValue a owl:Class ;
     rdfs:label "Day Type Value"@en ;
     rdfs:comment "ISO 8601 day type enumeration values" ;
@@ -1458,6 +1464,13 @@ urpx:daylightSavingRules a owl:DatatypeProperty ;
     rdfs:domain urpx:LocationDataSet ;
     rdfs:range xsd:string ;
     skos:note "DST transition rules and offsets. Can reference standard DST rules or specify custom rules for location." .
+
+urpx:daysOfWeek a owl:ObjectProperty ;
+    rdfs:label "Days Of Week"@en ;
+    rdfs:comment "Days of the week this time bracket applies to, used with dayType customDays" ;
+    rdfs:domain urpx:TimeBracket ;
+    rdfs:range urpx:DayOfWeekValue ;
+    skos:note "Multi-valued; the bracket applies on every listed day. Present exactly when dayType is customDays." .
 
 urpx:dayType a owl:ObjectProperty ;
     rdfs:label "Day Type"@en ;
@@ -4540,6 +4553,43 @@ urpx:regulatoryWebsiteSource rdf:type urpx:DataSourceTypeValue ;
     skos:definition "Data sourced from a regulatory agency's official website or database"@en ;
     skos:prefLabel "Regulatory Website"@en .    
 
+# --- Day Of Week Property (DayOfWeekValue) ---
+
+urpx:monday rdf:type urpx:DayOfWeekValue ;
+    rdfs:label "Monday"@en ;
+    skos:definition "Monday (ISO 8601 day 1)"@en ;
+    skos:prefLabel "Monday"@en .
+
+urpx:tuesday rdf:type urpx:DayOfWeekValue ;
+    rdfs:label "Tuesday"@en ;
+    skos:definition "Tuesday (ISO 8601 day 2)"@en ;
+    skos:prefLabel "Tuesday"@en .
+
+urpx:wednesday rdf:type urpx:DayOfWeekValue ;
+    rdfs:label "Wednesday"@en ;
+    skos:definition "Wednesday (ISO 8601 day 3)"@en ;
+    skos:prefLabel "Wednesday"@en .
+
+urpx:thursday rdf:type urpx:DayOfWeekValue ;
+    rdfs:label "Thursday"@en ;
+    skos:definition "Thursday (ISO 8601 day 4)"@en ;
+    skos:prefLabel "Thursday"@en .
+
+urpx:friday rdf:type urpx:DayOfWeekValue ;
+    rdfs:label "Friday"@en ;
+    skos:definition "Friday (ISO 8601 day 5)"@en ;
+    skos:prefLabel "Friday"@en .
+
+urpx:saturday rdf:type urpx:DayOfWeekValue ;
+    rdfs:label "Saturday"@en ;
+    skos:definition "Saturday (ISO 8601 day 6)"@en ;
+    skos:prefLabel "Saturday"@en .
+
+urpx:sunday rdf:type urpx:DayOfWeekValue ;
+    rdfs:label "Sunday"@en ;
+    skos:definition "Sunday (ISO 8601 day 7)"@en ;
+    skos:prefLabel "Sunday"@en .
+
 # --- Day Type Property (DayTypeValue) ---
 
 urpx:allDays rdf:type urpx:DayTypeValue ;
@@ -4549,7 +4599,7 @@ urpx:allDays rdf:type urpx:DayTypeValue ;
 
 urpx:customDays rdf:type urpx:DayTypeValue ;
     rdfs:label "Custom Days"@en ;
-    skos:definition "Custom day selection pattern"@en ;
+    skos:definition "The days listed in urpx:daysOfWeek"@en ;
     skos:prefLabel "Custom"@en .
 
 urpx:weekdayDays rdf:type urpx:DayTypeValue ;
