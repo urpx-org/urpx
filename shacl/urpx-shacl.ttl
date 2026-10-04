@@ -5558,9 +5558,36 @@ urpx-shacl:TimeBracketShape
     sh:targetClass urpx:TimeBracket ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type urpx:hasTemporalScope ) ;
+    sh:or (
+        [
+            sh:property [
+                sh:path urpx:dayType ;
+                sh:hasValue urpx:customDays ;
+            ] ;
+            sh:property [
+                sh:path urpx:daysOfWeek ;
+                sh:minCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path urpx:dayType ;
+                sh:in ( urpx:allDays urpx:weekdayDays urpx:weekendDays ) ;
+            ] ;
+            sh:property [
+                sh:path urpx:daysOfWeek ;
+                sh:maxCount 0 ;
+            ]
+        ]
+    ) ;
     sh:property [
         sh:path urpx:appliesInSeason ;
         sh:class urpx:Season ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:daysOfWeek ;
+        sh:node urpx-shacl:DayOfWeekValueShape ;
         sh:minCount 0 ;
     ] ;
     sh:property [
@@ -6107,6 +6134,13 @@ urpx-shacl:DataSourceTypeValueShape
     sh:targetClass urpx:DataSourceTypeValue ;
     sh:nodeKind sh:IRI ;
     sh:in ( urpx:apiSource urpx:databaseSource urpx:manualSource urpx:utilityWebsiteSource urpx:regulatoryWebsiteSource ) .
+
+urpx-shacl:DayOfWeekValueShape
+    a sh:NodeShape ;
+    rdfs:label "DayOfWeekValue Shape"@en ;
+    sh:targetClass urpx:DayOfWeekValue ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( urpx:monday urpx:tuesday urpx:wednesday urpx:thursday urpx:friday urpx:saturday urpx:sunday ) .
 
 urpx-shacl:DayTypeValueShape
     a sh:NodeShape ;
