@@ -12,7 +12,7 @@ site_position: 1
 # URPX Overview
 
 **Version**: 0.5.1 (Working Group Draft)
-**Last Updated**: 2026-07-07
+**Last Updated**: 2026-10-05
 **Status**: Active
 
 ## Understanding the Utility Rate Plan Exchange Standard
@@ -53,7 +53,7 @@ URPX is built on a core ontology ([`urpx-ontology.ttl`](../../ontology/urpx-onto
 - Rate plan identities and derived version snapshots
 - Pricing models carried by publications
 - Prices and price sets
-- TOU schedules and pricing rules
+- Time-of-use (TOU) schedules and pricing rules
 
 **Charge Classification:**
 - Charge types (minimumCharge, usageCharge, demandDirect, etc.)
@@ -94,19 +94,23 @@ URPX is built on a core ontology ([`urpx-ontology.ttl`](../../ontology/urpx-onto
 URPX cites the published sources that pricing content comes from. Every external published artifact is a `SourcePublication`, and its kind is given by the `publicationType` enumeration:
 
 - `tariffBook` - Complete tariff books
-- `tariffStatement` - PSC periodic filings (statements)
+- `tariffStatement` - Periodic regulatory filings (statements)
 - `tariffSupplement` / `tariffAddendum` - Supplements and addenda
 - `supplyCharges` - Competitive market supply pricing
 - `highlyDynamicPrices` - Dynamic pricing structures
-- `derExports` - Prices for DER exports
+- `derExports` - Prices for distributed energy resource (DER) exports
 - `marketPriceFeed` - Published market price feeds
 
 The URPX exchange package itself (`URPXPackage`) is a separate concept: it is URPX's own container for exchanging content between systems, while a `SourcePublication` is a third-party artifact that URPX references but does not own.
 
 #### 4. Validation Framework
-SHACL (Shapes Constraint Language) rules ensure data quality and consistency:
+SHACL (Shapes Constraint Language) rules ensure data quality and consistency.
 
 ```turtle
+@prefix urpx: <https://urpx.org/ns/ontology/> .
+@prefix urpx-shacl: <https://urpx.org/ns/shacl/core/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
 # Example: every rate plan version must name its plan and declare its coverage
 urpx-shacl:RatePlanVersionShape a sh:NodeShape ;
     sh:targetClass urpx:RatePlanVersion ;
@@ -128,7 +132,7 @@ urpx-shacl:RatePlanVersionShape a sh:NodeShape ;
 
 #### Rate Plans
 
-A `RatePlan` is the stable identity of a utility rate plan, independent of time: a durable record carrying the plan's name, identifiers (`hasIdentifier` / `RatePlanIdentifier`), service class and rate group links, and publisher. The identity itself carries no pricing content: pricing is stated by pricing models and read from derived version snapshots.
+A `RatePlan` is the stable identity of a utility rate plan, independent of time: a durable record carrying the plan's name, its identifiers (`hasIdentifier` / `RatePlanIdentifier`), where applicable its service class and rate group links, and the organization that offers it (`offeredBy`). The identity itself carries no pricing content. Pricing is stated by pricing models, which point at the plan directly (`referencesRatePlan`) or through the applicability statements on their prices. A rate plan version is derived from the pricing models that reference the plan: the resolved snapshot for a temporal window.
 
 #### Rate Plan Modifiers
 
@@ -152,7 +156,8 @@ A `RatePlanVersion` is the derived, complete snapshot of the resolved plan facts
 Individual pricing components with specific charge types, charge categories, and bill portions. Every price may have:
 - chargeType (implementation: minimumCharge, usageCharge, etc.)
 - chargeCategory (purpose: serviceCharge, auxiliaryCharge, etc.)
-- hasMetricSpecification with billPortion (delivery, supply, bundled)
+- billPortion (delivery, supply, bundled)
+- hasMetricSpecification for what is measured
 
 #### Time-of-Use
 
@@ -178,7 +183,7 @@ URPXPackage (exchange container)
       ├── RatePlanIdentifier (hasIdentifier)
       └── ServiceClass / RateGroup links
 
-RatePlanVersion (derived snapshot — forRatePlan → RatePlan)
+RatePlanVersion (derived snapshot; forRatePlan points to RatePlan)
   ├── CoverageClaim (hasCoverageClaim)
   │   └── Evaluation (explainedBy)
   ├── EligibilityRule (customer requirements)
@@ -265,23 +270,28 @@ URPX supports the full spectrum of utility charges:
 Regulatory statements typically adjust a single charge rather than restate a whole plan. URPX models this directly: the statement is a `SourcePublication`, the filed excerpt is a `TariffFiling`, and the pricing content it carries is a `PricingModel`, deliberately partial, citable back to its source:
 
 ```turtle
+@prefix urpx: <https://urpx.org/ns/ontology/> .
+@prefix ex: <https://example.org/urpx/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
 # The published statement, cited as an external source
 ex:psc-statement-2025-001 a urpx:SourcePublication ;
     urpx:name "PSC Statement 2025-EL-0123" ;
     urpx:publicationType urpx:tariffStatement ;
+    urpx:filingNumber "2025-EL-0123" ;
     urpx:effectiveDate "2025-01-15"^^xsd:date .
 
 # The filed excerpt carrying the pricing content
 ex:filing-2025-001 a urpx:TariffFiling ;
-    urpx:filingNumber "2025-EL-0123" ;
     urpx:effectiveDate "2025-01-15"^^xsd:date ;
     urpx:documentedBy [ a urpx:DataSourceReference ;
         urpx:sourcePublication ex:psc-statement-2025-001 ;
         urpx:fileName "psc-statement-2025-001.pdf" ] ;
     urpx:containsPricingModel ex:pm-transmission-2025 .
 
-# The authored pricing content — the same structure a rate plan version
-# carries: PlanElements define what is measured and how the charge is
+# The authored pricing content: the same structure a rate plan version
+# carries (ex:mi-energy-kwh and ex:ledger-delivery are defined in the
+# version's PlanElements and elided here): PlanElements define what is measured and how the charge is
 # defined; Prices carry the dated values.
 ex:pm-transmission-2025 a urpx:PricingModel ;
     urpx:confidence urpx:verified ;
@@ -317,6 +327,11 @@ Not every rate plan version is self-contained, and a plan identity often carries
 The plan identity carries the identifiers a customer and downstream systems key on. In California the MIDAS RIN (printed on the bill, and the key under which the utility uploads the rate plan's prices to the state MIDAS feed) rides alongside the utility's own tariff code:
 
 ```turtle
+@prefix urpx: <https://urpx.org/ns/ontology/> .
+@prefix ex: <https://example.org/urpx/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
 ex:pge-e-tou-c a urpx:RatePlan ;
     urpx:ratePlanUniqueIdentifier "E-TOU-C" ;
     urpx:name "Residential Time-of-Use (Peak Pricing 4-9 p.m.)" ;
@@ -333,6 +348,10 @@ ex:pge-e-tou-c a urpx:RatePlan ;
 The resolved version for a CCA customer then declares partial coverage. Only `completenessResult` is required on the `CoverageClaim`; `selfContained` and an explaining `Evaluation` are optional, but both make the partial case legible:
 
 ```turtle
+@prefix urpx: <https://urpx.org/ns/ontology/> .
+@prefix ex: <https://example.org/urpx/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
 ex:pge-e-tou-c-cca-2026-03-01 a urpx:RatePlanVersion ;
     urpx:forRatePlan ex:pge-e-tou-c ;
     urpx:effectiveDate "2026-03-01"^^xsd:date ;
@@ -345,7 +364,19 @@ ex:pge-e-tou-c-cca-2026-03-01 a urpx:RatePlanVersion ;
             urpx:description "Delivery charges are carried in full from the PG&E tariff book. Generation is priced by the customer's Community Choice Aggregator and referenced externally, not restated here." ] ] .
 ```
 
-The externally-priced generation is attached through a `PriceDefinitionReference` whose `referenceInclusion` is `retrievedElsewhere`. That reference is what makes `selfContained` false. The `completenessResult` of `partial` is a separate judgment, returned by the coverage evaluation because the generation price is not resolved in this snapshot.
+The externally priced generation is attached to the version through a `PriceDefinitionReference`: a relator node between the snapshot and a `PriceDefinition` that carries how the definition is included (`referenceInclusion`), the evidence for it, and its temporal scope. Here the inclusion is `retrievedElsewhere`, which is what makes `selfContained` false:
+
+```turtle
+@prefix urpx: <https://urpx.org/ns/ontology/> .
+@prefix ex: <https://example.org/urpx/> .
+
+ex:pge-e-tou-c-cca-2026-03-01
+    urpx:hasPriceDefinitionReference [ a urpx:PriceDefinitionReference ;
+        urpx:referenceInclusion urpx:retrievedElsewhere ;
+        urpx:referencesPriceDefinition ex:pd-cca-generation ] .
+```
+
+The `completenessResult` of `partial` is a separate judgment, returned by the coverage evaluation because the generation price is not resolved in this snapshot.
 
 ### Geographic Applicability
 
@@ -355,28 +386,35 @@ Prices apply within named geographic areas. Geographic scope is expressed throug
 
 **Prior Rate Plan Requirements**
 ```turtle
+@prefix urpx: <https://urpx.org/ns/ontology/> .
+@prefix ex: <https://example.org/urpx/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
 ex:EVRateEligibility a urpx:PriorRatePlan ;
-    urpx:name "Standard Residential Rate Plan" ;
-    urpx:minimumTenure "P12M"^^xsd:duration .  # 12 months 
+    urpx:referencesRatePlan ex:standard-residential-rate-plan ;
+    urpx:minimumTenure "P12M"^^xsd:duration .  # 12 months
 ```
 
 **Program Enrollment Requirements**
 ```turtle
+@prefix urpx: <https://urpx.org/ns/ontology/> .
+@prefix ex: <https://example.org/urpx/> .
+
 ex:DemandResponseProgram a urpx:ProgramEnrollment ;
     urpx:programName "SmartAC Program" ;
-    urpx:programType "urpx:demandResponseProgram" ;
-    urpx:enrollmentStatus "urpx:activeStatus" ;
+    urpx:programType urpx:demandResponseProgram ;
+    urpx:enrollmentStatus urpx:activeStatus .
 ```
 
 ### Data Quality & Validation
 
-URPX includes SHACL (Shapes Constraint Language) validation shapes in a unified file ([`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl)):
+URPX includes SHACL (Shapes Constraint Language) validation shapes in a unified file ([`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)):
 
-**Core Validation**: Rate plan structure integrity, price consistency rules, temporal constraint validation
+**Core Validation**: Required properties, cardinalities, datatypes and closed shapes on the rate plan, version, pricing and condition classes
 
-**Organization Validation**: Identity tracking consistency, corporate relationship rules, regulatory jurisdiction validation
+**Organization Validation**: Identity, identifier and organization-type constraints
 
-**Geography Validation**: Territory coverage rules, hierarchical boundary consistency, coordinate range validation
+**Geography Validation**: Shapes for service territories and administrative boundaries
 
 Because SHACL shapes are modular and composable, additional shape definitions can be authored to enforce jurisdiction-specific constraints, such as required fields, value ranges, or expected relationships between classes that vary by regulatory context.
 
@@ -434,7 +472,7 @@ Ready to work with URPX data? Here are your next steps:
 
 ### Summary
 
-URPX transforms utility rate plan data from isolated silos into an interconnected, semantic web of pricing information. By providing a comprehensive standard for rate representation, URPX enables innovation in energy applications while ensuring data quality and regulatory compliance.
+URPX transforms utility rate plan data from isolated silos into an interconnected, semantic web of pricing information. By providing a comprehensive standard for rate plan representation, URPX enables innovation in energy applications while supporting data quality.
 
 The modular design, industry alignment, and robust validation framework make URPX suitable for everything from simple residential rate plans to complex industrial rate plans with real-time pricing.
 
