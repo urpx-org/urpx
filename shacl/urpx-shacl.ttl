@@ -413,6 +413,12 @@ urpx-shacl:CalculationMethodShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:path urpx:hasValueExpression ;
+        sh:class urpx:ValueExpression ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:intervalAlignment ;
         sh:node urpx-shacl:IntervalAlignmentValueShape ;
         sh:minCount 0 ;
@@ -3107,6 +3113,12 @@ urpx-shacl:PriceUpdateRuleShape
     sh:property [
         sh:path urpx:description ;
         sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:hasValueExpression ;
+        sh:class urpx:ValueExpression ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
     ] ;
@@ -5978,6 +5990,36 @@ urpx-shacl:UtilityOperatorShape
         sh:minCount 0 ;
     ] .
 
+urpx-shacl:ValueExpressionShape
+    a sh:NodeShape ;
+    rdfs:label "ValueExpression Shape"@en ;
+    sh:targetClass urpx:ValueExpression ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type urpx:hasTemporalScope ) ;
+    sh:property [
+        sh:path urpx:rootNode ;
+        sh:or (
+            [ sh:class urpx:DatatypeOperandNode ]
+            [ sh:class urpx:ObjectOperandNode ]
+            [ sh:class urpx:CustomOperandNode ]
+            [ sh:class urpx:OperationNode ]
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
+
 # ============================================================================
 # ENUMERATION VALUE SHAPES
 # ============================================================================
@@ -6300,7 +6342,7 @@ urpx-shacl:OperatorValueShape
     rdfs:label "OperatorValue Shape"@en ;
     sh:targetClass urpx:OperatorValue ;
     sh:nodeKind sh:IRI ;
-    sh:in ( urpx:addOperator urpx:andOperator urpx:betweenOperator urpx:containsOperator urpx:divideOperator urpx:equalsOperator urpx:greaterThanOperator urpx:greaterThanOrEqualOperator urpx:inOperator urpx:lessThanOperator urpx:lessThanOrEqualOperator urpx:multiplyOperator urpx:notEqualsOperator urpx:notInOperator urpx:notOperator urpx:orOperator urpx:subtractOperator ) .
+    sh:in ( urpx:addOperator urpx:andOperator urpx:betweenOperator urpx:containsOperator urpx:divideOperator urpx:equalsOperator urpx:greaterThanOperator urpx:greaterThanOrEqualOperator urpx:inOperator urpx:lessThanOperator urpx:lessThanOrEqualOperator urpx:maxOperator urpx:minOperator urpx:multiplyOperator urpx:notEqualsOperator urpx:notInOperator urpx:notOperator urpx:orOperator urpx:subtractOperator ) .
 
 urpx-shacl:OrganizationTypeValueShape
     a sh:NodeShape ;
@@ -6429,7 +6471,7 @@ urpx-shacl:UnitOfMeasureValueShape
     rdfs:label "UnitOfMeasureValue Shape"@en ;
     sh:targetClass urpx:UnitOfMeasureValue ;
     sh:nodeKind sh:IRI ;
-    sh:in ( urpx:hertz urpx:Gbps urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:bit urpx:btu urpx:byte urpx:ccf urpx:cord urpx:count urpx:cubicFoot urpx:cubicMeter urpx:decatherm urpx:gallon urpx:hectare urpx:item urpx:kVA urpx:kVAh urpx:kVAr urpx:kVArh urpx:kW urpx:kWh urpx:kilogallon urpx:kilogram urpx:kilometer urpx:liter urpx:Mbps urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:VA urpx:VAh urpx:VAr urpx:VArh urpx:year ) .
+    sh:in ( urpx:hertz urpx:Gbps urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:bit urpx:btu urpx:byte urpx:ccf urpx:cord urpx:count urpx:cubicFoot urpx:cubicMeter urpx:currencyUnit urpx:decatherm urpx:gallon urpx:hectare urpx:item urpx:kVA urpx:kVAh urpx:kVAr urpx:kVArh urpx:kW urpx:kWh urpx:kilogallon urpx:kilogram urpx:kilometer urpx:liter urpx:Mbps urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:VA urpx:VAh urpx:VAr urpx:VArh urpx:year ) .
 
 urpx-shacl:UpdateFrequencyValueShape
     a sh:NodeShape ;
