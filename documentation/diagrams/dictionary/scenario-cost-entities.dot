@@ -26,45 +26,12 @@ digraph "Scenario & Cost Entities" {
         shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5
     ];
 
-    // Cross-section references
-    CoverageClaim [
-        label="CoverageClaim"
-        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
-    ];
-    CustomerProfile [
-        label="CustomerProfile"
-        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
-    ];
-    RatePlanVersion [
-        label="RatePlanVersion"
-        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
-    ];
-    ServicePointProfile [
-        label="Service\nPointProfile"
-        shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"
-    ];
-
     // Object property edges
-    Scenario -> CustomerProfile [
-        label="hasCustomerProfile\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-    Scenario -> ServicePointProfile [
-        label="hasServicePointProfile\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-    ScenarioCostModel -> RatePlanVersion [
-        label="consumesVersion\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
     ScenarioCostModel -> Scenario [
         label="forScenario\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
-    ScenarioCostModel -> CoverageClaim [
-        label="hasCoverageClaim\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
     ScenarioCostModel -> ScenarioCostResult [
         label="producesResult\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
-    ];
-    ScenarioCostResult -> CoverageClaim [
-        label="hasCoverageClaim\n0..1", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
 
     // Auto-computed rank hints
@@ -81,11 +48,8 @@ digraph "Scenario & Cost Entities" {
         margin=12;
 
         leg_class [label="OWL Class\n(this section)", shape=box, style="filled,rounded", fillcolor="#aaccff", color="#1a5276", penwidth=2.5];
-        leg_xref [label="OWL Class\n(other section)", shape=box, fillcolor="#aaccff", color="#1a5276", penwidth=1, style="filled,rounded,dashed"];
         leg_src [label=" ", shape=point, width=0.01];
         leg_tgt1 [label=" ", shape=point, width=0.01];
         leg_src -> leg_tgt1 [label="object property", color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
-        leg_tgt2 [label=" ", shape=point, width=0.01];
-        leg_src -> leg_tgt2 [label="cross-section ref", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5];
     }
 }

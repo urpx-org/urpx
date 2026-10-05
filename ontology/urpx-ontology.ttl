@@ -847,7 +847,7 @@ urpx:Scenario a owl:Class ;
 urpx:ScenarioCostModel a owl:Class ;
     rdfs:label "Scenario Cost Model"@en ;
     rdfs:comment "The cost-computation contract for a scenario: the bound inputs (which agreements, plans, modifiers, usage, profile) and the output schema needed to compute and explain a cost." ;
-    skos:note "Distinct from RatePlanVersion + Scenario + CoverageClaim, which describe the resolved facts and their coverage. ScenarioCostModel is the computation contract: it binds one or more AccountServiceAgreements (RatePlan + modifier combos over service points), the usage/profile inputs, and the urpx:Scenario, and declares the output schema a calculator must produce. Scenario-dependent, versus the scenario-independent RatePlanVersion snapshot. Execution engines and result auditing are outside URPX scope. Produces a ScenarioCostResult." .
+    skos:note "Distinct from RatePlanVersion + Scenario + CoverageClaim, which describe the resolved facts and their coverage. ScenarioCostModel is the computation contract: it binds the RatePlanVersion it prices (consumesVersion), the RatePlanModifierVersions applied to it (consumesModifierVersion), one ProfileAlternative per alternative dimension they leave open (selectsProfileAlternative), and the urpx:Scenario (forScenario), and declares the output schema a calculator must produce. Scenario-dependent, versus the scenario-independent RatePlanVersion snapshot. Execution engines and result auditing are outside URPX scope. Produces a ScenarioCostResult." .
 
 urpx:ScenarioCostResult a owl:Class ;
     rdfs:label "Scenario Cost Result"@en ;
@@ -1258,12 +1258,19 @@ urpx:consolidatedFrom a owl:ObjectProperty ;
     rdfs:range urpx:PricingModel ;
     skos:note "The complete set of contributing models for the snapshot. Supports source-document indexing and a completeness cross-check: every element-level urpx:contributedBy target should appear here, and every model listed here should contribute at least one element or have its exclusion recorded on the claim's Evaluation as a ModelExclusion (urpx:hasModelExclusion). Element-level lineage lives on the elements via urpx:contributedBy." .
 
+urpx:consumesModifierVersion a owl:ObjectProperty ;
+    rdfs:label "Consumes Modifier Version"@en ;
+    rdfs:comment "A RatePlanModifierVersion a ScenarioCostModel applies to the RatePlanVersion it consumes." ;
+    rdfs:domain urpx:ScenarioCostModel ;
+    rdfs:range urpx:RatePlanModifierVersion ;
+    skos:note "One value per modifier version applied. Compatibility with the consumed version is stated on the modifier version by urpx:applicableToRatePlan and urpx:applicableToRatePlanVersion." .
+
 urpx:consumesVersion a owl:ObjectProperty ;
     rdfs:label "Consumes Version"@en ;
-    rdfs:comment "The RatePlanVersion a ScenarioCostModel consumes for a prospect quote (future-window cost computation)." ;
+    rdfs:comment "The RatePlanVersion a ScenarioCostModel prices." ;
     rdfs:domain urpx:ScenarioCostModel ;
     rdfs:range urpx:RatePlanVersion ;
-    skos:note "For prospect quotes (future intervals). Distinct from hasAccountServiceAgreement, which is for existing-account cost cases." .
+    skos:note "At most one per model. Applies to a past or a future window. The modifier versions and profile alternatives applied to it are named by urpx:consumesModifierVersion and urpx:selectsProfileAlternative." .
 
 urpx:containsPricingModel a owl:ObjectProperty ;
     rdfs:label "Contains Pricing Model"@en ;
@@ -1492,7 +1499,7 @@ urpx:description a owl:DatatypeProperty ;
     rdfs:label "Description"@en ;
     rdfs:comment "Detailed description of the item" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:GeneralRule urpx:EligibilityRule urpx:ConditionExpression urpx:ComparisonNode urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:SourcePublication urpx:URPXPackage urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:DataSourceReference urpx:PriceUpdateRule urpx:ApplicabilityRule urpx:OperationNode urpx:BooleanOperationNode urpx:RateCase urpx:ServiceTiers urpx:ModelExclusion ) ] ;
+            owl:unionOf ( urpx:GeneralRule urpx:EligibilityRule urpx:ConditionExpression urpx:ComparisonNode urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:SourcePublication urpx:URPXPackage urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:DataSourceReference urpx:PriceUpdateRule urpx:ApplicabilityRule urpx:OperationNode urpx:BooleanOperationNode urpx:RateCase urpx:ServiceTiers urpx:ModelExclusion  urpx:ScenarioCostModel) ] ;
     rdfs:range xsd:string ;
     skos:note "Comprehensive explanation for documentation (max 1000 chars recommended)." .
 
@@ -2636,7 +2643,7 @@ urpx:name a owl:DatatypeProperty ;
     rdfs:label "Name"@en ;
     rdfs:comment "The name of the item" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:GeneralRule urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceSet urpx:PriceSetAlternatives urpx:PriceDefinition urpx:PriceSummary urpx:SourcePublication urpx:TOUPeriod urpx:URPXPackage urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:OrganizationName urpx:ProfileAlternatives urpx:ProfileAlternative urpx:DataSourceReference urpx:EligibilityRule urpx:TOUSchedule urpx:ServiceTier urpx:ServiceTiers urpx:ApplicabilityRule urpx:ApplicabilityGroup urpx:PriceUpdateRule urpx:ConditionExpression urpx:ComparisonNode urpx:RateCase ) ] ;
+            owl:unionOf ( urpx:GeneralRule urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceSet urpx:PriceSetAlternatives urpx:PriceDefinition urpx:PriceSummary urpx:SourcePublication urpx:TOUPeriod urpx:URPXPackage urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:OrganizationName urpx:ProfileAlternatives urpx:ProfileAlternative urpx:DataSourceReference urpx:EligibilityRule urpx:TOUSchedule urpx:ServiceTier urpx:ServiceTiers urpx:ApplicabilityRule urpx:ApplicabilityGroup urpx:PriceUpdateRule urpx:ConditionExpression urpx:ComparisonNode urpx:RateCase  urpx:ScenarioCostModel) ] ;
     rdfs:range xsd:string ;
     skos:note "Human-readable name for entities. Keep concise for display purposes (max 255 chars recommended). Universal naming property used across all entity types." .
 
@@ -2748,7 +2755,7 @@ urpx:packages a owl:ObjectProperty ;
     rdfs:comment "A unit of URPX content carried by this exchange package." ;
     rdfs:domain urpx:URPXPackage ;
     rdfs:range [ a owl:Class ;
-            owl:unionOf ( urpx:RatePlan urpx:RatePlanModifier urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:PricingModel urpx:TariffFiling urpx:SourcePublication ) ] ;
+            owl:unionOf ( urpx:RatePlan urpx:RatePlanModifier urpx:RatePlanVersion urpx:RatePlanModifierVersion urpx:PricingModel urpx:TariffFiling urpx:SourcePublication  urpx:ScenarioCostModel) ] ;
     skos:note "A package may carry several units, and a unit may be exchanged in a package of its own. The package declares the URPX version its contents were authored against through targetURPXVersion." .
 
 urpx:pageEnd a owl:DatatypeProperty ;
@@ -3151,6 +3158,13 @@ urpx:seasonName a owl:DatatypeProperty ;
     rdfs:domain urpx:Season ;
     rdfs:range xsd:string ;
     skos:note "E.g., 'Summer', 'Winter', 'Peak Season'. Human-readable identifier for season." .
+
+urpx:selectsProfileAlternative a owl:ObjectProperty ;
+    rdfs:label "Selects Profile Alternative"@en ;
+    rdfs:comment "The ProfileAlternative a ScenarioCostModel selects in an alternative dimension left open by the versions it consumes." ;
+    rdfs:domain urpx:ScenarioCostModel ;
+    rdfs:range urpx:ProfileAlternative ;
+    skos:note "One value per open dimension, drawn from the ProfileAlternatives of the consumed RatePlanVersion or RatePlanModifierVersions." .
 
 urpx:selfContained a owl:DatatypeProperty ;
     rdfs:label "Self Contained"@en ;

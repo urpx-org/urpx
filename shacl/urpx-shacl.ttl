@@ -4469,6 +4469,18 @@ urpx-shacl:ScenarioCostModelShape
     sh:closed true ;
     sh:ignoredProperties ( rdf:type urpx:hasTemporalScope ) ;
     sh:property [
+        sh:path urpx:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
         sh:path urpx:forScenario ;
         sh:class urpx:Scenario ;
         sh:minCount 0 ;
@@ -4483,6 +4495,17 @@ urpx-shacl:ScenarioCostModelShape
     sh:property [
         sh:path urpx:consumesVersion ;
         sh:class urpx:RatePlanVersion ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:consumesModifierVersion ;
+        sh:class urpx:RatePlanModifierVersion ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path urpx:selectsProfileAlternative ;
+        sh:class urpx:ProfileAlternative ;
         sh:minCount 0 ;
     ] ;
     sh:property [
@@ -5868,6 +5891,7 @@ urpx-shacl:URPXPackageShape
             [ sh:class urpx:PricingModel ]
             [ sh:class urpx:TariffFiling ]
             [ sh:class urpx:SourcePublication ]
+            [ sh:class urpx:ScenarioCostModel ]
         ) ;
         sh:minCount 0 ;
     ] ;
