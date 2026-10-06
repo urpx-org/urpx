@@ -3,7 +3,7 @@
 
 # URPX v0.5.1 Release Notes
 
-**Released:** 2026-10-04.
+**Released:** 2026-10-06.
 **Type:** Working Group Draft patch release.
 **Previous release:** [`v0.5.0`](urpx-release-notes-v0.5.0.md)
 
