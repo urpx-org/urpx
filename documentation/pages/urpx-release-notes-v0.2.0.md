@@ -97,7 +97,7 @@ To migrate an older pre-release dataset to `v0.2.0`:
 - remove `demandThreshold` and express threshold logic through rules / metric patterns
 - add `urpx:targetURPXVersion` to `URPXDocument` using:
   `https://github.com/urpx-org/urpx/raw/v0.2.0/ontology/urpx-ontology.ttl`
-- rerun SHACL validation against [`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl)
+- rerun SHACL validation against [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
 
 The updated PG&E E-ELEC example under [`test-cases/`](https://github.com/urpx-org/urpx/tree/main/test-cases) can be used as a current-model reference.
 

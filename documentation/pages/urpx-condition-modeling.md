@@ -12,7 +12,7 @@ site_position: 1
 # URPX Condition Model
 
 **Version:** 0.5.1
-**Last Updated:** 2026-08-20  
+**Last Updated:** 2026-10-05  
 **Status:** Adopted for URPX 0.4.0  
 **Scope:** Structured condition-expression modeling in eligibility, applicability, and related contexts  
 **Ontology Source:** [`urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)  
@@ -201,9 +201,9 @@ These are optional and non-semantic. They are intended for human readability, au
 
 #### `urpx:ApplicabilityGroup`
 
-**Description:** Geographic and service class applicability rules for statement prices.
+**Description:** Grouping of applicability rules applicable to prices.
 
-**Condition Model Role:** An applicability group may optionally use `urpx:hasConditionExpression` when its built-in applicability fields need supplemental structured condition logic.
+**Condition Model Role:** An applicability group may optionally use `urpx:hasConditionExpression` when its applicability needs structured condition logic beyond its `applicabilityLogic` text.
 
 **Relevant Properties:**
 
@@ -504,7 +504,7 @@ Datatype-specific value properties are compact in JSON-LD because their coercion
 
 ### Note on Decimals
 
-If exact decimal fidelity matters in a specific toolchain, implementations should verify that the JSON-LD processor preserves `xsd:decimal` coercion as intended for `urpx:decimalValue` values written as JSON numbers.
+Write `urpx:decimalValue` literals as quoted strings, as the examples on this page do. A JSON number lands as a floating-point literal that the shapes reject even under `xsd:decimal` coercion; the tutorial and every test case follow the same rule.
 
 ---
 
@@ -576,6 +576,8 @@ If exact decimal fidelity matters in a specific toolchain, implementations shoul
 ```
 
 ### Derived Decimal Comparison With OperationNode
+
+The two metric inputs are defined in the version's `PlanElements` with units chosen so that the quotient is a ratio.
 
 ```json
 {
@@ -700,7 +702,7 @@ graph TD
 
 The examples above show individual parts of the model. The following JSON-LD example shows one complete `ConditionExpression` graph in a single document, including the owning `EligibilityRule`, the `ConditionExpression`, the boolean root node, and the comparison nodes embedded directly in `urpx:operandNodes`.
 
-The same graph pattern can also be attached to `ApplicabilityRule`, `ApplicabilityGroup`, or `ProfileAlternative`.
+The same graph pattern can also be attached to `ApplicabilityRule`, `ApplicabilityGroup`, or `ProfileAlternative`. The metric input the threshold reads, `ex:mi-average-monthly-usage`, is included as the last node.
 
 ```json
 {
@@ -754,6 +756,24 @@ The same graph pattern can also be attached to `ApplicabilityRule`, `Applicabili
             }
           }
         ]
+      }
+    },
+    {
+      "@id": "ex:mi-average-monthly-usage",
+      "@type": "urpx:MetricInput",
+      "urpx:name": "Average monthly usage",
+      "urpx:metricInputType": { "@id": "urpx:calculatedMetricInput" },
+      "urpx:hasMetricSpecification": {
+        "@type": "urpx:MetricSpecification",
+        "urpx:commodity": { "@id": "urpx:electricity" },
+        "urpx:measurementKind": { "@id": "urpx:energy" },
+        "urpx:unitOfMeasure": { "@id": "urpx:kWh" },
+        "urpx:intervalDuration": "P1M",
+        "urpx:hasCalculationMethod": {
+          "@type": "urpx:CalculationMethod",
+          "urpx:aggregationMethod": { "@id": "urpx:average" },
+          "urpx:intervalDuration": "P12M"
+        }
       }
     }
   ]

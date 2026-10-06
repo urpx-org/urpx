@@ -20,7 +20,7 @@ Welcome to the URPX documentation. URPX is an open standard for exchanging utili
 ### Technical Reference
 - **[Data Dictionary](pages/urpx-data-dictionary.md)** - Complete reference of classes, properties, and enumerations
 - **[Syntax Guidelines](pages/urpx-syntax-guidelines.md)** - Labeling conventions and ontology syntax standards
-- **[API Specification](pages/urpx-api-spec.md)** - REST and SPARQL API patterns
+- **[API Specification](pages/urpx-api-spec.md)** - REST and SPARQL API patterns (non-normative sketch; the access API is in development)
 - **[Quality Assurance](pages/urpx-quality-assurance.md)** - Validation and quality standards
 - **[Test Data Review Guide](pages/urpx-test-data-review-guide.md)** - How to review tariff-to-URPX test cases for structural validity and source fidelity
 - **[Condition Model](pages/urpx-condition-modeling.md)** - Structured condition-expression architecture and validation patterns
@@ -34,8 +34,7 @@ Welcome to the URPX documentation. URPX is an open standard for exchanging utili
 - **[Diagram Index](pages/urpx-diagram-index.md)** - Visual guides and architecture diagrams
 
 ### Integration & Standards
-- **[Interoperability & Integration](pages/urpx-interoperability.md)** - Standards mapping (Green Button, CIM, OpenADR), SKOS methodology, and integration patterns
-- **[Internationalization](pages/urpx-i18n-guide.md)** - Multi-language and currency support
+- **[Interoperability & Integration](pages/urpx-interoperability.md)** - Standards mapping (Schema.org published; Green Button, LF Energy CDS, CIM, OpenADR in draft), SKOS methodology, and integration patterns
 
 ---
 
@@ -49,7 +48,7 @@ Welcome to the URPX documentation. URPX is an open standard for exchanging utili
 
 ## Contributing
 
-URPX is an open standard developed collaboratively. Contributions welcome:
+URPX is an open standard developed collaboratively. See [CONTRIBUTING.md](../CONTRIBUTING.md) for the process. Contributions welcome:
 - Bug reports and feature requests
 - Documentation improvements
 - Example implementations
