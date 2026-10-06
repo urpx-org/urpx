@@ -3,9 +3,18 @@
 
 # URPX Changelog
 
-**Version:** 0.5.1 (Working Group Draft) **Last Updated:** 2026-10-05
+**Version:** 0.5.1 (Working Group Draft) **Last Updated:** 2026-10-06
 
 [← Back to Index](documentation/index.md) | [Overview](documentation/pages/urpx-overview.md) | [Data Dictionary](documentation/pages/urpx-data-dictionary.md)
+
+2026-10-06 — v0.5.1 (schema.org mapping and two property domains align with the ontology)
+---
+
+### Fixed
+- The URPX to Schema.org SKOS mapping now maps `urpx:timezoneIdentifier`, the ontology's declared IANA timezone property, to `schema:timeZone`. It previously named `urpx:timeZone`, which the ontology does not declare.
+
+### Changed
+- `urpx:description` may now be stated on `urpx:Evaluation`, and `urpx:effectiveDate` on `urpx:RatePlanVersion`; each property's domain union gains the class, matching the shapes that already allow it and the test-case data that asserts it.
 
 2026-10-01 — v0.5.1 (the development record moves to urpx-dev)
 ---
