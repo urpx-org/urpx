@@ -10,6 +10,7 @@ authors:
     given-names: "Klaartje"
   - name: "URPX Working Group"
 version: 0.5.1
+date-released: 2026-10-06
 license:
   - Apache-2.0
   - W3C-20150513

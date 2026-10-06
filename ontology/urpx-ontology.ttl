@@ -25,7 +25,7 @@
     dcterms:creator "Klaar De Schepper, Una Smithsimon, Flux Tailor LLC" ;
     dcterms:description "URPX ontology for utility rate plan exchange" ;
     dcterms:license <https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document> ;
-    dcterms:modified "2026-09-08"^^xsd:date ;
+    dcterms:modified "2026-10-06"^^xsd:date ;
     dcterms:title "URPX Ontology" ;
     dcterms:hasVersion <https://urpx.org/ns/ontology/releases/v0.5.1> ;
     owl:versionIRI <https://github.com/urpx-org/urpx/raw/v0.5.1/ontology/urpx-ontology.ttl> .
@@ -33,7 +33,7 @@
 <https://urpx.org/ns/ontology/releases/v0.5.1>
     a owl:Ontology ;
     dcterms:isVersionOf <https://urpx.org/ns/ontology> ;
-    dcterms:issued "2026-09-14"^^xsd:date ;
+    dcterms:issued "2026-10-06"^^xsd:date ;
     owl:versionInfo "0.5.1" ;
     dcat:distribution <https://urpx.org/ns/ontology/releases/v0.5.1/ttl> .
 
@@ -1492,7 +1492,7 @@ urpx:description a owl:DatatypeProperty ;
     rdfs:label "Description"@en ;
     rdfs:comment "Detailed description of the item" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:GeneralRule urpx:EligibilityRule urpx:ConditionExpression urpx:ComparisonNode urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:SourcePublication urpx:URPXPackage urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:DataSourceReference urpx:PriceUpdateRule urpx:ApplicabilityRule urpx:OperationNode urpx:BooleanOperationNode urpx:RateCase urpx:ServiceTiers urpx:ModelExclusion ) ] ;
+            owl:unionOf ( urpx:GeneralRule urpx:EligibilityRule urpx:ConditionExpression urpx:ComparisonNode urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:Price urpx:PriceDefinition urpx:PriceSet urpx:SourcePublication urpx:URPXPackage urpx:CalculationMethod urpx:MetricInput urpx:Ledger urpx:DataSourceReference urpx:PriceUpdateRule urpx:ApplicabilityRule urpx:OperationNode urpx:BooleanOperationNode urpx:RateCase urpx:ServiceTiers urpx:ModelExclusion urpx:Evaluation ) ] ;
     rdfs:range xsd:string ;
     skos:note "Comprehensive explanation for documentation (max 1000 chars recommended)." .
 
@@ -1536,7 +1536,7 @@ urpx:effectiveDate a owl:DatatypeProperty ;
     rdfs:label "Effective Date"@en ;
     rdfs:comment "Date when entity becomes active" ;
     rdfs:domain [ a owl:Class ;
-            owl:unionOf ( urpx:DataSourceReference urpx:RatePlan urpx:RatePlanModifier urpx:PricingModel urpx:SourcePublication urpx:URPXPackage urpx:TariffFiling urpx:PriceDefinition urpx:TOUSchedule urpx:Season urpx:HolidayCalendar urpx:ServiceTiers ) ] ;
+            owl:unionOf ( urpx:DataSourceReference urpx:RatePlan urpx:RatePlanModifier urpx:RatePlanVersion urpx:PricingModel urpx:SourcePublication urpx:URPXPackage urpx:TariffFiling urpx:PriceDefinition urpx:TOUSchedule urpx:Season urpx:HolidayCalendar urpx:ServiceTiers ) ] ;
     rdfs:range xsd:date ;
     skos:note "ISO 8601 date format. For date-only specifications." .
 
