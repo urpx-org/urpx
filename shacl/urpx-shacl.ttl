@@ -4642,6 +4642,18 @@ urpx-shacl:ServiceBracketShape
                 sh:path urpx:upperBoundOperator ;
                 sh:maxCount 0 ;
             ] ;
+            sh:property [
+                sh:path urpx:adjustsServiceTier ;
+                sh:maxCount 0 ;
+            ] ;
+            sh:property [
+                sh:path urpx:lowerBoundOffset ;
+                sh:maxCount 0 ;
+            ] ;
+            sh:property [
+                sh:path urpx:upperBoundOffset ;
+                sh:maxCount 0 ;
+            ] ;
         ]
         [
             sh:property [
@@ -4664,6 +4676,18 @@ urpx-shacl:ServiceBracketShape
                 sh:minCount 1 ;
                 sh:maxCount 1 ;
             ] ;
+            sh:property [
+                sh:path urpx:adjustsServiceTier ;
+                sh:maxCount 0 ;
+            ] ;
+            sh:property [
+                sh:path urpx:lowerBoundOffset ;
+                sh:maxCount 0 ;
+            ] ;
+            sh:property [
+                sh:path urpx:upperBoundOffset ;
+                sh:maxCount 0 ;
+            ] ;
         ]
         [
             sh:property [
@@ -4684,8 +4708,61 @@ urpx-shacl:ServiceBracketShape
                 sh:minCount 1 ;
                 sh:maxCount 1 ;
             ] ;
+            sh:property [
+                sh:path urpx:adjustsServiceTier ;
+                sh:maxCount 0 ;
+            ] ;
+            sh:property [
+                sh:path urpx:lowerBoundOffset ;
+                sh:maxCount 0 ;
+            ] ;
+            sh:property [
+                sh:path urpx:upperBoundOffset ;
+                sh:maxCount 0 ;
+            ] ;
+        ]
+        [
+            sh:property [
+                sh:path urpx:lowerBound ;
+                sh:maxCount 0 ;
+            ] ;
+            sh:property [
+                sh:path urpx:lowerBoundOperator ;
+                sh:maxCount 0 ;
+            ] ;
+            sh:property [
+                sh:path urpx:upperBound ;
+                sh:maxCount 0 ;
+            ] ;
+            sh:property [
+                sh:path urpx:upperBoundOperator ;
+                sh:maxCount 0 ;
+            ] ;
+            sh:property [
+                sh:path urpx:adjustsServiceTier ;
+                sh:minCount 1 ;
+            ] ;
+            sh:or (
+                [
+                    sh:property [
+                        sh:path urpx:lowerBoundOffset ;
+                        sh:minCount 1 ;
+                    ] ;
+                ]
+                [
+                    sh:property [
+                        sh:path urpx:upperBoundOffset ;
+                        sh:minCount 1 ;
+                    ] ;
+                ]
+            ) ;
         ]
     ) ;
+    sh:property [
+        sh:path urpx:adjustsServiceTier ;
+        sh:class urpx:ServiceTier ;
+        sh:minCount 0 ;
+    ] ;
     sh:property [
         sh:path urpx:appliesInSeason ;
         sh:class urpx:Season ;
@@ -4693,6 +4770,12 @@ urpx-shacl:ServiceBracketShape
     ] ;
     sh:property [
         sh:path urpx:lowerBound ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:lowerBoundOffset ;
         sh:datatype xsd:decimal ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
@@ -4711,6 +4794,12 @@ urpx-shacl:ServiceBracketShape
     ] ;
     sh:property [
         sh:path urpx:upperBound ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path urpx:upperBoundOffset ;
         sh:datatype xsd:decimal ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
