@@ -290,6 +290,20 @@ urpx-shacl:BillingModelShape
     sh:targetClass urpx:BillingModel ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type urpx:hasTemporalScope ) ;
+    sh:or (
+        [
+            sh:property [
+                sh:path urpx:hasPriceDefinition ;
+                sh:minCount 1 ;
+            ] ;
+        ]
+        [
+            sh:property [
+                sh:path ( urpx:hasServiceTiers urpx:hasServiceTier urpx:hasServiceBracket urpx:adjustsServiceTier ) ;
+                sh:minCount 1 ;
+            ] ;
+        ]
+    ) ;
     sh:property [
         sh:path urpx:hasLedger ;
         sh:class urpx:Ledger ;
@@ -298,7 +312,7 @@ urpx-shacl:BillingModelShape
     sh:property [
         sh:path urpx:hasPriceDefinition ;
         sh:class urpx:PriceDefinition ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
     ] ;
     sh:property [
         sh:path urpx:hasServiceTiers ;
@@ -4762,6 +4776,14 @@ urpx-shacl:ServiceBracketShape
         sh:path urpx:adjustsServiceTier ;
         sh:class urpx:ServiceTier ;
         sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:node [
+            sh:property [
+                sh:path ( urpx:hasServiceBracket urpx:adjustsServiceTier ) ;
+                sh:maxCount 0 ;
+            ] ;
+        ] ;
+        sh:description "The adjusted tier holds no adjusting brackets, so an adjusting bracket cannot target its own host tier or any other host tier."@en ;
     ] ;
     sh:property [
         sh:path urpx:appliesInSeason ;
@@ -4979,6 +5001,38 @@ urpx-shacl:ServiceTierShape
     sh:targetClass urpx:ServiceTier ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type urpx:hasTemporalScope ) ;
+    sh:or (
+        [
+            sh:property [
+                sh:path urpx:serviceTierNumber ;
+                sh:minCount 1 ;
+            ] ;
+            sh:property [
+                sh:path urpx:hasServiceBracket ;
+                sh:node [
+                    sh:property [
+                        sh:path urpx:adjustsServiceTier ;
+                        sh:maxCount 0 ;
+                    ] ;
+                ] ;
+            ] ;
+        ]
+        [
+            sh:property [
+                sh:path urpx:serviceTierNumber ;
+                sh:maxCount 0 ;
+            ] ;
+            sh:property [
+                sh:path urpx:hasServiceBracket ;
+                sh:node [
+                    sh:property [
+                        sh:path urpx:adjustsServiceTier ;
+                        sh:minCount 1 ;
+                    ] ;
+                ] ;
+            ] ;
+        ]
+    ) ;
     sh:property [
         sh:path urpx:hasServiceBracket ;
         sh:class urpx:ServiceBracket ;
@@ -4993,7 +5047,7 @@ urpx-shacl:ServiceTierShape
     sh:property [
         sh:path urpx:serviceTierNumber ;
         sh:datatype xsd:integer ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
     ] .
 
