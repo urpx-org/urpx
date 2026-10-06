@@ -8,11 +8,7 @@
 Satisfied 2026-07-17.
 **Last reviewed:** 2026-09-09.
 
-This document explains how the URPX repository will transition license
-identifiers when the URPX Working Group (under LFESS) formally accepts
-URPX materials as a Draft. It is the reviewer-facing runbook and the
-source of truth for the transition manifest consumed by
-`scripts/transition-license.py`.
+This document explains how the URPX repository will transition license identifiers when the URPX Working Group (under LFESS) formally accepts URPX materials as a Draft. It is the reviewer-facing runbook and the source of truth for the transition manifest consumed by `scripts/transition-license.py`.
 
 ---
 
@@ -24,7 +20,7 @@ Following Working Group Draft acceptance (2026-07-17), files transition by the c
 
 Upon Working Group Draft acceptance, files transition by category:
 
-| Category | Current | Post-Draft target | Rationale |
+| Category | Before transition | Post-Draft target | Rationale |
 |---|---|---|---|
 | **Specification documents** | Apache-2.0 | W3C-20150513 (W3C Software Notice and Document License) | Standard W3C-compatible license for specification text. Covers ontology, SHACL, SKOS mappings, and all document pages that define the URPX standard. |
 | **Datasets** | Apache-2.0 | CDLA-Permissive-2.0 | Community Data License Agreement Permissive 2.0 — industry standard for open datasets distributed alongside specifications. Covers test-case data and index files. |
@@ -33,8 +29,7 @@ Upon Working Group Draft acceptance, files transition by category:
 
 ## 3. File-classification manifest
 
-This TOML block is the **source of truth** consumed by
-`scripts/transition-license.py`. Edit only with operator review.
+This TOML block is the **source of truth** consumed by `scripts/transition-license.py`. Edit only with operator review.
 
 ```toml
 [manifest]
@@ -143,54 +138,43 @@ paths = [
 
 **Note on the specification target identifier.** `W3C-20150513` is the valid SPDX identifier used here for the W3C Software Notice and Document License. The SPDX record states that the 2023 minor modifications did not require a new identifier, so the same identifier applies. `W3C-20231102` is retained here only as the invalid identifier originally recorded in this transition plan.
 
-`documentation/pages/urpx-data-dictionary.md` and `documentation/diagrams/**/*.svg` (seventeen files: sixteen dictionary SVGs plus `documentation/diagrams/urpx-temporal-versioning-summary.svg`) match this section's globs conceptually but carry no inline header or sidecar; REUSE.toml annotations carry their license instead, since the script's rewrite cannot reach either. Both now carry `W3C-20150513` there.
+`documentation/pages/urpx-data-dictionary.md` and `documentation/diagrams/**/*.svg` (the generated dictionary SVGs, seventeen at the time of the transition) match this section's globs conceptually but carry no inline header or sidecar; REUSE.toml annotations carry their license instead, since the script's rewrite cannot reach either. Both now carry `W3C-20150513` there.
 
-## 4. Transition procedure
+## 4. Transition procedure (as run on 2026-09-09)
 
-When the Working Group accepts URPX to Draft:
+The procedure below is the one that was followed; it is kept as the record. When the Working Group accepts URPX to Draft:
 
-1. **Operator confirms the trigger event.** Record the acceptance date
-   and any Working Group decision references.
+1. **Operator confirms the trigger event.** Record the acceptance date and any Working Group decision references.
 2. **Preview the transition.** Run:
    ```
    python3 scripts/transition-license.py
    ```
    Default mode is preview. No files modified. Review the summary diff.
-   Every specification file should appear as
-   `Apache-2.0 -> W3C-20150513`, every dataset as
-   `Apache-2.0 -> CDLA-Permissive-2.0`, source/meta files unchanged.
+   Every specification file should appear as `Apache-2.0 -> W3C-20150513`, every dataset as `Apache-2.0 -> CDLA-Permissive-2.0`, source/meta files unchanged.
 3. **Download the new license texts.** The script offers a flag:
    ```
    python3 scripts/transition-license.py --download-licenses
    ```
-   which invokes `reuse download` for `W3C-20150513` and
-   `CDLA-Permissive-2.0` into `LICENSES/`.
-4. **Apply.** Once the preview is correct and license texts are in
-   place:
+   which invokes `reuse download` for `W3C-20150513` and `CDLA-Permissive-2.0` into `LICENSES/`.
+4. **Apply.** Once the preview is correct and license texts are in place:
    ```
    python3 scripts/transition-license.py --apply
    ```
    <!-- REUSE-IgnoreStart -->
-   The script rewrites `SPDX-License-Identifier:` lines in inline
-   headers (.ttl), updates companion `.license` sidecars, and adjusts
-   REUSE.toml entries as needed.
+   The script rewrites `SPDX-License-Identifier:` lines in inline headers (.ttl), updates companion `.license` sidecars, and adjusts REUSE.toml entries as needed.
    <!-- REUSE-IgnoreEnd -->
-5. **Verify.** Run `reuse lint` — must exit 0. Run a fresh ScanCode
-   scan and compare metrics against the pre-transition snapshot.
-6. **Update this document.** Change section 1 from "Active" to
-   "Completed on YYYY-MM-DD". Move the manifest to historical reference
-   status.
+5. **Verify.** Run `reuse lint` — must exit 0. Run a fresh ScanCode scan and compare metrics against the pre-transition snapshot.
+6. **Update this document.** Change section 1 from "Active" to "Completed on YYYY-MM-DD". Move the manifest to historical reference status.
 7. **Update `urpx-changelog.md`** with the transition entry.
 8. **Operator commits the changes.** (The script never commits.)
 
-## 5. Rollback
+## 5. Rollback (as planned, not needed)
 
 If the Working Group requests changes during Draft acceptance review:
 
 1. Revert the single commit produced by `--apply` via `git revert`.
 2. Re-run `reuse lint` to confirm clean state.
-3. Leave this document in "Active" status; revisit once the Working
-   Group confirms final acceptance.
+3. Leave this document in "Active" status; revisit once the Working Group confirms final acceptance.
 
 ## 6. Notes on individual spec files
 
@@ -198,13 +182,6 @@ Specification and dataset files carry their current SPDX identifiers through inl
 
 ## 7. Relationship to LFESS governance
 
-The LFESS Working Group Charter for URPX designates the Working Group
-as the responsible body for promoting URPX materials through stages
-(Sandbox -> Draft -> Approved). The choice of the W3C Document License
-for specification text at Draft aligns URPX with broader W3C
-compatibility goals and is consistent with the repository's historical
-note (see README) that "subsequent versions will be published under a
-W3C license."
+The LFESS Working Group Charter for URPX designates the Working Group as the responsible body for promoting URPX materials through stages (Sandbox -> Draft -> Approved). The choice of the W3C Document License for specification text at Draft aligns URPX with broader W3C compatibility goals and is consistent with the note the README carried before the transition that "subsequent versions will be published under a W3C license."
 
-Contact: `urpx-wg@lists.lfenergy.org` for Working Group matters;
-`security@urpx.org` for security concerns (see [SECURITY.md](SECURITY.md)).
+Contact: `urpx-wg@lists.lfenergy.org` for Working Group matters; `security@urpx.org` for security concerns (see [SECURITY.md](SECURITY.md)).

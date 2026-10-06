@@ -802,7 +802,7 @@ urpx:PanelOrientationValue a owl:Class ;
 urpx:PhaseCodeKindValue a owl:Class ;
     rdfs:label "Phase Code Kind Value"@en ;
     rdfs:comment "Enumeration of electrical phase configurations." ;
-    owl:equivalentClass [ owl:oneOf (urpx:A urpx:AB urpx:ABN urpx:ABC urpx:ABCN urpx:AC urpx:ACN urpx:AN urpx:AtoAv urpx:B urpx:BAv urpx:BC urpx:BCN urpx:BN urpx:C urpx:CAv urpx:CN urpx:N urpx:NG urpx:S1 urpx:S12 urpx:S12N urpx:S1N urpx:S2 urpx:S2N ) ] ;
+    owl:equivalentClass [ owl:oneOf (urpx:A urpx:AB urpx:ABC urpx:ABCN urpx:ABN urpx:AC urpx:ACN urpx:AN urpx:AtoAv urpx:B urpx:BAv urpx:BC urpx:BCN urpx:BN urpx:C urpx:CAv urpx:CN urpx:N urpx:NG urpx:S1 urpx:S12 urpx:S12N urpx:S1N urpx:S2 urpx:S2N ) ] ;
     skos:note "Enumeration class for electrical phase code classification." .
 
 urpx:PhaseCategoryValue a owl:Class ;

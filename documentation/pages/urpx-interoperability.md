@@ -11,13 +11,10 @@ site_position: 1
 
 # URPX Interoperability & Standards Integration
 
-> **DRAFT DOCUMENT - WORKING GROUP REVIEW ONLY**
->
-> **Status**: Draft in Progress
-> **Audience**: URPX Working Group Members
-> **Warning**: This document is under active development and subject to significant changes. Content may be incomplete, inaccurate, or outdated.
->
-> **Purpose**: Internal working group review and discussion to establish standards integration and mapping methodology.
+**Version:** 0.5.1 (Working Group Draft)
+**Last Updated:** 2026-10-04
+
+> **Draft.** The mapping profiles on this page are under working group review. Only the Schema.org profile is published; see [Mapping Profile Publication](#mapping-profile-publication).
 
 **Comprehensive guide to URPX interoperability, multi-standard integration, and semantic mapping.**
 
@@ -31,7 +28,7 @@ site_position: 1
 2. [Standards Ecosystem](#standards-ecosystem)
 3. [Mapping Methodology](#mapping-methodology)
 4. [SKOS Semantic Approach](#skos-semantic-approach)
-5. [Supported Standards & Integrations](#supported-standards--integrations)
+5. [Standards and Draft Alignments](#standards-and-draft-alignments)
     - [Green Button Alliance](#green-button-alliance)
     - [LF Energy CDS](#lf-energy-cds)
     - [Common Information Model (CIM)](#common-information-model-cim)
@@ -44,7 +41,7 @@ site_position: 1
 
 ## Overview
 
-URPX follows a **complementary architecture** approach, integrating with existing utility data standards to provide comprehensive rate plan information within the broader energy data ecosystem. Rather than creating isolated formats, URPX provides formal mappings that preserve semantics across system boundaries.
+URPX follows a **complementary architecture** approach: it integrates with existing utility data standards to provide complete rate plan information within the broader energy data ecosystem. URPX provides formal mappings that preserve semantics across system boundaries.
 
 ### Why Multi-Standard Integration Matters
 
@@ -54,7 +51,7 @@ Utility rate plan data does not exist in isolation. It must integrate with:
 - **Smart home/IoT** (Zigbee, Matter, Thread)
 - **Grid operations** (CIM, IEC standards)
 
-URPX mappings enable bidirectional data exchange while preserving meaning and ensuring data quality across all these ecosystems.
+URPX mappings are designed for bidirectional data exchange that preserves meaning across these ecosystems.
 
 ---
 
@@ -87,7 +84,7 @@ graph TB
     URPX <-->|Property<br/>Alignment| CIM
     URPX -->|Rate Plan<br/>Enhancement| OpenEI
     URPX -->|Dynamic Pricing<br/>Events| OpenADR
-    URPX -->|DER Rate<br/>Signaling| IEEE
+    URPX -->|DER Price<br/>Signaling| IEEE
     
     CIM -->|Model & Measurement<br/>Foundation| CD
 ```
@@ -108,7 +105,7 @@ graph TB
 
 ## Mapping Methodology
 
-URPX uses formal RDF mappings to connect with other standards. Each mapping profile includes:
+URPX uses formal RDF mappings to connect with other standards. A complete mapping profile is expected to cover:
 
 **1. Vocabulary Alignment**
 - Class mappings (URPX classes ↔ Standard classes)
@@ -123,24 +120,24 @@ URPX uses formal RDF mappings to connect with other standards. Each mapping prof
 
 **3. Bidirectional Fidelity**
 - Round-trip conversion verification
-- Loss-less transformation where possible
+- Lossless transformation where possible
 - Extension fields for standard-specific data
 
 ---
 
 ## SKOS Semantic Approach
 
-To map URPX to existing standards without creating hard technical dependencies or IP risks, we use **SKOS (Simple Knowledge Organization System)**. SKOS is a W3C standard designed for linking controlled vocabularies and taxonomies across different domains.
+To map URPX to existing standards without creating hard technical dependencies, URPX uses **SKOS (Simple Knowledge Organization System)**. SKOS is a W3C standard designed for linking controlled vocabularies and taxonomies across different domains.
 
 **Mapping Logic used in URPX:**
 
-* **`skos:exactMatch`**: Used for concepts that are semantically identical (e.g., `urpx:unitPrice` to a specific API field).  
-* **`skos:broadMatch`**: Used when URPX provides a more generalized concept (e.g., URPX supports Water/Gas while the target is Energy-only).  
+* **`skos:exactMatch`**: Used for concepts that are semantically identical (e.g., `urpx:unitPrice` to a specific API field).
+* **`skos:broadMatch`**: Used when the target concept is broader than the URPX concept (e.g., a general line item in the target standard against a specific URPX price). `skos:narrowMatch` states the reverse (e.g., URPX supports water and gas while the target is energy-only).
 * **`skos:relatedMatch`**: Used for functional links where structures differ but the purpose is shared (e.g., linking a Rate Plan to an IoT Pricing Signal).
 
 ---
 
-## Supported Standards & Integrations
+## Standards and Draft Alignments
 
 Mapping work is in progress. The alignments in this section show the approach and the matches drafted so far; they are under working-group review and will change. Only the Schema.org mapping is published as a settled profile. See [Mapping Profile Publication](#mapping-profile-publication) for the status of each file.
 
@@ -149,7 +146,7 @@ Mapping work is in progress. The alignments in this section show the approach an
 **Purpose**: Customer usage data exchange standard.
 
 #### Integration Logic
-Green Button provides interval usage measurements that align with URPX TOU periods for accurate cost calculation.
+Green Button provides interval usage measurements that align with URPX time-of-use (TOU) periods for accurate cost calculation.
 
 **Cost Calculation Flow**:
 1. URPX provides TOU schedule and charge structure
@@ -180,19 +177,10 @@ gb:ItemKind_AdministrativeFee a skos:Concept ;
 
 ### LF Energy CDS
 
-**Purpose**: Customer Data Specification for accounts and billing.
+**Purpose**: Connected Data Specifications (CDS), the LF Energy family of data access standards; its Customer Data specification covers accounts and billing.
 
 #### Integration Logic
-URPX maintains privacy boundaries through reference-only integration. URPX billing cycles align with CDS billing periods.
-
-**URPX ServiceAccount**:
-```json
-{
-  "@type": "ServiceAccount",
-  "serviceAccountReference": "cds:customer:uuid-550e8400-e29b-41d4-a716-446655440000",
-  "accountServiceType": {"@id": "urpx:electricService"}
-}
-```
+URPX maintains privacy boundaries through reference-only integration. Service account and agreement data lives in the customer data system; URPX carries `urpx:AccountServiceAgreement` as the contractual hook for eligibility and refers to the customer record by its URI. URPX billing cycles align with CDS billing periods.
 
 #### Mapping Example
 ```turtle
@@ -215,7 +203,7 @@ lfe:ConsumptionCharge a skos:Concept ;
 **Purpose**: Enterprise utility system integration (IEC 61968/61970).
 
 #### Integration Logic
-URPX reuses CIM properties for industry alignment, particularly for measurement definitions.
+URPX aligns its measurement properties with CIM, particularly for measurement definitions.
 
 - `measurementKind` ↔ CIM ReadingType
 - `unitOfMeasure` ↔ CIM UnitSymbol
@@ -228,7 +216,7 @@ URPX reuses CIM properties for industry alignment, particularly for measurement 
 @prefix cim: <http://iec.ch/TC57/CIM-generic#> .
 
 # Class Alignment
-urpx:TOUPeriod skos:broadMatch cim:TimeTariffInterval ;
+urpx:TOUPeriod skos:narrowMatch cim:TimeTariffInterval ;
     skos:note "Generalized for multi-utility use; CIM equivalent is energy-specific." .
 
 urpx:Price skos:exactMatch cim:Price .
@@ -248,9 +236,9 @@ urpx:Price skos:exactMatch cim:Price .
 @prefix urpx: <https://urpx.org/ns/ontology/> .
 @prefix oadr: <http://openadr.org/oadr#> .
 
-# Event Mapping
+# Event Mapping, OpenADR 2.0b terms
 urpx:DynamicPricing skos:relatedMatch oadr:EiEvent ;
-    skos:note "URPX defines the rate boundaries; OpenADR signals real-time values." .
+    skos:note "URPX defines the pricing periods, price definitions, and price values feeding either to or from pricing servers; OpenADR signals real-time values." .
 
 urpx:currentPrice skos:relatedMatch oadr:oadrPayload ;
     skos:note "Maps to the price signal value within an OpenADR message." .
@@ -264,6 +252,8 @@ urpx:currentPrice skos:relatedMatch oadr:oadrPayload ;
 Bridges utility rate plan structures to residential Energy Management Clusters in the Matter 1.4+ standard.
 
 ```turtle
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
 @prefix matter: <http://csa-iot.org/matter#> .
 
 urpx:TOUTierStandardNameValue skos:relatedMatch matter:EnergyManagementCluster ;
@@ -271,9 +261,11 @@ urpx:TOUTierStandardNameValue skos:relatedMatch matter:EnergyManagementCluster ;
 ```
 
 #### Zigbee Integration
-Maps rate information to the legacy and modern HAN (Home Area Network) clusters.
+Maps rate plan prices to the legacy and modern HAN (Home Area Network) clusters.
 
 ```turtle
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
 @prefix zigbee: <http://zigbee.org/sep#> .
 
 urpx:Price skos:relatedMatch zigbee:PriceCluster ;
@@ -284,15 +276,15 @@ urpx:Price skos:relatedMatch zigbee:PriceCluster ;
 
 ## Mapping Profile Publication
 
-Each published mapping profile includes header metadata, vocabulary declarations, and bidirectional mapping rules.
+A published mapping profile carries header metadata, vocabulary declarations, and its mapping rules.
 
 **Directory**: `skos/standards-integration/`
 
-**Naming Convention**: `urpx-{standard-name}-mappings.ttl`
+**Naming Convention**: `urpx-{standard-name}-mapping.ttl`
 
-**Versioning**: Mapping files are versioned independently from URPX core (Major.Minor.Patch).
+**Versioning**: Mapping files are versioned independently from the URPX core vocabulary (Major.Minor.Patch). The published Schema.org file does not yet declare a version.
 
-**Status**: Mapping is an active work stream, and the profiles are at different stages. Each published file states its own status in its header.
+**Status**: Mapping is an active work stream, and the profiles are at different stages. The table below states each profile's status.
 
 | Profile | File | Status |
 | --- | --- | --- |
@@ -306,7 +298,7 @@ Two further profiles, Green Button (NAESB ESPI) and LF Energy CDS, are work in p
 
 ### Pattern 1: Rate Plan Cost Modeling
 
-**Use Case**: Retrieve a customer's meter and account data, determine eligible rate plans, and compute cost options for a scenario
+**Use Case**: Retrieve a customer's meter and account data, determine eligible rate plans, and compute cost options for a scenario. The URPX API calls are illustrative; the API specification is under development.
 
 ```mermaid
 sequenceDiagram
@@ -335,11 +327,16 @@ sequenceDiagram
 
 **Use When**: Mapping depends on context or additional properties. In SKOS, this is handled via `skos:closeMatch` or `skos:broadMatch` with explanatory notes, as SKOS does not natively support computational conditions.
 
-**Example**: Green Button tariffProfile → URPX name, conditionally URPX RatePlanIdentifier
+**Example**: a source identifier maps to `urpx:ratePlanUniqueIdentifier` by default, and to a `urpx:RatePlanIdentifier` when the source also names the register the value comes from. Schema.org's `schema:identifier` is the general case: a bare text value, or a `schema:PropertyValue` whose `propertyID` names the register.
+
 ```turtle
-gb:tariffProfile a skos:Concept ;
-    skos:closeMatch urpx:name ;
-    skos:note "Maps to urpx:name by default. If a producer profile or Green Button Alliance restriction declares tariffProfile a coded identifier, urpx:RatePlanIdentifier is the better fit; RatePlanIdentifierShape requires a skos:notation and scheme IRI that a free String256 cannot supply on its own, so no identifier alignment applies otherwise." .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
+@prefix schema: <http://schema.org/> .
+
+schema:identifier a skos:Concept ;
+    skos:closeMatch urpx:ratePlanUniqueIdentifier ;
+    skos:note "Maps to urpx:ratePlanUniqueIdentifier by default. When the source value is a schema:PropertyValue whose propertyID names a register, it belongs on a urpx:RatePlanIdentifier instead: the register becomes urpx:scheme and the value skos:notation. RatePlanIdentifierShape requires both, so a bare text identifier with no register stays on ratePlanUniqueIdentifier." .
 ```
 
 ---
