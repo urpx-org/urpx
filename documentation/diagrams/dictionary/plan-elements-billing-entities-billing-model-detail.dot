@@ -69,7 +69,7 @@ digraph "BillingModel — Pricing References" {
         label="hasLedger\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     BillingModel -> PriceDefinition [
-        label="hasPriceDefinition\n1..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+        label="hasPriceDefinition\n0..*", style=dashed, color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
     BillingModel -> ServiceTiers [
         label="hasServiceTiers\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5

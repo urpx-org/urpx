@@ -61,7 +61,7 @@
 <path fill="none" stroke="#1a5276" stroke-width="1.5" stroke-dasharray="5,2" d="M94.21,-134.47C174.25,-126.09 375.98,-104.97 469.71,-95.16"/>
 <polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="470.2,-98.63 479.79,-94.11 469.48,-91.67 470.2,-98.63"/>
 <text text-anchor="middle" x="267" y="-132.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">hasPriceDefinition</text>
-<text text-anchor="middle" x="267" y="-123.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">1..*</text>
+<text text-anchor="middle" x="267" y="-123.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
 </g>
 <!-- TOUSchedule -->
 <g id="node12" class="node">
