@@ -59,7 +59,7 @@ digraph "Plan Elements & Billing Entities" {
         label="hasServiceTier\n1..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5, weight=8
     ];
     ServiceBracket -> ServiceTier [
-        label="adjustsServiceTier\n0..*", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
+        label="adjustsServiceTier\n0..1", color="#1a5276", fontcolor="#1a5276", penwidth=1.5
     ];
 
     // Layout-specified rank groups

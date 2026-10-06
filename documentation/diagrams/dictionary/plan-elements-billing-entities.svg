@@ -103,7 +103,7 @@
 <path fill="none" stroke="#1a5276" stroke-width="1.5" d="M67.68,-36.22C72.33,-49.9 77.22,-69.57 74.82,-87 73.79,-94.53 71.92,-102.52 69.87,-109.85"/>
 <polygon fill="#1a5276" stroke="#1a5276" stroke-width="1.5" points="66.45,-109.08 66.94,-119.66 73.16,-111.08 66.45,-109.08"/>
 <text text-anchor="middle" x="108.32" y="-80.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">adjustsServiceTier</text>
-<text text-anchor="middle" x="108.32" y="-71.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..*</text>
+<text text-anchor="middle" x="108.32" y="-71.6" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.00" fill="#1a5276">0..1</text>
 </g>
 <!-- leg_class -->
 <g id="node8" class="node">
