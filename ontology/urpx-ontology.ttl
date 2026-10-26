@@ -307,7 +307,7 @@ urpx:PriceSummary a owl:Class ;
 urpx:PriceUpdateRule a owl:Class ;
     rdfs:label "Price Update Rule"@en ;
     rdfs:comment "Rule defining when and how dynamic prices are calculated" ;
-    skos:note "Governs dynamic price updates. Contains formulas and trigger conditions. Can reference external indices or internal calculations." .
+    skos:note "Governs dynamic price updates. Carries the update calculation as a structured value expression via hasValueExpression; external drivers such as market indices enter the expression as referenced metric inputs. Trigger cadence is described by the owning DynamicPricing's updateFrequency." .
 
 urpx:PricingModel a owl:Class ;
     rdfs:label "Pricing Model"@en ;
@@ -493,6 +493,11 @@ urpx:UtilityOperator a owl:Class ;
     rdfs:comment "Entity providing utility services and publishing rate plans" ;
     rdfs:subClassOf urpx:Organization ;
     skos:note "Actual service provider that operates infrastructure and serves customers. May be electric, gas, water, or multi-service utility with specific ownership structure." .
+
+urpx:ValueExpression a owl:Class ;
+    rdfs:label "Value Expression"@en ;
+    rdfs:comment "Rule-level wrapper for a structured numeric calculation, used by CalculationMethod, PriceUpdateRule, and calculated MetricInputs"@en ;
+    skos:note "The numeric sibling of ConditionExpression. Carries exactly one rootNode whose tree is built from OperationNode and the operand node classes. The tree is the authoritative calculation semantics; free-text formulas are non-authoritative audit labels. Output is a numeric quantity; its unit and currency ride on the referencing context (the price definition's metric specification and price currency)." .
 
 
 # ============================================================================
@@ -777,8 +782,8 @@ urpx:ObservanceRuleValue a owl:Class ;
 
 urpx:OperatorValue a owl:Class ;
     rdfs:label "Operator Value"@en ;
-    rdfs:comment "Enumeration class for operators used in condition evaluation and service tier boundary definitions" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:addOperator urpx:andOperator urpx:betweenOperator urpx:containsOperator urpx:divideOperator urpx:equalsOperator urpx:greaterThanOperator urpx:greaterThanOrEqualOperator urpx:inOperator urpx:lessThanOperator urpx:lessThanOrEqualOperator urpx:multiplyOperator urpx:notEqualsOperator urpx:notInOperator urpx:notOperator urpx:orOperator urpx:subtractOperator ) ] ;
+    rdfs:comment "Enumeration class for operators used in condition evaluation, value expressions, and service tier boundary definitions" ;
+    owl:equivalentClass [ owl:oneOf ( urpx:addOperator urpx:andOperator urpx:betweenOperator urpx:containsOperator urpx:divideOperator urpx:equalsOperator urpx:greaterThanOperator urpx:greaterThanOrEqualOperator urpx:inOperator urpx:lessThanOperator urpx:lessThanOrEqualOperator urpx:maxOperator urpx:minOperator urpx:multiplyOperator urpx:notEqualsOperator urpx:notInOperator urpx:notOperator urpx:orOperator urpx:subtractOperator ) ] ;
     skos:note "Enumeration class for comparison and calculation operators. Standardized operator definitions for consistent rule evaluation." .
 
 urpx:OrganizationTypeValue a owl:Class ;
@@ -903,7 +908,7 @@ urpx:TOUTierStandardNameValue a owl:Class ;
 urpx:UnitOfMeasureValue a owl:Class ;
     rdfs:label "Unit of Measure Value"@en ;
     rdfs:comment "Industry-standard unit of measure enumeration values" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:bit urpx:btu urpx:byte urpx:ccf urpx:cord urpx:count urpx:cubicFoot urpx:cubicMeter urpx:decatherm urpx:gallon urpx:Gbps urpx:hectare urpx:hertz urpx:item urpx:kVA urpx:kVAr urpx:kVArh urpx:kVAh urpx:kW urpx:kWh urpx:kilogallon urpx:kilogram urpx:kilometer urpx:liter urpx:Mbps urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:VA urpx:VAh urpx:VAr urpx:VArh urpx:year ) ] ;
+    owl:equivalentClass [ owl:oneOf ( urpx:GW urpx:GWh urpx:MVA urpx:MVAh urpx:MW urpx:MWh urpx:W urpx:Wh urpx:acre urpx:barrel urpx:bcf urpx:bit urpx:btu urpx:byte urpx:ccf urpx:cord urpx:count urpx:cubicFoot urpx:cubicMeter urpx:currencyUnit urpx:decatherm urpx:gallon urpx:Gbps urpx:hectare urpx:hertz urpx:item urpx:kVA urpx:kVAr urpx:kVArh urpx:kVAh urpx:kW urpx:kWh urpx:kilogallon urpx:kilogram urpx:kilometer urpx:liter urpx:Mbps urpx:mcf urpx:metricTon urpx:mile urpx:mmbtu urpx:mmcf urpx:percent urpx:pound urpx:ratio urpx:squareFoot urpx:squareMeter urpx:tcf urpx:therm urpx:ton urpx:unitOther urpx:VA urpx:VAh urpx:VAr urpx:VArh urpx:year ) ] ;
     skos:note "Enumeration class for units of measure covering energy, demand, volume, weight, area, and time units." .
 
 urpx:UpdateFrequencyValue a owl:Class ;
@@ -1123,7 +1128,7 @@ urpx:calculationFormula a owl:DatatypeProperty ;
     rdfs:comment "Formula defining calculation logic for complex scenarios" ;
     rdfs:domain urpx:CalculationMethod ;
     rdfs:range xsd:string ;
-    skos:note "Optional formula when simple multiplication isn't sufficient. Example: '(basePrice * usage) + (demandCharge * peakDemand)'." .
+    skos:note "Optional human-readable formula text. Example: '(basePrice * usage) + (demandCharge * peakDemand)'. Non-authoritative: when the calculation method carries hasValueExpression, the structured expression is the authoritative semantics and this text is an audit label." .
 
 urpx:cancelledBy a owl:ObjectProperty ;
     rdfs:label "Cancelled By"@en ;
@@ -2295,6 +2300,14 @@ urpx:hasTOUTier a owl:ObjectProperty ;
     rdfs:range urpx:TOUTier ;
     skos:note "Tiers organize time-of-use periods by price level for clearer structure." .
 
+urpx:hasValueExpression a owl:ObjectProperty ;
+    rdfs:label "Has Value Expression"@en ;
+    rdfs:comment "Links a calculation surface to its authoritative structured value expression"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:CalculationMethod urpx:PriceUpdateRule ) ] ;
+    rdfs:range urpx:ValueExpression ;
+    skos:note "Attachment points: CalculationMethod, which is where a calculated MetricInput states its derivation, and PriceUpdateRule. Both are named classes, so the domain is declared. When present, the value expression is the authoritative calculation semantics and any accompanying free-text formula is a non-authoritative label." .
+
 urpx:holidayDate a owl:DatatypeProperty ;
     rdfs:label "Holiday Date"@en ;
     rdfs:comment "Specific date for fixed holidays" ;
@@ -3107,15 +3120,20 @@ urpx:rightOperand a owl:ObjectProperty ;
 
 urpx:rootNode a owl:ObjectProperty ;
     rdfs:label "Root Node"@en ;
-    rdfs:comment "Points from a ConditionExpression to its single root ConditionNode"@en ;
-    rdfs:domain urpx:ConditionExpression ;
+    rdfs:comment "Points from a ConditionExpression or ValueExpression to its single root node"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:ConditionExpression urpx:ValueExpression ) ] ;
     rdfs:range [ a owl:Class ;
             owl:unionOf (
                 urpx:ConditionNode
                 urpx:ComparisonNode
                 urpx:BooleanOperationNode
+                urpx:OperationNode
+                urpx:DatatypeOperandNode
+                urpx:ObjectOperandNode
+                urpx:CustomOperandNode
             ) ] ;
-    skos:note "Exactly one rootNode is present on each ConditionExpression." .
+    skos:note "Exactly one rootNode is present on each expression. SHACL restricts the admissible root classes per expression kind: condition roots are comparison or boolean operation nodes; value roots are operand or operation nodes." .
 
 urpx:roundTripEfficiency a owl:DatatypeProperty ;
     rdfs:label "Round Trip Efficiency"@en ;
@@ -5666,6 +5684,16 @@ urpx:lessThanOrEqualOperator rdf:type urpx:OperatorValue ;
     skos:definition "Less than or equal comparison operator (<=)"@en ;
     skos:prefLabel "Less Than Or Equal"@en .
 
+urpx:maxOperator rdf:type urpx:OperatorValue ;
+    rdfs:label "Max Operator"@en ;
+    rdfs:comment "Represents the larger of two operands in value expressions"@en ;
+    skos:note "Used in OperationNode. Binary; chain nodes for more than two operands. Typical uses: demand ratchets (the larger of measured demand and a contract floor) and minimum bills." .
+
+urpx:minOperator rdf:type urpx:OperatorValue ;
+    rdfs:label "Min Operator"@en ;
+    rdfs:comment "Represents the smaller of two operands in value expressions"@en ;
+    skos:note "Used in OperationNode. Binary; chain nodes for more than two operands. Typical uses: caps and export compensation floors." .
+
 urpx:multiplyOperator rdf:type urpx:OperatorValue ;
     rdfs:label "Multiply Operator"@en ;
     rdfs:comment "Represents multiplication in condition expressions"@en ;
@@ -6487,6 +6515,11 @@ urpx:cubicMeter rdf:type urpx:UnitOfMeasureValue ;
     skos:definition "Cubic meter - unit of volume"@en ;
     skos:prefLabel "cubic meter"@en ;
     skos:altLabel "m3"@en .
+
+urpx:currencyUnit rdf:type urpx:UnitOfMeasureValue ;
+    rdfs:label "Currency Unit"@en ;
+    skos:definition "Currency unit - monetary amount in the currency given by urpx:priceCurrency (ISO 4217) on the enclosing price or container"@en ;
+    skos:prefLabel "currency"@en .
 
 urpx:decatherm rdf:type urpx:UnitOfMeasureValue ;
     rdfs:label "Decatherm"@en ;
