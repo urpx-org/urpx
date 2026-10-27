@@ -611,7 +611,7 @@ urpx:DataSourceTypeValue a owl:Class ;
 urpx:DayOfWeekValue a owl:Class ;
     rdfs:label "Day Of Week Value"@en ;
     rdfs:comment "ISO 8601 day of the week enumeration values" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:monday urpx:tuesday urpx:wednesday urpx:thursday urpx:friday urpx:saturday urpx:sunday ) ] ;
+    owl:equivalentClass [ owl:oneOf ( urpx:dayOfWeek1 urpx:dayOfWeek2 urpx:dayOfWeek3 urpx:dayOfWeek4 urpx:dayOfWeek5 urpx:dayOfWeek6 urpx:dayOfWeek7 ) ] ;
     skos:note "Enumeration class for the seven days of the week, numbered 1 (Monday) through 7 (Sunday) as in ISO 8601." .
 
 urpx:DayTypeValue a owl:Class ;
@@ -4555,38 +4555,45 @@ urpx:regulatoryWebsiteSource rdf:type urpx:DataSourceTypeValue ;
 
 # --- Day Of Week Property (DayOfWeekValue) ---
 
-urpx:monday rdf:type urpx:DayOfWeekValue ;
+urpx:dayOfWeek1 rdf:type urpx:DayOfWeekValue ;
     rdfs:label "Monday"@en ;
+    skos:notation 1 ;
     skos:definition "Monday (ISO 8601 day 1)"@en ;
     skos:prefLabel "Monday"@en .
 
-urpx:tuesday rdf:type urpx:DayOfWeekValue ;
+urpx:dayOfWeek2 rdf:type urpx:DayOfWeekValue ;
     rdfs:label "Tuesday"@en ;
+    skos:notation 2 ;
     skos:definition "Tuesday (ISO 8601 day 2)"@en ;
     skos:prefLabel "Tuesday"@en .
 
-urpx:wednesday rdf:type urpx:DayOfWeekValue ;
+urpx:dayOfWeek3 rdf:type urpx:DayOfWeekValue ;
     rdfs:label "Wednesday"@en ;
+    skos:notation 3 ;
     skos:definition "Wednesday (ISO 8601 day 3)"@en ;
     skos:prefLabel "Wednesday"@en .
 
-urpx:thursday rdf:type urpx:DayOfWeekValue ;
+urpx:dayOfWeek4 rdf:type urpx:DayOfWeekValue ;
     rdfs:label "Thursday"@en ;
+    skos:notation 4 ;
     skos:definition "Thursday (ISO 8601 day 4)"@en ;
     skos:prefLabel "Thursday"@en .
 
-urpx:friday rdf:type urpx:DayOfWeekValue ;
+urpx:dayOfWeek5 rdf:type urpx:DayOfWeekValue ;
     rdfs:label "Friday"@en ;
+    skos:notation 5 ;
     skos:definition "Friday (ISO 8601 day 5)"@en ;
     skos:prefLabel "Friday"@en .
 
-urpx:saturday rdf:type urpx:DayOfWeekValue ;
+urpx:dayOfWeek6 rdf:type urpx:DayOfWeekValue ;
     rdfs:label "Saturday"@en ;
+    skos:notation 6 ;
     skos:definition "Saturday (ISO 8601 day 6)"@en ;
     skos:prefLabel "Saturday"@en .
 
-urpx:sunday rdf:type urpx:DayOfWeekValue ;
+urpx:dayOfWeek7 rdf:type urpx:DayOfWeekValue ;
     rdfs:label "Sunday"@en ;
+    skos:notation 7 ;
     skos:definition "Sunday (ISO 8601 day 7)"@en ;
     skos:prefLabel "Sunday"@en .
 

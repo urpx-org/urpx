@@ -6140,7 +6140,7 @@ urpx-shacl:DayOfWeekValueShape
     rdfs:label "DayOfWeekValue Shape"@en ;
     sh:targetClass urpx:DayOfWeekValue ;
     sh:nodeKind sh:IRI ;
-    sh:in ( urpx:monday urpx:tuesday urpx:wednesday urpx:thursday urpx:friday urpx:saturday urpx:sunday ) .
+    sh:in ( urpx:dayOfWeek1 urpx:dayOfWeek2 urpx:dayOfWeek3 urpx:dayOfWeek4 urpx:dayOfWeek5 urpx:dayOfWeek6 urpx:dayOfWeek7 ) .
 
 urpx-shacl:DayTypeValueShape
     a sh:NodeShape ;
