@@ -11,14 +11,14 @@ site_position: 2
 # URPX Design Principles
 
 **Version**: 0.5.1 (Working Group Draft)
-**Last Updated**: 2026-03-02
+**Last Updated**: 2026-10-05
 **Status**: Active
 
 ---
 
 ## Purpose
 
-This document defines the core design principles and organizational standards for URPX ontology development. These principles ensure consistency, maintainability, and AI-assisted development efficiency across the project.
+This document defines the core design principles and organizational standards for URPX ontology development. These principles ensure consistency and maintainability across the project.
 
 ---
 
@@ -31,24 +31,23 @@ This document defines the core design principles and organizational standards fo
 **Rationale**: 
 - Enables quick location of class definitions
 - Reduces merge conflicts in collaborative development
-- Improves AI context efficiency by providing predictable structure
+- Provides a predictable structure for readers and tools
 
 **Example**:
 ```turtle
+@prefix urpx: <https://urpx.org/ns/ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
 urpx:AccountServiceAgreement a owl:Class ;
-    rdfs:label "Account Service Agreement"@en ;
-    ...
+    rdfs:label "Account Service Agreement"@en .
 
 urpx:BillingModel a owl:Class ;
-    rdfs:label "Billing Model"@en ;
-    ...
+    rdfs:label "Billing Model"@en .
 
 urpx:CalculationMethod a owl:Class ;
-    rdfs:label "Calculation Method"@en ;
-    ...
+    rdfs:label "Calculation Method"@en .
 ```
-
-**Exception**: Subclasses may be placed immediately after their parent class for clarity, but this should be documented in comments.
 
 ### 1.2 Property Definitions
 
@@ -58,11 +57,14 @@ urpx:CalculationMethod a owl:Class ;
 
 ### 1.3 Enumeration Values
 
-**Rule**: Within enumeration class definitions (`owl:oneOf`), values SHOULD be organized alphabetically unless semantic grouping provides clearer understanding.
+**Rule**: Within an enumeration class definition (`owl:oneOf`), members SHOULD be organized alphabetically by their local name, unless a natural order (for example a confidence scale, a voltage level, or an interval duration) reads more clearly. Inline comments are not used to group members.
 
-**Example - Alphabetical**:
+**Example** (an illustrative excerpt; the full enumeration carries more members):
 ```turtle
-urpx:CommodityValue owl:oneOf (
+@prefix urpx: <https://urpx.org/ns/ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+urpx:CommodityValue owl:equivalentClass [ owl:oneOf (
     urpx:biomass
     urpx:coal
     urpx:electricity
@@ -70,23 +72,7 @@ urpx:CommodityValue owl:oneOf (
     urpx:solar
     urpx:water
     urpx:wind
-) .
-```
-
-**Example - Semantic Grouping** (when justified):
-```turtle
-urpx:PhaseCodeKindValue owl:oneOf (
-    # Single phase
-    urpx:A
-    urpx:B
-    urpx:C
-    # Two phase
-    urpx:AB
-    urpx:BC
-    # Three phase
-    urpx:ABC
-    urpx:ABCN
-) .
+) ] .
 ```
 
 ---
@@ -123,7 +109,7 @@ urpx:PhaseCodeKindValue owl:oneOf (
 
 **Examples**:
 - `urpx:LedgerTypeValue`
-- `urpx:ChannelTypeValue`
+- `urpx:ChargeTypeValue`
 - `urpx:CommodityValue`
 
 **Rationale**: Distinguishes enumeration classes from regular classes and provides consistent pattern recognition.
@@ -136,7 +122,7 @@ urpx:PhaseCodeKindValue owl:oneOf (
 
 **Examples**:
 - `urpx:supplyLedger` (not `urpx:supply`)
-- `urpx:measuredChannel` (not `urpx:measured`)
+- `urpx:measuredMetricInput` (not `urpx:measured`)
 - `urpx:monthlyInterval` (not `urpx:monthly`)
 
 **Rationale**: Prevents naming collisions and improves semantic clarity.
@@ -148,21 +134,26 @@ urpx:PhaseCodeKindValue owl:oneOf (
 ### 3.1 Required Annotations
 
 **Rule**: Every class and property MUST have:
-1. `rdfs:label` - Human-readable name in English
+1. `rdfs:label` - Human-readable name, carrying a language tag (`@en`) so labels can be provided in other languages
 2. `rdfs:comment` - Brief description (1-2 sentences)
 3. `skos:note` - Detailed explanation, usage patterns, and design rationale
 
 **Example**:
 ```turtle
+@prefix urpx: <https://urpx.org/ns/ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
 urpx:BillingModel a owl:Class ;
     rdfs:label "Billing Model"@en ;
     rdfs:comment "Defines billing-specific rules and calculation patterns with ledger-based organization."@en ;
     skos:note "Contains one or more ledgers for organizing prices by billing category (supply, delivery, etc.) and defines calculation rules, proration patterns, and adjustment mechanisms." .
 ```
 
-### 3.2 W3C Compliance
+### 3.2 Concise Notes
 
-**Rule**: Keep `skos:note` content concise and W3C-compliant.
+**Rule**: Keep `skos:note` content concise.
 
 **Guidelines**:
 - Focus on essential information
@@ -171,12 +162,18 @@ urpx:BillingModel a owl:Class ;
 
 **Anti-pattern** (too verbose):
 ```turtle
-skos:note "This class is really important because it does many things. First, it does X. Then it does Y. Also, it can do Z in some cases. Users should be aware that..." .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+urpx:BillingModel skos:note "This class is really important because it does many things. First, it does X. Then it does Y. Also, it can do Z in some cases. Users should be aware that..." .
 ```
 
 **Correct pattern** (concise):
 ```turtle
-skos:note "Defines billing calculation rules and proration patterns. Supports ledger-based organization for supply/delivery separation." .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+urpx:BillingModel skos:note "Defines billing calculation rules and proration patterns. Supports ledger-based organization for supply/delivery separation." .
 ```
 
 ---
@@ -194,16 +191,20 @@ skos:note "Defines billing calculation rules and proration patterns. Supports le
 
 **Example**:
 ```turtle
-urpx:RateGroup a owl:Class ;
-    rdfs:subClassOf urpx:ServiceClass ;
-    rdfs:label "Rate Group"@en ;
-    rdfs:comment "Specific rate grouping within a service class" ;
-    skos:note "Subclass of ServiceClass representing specific rate groups like 'Service Class 2 Rate I'." .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+urpx:RegulatoryAuthority a owl:Class ;
+    rdfs:label "Regulatory Authority"@en ;
+    rdfs:subClassOf urpx:Organization ;
+    skos:note "Government or quasi-government entity with rate-setting authority. Includes PUCs, FERC, international regulators with nested jurisdictions." .
 ```
 
 ### 4.2 Property Domains and Ranges
 
-**Rule**: Always specify domain and range for properties.
+**Rule**: Specify domain and range for properties unless a property is deliberately left open (for example `hasTemporalScope`, which applies across classes).
 
 **Guidelines**:
 - Use `owl:unionOf` for multiple possible domains/ranges
@@ -211,12 +212,19 @@ urpx:RateGroup a owl:Class ;
 
 **Example**:
 ```turtle
-urpx:calculationMethod a rdf:Property ;
-    rdfs:label "Calculation Method"@en ;
-    rdfs:comment "A textual description of the calculation method."@en ;
-    rdfs:domain urpx:Price ;
-    rdfs:range xsd:string ;
-    skos:note "This property allows for a simple, human-readable description of the calculation logic directly on a price. For complex, machine-readable rules, a more formal rule representation should be used." .
+@prefix urpx: <https://urpx.org/ns/ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+urpx:url a owl:DatatypeProperty ;
+    rdfs:label "URL"@en ;
+    rdfs:comment "URL of the item" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( urpx:SourcePublication urpx:URPXPackage urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifier urpx:RatePlanModifierVersion urpx:DataSourceReference urpx:ProgramEnrollment urpx:RateCase urpx:Organization ) ] ;
+    rdfs:range xsd:anyURI ;
+    skos:note "Direct link to PDF, HTML, or other document format." .
 ```
 
 ### 4.3 Enumeration Pattern
@@ -225,6 +233,11 @@ urpx:calculationMethod a rdf:Property ;
 
 **Pattern**:
 ```turtle
+@prefix urpx: <https://urpx.org/ns/ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
 urpx:EnumerationNameValue a owl:Class ;
     rdfs:label "Enumeration Name Value"@en ;
     rdfs:comment "Brief description of enumeration purpose" ;
@@ -235,31 +248,20 @@ urpx:EnumerationNameValue a owl:Class ;
 
 ---
 
-
-
----
-
 ## 5. Version Control
-
-### 5.1 Ontology Versioning
 
 **Rule**: Update `owl:versionInfo` and `dcterms:modified` with each release.
 
 **Pattern**:
 ```turtle
-urpx: a owl:Ontology ;
-    owl:versionInfo "0.1.1" ;
-    dcterms:modified "2025-12-17"^^xsd:date ;
-    ...
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://urpx.org/ns/ontology> a owl:Ontology ;
+    owl:versionInfo "0.5.1" ;
+    dcterms:modified "2026-09-08"^^xsd:date .
 ```
-
-### 5.2 Backup Before Major Changes
-
-**Rule**: Create timestamped backups before major refactoring.
-
-**Pattern**: `backups/[epic_name]_[YYYYMMDD]/`
-
-**Example**: `backups/v0.1.1_comprehensive_start_20251216/`
 
 ---
 
@@ -276,9 +278,9 @@ urpx: a owl:Ontology ;
 Before committing ontology changes, verify:
 - [ ] Alphabetical organization maintained
 - [ ] All classes have label, comment, and note
-- [ ] All properties have domain and range
+- [ ] Properties have domain and range, or a documented reason to be open
 - [ ] Naming conventions followed
-- [ ] Documentation is concise and W3C-compliant
+- [ ] Documentation is concise
 - [ ] Turtle syntax validates
 - [ ] No duplicate definitions
 
@@ -308,9 +310,9 @@ Reviewers should verify:
 ## 8. References
 
 ### Related Documents
-- [URPX Syntax Guidelines](/docs/technical-reference/syntax-guidelines) - Turtle syntax and formatting
-- [URPX Overview](/docs/getting-started/overview) - Project overview and architecture
-- [URPX Quality Assurance](/docs/technical-reference/quality-assurance) - Testing and validation
+- [URPX Syntax Guidelines](urpx-syntax-guidelines.md) - Labeling conventions and ontology syntax
+- [URPX Overview](urpx-overview.md) - Project overview and architecture
+- [URPX Quality Assurance](urpx-quality-assurance.md) - Testing and validation
 
 ### External Standards
 - [OWL 2 Web Ontology Language](https://www.w3.org/TR/owl2-overview/)

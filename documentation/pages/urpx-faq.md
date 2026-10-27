@@ -8,7 +8,7 @@ site_title: "FAQ"
 site_position: 4
 ---
 
-### Frequently Asked Questions
+# Frequently Asked Questions
 
 **Q: What is a semantic web standard?**
 
@@ -16,7 +16,7 @@ A semantic web standard uses RDF (Resource Description Framework) to express dat
 
 **Q: Do I need to learn RDF to use URPX?**
 
-No. URPX uses JSON-LD, which looks like regular JSON. The ontology and SHACL do use RDF. RDF semantics are well documented and handled by standard libraries. While manual parsing is possible, libraries automate semantic processing for optimal performance. Developers work with familiar JSON; semantic interoperability happens through library integration.
+No. URPX uses JSON-LD, which looks like regular JSON. The ontology and the SHACL shapes are RDF, and standard libraries handle the RDF semantics. Developers work with familiar JSON; semantic interoperability happens through the library.
 
 **Q: How does URPX relate to OpenEI's URDB?**
 
@@ -24,7 +24,7 @@ URPX builds on [OpenEI's](https://openei.org) pioneering work in utility rate pl
 - Formal ontology (machine-readable definitions)
 - SHACL validation (automatic quality checks)
 - SPARQL queries (powerful data analysis)
-- Standards alignment (works with Green Button, CIM, etc.)
+- Standards alignment (SKOS mapping profiles to Schema.org, Green Button, CIM and others; see [Interoperability](urpx-interoperability.md))
 
 Both projects share the goal of making rate plan data more accessible. URPX can consume summary OpenEI charges data and align it with detailed URPX charges and rich semantic metadata.
 
@@ -46,7 +46,7 @@ No. URPX represents rate plan data: the plan, its modifiers, the pricing that ap
 
 **Q: Can URPX work with my existing systems?**
 
-Yes. URPX will provide mapping templates for major standards (Green Button, OpenADR, CIM). You can also create custom mappings for proprietary formats.
+Yes. URPX publishes SKOS mapping profiles to other standards: the Schema.org profile is published, and Green Button and LF Energy CDS profiles are in draft under working group review. See [Interoperability](urpx-interoperability.md). You can also create custom mappings for proprietary formats.
 
 **Q: What tools do I need to work with URPX?**
 
@@ -58,7 +58,9 @@ Yes. URPX will provide mapping templates for major standards (Green Button, Open
 **Q: What is the current status of URPX?**
 
 URPX v0.5.1 has completed the Working Group Draft transition. See [TRANSITION.md](../../TRANSITION.md) for the transition record. The working group continues to refine the ontology and validation rules. You can follow progress and contribute at the [urpx-org GitHub organization](https://github.com/urpx-org):
-- **urpx** - Core ontology and specifications
+- **urpx** - The standard: ontology, SHACL shapes, JSON-LD context, documentation, and curated test cases
+- **urpx-dev** - The development record: specifications, tasks, reports, roadmaps, and design-decision logs
+- **urpx-data-sandbox** - Community-contributed rate plan datasets, checked for conformance to the URPX version they declare
 - **urpx-wg** - Working group materials: meeting agendas, notes, and branding
 
 **Q: How can I participate in URPX development?**
@@ -69,17 +71,17 @@ Join the working group via [urpx-org on GitHub](https://github.com/urpx-org). Yo
 - Creating mappings for additional standards
 - Improving documentation and examples
 
-### Terminology
+## Terminology
 
-#### "Rate Plan" and "Price" vs. "Tariffs & Rates"
+### "Rate Plan" and "Price" vs. "Tariffs & Rates"
 
 Throughout URPX documentation and the ontology, the term **"rate plan"** is used as the standardized terminology, and the bare word "rate" is never used on its own. This distinction is deliberate and important. While URPX supports the current "dispersed" methods of rate plan publication, it is built for automation and designed to prioritize future-proofing. The lack of standardization in what "tariffs" and "rates" mean and the dispersed non-standard nature of their publication make them incompatible with URPX goals: to make it possible to accurately model cost for a scenario, and to analyze rate plans across utility territories.
 
 **Rate Plan** (URPX Standardized Term):
 - A complete package containing **all parameters** needed to calculate customer cost
 - Includes: prices, time-of-use schedules, service tiers, seasonal variations, eligibility rules, and applicability conditions
-- Ensures **completeness** - no guessing about what data inputs are required for cost calculation
-- Everything contained in one semantic unit for reliable billing and analysis
+- States its **coverage**: a required `CoverageClaim` says how complete each version snapshot is
+- One semantic unit per snapshot for billing and analysis, with external references made explicit
 
 **Price** (URPX Standardized Term):
 - A single value applied to something measured or counted (e.g., $0.15/kWh, an $18.75 monthly charge)
@@ -92,7 +94,7 @@ Throughout URPX documentation and the ontology, the term **"rate plan"** is used
 2. A **named grouping inside a service classification**: "Rate I", "Rate II"
 3. The **whole plan**: "switch to the EV rate"
 
-One word carrying three meanings is exactly the kind of ambiguity a data exchange standard exists to remove. So URPX gives each meaning its own unambiguous term: a single value is a **price** (`Price`, `PriceSet`); the complete package is a **rate plan** (`RatePlan`); and the named grouping is a **rate group**:
+One word carrying three meanings is exactly the kind of ambiguity a data exchange standard exists to remove. So URPX gives each meaning its own unambiguous term: a single value is a **price** (`Price`, grouped in a `PriceSet`); the complete package is a **rate plan** (`RatePlan`); and the named grouping is a **rate group**:
 
 **Rate Group** (`RateGroup`):
 - The named grouping within a service class that utilities themselves often call a "rate", for example, *Rate I* within *Service Classification No. 1*
@@ -119,4 +121,4 @@ URPX uses "tariff" for formal regulatory documents (tariff books, tariff stateme
 - `RateGroup` class = the utility's own published grouping, linked via `hasRateGroup`
 - Clear terminology ensures semantic precision for standards review
 
-This standardized terminology provides clarity for implementers, ensures data exchange completeness, and aligns with semantic web precision requirements for W3C standards compliance.
+This standardized terminology provides clarity for implementers and makes each snapshot's coverage explicit.

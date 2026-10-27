@@ -11,7 +11,7 @@ site_position: 4
 # URPX Quality Assurance Guidelines
 
 **Version**: 0.5.1 (Working Group Draft)
-**Last Updated**: 2026-07-07
+**Last Updated**: 2026-10-05
 **Status**: Active
 
 **Validation and quality standards for URPX v0.5.1 rate plan data**
@@ -50,13 +50,13 @@ URPX v0.5.1 maintains quality standards for ontology alignment, SHACL conformanc
 
 URPX v0.5.1 uses a core ontology file:
 
-- `../../ontology/urpx-ontology.ttl` - Complete URPX ontology with classes, properties, enumerations, and notes
+- [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl) - Complete URPX ontology with classes, properties, enumerations, and notes
 
 ### Common Validation Errors
 
 | Error | Cause | Solution |
 |-------|-------|----------|
-| Undefined property | Using a property no longer present in v0.5.1 | Check the ontology and rename to the current property |
+| Undefined property | Using a property the v0.5.1 ontology does not declare | Check the ontology and use the declared property |
 | Wrong enum value | Incorrect or invented enumeration instance | Use the exact URPX enumeration IRI |
 | Missing required property | Omitted mandatory identifier, version field, or container | Add the required property before SHACL validation |
 | Type mismatch | Literal used where an object reference is required, or vice versa | Correct to the ontology range |
@@ -67,12 +67,13 @@ URPX v0.5.1 uses a core ontology file:
 
 ### SHACL Validation Files
 
-- [`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl) - Unified SHACL validation shapes for the current draft ontology
+- [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl) - Unified SHACL validation shapes for the current ontology
 
 ### Critical SHACL Constraints
 
 **URPXPackage Requirements:**
 - Must include `targetURPXVersion` exactly once
+- Must carry at least one content unit through `packages`, `hasRatePlan` or `hasRatePlanModifier`
 - May include `timezoneIdentifier`
 - `targetURPXVersion` should point to the ontology version IRI used for authoring and validation
 
@@ -89,11 +90,11 @@ URPX v0.5.1 uses a core ontology file:
 - Must have `serviceRole`
 - Must have `hasPlanElements`
 - Must have `hasPrices`
-- Must have `effectiveDate` or `effectiveDateTime`
+- Should state `effectiveDate` or `effectiveDateTime` (at most one of each; the shapes do not require a date)
 - May have `offeredBy` naming the organization that offers the plan
 
 **CoverageClaim Requirements:**
-- Must have `completenessResult` (`complete`, `incomplete`, or `pending`)
+- Must have `completenessResult` (one of `complete`, `partial`, `pending`, `unsupported`, `unknown`, `noCoverage`)
 - Should state `selfContained` and carry an explaining `Evaluation` via `explainedBy`
 
 **Price Requirements:**
@@ -102,26 +103,26 @@ URPX v0.5.1 uses a core ontology file:
 - Must have temporal boundaries when the source tariff provides them
 
 **Structured Rule Requirements:**
-- Every `EligibilityRule` MUST include exactly one `hasConditionExpression`
-- Every `ProfileAlternative` MUST include exactly one `hasConditionExpression`
-- `ApplicabilityRule` and `ApplicabilityGroup` MAY include at most one `hasConditionExpression`
-- Every `ConditionExpression` MUST include exactly one `rootNode`
-- `BooleanOperationNode` MUST use `operandNodes` and not `leftOperand` / `rightOperand`
-- `ComparisonNode` MUST use `leftOperand` and `rightOperand`
-- Literal-bearing `DatatypeOperandNode` and `CustomOperandNode` branches MUST carry exactly one matching datatype-specific value property
+- Every `EligibilityRule` must include exactly one `hasConditionExpression`
+- Every `ProfileAlternative` must include exactly one `hasConditionExpression`
+- `ApplicabilityRule` and `ApplicabilityGroup` may include at most one `hasConditionExpression`
+- Every `ConditionExpression` must include exactly one `rootNode`
+- `BooleanOperationNode` must use `operandNodes` and not `leftOperand` / `rightOperand`
+- `ComparisonNode` must use `leftOperand` and `rightOperand`
+- Literal-bearing `DatatypeOperandNode` and `CustomOperandNode` branches must carry exactly one matching datatype-specific value property
 - `referencesMetricInput` is allowed on literal-bearing datatype/custom operand branches, but not on their property-reference branches
 
 **Scenario Requirements:**
-- A `Scenario` MUST include `hasCustomerProfile`, `hasServicePointProfile`, or both
+- A `Scenario` must include `hasCustomerProfile`, `hasServicePointProfile`, or both
 - Eligibility evaluation inputs should be modeled through `Scenario`, not by attaching profiles directly to `EligibilityRule`
 
 **PriceDefinition and RateCase Requirements:**
-- Every `PriceDefinition` MUST include exactly one `referencesLedger`
-- Every `RateCase` MUST include `caseNumber`
-- Every `RateCase` MUST include `url`
+- Every `PriceDefinition` must include exactly one `referencesLedger`
+- Every `RateCase` must include `caseNumber`
+- Every `RateCase` must include `url`
 - `hasRateCase` may be used on `RatePlanVersion`, `RatePlanModifierVersion`, `PriceDefinition`, `Price`, `PriceSet`, and `PriceSetAlternative`
 
-**Temporal Requirements:**
+**Temporal Requirements** (authoring rules the shapes do not check):
 - Use `timezoneIdentifier` where timezone metadata is needed
 - Versions must not overlap temporally
 - `expirationDate` / `expirationDateTime` must be later than `effectiveDate` / `effectiveDateTime`
@@ -134,6 +135,7 @@ URPX v0.5.1 uses a core ontology file:
 
 **Every URPXPackage must have:**
 - `targetURPXVersion`
+- at least one content unit (`packages`, `hasRatePlan` or `hasRatePlanModifier`)
 
 **Every RatePlan must have:**
 - `ratePlanUniqueIdentifier`
@@ -143,7 +145,7 @@ URPX v0.5.1 uses a core ontology file:
 **Every RatePlanVersion must have:**
 - `forRatePlan`
 - `hasCoverageClaim`
-- `effectiveDate` or `effectiveDateTime`
+- `effectiveDate` or `effectiveDateTime` (recommended)
 - `changeReason`
 - `serviceRole`
 - `hasPlanElements`
@@ -216,6 +218,10 @@ URPX v0.5.1 uses a core ontology file:
 **Incorrect legacy identifier pattern:**
 ```json
 {
+  "@context": [
+    "https://urpx.org/ns/context/releases/v0.5.1/jsonld/urpx-context.jsonld",
+    { "ex": "https://example.org/qa/" }
+  ],
   "@type": "urpx:RatePlan",
   "urpx:ratePlanIdentifier": "LEGACY-001"
 }
@@ -224,6 +230,10 @@ URPX v0.5.1 uses a core ontology file:
 **Valid structured condition pattern:**
 ```json
 {
+  "@context": [
+    "https://urpx.org/ns/context/releases/v0.5.1/jsonld/urpx-context.jsonld",
+    { "ex": "https://example.org/qa/" }
+  ],
   "@type": "urpx:EligibilityRule",
   "urpx:hasConditionExpression": {
     "@type": "urpx:ConditionExpression",
@@ -231,8 +241,8 @@ URPX v0.5.1 uses a core ontology file:
       "@type": "urpx:ComparisonNode",
       "urpx:operator": { "@id": "urpx:greaterThanOperator" },
       "urpx:leftOperand": {
-        "@type": "urpx:DatatypeOperandNode",
-        "urpx:conditionProperty": { "@id": "urpx:averageMonthlyUsage" }
+        "@type": "urpx:ObjectOperandNode",
+        "urpx:referencesMetricInput": { "@id": "ex:mi-average-monthly-usage" }
       },
       "urpx:rightOperand": {
         "@type": "urpx:DatatypeOperandNode",
@@ -247,6 +257,10 @@ URPX v0.5.1 uses a core ontology file:
 **Valid scenario pattern:**
 ```json
 {
+  "@context": [
+    "https://urpx.org/ns/context/releases/v0.5.1/jsonld/urpx-context.jsonld",
+    { "ex": "https://example.org/qa/" }
+  ],
   "@type": "urpx:Scenario",
   "urpx:hasCustomerProfile": {
     "@type": "urpx:CustomerProfile",
@@ -262,8 +276,20 @@ URPX v0.5.1 uses a core ontology file:
 **Valid rate case traceability pattern:**
 ```json
 {
+  "@context": [
+    "https://urpx.org/ns/context/releases/v0.5.1/jsonld/urpx-context.jsonld",
+    { "ex": "https://example.org/qa/" }
+  ],
   "@type": "urpx:RatePlanVersion",
+  "urpx:forRatePlan": { "@id": "ex:rateplan-basic-res" },
   "urpx:changeReason": { "@id": "urpx:rateCase" },
+  "urpx:serviceRole": { "@id": "urpx:bundledServiceRole" },
+  "urpx:hasCoverageClaim": {
+    "@type": "urpx:CoverageClaim",
+    "urpx:completenessResult": { "@id": "urpx:complete" }
+  },
+  "urpx:hasPlanElements": { "@id": "ex:plan-elements-basic" },
+  "urpx:hasPrices": { "@id": "ex:prices-basic" },
   "urpx:hasRateCase": [
     {
       "@type": "urpx:RateCase",
@@ -295,7 +321,7 @@ URPX v0.5.1 uses a core ontology file:
 
 ### Rate Plan Terminology
 
-**CRITICAL REQUIREMENT**: Never use the bare word "rate" in URPX data, annotations, or documentation. Pick the unambiguous term for what is meant:
+**Requirement**: Never use the bare word "rate" in URPX data, annotations, or documentation. Pick the unambiguous term for what is meant:
 
 - **"rate plan"** for the complete package (`RatePlan`)
 - **"price"** for a single value (`Price`): "the summer energy price", not "the summer rate"
@@ -330,7 +356,7 @@ URPX documentation, annotations, and data write **"an URPX"**, never "a URPX": "
 
 ### Edge-Case Coverage
 
-The repository maintains an edge-case register at [`test-cases/urpx-edge-cases.csv`](../../test-cases/urpx-edge-cases.csv): a catalog of difficult real-world  tariff and rate plan features, each with the publishing utility, a source link, and the exact source language. Use it to steer test-case coverage, and add a row when a tariff publishes a rate plan pattern the register does not yet contain.
+The repository maintains an edge-case register at [`test-cases/urpx-edge-cases.csv`](../../test-cases/urpx-edge-cases.csv): a catalog of difficult real-world tariff and rate plan features, each with the publishing utility, a source link, and the exact source language.
 
 ### Common Pitfalls to Avoid
 

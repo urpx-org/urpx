@@ -11,8 +11,9 @@ site_position: 3
 
 # URPX API Specification
 
-**Status:** Non-normative sketch, illustrative only. Aligned to URPX v0.3.0; the normative access API is in development for a release after v0.3.0.
-**Last Updated:** 2026-07-24
+**Version:** 0.5.1 (Working Group Draft)
+**Status:** Non-normative sketch, illustrative only. Aligned to URPX v0.5.1; the normative access API is in development for a later release.
+**Last Updated:** 2026-10-05
 
 [← Back to Index](/docs/getting-started/overview) | [Overview](urpx-overview.md) | [URPX Interoperability & Standards Integration](urpx-interoperability.md)
 
@@ -20,7 +21,7 @@ site_position: 3
 
 ## Status Notice
 
-This page is an **illustrative sketch**, not a normative interface. The sequence diagrams and API-call drafts below show the *shape* of how applications will read published rate plan data; they are for illustration and are **not final**. Endpoint paths, parameters, and response formats will be settled in the normative access-API specification, which is being developed for a release after v0.3.0.
+This page is an **illustrative sketch**, not a normative interface. The sequence diagrams and API-call drafts below show the *shape* of how applications will read published rate plan data; they are for illustration and are **not final**. Endpoint paths, parameters, and response formats will be settled in the normative access-API specification, which is being developed for a later release.
 
 **Scope**: URPX APIs are for **consuming** published rate plan data: discovery, version retrieval, and eligibility checks. Rate plan submission workflows are outside the standard's scope. Published URPX data may, however, expose regulatory traceability metadata such as linked `RateCase` resources, filing references, and approval dates.
 
@@ -42,7 +43,7 @@ URPX standardizes one thing on the wire: the **JSON-LD representation** of a rat
 Access to published data is offered as **profiles** over that representation, rather than a single fixed interface:
 
 - **Graph query (SPARQL)**: the native query profile for the RDF graph. A worked example is shown below.
-- **A query API and a REST/JSON profile**: a documented request/response access layer over the same JSON-LD representation. These are being designed for a release after v0.3.0; the REST profile in particular will be shaped by broader input from data consumers once the standard is public.
+- **A query API and a REST/JSON profile**: a documented request/response access layer over the same JSON-LD representation. These are being designed for a later release; the REST profile in particular will be shaped by broader input from data consumers once the standard is public.
 
 No single protocol is "the API." Because the representation is the stable thing, a new property added to the model flows through to consumers without breaking the access layer.
 
@@ -185,7 +186,7 @@ Accept: application/ld+json
 
 SPARQL is the native query profile for the URPX graph. The example below orders a rate plan's versions by the start of their coverage window and takes the most recent.
 
-A rate plan version is a derived snapshot with no authored effective date, so recency is read from the start of the version's coverage window (its temporal scope). The version links back to its rate plan through `forRatePlan`; there is no navigation property in the other direction. This query assumes each version carries a coverage-kind temporal scope with a start date. That is a modelling convention for published snapshots, not a field the v0.3.0 shapes yet require.
+A rate plan version is a derived snapshot with no authored effective date, so recency is read from the start of the version's coverage window (its temporal scope). The version links back to its rate plan through `forRatePlan`; there is no navigation property in the other direction. This query reads the coverage-kind temporal scope on the version's coverage claim, with a start date. That is a modelling convention for published snapshots, not a field the v0.5.1 shapes require.
 
 ```sparql
 PREFIX urpx: <https://urpx.org/ns/ontology/>
@@ -193,11 +194,11 @@ PREFIX urpx: <https://urpx.org/ns/ontology/>
 SELECT ?version ?coverageStart
 WHERE {
   ?plan  a urpx:RatePlan ;
-         urpx:ratePlanUniqueIdentifier "RES-TOU-001" .
+         urpx:ratePlanUniqueIdentifier "CPL-RES-TOU-1" .
 
   ?version a urpx:RatePlanVersion ;
            urpx:forRatePlan ?plan ;
-           urpx:hasTemporalScope ?scope .
+           urpx:hasCoverageClaim/urpx:hasTemporalScope ?scope .
 
   ?scope urpx:scopeKind urpx:coverage ;
          urpx:startDate  ?coverageStart .
@@ -210,7 +211,7 @@ LIMIT 1
 
 Three things this example is built to show:
 
-- **One resolved version spanning several pricing inputs.** The snapshot consolidates three distinct pricing models, each authored in its own publication: delivery pricing and rate plan structure from the 2026 rate-case tariff book, seasonal generation energy from an advice-letter supplement, and market supply energy from a monthly price feed. On the version there is no property that points at a `PricingModel`; the tie to each source is provenance. Every price set and price carries a `hasDataSourceReference` back to the `SourcePublication` it was read from, and the authoring models are made explicit alongside as a `ModelCollection` of `PricingModel` nodes.
+- **One resolved version spanning several pricing inputs.** The snapshot consolidates three distinct pricing models, each authored in its own publication: delivery pricing and rate plan structure from the 2026 rate-case tariff book, seasonal generation energy from an advice-letter supplement, and market supply energy from a monthly price feed. The version lists its contributing models through `consolidatedFrom`, and the tie of each price to its source is provenance: every price set and price carries a `hasDataSourceReference` back to the `SourcePublication` it was read from, and the authoring models are made explicit alongside as a `ModelCollection` of `PricingModel` nodes.
 - **Prices change over time, at two cadences.** The seasonal generation prices apply by season (summer and winter price sets, selected by `appliesInSeason`, each with its own validity window), while the market supply prices refresh monthly on 2026-07-01 and 2026-08-01. Season here is applicability, expressed through `appliesInSeason` on the plan-element definitions, not a validity window; the definitions themselves are stable structure. A validity window on a plan-element definition is reserved for when the structure itself is authored to change, which is not what a season boundary is.
 - **Dated blocks with their own reason.** Each market-supply block is a `Price` valid for a non-overlapping window, and each carries its own `SourcePublication` stating why it changed (a scheduled reconciliation, then a summer fuel-cost adjustment). Note a modelling reality: a reason code (`changeReason`) is a property of the whole `RatePlanVersion`, not of a block inside it, so per-block reasons are expressed through each block's source publication. To model three genuinely reason-tagged changes as first-class, the model-faithful form is three effective-dated `RatePlanVersion` records on the same rate plan.
 
@@ -219,8 +220,8 @@ Three things this example is built to show:
   "@context": [
     "https://urpx.org/ns/context/releases/v0.5.1/jsonld/urpx-context.jsonld",
     {
-      "cpl": "https://urpx-org.github.io/urpx/fixtures/cpl/",
-      "org": "https://urpx-org.github.io/urpx/fixtures/org/",
+      "cpl": "https://example.org/urpx/fixtures/cpl/",
+      "org": "https://example.org/urpx/fixtures/org/",
       "xsd": "http://www.w3.org/2001/XMLSchema#",
       "urpx:effectiveDate": { "@type": "xsd:date" },
       "urpx:expirationDate": { "@type": "xsd:date" },
@@ -255,6 +256,11 @@ Three things this example is built to show:
       "urpx:isDefault": false,
       "urpx:timezoneIdentifier": "America/Los_Angeles",
       "urpx:selfContained": true,
+      "urpx:consolidatedFrom": [
+        { "@id": "cpl:pm-delivery-structure" },
+        { "@id": "cpl:pm-generation-seasonal" },
+        { "@id": "cpl:pm-market-supply" }
+      ],
       "urpx:offeredBy": {
         "@id": "org:cascade-pl",
         "@type": "urpx:UtilityOperator",
@@ -428,6 +434,14 @@ Three things this example is built to show:
                         "urpx:endTime": "17:00:00",
                         "urpx:appliesInSeason": { "@id": "cpl:season-summer" },
                         "urpx:dayType": { "@id": "urpx:allDays" }
+                      },
+                      {
+                        "@id": "cpl:tb-summer-off-peak-pm",
+                        "@type": "urpx:TimeBracket",
+                        "urpx:startTime": "21:00:00",
+                        "urpx:endTime": "23:59:59",
+                        "urpx:appliesInSeason": { "@id": "cpl:season-summer" },
+                        "urpx:dayType": { "@id": "urpx:allDays" }
                       }
                     ]
                   },
@@ -444,6 +458,14 @@ Three things this example is built to show:
                         "urpx:endTime": "17:00:00",
                         "urpx:appliesInSeason": { "@id": "cpl:season-winter" },
                         "urpx:dayType": { "@id": "urpx:allDays" }
+                      },
+                      {
+                        "@id": "cpl:tb-winter-off-peak-pm",
+                        "@type": "urpx:TimeBracket",
+                        "urpx:startTime": "21:00:00",
+                        "urpx:endTime": "23:59:59",
+                        "urpx:appliesInSeason": { "@id": "cpl:season-winter" },
+                        "urpx:dayType": { "@id": "urpx:allDays" }
                       }
                     ]
                   }
@@ -456,7 +478,7 @@ Three things this example is built to show:
               "@id": "cpl:pd-customer-charge",
               "@type": "urpx:PriceDefinition",
               "urpx:name": "Customer Charge",
-              "urpx:chargeType": { "@id": "urpx:minimumBill" },
+              "urpx:chargeType": { "@id": "urpx:customerCharge" },
               "urpx:billPortion": { "@id": "urpx:deliveryPortion" },
               "urpx:priceCurrency": "USD",
               "urpx:baseQuantity": "1",
@@ -703,13 +725,11 @@ Three things this example is built to show:
 
 *The public query endpoint is part of the access API in development; the query itself uses the published ontology namespace shown in the `PREFIX` line.*
 
-*The public query endpoint is part of the access API in development; the query itself uses the published ontology namespace shown in the `PREFIX` line.*
-
 ---
 
 ## Roadmap
 
-The URPX v0.3.0 model (the ontology, the SHACL shapes, and the JSON-LD representation) is the stable foundation the access API is built on. The access API itself develops after v0.3.0:
+The URPX v0.5.1 model (the ontology, the SHACL shapes, and the JSON-LD representation) is the foundation the access API is built on. The access API itself develops in a later release:
 
 - **Query API**: a documented request/response query interface over the JSON-LD representation, taking the graph-query profile shown above as its starting point.
 - **REST / JSON profile**: a resource-oriented access layer, shaped by broader input from data consumers once the standard is public.
