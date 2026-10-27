@@ -30,7 +30,7 @@ See [TRANSITION.md](TRANSITION.md) for the completed transition record and file-
 ## Developer Certificate of Origin (DCO)
 
 All contributions must include a `Signed-off-by` line in every commit.
-Adding this line certifies that you wrote the contribution — or otherwise have the right to submit it under the applicable license — per the [Developer Certificate of Origin, version 1.1](https://developercertificate.org/).
+Adding this line certifies that you wrote the contribution, or otherwise have the right to submit it under the applicable license, per the [Developer Certificate of Origin, version 1.1](https://developercertificate.org/).
 
 Append a DCO line by running:
 
@@ -50,9 +50,9 @@ Pull requests missing `Signed-off-by` on every commit will be asked to rebase an
 
 Understanding the following distinctions is important when working with URPX. For more detail, see the [URPX FAQ](documentation/pages/urpx-faq.md) and [URPX Overview](documentation/pages/urpx-overview.md).
 
-- **Tariff:** A regulatory document, such as a tariff book, containing one or more rate plans. It is published by utilities and approved by regulatory authorities.
-- **Rate plan:** A complete package with all parameters needed to calculate customer cost, including prices, TOU schedules, service tiers, seasonal variations, eligibility rules, and applicability conditions.
-- **Rate:** A single price value, such as `$0.12/kWh`, which is incomplete without the surrounding rate plan context.
+- **Tariff filing:** Parts of rate plans are published as tariff documents: a tariff book, a tariff sheet or a statement, each carrying `urpx:PricingModel` material for one or more rate plans. Utility service providers publish them, and where the provider is regulated the regulatory authority approves the filing and makes it available in a public catalog. URPX records the published document as a `urpx:SourcePublication` and the regulatory unit within it as a `urpx:TariffFiling`.
+- **Rate plan:** A complete package with all parameters needed to calculate customer cost, including prices, time-of-use (TOU) schedules, service tiers, seasonal variations, eligibility rules, and applicability conditions. URPX models that package as separate classes, because no single publication carries all of it: `urpx:RatePlan` holds the stable identity of the plan and carries no pricing, input metric specifications or eligibility criteria of its own, while the pricing content is authored in `urpx:PricingModel` instances, which a `urpx:TariffFiling` holds via `containsPricingModel`. A pricing model written for one plan points at that identity directly via `referencesRatePlan`, but most tariff filings as published today name no rate plan identity at all, so the link is inferred from what the pricing model does say: the service class it applies to, a MIDAS RIN or another scheme identifier where one is printed, and the applicability conditions on its prices. A `urpx:RatePlanVersion` is the resolved snapshot for a temporal window, consolidated from the pricing models in effect for that window (`consolidatedFrom`) and linked back to the identity via `forRatePlan`, and it carries the calculation instructions a billing engine needs (`PlanElements` with metric inputs, billing model and price definitions) together with the dated `Prices`. This is how URPX bridges static publications and machine-readable rate plans: the publications remain citable history, and the sequence of versions is the rate plan as a time series of calculable snapshots, each stating its own coverage in a required `CoverageClaim`.
+- **Price:** A single value applied to something measured or counted, such as `$0.12/kWh`, which is incomplete without the surrounding rate plan context. URPX does not use the bare word "rate" on its own; the FAQ's Terminology section explains why.
 
 Language used by contributors should be polite, professional, and constructive. Prefer precise descriptions such as "verbose" or "redundant" instead of dismissive wording.
 
@@ -122,7 +122,7 @@ Test data may be submitted directly with a pull request when it is clearly scope
 
 If the test data implies a change to the ontology, SHACL constraints, or repository structure, discuss it with the working group before opening the pull request.
 
-Vendor-submitted test data is requested, not required, to name the submitting organization and, if a platform was used to produce it, the platform's name (`urpx:publicationPlatform`). An organization named this way is typed `urpx:vendorOrganization` via `urpx:organizationType` and referenced with `urpx:publishedBy`, the same required typing every `urpx:Organization` in the schema already carries.
+Vendor-submitted test data is requested, not required, to name the submitting organization and, if a platform was used to produce it, the platform's name (`urpx:publicationPlatform`). An organization named this way is typed `urpx:vendorOrganization` via `urpx:organizationType` and referenced with `urpx:publishedBy`, the same required typing every `urpx:Organization` in the vocabulary already carries.
 
 ### Reviews
 

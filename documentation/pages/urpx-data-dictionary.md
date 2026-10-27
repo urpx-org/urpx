@@ -1128,7 +1128,7 @@ including TOU schedules, billing cycles, and ledger configuration.
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
 | <a id="hasLedger" href="/ns/ontology/hasLedger" target="_blank" rel="noopener">`urpx:hasLedger`</a> | Object | 0..* | [`Ledger`](#Ledger) | Links plan elements to ledgers for billing segregation |
-| <a id="hasPriceDefinition" href="/ns/ontology/hasPriceDefinition" target="_blank" rel="noopener">`urpx:hasPriceDefinition`</a> | Object | 0..* | [`PriceDefinition`](#PriceDefinition) | Links a billing model to its price definitions. |
+| <a id="hasPriceDefinition" href="/ns/ontology/hasPriceDefinition" target="_blank" rel="noopener">`urpx:hasPriceDefinition`</a> | Object | 1..* | [`PriceDefinition`](#PriceDefinition) | Links a billing model to its price definitions. |
 | <a id="hasServiceTiers" href="/ns/ontology/hasServiceTiers" target="_blank" rel="noopener">`urpx:hasServiceTiers`</a> | Object | 0..* | [`ServiceTiers`](#ServiceTiers) | Container for multiple service tier definitions |
 | <a id="hasTOUSchedule" href="/ns/ontology/hasTOUSchedule" target="_blank" rel="noopener">`urpx:hasTOUSchedule`</a> | Object | 0..* | [`TOUSchedule`](#TOUSchedule) | Defines time-of-use pricing schedules |
 | <a id="prorationMethod" href="/ns/ontology/prorationMethod" target="_blank" rel="noopener">`urpx:prorationMethod`</a> | Datatype | 0..1 | `xsd:string` | Method for prorating prices during partial billing periods |
@@ -1202,7 +1202,7 @@ apply to that measurement.
 |----------|------|-------------|-------|-------------|
 | <a id="hasServiceBracket" href="/ns/ontology/hasServiceBracket" target="_blank" rel="noopener">`urpx:hasServiceBracket`</a> | Object | 1..* | [`ServiceBracket`](#ServiceBracket) | Contextual boundary variants attached to a service tier |
 | <a href="/ns/ontology/name" target="_blank" rel="noopener">`urpx:name`</a> | Datatype | 0..1 | `xsd:string` | The name of the item |
-| <a href="/ns/ontology/serviceTierNumber" target="_blank" rel="noopener">`urpx:serviceTierNumber`</a> | Datatype | 0..1 | `xsd:integer` | Integer reference to the logical service tier |
+| <a href="/ns/ontology/serviceTierNumber" target="_blank" rel="noopener">`urpx:serviceTierNumber`</a> | Datatype | 1..1 | `xsd:integer` | Integer reference to the logical service tier |
 
 ---
 
@@ -1241,14 +1241,11 @@ apply to that measurement.
 
 | Property | Type | Cardinality | Range | Description |
 |----------|------|-------------|-------|-------------|
-| <a id="adjustsServiceTier" href="/ns/ontology/adjustsServiceTier" target="_blank" rel="noopener">`urpx:adjustsServiceTier`</a> | Object | 0..1 | [`ServiceTier`](#ServiceTier) | The adjusted tier holds no adjusting brackets, so an adjusting bracket cannot target its own host tier or any other host tier. |
 | <a href="/ns/ontology/appliesInSeason" target="_blank" rel="noopener">`urpx:appliesInSeason`</a> | Object | 0..* | [`Season`](#Season) | Season(s) this resource applies to |
 | <a id="lowerBound" href="/ns/ontology/lowerBound" target="_blank" rel="noopener">`urpx:lowerBound`</a> | Datatype | 0..1 | `xsd:decimal` | Lower threshold value for bracket applicability |
-| <a id="lowerBoundOffset" href="/ns/ontology/lowerBoundOffset" target="_blank" rel="noopener">`urpx:lowerBoundOffset`</a> | Datatype | 0..1 | `xsd:decimal` | Quantity added to the lower bound of the adjusted tier's applicable bracket |
 | <a id="lowerBoundOperator" href="/ns/ontology/lowerBoundOperator" target="_blank" rel="noopener">`urpx:lowerBoundOperator`</a> | Object | 0..1 | [`OperatorValue`](#OperatorValue) | Comparison operator for lower bound evaluation |
 | <a href="/ns/ontology/referencesProfileAlternative" target="_blank" rel="noopener">`urpx:referencesProfileAlternative`</a> | Object | 0..1 | [`ProfileAlternative`](#ProfileAlternative) | IRI reference linking pricing, schedule, or tier resources to their applicable ProfileAlternative. |
 | <a id="upperBound" href="/ns/ontology/upperBound" target="_blank" rel="noopener">`urpx:upperBound`</a> | Datatype | 0..1 | `xsd:decimal` | Upper threshold value for bracket applicability |
-| <a id="upperBoundOffset" href="/ns/ontology/upperBoundOffset" target="_blank" rel="noopener">`urpx:upperBoundOffset`</a> | Datatype | 0..1 | `xsd:decimal` | Quantity added to the upper bound of the adjusted tier's applicable bracket |
 | <a id="upperBoundOperator" href="/ns/ontology/upperBoundOperator" target="_blank" rel="noopener">`urpx:upperBoundOperator`</a> | Object | 0..1 | [`OperatorValue`](#OperatorValue) | Comparison operator for upper bound evaluation |
 
 ---

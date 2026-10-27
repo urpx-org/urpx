@@ -11,7 +11,7 @@ site_position: 2
 # URPX Diagram Index
 
 **Version:** 0.5.1 (Working Group Draft)
-**Last Updated:** 2026-08-20
+**Last Updated:** 2026-10-05
 
 [← Back to Index](/docs/getting-started/overview)
 
@@ -30,6 +30,24 @@ This index lists the diagram assets currently present in the repository and the 
 - **Source:** Mermaid diagram embedded in `documentation/pages/urpx-overview.md`
 - **Used in:** [Overview](urpx-overview.md)
 - **Shows:** How a `TariffFiling` chain carries supersession, and how each `RatePlanVersion` snapshot is consolidated from the pricing models in force and bound to its `RatePlan`
+
+### Tutorial Diagrams
+
+- **Source:** Five Mermaid diagrams embedded in `documentation/pages/urpx-tutorial.md`
+- **Used in:** [Tutorial](urpx-tutorial.md)
+- **Shows:** The package and version structure being built, the three classification dimensions of a price, metric inputs and their references, the time-of-use hierarchy, and the assembled rate plan
+
+### Condition Expression Tree
+
+- **Source:** Mermaid diagram embedded in `documentation/pages/urpx-condition-modeling.md`
+- **Used in:** [Condition Model](urpx-condition-modeling.md)
+- **Shows:** An `EligibilityRule` with a boolean root node and two comparison nodes, expanded
+
+### API Sequence Diagrams
+
+- **Source:** Two Mermaid sequence diagrams embedded in `documentation/pages/urpx-api-spec.md`
+- **Used in:** [API Specification](urpx-api-spec.md)
+- **Shows:** Illustrative version retrieval and eligibility-check flows
 
 ---
 
@@ -52,6 +70,14 @@ This index lists the diagram assets currently present in the repository and the 
 - **File:** `documentation/diagrams/urpx-tou-structure-diagram.mmd`
 - **Status:** Present in the repository but not currently embedded in a documentation page
 - **Shows:** `TOUSchedule` -> `TOUTier` -> `TOUPeriod` -> `TimeBracket` with price references by `touPeriodNumber`
+
+---
+
+## Generated Dictionary Diagrams
+
+- **Directory:** `documentation/diagrams/dictionary/`
+- **Used in:** [Data Dictionary](urpx-data-dictionary.md), per section
+- **Status:** Generated from the ontology by the repository's regeneration workflow; never hand-edited
 
 ---
 
