@@ -6293,7 +6293,7 @@ urpx-shacl:ObservanceRuleValueShape
     rdfs:label "ObservanceRuleValue Shape"@en ;
     sh:targetClass urpx:ObservanceRuleValue ;
     sh:nodeKind sh:IRI ;
-    sh:in ( urpx:actualDateObservance urpx:fridayIfWeekendObservance urpx:mondayIfWeekendObservance urpx:nearestWeekdayObservance ) .
+    sh:in ( urpx:actualDateObservance urpx:fridayIfWeekendObservance urpx:mondayIfSundayObservance urpx:mondayIfWeekendObservance urpx:nearestWeekdayObservance ) .
 
 urpx-shacl:OperatorValueShape
     a sh:NodeShape ;

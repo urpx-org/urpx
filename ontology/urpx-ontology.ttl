@@ -772,7 +772,7 @@ urpx:NameTypeValue a owl:Class ;
 urpx:ObservanceRuleValue a owl:Class ;
     rdfs:label "Observance Rule Value"@en ;
     rdfs:comment "Government holiday observance rule enumeration values" ;
-    owl:equivalentClass [ owl:oneOf ( urpx:actualDateObservance urpx:fridayIfWeekendObservance urpx:mondayIfWeekendObservance urpx:nearestWeekdayObservance ) ] ;
+    owl:equivalentClass [ owl:oneOf ( urpx:actualDateObservance urpx:fridayIfWeekendObservance urpx:mondayIfSundayObservance urpx:mondayIfWeekendObservance urpx:nearestWeekdayObservance ) ] ;
     skos:note "Enumeration class for standardized holiday weekend observance rules." .
 
 urpx:OperatorValue a owl:Class ;
@@ -5581,6 +5581,11 @@ urpx:fridayIfWeekendObservance rdf:type urpx:ObservanceRuleValue ;
     rdfs:label "Friday If Weekend Observance"@en ;
     skos:definition "Holiday observed on preceding Friday if it falls on weekend"@en ;
     skos:prefLabel "If Weekend Then Friday"@en .
+
+urpx:mondayIfSundayObservance rdf:type urpx:ObservanceRuleValue ;
+    rdfs:label "Monday If Sunday Observance"@en ;
+    skos:definition "Holiday observed on following Monday if it falls on Sunday, and on the actual date if it falls on Saturday"@en ;
+    skos:prefLabel "If Sunday Then Monday"@en .
 
 urpx:mondayIfWeekendObservance rdf:type urpx:ObservanceRuleValue ;
     rdfs:label "Monday If Weekend Observance"@en ;
