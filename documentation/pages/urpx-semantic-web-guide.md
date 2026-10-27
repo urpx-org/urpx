@@ -11,7 +11,7 @@ site_position: 1
 # Semantic Web Guide for URPX
 
 **Version:** 0.5.1 (Working Group Draft)
-**Last Updated:** 2026-08-20
+**Last Updated:** 2026-10-05
 
 **A beginner-friendly introduction to semantic web technologies for the URPX working group**
 
@@ -43,17 +43,17 @@ This connection requires **rich semantics** to accurately represent:
 - Geographic applicability (service territories, jurisdictions)
 - Regulatory context (tariff filings, approval dates)
 
-Traditional flat file formats (CSV, basic JSON) lack the expressiveness needed for these complex relationships. Semantic web technologies provide the structure and vocabulary to capture this complexity while maintaining machine-readability.
+Flat file formats (CSV, plain JSON) carry no standardized meaning for these relationships, so each consumer re-derives it. Semantic web technologies give the relationships a shared vocabulary and a graph form that machines can read across systems.
 
 
-### AI and Machine Learning Benefits
+### Machine Learning Applications
 
-Semantically-rich, interconnected data dramatically improves AI/ML applications:
+Semantically rich, interconnected data also serves machine learning applications:
 
 **Intelligent Rate Plan Comparison**
-- LLMs can understand rate plan structure relationships
+- Language models can read rate plan structure relationships
 - Contextual recommendations based on usage patterns
-- Automated tariff analysis across utilities
+- Automated rate plan analysis across utilities
 
 **Customer-Specific Optimization**
 - Machine learning on knowledge graphs
@@ -61,7 +61,7 @@ Semantically-rich, interconnected data dramatically improves AI/ML applications:
 - Personalized rate plan recommendations
 
 **Regulatory Compliance**
-- Automated validation of tariff structures
+- Automated validation of rate plan structures
 - Identification of compliance issues
 - Cross-jurisdictional analysis
 
@@ -112,7 +112,7 @@ The semantic web represents data as **interconnected graphs** of meaning, not ju
 Notice how the semantic version explicitly **links** the charge to:
 - Its type via IRI reference (`urpx:usageCharge`)
 - Its measurement specification with commodity, kind, and unit
-- All values are dereferenceable IRIs that machines can follow
+- Enumeration values are dereferenceable IRIs that machines can follow
 
 Machines can follow these links to understand relationships and answer complex questions.
 
@@ -144,11 +144,9 @@ Every statement has three parts:
 (PRC-001) (is a) (Price)
 ```
 
-### Graph Visualization
+### Graph Structure
 
-A simple rate plan forms an interconnected graph.
-
-This graph structure enables:
+A simple rate plan forms an interconnected graph. This structure enables:
 - **Navigation**: Follow links to find related data
 - **Inference**: Deduce new facts from relationships
 - **Validation**: Check structural constraints
@@ -194,12 +192,18 @@ An ontology is a **formal specification** of a domain's concepts and relationshi
 
 **Why We Use OWL:**
 - **W3C Standard**: Globally recognized and widely supported
-- **Reasoning**: Machines can infer new facts from existing data
+- **Reasoning**: Machines can infer facts such as class membership through subclass relations
 - **Validation**: Structural constraints ensure data quality
 - **Interoperability**: Common vocabulary across systems
 
 **Example OWL Definition:**
 ```turtle
+@prefix urpx: <https://urpx.org/ns/ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
 urpx:Price a owl:Class ;
     rdfs:label "Price"@en ;
     rdfs:comment "Individual pricing component with an amount and applicability rules" .
@@ -338,6 +342,10 @@ SHACL defines **shapes** that data must conform to. Think of it as "JSON Schema 
 
 **Example SHACL Shape:**
 ```turtle
+@prefix urpx: <https://urpx.org/ns/ontology/> .
+@prefix urpx-shacl: <https://urpx.org/ns/shacl/core/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
 urpx-shacl:PriceShape a sh:NodeShape ;
     sh:targetClass urpx:Price ;
     sh:property [
@@ -350,7 +358,7 @@ urpx-shacl:PriceShape a sh:NodeShape ;
 **URPX SHACL Validation:**
 - **Structural Rules**: Required properties, cardinality constraints
 - **Data Type Rules**: Decimal prices, date formats, string patterns
-- **Business Rules**: Charge combination matrices, applicability logic
+- **Closed Shapes**: Only declared properties and allowed values on each node
 - **Relationship Rules**: References must point to valid entities
 
 **How Validation Works:**
@@ -371,7 +379,7 @@ urpx-shacl:PriceShape a sh:NodeShape ;
 
 SPARQL is the "SQL for RDF" - a query language for semantic data.
 
-**Example 1: Find All Prices in a Rate Plan**
+**Example 1: Find the Named Unit Prices in a Rate Plan**
 ```sparql
 PREFIX urpx: <https://urpx.org/ns/ontology/>
 
@@ -385,7 +393,7 @@ WHERE {
 }
 ```
 
-Note the query starts from the version snapshot: versions point at their plan via `forRatePlan`, so the plan is found by identifier and the versions are found by their link back to it.
+Note the query starts from the version snapshot: versions point at their plan via `forRatePlan`, so the plan is found by identifier and the versions are found by their link back to it. The query returns prices that carry both a name and a unit price; fixed amounts and price set alternatives need their own patterns.
 
 **SPARQL Use Cases:**
 - **Rate Plan Comparison**: Find best rate plans for specific usage patterns
@@ -397,7 +405,7 @@ Note the query starts from the version snapshot: versions point at their plan vi
 - **Powerful Queries**: Navigate complex graph relationships
 - **Standardized**: Works across any RDF data source
 - **Flexible**: Can combine data from multiple sources
-- **Expressive**: Ask questions impossible in SQL
+- **Expressive**: Ask questions that are hard to express in SQL
 
 ---
 

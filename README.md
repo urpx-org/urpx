@@ -3,7 +3,7 @@
 
 # URPX: Utility Rate Plan Exchange Ontology
 
-**Version 0.5.1** | **W3C-Ready Semantic Standard**
+**Version 0.5.1** | **Working Group Draft**, LF Energy Standards and Specifications
 
  [![Documentation](https://img.shields.io/badge/Documentation-Complete-green)](documentation/) [![License](https://img.shields.io/badge/License-Multiple-blue.svg)](NOTICE)
 
@@ -43,6 +43,7 @@ urpx/
 ├── documentation/     # Complete documentation (start at index)
 ├── ontology/          # Core OWL ontology file
 ├── shacl/             # SHACL validation constraints
+├── context/           # Published JSON-LD context
 ├── skos/              # SKOS mappings to related standards
 ├── test-cases/        # Test datasets and examples
 ├── scripts/           # Project tooling
@@ -82,7 +83,7 @@ Every release states its own compatibility in its release notes. Where a release
 
 Three licenses apply by file category. Specification files (the ontology, SHACL shapes, SKOS mappings, and documentation pages) are licensed under the W3C Software Notice and Document License (W3C-20150513). Dataset files (test-case data and index files) are licensed under the Community Data License Agreement - Permissive 2.0 (CDLA-Permissive-2.0). Source code and meta files, including this README, are licensed under the Apache License, Version 2.0. See [NOTICE](NOTICE) for the full statement, [LICENSE](LICENSE) for the Apache-2.0 text, and `LICENSES/` for the other two.
 
-**Licensing before and after 2026-09-09.** This repository was licensed in full under the Apache License, Version 2.0 from its first release until 2026-09-09. On that date, following Working Group Draft acceptance, the category licensing above took effect: specification files moved to W3C-20150513 and dataset files to CDLA-Permissive-2.0, while source code and meta files stayed on Apache-2.0. A commit, release, or copy dated before 2026-09-09 is Apache-2.0 throughout. See [TRANSITION.md](TRANSITION.md) for the completed transition record and the file-classification manifest.
+**Licensing before and after 2026-09-09.** The project-authored files in this repository were licensed under the Apache License, Version 2.0 from its first release until 2026-09-09; third-party public-record assets have carried their own notice throughout. On that date, following Working Group Draft acceptance, the category licensing above took effect: specification files moved to W3C-20150513 and dataset files to CDLA-Permissive-2.0, while source code and meta files stayed on Apache-2.0. A commit, release, or copy dated before 2026-09-09 is Apache-2.0 for every project-authored file. See [TRANSITION.md](TRANSITION.md) for the completed transition record and the file-classification manifest.
 
 Contributions are governed by the Developer Certificate of Origin v1.1. See [CONTRIBUTING.md](CONTRIBUTING.md).
 

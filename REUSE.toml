@@ -9,7 +9,7 @@ version = 1
 
 # -----------------------------------------------------------------------------
 # Binary raster images (PNG, JPG), SVG diagrams, and their Graphviz DOT sources
-# — all Flux Tailor-authored, Apache-2.0 alongside the rest of the
+# — all project-authored, Apache-2.0 alongside the rest of the
 # project's meta and tooling assets.
 # -----------------------------------------------------------------------------
 [[annotations]]
@@ -21,7 +21,7 @@ SPDX-License-Identifier = "Apache-2.0"
 # -----------------------------------------------------------------------------
 # PG&E tariff PDF — US public record, included as a test-case asset so the
 # URPX test suite can reference a real utility tariff document. Not subject
-# to Flux Tailor copyright; see LICENSES/LicenseRef-PublicRecord.txt.
+# to the project's copyright; see LICENSES/LicenseRef-PublicRecord.txt.
 # -----------------------------------------------------------------------------
 [[annotations]]
 path = "test-cases/pge-e-elec/assets/PGE_E-ELEC_2026-01-01.pdf"
@@ -38,7 +38,7 @@ SPDX-License-Identifier = "LicenseRef-PublicRecord"
 # -----------------------------------------------------------------------------
 # Consolidated Edison tariff documents and market supply charge feed — US
 # public records (PSC filings and utility-published rate data), included as
-# test-case assets. Not subject to Flux Tailor copyright; see
+# test-case assets. Not subject to the project's copyright; see
 # LICENSES/LicenseRef-PublicRecord.txt.
 # -----------------------------------------------------------------------------
 [[annotations]]
@@ -84,7 +84,7 @@ SPDX-FileCopyrightText = "The URPX Authors"
 SPDX-License-Identifier = "CDLA-Permissive-2.0"
 
 # -----------------------------------------------------------------------------
-# JSON manifests/schemas (JSON cannot carry comment headers) — Flux Tailor-authored,
+# JSON manifests/schemas (JSON cannot carry comment headers) — project-authored,
 # Apache-2.0 alongside the rest of the project's meta and tooling assets.
 # -----------------------------------------------------------------------------
 [[annotations]]
