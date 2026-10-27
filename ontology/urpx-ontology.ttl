@@ -1015,7 +1015,7 @@ urpx:applicableToRatePlan a owl:ObjectProperty ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:RatePlan urpx:RatePlanVersion urpx:RatePlanModifierVersion ) ] ;
     rdfs:range urpx:RatePlan ;
-    skos:note "Defines which rate plans are compatible with this modifier or supply plan complement. For simple modifier-to-plan associations use this property. For complex enrollment-based or conditional modifier application use hasEligibilityRule." .
+    skos:note "Defines which rate plans are compatible with this modifier or supply plan complement. For simple modifier-to-plan associations use this property. For complex enrollment-based or conditional modifier application use hasEligibilityRule. Several values are alternatives: a customer takes service under one rate plan at a time, and the modifier applies with whichever named plan that is." .
 
 urpx:applicableToRatePlanVersion a owl:ObjectProperty ;
     rdfs:label "Applicable To Rate Plan Version"@en ;
@@ -1023,7 +1023,7 @@ urpx:applicableToRatePlanVersion a owl:ObjectProperty ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( urpx:RatePlanModifierVersion urpx:RatePlanVersion ) ] ;
     rdfs:range urpx:RatePlanVersion ;
-    skos:note "Defines which specific rate plan versions are compatible with this modifier version." .
+    skos:note "Defines which specific rate plan versions are compatible with this modifier version. Several values are alternatives: the modifier version applies with whichever named version is in force for the customer." .
 
 urpx:appliesInSeason a owl:ObjectProperty ;
     rdfs:label "Applies In Season"@en ;
@@ -1054,7 +1054,7 @@ urpx:basedOnPrice a owl:ObjectProperty ;
             owl:unionOf ( urpx:Price urpx:PriceDefinition ) ] ;
     rdfs:range [ a owl:Class ;
             owl:unionOf ( urpx:Price urpx:PriceSummary ) ] ;
-    skos:note "Enables price calculation dependencies. Used with multiplier/adder properties for calculation formulas." .
+    skos:note "Enables price calculation dependencies. Used with multiplier/adder properties for calculation formulas. Several values are alternatives, not a sum: the calculation uses whichever named price applies to the customer being priced. To apply a multiplier or adder to the total of several prices, reference one urpx:PriceSummary that includes them." .
 
 urpx:basePrice a owl:DatatypeProperty ;
     rdfs:label "Base Price"@en ;
