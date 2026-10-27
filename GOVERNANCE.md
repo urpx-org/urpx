@@ -26,7 +26,7 @@ Working group meetings are open to anyone. Join the mailing list, [urpx-wg@lists
 
 ## Committee membership
 
-Attending meetings and joining the working group mailing list is open to anyone. Voting on stage promotions and releases is reserved to the committee, a smaller group reachable at urpx-committee@lists.lfenergy.org.
+Anyone may attend meetings and join the working group mailing list. Voting on stage promotions and releases is reserved to the committee, a smaller group reachable at urpx-committee@lists.lfenergy.org.
 
 To request committee membership: contact the chair at `chair@urpx.org` or at a working group meeting, having attended at least one working group meeting or made a contribution or proposal. The chair adds new members and notes the addition in the next meeting's minutes.
 
