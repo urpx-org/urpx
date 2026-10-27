@@ -395,7 +395,7 @@ urpx:Season a owl:Class ;
 urpx:ServiceBracket a owl:Class ;
     rdfs:label "Service Bracket"@en ;
     rdfs:comment "Contextual boundary definition for a service tier" ;
-    skos:note "Carries the actual lower and upper bounds for a ServiceTier and may optionally be qualified by season or profile alternative. A ServiceTier may have one or more ServiceBracket instances." .
+    skos:note "Carries the actual lower and upper bounds for a ServiceTier and may optionally be qualified by season or profile alternative. A ServiceTier may have one or more ServiceBracket instances. A bracket with adjustsServiceTier carries offsets to another tier's bounds instead of bounds of its own; see adjustsServiceTier." .
 
 urpx:ServiceClass a owl:Class ;
     rdfs:label "Service Class"@en ;
@@ -416,7 +416,7 @@ urpx:ServiceTerritory a owl:Class ;
 urpx:ServiceTier a owl:Class ;
     rdfs:label "Service Tier"@en ;
     rdfs:comment "Logical tier identity for tiered pricing" ;
-    skos:note "Defines the stable tier identity and serviceTierNumber used by prices. Actual lower and upper bounds live on attached ServiceBracket instances. Prices may reference tiers via serviceTierNumber or referencesServiceTier, or reference an exact bracket via referencesServiceBracket." .
+    skos:note "Defines the stable tier identity and serviceTierNumber used by prices. Actual lower and upper bounds live on attached ServiceBracket instances. Prices may reference tiers via serviceTierNumber or referencesServiceTier, or reference an exact bracket via referencesServiceBracket. A tier that hosts adjusting brackets holds only adjusting brackets and carries no serviceTierNumber; see adjustsServiceTier." .
 
 urpx:ServiceTiers a owl:Class ;
     rdfs:label "Service Tiers"@en ;
@@ -951,6 +951,13 @@ urpx:adder a owl:DatatypeProperty ;
         owl:unionOf ( urpx:Price urpx:PriceSet ) ] ;
     rdfs:range xsd:decimal ;
     skos:note "Applied after multiplication for final price." .
+
+urpx:adjustsServiceTier a owl:ObjectProperty ;
+    rdfs:label "Adjusts Service Tier"@en ;
+    rdfs:comment "Service tier whose bracket bounds this service bracket offsets" ;
+    rdfs:domain urpx:ServiceBracket ;
+    rdfs:range urpx:ServiceTier ;
+    skos:note "An adjusting bracket carries lowerBoundOffset or upperBoundOffset in place of lowerBound and upperBound. It is hosted in a ServiceTier under a ServiceTiers container in a RatePlanModifier's pricing structure, so it applies only where and when that modifier applies. A host tier holds only adjusting brackets, carries no serviceTierNumber, has no bounds of its own, and is not referenced by prices. The target is matched by ServiceTier @id and must hold no adjusting brackets; a missing target, a target that is not a ServiceTier, or more than one target refuses the document. A new version of the adjusted plan or modifier that mints new tier IRIs requires a new version of the adjusting modifier. When the adjusting bracket's season and profile-alternative qualifiers, and those of its host container, hold, each offset is added to the same bound of the adjusted tier's applicable bracket; if they cannot be decided, the adjusted tier is unresolved. Adjusting brackets are deduplicated by @id, then the offsets of every applicable one sum. An offset on a bound the applicable bracket lacks refuses, as does an adjusted lower bound above the adjusted upper bound. Offsets may be negative. Offsets are in the unit of the bound they adjust and are not scaled by days: the host ServiceTiers container and the adjusted tier's ServiceTiers container must reference MetricInputs with the same unitOfMeasure; a mismatch, or a missing unitOfMeasure on either, refuses. Bound operators are unchanged." .
 
 urpx:aggregationMethod a owl:ObjectProperty ;
     rdfs:label "Aggregation Method"@en ;
@@ -2544,6 +2551,13 @@ urpx:lowerBound a owl:DatatypeProperty ;
     rdfs:range xsd:decimal ;
     skos:note "Minimum value for this service bracket. Used with lowerBoundOperator to determine boundary comparison logic." .
 
+urpx:lowerBoundOffset a owl:DatatypeProperty ;
+    rdfs:label "Lower Bound Offset"@en ;
+    rdfs:comment "Quantity added to the lower bound of the adjusted tier's applicable bracket" ;
+    rdfs:domain urpx:ServiceBracket ;
+    rdfs:range xsd:decimal ;
+    skos:note "Used with adjustsServiceTier. In the unit of the bound it adjusts. May be negative." .
+
 urpx:lowerBoundOperator a owl:ObjectProperty ;
     rdfs:label "Lower Bound Operator"@en ;
     rdfs:comment "Comparison operator for lower bound evaluation" ;
@@ -3406,6 +3420,13 @@ urpx:upperBound a owl:DatatypeProperty ;
     rdfs:domain urpx:ServiceBracket ;
     rdfs:range xsd:decimal ;
     skos:note "Maximum value for this service bracket. Used with upperBoundOperator to determine boundary comparison logic." .
+
+urpx:upperBoundOffset a owl:DatatypeProperty ;
+    rdfs:label "Upper Bound Offset"@en ;
+    rdfs:comment "Quantity added to the upper bound of the adjusted tier's applicable bracket" ;
+    rdfs:domain urpx:ServiceBracket ;
+    rdfs:range xsd:decimal ;
+    skos:note "Used with adjustsServiceTier. In the unit of the bound it adjusts. May be negative." .
 
 urpx:upperBoundOperator a owl:ObjectProperty ;
     rdfs:label "Upper Bound Operator"@en ;
