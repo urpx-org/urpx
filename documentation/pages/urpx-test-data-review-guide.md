@@ -11,7 +11,7 @@ site_position: 5
 # URPX Test Data Review Guide
 
 **Version**: 0.5.1 (Working Group Draft)
-**Last Updated**: 2026-07-07
+**Last Updated**: 2026-10-05
 **Status**: Active
 
 **How to review an URPX JSON-LD test case against its source tariff book**
@@ -40,7 +40,7 @@ Before review, gather:
 - the source tariff book PDF
 - the URPX JSON-LD file
 - the current ontology: [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
-- the current SHACL shapes: [`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl)
+- the current SHACL shapes: [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
 - any extraction notes, audit logs, or transformation notes if available
 
 Example review pair in this repository:
@@ -75,7 +75,7 @@ Clone the repository before starting review so you can inspect the current ontol
 From this document, the current ontology and SHACL files are at:
 
 - [`../../ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)
-- [`/ontology/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl)
+- [`../../shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
 
 ---
 
@@ -106,7 +106,7 @@ At this stage, also check:
 - `urpx:changeReason`
 - `urpx:priceCurrency`
 - `urpx:forRatePlan` on every `RatePlanVersion`: the version must point at the right plan identity
-- `urpx:hasCoverageClaim` on every version, and whether the claimed `completenessResult` and `selfContained` value are actually true of the file: a version claiming `complete` while a component is only referenced externally is a review finding
+- `urpx:hasCoverageClaim` on every version, and whether the claimed `completenessResult` and `selfContained` value are actually true of the file: a version claiming `complete` while a required component is missing is a review finding, and a version with an externally retrieved component states `selfContained` false
 - `urpx:hasRateCase`, if the tariff book references a rate case or docket
 
 ---
@@ -137,8 +137,6 @@ python3 -m pyshacl \
   -f human \
   test-cases/pge-e-elec/data/urpx-rate-plan_pge_e-elec.jsonld
 ```
-
-If parser auto-detection has trouble with JSON-LD, rerun with `-df json-ld`.
 
 Interpretation:
 
@@ -299,7 +297,7 @@ Check that:
 - the price name, `urpx:chargeType`, `urpx:chargeCategory`, and `urpx:billPortion` are modeled on the right object
 - `PriceDefinition` includes `urpx:referencesLedger`
 - numeric values are on `Price`
-- dates belong on `Price`, not on the price definition
+- a price instance's dates belong on `Price`; a `PriceDefinition` carries only its own validity window
 
 ### Completeness
 
@@ -418,5 +416,5 @@ Keep findings specific and tied to the file path, tariff book section, and URPX 
 - [`urpx-quality-assurance.md`](urpx-quality-assurance.md)
 - [`urpx-condition-modeling.md`](urpx-condition-modeling.md)
 - [`urpx-data-dictionary.md`](urpx-data-dictionary.md)
-- [`shacl/urpx-shacl.ttl`](/ontology/urpx-shacl.ttl)
+- [`shacl/urpx-shacl.ttl`](../../shacl/urpx-shacl.ttl)
 - [`ontology/urpx-ontology.ttl`](../../ontology/urpx-ontology.ttl)

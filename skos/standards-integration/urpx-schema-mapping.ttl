@@ -27,6 +27,6 @@ urpx:description skos:broadMatch schema:description .
 urpx:name skos:broadMatch schema:name .
 urpx:url skos:broadMatch schema:url .
 urpx:version skos:broadMatch schema:version .
-urpx:timeZone skos:broadMatch schema:timeZone .
+urpx:timezoneIdentifier skos:broadMatch schema:timeZone .
 urpx:datePublished skos:broadMatch schema:datePublished .
 urpx:legalName skos:broadMatch schema:legalName .

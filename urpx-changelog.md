@@ -3,18 +3,39 @@
 
 # URPX Changelog
 
-**Version:** 0.5.1 (Working Group Draft) **Last Updated:** 2026-10-01
+**Version:** 0.5.1 (Working Group Draft) **Last Updated:** 2026-10-06
 
 [← Back to Index](documentation/index.md) | [Overview](documentation/pages/urpx-overview.md) | [Data Dictionary](documentation/pages/urpx-data-dictionary.md)
+
+2026-10-06 — v0.5.1 (schema.org mapping and two property domains align with the ontology)
+---
+
+### Fixed
+- The URPX to Schema.org SKOS mapping now maps `urpx:timezoneIdentifier`, the ontology's declared IANA timezone property, to `schema:timeZone`. It previously named `urpx:timeZone`, which the ontology does not declare.
+
+### Changed
+- `urpx:description` may now be stated on `urpx:Evaluation`, and `urpx:effectiveDate` on `urpx:RatePlanVersion`; each property's domain union gains the class, matching the shapes that already allow it and the test-case data that asserts it.
 
 2026-10-01 — v0.5.1 (the development record moves to urpx-dev)
 ---
 
 ### Removed
-- `dev-docs/` (72 files: tasks, specifications, reports, roadmaps, review material and the worked sample instances), the five design-decision logs under `documentation/pages/`, and the two draft mapping profiles `urpx-green-button-mappings.ttl` and `urpx-lf-energy-mappings.ttl` under `skos/standards-integration/` leave this repository. They are maintained in `urpx-org/urpx-dev`, the design and process record, each file byte-identical at its new path; the design-decision logs sit under `dev-docs/decisions/` there.
+- `dev-docs/` (72 files: tasks, specifications, reports, roadmaps, review material and the worked sample instances), the five design-decision logs under `documentation/pages/`, and the two draft mapping profiles `urpx-green-button-mappings.ttl` and `urpx-lf-energy-mappings.ttl` under `skos/standards-integration/` leave this repository. They are maintained in `urpx-org/urpx-dev`, the design and process record, with links updated for their new locations and internal process references removed from the design-decision logs; the design-decision logs sit under `dev-docs/decisions/` there.
 
 ### Changed
 - `README.md`, `AGENTS.md`, `documentation/index.md`, `documentation/pages/urpx-interoperability.md` and the v0.2.0 and v0.4.0 release notes no longer point at the moved files; `REUSE.toml` and `TRANSITION.md` drop their `dev-docs/` rules; the design-decision references in this changelog point at `urpx-org/urpx-dev`.
+
+2026-09-19 — v0.5.1 (vendor and platform attribution for exchange packages)
+---
+
+### Added
+- `urpx:publicationPlatform`, a string property on `urpx:URPXPackage` naming the software platform or tool that produced or assembled the package, distinct from the organization that operates it and from the package's official publisher (`urpx:publishedBy`).
+- `urpx:vendorOrganization`, a member of `urpx:OrganizationTypeValue` for an organization that operates such a platform without itself being an energy-market participant.
+
+### Changed
+- `urpx:url` may now be stated on `urpx:Organization`; the property's domain union gains the class, and `OrganizationShape` allows one value.
+- The shapes carry the matching constraints: a `urpx:publicationPlatform` entry on the closed `URPXPackageShape` and the new member in `OrganizationTypeValueShape`.
+- Eleven of the twelve test-case data files name the organization and the platform that assembled their package.
 
 2026-09-15 — v0.5.1 (release metadata and the RDF license agree with the SPDX header)
 ---
@@ -47,7 +68,7 @@
 ---
 
 ### Fixed
-- `README.md`, `CONTRIBUTING.md`, `documentation/index.md`, and the FAQ stated pre-Draft, v0.3.0, and Apache-only; each now states v0.5.1, Working Group Draft acceptance, and the three-license split.
+- `README.md`, `CONTRIBUTING.md`, `documentation/index.md`, and the FAQ stated pre-Draft, v0.3.0, and Apache-only; together they now state v0.5.1, Working Group Draft acceptance, and the three-license split.
 - The hand-authored documentation pages' version headers move from Pre-draft to Working Group Draft, matching the completed transition.
 - The interoperability page's banner now says the page, not the project, is a draft.
 - Two prose instances in the API specification and quality-assurance pages said `rate structure`; both now say `rate plan structure`, and the quality-assurance page's edge-case note names the rate plan, not the tariff, as the thing with the pattern.
@@ -56,7 +77,7 @@
 ---
 
 ### Changed
-- The ontology, SHACL shapes, SKOS mappings, documentation pages, the published JSON-LD context, the diagram set under `documentation/diagrams/` (the SVGs and their Graphviz `.dot` sources), per the transition plan in `TRANSITION.md`. Source tooling and meta files (`scripts/`, `README.md`, `LICENSE`, `documentation/examples/examples-schema.json`, and the like) are unchanged and remain Apache-2.0.
+- The ontology, SHACL shapes, SKOS mappings, documentation pages, the published JSON-LD context, and the diagram set under `documentation/diagrams/` (the SVGs and their Graphviz `.dot` sources) move from Apache-2.0 to W3C-20150513, per the transition plan in `TRANSITION.md`. Source tooling and meta files (`scripts/`, `README.md`, `LICENSE`, `documentation/examples/examples-schema.json`, and the like) are unchanged and remain Apache-2.0.
 - `LICENSES/W3C-20150513.txt` is added.
 - This closes the license transition `TRANSITION.md` describes; its status now reads Completed.
 
